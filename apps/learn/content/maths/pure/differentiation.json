@@ -1,0 +1,991 @@
+{
+ "id": "maths.pure.differentiation",
+ "title": "Differentiation",
+ "tags": [
+  "calculus",
+  "edexcel"
+ ],
+ "kind": "procedure",
+ "level": 5.2,
+ "minutes": 30,
+ "goals": [
+  "Say what the gradient of a curve at a point means, and read $\\frac{dy}{dx}$ aloud and in words",
+  "Differentiate powers of $x$, sums of them, and $e^{kx}$, $\\ln x$, $\\sin kx$ and $\\cos kx$",
+  "Find the gradient of a curve at a given point",
+  "Find stationary points and say whether each is a maximum or a minimum",
+  "Recognise when to use the chain rule and the product rule"
+ ],
+ "summary": "The **gradient** of a curve at a point is how steep it is right there: the gradient of the **tangent**, the line that just touches it. The **derivative**, $\\frac{dy}{dx}$ (\"d y by d x\", also $f'(x)$), is a formula for that gradient at every $x$. It is one symbol, not a fraction.\n\n**From first principles:** take a small step $h$, find rise over run, let $h$ shrink to 0: $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$. For $x^2$ it gives $2x$.\n\n**The power rule:** bring the power down, take one off: $\\frac{d}{dx}\\left(x^n\\right) = nx^{n-1}$.\n\n- a number in front stays and multiplies: $5x^3$ gives $15x^2$\n- terms one at a time; $x$ gives 1; a plain number gives 0\n- write roots and fractions as powers first\n\n**To learn:** $e^{kx}$ gives $ke^{kx}$; $\\ln x$ gives $\\frac{1}{x}$; $\\sin kx$ gives $k\\cos kx$; $\\cos kx$ gives $-k\\sin kx$ (radians).\n\n**Gradient at a point:** differentiate, then put $x$ into the derivative (not into $y$, which gives the height).\n\n**Stationary points:** set $\\frac{dy}{dx} = 0$, solve for $x$, find $y$. Then the **second derivative** $\\frac{d^2y}{dx^2}$: positive is a minimum, negative a maximum, zero cannot tell.\n\n**Increasing** where $\\frac{dy}{dx} > 0$; decreasing where it is negative.\n\n**Rates:** velocity $v = \\frac{ds}{dt}$; differentiate again for acceleration.\n\n**Tangent:** gradient from $\\frac{dy}{dx}$ at the point, then $y - y_1 = m(x - x_1)$.\n\n**Chain rule** (a function inside a function): outside's derivative times inside's. $(3x + 1)^5$ gives $15(3x + 1)^4$.\n\n**Product rule** (two multiplied): $\\frac{d}{dx}(uv) = u'v + uv'$.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "video",
+   "title": "The paradox of the derivative | Chapter 2, Essence of calculus",
+   "url": "https://www.youtube.com/watch?v=9vKqVkMQHKk",
+   "by": "3Blue1Brown",
+   "minutes": 17,
+   "note": "What \"the gradient right at a point\" means, with pictures and no rules to learn."
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Exploring the power rule",
+   "url": "https://www.khanacademy.org/math/ap-calculus-ab/ab-differentiation-1-new/ab-2-5/v/power-rule",
+   "by": "Khan Academy",
+   "minutes": 5
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Visualizing the chain rule and product rule | Chapter 4, Essence of calculus",
+   "url": "https://www.youtube.com/watch?v=YG15m2VwSjA",
+   "by": "3Blue1Brown",
+   "minutes": 16
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "Differentiation Revision - Edexcel Maths A-level",
+   "url": "https://www.physicsandmathstutor.com/maths-revision/a-level-edexcel/differentiation/",
+   "by": "Physics & Maths Tutor",
+   "minutes": 20,
+   "note": "Notes and exam questions by topic, with mark schemes."
+  }
+ ],
+ "sources": [
+  "Pearson Edexcel Level 3 Advanced GCE in Mathematics (9MA0) specification",
+  "Pearson Edexcel A level Mathematics: Mathematical Formulae and Statistical Tables",
+  "Pearson Edexcel AS and A level Mathematics: Pure Mathematics Year 1/AS (Pearson, 2017)",
+  "Pearson Edexcel A level Mathematics: Pure Mathematics Year 2 (Pearson, 2018)"
+ ],
+ "formulas": [
+  {
+   "name": "Gradient of a straight line",
+   "tex": "m = \\frac{y_2 - y_1}{x_2 - x_1}",
+   "match": [
+    "\\frac{y_2-y_1}{x_2-x_1}"
+   ],
+   "says": "How steep a line is: how far up, divided by how far across, between two points on it.",
+   "symbols": [
+    [
+     "m",
+     "the gradient"
+    ],
+    [
+     "x_1, y_1",
+     "the first point"
+    ],
+    [
+     "x_2, y_2",
+     "the second point"
+    ]
+   ],
+   "example": "(1, 2) to (3, 8): $\\frac{8 - 2}{3 - 1} = \\frac{6}{2} = 3$."
+  },
+  {
+   "name": "The derivative from first principles",
+   "tex": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+   "match": [
+    "\\lim"
+   ],
+   "says": "The gradient between $x$ and a point a small step $h$ further on, as the step shrinks to nothing. It is where every rule below comes from.",
+   "symbols": [
+    [
+     "f'(x)",
+     "the derivative: the gradient at $x$"
+    ],
+    [
+     "f(x)",
+     "the height of the curve at $x$"
+    ],
+    [
+     "f(x+h)",
+     "the height a step $h$ further on"
+    ],
+    [
+     "h",
+     "the size of the step across"
+    ],
+    [
+     "\\lim_{h \\to 0}",
+     "what it becomes as $h$ shrinks towards 0"
+    ]
+   ],
+   "example": "$f(x) = x^2$: $\\frac{(x+h)^2 - x^2}{h} = 2x + h$, which becomes $2x$."
+  },
+  {
+   "name": "The power rule",
+   "tex": "\\frac{d}{dx}\\left(x^n\\right) = nx^{n-1}",
+   "match": [
+    "nx^{n-1}"
+   ],
+   "says": "Bring the power down in front, then take one off the power.",
+   "symbols": [
+    [
+     "\\frac{d}{dx}",
+     "differentiate what follows: find its gradient formula"
+    ],
+    [
+     "x",
+     "the variable"
+    ],
+    [
+     "n",
+     "the power: any number"
+    ]
+   ],
+   "example": "$x^4$ gives $4x^3$; $x^{-1}$ gives $-x^{-2}$."
+  },
+  {
+   "name": "Numbers in front, and plain numbers",
+   "tex": "\\frac{d}{dx}\\left(ax^n + c\\right) = anx^{n-1}",
+   "match": [
+    "anx^{n-1}"
+   ],
+   "says": "A number multiplying a term stays and multiplies. A plain number on its own gives 0, because a flat line has no slope. Several terms: do each on its own.",
+   "symbols": [
+    [
+     "a",
+     "the number in front (the coefficient)"
+    ],
+    [
+     "c",
+     "a plain number (a constant)"
+    ],
+    [
+     "n",
+     "the power"
+    ]
+   ],
+   "example": "$4x^3 - 5x + 7$ gives $12x^2 - 5$."
+  },
+  {
+   "name": "Exponential",
+   "tex": "\\frac{d}{dx}e^{kx} = ke^{kx}",
+   "match": [
+    "ke^{kx}"
+   ],
+   "says": "$e^x$ is its own derivative. With a number inside, it comes out in front.",
+   "symbols": [
+    [
+     "e",
+     "a fixed number, about 2.718"
+    ],
+    [
+     "k",
+     "the number multiplying $x$ in the power"
+    ]
+   ],
+   "example": "$e^{3x}$ gives $3e^{3x}$; at $x = 0$ that is 3."
+  },
+  {
+   "name": "Natural log",
+   "tex": "\\frac{d}{dx}\\ln x = \\frac{1}{x}",
+   "match": [
+    "\\lnx",
+    "\\frac{1}{x}"
+   ],
+   "says": "The gradient of $\\ln x$ is one over $x$: steep near 0, flatter and flatter as $x$ grows.",
+   "symbols": [
+    [
+     "\\ln x",
+     "the natural log of $x$"
+    ]
+   ],
+   "example": "at $x = 4$ the gradient of $\\ln x$ is $\\frac{1}{4}$."
+  },
+  {
+   "name": "Sine",
+   "tex": "\\frac{d}{dx}\\sin(kx) = k\\cos(kx)",
+   "match": [
+    "k\\cos(kx)"
+   ],
+   "says": "The gradient of a sine wave is a cosine wave. $x$ must be in radians.",
+   "symbols": [
+    [
+     "k",
+     "the number multiplying $x$ inside"
+    ],
+    [
+     "x",
+     "the angle, in radians"
+    ]
+   ],
+   "example": "$\\sin(2x)$ gives $2\\cos(2x)$; at $x = 0$ that is 2."
+  },
+  {
+   "name": "Cosine",
+   "tex": "\\frac{d}{dx}\\cos(kx) = -k\\sin(kx)",
+   "match": [
+    "-k\\sin(kx)"
+   ],
+   "says": "The gradient of a cosine wave is minus a sine wave. $x$ in radians.",
+   "symbols": [
+    [
+     "k",
+     "the number multiplying $x$ inside"
+    ],
+    [
+     "x",
+     "the angle, in radians"
+    ]
+   ],
+   "example": "$\\cos x$ at $x = \\frac{\\pi}{2}$: gradient $-\\sin\\frac{\\pi}{2} = -1$."
+  },
+  {
+   "name": "Stationary points and the second derivative",
+   "tex": "\\frac{dy}{dx} = 0, \\quad \\frac{d^2y}{dx^2} > 0 \\text{ minimum}, < 0 \\text{ maximum}",
+   "match": [
+    "\\frac{d^2y}{dx^2}"
+   ],
+   "says": "A stationary point is where the gradient is 0. Differentiate again: plus means a minimum (the bottom of a dip), minus a maximum (the top of a hump). 0: the test cannot tell.",
+   "symbols": [
+    [
+     "\\frac{dy}{dx}",
+     "the gradient"
+    ],
+    [
+     "\\frac{d^2y}{dx^2}",
+     "the second derivative: the gradient of the gradient"
+    ]
+   ],
+   "example": "$y = x^2 - 4x$: $2x - 4 = 0$ at $x = 2$; $\\frac{d^2y}{dx^2} = 2 > 0$, a minimum."
+  },
+  {
+   "name": "The chain rule",
+   "tex": "\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx}",
+   "match": [
+    "\\frac{dy}{du}"
+   ],
+   "says": "For a function inside a function: differentiate the outside with the inside left alone, then multiply by the derivative of the inside.",
+   "symbols": [
+    [
+     "u",
+     "the inside part"
+    ],
+    [
+     "\\frac{dy}{du}",
+     "the outside's derivative"
+    ],
+    [
+     "\\frac{du}{dx}",
+     "the inside's derivative"
+    ]
+   ],
+   "example": "$(3x + 1)^5$: $5(3x + 1)^4 \\times 3 = 15(3x + 1)^4$."
+  },
+  {
+   "name": "The product rule",
+   "tex": "\\frac{d}{dx}(uv) = u'v + uv'",
+   "match": [
+    "\\frac{d}{dx}(uv)"
+   ],
+   "says": "For two things multiplied: the first's derivative times the second, plus the first times the second's derivative.",
+   "symbols": [
+    [
+     "u, v",
+     "the two parts multiplied together"
+    ],
+    [
+     "u', v'",
+     "their derivatives"
+    ]
+   ],
+   "example": "$x\\sin x$: $1 \\times \\sin x + x\\cos x$."
+  },
+  {
+   "name": "Velocity from displacement",
+   "tex": "v = \\frac{ds}{dt}",
+   "match": [
+    "\\frac{ds}{dt}"
+   ],
+   "says": "Velocity is how fast the displacement changes: differentiate the displacement with respect to time.",
+   "symbols": [
+    [
+     "v",
+     "the velocity (m/s)"
+    ],
+    [
+     "s",
+     "the displacement: distance from the start (m)"
+    ],
+    [
+     "t",
+     "the time (s)"
+    ]
+   ],
+   "example": "$s = 3t^2$: $v = 6t$, so 12 m/s at $t = 2$ s."
+  },
+  {
+   "name": "Equation of a tangent",
+   "tex": "y - y_1 = m(x - x_1)",
+   "match": [
+    "y-y_1=m(x-x_1)"
+   ],
+   "says": "The straight line through the point $(x_1, y_1)$ with gradient $m$. For a tangent, $m$ comes from $\\frac{dy}{dx}$ at that point.",
+   "symbols": [
+    [
+     "m",
+     "the gradient"
+    ],
+    [
+     "x_1, y_1",
+     "the point the line goes through"
+    ]
+   ],
+   "example": "$y = x^2$ at $x = 3$: $m = 6$, through $(3, 9)$: $y - 9 = 6(x - 3)$, so $y = 6x - 9$."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-gradient",
+   "type": "numeric",
+   "stage": "try",
+   "level": 5.5,
+   "q": "The curve $y = x^2$: at $x = 1$, $y = 1$; at $x = 2$, $y = 4$; at $x = 3$, $y = 9$. It gets steeper as you go. How steep is it **exactly at** $x = {k}$: how many up for each 1 across, right at that point? A guess is fine.",
+   "vars": {
+    "k": [
+     2,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "next": "2 * k + 1"
+   },
+   "answer": "2 * k",
+   "abs": 0.05,
+   "work": "The gradient of $y = x^2$ is $\\frac{dy}{dx} = 2x$, so at $x = {k}$ it is {answer}.",
+   "why": "The rule you are about to meet: for $x^2$ the gradient is $2x$, so at $x = {k}$ the curve climbs {answer} for each 1 across. Joining $x = {k}$ to $x = {k} + 1$ gives {next}, a bit more, because the curve keeps getting steeper in between.",
+   "hint": "Try a tiny step: work out $y$ at $x = {k}$ and at $x = {k}.01$, and divide the rise by 0.01."
+  },
+  {
+   "id": "gradient",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The gradient of a curve",
+   "body": "The **gradient** of a straight line is how steep it is: how far up for each 1 across. A line through (1, 2) and (3, 8) climbs 6 in 2 across: gradient 3.\n\nA curve's steepness changes as you go along it. Its gradient at a point is the gradient of the **tangent** there: the straight line that just touches the curve at that point.\n\nThe **derivative** is a formula for that gradient at every $x$. It is written $\\frac{dy}{dx}$, read \"d y by d x\": how much $y$ changes for each bit $x$ changes, right here. It is one symbol, not a fraction to cancel. $f'(x)$, \"f dash of x\", means the same.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x2",
+     "x": [
+      -1,
+      4
+     ],
+     "y": [
+      -1,
+      10
+     ],
+     "controls": []
+    }
+   },
+   "more": "Walk up a hill road. At the bottom it is gentle, half-way up it is steep, at the top it levels off. A road sign saying 10% tells you the steepness right where the sign stands. That is a gradient at a point.\n\nWith numbers, $y = x^2$ (the curve in the picture). At $x = 3$, $y = 9$. Step a little to $x = 3.1$: $y = 9.61$. It went up 0.61 for 0.1 across, a gradient of $0.61 \\div 0.1 = 6.1$. Step only 0.01, to 3.01: $y = 9.0601$, up 0.0601 for 0.01 across, a gradient of 6.01. The smaller the step, the closer to 6. So the gradient of $y = x^2$ at $x = 3$ is exactly 6.\n\nFinding it this way, with the step shrinking to nothing, is differentiating **from first principles**."
+  },
+  {
+   "id": "gradient-estimate",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "$y = x^2$. At $x = {k}$, $y = {y1}$. Step a little to $x = {x2:2}$, where $y = {y2:4}$. What is the gradient between the two points (the rise divided by 0.01)?",
+   "vars": {
+    "k": [
+     1,
+     6,
+     1
+    ]
+   },
+   "let": {
+    "x2": "k + 0.01",
+    "y1": "k^2",
+    "y2": "(k + 0.01)^2",
+    "rise": "y2 - y1",
+    "twok": "2 * k"
+   },
+   "answer": "(y2 - y1) / 0.01",
+   "tolerance": 0.01,
+   "work": "Rise: ${y2:4} - {y1} = {rise:4}$. Across: 0.01. Gradient: ${rise:4} \\div 0.01 = {answer}$",
+   "why": "Rise over run, as for a straight line, but over a step so small the curve is nearly straight. The answer is just over $2 \\times {k}$; shrink the step to nothing and it becomes exactly {twok}. That is what $\\frac{dy}{dx} = 2x$ says.",
+   "hint": "Rise: take the smaller $y$ from the bigger one. Then divide by 0.01 (the same as times 100)."
+  },
+  {
+   "id": "first-principles",
+   "type": "steps",
+   "stage": "learn",
+   "q": "Differentiate $f(x) = x^2$ from first principles. This is the tiny-step idea done with a letter: take a step $h$ along, find the gradient between the two points, then let $h$ shrink to 0. Written out:\n\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$\n\n$f(x)$ is the height at $x$, $f(x+h)$ the height a step $h$ further on, and $\\lim_{h \\to 0}$ means \"what it becomes as $h$ shrinks to nothing\".",
+   "steps": [
+    {
+     "ask": "Write out $f(x+h) - f(x)$.",
+     "show": "$(x+h)^2 - x^2 = x^2 + 2xh + h^2 - x^2 = 2xh + h^2$"
+    },
+    {
+     "ask": "Divide by $h$.",
+     "show": "$\\frac{2xh + h^2}{h} = 2x + h$"
+    },
+    {
+     "ask": "Let $h \\to 0$.",
+     "show": "$f'(x) = 2x$"
+    }
+   ],
+   "why": "The gradient of $x^2$ at any point is twice its $x$: 2 at $x = 1$, 6 at $x = 3$, and 0 at the bottom of the curve. The $h$ left over in $2x + h$ is why a small step gave 6.01 rather than 6: it vanishes as the step shrinks.",
+   "worked": true
+  },
+  {
+   "id": "power-rule",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The power rule",
+   "body": "Differentiating $x^2$ gave $2x$. There is a pattern for every power:\n\n- $x^2$ gives $2x$\n- $x^3$ gives $3x^2$\n- $x^4$ gives $4x^3$\n\n**Bring the power down in front, then take one off the power.** As a rule, for any power $n$:\n\n$$\\frac{d}{dx}\\left(x^n\\right) = nx^{n-1}$$\n\n$\\frac{d}{dx}$ means \"differentiate what follows\". A number in front stays and multiplies: $5x^3$ gives $15x^2$. Several terms? Do each on its own. $x$ gives 1, and a plain number gives 0:\n\n$$\\frac{d}{dx}\\left(4x^3 - 5x + 7\\right) = 12x^2 - 5$$",
+   "more": "Why does a plain number vanish? $y = 7$ is a flat line: it never climbs, so its gradient is 0 everywhere. And $y = 5x$ is a straight line of gradient 5, so its derivative is 5.\n\nA worked one, $y = 3x^4$: bring the 4 down, $3 \\times 4 = 12$; take one off the power, so 4 becomes 3. So $\\frac{dy}{dx} = 12x^3$. At $x = 2$ the gradient is $12 \\times 2^3 = 12 \\times 8 = 96$.\n\nThe rule works for any power, minus and fraction powers too: $x^{-1}$ (which is $\\frac{1}{x}$) gives $-x^{-2}$, and $\\sqrt{x}$ (which is $x^{\\frac{1}{2}}$) gives $\\frac{1}{2}x^{-\\frac{1}{2}}$. Write roots and fractions as powers first."
+  },
+  {
+   "id": "power-at-point",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "$y = {a}x^{{n}}$. Find $\\frac{dy}{dx}$ at $x = {k}$.",
+   "vars": {
+    "a": [
+     2,
+     6,
+     1
+    ],
+    "n": [
+     2,
+     4,
+     1
+    ],
+    "k": [
+     1,
+     3,
+     1
+    ]
+   },
+   "let": {
+    "an": "a * n",
+    "nm1": "n - 1"
+   },
+   "answer": "a * n * k^(n - 1)",
+   "abs": 0.001,
+   "work": "$\\frac{dy}{dx} = {a} \\times {n} x^{{n} - 1} = {an}x^{{nm1}}$; at $x = {k}$ that is ${an} \\times {k}^{{nm1}} = {answer}$.",
+   "why": "Power rule: bring the power down and take one off it, then put the value of $x$ in.",
+   "hint": "Bring the power down and multiply it by the number in front; take one off the power; then put $x = {k}$ in."
+  },
+  {
+   "id": "constant",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "What is $\\frac{d}{dx}(7)$?",
+   "options": [
+    "0",
+    "7",
+    "$7x$",
+    "1"
+   ],
+   "answer": 0,
+   "why": "$y = 7$ is a flat line: its gradient is 0 everywhere. (It is $7x^0$, and the power rule brings down the 0.) 7 is the height of the line, not its steepness; 1 is the derivative of $x$, not of a number."
+  },
+  {
+   "id": "standard-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Other curves to know",
+   "body": "A few other curves have derivatives you learn by heart:\n\n- $e^x$ gives $e^x$: its gradient always equals its height. ($e$ is a fixed number, about 2.718.)\n- $\\ln x$ gives $\\frac{1}{x}$\n- $\\sin x$ gives $\\cos x$, and $\\cos x$ gives $-\\sin x$, with $x$ in **radians** (a full turn is $2\\pi$, about 6.28).\n- A number $k$ times $x$ inside: $e^{kx}$ gives $ke^{kx}$, and $\\sin(kx)$ gives $k\\cos(kx)$. The $k$ comes out in front.\n\nLook at a sine wave: at its tops and bottoms it is flat, so its gradient there is 0. That is exactly where $\\cos x = 0$.",
+   "more": "Why radians? The rule \"$\\sin x$ gives $\\cos x$\" is only true with $x$ in radians; in degrees an extra $\\frac{\\pi}{180}$ would appear everywhere. Put your calculator in RAD mode for these.\n\nNumbers: $y = \\sin x$ at $x = 0$ has gradient $\\cos 0 = 1$, so it crosses the origin climbing 1 up for 1 across. At $x = \\pi$ (about 3.14) the gradient is $\\cos \\pi = -1$: going down just as steeply.\n\n$y = e^{2x}$ at $x = 0$: gradient $2e^{0} = 2 \\times 1 = 2$. The 2 comes out in front because the curve is squashed sideways, so it climbs twice as steeply as $e^x$ does at the same height."
+  },
+  {
+   "id": "sin-flat",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.0,
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sin",
+     "x": [
+      -1,
+      7
+     ],
+     "y": [
+      -1.6,
+      1.6
+     ],
+     "controls": [
+      "a"
+     ]
+    }
+   },
+   "intro": "Here is $y = \\sin x$ (in radians). Look where the curve is flat.",
+   "ask": {
+    "type": "mcq",
+    "q": "Between 0 and $2\\pi$, where is the gradient of $\\sin x$ zero?",
+    "options": [
+     "At $x = \\frac{\\pi}{2}$ and $x = \\frac{3\\pi}{2}$, the top and bottom of the wave",
+     "At $x = 0$, $\\pi$ and $2\\pi$, where it crosses the axis",
+     "Nowhere",
+     "Only at $x = \\pi$"
+    ],
+    "answer": 0,
+    "why": "The derivative of $\\sin x$ is $\\cos x$, which is zero at $\\frac{\\pi}{2}$ and $\\frac{3\\pi}{2}$: the peak and the trough. Where $\\sin x$ crosses the axis it is at its steepest."
+   }
+  },
+  {
+   "id": "standard",
+   "type": "match",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "Match each function to its derivative.",
+   "pairs": [
+    [
+     "$x^n$",
+     "$nx^{n-1}$"
+    ],
+    [
+     "$e^x$",
+     "$e^x$"
+    ],
+    [
+     "$\\ln x$",
+     "$\\frac{1}{x}$"
+    ],
+    [
+     "$\\sin x$",
+     "$\\cos x$"
+    ],
+    [
+     "$\\cos x$",
+     "$-\\sin x$"
+    ]
+   ],
+   "why": "The trig results only hold with $x$ in radians. In the Edexcel formula booklet, some of these are given and some you must know: learn them all."
+  },
+  {
+   "id": "stationary-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Stationary points: where the gradient is 0",
+   "body": "Where a curve turns, at the top of a hump or the bottom of a dip, it is flat for a moment: its gradient is **0**. These are **stationary points**. To find them, set $\\frac{dy}{dx} = 0$ and solve for $x$.\n\nIs it a top (a **maximum**) or a bottom (a **minimum**)? Differentiate again. That gives the **second derivative**, $\\frac{d^2y}{dx^2}$ (\"d two y by d x squared\"): how fast the gradient itself is changing.\n\n- positive: the gradient goes from minus to plus, a **minimum**\n- negative: from plus to minus, a **maximum**\n- zero: this test cannot tell",
+   "more": "Think of driving over a hump-backed bridge. Going up, the road climbs (a plus gradient); at the very top it is level (0); then it falls (a minus gradient). The gradient went plus, 0, minus: it was going down, so the second derivative is negative, and the top is a maximum.\n\nNumbers, $y = x^2 - 4x$: $\\frac{dy}{dx} = 2x - 4$, which is 0 at $x = 2$. There $y = 4 - 8 = -4$. Differentiate again: $\\frac{d^2y}{dx^2} = 2$, positive, so $(2, -4)$ is a minimum, the bottom of the U.\n\nIn the workshop this is how you find the best: the size of box that holds most, the speed that uses least fuel."
+  },
+  {
+   "id": "second-derivative",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "At a stationary point, $\\frac{d^2y}{dx^2} > 0$. What kind of point is it?",
+   "options": [
+    "A minimum",
+    "A maximum",
+    "A point of inflection, always",
+    "You cannot tell"
+   ],
+   "answer": 0,
+   "why": "A positive second derivative means the gradient is increasing: going from negative to positive through zero, so the curve bottoms out. Negative means a maximum. Zero needs another test."
+  },
+  {
+   "id": "chain-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The chain rule and the product rule",
+   "body": "Two more rules, for harder shapes.\n\n**The chain rule**, for a function inside a function, such as $(3x + 1)^5$: differentiate the outside as if the inside were a single letter, then multiply by the derivative of the inside. $5(3x + 1)^4 \\times 3 = 15(3x + 1)^4$.\n\n**The product rule**, for two functions multiplied together, $u$ times $v$:\n\n$$\\frac{d}{dx}(uv) = u'v + uv'$$\n\nwhere $u'$ is the derivative of $u$ and $v'$ that of $v$. For $x^2 \\sin x$: $2x \\sin x + x^2 \\cos x$.",
+   "more": "Chain rule as gears: if the inside, $3x + 1$, turns 3 times as fast as $x$, and the outside turns $5(\\ldots)^4$ times as fast as the inside, the whole thing turns $3 \\times 5(\\ldots)^4$ times as fast as $x$. Rates multiply.\n\nWith numbers, $y = (2x + 1)^3$ at $x = 1$: the outside gives $3(2x + 1)^2 = 3 \\times 9 = 27$, the inside gives 2, so the gradient is $27 \\times 2 = 54$.\n\nProduct rule as a plate $u$ long and $v$ wide, both growing. Its area grows by the growth of $u$ times $v$, plus $u$ times the growth of $v$. Check on $y = x \\times x^2$, which is really $x^3$: $1 \\times x^2 + x \\times 2x = 3x^2$, the same as the power rule gives."
+  },
+  {
+   "id": "chain",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "Differentiate $(3x + 1)^5$.",
+   "options": [
+    "$15(3x + 1)^4$",
+    "$5(3x + 1)^4$",
+    "$(3x + 1)^4$",
+    "$15x^4$"
+   ],
+   "answer": 0,
+   "why": "The chain rule: the outside's derivative, $5(\\ldots)^4$, times the inside's derivative, 3."
+  },
+  {
+   "id": "product",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "Differentiate $x \\sin x$.",
+   "options": [
+    "$\\sin x + x\\cos x$",
+    "$\\cos x$",
+    "$x\\cos x$",
+    "$\\sin x - x\\cos x$"
+   ],
+   "answer": 0,
+   "why": "The product rule: $\\frac{d}{dx}(uv) = u'v + uv'$. Here $u = x$ and $v = \\sin x$, so $1 \\times \\sin x + x \\cos x$. Differentiating each part and multiplying ($1 \\times \\cos x$) is the usual slip."
+  },
+  {
+   "id": "worked-gradient",
+   "type": "steps",
+   "stage": "example",
+   "q": "$y = 2x^3 - 5x + 1$. Find the gradient of the curve at $x = 2$.",
+   "steps": [
+    {
+     "ask": "Differentiate $2x^3$.",
+     "show": "The power 3 comes down: $2 \\times 3 = 6$; the power drops to 2. So $6x^2$."
+    },
+    {
+     "ask": "Differentiate $-5x$ and $+1$.",
+     "show": "$-5x$ is a straight line of gradient $-5$, so it gives $-5$. The plain number 1 gives 0."
+    },
+    {
+     "ask": "Write out $\\frac{dy}{dx}$.",
+     "show": "$\\frac{dy}{dx} = 6x^2 - 5$"
+    },
+    {
+     "ask": "Put $x = 2$ in.",
+     "show": "$6 \\times 2^2 - 5 = 6 \\times 4 - 5 = 19$. At $x = 2$ the curve climbs 19 for each 1 across."
+    }
+   ],
+   "why": "Differentiate term by term, then put the value of $x$ into the **derivative**, not into $y$. Putting it into $y$ gives the height, $2 \\times 8 - 10 + 1 = 7$, not the steepness.",
+   "worked": true
+  },
+  {
+   "id": "faded-gradient",
+   "type": "steps",
+   "stage": "example",
+   "q": "$y = x^4 - 3x^2 + 7$. Find the gradient at $x = 1$, and say whether the curve is going up or down there.",
+   "steps": [
+    {
+     "ask": "Differentiate term by term.",
+     "show": "$x^4$ gives $4x^3$; $-3x^2$ gives $-6x$; 7 gives 0. So $\\frac{dy}{dx} = 4x^3 - 6x$."
+    },
+    {
+     "ask": "Put $x = 1$ in.",
+     "show": "$4 \\times 1^3 - 6 \\times 1 = 4 - 6 = -2$"
+    },
+    {
+     "ask": "Up or down?",
+     "show": "The gradient is minus, so at $x = 1$ the curve is going **down**: 2 down for each 1 across."
+    }
+   ],
+   "why": "The same moves as before: differentiate each term, then put the $x$ value in. A minus gradient means the curve falls as $x$ grows.",
+   "given": 1
+  },
+  {
+   "id": "poly-at-point",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.0,
+   "q": "$y = {a}x^3 + {b}x^2 + {c}x$. Find the gradient at $x = {k}$.",
+   "vars": {
+    "a": [
+     1,
+     4,
+     1
+    ],
+    "b": [
+     1,
+     5,
+     1
+    ],
+    "c": [
+     1,
+     9,
+     1
+    ],
+    "k": [
+     -2,
+     3,
+     1
+    ]
+   },
+   "answer": "3 * a * k^2 + 2 * b * k + c",
+   "abs": 0.001,
+   "work": "$\\frac{dy}{dx} = 3({a})x^2 + 2({b})x + {c}$, which at $x = {k}$ is {answer}.",
+   "why": "Term by term. The $x$ term's derivative is its coefficient.",
+   "hint": "Differentiate each term with the power rule, then put $x = {k}$ into the derivative."
+  },
+  {
+   "id": "why-stationary",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Why do you set $\\frac{dy}{dx} = 0$ to find the top of a hump or the bottom of a dip?",
+   "options": [
+    "Because $y$ is 0 there",
+    "Because at the top or bottom the curve is flat for a moment, so its gradient is 0",
+    "Because $x$ is 0 there",
+    "To make the equation shorter"
+   ],
+   "answer": 1,
+   "why": "$\\frac{dy}{dx}$ is the gradient. Just before a top the curve climbs, just after it falls, and at the top it is level: gradient 0. The height $y$ at a top can be anything; $y = 0$ is where the curve crosses the $x$-axis, a different thing."
+  },
+  {
+   "id": "order-stationary",
+   "type": "order",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Put the method for stationary points in order.",
+   "items": [
+    "Differentiate to find $\\frac{dy}{dx}$",
+    "Set $\\frac{dy}{dx} = 0$",
+    "Solve for $x$",
+    "Put each $x$ into $y$ to find the points",
+    "Use $\\frac{d^2y}{dx^2}$ to say which is a maximum or minimum"
+   ],
+   "why": "Find where the gradient is 0, then find the points, then say what kind each is. Classifying comes last because you need the $x$ values to put in."
+  },
+  {
+   "id": "classify-cubic",
+   "type": "steps",
+   "stage": "practise",
+   "q": "Find and classify the stationary points of $y = x^3 - 3x$.",
+   "steps": [
+    {
+     "ask": "Differentiate.",
+     "show": "$\\frac{dy}{dx} = 3x^2 - 3$"
+    },
+    {
+     "ask": "Set it to zero and solve.",
+     "show": "$3x^2 - 3 = 0 \\Rightarrow x^2 = 1 \\Rightarrow x = 1$ or $x = -1$"
+    },
+    {
+     "ask": "Find the $y$ values.",
+     "show": "At $x = 1$: $y = 1 - 3 = -2$. At $x = -1$: $y = -1 + 3 = 2$."
+    },
+    {
+     "ask": "Classify with the second derivative.",
+     "show": "$\\frac{d^2y}{dx^2} = 6x$. At $x = 1$ it is 6, so $(1, -2)$ is a minimum; at $x = -1$ it is $-6$, so $(-1, 2)$ is a maximum."
+    }
+   ],
+   "why": "Differentiate, set to zero, solve, find $y$, classify: the same five moves every time.",
+   "worked": true
+  },
+  {
+   "id": "stationary-quadratic",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "$y = {a}x^2 - {p}x + {c}$. At what $x$ is the gradient zero?",
+   "vars": {
+    "a": [
+     1,
+     5,
+     1
+    ],
+    "p": [
+     2,
+     12,
+     2
+    ],
+    "c": [
+     0,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "twoa": "2 * a"
+   },
+   "answer": "p / (2 * a)",
+   "tolerance": 0.001,
+   "work": "$\\frac{dy}{dx} = {twoa}x - {p} = 0$, so $x = \\frac{{p}}{2 \\times {a}} = {answer}$",
+   "why": "Stationary points are where $\\frac{dy}{dx} = 0$. For a quadratic there is one: the vertex."
+  },
+  {
+   "id": "increasing",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "For which $x$ is $y = x^2 - 6x$ increasing?",
+   "options": [
+    "$x > 3$",
+    "$x < 3$",
+    "$x > 6$",
+    "All $x$"
+   ],
+   "answer": 0,
+   "why": "$\\frac{dy}{dx} = 2x - 6$, which is positive when $x > 3$. Increasing means a positive gradient. $x > 6$ is where $y$ itself is positive, which is a different question.",
+   "hint": "Increasing means the curve goes up as $x$ goes up: the gradient is positive."
+  },
+  {
+   "id": "exp-grad",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.6,
+   "q": "$y = e^{{k}x}$. Find the gradient at $x = {m}$.",
+   "vars": {
+    "k": [
+     1,
+     3,
+     0.5
+    ],
+    "m": [
+     0,
+     1,
+     0.5
+    ]
+   },
+   "answer": "k * EXP(k * m)",
+   "tolerance": 0.01,
+   "work": "$\\frac{dy}{dx} = {k}e^{{k}x}$, and at $x = {m}$ that is {answer}.",
+   "why": "$\\frac{d}{dx}e^{kx} = ke^{kx}$: the chain rule with the inside $kx$.",
+   "hint": "The number in front of $x$ in the power comes down in front. Then put $x = {m}$ in; $e^0 = 1$."
+  },
+  {
+   "id": "sin-bx",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.6,
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sin",
+     "b": 2,
+     "x": [
+      -4,
+      4
+     ],
+     "y": [
+      -2,
+      2
+     ],
+     "controls": [
+      "b"
+     ]
+    }
+   },
+   "intro": "$y = \\sin(bx)$. Squash it with $b$ and watch how steeply it crosses the origin.",
+   "ask": {
+    "type": "numeric",
+    "q": "With $b$ as you have left it, what is the gradient of the curve at $x = 0$?",
+    "answer": "b",
+    "why": "$\\frac{ d }{dx}\\sin(bx) = b\\cos(bx)$, and $\\cos 0 = 1$, so the gradient at the origin is $b$ itself: here {b}.",
+    "hint": "The $b$ inside comes out in front: $\\sin(bx)$ gives $b\\cos(bx)$. What is $\\cos 0$?"
+   }
+  },
+  {
+   "id": "mix-value-or-gradient",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "On the curve $y = x^2 + 3x$, what is the **gradient** at $x = 2$?",
+   "options": [
+    "10",
+    "5",
+    "7",
+    "4"
+   ],
+   "answer": 2,
+   "why": "$\\frac{dy}{dx} = 2x + 3$, and at $x = 2$ that is $4 + 3 = 7$. 10 is the **height** there ($4 + 6$), not the steepness. 5 comes from forgetting to double ($x + 3$); 4 from differentiating only the $x^2$."
+  },
+  {
+   "id": "mix-which-rule",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.5,
+   "q": "Which of these needs the **chain rule**?",
+   "options": [
+    "$x^3 + 4x$",
+    "$x^2 \\sin x$",
+    "$7x^4$",
+    "$(2x - 5)^3$"
+   ],
+   "answer": 3,
+   "why": "$(2x - 5)^3$ is a function inside a function: $(\\ldots)^3$ with $2x - 5$ inside. So: $3(2x - 5)^2 \\times 2 = 6(2x - 5)^2$. $x^2 \\sin x$ is two functions **multiplied**: the product rule. The other two are plain powers: the power rule, term by term."
+  },
+  {
+   "id": "velocity",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A body's displacement (its distance from the start) is $s = {a}t^2 + {b}t$ metres, $t$ seconds after it sets off. What is its velocity at $t = {k}$ s?",
+   "vars": {
+    "a": [
+     1,
+     5,
+     0.5
+    ],
+    "b": [
+     2,
+     10,
+     1
+    ],
+    "k": [
+     1,
+     6,
+     1
+    ]
+   },
+   "answer": "2 * a * k + b",
+   "unit": "m/s",
+   "tolerance": 0.001,
+   "work": "$v = \\frac{ds}{dt} = 2({a})t + {b}$, which at $t = {k}$ is {answer} m/s.",
+   "why": "Velocity is the rate of change of displacement: $v = \\frac{ds}{dt}$. Differentiate again for acceleration.",
+   "hint": "Velocity is how fast the displacement changes: differentiate $s$ with respect to $t$, then put $t = {k}$ in."
+  },
+  {
+   "id": "tangent-intercept",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "The tangent to $y = x^2$ at $x = {k}$ crosses the $y$-axis where?",
+   "vars": {
+    "k": [
+     1,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "k2": "k^2",
+    "m": "2 * k"
+   },
+   "answer": "-(k^2)",
+   "abs": 0.001,
+   "work": "Gradient $2({k})$, through $({k}, {k2})$: $y - {k2} = {m}(x - {k})$, so at $x = 0$, $y = {answer}$.",
+   "why": "A tangent is a straight line: its gradient from $\\frac{dy}{dx}$, and the point from the curve. Then $y - y_1 = m(x - x_1)$.",
+   "hint": "The tangent is a straight line. Its gradient is $\\frac{dy}{dx}$ at $x = {k}$, and it passes through the point on the curve there. Then put $x = 0$ in."
+  },
+  {
+   "id": "check-gradient",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "$y = x^3$. How steep is the curve exactly at $x = {k}$?",
+   "vars": {
+    "k": [
+     1,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "k3": "k^3"
+   },
+   "answer": "3 * k^2",
+   "abs": 0.001,
+   "work": "$\\frac{dy}{dx} = 3x^2$, so at $x = {k}$: $3 \\times {k}^2 = {answer}$",
+   "why": "Power rule: bring the 3 down, take one off the power, $3x^2$. Then put $x = {k}$ in. $x^3$ itself, {k3}, is the height, not the steepness."
+  },
+  {
+   "id": "flash-power",
+   "type": "flash",
+   "stage": "check",
+   "front": "$\\frac{d}{dx}\\left(x^n\\right)$ = ?",
+   "back": "$nx^{n-1}$"
+  },
+  {
+   "id": "flash-rules",
+   "type": "flash",
+   "stage": "check",
+   "front": "The chain rule and the product rule?",
+   "back": "Chain: $\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx}$.\n\nProduct: $\\frac{d}{dx}(uv) = u\\frac{dv}{dx} + v\\frac{du}{dx}$."
+  },
+  {
+   "id": "flash-trig",
+   "type": "flash",
+   "stage": "check",
+   "front": "$\\frac{d}{dx}\\sin(kx)$ and $\\frac{d}{dx}\\cos(kx)$?",
+   "back": "$k\\cos(kx)$ and $-k\\sin(kx)$, with $x$ in radians."
+  }
+ ]
+}

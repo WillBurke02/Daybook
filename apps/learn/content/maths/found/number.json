@@ -1,0 +1,367 @@
+{
+ "id": "maths.found.number",
+ "title": "Number: place value, the four operations, mental methods",
+ "tags": ["maths", "number", "arithmetic"],
+ "kind": "procedure",
+ "level": 1.6,
+ "minutes": 25,
+ "goals": [
+  "Say what each digit in a number is worth, including tenths and hundredths",
+  "Add and take away in your head by splitting and by rounding and putting right",
+  "Multiply with the grid method and divide by sharing, grouping and short division",
+  "Work out a mixed calculation in the right order (BIDMAS)",
+  "Use negative numbers on a number line, and estimate to check an answer"
+ ],
+ "summary": "**Place value**: a digit's worth depends on its place. In 2745 there are 2 thousands, 7 hundreds, 4 tens and 5 ones. Each place is worth **ten times** the place to its right. After the decimal point come **tenths** and **hundredths**: 1.35 m is 1 m, 3 tenths (30 cm) and 5 hundredths (5 cm). Times by 10 and every digit moves one place left.\n\n**Adding and taking away in your head**\n- **Partitioning**: split into tens and ones. $47 + 38$: $70 + 15 = 85$.\n- **Compensation**: use a round number, then put it right. $256 + 99 = 256 + 100 - 1 = 355$.\n- On paper, the **column method**: ones under ones, tens under tens, start from the right.\n\n**Multiplying**: know your tables to $10 \\times 10$. For bigger numbers split them and use the **grid method**: $23 \\times 4 = 20 \\times 4 + 3 \\times 4 = 92$.\n\n**Dividing** is **sharing** (how many each?) or **grouping** (how many groups?). Use tables backwards: $96 \\div 8 = 12$ because $8 \\times 12 = 96$. **Short division** goes one digit at a time from the left. What is left over is the **remainder**.\n\n**BIDMAS** is the order: Brackets, Indices (powers), Divide and Multiply (left to right), Add and Subtract (left to right). $2 + 3 \\times 4 = 14$, not 20.\n\n**Negative numbers** are below zero, like −5 °C. On a number line, adding moves right (warmer) and taking away moves left (colder). From −3, up 7 is 4. To find a gap across zero, count to zero, then on.\n\n**Estimate to check**: round each number to the nearest ten (38 → 40, 24 → 20) and work out the rough answer ($40 \\times 20 = 800$). If your answer is nowhere near, look again.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "Place Value Video", "url": "https://corbettmaths.com/2013/03/29/place-value/", "by": "Corbettmaths", "minutes": 5, "note": "What each digit is worth, in five minutes."},
+  {"when": "after", "kind": "video", "title": "Place Value – Operations Video", "url": "https://corbettmaths.com/2016/01/07/place-value-operations/", "by": "Corbettmaths", "minutes": 6, "note": "Using one answer you know to get others: 23 × 4 = 92, so 2.3 × 4 = 9.2."},
+  {"when": "after", "kind": "video", "title": "Order of Operations Video", "url": "https://corbettmaths.com/2013/06/08/order-of-operations/", "by": "Corbettmaths", "minutes": 6, "note": "More BIDMAS examples."},
+  {"when": "after", "kind": "video", "title": "Multiplication: Grid Method Video", "url": "https://corbettmaths.com/2013/12/20/multiplication-grid-method-video-199/", "by": "Corbettmaths", "minutes": 5, "note": "The grid method, step by step."}
+ ],
+ "sources": [
+  "Department for Education, Mathematics programmes of study: key stages 1 and 2. National curriculum in England (2013)",
+  "Department for Education, Mathematics programmes of study: key stage 3. National curriculum in England (2013)",
+  "Department for Education, Mathematics: GCSE subject content and assessment objectives (2013)",
+  "Department for Education, Functional Skills subject content: mathematics (2018)"
+ ],
+ "formulas": [
+  {"name": "Place value: digits and their places", "tex": "2745 = 2000 + 700 + 40 + 5", "match": ["2000+700+40+5"],
+   "says": "A number is its digits added up, each worth ten times more for every place it sits to the left. 2745 is 2 thousands, 7 hundreds, 4 tens and 5 ones.",
+   "example": "1.35 m $= 1 + 0.3 + 0.05$: 1 metre, 3 tenths (30 cm) and 5 hundredths (5 cm)."},
+  {"name": "Compensation: round, then put it right", "tex": "a + 99 = a + 100 - 1", "match": ["+100-1"],
+   "says": "Adding 99 is awkward; adding 100 is easy. So add 100, then take off the 1 you added too many. To take away 99, take away 100 and give 1 back.",
+   "symbols": [["a", "the number you start with: any number"]],
+   "example": "$256 + 99 = 356 - 1 = 355$, and $256 - 99 = 156 + 1 = 157$."},
+  {"name": "The grid method: split, multiply, add", "tex": "23 \\times 4 = 20 \\times 4 + 3 \\times 4", "match": ["20\\times4+3\\times4"],
+   "says": "Split the number into tens and ones, multiply each part, then add the answers. Every part gets multiplied, so nothing is lost.",
+   "example": "$23 \\times 4 = 80 + 12 = 92$. Two bigger numbers: $38 \\times 24$ is a 2 by 2 grid, $600 + 160 + 120 + 32 = 912$."},
+  {"name": "Dividing, with a remainder", "tex": "50 = 8 \\times 6 + 2", "match": ["8\\times6+2"],
+   "says": "50 divided by 8 is 6 whole eights with 2 left over: 6 remainder 2. Check any division by multiplying back and adding the remainder.",
+   "example": "$100 \\div 8 = 12$ remainder 4, because $8 \\times 12 + 4 = 100$."},
+  {"name": "BIDMAS: the order of operations", "tex": "\\text{Brackets} \\to \\text{Indices} \\to \\div \\text{ and } \\times \\to + \\text{ and } -", "match": ["2+3\\times4"],
+   "says": "Work a calculation out in this order: Brackets first, then Indices (powers), then Divide and Multiply from left to right, then Add and Subtract from left to right.",
+   "example": "$2 + 3 \\times 4 = 2 + 12 = 14$, but $(2 + 3) \\times 4 = 5 \\times 4 = 20$."},
+  {"name": "Moving along the number line", "tex": "-3 + 7 = 4", "match": ["-3+7"],
+   "says": "Adding moves you right along the number line (warmer); taking away moves you left (colder). You can pass through zero.",
+   "example": "From 2 °C, down 6 degrees: $2 - 6 = -4$, so −4 °C."}
+ ],
+ "cards": [
+  {
+   "id": "try-cable",
+   "type": "numeric",
+   "stage": "try",
+   "level": 1.8,
+   "q": "A reel holds {r} m of cable. You cut off {n} lengths of {L} m each. How many metres are left on the reel? A guess is fine: the lesson shows you how.",
+   "vars": {"r": {"pick": [50, 60, 80, 100]}, "n": [2, 4, 1], "L": [5, 12, 1]},
+   "let": {"used": "n * L"},
+   "answer": "r - n * L",
+   "unit": "m",
+   "abs": 0.01,
+   "work": "Cable used: ${{n}} \\times {{L}} = {{used}}$ m. Left: ${{r}} - {{used}} = {{answer}}$ m.",
+   "why": "Two steps. First the cable you used: {n} lengths of {L} m is {used} m. Then take that from the reel. Taking {n} from {r} first mixes up the number of lengths with metres."
+  },
+  {
+   "id": "place-value",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Place value: what each digit is worth",
+   "body": "A digit's worth depends on its **place**. In 2745 mm there are 2 thousands, 7 hundreds, 4 tens and 5 ones (units):\n\n$$2745 = 2000 + 700 + 40 + 5$$\n\nEach place is worth **ten times** the place to its right.\n\nAfter the **decimal point** the places carry on, ten times smaller each time: **tenths**, then **hundredths**. On a tape, 1.35 m is 1 whole metre, 3 tenths of a metre (30 cm) and 5 hundredths (5 cm).\n\nA **zero** holds a place open: 305 is 3 hundreds, no tens and 5 ones.",
+   "more": "Think of money. £3.47 is 3 pounds, 4 ten-pence pieces and 7 pennies. A ten-pence piece is a tenth of a pound; a penny is a hundredth. So in 3.47 the 4 is worth 4 tenths (40p) and the 7 is worth 7 hundredths (7p).\n\nWhole numbers work the same way going left: in 347 the 3 is 3 hundreds, the 4 is 4 tens and the 7 is 7 ones.\n\nTimes by 10 and every digit moves one place to the left: $3.47 \\times 10 = 34.7$. Divide by 10 and every digit moves one place to the right: $34.7 \\div 10 = 3.47$. The digits stay the same; only their places change."
+  },
+  {
+   "id": "pv-worth",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 1.2,
+   "q": "A tape measure reads 2.47 m. What is the 4 worth?",
+   "options": [
+    "4 metres",
+    "4 tenths of a metre: 40 cm",
+    "4 hundredths of a metre: 4 cm",
+    "4 millimetres"
+   ],
+   "answer": 1,
+   "why": "The first place after the point is **tenths**. A tenth of a metre is 10 cm, so the 4 is worth 40 cm. The 7 is in the hundredths place (7 cm), and the 2 before the point is whole metres. So 2.47 m is 2 m 47 cm. \"4 metres\" would need the 4 before the point."
+  },
+  {
+   "id": "mental-add",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Adding and taking away in your head",
+   "body": "Two tricks make most sums easy in your head.\n\n**Partitioning** (splitting): add the tens, add the ones, then put them together. $47 + 38$: $40 + 30 = 70$, $7 + 8 = 15$, so $70 + 15 = 85$.\n\n**Compensation** (round, then put it right): to add 99, add 100 and take 1 off: $256 + 99 = 256 + 100 - 1 = 355$. To take away 99, take away 100 and give 1 back: $256 - 99 = 157$.\n\nOn paper, the **column method** lines up ones under ones and tens under tens, and works from the right. When a column adds up to 10 or more, carry the ten into the next column.",
+   "more": "Think of cash. £47 is four £10 notes and £7 in coins; £38 is three £10 notes and £8. Put the notes together: seven tens, £70. Put the coins together: £15. Altogether £85. That is partitioning.\n\nCompensation is how a price of £9.99 works: hand over £10 and get 1p back. So adding 9.99 is adding 10 and taking off 0.01. The same works for 19, 29 or 98: use the round number, then put the difference right.\n\nTaking away? Count up, like giving change. $100 - 38$: from 38 up to 40 is 2, from 40 up to 100 is 60. So the answer is $2 + 60 = 62$."
+  },
+  {
+   "id": "mental-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A bin had {a} washers. You take out {b}. How many are left? Try it in your head first.",
+   "vars": {"a": [121, 480, 1], "b": {"pick": [19, 29, 39, 49, 99]}},
+   "let": {"rb": "b + 1", "mid": "a - (b + 1)", "wrong": "a - (b + 1) - 1"},
+   "answer": "a - b",
+   "abs": 0.01,
+   "hint": "Take away the round number, {rb}. You took 1 too many, so give it back.",
+   "work": "${{a}} - {{rb}} = {{mid}}$, then give back 1: ${{mid}} + 1 = {{answer}}$.",
+   "why": "Compensation: {b} is 1 less than {rb}, so taking away {rb} takes 1 too many. Give it back: {mid} + 1 = {answer}. Taking another 1 off instead gives {wrong}, the usual slip."
+  },
+  {
+   "id": "multiply",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Multiplying: tables and the grid method",
+   "body": "Know your **times tables** up to $10 \\times 10$: they are the building blocks.\n\nFor bigger numbers, split and multiply each part. This is the **grid method**:\n\n```\n   ×  |  20  |  3\n   4  |  80  |  12\n```\n\nAdd the parts: $23 \\times 4 = 20 \\times 4 + 3 \\times 4 = 80 + 12 = 92$.\n\nHandy shortcuts:\n- × 10: every digit moves one place left. $23 \\times 10 = 230$.\n- × 5: times 10, then halve. $18 \\times 5 = 90$.\n- × 4: double, then double again. $23 \\times 4$: 46, then 92.",
+   "more": "Picture 4 boxes, each holding 23 bolts. Take 20 from each box: $4 \\times 20 = 80$. Then the 3 left in each box: $4 \\times 3 = 12$. Together 92 bolts. The grid just keeps track of the pieces so none are missed.\n\nFor two bigger numbers, split both. $23 \\times 14$ is a 2 by 2 grid: $20 \\times 10 = 200$, $3 \\times 10 = 30$, $20 \\times 4 = 80$, $3 \\times 4 = 12$. Add them: 322.\n\nIf you cannot remember a table fact, build it from ones you know: $7 \\times 8$ is $7 \\times 4$ doubled, 28 doubled, which is 56."
+  },
+  {
+   "id": "multiply-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A box holds {n} bolts. How many bolts are there in {k} boxes?",
+   "vars": {"n": {"pick": [13, 14, 16, 17, 18, 19, 23, 24, 26, 27, 28, 32, 34, 36, 37, 38, 43, 46, 47]}, "k": [3, 9, 1]},
+   "let": {"t": "ROUNDDOWN(n / 10, 0) * 10", "o": "n - ROUNDDOWN(n / 10, 0) * 10", "p1": "ROUNDDOWN(n / 10, 0) * 10 * k", "p2": "(n - ROUNDDOWN(n / 10, 0) * 10) * k"},
+   "answer": "n * k",
+   "abs": 0.01,
+   "hint": "Split {n} into {t} and {o}. Multiply each part by {k}, then add.",
+   "work": "${{t}} \\times {{k}} = {{p1}}$ and ${{o}} \\times {{k}} = {{p2}}$, so ${{p1}} + {{p2}} = {{answer}}$ bolts.",
+   "why": "The grid method: split {n} into tens and ones, multiply both parts by {k}, and add. Multiplying only the tens and forgetting the {o} is the usual slip: it would give {p1}."
+  },
+  {
+   "id": "divide",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Dividing: sharing and grouping",
+   "body": "Dividing answers two kinds of question:\n- **Sharing**: 96 bolts shared between 8 bins. How many in each?\n- **Grouping**: 96 bolts in bags of 8. How many bags?\n\nBoth are $96 \\div 8 = 12$. Use your tables backwards: what times 8 makes 96? $8 \\times 12 = 96$.\n\nOn paper, **short division** works from the left, one digit at a time:\n\n```\n   1 2\n 8)9¹6\n```\n\n8 into 9 goes 1, with 1 over. Carry the 1 to make 16. 8 into 16 goes 2.\n\nWhat cannot be shared out is the **remainder**: $50 \\div 8 = 6$ remainder 2, because $50 = 8 \\times 6 + 2$.",
+   "more": "Dividing undoes multiplying. If $8 \\times 12 = 96$, then $96 \\div 8 = 12$ and $96 \\div 12 = 8$. So when you divide, ask the times-table question: what times 8 makes 96?\n\nFor bigger numbers, take away easy chunks. 96 bolts in bags of 8: ten bags use 80, leaving 16. Two more bags use the 16. That is $10 + 2 = 12$ bags.\n\nA remainder is what does not fill a whole bag: 100 bolts in bags of 8 is 12 bags with 4 over. On a job, think about what it means. 100 m of cable cut into 8 m lengths gives 12 lengths and a 4 m offcut; but 100 people in minibuses of 8 need 13 buses."
+  },
+  {
+   "id": "divide-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 1.8,
+   "q": "A drum holds {t} m of cable. You cut it into {L} m lengths. How many whole lengths do you get?",
+   "vars": {"L": {"pick": [3, 4, 6, 7, 8, 9]}, "n": [5, 12, 1], "x": [0, 8, 1]},
+   "let": {"r": "MOD(x, L - 1) + 1", "t": "L * n + MOD(x, L - 1) + 1", "used": "L * n"},
+   "answer": "ROUNDDOWN((L * n + MOD(x, L - 1) + 1) / L, 0)",
+   "abs": 0.01,
+   "hint": "How many {L}s make {t}? Anything left over is offcut.",
+   "work": "${{L}} \\times {{answer}} = {{used}}$, and ${{t}} - {{used}} = {{r}}$ m is left over.",
+   "why": "Grouping: how many {L} m lengths fit into {t} m? {t} ÷ {L} = {answer} remainder {r}. The {r} m offcut is too short for another length, so you round **down**, not up."
+  },
+  {
+   "id": "bidmas",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The order to work it out: BIDMAS",
+   "body": "When a calculation mixes operations, the order matters. $2 + 3 \\times 4$ is 14, not 20.\n\n**BIDMAS** gives the order:\n- **B**rackets first\n- **I**ndices: powers, like $3^2 = 3 \\times 3$\n- **D**ivide and **M**ultiply, from left to right\n- **A**dd and **S**ubtract, from left to right\n\nSo $2 + 3 \\times 4$: multiply first, $3 \\times 4 = 12$, then add, $2 + 12 = 14$.\n\nTo make the add happen first, write brackets: $(2 + 3) \\times 4 = 20$. (Some people say BODMAS: the O is for Orders, the same as Indices.)",
+   "more": "Think of an order from the stores: 1 roll of tape at £2, and 3 packs of cable ties at £4 each. The bill is $2 + 3 \\times 4$. Nobody would add the 2 and the 3 first: the 3 goes with the £4 packs. So the multiply comes first, $3 \\times 4 = 12$, then add the tape: £14. BIDMAS just writes that habit down.\n\nDivide and multiply are equal partners: do them in the order they come, left to right. So are add and subtract: $10 - 3 + 2$ is $7 + 2 = 9$, not $10 - 5 = 5$.\n\nBrackets beat everything: they say \"do me first\". A scientific calculator follows BIDMAS too."
+  },
+  {
+   "id": "bidmas-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Work out $18 - 2 \\times 5$.",
+   "options": ["8", "80", "16", "10"],
+   "answer": 0,
+   "why": "Multiply before you take away: $2 \\times 5 = 10$, then $18 - 10 = 8$. Working left to right ($18 - 2 = 16$, then $16 \\times 5 = 80$) ignores BIDMAS; that is what $(18 - 2) \\times 5$ would mean."
+  },
+  {
+   "id": "negatives",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Negative numbers: below zero",
+   "body": "A **negative number** is less than zero, written with a minus sign: −5 °C is 5 degrees below freezing.\n\nPicture a **number line**, like a thermometer lying on its side: negatives to the left of 0, positives to the right.\n\n```\n -5  -4  -3  -2  -1   0   1   2   3   4   5\n```\n\n- **Adding** moves right (warmer). From −3 °C, warming by 7 degrees: $-3 + 7 = 4$, so 4 °C.\n- **Taking away** moves left (colder). From 2 °C, cooling by 6 degrees: $2 - 6 = -4$, so −4 °C.\n- The **difference** between two temperatures is the number of steps between them: from −3 °C to 4 °C is 7 degrees.",
+   "more": "Think of a freezer and a workshop. The freezer is at −18 °C and the workshop at 20 °C. How far apart are they? Count up from −18 to 0: 18 degrees. Then from 0 to 20: 20 more. That is 38 degrees in all. Zero is the stepping stone: go to zero first, then on.\n\nMoney works the same way. Overdrawn by £30 is −£30. Pay in £50 and you have $-30 + 50 = 20$, so £20.\n\nA bigger number after the minus sign is a **smaller** number: −10 °C is colder than −2 °C, so −10 is less than −2."
+  },
+  {
+   "id": "negatives-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 1.8,
+   "q": "At 6 am the yard is at {a} °C. By noon it has warmed up by {w} degrees. What is the temperature at noon?",
+   "vars": {"a": [-9, -1, 1], "w": [2, 15, 1]},
+   "let": {"wrong": "ABS(a) + w"},
+   "answer": "a + w",
+   "unit": "°C",
+   "abs": 0.01,
+   "hint": "Start at {a} on the number line and count {w} steps to the right. Passing 0 is fine.",
+   "work": "${{a}} + {{w}} = {{answer}}$, so {answer} °C.",
+   "why": "Warming is adding, so you move **right**, up the thermometer. The usual slip is to drop the minus sign: {a} + {w} is not {wrong}."
+  },
+  {
+   "id": "worked-grid",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A pallet has 38 boxes. Each box holds 24 fittings. How many fittings are on the pallet? Estimate first, then work it out.",
+   "steps": [
+    {"ask": "Estimate: round each number to the nearest ten.", "show": "**Rounding** to the nearest ten means the closest number that ends in 0. 38 is between 30 and 40, and nearer 40. 24 is between 20 and 30, and nearer 20. (A ones digit of 5 or more rounds up.) So the answer is about $40 \\times 20 = 800$."},
+    {"ask": "Split both numbers and fill in the grid.", "show": "38 is 30 and 8; 24 is 20 and 4. Multiply every part by every part:\n\n```\n   ×  |  30  |   8\n  20  | 600  | 160\n   4  | 120  |  32\n```"},
+    {"ask": "Add the parts.", "show": "$600 + 160 + 120 + 32 = 912$ fittings."},
+    {"ask": "Check against the estimate.", "show": "912 is near 800: the right size. An answer like 9120 or 91 would tell you something slipped."}
+   ],
+   "why": "Estimate, work it out, check. The estimate takes seconds and catches the big mistakes: a lost or extra zero, a wrong button, a digit in the wrong place."
+  },
+  {
+   "id": "faded-grid",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 2.2,
+   "q": "A job needs 26 brackets. Each bracket takes 17 screws. How many screws are needed? Estimate first, then work it out.",
+   "steps": [
+    {"ask": "Estimate: round each number to the nearest ten.", "show": "26 is nearer 30; 17 is nearer 20. About $30 \\times 20 = 600$."},
+    {"ask": "Split both numbers and fill in the grid.", "show": "26 is 20 and 6; 17 is 10 and 7:\n\n```\n   ×  |  20  |   6\n  10  | 200  |  60\n   7  | 140  |  42\n```"},
+    {"ask": "Add the parts.", "show": "$200 + 60 + 140 + 42 = 442$ screws."},
+    {"ask": "Check against the estimate.", "show": "442 is in the hundreds, like 600. Both numbers were rounded **up**, so the estimate is on the high side, as you would expect."}
+   ],
+   "why": "The same four moves. Rounding both numbers up makes the estimate too big, and rounding both down makes it too small; either way it tells you the size of the answer."
+  },
+  {
+   "id": "grid-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 2.4,
+   "q": "An electrician works {h} hours at £{r} an hour. How much is that, in pounds? Estimate first, then use the grid.",
+   "vars": {"h": {"pick": [21, 22, 23, 24, 26, 27, 28, 32, 34, 36, 37, 38]}, "r": {"pick": [12, 13, 14, 16, 17, 18, 19]}},
+   "let": {"he": "ROUND(h / 10, 0) * 10", "re": "ROUND(r / 10, 0) * 10", "est": "ROUND(h / 10, 0) * 10 * ROUND(r / 10, 0) * 10", "ht": "ROUNDDOWN(h / 10, 0) * 10", "ho": "h - ROUNDDOWN(h / 10, 0) * 10", "ro": "r - 10", "p1": "ROUNDDOWN(h / 10, 0) * 10 * 10", "p2": "(h - ROUNDDOWN(h / 10, 0) * 10) * 10", "p3": "ROUNDDOWN(h / 10, 0) * 10 * (r - 10)", "p4": "(h - ROUNDDOWN(h / 10, 0) * 10) * (r - 10)"},
+   "answer": "h * r",
+   "abs": 0.01,
+   "hint": "Pay is hours times the rate. Split {h} into {ht} and {ho}, and {r} into 10 and {ro}.",
+   "work": "Estimate: ${{he}} \\times {{re}} = {{est}}$. Grid: ${{p1}} + {{p2}} + {{p3}} + {{p4}} = {{answer}}$, so £{answer}.",
+   "why": "Pay = hours × rate. The grid multiplies every part by every part: {ht} × 10, {ho} × 10, {ht} × {ro} and {ho} × {ro}, then adds them. The estimate of about £{est} says the answer is in the hundreds."
+  },
+  {
+   "id": "round-ten",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 1.3,
+   "q": "A cut list says {x} mm. Round it to the nearest 10 mm.",
+   "vars": {"x": [101, 998, 1]},
+   "let": {"lo": "ROUNDDOWN(x / 10, 0) * 10", "hi": "ROUNDDOWN(x / 10, 0) * 10 + 10", "d": "x - ROUNDDOWN(x / 10, 0) * 10"},
+   "answer": "ROUND(x / 10, 0) * 10",
+   "unit": "mm",
+   "abs": 0.01,
+   "hint": "Look at the ones digit. 5 or more rounds up; 4 or less rounds down.",
+   "work": "{x} is between {lo} and {hi}. The ones digit is {d}, so it rounds to {answer} mm.",
+   "why": "Rounding to the nearest ten keeps the tens and looks only at the ones digit to decide up or down. A 5 goes up, by agreement. The answer always ends in 0."
+  },
+  {
+   "id": "bidmas-numeric",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 1.8,
+   "q": "Work out ${{a}} + {{b}} \\times {{c}}$.",
+   "vars": {"a": [2, 20, 1], "b": [2, 9, 1], "c": [2, 9, 1]},
+   "let": {"m": "b * c", "wrong": "(a + b) * c"},
+   "answer": "a + b * c",
+   "abs": 0.01,
+   "hint": "BIDMAS: multiply before you add.",
+   "work": "${{b}} \\times {{c}} = {{m}}$, then ${{a}} + {{m}} = {{answer}}$.",
+   "why": "Multiply first, then add. Adding first gives $({{a}} + {{b}}) \\times {{c}} = {{wrong}}$: that is what brackets would mean, and there are none."
+  },
+  {
+   "id": "negative-diff",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 2.2,
+   "q": "A cold store is at {f} °C. The workshop is at {w} °C. How many degrees warmer is the workshop?",
+   "vars": {"f": [-25, -10, 1], "w": [12, 24, 1]},
+   "let": {"up": "0 - f", "wrong": "w - (0 - f)"},
+   "answer": "w - f",
+   "unit": "degrees",
+   "abs": 0.01,
+   "hint": "Count up from {f} to 0, then from 0 to {w}, and add the two.",
+   "work": "From {f} °C up to 0 °C is {up} degrees; from 0 °C up to {w} °C is {w} more. ${{up}} + {{w}} = {{answer}}$ degrees.",
+   "why": "The gap crosses zero, so add the two parts. Taking one number from the other as they look ({w} − {up} = {wrong}) forgets that the cold store is **below** zero."
+  },
+  {
+   "id": "why-estimate",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 1.8,
+   "q": "You work out $41 \\times 19$ and get 7790. How does an estimate show that something went wrong?",
+   "options": [
+    "An estimate is the exact answer, so anything different is wrong",
+    "Answers that end in 0 are always wrong",
+    "About $40 \\times 20 = 800$, so the answer should be near 800, not near 8000",
+    "Multiplying two numbers under 50 can never give more than 100"
+   ],
+   "answer": 2,
+   "why": "Round to the nearest ten: $40 \\times 20 = 800$. 7790 is about ten times too big: an extra 0 crept in. The real answer is 779. An estimate is not exact (779 is not 800); it tells you the **size** to expect. And $20 \\times 10 = 200$ shows two numbers under 50 can make more than 100."
+  },
+  {
+   "id": "mix-bags",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 1.8,
+   "q": "{t} screws are packed {k} to a bag. How many bags are filled?",
+   "vars": {"k": {"pick": [4, 5, 6, 8]}, "m": [6, 12, 1]},
+   "let": {"t": "k * m"},
+   "answer": "k * m / k",
+   "abs": 0.01,
+   "hint": "Is it how many groups (divide) or how many altogether (multiply)?",
+   "work": "${{t}} \\div {{k}} = {{answer}}$ bags.",
+   "why": "Grouping: how many {k}s in {t}? That is dividing: {t} ÷ {k} = {answer}. Multiplying would give more bags than there are screws: a sign it is the wrong sum."
+  },
+  {
+   "id": "mix-total",
+   "type": "numeric",
+   "stage": "mix",
+   "q": "Each bag holds {k} screws. How many screws are there in {m} bags?",
+   "vars": {"k": {"pick": [4, 5, 6, 8]}, "m": [6, 12, 1]},
+   "answer": "k * m",
+   "abs": 0.01,
+   "hint": "Is it how many groups (divide) or how many altogether (multiply)?",
+   "work": "${{m}} \\times {{k}} = {{answer}}$ screws.",
+   "why": "How many altogether: multiply. {m} bags of {k} is {m} × {k} = {answer}. It looks like the packing question, but this time the bags are full and you want the total."
+  },
+  {
+   "id": "mix-which-op",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 1.3,
+   "q": "Six fitters share a £240 bonus equally. Which sum gives each fitter's share?",
+   "options": ["$240 \\times 6$", "$240 - 6$", "$240 \\div 6$", "$6 \\div 240$"],
+   "answer": 2,
+   "why": "Sharing equally is dividing: $240 \\div 6 = 40$, so £40 each. $6 \\div 240$ has the numbers the wrong way round and gives a tiny amount. Multiplying would make each share bigger than the whole bonus, which cannot be right."
+  },
+  {
+   "id": "check-shop",
+   "type": "numeric",
+   "stage": "check",
+   "level": 1.8,
+   "q": "You have £{p}. You buy {n} boxes of screws at £{c} a box. How much money is left, in pounds?",
+   "vars": {"p": {"pick": [50, 60, 100]}, "n": [2, 5, 1], "c": [4, 9, 1]},
+   "let": {"s": "n * c"},
+   "answer": "p - n * c",
+   "abs": 0.01,
+   "work": "Spent: ${{n}} \\times {{c}} = {{s}}$. Left: ${{p}} - {{s}} = {{answer}}$, so £{answer}.",
+   "why": "Work out what you spent first (multiply), then take it from what you had. BIDMAS agrees: in ${{p}} - {{n}} \\times {{c}}$ the multiply comes first."
+  },
+  {
+   "id": "check-order",
+   "type": "mcq",
+   "stage": "check",
+   "level": 1.8,
+   "q": "Work out $30 - 12 \\div 3$.",
+   "options": ["6", "18", "4", "26"],
+   "answer": 3,
+   "why": "Divide before you take away: $12 \\div 3 = 4$, then $30 - 4 = 26$. Going left to right ($30 - 12 = 18$, then $18 \\div 3 = 6$) ignores BIDMAS."
+  },
+  {
+   "id": "check-negative",
+   "type": "numeric",
+   "stage": "check",
+   "level": 2.0,
+   "q": "The yard is at {a} °C. Overnight the temperature falls by {d} degrees. What is it now?",
+   "vars": {"a": [2, 6, 1], "d": [8, 14, 1]},
+   "let": {"rest": "d - a"},
+   "answer": "a - d",
+   "unit": "°C",
+   "abs": 0.01,
+   "work": "${{a}} - {{d}} = {{answer}}$, so {answer} °C.",
+   "why": "Falling is taking away: move left on the number line. The first {a} degrees take you down to 0 °C, and the other {rest} take you below zero, to {answer} °C."
+  }
+ ]
+}

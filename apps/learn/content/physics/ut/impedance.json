@@ -1,0 +1,694 @@
+{
+ "id": "physics.ut.impedance",
+ "title": "Acoustic impedance and reflection",
+ "tags": [
+  "ut",
+  "ndt"
+ ],
+ "kind": "procedure",
+ "level": 5.3,
+ "minutes": 22,
+ "goals": [
+  "Work out a material's acoustic impedance from its density and velocity",
+  "Work out how much of the sound reflects and how much crosses a boundary",
+  "Explain why a back wall or an air-filled crack echoes so strongly, and why a probe needs couplant",
+  "Tell when an echo comes back upside down"
+ ],
+ "summary": "**Acoustic impedance** is how hard a material is to set moving by sound: $Z = \\rho v$, density (kg/m³) times velocity (m/s), in rayl. The numbers are big, so they are quoted in **MRayl** (millions). Typical values: air 0.0004, water 1.5, perspex 3.2, aluminium 17, steel 46.5 MRayl.\n\n**At a boundary** met square on, the share of the intensity (energy) that comes back is\n\n$$R = \\left(\\frac{Z_2 - Z_1}{Z_2 + Z_1}\\right)^2$$\n\nand the rest goes on: $T = 1 - R$. Difference over sum, squared. The bigger the mismatch, the more comes back.\n\n- **Water to steel:** about 88% back, 12% in. That is why the front-wall echo is so big in immersion testing.\n- **Steel to air:** more than 99.99% back. That is why back walls and air-filled cracks echo so well, and why a probe needs **couplant**.\n- **Equal impedances:** nothing reflects, whatever the materials.\n\n**The amplitude ratio** $r = \\frac{Z_2 - Z_1}{Z_2 + Z_1}$ compares the height of the echo with the wave coming in; $R = r^2$. $r$ is minus when the sound meets a lower impedance: the echo comes back **upside down**. The square removes the sign, so $R$ is the same either way.\n\n**The method:** $r$ first, square it for $R$, then $T = 1 - R$.\n\n**Decibels:** energies (like $T$) use $10\\log_{10}$; echo heights use $20\\log_{10}$.\n\nImpedance decides how **much** comes back; velocity and time decide **when** ($d = \\frac{vt}{2}$).",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Acoustic Impedance - Sound",
+   "url": "https://www.nde-ed.org/Physics/Sound/acousticimpedance.xhtml",
+   "by": "NDE-Ed",
+   "minutes": 5,
+   "note": "What impedance is, and the reflection formula, with a table of values."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "UNIT G485 Module 4 5.4.3 Ultrasound",
+   "url": "https://pmt.physicsandmathstutor.com/download/Physics/A-level/Notes/OCR-A-Old/Unit-5/Set-A/5.4.3%20Ultrasound.pdf",
+   "by": "Physics & Maths Tutor",
+   "minutes": 15,
+   "note": "A-level notes: impedance, reflection and why gel is used, from the medical side."
+  },
+  {
+   "when": "after",
+   "kind": "interactive",
+   "title": "Energy Reflection and Transmission Coefficients",
+   "url": "https://www.nde-ed.org/Physics/Waves/js_apps/reflectionTransmissionCoef/",
+   "by": "NDE-Ed",
+   "minutes": 5
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Ultrasonic Couplants",
+   "url": "https://ims.evidentscientific.com/en/applications/ultrasonic-couplant",
+   "by": "Evident",
+   "minutes": 5,
+   "note": "Which couplant for which job."
+  }
+ ],
+ "sources": [
+  "J. and H. Krautkrämer, Ultrasonic Testing of Materials, 4th edition (Springer)",
+  "BS EN ISO 16810: Non-destructive testing. Ultrasonic testing. General principles",
+  "NDE-Ed, Acoustic impedance and Reflection and transmission coefficients (nde-ed.org)",
+  "OCR A Level Physics A (H556) specification, 6.5 Medical imaging: ultrasound and acoustic impedance"
+ ],
+ "formulas": [
+  {
+   "name": "Acoustic impedance",
+   "tex": "Z = \\rho v",
+   "match": [
+    "\\rhov"
+   ],
+   "says": "How hard a material is to set moving by sound: its density times the speed of sound in it.",
+   "symbols": [
+    [
+     "Z",
+     "the acoustic impedance (rayl, kg m⁻² s⁻¹; usually MRayl, millions of rayl)"
+    ],
+    [
+     "\\rho",
+     "rho, the density (kg/m³)"
+    ],
+    [
+     "v",
+     "the speed of sound in the material (m/s)"
+    ]
+   ],
+   "example": "steel: $7850 \\times 5920 \\approx 46\\,500\\,000$ rayl, 46.5 MRayl."
+  },
+  {
+   "name": "Share of intensity reflected",
+   "tex": "R = \\left(\\frac{Z_2 - Z_1}{Z_2 + Z_1}\\right)^2",
+   "match": [
+    "\\left(\\frac{Z_2-Z_1}{Z_2+Z_1}\\right)^2"
+   ],
+   "says": "At a boundary met square on: the difference of the impedances over their sum, squared. 0 means nothing comes back; 1 means it all does.",
+   "symbols": [
+    [
+     "R",
+     "the fraction of the intensity (energy) reflected; × 100 for %"
+    ],
+    [
+     "Z_1",
+     "the impedance of the material the sound comes from"
+    ],
+    [
+     "Z_2",
+     "the impedance of the material it meets"
+    ]
+   ],
+   "example": "water (1.48) to steel (46.5): $\\left(\\frac{45.02}{47.98}\\right)^2 = 0.88$, 88% back."
+  },
+  {
+   "name": "Share of intensity transmitted",
+   "tex": "T = 1 - R",
+   "match": [
+    "T=1-R"
+   ],
+   "says": "What does not come back goes on: no energy is lost at the boundary itself.",
+   "symbols": [
+    [
+     "T",
+     "the fraction of the intensity that crosses"
+    ],
+    [
+     "R",
+     "the fraction reflected"
+    ]
+   ],
+   "example": "$R = 0.88$: $T = 0.12$, 12% goes in."
+  },
+  {
+   "name": "Amplitude ratio",
+   "tex": "r = \\frac{Z_2 - Z_1}{Z_2 + Z_1}",
+   "match": [
+    "r=\\frac{Z_2-Z_1}{Z_2+Z_1}"
+   ],
+   "says": "The height of the reflected wave compared with the wave coming in. Minus means the echo comes back upside down (the sound met a lower impedance).",
+   "symbols": [
+    [
+     "r",
+     "the amplitude ratio (no unit; −1 to 1)"
+    ],
+    [
+     "Z_1, Z_2",
+     "the impedances before and after the boundary"
+    ]
+   ],
+   "example": "steel (46.5) to water (1.48): $\\frac{1.48 - 46.5}{47.98} = -0.94$: as tall, upside down."
+  },
+  {
+   "name": "Intensity from amplitude",
+   "tex": "R = r^2",
+   "match": [
+    "R=r^2"
+   ],
+   "says": "Energy goes with the square of the wave's height, so the intensity share is the amplitude ratio squared.",
+   "symbols": [
+    [
+     "R",
+     "the fraction of intensity reflected"
+    ],
+    [
+     "r",
+     "the amplitude ratio"
+    ]
+   ],
+   "example": "$r = 0.87$: $R = 0.76$."
+  },
+  {
+   "name": "Loss in dB for an energy ratio",
+   "tex": "\\text{loss (dB)} = -10\\log_{10} T",
+   "match": [
+    "10\\log_{10}"
+   ],
+   "says": "How many decibels weaker the transmitted sound is. Energies use 10; echo heights (amplitudes) use 20.",
+   "symbols": [
+    [
+     "T",
+     "the fraction of intensity transmitted"
+    ],
+    [
+     "\\log_{10}",
+     "the log: the power of 10 that makes the number"
+    ]
+   ],
+   "example": "$T = 0.12$: $-10\\log_{10} 0.12 \\approx 9.2$ dB lost."
+  },
+  {
+   "name": "Decibels between two echoes",
+   "tex": "\\text{dB} = 20\\log_{10}\\left(\\frac{A_1}{A_2}\\right)",
+   "match": [
+    "20\\log_{10}"
+   ],
+   "says": "From the pulse-echo lesson: how much bigger one echo is than another. Heights are amplitudes, so 20. +6 dB doubles an echo.",
+   "symbols": [
+    [
+     "A_1, A_2",
+     "the two echo heights (% of screen height)"
+    ]
+   ],
+   "example": "80% against 20%: $20\\log_{10} 4 \\approx 12$ dB."
+  },
+  {
+   "name": "Depth from the echo time",
+   "tex": "d = \\frac{vt}{2}",
+   "match": [
+    "\\frac{vt}{2}"
+   ],
+   "says": "From the pulse-echo lesson: velocity times time, halved for there and back. Density plays no part.",
+   "symbols": [
+    [
+     "d",
+     "the depth (m; × 1000 for mm)"
+    ],
+    [
+     "v",
+     "the speed of sound (m/s)"
+    ],
+    [
+     "t",
+     "the round-trip time (s)"
+    ]
+   ],
+   "example": "steel, 10 µs: $5920 \\times 0.00001 \\div 2 = 0.0296$ m, 29.6 mm."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-water-steel",
+   "type": "mcq",
+   "stage": "try",
+   "level": 5.0,
+   "q": "Ultrasound travelling through water meets a flat steel surface square on. Roughly how much of its energy goes into the steel?",
+   "options": [
+    "Almost all of it",
+    "About half",
+    "About 12%",
+    "None: water cannot pass sound into steel"
+   ],
+   "answer": 2,
+   "why": "Only about 12% gets in; about 88% reflects. Water and steel resist sound very differently (their **acoustic impedances**, about 1.5 and 46.5 MRayl, are far apart), and a big mismatch sends most of the sound back. It is not none: immersion testing works on that 12%."
+  },
+  {
+   "id": "idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Acoustic impedance",
+   "body": "Every material resists being set moving by sound. That resistance is its **acoustic impedance**:\n\n$$Z = \\rho v$$\n\n$Z$ is the impedance, $\\rho$ (rho) the material's **density** in kg/m³, and $v$ the speed of sound in it, in m/s. Multiply them. The unit is kg m$^{-2}$ s$^{-1}$, called the **rayl**. The numbers are big, so they are usually given in **MRayl** (millions of rayl): steel is about 46.5 MRayl.\n\nWhere two materials meet, what matters is how different their impedances are. A small difference lets most of the sound through; a big one sends most of it back.",
+   "more": "Think of pushing a child's swing and then pushing a car. The light thing is easy to set moving; the heavy one resists. Impedance is that resistance for sound. Dense materials that carry sound fast (steel) have a high impedance; light ones that carry it slowly (air) have a tiny one.\n\nNumbers: water, density 1000 kg/m³, sound at 1480 m/s: $Z = 1000 \\times 1480 = 1\\,480\\,000$ rayl, which is 1.48 MRayl. Aluminium: $2700 \\times 6320 = 17\\,064\\,000$ rayl, about 17.1 MRayl. Steel's is nearly three times aluminium's, even though sound is slower in steel, because steel is nearly three times as dense.\n\nTo get MRayl, divide by 1 000 000."
+  },
+  {
+   "id": "z-steel",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "Steel: density {rho} kg/m³, longitudinal velocity {v} m/s. What is its acoustic impedance?",
+   "vars": {
+    "rho": [
+     7800,
+     7900,
+     10
+    ],
+    "v": [
+     5900,
+     5960,
+     10
+    ]
+   },
+   "answer": "rho * v / 1e6",
+   "unit": "MRayl",
+   "tolerance": 0.01,
+   "work": "$Z = \\rho v = {rho} \\times {v} = {answer} \\times 10^{6}$ rayl",
+   "why": "$Z = \\rho v$. Divide by $10^{6}$ for MRayl.",
+   "hint": "Density times velocity, then divide by 1 000 000 for MRayl."
+  },
+  {
+   "id": "interface",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What comes back",
+   "body": "Where sound meets a boundary square on, some goes on and some comes back. Call the material it comes from 1 and the one it meets 2. The share of the sound's **intensity** (its energy) that comes back is\n\n$$R = \\left(\\frac{Z_2 - Z_1}{Z_2 + Z_1}\\right)^2$$\n\nTake the difference, divide by the sum, square it. $R$ is a fraction: 0.88 means 88%. The rest goes on: $T = 1 - R$.\n\nWater (1.48) to steel (46.5): $\\frac{45.02}{47.98} = 0.94$, squared 0.88. So 88% comes back and 12% goes in. Try other pairs.",
+   "widget": {
+    "name": "impedance",
+    "params": {
+     "a": "water",
+     "b": "steel"
+    }
+   },
+   "more": "In words: the more different the two impedances, the nearer the fraction gets to 1, and the more comes back.\n\nPerspex (3.22) to steel (46.5): $\\frac{43.28}{49.72} = 0.87$, squared 0.76: 76% back. Aluminium (17.1) to steel (46.5): $\\frac{29.4}{63.6} = 0.46$, squared 0.21: only 21% back, because the two metals are closer.\n\nWhy squared? The fraction in the brackets compares the heights of the waves (their amplitudes). Energy goes with the height squared, as the power in a resistor goes with the voltage squared.\n\nAnd $T = 1 - R$ because no energy is lost at the boundary itself: what does not come back goes on."
+  },
+  {
+   "id": "r-water-steel",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "Water ($Z_1$ = {z1} MRayl) meets steel ($Z_2$ = {z2} MRayl). What percentage of the intensity is reflected?",
+   "vars": {
+    "z1": [
+     1.44,
+     1.52,
+     0.02
+    ],
+    "z2": [
+     45,
+     47,
+     0.5
+    ]
+   },
+   "answer": "100 * ((z2 - z1) / (z2 + z1))^2",
+   "unit": "%",
+   "abs": 0.5,
+   "work": "$R = \\left(\\frac{{z2} - {z1}}{{z2} + {z1}}\\right)^2 = {answer}$%",
+   "why": "Close to 88%. That is why in immersion testing the front-wall echo is so large, and only about an eighth of the sound gets into the steel.",
+   "hint": "Difference over sum, then square. Times 100 for a percentage."
+  },
+  {
+   "id": "mismatch",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Big mismatch, big echo",
+   "body": "The further apart $Z_1$ and $Z_2$ are, the more comes back.\n\n- **Steel to air** (46.5 against 0.0004 MRayl): more than 99.99% reflected. That is why the back wall of a plate echoes so well, and why a crack, full of air, shows up.\n- **Probe to part through an air gap**: almost nothing gets in. So you fill the gap with **couplant**: gel, oil or water.\n- **Equal impedances**: $Z_2 - Z_1 = 0$, so nothing reflects, however different the two materials are.",
+   "more": "Tie a rope to a second rope just like it and a flick runs straight through: nothing comes back. Tie it to a wall, a huge mismatch, and the flick comes all the way back. Sound at a boundary behaves the same.\n\nSteel to air in numbers: $\\frac{0.0004 - 46.5}{0.0004 + 46.5} = -0.99998$; squared, 0.99997. So 99.997% reflected, 0.003% through. Even a film of air far thinner than a millimetre does this, which is why a dry probe shows nothing but its own pulse.\n\nWith water in the gap, water to steel lets in about 12%: not much, but enough to test with. Gels, a little closer to steel, do slightly better."
+  },
+  {
+   "id": "air-gap",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.8,
+   "widget": {
+    "name": "impedance",
+    "params": {
+     "a": "steel",
+     "b": "water"
+    }
+   },
+   "intro": "Set the first material to **steel** and the second to **air**: a probe with nothing between it and the part, or the far side of a plate.",
+   "ask": {
+    "type": "mcq",
+    "q": "What happens at a steel to air boundary?",
+    "options": [
+     "Almost all the sound is reflected",
+     "About half is reflected",
+     "Almost all of it goes into the air",
+     "None is reflected, because air has no impedance"
+    ],
+    "answer": 0,
+    "why": "Air's impedance is around 0.0004 MRayl against steel's 46, so $R$ is 99.99%. That is why the back wall reflects so well, and why a probe needs couplant."
+   }
+  },
+  {
+   "id": "amplitude-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Upside-down echoes",
+   "body": "$R$ is about energy. The height of the reflected wave itself, compared with the wave coming in, is the **amplitude ratio**, small $r$, with no square:\n\n$$r = \\frac{Z_2 - Z_1}{Z_2 + Z_1}$$\n\nand $R = r^2$.\n\n$r$ is **negative** when the sound meets a **lower** impedance ($Z_2$ smaller than $Z_1$), as at steel to water or steel to air. A negative $r$ means the echo comes back **upside down** (its phase is flipped). Squaring removes the sign, so $R$ is the same whichever way the sound crosses.",
+   "more": "Water (1.48) to steel (46.5): $r = \\frac{46.5 - 1.48}{46.5 + 1.48} = \\frac{45.02}{47.98} = 0.94$. Plus: the echo comes back the right way up, 94% as tall as the wave that went in.\n\nSteel to water: $r = \\frac{1.48 - 46.5}{47.98} = -0.94$. Just as tall, but upside down.\n\nSquared, both give $R = 0.88$: 88% of the energy either way.\n\nMost flaw detectors show a rectified A-scan (only the size of each echo), so you do not see the flip. On an RF display (the raw signal) you can: a back-wall echo from steel to air is upside down compared with an echo from a harder material."
+  },
+  {
+   "id": "direction",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.5,
+   "q": "Is more intensity reflected going from water into steel, or from steel into water?",
+   "options": [
+    "The same either way; only the phase of the reflection differs",
+    "More from water into steel",
+    "More from steel into water",
+    "None either way"
+   ],
+   "answer": 0,
+   "why": "Swapping $Z_1$ and $Z_2$ only changes the sign inside the brackets, and the square removes it. The sign does matter for the wave itself: reflecting towards a lower impedance inverts it.",
+   "hint": "Swap $Z_1$ and $Z_2$ in the formula. What does squaring do to a minus sign?"
+  },
+  {
+   "id": "phase",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.6,
+   "widget": {
+    "name": "impedance",
+    "params": {
+     "a": "steel",
+     "b": "water"
+    }
+   },
+   "intro": "The amplitude ratio $r = \\frac{Z_2 - Z_1}{Z_2 + Z_1}$ keeps its sign. Try steel to water, then water to steel.",
+   "ask": {
+    "type": "mcq",
+    "q": "When $r$ is negative, what does that tell you?",
+    "options": [
+     "The reflected wave is inverted: the sound met a lower impedance",
+     "Nothing is reflected",
+     "The sound speeds up",
+     "The probe needs more gain"
+    ],
+    "answer": 0,
+    "why": "A negative $r$ means the reflection comes back upside down. On an RF display, a back-wall echo (steel to air) is inverted compared with an echo from a harder material."
+   }
+  },
+  {
+   "id": "perspex-steel",
+   "type": "steps",
+   "stage": "example",
+   "q": "A perspex wedge ($Z$ = 3.22 MRayl) on steel ($Z$ = 46.5 MRayl). How much of the intensity crosses into the steel?",
+   "steps": [
+    {
+     "ask": "The amplitude ratio first.",
+     "show": "$r = \\frac{46.5 - 3.22}{46.5 + 3.22} = \\frac{43.28}{49.72} = 0.870$"
+    },
+    {
+     "ask": "Now the share reflected.",
+     "show": "$R = r^2 = 0.758$, about 76%"
+    },
+    {
+     "ask": "And the share transmitted?",
+     "show": "$T = 1 - R = 0.242$, about 24%"
+    }
+   ],
+   "why": "Far better than water (about 12%) but still most of the sound comes back into the wedge, which is why wedges are shaped and damped to lose those reflections.",
+   "worked": true
+  },
+  {
+   "id": "faded-gel-steel",
+   "type": "steps",
+   "stage": "example",
+   "q": "Couplant gel ($Z$ = 2.42 MRayl) on steel ($Z$ = 46.5 MRayl). How much of the intensity crosses into the steel?",
+   "steps": [
+    {
+     "ask": "The amplitude ratio first.",
+     "show": "$r = \\frac{46.5 - 2.42}{46.5 + 2.42} = \\frac{44.08}{48.92} = 0.901$"
+    },
+    {
+     "ask": "Now the share reflected.",
+     "show": "$R = r^2 = 0.901^2 = 0.812$, about 81%"
+    },
+    {
+     "ask": "And the share transmitted?",
+     "show": "$T = 1 - R = 0.188$, about 19%"
+    }
+   ],
+   "why": "The same three moves as the perspex wedge: $r$, then square it for $R$, then $T = 1 - R$. Gel lets in more than water (about 12%) because its impedance is a little closer to steel's.",
+   "given": 1
+  },
+  {
+   "id": "t-water-steel",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.3,
+   "q": "Same boundary: water {z1} MRayl, steel {z2} MRayl. What percentage of the intensity goes into the steel?",
+   "vars": {
+    "z1": [
+     1.44,
+     1.52,
+     0.02
+    ],
+    "z2": [
+     45,
+     47,
+     0.5
+    ]
+   },
+   "answer": "100 - 100 * ((z2 - z1) / (z2 + z1))^2",
+   "unit": "%",
+   "abs": 0.5,
+   "work": "$T = 1 - R = {answer}$%",
+   "why": "What is not reflected is transmitted: $T = 1 - R$.",
+   "hint": "Work out $R$ first, then $T = 1 - R$."
+  },
+  {
+   "id": "why-couplant",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Why is couplant needed between a contact probe and the part?",
+   "options": [
+    "It replaces the air gap, whose impedance is so low that almost nothing would cross it",
+    "It cools the crystal",
+    "It lowers the part's velocity so echoes are easier to read",
+    "It stops the probe wearing out, and nothing else"
+   ],
+   "answer": 0,
+   "why": "Even a thin layer of air reflects nearly everything, because air's impedance is tiny next to steel's. A liquid or gel has an impedance thousands of times closer, so sound can cross into the part. It does not change the part's velocity: the echoes are exactly where they would be."
+  },
+  {
+   "id": "z-al",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Aluminium: density {rho} kg/m³, velocity {v} m/s. Its impedance?",
+   "vars": {
+    "rho": [
+     2690,
+     2710,
+     5
+    ],
+    "v": [
+     6300,
+     6340,
+     10
+    ]
+   },
+   "answer": "rho * v / 1e6",
+   "unit": "MRayl",
+   "tolerance": 0.01,
+   "work": "$Z = {rho} \\times {v} = {answer}$ MRayl",
+   "why": "About 17 MRayl: less than half of steel's, though aluminium's velocity is higher. Density matters as much as velocity."
+  },
+  {
+   "id": "same-z",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Two different materials happen to have the same acoustic impedance. What happens to sound crossing from one to the other?",
+   "options": [
+    "It all goes through: nothing is reflected",
+    "It all reflects",
+    "Half reflects",
+    "It depends only on which has the higher density"
+   ],
+   "answer": 0,
+   "why": "With $Z_1 = Z_2$ the top of the fraction is zero, so $R = 0$, however different their densities and velocities are."
+  },
+  {
+   "id": "match-z",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Match each material to its typical acoustic impedance.",
+   "pairs": [
+    [
+     "Air",
+     "about 0.0004 MRayl"
+    ],
+    [
+     "Water",
+     "about 1.5 MRayl"
+    ],
+    [
+     "Perspex",
+     "about 3.2 MRayl"
+    ],
+    [
+     "Aluminium",
+     "about 17 MRayl"
+    ],
+    [
+     "Steel",
+     "about 46 MRayl"
+    ]
+   ],
+   "why": "Typical values; they vary with the grade and temperature. Liquids and plastics sit in the low single figures, metals in the tens, air near nothing."
+  },
+  {
+   "id": "immersion-front",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.5,
+   "q": "In an immersion tank, why is the front-wall echo from a steel part so much bigger than the back-wall echo?",
+   "options": [
+    "About 88% of the sound reflects at the water to steel surface, and what gets in loses more on the way back out",
+    "The water amplifies it",
+    "The probe is closer to the back wall",
+    "The back wall is always rough"
+   ],
+   "answer": 0,
+   "why": "Most of the sound never enters. Of the 12% that does, the back-wall echo must cross the steel to water boundary again on the way out."
+  },
+  {
+   "id": "t-db",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.2,
+   "q": "At a boundary $Z_1$ = {z1} MRayl, $Z_2$ = {z2} MRayl. How much weaker in dB is the transmitted intensity than the incident?",
+   "vars": {
+    "z1": [
+     1.4,
+     3.2,
+     0.2
+    ],
+    "z2": [
+     15,
+     47,
+     1
+    ]
+   },
+   "let": {
+    "tr": "1 - ((z2 - z1) / (z2 + z1))^2"
+   },
+   "answer": "-10 * LOG10(tr)",
+   "unit": "dB",
+   "abs": 0.2,
+   "work": "$T = {tr}$, and $-10\\log_{10}T = {answer}$ dB",
+   "why": "An intensity ratio in dB is $10\\log_{10}$ (amplitudes use 20). Give it as a positive number of dB lost.",
+   "hint": "Work out $T$ as a fraction first. $T$ is an energy ratio, so use $10\\log_{10}$ (echo heights use 20). A fraction below 1 has a minus log, so the loss is $-10\\log_{10} T$."
+  },
+  {
+   "id": "mix-which-property",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "You want to know how much of the sound crosses from a wedge into a part. What do you need to know about each material?",
+   "options": [
+    "Its velocity only",
+    "Its thickness",
+    "Its density times its velocity: the impedance",
+    "Its density only"
+   ],
+   "answer": 2,
+   "why": "What crosses depends on the impedances, $Z = \\rho v$, of both materials. Velocity alone is what you need for depth and timing ($d = \\frac{vt}{2}$). Aluminium has a higher velocity than steel but well under half its impedance, so velocity alone would mislead."
+  },
+  {
+   "id": "mix-depth",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A steel plate: density 7850 kg/m³, velocity 5920 m/s. The back-wall echo is at {t} µs. How thick is the plate?",
+   "vars": {
+    "t": [
+     5,
+     20,
+     0.5
+    ]
+   },
+   "answer": "5920 * t / 1e6 / 2 * 1000",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$d = \\frac{vt}{2} = \\frac{5920 \\times {t} \\times 10^{-6}}{2}$ m $= {answer}$ mm",
+   "why": "Depth needs only the velocity and the time, halved for there and back: $d = \\frac{vt}{2}$. The density only matters for impedance ($Z = \\rho v$), which decides how **much** comes back, not **when**.",
+   "hint": "Which formula gives a distance from a time? Is the density needed for it?"
+  },
+  {
+   "id": "mix-amp-db",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.6,
+   "q": "The first back-wall echo is at {a}% of screen height and the second at {b}%. How many dB lower is the second?",
+   "vars": {
+    "a": [
+     60,
+     100,
+     10
+    ],
+    "b": [
+     10,
+     40,
+     5
+    ]
+   },
+   "answer": "20 * LOG10(a / b)",
+   "unit": "dB",
+   "abs": 0.3,
+   "work": "$20\\log_{10}\\left(\\frac{{a}}{{b}}\\right) = {answer}$ dB",
+   "why": "Echo heights are **amplitudes**, so use $20\\log_{10}$ of their ratio. Energies, like $R$ and $T$, use $10\\log_{10}$. Same log, a different number in front: check which kind of ratio you have.",
+   "hint": "Is this a ratio of echo heights, or of energies?"
+  },
+  {
+   "id": "check-transmit",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.3,
+   "q": "Oil ($Z_1$ = {z1} MRayl) couples a probe to aluminium ($Z_2$ = {z2} MRayl). What percentage of the intensity goes into the aluminium?",
+   "vars": {
+    "z1": [
+     1.2,
+     1.4,
+     0.05
+    ],
+    "z2": [
+     16.8,
+     17.4,
+     0.2
+    ]
+   },
+   "let": {
+    "rr": "((z2 - z1) / (z2 + z1))^2"
+   },
+   "answer": "100 * (1 - rr)",
+   "unit": "%",
+   "abs": 0.5,
+   "work": "$R = \\left(\\frac{{z2} - {z1}}{{z2} + {z1}}\\right)^2 = {rr:3}$, so $T = 1 - R = {answer}$%",
+   "why": "Most of it comes back, as at any liquid to metal boundary, because the impedances are so far apart. What does not come back goes on: $T = 1 - R$."
+  },
+  {
+   "id": "flash-z",
+   "type": "flash",
+   "stage": "check",
+   "front": "Acoustic impedance: formula and unit?",
+   "back": "$Z = \\rho v$ (density times velocity), in kg m$^{-2}$ s$^{-1}$, called rayl; usually quoted in MRayl."
+  },
+  {
+   "id": "flash-r",
+   "type": "flash",
+   "stage": "check",
+   "front": "The share of intensity reflected at a boundary (normal incidence)?",
+   "back": "$R = \\left(\\frac{Z_2 - Z_1}{Z_2 + Z_1}\\right)^2$, and $T = 1 - R$."
+  }
+ ]
+}

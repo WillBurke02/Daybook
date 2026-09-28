@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · Daybook</title>
+<link rel="stylesheet" href="/ui/tokens.css">
+<link rel="icon" href="/assets/icons/favicon-32.png">
+</head>
+<body class="signin">
+<form class="panel" method="post">
+  <h1>Daybook</h1>
+  <label class="f">Password <input type="password" name="password" autocomplete="current-password" autofocus required></label>
+  <button class="btn" type="submit">Sign in</button>
+  <p class="err" role="alert" hidden></p>
+  <p class="note">Signed in for 30 days on this device. Lock, in any app, signs it out.</p>
+</form>
+<script>
+  // Plain script: this page loads before sign-in, so it takes nothing from the app.
+  const f = document.querySelector('form'), err = document.querySelector('.err');
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    const r = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json', 'X-Daybook': '1' },
+                                          body: JSON.stringify({ password: f.password.value }) });
+    if (r.ok) {
+      const next = new URLSearchParams(location.search).get('next') || '/';
+      location.href = next.startsWith('/') && !next.startsWith('//') ? next : '/';   // only ever back into Daybook
+      return;
+    }
+    err.textContent = (await r.json().catch(() => ({}))).error || 'Could not sign in';
+    err.hidden = false; f.password.select();
+  });
+</script>
+</body>
+</html>

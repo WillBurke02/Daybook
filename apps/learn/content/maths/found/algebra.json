@@ -1,0 +1,395 @@
+{
+ "id": "maths.found.algebra",
+ "title": "Algebra: expressions and simple equations",
+ "tags": ["algebra", "equations"],
+ "kind": "procedure",
+ "level": 3.6,
+ "minutes": 25,
+ "goals": [
+  "Work out an expression or a formula by putting numbers in place of its letters",
+  "Tidy an expression by collecting like terms and expanding a bracket",
+  "Solve an equation by doing the same to both sides, including letters on both sides",
+  "Turn a problem in words into an equation, then solve it"
+ ],
+ "summary": "**A letter stands for a number.** You earn £15 an hour; for $h$ hours you earn $15 \\times h$, written $15h$. A number or a letter written next to a letter means **multiply**: $rh$ is $r \\times h$.\n\n**Substituting** means putting the numbers in place of the letters, then working it out. Multiply before you add: $2h + 40$ with $h = 3$ is $6 + 40 = 46$. Ohm's law $V = IR$ with $I = 2$ A and $R = 6$ Ω gives $V = 12$ V.\n\n**Like terms** have the same letter part. Add or take them away as you would count things: $3x + 5 + 2x - 1 = 5x + 4$. The sign in front belongs to the term. $4x$ and $4y$ are not like terms; neither are $5$ and $5x$.\n\n**Expanding a bracket**: the number outside multiplies **everything** inside. $3(x + 2) = 3x + 6$; $4(x - 5) = 4x - 20$.\n\n**An equation** says two things are equal, like a balance. Do the same to both sides and it stays true.\n\n- Undo with the opposite: take away undoes add, divide undoes multiply.\n- Two steps: undo in reverse order. $3x + 4 = 19$: take 4 from both sides ($3x = 15$), then divide by 3 ($x = 5$).\n- Letters on both sides: first take the smaller letter term from both sides. $5x + 3 = 2x + 15$ becomes $3x + 3 = 15$, so $x = 4$.\n- Check by putting your answer back in.\n\n**Forming an equation** from words: give the unknown a letter, write what you are told as an equation, then solve it. A £40 call-out plus £25 an hour comes to £115: $40 + 25h = 115$, so $25h = 75$ and $h = 3$ hours.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "Collecting Like Terms Video", "url": "https://corbettmaths.com/2013/12/28/collecting-like-terms-video-9/", "by": "Corbettmaths", "minutes": 5},
+  {"when": "after", "kind": "video", "title": "Solving Equations Video", "url": "https://corbettmaths.com/2012/08/24/solving-equations/", "by": "Corbettmaths", "minutes": 10},
+  {"when": "after", "kind": "video", "title": "Intro to two-step equations", "url": "https://www.khanacademy.org/math/algebra-basics/alg-basics-linear-equations-and-inequalities/alg-basics-two-steps-equations-intro/v/why-we-do-the-same-thing-to-both-sides-two-step-equations", "by": "Khan Academy", "minutes": 6, "note": "Why you do the same thing to both sides."}
+ ],
+ "sources": [
+  "Department for Education, Mathematics GCSE subject content and assessment objectives (2013)",
+  "John Bird, Bird's Basic Engineering Mathematics, 8th edition (Routledge, 2021)"
+ ],
+ "formulas": [
+  {
+   "name": "Pay for the hours you work",
+   "tex": "P = rh",
+   "match": ["P=rh"],
+   "says": "Your pay is the hourly rate times the number of hours.",
+   "symbols": [["P", "the pay (£)"], ["r", "the rate: pounds for each hour (£ per hour)"], ["h", "the number of hours worked"]],
+   "example": "£15 an hour for 8 hours: $P = 15 \\times 8 = 120$, so £120."
+  },
+  {
+   "name": "A call-out fee plus an hourly rate",
+   "tex": "B = f + rh",
+   "match": ["40+25h"],
+   "says": "The bill is the fixed fee, paid once, plus the rate times the hours.",
+   "symbols": [["B", "the bill (£)"], ["f", "the fixed call-out fee (£), paid however long the job takes"], ["r", "the rate (£ per hour)"], ["h", "the number of hours"]],
+   "example": "£40 call-out plus £25 an hour for 3 hours: $40 + 25 \\times 3 = 40 + 75 = 115$, so £115."
+  },
+  {
+   "name": "Ohm's law",
+   "tex": "V = IR",
+   "match": ["V=IR"],
+   "says": "The voltage across a resistor is the current through it times its resistance.",
+   "symbols": [["V", "the voltage (volts, V)"], ["I", "the current (amps, A)"], ["R", "the resistance (ohms, Ω)"]],
+   "example": "2 A through 6 Ω: $V = 2 \\times 6 = 12$ V."
+  },
+  {
+   "name": "Depth from the echo time",
+   "tex": "d = \\frac{vt}{2}",
+   "match": ["\\frac{vt}{2}"],
+   "says": "The depth of a flaw is the speed of sound times the echo time, **halved**, because the sound goes there and back.",
+   "symbols": [["d", "the depth (mm)"], ["v", "the speed of sound in the metal (mm per µs; steel about 5.92)"], ["t", "the time for the echo to come back (µs, millionths of a second)"]],
+   "example": "steel, echo at 10 µs: $5.92 \\times 10 \\div 2 = 29.6$ mm."
+  },
+  {
+   "name": "Perimeter of a rectangle",
+   "tex": "p = 2(l + w)",
+   "match": ["2(l+w)"],
+   "says": "The distance all the way round a rectangle: the length plus the width, doubled. Expanded, it is $2l + 2w$.",
+   "symbols": [["p", "the perimeter: the distance round the edge (same units as the sides)"], ["l", "the length"], ["w", "the width"]],
+   "example": "a guard 60 cm by 40 cm: $2(60 + 40) = 2 \\times 100 = 200$ cm."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-callout",
+   "type": "numeric",
+   "stage": "try",
+   "level": 3.9,
+   "q": "Have a go before any teaching: a guess is fine. An electrician charges a £40 call-out fee plus £25 for each hour. The bill comes to £115. How many hours did the job take?",
+   "vars": {},
+   "answer": "(115 - 40) / 25",
+   "unit": "hours",
+   "work": "Take off the call-out fee: $115 - 40 = 75$. Then $75 \\div 25 = 3$ hours.",
+   "why": "The £40 is paid once, however long the job, so take it off first. What is left, £75, is all hourly pay at £25 an hour: 3 hours. Dividing £115 by 25 (4.6 hours) charges the fee by the hour. In algebra, with $h$ for the hours, this is the equation $40 + 25h = 115$. By the end of the lesson you will solve it step by step."
+  },
+  {
+   "id": "letters",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A letter stands for a number",
+   "body": "You earn £15 an hour. For 8 hours: $15 \\times 8 = 120$, so £120.\n\nFor any number of hours, write the hours as a letter, $h$. Your pay is $15 \\times h$. In algebra you leave out the times sign and write $15h$. A number next to a letter means **multiply**. Two letters side by side multiply too: $rh$ means $r \\times h$.\n\nA mix of numbers and letters, like $15h$ or $2h + 40$, is an **expression**. To find its value, **substitute**: put the number in place of the letter, then work it out. Multiply before you add: with $h = 3$, $2h + 40 = 6 + 40 = 46$.",
+   "more": "Think of a letter as a labelled box with a number inside. $h$ is the box marked 'hours'. This week it holds 8; next week maybe 10. The rule $15h$ stays the same; only the number in the box changes.\n\nWhy leave out the times sign? Because $\\times$ looks too much like the letter $x$. So $15h$ is 15 lots of $h$, and $3x$ is $3 \\times x$, not thirty-something.\n\nA worked number: a £40 call-out plus £25 an hour is $40 + 25h$. For a 2-hour job, $h = 2$. First the multiply: $25 \\times 2 = 50$. Then the add: $40 + 50 = 90$. The bill is £90."
+  },
+  {
+   "id": "letters-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 2.8,
+   "q": "What is the value of $3h$ when $h = 5$?",
+   "options": ["15", "35", "8", "53"],
+   "answer": 0,
+   "why": "$3h$ means $3 \\times h$, so $3 \\times 5 = 15$. It is not 35: the letter is replaced by its value and multiplied, not written next to the 3 as a digit. It is not 8 either: a number next to a letter multiplies, it does not add."
+  },
+  {
+   "id": "like-terms",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Collecting like terms",
+   "body": "A stores order: 3 boxes of bolts, 2 boxes of nuts, then 4 more boxes of bolts. That is 7 boxes of bolts and 2 of nuts. You cannot add bolts to nuts.\n\nAlgebra works the same way. Each part of an expression, joined by $+$ or $-$, is a **term**. **Like terms** have exactly the same letter part: $3b$ and $4b$ are like terms, so $3b + 4b = 7b$. $3b$ and $2n$ are not, so $3b + 2n$ stays as it is. A plain number is a term of its own.\n\n**Collect** them: $3x + 5 + 2x - 1 = 5x + 4$. The sign in front of a term belongs to it and moves with it.",
+   "more": "Collecting like terms is just counting things of the same kind.\n\n$4a + 3b + 2a - b$: pick out the $a$ terms, $4a$ and $2a$, which make $6a$. Then the $b$ terms: $+3b$ and $-b$ (a lone $b$ means $1b$), which make $2b$. Answer: $6a + 2b$.\n\nWatch the signs. In $7y - 2 - 3y + 5$, the $-3y$ means 'take away 3 lots of $y$'. The $y$ terms: $7y - 3y = 4y$. The numbers: $-2 + 5 = 3$. Answer: $4y + 3$.\n\nYou cannot go further: $4y + 3$ is not $7y$, just as 4 boxes of bolts and 3 loose washers are not 7 boxes of bolts."
+  },
+  {
+   "id": "like-terms-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.3,
+   "q": "Simplify $4a + 3b + 2a - b$.",
+   "options": ["$6a + 4b$", "$8ab$", "$6a + 2b$", "$6a + 3b$"],
+   "answer": 2,
+   "why": "The $a$ terms: $4a + 2a = 6a$. The $b$ terms: $3b - b = 2b$ (a lone $b$ is $1b$). So $6a + 2b$. $6a + 4b$ adds the $b$ instead of taking it away: the minus sign belongs to that term. $8ab$ lumps unlike terms together, which you cannot do."
+  },
+  {
+   "id": "brackets",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Expanding a bracket",
+   "body": "A **bracket** groups things together. A number written just before a bracket multiplies the whole group.\n\nNumbers first: $3 \\times (10 + 2)$ is $3 \\times 12 = 36$. Or do it in parts: $3 \\times 10 + 3 \\times 2 = 30 + 6 = 36$. The same answer.\n\nSo $3(x + 2) = 3x + 6$. Writing it without the bracket is called **expanding**. The number outside multiplies **everything** inside: the 2 as well as the $x$. With a minus inside: $4(x - 5) = 4x - 20$.\n\nA frame $l$ long and $w$ wide measures $2(l + w)$ all the way round, which expands to $2l + 2w$.",
+   "more": "Picture 3 kits. Each kit holds $x$ bolts and 2 washers. In all you have 3 lots of $x$ bolts and 3 lots of 2 washers: $3x + 6$. That is $3(x + 2)$ expanded.\n\nThe usual slip is to multiply only the first thing: $3(x + 2) = 3x + 2$. That would give each of the 3 kits its bolts but share just 2 washers between all of them.\n\nWorked number, to check: take $x = 4$. $3(4 + 2) = 3 \\times 6 = 18$. And $3 \\times 4 + 6 = 12 + 6 = 18$. The same, so the expansion is right. Putting a number in is a quick way to check any expansion."
+  },
+  {
+   "id": "brackets-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.4,
+   "q": "Expand $5(x - 3)$.",
+   "options": ["$5x - 3$", "$5x - 15$", "$5x + 15$", "$5x - 8$"],
+   "answer": 1,
+   "why": "The 5 multiplies both things inside: $5 \\times x = 5x$ and $5 \\times 3 = 15$, keeping the minus: $5x - 15$. $5x - 3$ forgets to multiply the 3. $5x - 8$ adds the 5 instead of multiplying. Check with $x = 4$: $5(4 - 3) = 5$, and $20 - 15 = 5$."
+  },
+  {
+   "id": "balance",
+   "type": "concept",
+   "stage": "learn",
+   "title": "An equation is a balance",
+   "body": "An **equation** says two things are equal: $x + 7 = 12$. **Solving** it means finding the number $x$ stands for.\n\nThink of a balance with equal weights in each pan. Take the same off both pans and it still balances. So:\n\n- $x + 7 = 12$: take 7 from both sides, $x = 5$.\n- $4x = 36$: divide both sides by 4, $x = 9$.\n\n**Do the same to both sides**, and use the **opposite** to undo: take away undoes add; divide undoes multiply (and the other way round).\n\nThen **check**: put your answer back in. $4 \\times 9 = 36$. Right.",
+   "more": "Numbers first. 'Something times 4 is 36': you know it is 9, because $36 \\div 4 = 9$. Solving $4x = 36$ is exactly that, written down.\n\nThe balance is why it works. Picture 4 identical bags of bolts on one side of a scale and 36 loose bolts on the other, and it balances. Split both sides into 4 equal shares, and one share still balances one share: 1 bag weighs the same as 9 bolts.\n\nThe opposites:\n\n- $x + 7$: undo by taking 7 away.\n- $x - 7$: undo by adding 7.\n- $4x$: undo by dividing by 4.\n- $\\frac{x}{4}$ ($x$ divided by 4): undo by multiplying by 4.\n\nWhatever you do, do it to **the whole** of each side."
+  },
+  {
+   "id": "one-step-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.0,
+   "q": "Solve $ {k}x = {p}$.",
+   "vars": {"k": [2, 9, 1], "n": [2, 12, 1]},
+   "let": {"p": "k * n"},
+   "answer": "p / k",
+   "work": "Divide both sides by {k}: $x = {p} \\div {k} = {answer}$.",
+   "why": "$ {k}x$ means {k} times $x$. The opposite of multiplying by {k} is dividing by {k}, done to both sides. Taking {k} away instead would leave $ {k}x - {k}$, not $x$ on its own. Check: ${k} \\times {answer} = {p}$."
+  },
+  {
+   "id": "two-step",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Two steps: undo in reverse order",
+   "body": "In $3x + 4 = 19$, two things were done to $x$: first **times 3**, then **add 4**.\n\nTo get $x$ on its own, undo them in **reverse order**, as you take off your boots before your socks:\n\n- Undo the add 4 first: take 4 from both sides. $3x = 15$.\n- Then undo the times 3: divide both sides by 3. $x = 5$.\n\nCheck: $3 \\times 5 + 4 = 19$. Right.\n\nThe call-out bill from the start has the same shape: $40 + 25h = 115$. Take 40 from both sides: $25h = 75$. Divide both sides by 25: $h = 3$ hours.",
+   "more": "Think of a machine. $x$ goes in, gets multiplied by 3, then has 4 added, and 19 comes out. To run it backwards, start at the end: from 19, take off the 4 (15), then divide by 3 (5).\n\nIf you divide first, you must divide **everything** on both sides, the 4 as well: $x + \\frac{4}{3} = \\frac{19}{3}$. It still works, but the numbers get messy. Taking away first keeps them whole.\n\nAnother one: $2x - 6 = 10$. The last thing done was take 6, so add 6 to both sides: $2x = 16$. Then divide both sides by 2: $x = 8$. Check: $2 \\times 8 - 6 = 10$. Right."
+  },
+  {
+   "id": "two-step-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Solve $ {a}x + {b} = {c}$.",
+   "vars": {"a": [2, 9, 1], "b": [1, 20, 1], "n": [1, 12, 1]},
+   "let": {"c": "a * n + b", "r": "c - b"},
+   "answer": "(c - b) / a",
+   "hint": "What was done to $x$ last? Undo that first.",
+   "work": "Take {b} from both sides: $ {a}x = {r}$. Divide both sides by {a}: $x = {answer}$.",
+   "why": "Undo in reverse order: the add {b} was done last, so take {b} away first, then divide by {a}. Dividing {c} by {a} straight away forgets the {b}. Check: ${a} \\times {answer} + {b} = {c}$."
+  },
+  {
+   "id": "both-sides",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Letters on both sides",
+   "body": "Sometimes the letter is on both sides: $5x + 3 = 2x + 15$.\n\nFirst get all the letters on one side. Take the **smaller** letter term, $2x$, from both sides:\n\n$$3x + 3 = 15$$\n\nNow it is a two-step equation. Take 3 from both sides: $3x = 12$. Divide both sides by 3: $x = 4$.\n\nCheck both sides with $x = 4$: $5 \\times 4 + 3 = 23$ and $2 \\times 4 + 15 = 23$. They match.",
+   "more": "A real case. Hire firm A charges £30 plus £12 an hour for a scissor lift; firm B charges £60 plus £9 an hour. After how many hours do they cost the same?\n\nCall the hours $h$. Firm A: $30 + 12h$. Firm B: $60 + 9h$. Same cost: $30 + 12h = 60 + 9h$.\n\nTake $9h$ from both sides (the smaller letter term): $30 + 3h = 60$. Take 30 from both sides: $3h = 30$. Divide both sides by 3: $h = 10$ hours.\n\nCheck: A is $30 + 120 = 150$; B is $60 + 90 = 150$. Both £150. Taking away the smaller letter term leaves a positive number of letters, which is easier to handle."
+  },
+  {
+   "id": "both-sides-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.1,
+   "q": "Solve $ {a}x + {b} = {c}x + {e}$.",
+   "vars": {"c": [2, 5, 1], "g": [2, 5, 1], "n": [1, 10, 1], "b": [1, 15, 1]},
+   "let": {"a": "c + g", "e": "g * n + b", "r": "e - b", "s": "a * n + b"},
+   "answer": "(e - b) / (a - c)",
+   "hint": "Take {c}x from both sides first, so the letters are only on the left.",
+   "work": "Take {c}x from both sides: $ {g}x + {b} = {e}$. Take {b} from both sides: $ {g}x = {r}$. Divide both sides by {g}: $x = {answer}$.",
+   "why": "Get the letters on one side by taking the smaller letter term, {c}x, from both sides. Then it is a two-step equation. Adding {c}x to the left instead is the slip to avoid: it moves the letters the wrong way. Check: ${a} \\times {answer} + {b}$ and ${c} \\times {answer} + {e}$ both come to {s}."
+  },
+  {
+   "id": "worked-words",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A hire firm charges a £35 delivery fee plus £20 a day for a pallet truck. The bill is £155. For how many days was it hired?",
+   "steps": [
+    {"ask": "What is unknown? Give it a letter.", "show": "The number of days. Call it $n$."},
+    {"ask": "Write the bill using $n$.", "show": "£35 once, plus £20 for each day: $35 + 20n$."},
+    {"ask": "Make it an equation.", "show": "The bill is £155: $35 + 20n = 155$."},
+    {"ask": "Solve it.", "show": "Take 35 from both sides: $20n = 120$. Divide both sides by 20: $n = 6$."},
+    {"ask": "Check it in the words of the question.", "show": "6 days: $35 + 20 \\times 6 = 35 + 120 = 155$. Right: 6 days."}
+   ],
+   "why": "Forming an equation: name the unknown, write what you are told using it, set it equal to the number you know, then solve by undoing in reverse order. Always check the answer against the words."
+  },
+  {
+   "id": "faded-words",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 3.9,
+   "q": "A bar 150 cm long is cut into two pieces. One piece is 30 cm longer than the other. How long is the shorter piece?",
+   "steps": [
+    {"ask": "Give the unknown a letter.", "show": "Call the shorter piece $s$ cm. Then the longer piece is $s + 30$ cm."},
+    {"ask": "Make an equation.", "show": "The two pieces make the whole bar: $s + s + 30 = 150$. Collect like terms: $2s + 30 = 150$."},
+    {"ask": "Solve it.", "show": "Take 30 from both sides: $2s = 120$. Divide both sides by 2: $s = 60$ cm."},
+    {"ask": "Check it.", "show": "The pieces are 60 cm and 90 cm. $60 + 90 = 150$, and 90 is 30 more than 60. Right."}
+   ],
+   "why": "Collect like terms first ($s + s = 2s$), then undo in reverse order. Halving 150 to get 75 forgets that one piece is longer than the other."
+  },
+  {
+   "id": "words-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 3.9,
+   "q": "An order has {n} identical brackets and one {k} kg gearbox. Together they weigh {W} kg. What does one bracket weigh?",
+   "vars": {"n": [3, 12, 1], "k": [5, 40, 5], "b0": {"pick": [0.5, 1.5, 2, 2.5, 3, 4]}},
+   "let": {"W": "n * b0 + k", "r": "W - k"},
+   "answer": "(W - k) / n",
+   "unit": "kg",
+   "hint": "Call one bracket's weight $b$. What do {n} brackets weigh?",
+   "work": "$ {n}b + {k} = {W}$. Take {k} from both sides: $ {n}b = {r}$. Divide both sides by {n}: $b = {answer}$ kg.",
+   "why": "{n} brackets weigh {n} times $b$, and the gearbox is added once. Take its weight off first, then share what is left between the {n} brackets. Dividing {W} by {n} straight away shares the gearbox out too."
+  },
+  {
+   "id": "sub-ohm",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.1,
+   "q": "**Ohm's law** is $V = IR$: the voltage $V$ (volts) is the current $I$ (amps) times the resistance $R$ (ohms, Ω). A current of {I} A flows through a {R} Ω resistor. What is the voltage across it?",
+   "vars": {"I": {"pick": [0.5, 1, 1.5, 2, 2.5, 3, 4]}, "R": [2, 50, 2]},
+   "answer": "I * R",
+   "unit": "V",
+   "work": "$V = IR = {I} \\times {R} = {answer}$ V",
+   "why": "$IR$ means $I \\times R$: letters side by side multiply. Adding them ({I} + {R}) is the slip to avoid: nothing is added in this formula."
+  },
+  {
+   "id": "sub-echo",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.8,
+   "q": "In ultrasonic testing, the depth of a flaw is $d = \\frac{vt}{2}$. Here $d$ is the depth (mm), $v$ the speed of sound (mm per µs) and $t$ the time for the echo to come back (µs, millionths of a second). In steel, $v = 5.92$ mm per µs. An echo comes back after {t} µs. How deep is the flaw?",
+   "vars": {"t": [2, 20, 0.5]},
+   "answer": "5.92 * t / 2",
+   "unit": "mm",
+   "hint": "Work out the top first: 5.92 times the time. Then halve it.",
+   "work": "$d = \\frac{5.92 \\times {t}}{2} = {answer}$ mm",
+   "why": "$vt$ means $v \\times t$; then the fraction line means divide the lot by 2. You halve because the time is there **and back**. Forgetting to halve gives double the real depth."
+  },
+  {
+   "id": "expand-collect",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.9,
+   "q": "Expand and simplify $3(x + 4) + 2x$.",
+   "options": ["$5x + 4$", "$6x + 12$", "$17x$", "$5x + 12$"],
+   "answer": 3,
+   "why": "Expand first: $3(x + 4) = 3x + 12$. Then collect the $x$ terms: $3x + 2x = 5x$. Answer: $5x + 12$. $5x + 4$ forgot to multiply the 4 by 3. $6x + 12$ multiplies the $2x$ by 3 as well, but it is outside the bracket. $17x$ adds unlike terms: 12 is a number, not 12 lots of $x$."
+  },
+  {
+   "id": "divide-step",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "Solve $\\frac{x}{{a}} + {b} = {c}$. (The fraction means $x$ divided by {a}.)",
+   "vars": {"a": {"pick": [2, 3, 4, 5, 10]}, "n": [1, 10, 1], "b": [1, 12, 1]},
+   "let": {"c": "n + b", "r": "c - b"},
+   "answer": "a * (c - b)",
+   "hint": "Undo the add first. Then: what undoes dividing by {a}?",
+   "work": "Take {b} from both sides: $\\frac{x}{{a}} = {r}$. Multiply both sides by {a}: $x = {answer}$.",
+   "why": "Reverse order again: the add {b} came last, so take it off first. Then multiply by {a}, the opposite of dividing by {a}. Dividing by {a} again would make the number smaller, not free the $x$. Check: ${answer} \\div {a} + {b} = {c}$."
+  },
+  {
+   "id": "why-same",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.4,
+   "q": "When you solve an equation, why must you do the same thing to **both** sides?",
+   "options": [
+    "It makes the numbers smaller",
+    "An equation says the two sides are equal; changing both by the same amount keeps them equal",
+    "It is just a rule that examiners want to see",
+    "So that the letter always ends up on the right"
+   ],
+   "answer": 1,
+   "why": "Like a balance: take the same weight off both pans and it still balances. Change one side only and the two sides are no longer equal, so any answer you get is wrong. Smaller numbers are sometimes a side effect, not the reason."
+  },
+  {
+   "id": "bracket-both",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "Solve $ {a}(x + {b}) = x + {e}$.",
+   "vars": {"a": [3, 5, 1], "b": [1, 5, 1], "n": [1, 8, 1]},
+   "let": {"e": "(a - 1) * n + a * b", "ab": "a * b", "a1": "a - 1", "r": "e - a * b"},
+   "answer": "(e - a * b) / (a - 1)",
+   "hint": "Expand the bracket first. Then get the $x$ terms on one side.",
+   "work": "Expand: $ {a}x + {ab} = x + {e}$. Take $x$ from both sides: $ {a1}x + {ab} = {e}$. Take {ab} from both sides: $ {a1}x = {r}$. Divide both sides by {a1}: $x = {answer}$.",
+   "why": "Three moves you have met: expand (the {a} multiplies both the $x$ and the {b}), take the smaller letter term, $x$, from both sides, then undo in reverse order. Expanding to $ {a}x + {b}$ is the usual slip: the {b} must be multiplied by {a} too."
+  },
+  {
+   "id": "mix-solve-or-sub",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 3.3,
+   "q": "Your pay is $P = rh$: the rate $r$ (£ an hour) times the hours $h$. At £15 an hour, $P = 15h$. Which question needs you to **solve an equation**, rather than just put a number in?",
+   "options": [
+    "You worked 12 hours. What was your pay?",
+    "What is $15h$ when $h = 9$?",
+    "You were paid £180. How many hours did you work?",
+    "You worked 7 hours at £15 an hour. What was your pay?"
+   ],
+   "answer": 2,
+   "why": "When you know the hours, you substitute: $15 \\times 12 = 180$. When you know the pay and want the hours, the unknown is inside the formula: $15h = 180$, so divide both sides by 15, and $h = 12$. The same formula does two jobs: look at which number is missing."
+  },
+  {
+   "id": "mix-pay-rise",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.4,
+   "q": "Your rate is £{r} an hour. It goes up by {pc}%. What is the new hourly rate?",
+   "vars": {"r": {"pick": [12, 14, 15, 16, 18, 20]}, "pc": {"pick": [2, 3, 4, 5, 10]}},
+   "let": {"inc": "r * pc / 100"},
+   "answer": "r * (1 + pc / 100)",
+   "unit": "£ per hour",
+   "work": "{pc}% of £{r} is ${r} \\times \\frac{{pc}}{100} = {inc}$. New rate: ${r} + {inc} = {answer}$.",
+   "why": "A percentage question, not an equation: find {pc}% of the rate and add it on. Adding £{pc} (the percentage as pounds) is the slip: {pc}% of £{r} is only £{inc}."
+  },
+  {
+   "id": "mix-times-add",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.0,
+   "q": "Which line is right?",
+   "options": [
+    "$3x + 2x = 5x^2$ and $3x \\times 2x = 6x$",
+    "$3x + 2x = 5x$ and $3x \\times 2x = 6x^2$",
+    "$3x + 2x = 5x$ and $3x \\times 2x = 6x$",
+    "$3x + 2x = 6x$ and $3x \\times 2x = 5x^2$"
+   ],
+   "answer": 1,
+   "why": "Adding like terms counts them: 3 lots of $x$ and 2 more lots make 5 lots, $5x$. Multiplying multiplies everything: $3 \\times 2 = 6$ and $x \\times x = x^2$ ($x$ squared: $x$ times itself). Check with $x = 10$: $30 + 20 = 50$, which is $5x$; and $30 \\times 20 = 600$, which is $6 \\times 10^2$."
+  },
+  {
+   "id": "check-callout",
+   "type": "numeric",
+   "stage": "check",
+   "level": 3.7,
+   "q": "A plumber charges a £{f} call-out fee plus £{r} for each hour. The bill is £{b}. How many hours did the job take?",
+   "vars": {"f": {"pick": [30, 45, 50, 60]}, "r": {"pick": [20, 25, 30, 35, 40]}, "n": [1, 6, 1]},
+   "let": {"b": "f + r * n", "k": "b - f"},
+   "answer": "(b - f) / r",
+   "unit": "hours",
+   "work": "$ {f} + {r}h = {b}$. Take {f} from both sides: $ {r}h = {k}$. Divide both sides by {r}: $h = {answer}$ hours.",
+   "why": "Take off the one-off fee first, then divide by the hourly rate: undo in reverse order. Dividing the whole bill by {r} would charge the call-out fee by the hour."
+  },
+  {
+   "id": "check-both",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.0,
+   "q": "Solve $7x - 4 = 3x + 16$.",
+   "options": ["$x = 3$", "$x = 2$", "$x = 5$", "$x = 1.2$"],
+   "answer": 2,
+   "why": "Take $3x$ from both sides: $4x - 4 = 16$. Add 4 to both sides: $4x = 20$. Divide both sides by 4: $x = 5$. Check: $35 - 4 = 31$ and $15 + 16 = 31$. $x = 3$ comes from taking the 4 away instead of adding it back; $x = 2$ from adding $3x$ to the left instead of taking it away."
+  },
+  {
+   "id": "check-tidy",
+   "type": "match",
+   "stage": "check",
+   "level": 3.4,
+   "q": "Match each expression to its simplest form.",
+   "pairs": [
+    ["$3(x + 4)$", "$3x + 12$"],
+    ["$3x + 4x$", "$7x$"],
+    ["$3x + 4 - x$", "$2x + 4$"],
+    ["$3 \\times 4x$", "$12x$"]
+   ],
+   "why": "Expand: the 3 multiplies both things in the bracket. Collect: like terms add ($3x + 4x = 7x$), and $-x$ takes one $x$ away. Multiply: $3 \\times 4x$ is 3 lots of $4x$, which is $12x$."
+  }
+ ]
+}

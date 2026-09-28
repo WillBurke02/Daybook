@@ -1,0 +1,1162 @@
+{
+ "id": "drives.control.pid",
+ "title": "PID and cascaded loops",
+ "tags": [
+  "control",
+  "pid"
+ ],
+ "kind": "concept",
+ "level": 6.0,
+ "minutes": 30,
+ "goals": [
+  "Say what the set-point, the process value and the error are, and work out the error",
+  "Work out a rate of change and a running total from numbers, and say which one D and I use",
+  "Explain in plain words what P, I and D each do, and why P alone leaves an offset",
+  "Read the PID equation letter by letter and predict what more P, I or D, or a longer dead time, does to a loop",
+  "Describe a servo drive's cascade of position, speed and current loops, and tune it from the inside out"
+ ],
+ "summary": "A **control loop** compares the **set-point** (SP, where you want it) with the **process value** (PV, what the sensor reads). The gap is the **error**, $e = SP - PV$. The controller turns the error into an **output** $u$ (valve, heater, torque), measures again, and repeats.\n\nThe process answers late and slowly: a **dead time** $\\theta$ before anything moves, then a curve with a **time constant** $\\tau$ (63% of the change after one $\\tau$).\n\n**P** pushes in proportion to the error now: $u = K_p e$. Alone it leaves an **offset**, because it needs some error to make any output. More $K_p$: faster, smaller offset, more overshoot, and in the end unstable.\n\n**Rate of change** is change ÷ time: 40 to 46 °C in 3 s is 2 °C/s. The rate right now is the **derivative**, $\\frac{de}{dt}$: the slope of the graph.\n\n**Adding up over time** is a running total: an error of 2 for 5 s adds 10. It is the **integral**, $\\int e\\,dt$: the area under the error graph.\n\n**I** pushes in proportion to the running total. While any error is left it keeps growing, so it removes the offset. Too much gives overshoot. If the output is stuck at its limit the total **winds up**; anti-wind-up stops that.\n\n**D** pushes against the slope: it brakes before the PV arrives and cuts overshoot. It does nothing for a steady error, and it magnifies noise. Most blocks take it on the PV, not the error, so a set-point step gives no kick.\n\nAll together:\n\n$$u = K_p e + K_i \\int e\\,dt + K_d \\frac{de}{dt}$$\n\nBlocks in the times form use $K_c$, $T_i$, $T_d$: $K_i = \\frac{K_c}{T_i}$, $K_d = K_c T_d$.\n\n**Tuning by hand:** P first, then I to remove the offset, then a little D; test, then back off for margin. A longer dead time needs gentler gains.\n\n**Cascade:** in a servo drive, position gives the speed set-point, speed gives the current (torque) set-point. Inner loops are faster; tune from the inside out.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "video",
+   "title": "What Is PID Control? | Understanding PID Control, Part 1",
+   "url": "https://www.mathworks.com/videos/understanding-pid-control-part-1-what-is-pid-control--1527089264373.html",
+   "by": "MathWorks",
+   "minutes": 12,
+   "note": "The loop, and P, I and D, shown with pictures rather than maths."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "The Cascade Control Architecture",
+   "url": "https://controlguru.com/the-cascade-control-architecture/",
+   "by": "Control Guru",
+   "minutes": 9,
+   "note": "Inner and outer loops in a process plant."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Cascaded position control for servo drives explained",
+   "url": "https://www.synapticon.com/en/motion-control-academy/kaskadierte-positionsregelung",
+   "by": "Synapticon",
+   "minutes": 5,
+   "note": "Position, speed and current loops in a servo drive."
+  }
+ ],
+ "sources": [
+  "K. J. Åström and T. Hägglund, Advanced PID Control (ISA, 2006)",
+  "K. J. Åström and T. Hägglund, PID Controllers: Theory, Design, and Tuning, 2nd edition (ISA, 1995)",
+  "J. G. Ziegler and N. B. Nichols, Optimum Settings for Automatic Controllers, Transactions of the ASME 64 (1942)",
+  "G. Ellis, Control System Design Guide, 4th edition (Butterworth-Heinemann, 2012)",
+  "Siemens, SIMATIC S7-1200, S7-1500 PID control, Function Manual"
+ ],
+ "formulas": [
+  {
+   "name": "The error",
+   "tex": "e = SP - PV",
+   "match": [
+    "e=SP-PV"
+   ],
+   "says": "How far off you are: where you want it minus where it is. Plus means below the set-point; minus means it has gone past.",
+   "symbols": [
+    [
+     "e",
+     "the error (same units as the PV, e.g. °C)"
+    ],
+    [
+     "SP",
+     "the set-point: where you want it (one name, not S times P)"
+    ],
+    [
+     "PV",
+     "the process value: what the sensor reads now (one name, not P times V)"
+    ]
+   ],
+   "example": "set 60 °C, reading 57 °C: $e = 60 - 57 = 3$ °C. Reading 62 °C: $e = 60 - 62 = -2$ °C, too hot."
+  },
+  {
+   "name": "P alone",
+   "tex": "u = K_p e",
+   "match": [
+    "u=K_pe"
+   ],
+   "says": "The output is the gain times the error now. Double the error, double the push.",
+   "symbols": [
+    [
+     "u",
+     "the controller's output (% of valve, heater or torque)"
+    ],
+    [
+     "K_p",
+     "the proportional gain: the number you set (% per unit of error)"
+    ],
+    [
+     "e",
+     "the error now"
+    ]
+   ],
+   "example": "$K_p = 5$, error 2 °C: $u = 5 \\times 2 = 10$%."
+  },
+  {
+   "name": "The offset P leaves",
+   "tex": "e = \\frac{1}{1 + K K_p}",
+   "match": [
+    "\\frac{1}{1+KK_p}"
+   ],
+   "says": "With P only, a set-point step of 1 settles with this much error left. More gain, less offset, but never none.",
+   "symbols": [
+    [
+     "e",
+     "the error left once settled, as a fraction of the step"
+    ],
+    [
+     "K",
+     "the plant gain: how far the PV moves for each 1 of output, once settled"
+    ],
+    [
+     "K_p",
+     "the proportional gain"
+    ]
+   ],
+   "example": "$K = 1$, $K_p = 4$: $e = \\frac{1}{1 + 4} = 0.2$, a fifth of the step left."
+  },
+  {
+   "name": "Rate of change: the slope",
+   "tex": "\\frac{de}{dt} \\approx \\frac{\\Delta e}{\\Delta t}",
+   "match": [
+    "\\frac{de}{dt}"
+   ],
+   "says": "How fast the error is changing: the change divided by the time it took. Over a very short time this is the derivative, which D uses.",
+   "symbols": [
+    [
+     "\\frac{de}{dt}",
+     "the rate of change of the error right now, per second (read \"d e by d t\")"
+    ],
+    [
+     "\\Delta e",
+     "the change in the error: the later value minus the earlier one"
+    ],
+    [
+     "\\Delta t",
+     "the time the change took (s)"
+    ],
+    [
+     "\\approx",
+     "about equal: exact when the time is very short"
+    ]
+   ],
+   "example": "error 5 °C, then 4.5 °C a second later: $\\frac{4.5 - 5}{1} = -0.5$ °C per second, shrinking. A tank from 40 °C to 46 °C in 3 s: $6 \\div 3 = 2$ °C/s."
+  },
+  {
+   "name": "I: a running total",
+   "tex": "\\int e\\,dt",
+   "match": [
+    "\\int"
+   ],
+   "says": "The error added up over time: each moment's error times how long it lasted, all added together. On a graph, the area under the error line.",
+   "symbols": [
+    [
+     "\\int",
+     "the long S: add up (sum)"
+    ],
+    [
+     "e",
+     "the error at each moment"
+    ],
+    [
+     "dt",
+     "each small slice of time: it says you add up over time"
+    ]
+   ],
+   "example": "an error of 2 for 5 s adds $2 \\times 5 = 10$. Then −1 for 4 s takes 4 back off: 6."
+  },
+  {
+   "name": "The I term",
+   "tex": "u_I = K_i \\int e\\,dt",
+   "match": [
+    "u_I"
+   ],
+   "says": "The I part of the output: the integral gain times the running total. It keeps growing while any error is left.",
+   "symbols": [
+    [
+     "u_I",
+     "the I part of the output (%)"
+    ],
+    [
+     "K_i",
+     "the integral gain (per second)"
+    ],
+    [
+     "\\int e\\,dt",
+     "the running total of the error"
+    ]
+   ],
+   "example": "$K_i = 0.1$ /s, total 10: $u_I = 0.1 \\times 10 = 1$%."
+  },
+  {
+   "name": "The D term",
+   "tex": "u_D = K_d \\frac{de}{dt}",
+   "match": [
+    "u_D"
+   ],
+   "says": "The D part of the output: the derivative gain times how fast the error is changing. It brakes when the error is shrinking fast, and gives nothing when it is steady.",
+   "symbols": [
+    [
+     "u_D",
+     "the D part of the output (%)"
+    ],
+    [
+     "K_d",
+     "the derivative gain (seconds)"
+    ],
+    [
+     "\\frac{de}{dt}",
+     "how fast the error is changing (per second)"
+    ]
+   ],
+   "example": "$K_d = 3$ s, error falling at 0.5 °C/s: $u_D = 3 \\times (-0.5) = -1.5$%."
+  },
+  {
+   "name": "The PID equation (parallel form)",
+   "tex": "u = K_p e + K_i \\int e\\,dt + K_d \\frac{de}{dt}",
+   "match": [
+    "K_i\\int",
+    "K_d\\frac{de}{dt}"
+   ],
+   "says": "The output is three pushes added up: P for the error now, I for its history (running total), D for its trend (slope).",
+   "symbols": [
+    [
+     "u",
+     "the controller's output (%)"
+    ],
+    [
+     "K_p, K_i, K_d",
+     "the three gains you set; the small letters are names, not multiplied"
+    ],
+    [
+     "e",
+     "the error, $SP - PV$"
+    ],
+    [
+     "\\int e\\,dt",
+     "the running total of the error"
+    ],
+    [
+     "\\frac{de}{dt}",
+     "how fast the error is changing"
+    ]
+   ],
+   "example": "$K_p = 2$, $K_i = 0.1$, $K_d = 4$; error 3, total 20, falling at 0.5 a second: $6 + 2 - 2 = 6$%."
+  },
+  {
+   "name": "D on the measurement",
+   "tex": "u = K_p e + K_i \\int e\\,dt - K_d \\frac{dPV}{dt}",
+   "match": [
+    "\\frac{dPV}{dt}"
+   ],
+   "says": "What most PLC blocks do: D watches how fast the PV moves, not the error, so a jump in the set-point gives no kick. With a steady set-point it is the same thing.",
+   "symbols": [
+    [
+     "\\frac{dPV}{dt}",
+     "how fast the process value is changing (per second)"
+    ],
+    [
+     "-K_d",
+     "minus: a rising PV takes output off"
+    ]
+   ],
+   "example": "PV rising at 0.5 °C/s, $K_d = 3$ s: D takes off $3 \\times 0.5 = 1.5$%."
+  },
+  {
+   "name": "Times form (standard form)",
+   "tex": "u = K_c\\left(e + \\frac{1}{T_i}\\int e\\,dt + T_d\\frac{de}{dt}\\right)",
+   "match": [
+    "\\frac{1}{T_i}"
+   ],
+   "says": "The same controller with one gain and two times. Many PLC blocks use this form.",
+   "symbols": [
+    [
+     "K_c",
+     "the controller gain: the same job as $K_p$"
+    ],
+    [
+     "T_i",
+     "the integral time (s): longer means **less** I"
+    ],
+    [
+     "T_d",
+     "the derivative time (s): longer means more D"
+    ]
+   ],
+   "example": "$K_c = 2$, $T_i = 20$ s, $T_d = 2$ s is the same as $K_p = 2$, $K_i = 0.1$ /s, $K_d = 4$ s."
+  },
+  {
+   "name": "Integral gain from integral time",
+   "tex": "K_i = \\frac{K_c}{T_i}",
+   "match": [
+    "\\frac{K_c}{T_i}"
+   ],
+   "says": "To move a setting from the times form to the gains form, divide the gain by the integral time.",
+   "symbols": [
+    [
+     "K_i",
+     "the integral gain (per second)"
+    ],
+    [
+     "K_c",
+     "the controller gain"
+    ],
+    [
+     "T_i",
+     "the integral time (s)"
+    ]
+   ],
+   "example": "$K_c = 2.4$, $T_i = 10$ s: $K_i = 0.24$ /s."
+  },
+  {
+   "name": "Derivative gain from derivative time",
+   "tex": "K_d = K_c T_d",
+   "match": [
+    "K_cT_d"
+   ],
+   "says": "Multiply the gain by the derivative time.",
+   "symbols": [
+    [
+     "K_d",
+     "the derivative gain (s)"
+    ],
+    [
+     "K_c",
+     "the controller gain"
+    ],
+    [
+     "T_d",
+     "the derivative time (s)"
+    ]
+   ],
+   "example": "$K_c = 2.4$, $T_d = 2.5$ s: $K_d = 6$ s."
+  },
+  {
+   "name": "Time constant from a step test",
+   "tex": "\\tau = t_{63} - \\theta",
+   "match": [
+    "\\tau="
+   ],
+   "says": "Time from when the PV starts to move until it is 63% of the way to its new value. Leave out the dead time.",
+   "symbols": [
+    [
+     "\\tau",
+     "tau, the time constant (s)"
+    ],
+    [
+     "t_{63}",
+     "the time the PV reaches 63% of its change, counted from the step (s)"
+    ],
+    [
+     "\\theta",
+     "theta, the dead time: the wait before it moves at all (s)"
+    ]
+   ],
+   "example": "starts moving at 5 s, 63% at 65 s: $\\tau = 65 - 5 = 60$ s."
+  },
+  {
+   "name": "Ziegler-Nichols (closed loop, PID)",
+   "tex": "K_c = 0.6K_u, T_i = \\frac{T_u}{2}, T_d = \\frac{T_u}{8}",
+   "match": [
+    "0.6K_u"
+   ],
+   "says": "Starting settings from the gain that makes a P-only loop swing steadily and the time of one swing. Usually too lively: back off from here.",
+   "symbols": [
+    [
+     "K_u",
+     "the ultimate gain: P-only gain that makes steady swings"
+    ],
+    [
+     "T_u",
+     "the ultimate period: the time of one full swing (s)"
+    ],
+    [
+     "K_c, T_i, T_d",
+     "the settings, in the times form"
+    ]
+   ],
+   "example": "$K_u = 4$, $T_u = 20$ s: $K_c = 2.4$, $T_i = 10$ s, $T_d = 2.5$ s."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-hill",
+   "type": "mcq",
+   "stage": "try",
+   "level": 5.5,
+   "q": "A simple cruise control opens the throttle in proportion to how far the car is below the set speed: 10 mph short gets twice the throttle of 5 mph short. You set 70 mph and drive up a long, steady hill. Where does the speed settle?",
+   "options": [
+    "Exactly 70 mph",
+    "It keeps falling until the car stops",
+    "A little below 70 mph, and it stays there",
+    "Above 70 mph"
+   ],
+   "answer": 2,
+   "why": "Holding speed up a hill needs extra throttle. This controller only gives throttle while there **is** a shortfall, so it settles a little under 70: just far enough short to hold the throttle the hill needs. Exactly 70 would mean no shortfall, so no extra throttle, and the car would slow again. Getting rid of that last bit of shortfall is the job of **integral** action, coming up."
+  },
+  {
+   "id": "loop",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The loop",
+   "body": "A controller compares where the process **is** with where it **should be**:\n\n- the **set-point** (SP): where you want it, say 38 °C for a shower\n- the **process value** (PV): what the sensor says now, say 35 °C\n- the **error**: $e = SP - PV$, here $38 - 35 = 3$ °C\n\nFrom the error it works out an **output**, called $u$: how far to open the valve, how hard to drive the heater or the motor. The process answers, the sensor measures again, and round it goes. That circle is the **loop**.\n\nOn the graph the dashed line is the set-point and the rising line is the PV.",
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 1.2,
+     "ki": 0.2,
+     "kd": 0,
+     "controls": []
+    }
+   },
+   "more": "You in the shower are a control loop. You want 38 °C: that is your set-point. Your skin says 35 °C: that is the process value. The gap, 3 °C too cold, is the error. Your hand on the tap is the output.\n\nThe error has a sign. Too cold: $38 - 35 = 3$, so open the hot more. Too hot at 41 °C: $38 - 41 = -3$, a minus error, so turn it back. Zero error: leave the tap alone.\n\nA PLC does the same with numbers. It reads the PV, works out the error, sets the output, and repeats every scan or every fixed time step, say every 100 ms. The rest of this lesson is about one question: **given the error, how hard should it push?**"
+  },
+  {
+   "id": "error-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A tank's set-point is {sp} °C. The sensor reads {pv} °C. What is the error $e = SP - PV$?",
+   "vars": {
+    "sp": [
+     40,
+     80,
+     5
+    ],
+    "gap": [
+     -6,
+     8,
+     1
+    ]
+   },
+   "let": {
+    "pv": "sp - gap"
+   },
+   "answer": "sp - pv",
+   "unit": "°C",
+   "abs": 0.01,
+   "work": "$e = SP - PV = {sp} - {pv} = {answer}$ °C",
+   "why": "Set-point minus process value. A plus error means the PV is **below** where you want it (too cold here); a minus error means it has gone past (too hot). Taking it the other way round, PV − SP, flips the sign, and a controller with the sign wrong drives the wrong way."
+  },
+  {
+   "id": "plant",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The process answers late and slowly",
+   "body": "Change the output, and most processes do not answer at once. A heated tank shows two things:\n\n- **Dead time**, written $\\theta$ (theta): for a while nothing happens at all, while the hot water travels down the pipe to the sensor.\n- Then a slow curve. The **time constant**, $\\tau$ (tau), is how long it takes, once it starts moving, to get **63%** of the way to where it will end up.\n\nBoth are in seconds. They are why control is hard: the controller is always acting on news that is a little old.",
+   "more": "Picture turning up a gas oven. For the first few seconds the thermometer does not move at all: that is the dead time. Then it climbs, quickly at first, then more and more slowly as it nears its new temperature.\n\nSay the oven goes from 20 °C to 220 °C, a change of 200 °C, and starts to move 5 s after you turn the knob. 63% of 200 is 126, so when it reads $20 + 126 = 146$ °C, one time constant has passed since it **started moving**. If that is at 65 s, the time constant is $65 - 5 = 60$ s.\n\nWhy 63%? That is where this kind of curve always is after one time constant, whatever the process. After five time constants it is all but 1% of the way."
+  },
+  {
+   "id": "tau",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.5,
+   "q": "After a step in the output, the PV starts to move {th} s later and reaches 63% of its final change at {t63} s. What is the time constant?",
+   "vars": {
+    "th": [
+     1,
+     6,
+     0.5
+    ],
+    "tc": [
+     5,
+     40,
+     1
+    ]
+   },
+   "let": {
+    "t63": "th + tc"
+   },
+   "answer": "t63 - th",
+   "unit": "s",
+   "tolerance": 0.01,
+   "work": "$\\tau = {t63} - {th} = {answer}$ s",
+   "why": "A first-order lag reaches 63.2% of its final change one time constant after it starts moving. Count from when it starts, after the dead time.",
+   "hint": "Count from when the PV **starts** to move, not from when the output changed."
+  },
+  {
+   "id": "p-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "P: push in proportion to the error",
+   "body": "The simplest controller: the bigger the error **now**, the harder it pushes.\n\n$$u = K_p e$$\n\n$u$ is the output, $e$ the error, and $K_p$ (say \"K p\") the **proportional gain**: a number you choose. With $K_p = 5$, an error of 2 °C gives an output of 10%; an error of 1 °C gives 5%.\n\nThe catch: as the PV gets close, the error shrinks, so the push shrinks. It settles where the error is just big enough to make the output the process needs. So some error is always left: the **offset**.",
+   "more": "Think of a spring holding a door shut in the wind. The further the door opens, the harder the spring pulls back: that is P. But the spring only pulls if the door is open a little. So in a steady wind the door rests slightly open, just far enough for the spring to balance the wind. That gap is the offset.\n\nWith numbers: say a tank heater needs 20% power to hold the tank near its set-point. With $K_p = 5$, P only gives 20% when the error is $20 \\div 5 = 4$ °C. So the tank sits about 4 °C short. Double $K_p$ to 10 and it sits about $20 \\div 10 = 2$ °C short: smaller, but still there. Turn the gain up too far and the loop overshoots and swings instead."
+  },
+  {
+   "id": "p-output",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "P only, with $K_p$ = {kp} % per °C. The set-point is {sp} °C and the tank reads {pv} °C. What output does P give?",
+   "vars": {
+    "kp": [
+     2,
+     8,
+     1
+    ],
+    "sp": [
+     50,
+     70,
+     5
+    ],
+    "gap": [
+     1,
+     6,
+     1
+    ]
+   },
+   "let": {
+    "pv": "sp - gap"
+   },
+   "answer": "kp * (sp - pv)",
+   "unit": "%",
+   "abs": 0.01,
+   "work": "$e = {sp} - {pv} = {gap}$ °C, so $u = K_p e = {kp} \\times {gap} = {answer}$%",
+   "why": "First the error, then times the gain. Halve the error and the output halves too: that is what **proportional** means. Multiplying the reading itself ({kp} × {pv}) is the usual slip: P works on the gap, not on the reading.",
+   "hint": "Work out the error first: set-point minus reading."
+  },
+  {
+   "id": "p-only",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.5,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 2,
+     "ki": 0,
+     "kd": 0,
+     "controls": [
+      "kp"
+     ]
+    }
+   },
+   "intro": "The plant here is a lag with a dead time: it answers slowly and late, like a heated tank. The dashed line is the set point. Only P is on.",
+   "ask": {
+    "type": "mcq",
+    "q": "With only P, where does the PV end up?",
+    "options": [
+     "Short of the set point, however long you wait",
+     "Exactly on the set point",
+     "Above the set point",
+     "Back at zero"
+    ],
+    "answer": 0,
+    "why": "P needs an error to make any output, so it settles where the error is just big enough to hold the PV there. More $K_p$ shrinks that offset but brings overshoot.",
+    "hint": "To make any output at all, P needs some error. What happens to its output if the error reaches zero?"
+   }
+  },
+  {
+   "id": "rate-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What rate of change means",
+   "body": "**Rate of change** is how fast something is changing: the change divided by the time it took.\n\nA tank goes from 40 °C to 46 °C in 3 s. It changed 6 °C, so it is changing at $6 \\div 3 = 2$ °C per second.\n\nOn a graph against time, the rate is the **slope**: steep is fast, flat is not changing (a rate of 0), sloping down is falling (a minus rate).\n\nThe rate **right now**, over a moment too short to see, is what maths calls the **derivative**. For the error it is written $\\frac{de}{dt}$, read \"d e by d t\": how fast $e$ is changing, per second. It is one symbol, not a fraction to cancel.",
+   "more": "A car's speedometer shows a rate of change: how fast the distance is growing. Drive 30 m in 2 s and your average speed is $30 \\div 2 = 15$ m/s. The speedometer does the same sum over a tiny slice of time, so it shows the speed **at this instant**, even while you speed up or brake.\n\nThe controller does it with the error. If the error was 5 °C one second and 4.5 °C the next, it is changing at $4.5 - 5 = -0.5$ °C per second: shrinking, so the PV is closing in on the set-point.\n\nThe rate says nothing about how big the error is. An error sitting still at 10 °C has a rate of 0; a tiny error that jumps about has a big rate."
+  },
+  {
+   "id": "rate-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "The temperature in a tank went from {a} °C to {b} °C in {t} s. How fast is it changing?",
+   "vars": {
+    "a": [
+     20,
+     60,
+     2
+    ],
+    "r": {
+     "pick": [
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5,
+      3
+     ]
+    },
+    "t": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      6
+     ]
+    }
+   },
+   "let": {
+    "b": "a + r * t",
+    "rise": "b - a"
+   },
+   "answer": "(b - a) / t",
+   "unit": "°C/s",
+   "tolerance": 0.01,
+   "work": "Change: ${b} - {a} = {rise}$ °C. Time: {t} s. Rate: ${rise} \\div {t} = {answer}$ °C per second.",
+   "why": "Rate of change is the change divided by the time: {rise} °C over {t} s. Dividing the reading itself by the time ({b} ÷ {t}) is the tempting slip: it is the **change** that counts, not the reading.",
+   "hint": "First find how much it changed: the later reading minus the earlier one."
+  },
+  {
+   "id": "sum-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Adding up over time",
+   "body": "A **running total** of the error: every second, add that second's error to a total that is kept.\n\nAn error of 2 that lasts 5 s adds $2 \\times 5 = 10$ to the total. An error of 0.5 for 20 s also adds 10: a small error kept up for long counts as much as a big one for a moment.\n\nOn a graph of error against time, the total is the **area under the line**.\n\nAdded up over moments too short to see, this is what maths calls the **integral**. It is written $\\int e\\,dt$: the long S is for **sum**, $e$ is what is added up, and $dt$ says \"over time\".",
+   "more": "Think of your pay. £12 an hour for 5 hours adds £60 to what you have earned this week. Another 3 hours adds £36 more. The total keeps growing while you keep working, and stays put when you stop. It never drops back to zero by itself.\n\nThe integral of the error works the same way: the error is the rate, time is the hours. An error of 3 °C for 4 s adds 12 (its unit is °C × s). If the PV then overshoots and the error is −1 °C for 6 s, that takes 6 back off: the total is now 6.\n\nOn the graph, 3 high for 4 s is a rectangle with an area of $3 \\times 4 = 12$. That is why the integral is called the area under the curve."
+  },
+  {
+   "id": "sum-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "The error sits at {e} °C for {t} s. How much does that add to the running total of the error (the integral)?",
+   "vars": {
+    "e": [
+     0.5,
+     4,
+     0.5
+    ],
+    "t": [
+     2,
+     12,
+     1
+    ]
+   },
+   "answer": "e * t",
+   "unit": "°C·s",
+   "tolerance": 0.01,
+   "work": "${e} \\times {t} = {answer}$ °C·s",
+   "why": "Adding up over time is the error times how long it lasted: the area of a rectangle {e} high and {t} wide. Adding the error and the time ({e} + {t}) is the slip: every second adds another {e}.",
+   "hint": "Every second adds {e}. How many seconds are there?"
+  },
+  {
+   "id": "i-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "I: the running total removes the offset",
+   "body": "The **I** term pushes in proportion to the running total of the error:\n\n$$u_I = K_i \\int e\\,dt$$\n\n$u_I$ is the I part of the output, and $K_i$ the **integral gain**, per second. With $K_i = 0.1$ /s, an error of 2 for 5 s (a total of 10) adds $0.1 \\times 10 = 1$% to the output, and it keeps adding while the error lasts.\n\nSo while **any** error is left, the output keeps creeping up. The only place the loop can rest is **zero error**. Then the total stops growing but does not vanish: it holds the output the process needs. That is how I removes the offset P leaves.",
+   "more": "Back in the shower, 1 °C too cold. P alone turns the tap a set amount for that 1 °C and stops. I is you still feeling a little cold, so every few seconds you nudge the tap a bit more. While it is still cold you keep nudging. When it is just right you stop, and leave the tap where it has got to.\n\nWith numbers: $K_i = 0.2$ /s and a steady error of 0.5 °C. Each second the total grows by 0.5, so the I output grows by $0.2 \\times 0.5 = 0.1$% a second. After 30 s that is 3% more output, and still rising, until the error is gone.\n\nToo much $K_i$ and it nudges too hard: by the time the PV arrives, the total is too big, and it overshoots."
+  },
+  {
+   "id": "add-i",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.5,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 1.2,
+     "ki": 0,
+     "kd": 0,
+     "controls": [
+      "ki"
+     ]
+    }
+   },
+   "intro": "$K_p$ is 1.2. Bring in some integral action with $K_i$.",
+   "ask": {
+    "type": "mcq",
+    "q": "With $K_i$ at about 0.1, what happens to the offset?",
+    "options": [
+     "It goes: the PV ends on the set point",
+     "It doubles",
+     "It stays the same, only faster",
+     "The loop becomes unstable at once"
+    ],
+    "answer": 0,
+    "why": "While any error remains, the integral keeps growing and pushing, so the only place the loop can rest is with no error at all."
+   }
+  },
+  {
+   "id": "d-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "D: the brake",
+   "body": "The **D** term looks at the **slope**: how fast the error is changing right now.\n\n$$u_D = K_d \\frac{de}{dt}$$\n\n$u_D$ is the D part of the output, and $K_d$ the **derivative gain**, in seconds.\n\nAs the PV rushes up towards the set-point, the error shrinks fast, so $\\frac{de}{dt}$ is minus and D takes output **off**: it brakes before you arrive, so there is less overshoot. With $K_d = 3$ s and the error falling at 0.5 °C a second, D takes off $3 \\times 0.5 = 1.5$%.\n\nWhen nothing is changing, D gives nothing, however big the error.",
+   "more": "Driving up to a red light, you do not wait until the line to brake: you see how fast the gap is closing and ease off early. That is D. Of two cars the same distance from the line, the one closing faster brakes harder.\n\nWith numbers: $K_d = 4$ s. The error drops from 3 °C to 2 °C in one second, a rate of −1 °C/s. D gives $4 \\times (-1) = -4$%: 4% off the output. A second later the error is falling at only 0.2 °C/s, so D takes off just 0.8%.\n\nD cannot fix an offset: a steady error has a slope of 0, so D does nothing about it. It only watches movement."
+  },
+  {
+   "id": "add-d",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.7,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 6,
+     "ki": 0,
+     "kd": 0,
+     "controls": [
+      "kd"
+     ]
+    }
+   },
+   "intro": "P only at $K_p$ = 6: about 42% overshoot. Bring in $K_d$.",
+   "ask": {
+    "type": "mcq",
+    "q": "What does raising $K_d$ to 3 do?",
+    "options": [
+     "Cuts the overshoot, to about 24%",
+     "Removes the offset",
+     "Makes it unstable",
+     "Nothing"
+    ],
+    "answer": 0,
+    "why": "D pushes against the PV's rate of change, braking the rise before it overshoots. It does nothing for the steady offset: that is I's job."
+   }
+  },
+  {
+   "id": "pid-terms",
+   "type": "concept",
+   "stage": "learn",
+   "title": "P, I and D together",
+   "body": "Add the three pushes and you have the **PID** equation:\n\n$$u = K_p e + K_i \\int e\\,dt + K_d \\frac{de}{dt}$$\n\n- $u$: the output (% of valve, heater or torque)\n- $e$: the error now; $\\int e\\,dt$: its running total; $\\frac{de}{dt}$: how fast it is changing\n- $K_p$, $K_i$, $K_d$: the three gains, the knobs you set\n\nIn words: output = P (the error now) + I (its history) + D (its trend). Set a gain to 0 and that term is off.\n\nMany PLC blocks use one gain $K_c$ with an **integral time** $T_i$ and a **derivative time** $T_d$ instead. They convert: $K_i = \\frac{K_c}{T_i}$ and $K_d = K_c T_d$. Check which form yours expects.",
+   "more": "Read it as three pushes, added up.\n\nSay $K_p = 2$, $K_i = 0.1$ /s and $K_d = 4$ s. Right now the error is 3 °C, its running total is 20 °C·s, and the error is falling at 0.5 °C a second.\n\n- P: $2 \\times 3 = 6$%\n- I: $0.1 \\times 20 = 2$%\n- D: $4 \\times (-0.5) = -2$%\n\nOutput: $6 + 2 - 2 = 6$%.\n\nP gives the main push, I adds what the past has built up, and D eases off because the PV is already closing in. A moment later the numbers have changed, and the controller works it out again.\n\nThe times form says the same thing: $T_i = 20$ s with $K_c = 2$ is $K_i = 2 \\div 20 = 0.1$ /s."
+  },
+  {
+   "id": "pid-sum",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.3,
+   "q": "$K_p$ = {kp}, $K_i$ = {ki} /s, $K_d$ = {kd} s. Right now the error is {e} °C, its running total is {s} °C·s, and the error is **falling** at {r} °C a second. What is the output $u$?",
+   "vars": {
+    "kp": [
+     1,
+     4,
+     0.5
+    ],
+    "ki": {
+     "pick": [
+      0.05,
+      0.1,
+      0.2
+     ]
+    },
+    "kd": [
+     1,
+     5,
+     1
+    ],
+    "e": [
+     1,
+     5,
+     0.5
+    ],
+    "s": [
+     10,
+     40,
+     5
+    ],
+    "r": {
+     "pick": [
+      0.2,
+      0.5,
+      1
+     ]
+    }
+   },
+   "let": {
+    "up": "kp * e",
+    "ui": "ki * s",
+    "ud": "-kd * r"
+   },
+   "answer": "up + ui + ud",
+   "unit": "%",
+   "abs": 0.01,
+   "work": "P: ${kp} \\times {e} = {up}$. I: ${ki} \\times {s} = {ui}$. D: ${kd} \\times (-{r}) = {ud}$. Total: $u = {answer}$%",
+   "why": "Work out each term, then add them. D is **minus** here because the error is falling: $\\frac{de}{dt} = -{r}$, so D takes output off. Adding D as a plus is the usual slip.",
+   "hint": "Three pushes: gain × error, gain × total, gain × rate. Falling means the rate is a minus number."
+  },
+  {
+   "id": "cascade",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Cascaded loops",
+   "body": "A servo drive uses not one loop but three, one inside another: a **cascade**.\n\n- The **position loop** compares where the axis should be with where the encoder says it is. Its output is the **speed set-point**.\n- The **speed loop** compares that with the measured speed. Its output is the **torque (current) set-point**.\n- The **current loop**, innermost, sets the motor current, and so the torque.\n\nEach inner loop must be several times faster than the one around it, so the outer loop can trust it to do as it is told. So you tune from the **inside out**: current, then speed, then position.",
+   "more": "Think of a site manager, a supervisor and a fitter. The manager (position) knows where the job must be and tells the supervisor how fast to go. The supervisor (speed) turns that into how hard to push, and tells the fitter. The fitter (current) does the pushing, quickly and exactly.\n\nIf the fitter is slow or unreliable, the supervisor's plans go wrong, and the manager's with them. So you sort out the fitter first, then the supervisor, then the manager.\n\nIn a drive the current loop is the quickest by far, and is often set up automatically from the motor data. The position loop is often P only; the speed and current loops are usually PI. Process plants use cascades too: a temperature loop whose output is the set-point of a steam flow loop."
+  },
+  {
+   "id": "cascade-feed",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a servo drive's cascade, what does the speed loop's output become?",
+   "options": [
+    "The set-point for the position loop",
+    "The set-point for the current (torque) loop",
+    "The position the axis should reach",
+    "The motor voltage, with no loop after it"
+   ],
+   "answer": 1,
+   "why": "Each loop's output is the set-point of the loop inside it: position gives the speed set-point, speed gives the torque (current) set-point, and the current loop drives the motor. The position loop is **outside** the speed loop, so it takes nothing from it."
+  },
+  {
+   "id": "sum-negative",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.5,
+   "q": "The error is {a} °C for {t1} s. Then the PV overshoots, and the error is −{b} °C for {t2} s. What is the running total of the error (the integral) at the end?",
+   "vars": {
+    "a": [
+     2,
+     5,
+     1
+    ],
+    "t1": [
+     4,
+     10,
+     1
+    ],
+    "b": [
+     0.5,
+     2,
+     0.5
+    ],
+    "t2": [
+     2,
+     8,
+     2
+    ]
+   },
+   "let": {
+    "first": "a * t1",
+    "second": "b * t2"
+   },
+   "answer": "first - second",
+   "unit": "°C·s",
+   "abs": 0.01,
+   "work": "${a} \\times {t1} = {first}$, then $-{b} \\times {t2} = -{second}$. Total: ${first} - {second} = {answer}$ °C·s",
+   "why": "A minus error takes away from the running total. That is how I unwinds after an overshoot, and why too much I gives a big overshoot: the total can only come down while the PV is on the wrong side of the set-point.",
+   "hint": "Each part is error × time. The overshoot part is a minus error, so it takes off."
+  },
+  {
+   "id": "p-high",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.8,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 4,
+     "ki": 0,
+     "kd": 0,
+     "controls": [
+      "kp"
+     ]
+    }
+   },
+   "intro": "Now take $K_p$ up, a step at a time, from 4 towards 9.",
+   "ask": {
+    "type": "mcq",
+    "q": "What happens as $K_p$ goes up?",
+    "options": [
+     "It gets faster but overshoots more, until around 9 the swings grow and the loop is unstable",
+     "It gets slower",
+     "The offset grows",
+     "Nothing changes: P only sets the final value"
+    ],
+    "answer": 0,
+    "why": "More gain answers harder. With the dead time, the correction arrives late; turn the gain up far enough and each correction overshoots the last, so the swings grow."
+   }
+  },
+  {
+   "id": "too-much-i",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.0,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 1.2,
+     "ki": 0.1,
+     "kd": 0,
+     "controls": [
+      "ki"
+     ]
+    }
+   },
+   "intro": "$K_p$ 1.2 again. Compare $K_i$ = 0.1 with $K_i$ = 0.4.",
+   "ask": {
+    "type": "mcq",
+    "q": "What does too much integral action do?",
+    "options": [
+     "It overshoots and swings before settling (about 38% overshoot at 0.4)",
+     "It leaves an offset",
+     "It makes the rise slower",
+     "Nothing: more is always better"
+    ],
+    "answer": 0,
+    "why": "The running total has built up a lot of output by the time the PV reaches the set-point. It only shrinks when the error goes negative, so it takes an overshoot to unwind it. It does not leave an offset: removing the offset is what I is for."
+   }
+  },
+  {
+   "id": "dead-time",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.2,
+   "widget": {
+    "name": "pid",
+    "params": {
+     "kp": 1.2,
+     "ki": 0.2,
+     "kd": 0,
+     "controls": [
+      "theta"
+     ]
+    }
+   },
+   "intro": "Same gains ($K_p$ 1.2, $K_i$ 0.2); now change the plant's dead time from 2 s to 5 s.",
+   "ask": {
+    "type": "mcq",
+    "q": "What does the longer dead time do to this loop?",
+    "options": [
+     "Overshoot jumps (about 10% to 45%) and it takes nearly twice as long to settle",
+     "Nothing: the gains are the same",
+     "It removes the overshoot",
+     "It only delays the whole response by 3 s, shape unchanged"
+    ],
+    "answer": 0,
+    "why": "Dead time is the controller acting on old news. The longer it is, the gentler the gains must be. It is the main limit on how tight a loop can be tuned."
+   }
+  },
+  {
+   "id": "d-noise",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "The PV signal is noisy. Why can derivative action make things worse?",
+   "options": [
+    "D reacts to the rate of change, and noise changes fast, so the output jumps about",
+    "D ignores noise completely",
+    "D adds a steady offset",
+    "D slows the scan"
+   ],
+   "answer": 0,
+   "why": "Noise wiggles fast, and fast wiggles have a steep slope even when they are small. D multiplies that slope, so the output jumps about. Filter the derivative (most blocks have a filter time), filter the signal, or leave D out. D does not add an offset: a steady signal has a slope of 0."
+  },
+  {
+   "id": "ki-from-ti",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.2,
+   "q": "Some blocks use one gain $K_c$ and an **integral time** $T_i$ (in seconds): their I term is $\\frac{K_c}{T_i}\\int e\\,dt$. A block has $K_c$ = {kc} and $T_i$ = {ti} s. What is the equivalent integral gain $K_i$ in the parallel form?",
+   "vars": {
+    "kc": [
+     0.5,
+     4,
+     0.5
+    ],
+    "ti": [
+     5,
+     60,
+     5
+    ]
+   },
+   "answer": "kc / ti",
+   "unit": "/s",
+   "tolerance": 0.02,
+   "work": "$K_i = \\frac{K_c}{T_i} = \\frac{{kc}}{{ti}} = {answer}$ /s",
+   "why": "$\\frac{K_c}{T_i}\\int e\\,dt$ is the same as $K_i \\int e\\,dt$ with $K_i = \\frac{K_c}{T_i}$. So a **longer** $T_i$ means **less** integral action: the opposite way round to $K_i$, which is the usual trap when moving settings between blocks.",
+   "hint": "Match the two I terms: $K_i \\int e\\,dt$ and $\\frac{K_c}{T_i}\\int e\\,dt$."
+  },
+  {
+   "id": "tune-order",
+   "type": "order",
+   "stage": "practise",
+   "level": 6.3,
+   "q": "Tuning by hand, a common order:",
+   "items": [
+    "Start with I and D off (or very small)",
+    "Raise P until the response is quick with a little overshoot",
+    "Add I until any offset goes in an acceptable time",
+    "Add a little D if the overshoot needs damping",
+    "Test with set-point steps and disturbances, then back off for margin"
+   ],
+   "why": "One term at a time, P first. Always leave some margin: the plant will change with load, wear and temperature."
+  },
+  {
+   "id": "zn",
+   "type": "steps",
+   "stage": "practise",
+   "level": 6.5,
+   "q": "Ziegler-Nichols, the closed-loop method: with P only, raise the gain until the loop swings steadily, neither dying away nor growing. That gain is $K_u$ = 4 (the **ultimate gain**) and one full swing takes $T_u$ = 20 s (the **ultimate period**). What starting PID settings does the classic table give?",
+   "steps": [
+    {
+     "ask": "The gain: $K_c = 0.6 K_u$",
+     "show": "$K_c = 0.6 \\times 4 = 2.4$"
+    },
+    {
+     "ask": "The integral time: $T_i = T_u / 2$",
+     "show": "$T_i = 20 / 2 = 10$ s, so $K_i = 2.4 / 10 = 0.24$ /s"
+    },
+    {
+     "ask": "The derivative time: $T_d = T_u / 8$",
+     "show": "$T_d = 20 / 8 = 2.5$ s, so $K_d = 2.4 \\times 2.5 = 6$ s"
+    }
+   ],
+   "why": "A starting point, usually too lively (the classic target is each swing a quarter of the one before). Most people back the gain off from here. The last step turns the times into gains with $K_i = \\frac{K_c}{T_i}$ and $K_d = K_c T_d$."
+  },
+  {
+   "id": "p-offset",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.8,
+   "q": "A P-only loop on a plant with a gain of 1 (hold the output at 1 and the PV settles at 1), $K_p$ = {kp}. The set point steps by 1. What error is left once it has settled?",
+   "vars": {
+    "kp": [
+     0.5,
+     5,
+     0.5
+    ]
+   },
+   "answer": "1 / (1 + kp)",
+   "tolerance": 0.02,
+   "work": "$e = \\frac{1}{1 + K K_p} = \\frac{1}{1 + {kp}} = {answer}$, with the plant gain $K = 1$.",
+   "why": "Once settled, the output is $K_p e$ and the PV is the plant gain times that, $K K_p e$. The PV is also $1 - e$ (the set-point minus the error). Put the two equal and solve: $e = \\frac{1}{1 + K K_p}$. More $K_p$ shrinks the offset but never to zero: that is why I is needed.",
+   "hint": "Two facts about the settled loop: PV = $K_p \\times e$ (plant gain 1), and PV = $1 - e$. Set them equal."
+  },
+  {
+   "id": "mix-rate-or-sum",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.5,
+   "q": "For the last 4 s the error has sat steady at 3 °C. What have the I and D terms been seeing?",
+   "options": [
+    "The running total is 3; the rate of change is 12",
+    "The running total rose by 12; the rate of change is 3 °C/s",
+    "The running total rose by 12 °C·s; the rate of change is 0",
+    "Both are 0, because nothing has changed"
+   ],
+   "answer": 2,
+   "why": "Adding up over time: 3 °C for 4 s adds $3 \\times 4 = 12$, so I keeps pushing harder. The **rate** of change is how fast the error moves, and a steady error does not move: 0, so D gives nothing. Size and time go into the total; only change goes into the rate."
+  },
+  {
+   "id": "mix-symptoms",
+   "type": "match",
+   "stage": "mix",
+   "level": 6.3,
+   "q": "Match each symptom to the first thing to change.",
+   "pairs": [
+    [
+     "Settles short of the set-point, however long you wait",
+     "Add integral action, or more of it"
+    ],
+    [
+     "Overshoots and rings on a step; the PV signal is clean",
+     "Less $K_p$ or $K_i$, or a little D"
+    ],
+    [
+     "The output jumps about with a noisy PV",
+     "Less D, or filter it"
+    ],
+    [
+     "Big overshoot after the valve sat fully open",
+     "Wind-up: set the output limits and anti-wind-up"
+    ],
+    [
+     "Slow and sluggish, with no overshoot",
+     "More $K_p$"
+    ]
+   ],
+   "why": "Each term has its own fingerprint. A steady offset is I's job. Overshoot is too much push (P or I) or too little brake (D). A jumpy output with noise is D magnifying the wiggles. Overshoot after the output was at its limit is the integral winding up."
+  },
+  {
+   "id": "kick",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 6.5,
+   "q": "Why do many PID blocks take the derivative of the PV rather than of the error?",
+   "options": [
+    "A step in the set point would make $de/dt$ huge for one scan and kick the output",
+    "It is cheaper to calculate",
+    "The PV is always smoother than the set point",
+    "The error has no derivative"
+   ],
+   "answer": 0,
+   "why": "The set-point jumps in an instant, so the error jumps, and the slope of a jump is enormous for one scan. D on the error turns that into a kick of output. The process itself cannot jump, so taking D on the PV gives the same braking without the kick: $u = K_p e + K_i \\int e\\,dt - K_d \\frac{dPV}{dt}$. While the set-point is steady, $\\frac{de}{dt} = -\\frac{dPV}{dt}$, so nothing else changes.",
+   "hint": "What is the slope of a step change?"
+  },
+  {
+   "id": "windup",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 6.3,
+   "q": "A valve is fully open but the PV is still below the set point. What goes wrong with the integral term, and what is the cure?",
+   "options": [
+    "It keeps growing (wind-up), so the PV overshoots badly later; anti-wind-up stops the integral while the output is at its limit",
+    "It shrinks to zero; the cure is more gain",
+    "Nothing: the integral stops by itself",
+    "The D term takes over; the cure is to remove D"
+   ],
+   "answer": 0,
+   "why": "The integral does not know the valve cannot open any further, so its running total keeps growing. When the PV finally gets there, all that stored-up output has to unwind, and the PV overshoots. PLC PID blocks normally include anti-wind-up (they stop or limit the integral at the output limits): make sure the output limits are set to match the valve or drive.",
+   "hint": "I adds up the error. What happens to a running total while the error cannot shrink?"
+  },
+  {
+   "id": "check-offset",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.5,
+   "q": "A tank loop with P only holds the water at 57 °C when the set-point is 60 °C, however long you wait. Which change makes it end exactly on 60 °C?",
+   "options": [
+    "Add derivative action (D)",
+    "Turn $K_p$ down",
+    "Add integral action (I)",
+    "Nothing: no loop can ever reach its set-point exactly"
+   ],
+   "answer": 2,
+   "why": "P needs an error to make any output, so it settles with 3 °C left. I keeps adding while any error remains, so it can only rest at zero error. D reacts to change, and a steady 3 °C is not changing, so D does nothing for it. Less $K_p$ makes the offset **bigger**."
+  },
+  {
+   "id": "match-terms",
+   "type": "match",
+   "stage": "check",
+   "level": 5.5,
+   "q": "Match each to what it means.",
+   "pairs": [
+    [
+     "Proportional",
+     "Reacts to the error now"
+    ],
+    [
+     "Integral",
+     "Reacts to the error's history; removes offset"
+    ],
+    [
+     "Derivative",
+     "Reacts to how fast things are changing"
+    ],
+    [
+     "Dead time",
+     "Delay before the PV responds at all"
+    ],
+    [
+     "Time constant",
+     "Time to reach 63% of a step, once moving"
+    ]
+   ]
+  },
+  {
+   "id": "flash-pid",
+   "type": "flash",
+   "stage": "check",
+   "front": "The PID equation, parallel form?",
+   "back": "$u = K_p e + K_i \\int e\\,dt + K_d \\frac{de}{dt}$, with $e = SP - PV$.\n\nP: the error now. I: its running total (the area under the error graph). D: how fast it is changing (the slope)."
+  },
+  {
+   "id": "flash-offset",
+   "type": "flash",
+   "stage": "check",
+   "level": 5.5,
+   "front": "Why does a P-only loop leave an offset, and what removes it?",
+   "back": "P needs an error to produce an output, so it settles with some error left. Integral action removes it."
+  }
+ ]
+}

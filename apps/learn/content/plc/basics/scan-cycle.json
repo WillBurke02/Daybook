@@ -1,0 +1,664 @@
+{
+ "id": "plc.basics.scan-cycle",
+ "title": "The scan cycle",
+ "tags": [
+  "plc",
+  "iec61131"
+ ],
+ "kind": "concept",
+ "level": 4.5,
+ "minutes": 20,
+ "goals": [
+  "Put the three steps of a scan in order and say what happens in each",
+  "Say when the program sees an input change, and when an output really changes",
+  "Explain why the last write to an output wins, and spot a double coil",
+  "Work out scans a second, pulses a scan and timer scans, and say when a pulse can be missed"
+ ],
+ "summary": "A PLC runs one loop, over and over: a **scan**.\n\n- **Read the inputs** into memory: the **input image**, a snapshot.\n- **Run the program** once, top to bottom, using that snapshot.\n- **Write the outputs** from the **output image** to the real terminals.\n- Then communications and housekeeping, and round again.\n\n**Inputs:** a change after the read waits for the next scan. The snapshot keeps the scan consistent: every line sees the same values.\n\n**Outputs:** the program only changes the output image; the real outputs are written once, at the end. So **the last write wins**. An output set TRUE then FALSE in one scan never comes on. Writing one output in two places (in ladder, the **double coil**) is a classic fault.\n\n**Seal-in:** `Motor := (Start OR Motor) AND NOT Stop;` The motor's own value, from the scan before, holds it in. Stop wins.\n\n**Scan time** is typically a few milliseconds.\n\n- scans a second: $1000 \\div$ the scan time in ms\n- a pulse shorter than a scan (plus the input filter) can be **missed**: use a **high-speed counter** or an interrupt input\n- a timer is accurate to about one scan\n- worst-case reaction is about **two scans**, plus I/O delays\n\n**Watchdog:** if a scan runs over the maximum cycle time (150 ms by default on Siemens S7-1200/1500), the CPU faults or stops.\n\n**Direct access** (such as %I0.0:P on Siemens) reads the real input mid-scan, bypassing the image. Use it sparingly.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "PLC Scan Time: What it is & How it Works",
+   "url": "https://www.plcacademy.com/scan-time-of-the-plc-program/",
+   "by": "PLC Academy",
+   "minutes": 6,
+   "note": "The three steps of a scan, and what scan time means."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Ladder logic 105: PLC scanning",
+   "url": "https://www.controleng.com/ladder-logic-105-plc-scanning/",
+   "by": "Control Engineering",
+   "minutes": 4,
+   "note": "The same ideas seen from ladder: rung order and the double coil."
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "Processing the scan cycle in RUN mode",
+   "url": "https://docs.tia.siemens.cloud/r/simatic_s7_1200_manual_collection_enus_20/plc-concepts/execution-of-the-user-program/processing-the-scan-cycle-in-run-mode",
+   "by": "Siemens",
+   "minutes": 4,
+   "note": "What an S7-1200 actually does each scan."
+  }
+ ],
+ "sources": [
+  "IEC 61131-3: Programmable controllers. Part 3: Programming languages",
+  "Siemens, SIMATIC S7-1200 Programmable controller, System Manual",
+  "Siemens, SIMATIC S7-1500 Cycle and response times, Function Manual",
+  "W. Bolton, Programmable Logic Controllers, 6th edition (Newnes, 2015)"
+ ],
+ "formulas": [
+  {
+   "name": "Scans a second",
+   "tex": "n = \\frac{1000}{t_{scan}}",
+   "match": [
+    "1000\\text{ms}\\div"
+   ],
+   "says": "How many scans the PLC makes each second: 1000 ms divided by the scan time in ms.",
+   "symbols": [
+    [
+     "n",
+     "scans a second"
+    ],
+    [
+     "t_{scan}",
+     "the scan time (ms)"
+    ]
+   ],
+   "example": "a 5 ms scan: $1000 \\div 5 = 200$ scans a second."
+  },
+  {
+   "name": "Pulses in one scan",
+   "tex": "n = f \\times t_{scan}",
+   "match": [
+    "\\times10^{-3}="
+   ],
+   "says": "How many pulses arrive while the PLC does one scan. More than about one, and an ordinary input cannot count them all.",
+   "symbols": [
+    [
+     "n",
+     "pulses a scan"
+    ],
+    [
+     "f",
+     "pulses a second (Hz)"
+    ],
+    [
+     "t_{scan}",
+     "the scan time (s; ms ÷ 1000)"
+    ]
+   ],
+   "example": "500 pulses a second, 8 ms scan: $500 \\times 0.008 = 4$ pulses a scan."
+  },
+  {
+   "name": "Scans before a timer is done",
+   "tex": "n \\approx \\frac{PT}{t_{scan}}",
+   "match": [
+    "\\text{s}\\div"
+   ],
+   "says": "The timer's preset time divided by the scan time: about how many scans pass before its output comes on. It is accurate to about one scan.",
+   "symbols": [
+    [
+     "PT",
+     "the timer's preset time (one name, not P times T)"
+    ],
+    [
+     "t_{scan}",
+     "the scan time, in the same units"
+    ]
+   ],
+   "example": "PT = T#2s, 10 ms scan: $2000 \\div 10 = 200$ scans."
+  },
+  {
+   "name": "Worst-case reaction time",
+   "tex": "t_{react} \\approx 2 \\times t_{scan}",
+   "says": "At worst an input change waits a whole scan to be read, then a whole scan to reach the outputs. Add the input filter and output delays on top.",
+   "symbols": [
+    [
+     "t_{react}",
+     "the time from the input changing to the output changing"
+    ],
+    [
+     "t_{scan}",
+     "the scan time"
+    ]
+   ],
+   "example": "10 ms scan: up to about 20 ms, plus the I/O delays."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-snapshot",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.8,
+   "q": "A PLC's program is one line, `Lamp := Button;`. The button is pressed while the program is half-way through a scan. When does the lamp come on?",
+   "options": [
+    "Straight away",
+    "At the end of this scan",
+    "At the end of the next scan",
+    "Only when the button is released"
+   ],
+   "answer": 2,
+   "why": "The program works from a copy of the inputs taken at the **start** of the scan, and that copy says the button was not pressed. The press is copied in at the start of the next scan, and the lamp is written out at the end of it. Not at the end of this scan: this scan's copy is already out of date."
+  },
+  {
+   "id": "idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Round and round",
+   "body": "A PLC runs one loop, over and over, as fast as it can:\n\n- **Read the inputs.** Every input is copied into memory, the *input image* (process image).\n- **Run the program**, top to bottom, once, using that copy.\n- **Write the outputs.** The *output image* is copied out to the real outputs.\n\nThen communications and housekeeping, and round again. One loop is a **scan**; a typical scan takes a few milliseconds.",
+   "more": "Think of a clerk who works in rounds. First they photograph the noticeboard: the inputs. Then they work through their instructions, top to bottom, using only the photo. Then they post all their replies at once: the outputs. Then back to the board for a fresh photo.\n\nAnything that changes on the board while they are working waits for the next photo. And a reply they change half-way through only goes out in its final form.\n\nWith numbers: a scan of 5 ms means $1000 \\div 5 = 200$ rounds a second. To a person pressing a button that is instant. To a sensor pulse lasting 2 ms it is not."
+  },
+  {
+   "id": "order-scan",
+   "type": "order",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "Put one scan in order.",
+   "items": [
+    "Read the inputs into the input image",
+    "Run the program from top to bottom",
+    "Write the output image to the outputs",
+    "Communications and housekeeping, then start again"
+   ],
+   "why": "Inputs, program, outputs; the exact place of communications and diagnostics varies by make, but the three core steps are always in this order."
+  },
+  {
+   "id": "step-it",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Step through a scan",
+   "body": "This is a start/stop circuit: `Motor := (Start OR Motor) AND NOT Stop;`\n\nTick **Start**, then press **Step** one phase at a time and watch when the input image, the output image and the lamp change.",
+   "widget": {
+    "name": "plc",
+    "params": {
+     "src": "Motor := (Start OR Motor) AND NOT Stop;",
+     "inputs": [
+      "Start",
+      "Stop"
+     ],
+     "outputs": [
+      "Motor"
+     ]
+    }
+   },
+   "more": "The line reads: Motor becomes (Start OR Motor) AND NOT Stop. In words: run if Start is pressed or the motor is already running, as long as Stop is not pressed.\n\nStep it slowly. Scan 1, Start ticked: Read inputs copies Start = TRUE into the input image, the program works out TRUE, and only at Write outputs does the lamp light. Scan 2, Start unticked: Motor is still TRUE from the last scan, so (FALSE OR TRUE) is TRUE and the lamp stays on.\n\nThe motor's own value holds it in: the **seal-in**. You will trace it by hand below."
+  },
+  {
+   "id": "when-seen",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "A switch closes just after the PLC has read its inputs, while the program is running. When does the program first see it?",
+   "options": [
+    "On the next scan, when the inputs are read again",
+    "Straight away, part way through this scan",
+    "Only after the outputs are written twice",
+    "Never, unless the PLC is restarted"
+   ],
+   "answer": 0,
+   "why": "The program works from the input image, a copy taken at the start of the scan. A change after that waits for the next copy."
+  },
+  {
+   "id": "image-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The program writes to a copy",
+   "body": "Outputs work the same way as inputs, the other way round. While the program runs it only changes the **output image**, a table in memory. The real outputs are written once, at the end of the scan.\n\nSo if two lines write the same output, **the last write wins**: the first value never reaches the terminal. And an output switched on at line 10 and off at line 50 never switches on at all.\n\nIn ladder the same fault is the **double coil**: one output driven by two rungs. Only the lower rung counts.",
+   "more": "Back to the clerk. Their replies go into an out-tray as they work, and the tray is only posted at the end of the round. If they write \"yes\" on a form and further down cross it out and write \"no\", only \"no\" is posted.\n\nIn ST: `Lamp := A;` on one line and `Lamp := B;` further down. With A on and B off, the first line puts TRUE in the image, the second puts FALSE over it, and FALSE is written out. The lamp stays off.\n\nThe fix is to write each output in one place only, and combine the conditions there: `Lamp := A OR B;`."
+  },
+  {
+   "id": "last-write",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.5,
+   "widget": {
+    "name": "plc",
+    "params": {
+     "src": "Lamp := A;\nLamp := B;",
+     "inputs": [
+      "A",
+      "B"
+     ],
+     "outputs": [
+      "Lamp"
+     ]
+    }
+   },
+   "intro": "Two lines write the same output. Tick **A** only, then **Scan once**.",
+   "ask": {
+    "type": "mcq",
+    "q": "With A on and B off, after a scan, is the lamp on?",
+    "options": [
+     "No: the second line overwrites the first, and only the final value is written out",
+     "Yes: A turned it on first",
+     "It flickers on and off every scan",
+     "It depends on how fast the scan is"
+    ],
+    "answer": 0,
+    "why": "Within a scan the last write wins. The output image is only copied out at the end, so the real lamp never sees the value from the first line. Writing one output in two places is a classic fault; in ladder it is the double coil."
+   }
+  },
+  {
+   "id": "set-then-clear",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "In one scan the program sets output Q0.0 TRUE on line 10, then FALSE on line 50. What does the real output do?",
+   "options": [
+    "Nothing: it stays off, because only the value at the end of the scan is written out",
+    "It pulses on for the time between lines 10 and 50",
+    "It turns on and stays on",
+    "The PLC faults"
+   ],
+   "answer": 0,
+   "why": "The program only changes the output image. The real output is written once, at the end of the scan, with whatever value is there then."
+  },
+  {
+   "id": "timing-idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "How long a scan takes",
+   "body": "The **scan time** is how long one full round takes: typically a few milliseconds, longer for a big program. The PLC reports it (the diagnostics show the shortest, current and longest).\n\nIt sets what the PLC can see:\n\n- an input is looked at once a scan, so a pulse shorter than a scan can fall between two looks and be **missed**\n- a timer is accurate to about one scan\n- the reaction to an input can take up to about **two** scans\n\nFor fast signals, such as encoder pulses, use a **high-speed counter** or an interrupt input: they do not wait for the scan.",
+   "more": "Think of checking a letterbox once an hour. A parcel left for 10 minutes and then taken away again can come and go between two looks, and you never know it was there.\n\nNumbers: scan 10 ms, sensor pulse 2 ms. Most of the time the pulse falls between two input reads: missed. To be sure of seeing a pulse, it must last longer than one scan plus the input filter time (often a few ms on an ordinary input).\n\nReaction time: a switch closes just after the inputs were read. It waits up to 10 ms for the next read; then the program runs and the outputs go out at the end of that scan, up to another 10 ms. Worst case about 20 ms, plus the input and output delays."
+  },
+  {
+   "id": "short-pulse",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A sensor gives a pulse 2 ms long. The scan takes 10 ms. What can happen?",
+   "options": [
+    "The PLC can miss it: it may start and end between two input reads",
+    "The PLC always sees it, because inputs are latched",
+    "The PLC sees it five times",
+    "The scan speeds up to catch it"
+   ],
+   "answer": 0,
+   "why": "Inputs are read once a scan. A pulse shorter than a scan (plus the input filter time) can fall between reads. Fast signals go to a high-speed counter or an interrupt input."
+  },
+  {
+   "id": "trace-seal",
+   "type": "steps",
+   "stage": "example",
+   "q": "Trace `Motor := (Start OR Motor) AND NOT Stop;` over three scans. Motor starts FALSE.",
+   "steps": [
+    {
+     "ask": "Scan 1: Start pressed, Stop not.",
+     "show": "(TRUE OR FALSE) AND NOT FALSE = **TRUE**. The motor runs."
+    },
+    {
+     "ask": "Scan 2: Start released.",
+     "show": "(FALSE OR TRUE) AND NOT FALSE = **TRUE**. Motor holds itself in: the seal-in."
+    },
+    {
+     "ask": "Scan 3: Stop pressed.",
+     "show": "(FALSE OR TRUE) AND NOT TRUE = **FALSE**. It drops out, and stays out once Stop is released."
+    }
+   ],
+   "why": "Motor feeds back into its own line, so it remembers across scans. Stop wins over Start here, which is what you want on a stop button.",
+   "worked": true
+  },
+  {
+   "id": "faded-trace",
+   "type": "steps",
+   "stage": "example",
+   "level": 4.5,
+   "q": "Trace `Motor := (Start OR Motor) AND NOT Stop;` over three scans. Motor starts FALSE. Someone presses Start and Stop together.",
+   "steps": [
+    {
+     "ask": "Scan 1: Start and Stop both pressed.",
+     "show": "(TRUE OR FALSE) AND NOT TRUE = **FALSE**. Stop wins: the motor does not start."
+    },
+    {
+     "ask": "Scan 2: Stop released, Start still held.",
+     "show": "(TRUE OR FALSE) AND NOT FALSE = **TRUE**. Now it runs."
+    },
+    {
+     "ask": "Scan 3: Start released too.",
+     "show": "(FALSE OR TRUE) AND NOT FALSE = **TRUE**. It holds itself in."
+    }
+   ],
+   "why": "Work each scan from that scan's inputs and the motor's value from the scan before. With Stop pressed, NOT Stop is FALSE, and FALSE AND anything is FALSE: Stop always wins in this line, which is what you want on a stop button.",
+   "given": 1
+  },
+  {
+   "id": "code-seal",
+   "type": "code",
+   "stage": "example",
+   "level": 4.8,
+   "q": "Fill in the blank so Motor latches on with Start and drops out with Stop.",
+   "code": "Motor := (Start OR ___) AND NOT Stop;",
+   "inputs": [
+    "Start",
+    "Stop"
+   ],
+   "outputs": [
+    "Motor"
+   ],
+   "solution": [
+    "Motor"
+   ],
+   "tests": [
+    {
+     "name": "Start runs it",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "expect": {
+        "Motor": true
+       }
+      }
+     ]
+    },
+    {
+     "name": "It holds when Start is released",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       }
+      },
+      {
+       "set": {
+        "Start": false
+       },
+       "scans": 3,
+       "expect": {
+        "Motor": true
+       }
+      }
+     ]
+    },
+    {
+     "name": "Stop drops it",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       }
+      },
+      {
+       "set": {
+        "Start": false
+       }
+      },
+      {
+       "set": {
+        "Stop": true
+       },
+       "expect": {
+        "Motor": false
+       }
+      },
+      {
+       "set": {
+        "Stop": false
+       },
+       "expect": {
+        "Motor": false
+       }
+      }
+     ]
+    }
+   ],
+   "why": "The output's own value, fed back, is what holds it in after Start is released."
+  },
+  {
+   "id": "why-image",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Why does a PLC copy all its inputs into memory at the start of a scan, instead of reading each input at the moment a line of the program needs it?",
+   "options": [
+    "Reading an input directly is impossible",
+    "So every line of the program sees the same values all through the scan",
+    "To make the scan take longer",
+    "So the outputs are written faster"
+   ],
+   "answer": 1,
+   "why": "With a snapshot, an input cannot change half-way through the program, so two lines that test the same input always agree. Reading directly is possible (direct or peripheral access), but it is kept for special cases."
+  },
+  {
+   "id": "watchdog",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A loop in the program keeps it from finishing a scan. What stops the PLC hanging for ever?",
+   "options": [
+    "The watchdog: if a scan runs over the maximum cycle time, the CPU faults or goes to stop",
+    "Nothing: it waits until the loop ends",
+    "The outputs keep being written in the meantime",
+    "The inputs switch off"
+   ],
+   "answer": 0,
+   "why": "Every PLC watches its own scan time. On a Siemens S7-1200/1500 the maximum cycle time is set in the CPU properties (150 ms unless changed); check your own CPU's setting."
+  },
+  {
+   "id": "code-delay",
+   "type": "code",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Make the lamp come on 3 seconds after Go goes on (the tests scan every 100 ms).",
+   "code": "VAR T1 : TON; END_VAR\nT1(IN := Go, PT := T#___);\nLamp := T1.Q;",
+   "inputs": [
+    "Go"
+   ],
+   "outputs": [
+    "Lamp"
+   ],
+   "solution": [
+    "3s"
+   ],
+   "blank_size": 6,
+   "tests": [
+    {
+     "name": "Not yet at 2.9 s",
+     "steps": [
+      {
+       "set": {
+        "Go": true
+       },
+       "scans": 29,
+       "expect": {
+        "Lamp": false
+       }
+      }
+     ]
+    },
+    {
+     "name": "On at 3 s",
+     "steps": [
+      {
+       "set": {
+        "Go": true
+       },
+       "scans": 30,
+       "expect": {
+        "Lamp": true
+       }
+      }
+     ]
+    },
+    {
+     "name": "Off as soon as Go goes off",
+     "steps": [
+      {
+       "set": {
+        "Go": true
+       },
+       "scans": 30
+      },
+      {
+       "set": {
+        "Go": false
+       },
+       "expect": {
+        "Lamp": false
+       }
+      }
+     ]
+    }
+   ],
+   "why": "A TON (on-delay) sets Q once IN has been true for PT, and resets at once when IN goes false. T#3s and T#3000ms are the same time."
+  },
+  {
+   "id": "direct-read",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "You need an input's state right now, in the middle of a scan, not the copy taken at the start. What do you use?",
+   "options": [
+    "Direct (peripheral) access, such as %I0.0:P on a Siemens CPU",
+    "A longer scan time",
+    "A second copy of the program",
+    "An output instead"
+   ],
+   "answer": 0,
+   "why": "Most PLCs can read or write the real I/O directly, bypassing the process image. On Siemens it is the :P suffix; other makes have immediate I/O instructions. Use it sparingly: the image is there to keep a scan consistent."
+  },
+  {
+   "id": "mix-scan-rate",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.2,
+   "q": "A PLC's scan takes {s} ms. How many scans does it make each second?",
+   "vars": {
+    "s": {
+     "pick": [
+      2,
+      4,
+      5,
+      8,
+      10,
+      20,
+      25,
+      40,
+      50
+     ]
+    }
+   },
+   "answer": "1000 / s",
+   "unit": "scans",
+   "tolerance": 0.02,
+   "work": "$1000 \\text{ ms} \\div {s} \\text{ ms} = {answer}$ scans a second",
+   "why": "A second is 1000 ms, so divide 1000 by the scan time. Multiplying (1000 × {s}) is the slip: a longer scan means **fewer** scans a second.",
+   "hint": "How many lots of {s} ms fit into 1000 ms?"
+  },
+  {
+   "id": "pulses-per-scan",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "An encoder sends {f} pulses a second into an ordinary input. The scan takes {s} ms. How many pulses arrive during one scan?",
+   "vars": {
+    "f": [
+     200,
+     2000,
+     100
+    ],
+    "s": [
+     4,
+     20,
+     1
+    ]
+   },
+   "answer": "f * s / 1000",
+   "unit": "pulses",
+   "tolerance": 0.02,
+   "work": "${f} \\times {s} \\times 10^{-3} = {answer}$ pulses a scan (1 ms is $10^{-3}$ s)",
+   "why": "More than about one pulse a scan and an ordinary input cannot count them all. That is the job of a high-speed counter, which counts in hardware.",
+   "hint": "Pulses a second times the scan time in seconds. {s} ms is {s} ÷ 1000 s."
+  },
+  {
+   "id": "ton-scans",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A TON timer has PT = T#{p}s. The program scans every {s} ms. About how many scans after IN goes true does Q come on?",
+   "vars": {
+    "p": [
+     1,
+     5,
+     0.5
+    ],
+    "s": [
+     5,
+     50,
+     5
+    ]
+   },
+   "answer": "p * 1000 / s",
+   "unit": "scans",
+   "tolerance": 0.05,
+   "work": "${p} \\text{ s} \\div {s} \\text{ ms} = {answer}$ scans",
+   "why": "The timer checks the time each time the program calls it, so Q comes on at the first scan after PT has passed: the delay is PT, give or take a scan.",
+   "hint": "How many scans of {s} ms fit into {p} s? Put both in milliseconds first."
+  },
+  {
+   "id": "check-snapshot",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.2,
+   "q": "A proximity sensor switches on just after the PLC has read its inputs. The scan takes 10 ms. Leaving out the input and output delays, roughly how long can it take, at worst, before an output driven by that sensor changes?",
+   "options": [
+    "At once",
+    "About 5 ms",
+    "About 20 ms",
+    "About 100 ms"
+   ],
+   "answer": 2,
+   "why": "The change waits for the next input read (up to one scan, 10 ms). Then the program acts on it and the output is written at the end of that scan (another 10 ms). So up to about two scans. It cannot be at once: the program only ever sees the snapshot.",
+   "hint": "Two waits: until the next input read, then until the outputs are written."
+  },
+  {
+   "id": "match-scan",
+   "type": "match",
+   "stage": "check",
+   "level": 4.2,
+   "q": "Match the terms.",
+   "pairs": [
+    [
+     "Input image",
+     "The copy of the inputs taken at the start of the scan"
+    ],
+    [
+     "Output image",
+     "The values written out to the outputs at the end"
+    ],
+    [
+     "Scan time",
+     "How long one full cycle takes"
+    ],
+    [
+     "Watchdog",
+     "Faults the CPU if a scan runs too long"
+    ],
+    [
+     "Cyclic interrupt",
+     "Code run at a fixed interval, whatever the scan is doing"
+    ]
+   ]
+  },
+  {
+   "id": "flash-steps",
+   "type": "flash",
+   "stage": "check",
+   "front": "The three steps of a PLC scan?",
+   "back": "Read the inputs into the input image; run the program top to bottom once; write the output image to the outputs. Then housekeeping, and again."
+  },
+  {
+   "id": "flash-miss",
+   "type": "flash",
+   "stage": "check",
+   "front": "Why can a PLC miss a short input pulse, and what is the fix?",
+   "back": "Inputs are read once a scan, so a pulse shorter than a scan can fall between two reads. Use a high-speed counter or an interrupt input."
+  }
+ ]
+}

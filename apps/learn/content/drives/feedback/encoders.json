@@ -1,0 +1,447 @@
+{
+ "id": "drives.feedback.encoders",
+ "title": "Encoders and resolvers",
+ "tags": ["drives", "feedback", "encoders", "resolvers", "motion"],
+ "kind": "procedure",
+ "level": 5.5,
+ "minutes": 25,
+ "goals": [
+  "Read A, B and Z from an incremental encoder: tell the direction, and the counts a turn with ×1, ×2 or ×4 decoding",
+  "Work out the frequency on A from the speed and the PPR, and the top speed a counter input can follow",
+  "Turn counts into degrees, and into millimetres through a leadscrew, a roller or a toothed belt",
+  "Say what an absolute encoder and a resolver give you that an incremental encoder does not",
+  "Explain why differential (RS-422) signals survive electrical noise, and where HTL is used"
+ ],
+ "summary": "An **incremental encoder** is a disc with fine lines; each line that passes makes a pulse. **PPR** (pulses per revolution) is the pulses one turn makes on one channel.\n\nTwo channels, **A** and **B**, a quarter of a cycle apart: **quadrature**. Which one rises first gives the **direction**. **Z** (the **index**) is one pulse a turn, for homing. Incremental means it counts changes only: at power-off the count is lost.\n\n**Decoding**: ×1 counts A's rising edges (PPR a turn), ×2 both edges of A, ×4 every edge of A and B: $CPR = 4 \\times PPR$ counts a turn. Resolution: $\\frac{360}{CPR}$ degrees a count.\n\n**Frequency** on A, with $n$ the speed in rpm: $f = \\frac{n \\times PPR}{60}$. A ×4 counter sees $4f$ counts a second. Every counter input has a top frequency (an S7-1200 CPU 1214C: 80 kHz on its fastest A/B inputs). Turned round, $n = \\frac{60 f}{PPR}$ is the fastest it can follow.\n\n**Millimetres**: $\\frac{L}{CPR}$ mm a count, where $L$ is the travel in one turn:\n\n- leadscrew: the lead\n- roller: the circumference, $L = \\pi d$\n- toothed belt: $L = z \\times p$, teeth times belt pitch\n\nCounts per mm is the other way up: $\\frac{CPR}{L}$.\n\n**Absolute encoders** read a different code at every position. **Single-turn**: where it is within a turn ($N = 2^{b}$ positions for $b$ bits). **Multi-turn**: counts whole turns too, even while switched off. The position is sent as a message: **SSI**, **EnDat** or **BiSS**.\n\n**Resolvers**: a rotary transformer fed with AC. Two windings give signals that follow $\\sin\\theta$ and $\\cos\\theta$ of the shaft angle. Analogue, absolute within a turn, and rugged.\n\n**Signals**: **TTL** is 5 V, usually **RS-422 differential** (A+ and A−, twisted together). The receiver reads the difference, $V_d = V_{A+} - V_{A-}$, so noise on both wires cancels. **HTL** swings up to the supply (usually 24 V) and suits 24 V PLC inputs.\n\nSwap A and B on a closed position loop and the axis runs away: set a following-error limit before the first enable.",
+ "resources": [
+  {"when": "before", "kind": "read", "title": "What Is an Encoder?", "url": "https://www.realpars.com/blog/encoder", "by": "RealPars", "minutes": 5, "note": "Incremental and absolute encoders, with pictures of the disc."},
+  {"when": "after", "kind": "read", "title": "Quadrature Encoders - The Ultimate Guide", "url": "https://www.dynapar.com/knowledge/encoder-basics/encoder-output/quadrature-encoders/", "by": "Dynapar", "minutes": 5, "note": "A and B, direction and ×1, ×2, ×4 decoding."},
+  {"when": "after", "kind": "read", "title": "Resolvers - What Are They and How Do They Work?", "url": "https://www.dynapar.com/knowledge/encoder-basics/encoders-vs-resolvers/resolvers/", "by": "Dynapar", "minutes": 5, "note": "Inside a resolver, and where it beats an encoder."}
+ ],
+ "sources": [
+  "G. Ellis, Control System Design Guide, 4th edition (Butterworth-Heinemann, 2012), chapter on encoders and resolvers",
+  "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
+  "HEIDENHAIN, Encoders for Servo Drives (product brochure)",
+  "HEIDENHAIN, EnDat 2.2: Bidirectional Interface for Position Encoders (Technical Information)",
+  "TIA/EIA-422-B: Electrical Characteristics of Balanced Voltage Digital Interface Circuits",
+  "Analog Devices, AD2S1210 datasheet: Variable Resolution, 10-Bit to 16-Bit R/D Converter with Reference Oscillator",
+  "Siemens, SIMATIC S7-1200 Programmable Controller System Manual (CPU 1214C specifications: high-speed counters)",
+  "Galil Motion Control, DMC-40x0 Command Reference (CE: configure encoder)"
+ ],
+ "formulas": [
+  {
+   "name": "Counts a turn with ×4 decoding",
+   "tex": "CPR = 4 \\times PPR",
+   "match": ["4\\timesPPR"],
+   "says": "Counting every rising and falling edge of both A and B gives four counts for each pulse on one channel.",
+   "symbols": [["CPR", "counts per revolution: what the counter sees in one turn (one name, not C times P times R)"], ["PPR", "pulses per revolution: the pulses on one channel in one turn, from the datasheet (also called lines)"]],
+   "example": "a 1000 PPR encoder: $4 \\times 1000 = 4000$ counts a turn. With ×2 decoding it would be 2000; with ×1, 1000."
+  },
+  {
+   "name": "Degrees per count",
+   "tex": "\\text{degrees per count} = \\frac{360}{CPR}",
+   "match": ["\\frac{360}{CPR}"],
+   "says": "One turn is 360 degrees, shared equally between the counts in a turn.",
+   "symbols": [["CPR", "the counts in one turn, after decoding"]],
+   "example": "4000 counts a turn: $360 \\div 4000 = 0.09$ degrees a count."
+  },
+  {
+   "name": "Frequency on channel A",
+   "tex": "f = \\frac{n \\times PPR}{60}",
+   "match": ["PPR}{60}"],
+   "says": "The pulses a second on one channel: the turns a minute times the pulses a turn, divided by 60 to make it per second.",
+   "symbols": [["f", "the frequency of A (hertz, Hz: pulses a second; 1 kHz is 1000 Hz)"], ["n", "the shaft speed (rpm: turns a minute)"], ["PPR", "pulses per revolution"]],
+   "example": "1024 PPR at 3000 rpm: $\\frac{3000 \\times 1024}{60} = 51\\,200$ Hz, which is 51.2 kHz. A ×4 counter sees four times that: 204 800 counts a second."
+  },
+  {
+   "name": "Speed from the frequency",
+   "tex": "n = \\frac{60 f}{PPR}",
+   "match": ["\\frac{60f}{PPR}"],
+   "says": "The frequency formula turned round: the pulses a second, times 60 to make it a minute, divided by the pulses in a turn.",
+   "symbols": [["n", "the shaft speed (rpm)"], ["f", "the frequency on A (Hz); for ×4 counts a second, divide by 4 first"], ["PPR", "pulses per revolution"]],
+   "example": "A at 25 kHz from a 1000 PPR encoder: $\\frac{60 \\times 25\\,000}{1000} = 1500$ rpm."
+  },
+  {
+   "name": "Distance per count",
+   "tex": "\\text{mm per count} = \\frac{L}{CPR}",
+   "match": ["\\frac{L}{CPR}"],
+   "says": "How far the axis moves in one turn of the encoder, shared between the counts in that turn.",
+   "symbols": [["L", "the distance moved in one turn (mm): the lead of a leadscrew, the circumference of a roller"], ["CPR", "the counts in one turn, after decoding"]],
+   "example": "5 mm lead, 4000 counts a turn: $5 \\div 4000 = 0.00125$ mm, which is 1.25 µm."
+  },
+  {
+   "name": "Counts per millimetre",
+   "tex": "\\text{counts per mm} = \\frac{CPR}{L}",
+   "match": ["\\frac{CPR}{L}"],
+   "says": "The same fact the other way up: the counts in one turn, divided by the millimetres one turn moves. Controllers such as a Galil work in counts, so this is the number you multiply by.",
+   "symbols": [["CPR", "the counts in one turn, after decoding"], ["L", "the distance moved in one turn (mm)"]],
+   "example": "4000 counts a turn on a 5 mm lead: $4000 \\div 5 = 800$ counts per mm, so a 100 mm move is 80 000 counts."
+  },
+  {
+   "name": "Circumference of a roller",
+   "tex": "L = \\pi d",
+   "match": ["\\pid"],
+   "says": "One turn of a roller or wheel moves the belt, or the product on it, by the distance round the roller: pi times the diameter.",
+   "symbols": [["L", "the distance moved in one turn (mm)"], ["\\pi", "pi, about 3.1416"], ["d", "the roller's diameter (mm)"]],
+   "example": "a 60 mm roller: $\\pi \\times 60 \\approx 188.5$ mm a turn."
+  },
+  {
+   "name": "Toothed belt pulley",
+   "tex": "L = z \\times p",
+   "match": ["z\\timesp"],
+   "says": "Each turn of the pulley pulls through one tooth's worth of belt for every tooth on it: the number of teeth times the belt's pitch.",
+   "symbols": [["L", "the distance moved in one turn (mm)"], ["z", "the number of teeth on the pulley"], ["p", "the belt's pitch: from one tooth to the next (mm)"]],
+   "example": "20 teeth on a 5 mm pitch belt: $20 \\times 5 = 100$ mm a turn."
+  },
+  {
+   "name": "Absolute encoder: positions in a turn",
+   "tex": "N = 2^{b}",
+   "match": ["2^{"],
+   "says": "Each bit doubles the number of positions it can tell apart: 2 multiplied by itself, once for every bit.",
+   "symbols": [["N", "the number of positions in one turn"], ["b", "the resolution in bits"]],
+   "example": "13 bits: $2^{13} = 8192$ positions a turn, so each step is $360 \\div 8192 \\approx 0.044$ degrees."
+  },
+  {
+   "name": "Resolver outputs",
+   "tex": "V_{sin} = V_m \\sin\\theta,\\ V_{cos} = V_m \\cos\\theta",
+   "match": ["\\sin\\theta"],
+   "says": "The drive feeds the resolver an AC signal. The size of what comes back from one winding follows the sine of the shaft angle; from the other, the cosine. Each angle in a turn gives its own pair, so the drive can work the angle out.",
+   "symbols": [["V_{sin}, V_{cos}", "the size of the AC signal from each output winding (V)"], ["V_m", "the biggest that signal gets (V)"], ["\\theta", "theta: the shaft angle (degrees)"], ["\\sin\\theta, \\cos\\theta", "picture the shaft as a clock hand one unit long: how far up it points, and how far across (each between −1 and 1)"]],
+   "example": "$V_m = 2$ V at 30°: $\\sin 30^\\circ = 0.5$ and $\\cos 30^\\circ \\approx 0.87$, so the windings give 1 V and about 1.73 V. At 45° both give about 1.41 V."
+  },
+  {
+   "name": "What a differential receiver reads",
+   "tex": "V_d = V_{A+} - V_{A-}",
+   "match": ["V_{A+}-V_{A-}"],
+   "says": "The receiver takes one wire of the pair away from the other. Noise that lands on both wires equally cancels out.",
+   "symbols": [["V_d", "the difference the receiver sees (V)"], ["V_{A+}", "the voltage on the A+ wire (V)"], ["V_{A-}", "the voltage on the A− wire, always the opposite of A+ (V)"]],
+   "example": "3.5 V and 0.5 V: $3.5 - 0.5 = 3$ V. A 2 V spike on both: $5.5 - 2.5 = 3$ V, the same."
+  },
+  {
+   "name": "Synchronous speed of an induction motor",
+   "tex": "n_s = \\frac{120 f}{p}",
+   "match": ["\\frac{120"],
+   "says": "The speed of the rotating magnetic field: 120 times the supply frequency, divided by the number of poles. The rotor runs a little slower (the slip).",
+   "symbols": [["n_s", "the synchronous speed (rpm)"], ["f", "the supply frequency from the mains or the drive (Hz); not the encoder's frequency"], ["p", "the number of poles (2, 4, 6 ...)"]],
+   "example": "4 poles at 50 Hz: $\\frac{120 \\times 50}{4} = 1500$ rpm."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-scanner",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A scanner axis is driven by a leadscrew with a 5 mm lead: one turn of the screw moves the carriage 5 mm. The motor turns the screw directly. Its encoder gives 1000 pulses a turn on each of its two channels, and the controller counts every edge of both channels (×4). How far does the carriage move for each count?",
+   "options": ["0.005 mm (5 µm)", "0.00125 mm (1.25 µm)", "0.02 mm (20 µm)", "1.25 mm"],
+   "answer": 1,
+   "why": "Every edge of both channels is 4 counts per pulse: $4 \\times 1000 = 4000$ counts a turn. One turn is 5 mm, so each count is $5 \\div 4000 = 0.00125$ mm, 1.25 µm. 0.005 mm forgets the ×4 ($5 \\div 1000$). 0.02 mm multiplies by 4 instead of dividing: more counts must mean **smaller** steps. 1.25 mm divides by 4 but forgets the 1000 pulses."
+  },
+  {
+   "id": "incremental",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The incremental encoder: A, B and Z",
+   "body": "A typical **incremental encoder** is a disc on the motor shaft with fine lines round its edge. Light shines through onto sensors, so each line that passes makes one pulse. The **PPR** (pulses per revolution) is the pulses one turn makes: 1000 PPR, 1000 pulses a turn.\n\nThere are two outputs, **A** and **B**. Each gives PPR pulses a turn, but B is shifted a **quarter of a cycle** from A. That is called **quadrature**.\n\nThe shift gives the **direction**: if A rises first, the shaft turns one way; if B rises first, the other. Try the switch below.\n\nA third output, **Z** (the **index**), gives one pulse a turn, always at the same place. It is used for homing.",
+   "widget": {"name": "encoder", "params": {"ppr": 1000, "rpm": 300, "dir": 1, "controls": ["dir"]}},
+   "more": "Picture two light gates a few centimetres apart beside a roller conveyor. A box breaks gate A, then gate B: it is going one way. B then A: it is coming back. An encoder does the same, with lines on a disc instead of boxes.\n\nWhy a quarter of a cycle? It keeps the changes on A and B apart, so the controller always knows which came first, however slowly or fast the shaft turns.\n\nWorked number: a 1000 PPR encoder turning once a second gives 1000 pulses a second on A, and 1000 on B.\n\nWhich way counts as forwards is a convention. Many datasheets say A leads when the shaft turns clockwise, looking at the shaft end. The controller lets you swap it (on a Galil, the CE command).\n\n**Incremental** means it only counts changes. The controller keeps the running total, and loses it at power-off."
+  },
+  {
+   "id": "lead-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "On a scope, channel B now rises a quarter of a cycle **before** A, every cycle. A moment ago A was rising first. What has happened?",
+   "options": ["The shaft has reversed: it now turns the other way", "The shaft has doubled its speed", "The encoder has lost its Z pulse", "Nothing: A and B take turns to lead"],
+   "answer": 0,
+   "why": "Which channel leads **is** the direction. Speed changes how close together the pulses are, not which one comes first. Z is a separate pulse, once a turn, and has nothing to do with the order of A and B. If they really took turns, the controller could never tell the direction."
+  },
+  {
+   "id": "decoding",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Counting edges: ×1, ×2 and ×4",
+   "body": "Each pulse on A has two **edges**: it rises, then it falls. B has two more, a quarter of a cycle later. So every cycle has **four** edges, evenly spaced.\n\nThe counter can count:\n\n- **×1**: only A's rising edges: PPR counts a turn\n- **×2**: both edges of A: 2 × PPR\n- **×4**: every edge of A and B: 4 × PPR\n\nMost drives and motion controllers use ×4. The **counts per revolution** (CPR) is then\n\n$$CPR = 4 \\times PPR$$\n\nOne turn, 360 degrees, is shared between the counts: each count is $\\frac{360}{CPR}$ degrees, the **resolution**. 1000 PPR gives 4000 counts, so $360 \\div 4000 = 0.09$ degrees a count.",
+   "widget": {"name": "encoder", "params": {"ppr": 1000, "rpm": 1500, "dir": 1, "controls": ["ppr"]}},
+   "more": "Look at one cycle on the picture: A goes up, B goes up, A goes down, B goes down. Four changes, a quarter of a cycle apart. Each one tells the counter the shaft has moved a little, and the order tells it which way.\n\nWorked number, a 2500 PPR encoder:\n\n- ×1: 2500 counts a turn, $360 \\div 2500 = 0.144$ degrees a count\n- ×4: $4 \\times 2500 = 10\\,000$ counts, $360 \\div 10\\,000 = 0.036$ degrees a count\n\nThe same encoder, four times finer, for nothing. That is why nearly everything uses ×4.\n\nMind the words. A datasheet's PPR (or **lines**) is the pulses on one channel. **Counts** are what the controller adds up after decoding. A Galil's position is in ×4 counts, so a 2500-line encoder reads 10 000 counts a turn."
+  },
+  {
+   "id": "deg-x1",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.0,
+   "intro": "Pick any PPR. The readout gives the resolution with ×4 decoding.",
+   "widget": {"name": "encoder", "params": {"ppr": 500, "rpm": 1500, "dir": 1, "controls": ["ppr"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "Now work it out for **×1** decoding: how many degrees is one count?",
+    "answer": "360 / ppr",
+    "unit": "°",
+    "tolerance": 0.02,
+    "hint": "×1 counts only A's rising edges. How many is that in one turn?",
+    "work": "×1 gives {ppr} counts a turn: $360 \\div {ppr} = {answer}$ degrees a count.",
+    "why": "×1 counts one edge a pulse, so {ppr} counts a turn, each $360 \\div {ppr} = {answer}$ degrees. The readout's {deg} degrees is for ×4: four times as many counts, so each is a quarter the size. Dividing by 4 × PPR gives that ×4 answer, not the ×1 one."
+   }
+  },
+  {
+   "id": "frequency",
+   "type": "concept",
+   "stage": "learn",
+   "title": "How fast the pulses come",
+   "body": "Numbers first. A 1000 PPR encoder at 3000 **rpm** (revolutions, or turns, a minute) makes $3000 \\div 60 = 50$ turns a second. Each turn gives 1000 pulses on A, so A runs at $50 \\times 1000 = 50\\,000$ pulses a second: 50 kHz.\n\nAs a formula, with $n$ the speed in rpm:\n\n$$f = \\frac{n \\times PPR}{60}$$\n\nThe **frequency** $f$ of A, in hertz (Hz, pulses a second), is the speed times the PPR, divided by 60 to turn minutes into seconds. A ×4 counter sees $4f$ counts a second.\n\nIt matters because every counter input has a **top frequency**. Go over it and pulses are missed: the position quietly drifts.",
+   "widget": {"name": "encoder", "params": {"ppr": 1000, "rpm": 3000, "dir": 1, "controls": ["rpm"]}},
+   "more": "Think of fence posts going past a train window. A faster train: more posts a second. Posts closer together (more PPR): more posts a second too. So the rate is the speed times the posts in each turn.\n\nThe ÷ 60 is only there because rpm counts per minute and hertz per second.\n\nA real limit: an S7-1200 CPU 1214C's fastest built-in counters take A/B signals up to 80 kHz. A 1024 PPR encoder at 3000 rpm gives $\\frac{3000 \\times 1024}{60} = 51\\,200$ Hz, 51.2 kHz: fine. A 2500 PPR one at the same speed gives $\\frac{3000 \\times 2500}{60} = 125\\,000$ Hz: too fast, and the PLC drops counts.\n\nMore PPR is finer, but faster. Motion controllers such as a Galil take pulses in the megahertz (millions a second), so there it rarely bites."
+  },
+  {
+   "id": "freq-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A motor encoder has {ppr} PPR. The motor runs at {rpm} rpm. What frequency comes out of channel A, in kHz?",
+   "vars": {"ppr": {"pick": [500, 1000, 1024, 2048, 2500]}, "rpm": {"pick": [600, 900, 1200, 1500, 1800, 2400, 3000]}},
+   "let": {"tps": "rpm / 60", "hz": "rpm * ppr / 60"},
+   "answer": "rpm * ppr / 60 / 1000",
+   "unit": "kHz",
+   "hint": "Turns a minute ÷ 60 gives turns a second. Each turn gives {ppr} pulses.",
+   "work": "$f = \\frac{n \\times PPR}{60} = \\frac{{rpm} \\times {ppr}}{60} = {hz}$ Hz $= {answer}$ kHz",
+   "why": "{rpm} rpm is $\\frac{{rpm}}{60} = {tps}$ turns a second, and each turn gives {ppr} pulses on A: {hz} a second, {answer} kHz. Forgetting the ÷ 60 gives a number 60 times too big. Multiplying by 4 gives the ×4 count rate, not the frequency on the wire."
+  },
+  {
+   "id": "distance",
+   "type": "concept",
+   "stage": "learn",
+   "title": "From counts to millimetres",
+   "body": "On a machine you want **millimetres**, not degrees. Find $L$, how far the axis moves in one turn of the encoder, then share it between the counts:\n\n$$\\text{mm per count} = \\frac{L}{CPR}$$\n\n- **Leadscrew**: $L$ is the **lead**, how far the nut moves in one turn. On an ordinary single-start screw it equals the pitch (thread to thread).\n- **Roller** or wheel: $L$ is the **circumference**, the distance round it: $L = \\pi d$, with $d$ the diameter and $\\pi \\approx 3.1416$.\n- **Toothed belt**: $L = z \\times p$, the teeth on the pulley times the belt's pitch.\n\nA 5 mm lead and 4000 counts a turn: $5 \\div 4000 = 0.00125$ mm, or 1.25 µm, a count.",
+   "more": "Think of a tape measure wound on a drum: each turn of the drum pays out one circumference of tape. A roller moves a belt the same way; a leadscrew moves its nut one lead a turn.\n\nWorked number, a roller conveyor: a 500 PPR encoder on a 60 mm roller, ×4.\n\n- One turn: $\\pi \\times 60 \\approx 188.5$ mm\n- Counts a turn: $4 \\times 500 = 2000$\n- Each count: $188.5 \\div 2000 \\approx 0.094$ mm\n\nThe other way up is often handier: **counts per mm** is $\\frac{CPR}{L}$. For the 5 mm leadscrew with 4000 counts a turn, $4000 \\div 5 = 800$ counts per mm. A Galil works in counts, so a 100 mm move is 80 000 counts.\n\nA roller encoder measures the roller: if the belt slips on it, the count is wrong."
+  },
+  {
+   "id": "roller-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A conveyor roller {dia} mm in diameter has a {ppr} PPR encoder on its shaft, decoded ×4. How far does the belt move for each count, in mm?",
+   "vars": {"dia": {"pick": [50, 60, 80, 89, 100]}, "ppr": {"pick": [100, 250, 360, 500, 1000]}},
+   "let": {"circ": "PI() * dia", "cpr": "4 * ppr"},
+   "answer": "PI() * dia / (4 * ppr)",
+   "unit": "mm",
+   "hint": "One turn of the roller moves the belt its circumference: $\\pi$ times the diameter.",
+   "work": "One turn: $\\pi \\times {dia} = {circ}$ mm. Counts a turn: $4 \\times {ppr} = {cpr}$. Each count: ${circ} \\div {cpr} = {answer}$ mm",
+   "why": "A roller moves the belt one **circumference** a turn, {circ} mm, not its diameter. Using {dia} mm instead makes the answer about three times too small. Then share the turn between the {cpr} counts."
+  },
+  {
+   "id": "absolute",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Knowing where you are at switch-on",
+   "body": "An incremental encoder only counts **changes**. Switch off and the count is lost, so the axis must **home** again.\n\n- An **absolute encoder** reads a different code at every position. **Single-turn**: it knows where it is within one turn; 17 **bits** give $2^{17} = 131\\,072$ positions (each bit doubles the number). **Multi-turn**: it also counts whole turns, often 4096, even while switched off. It sends its position as a message: **SSI**, **EnDat** or **BiSS**.\n- A **resolver** is a small rotary transformer: no electronics, no glass disc. Fed with AC, its two windings give signals that follow $\\sin\\theta$ and $\\cos\\theta$ of the shaft angle $\\theta$. It is analogue, absolute within one turn, and shrugs off heat, shock and dirt.",
+   "more": "An incremental encoder is like a trip counter: useful once you have zeroed it at a known place (homing). An absolute encoder is like numbered floor tiles: look down and you know where you are.\n\nWorked number: a 13-bit single-turn encoder has $2^{13} = 8192$ positions a turn, $360 \\div 8192 \\approx 0.044$ degrees each. Add 12 bits of turns and it tells 4096 turns apart: on a 5 mm leadscrew, over 20 m of travel.\n\nSSI is one-way: the controller sends clock pulses, the encoder answers a bit per pulse. EnDat and BiSS are two-way, with error checks.\n\nFor the resolver, picture the shaft as a clock hand. The sine winding says how far **up** it points, the cosine winding how far **across**. At 0° it is all across; at 90°, all up; at 45°, equal. No two angles in a turn give the same pair."
+  },
+  {
+   "id": "abs-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A scanner is switched off overnight, and someone turns its leadscrew by hand three full turns. Which feedback lets it know exactly where the carriage is at switch-on, without homing?",
+   "options": ["A single-turn absolute encoder", "An incremental encoder with a Z pulse", "A resolver", "A multi-turn absolute encoder"],
+   "answer": 3,
+   "why": "Only a multi-turn absolute encoder keeps count of whole turns while it is off. A single-turn encoder and a resolver know the angle within the turn, but not that three turns went by: 15 mm on a 5 mm lead. An incremental encoder lost its count at switch-off; its Z pulse is one mark a turn, found only by moving the axis to it, which is homing."
+  },
+  {
+   "id": "line-drivers",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Getting the pulses down the cable",
+   "body": "Encoder cables often run beside motor cables that switch hundreds of volts, thousands of times a second. The pulses must survive that noise.\n\n- **TTL** outputs are 5 V. On encoders they are usually **RS-422 differential**: each channel has a pair of wires, A+ and A−, always opposite, twisted together.\n- **HTL** outputs swing up to the supply, usually 24 V. Noise struggles to fake a swing that big, and 24 V PLC counter inputs want it.\n\nA **differential** receiver looks only at the **difference** between its pair:\n\n$$V_d = V_{A+} - V_{A-}$$\n\nNoise picked up along the cable lands on both twisted wires almost equally, so it cancels out of the difference.",
+   "more": "Picture a see-saw. Which end is higher is the signal. Noise is someone lifting the whole see-saw: both ends rise together, but which end is higher does not change.\n\nWorked number: A+ at 3.5 V, A− at 0.5 V. The difference is $3.5 - 0.5 = 3$ V: A is high. A 2 V spike from a motor cable lands on both: 5.5 V and 2.5 V. The difference is still $5.5 - 2.5 = 3$ V. The receiver needs only 0.2 V of difference to decide.\n\nOn a single wire, the same 2 V spike on a low (0 V) signal reaches 2 V, which a 5 V TTL input may read as high: a false count, and the position creeps.\n\nSo: twisted pairs, a screened cable, and encoder cables kept apart from motor cables."
+  },
+  {
+   "id": "diff-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "An RS-422 pair: A+ is at {hi} V and A− at {lo} V. A noise spike from a motor cable adds {nz} V to both wires. What difference does the receiver see during the spike?",
+   "vars": {"hi": {"pick": [3, 3.3, 3.5, 4]}, "lo": {"pick": [0.2, 0.5, 1]}, "nz": [0.5, 3, 0.5]},
+   "let": {"hin": "hi + nz", "lon": "lo + nz", "once": "hi + nz - lo"},
+   "answer": "hi - lo",
+   "unit": "V",
+   "abs": 0.01,
+   "hint": "Add the spike to **both** wires, then take one from the other.",
+   "work": "$V_d = ({hi} + {nz}) - ({lo} + {nz}) = {hin} - {lon} = {answer}$ V",
+   "why": "The spike lands on both twisted wires, so it is taken away again in the difference: {answer} V, the same as without it. Adding it to one wire only gives {once} V: that is what happens if the noise reaches one wire and not the other, which is why the pair is twisted together. Cancelling it is the whole point of the pair."
+  },
+  {
+   "id": "worked-screw",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A scanner axis: a leadscrew with a 5 mm lead, turned directly by a servo motor with a 2500 PPR encoder, decoded ×4. The top speed is 200 mm/s. Find the counts a turn, the mm per count, the counts per mm, and the frequency on A at top speed.",
+   "steps": [
+    {"ask": "Counts a turn (×4).", "show": "$CPR = 4 \\times PPR = 4 \\times 2500 = 10\\,000$"},
+    {"ask": "Millimetres per count: the lead shared between the counts.", "show": "$\\frac{L}{CPR} = \\frac{5}{10\\,000} = 0.0005$ mm, which is 0.5 µm"},
+    {"ask": "Counts per mm: the other way up.", "show": "$\\frac{CPR}{L} = \\frac{10\\,000}{5} = 2000$ counts per mm"},
+    {"ask": "Motor speed at 200 mm/s.", "show": "$200 \\div 5 = 40$ turns a second, which is $40 \\times 60 = 2400$ rpm"},
+    {"ask": "Frequency on A at that speed.", "show": "$f = \\frac{n \\times PPR}{60} = \\frac{2400 \\times 2500}{60} = 100\\,000$ Hz, 100 kHz. The ×4 counter sees 400 000 counts a second."}
+   ],
+   "why": "Every encoder sum is the same chain: counts a turn, distance a turn, then share one between the other. 100 kHz is fine for a motion controller, but too fast for an 80 kHz PLC counter input: check the input before choosing a higher PPR."
+  },
+  {
+   "id": "faded-belt",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.3,
+   "q": "A belt-driven scanner axis: a toothed pulley with 20 teeth, on a belt with a 5 mm pitch, turned directly by a motor with a 1000 PPR encoder, decoded ×4. Find the mm per count and the counts per mm.",
+   "steps": [
+    {"ask": "Distance per turn of the pulley.", "show": "$L = z \\times p = 20 \\times 5 = 100$ mm"},
+    {"ask": "Counts a turn.", "show": "$CPR = 4 \\times 1000 = 4000$"},
+    {"ask": "Millimetres per count.", "show": "$\\frac{L}{CPR} = \\frac{100}{4000} = 0.025$ mm, which is 25 µm"},
+    {"ask": "Counts per mm.", "show": "$\\frac{CPR}{L} = \\frac{4000}{100} = 40$ counts per mm"}
+   ],
+   "why": "The same chain as the leadscrew. The belt moves 100 mm a turn where the screw moved 5 mm, so each count is 20 times coarser, but the axis is 20 times faster for the same motor speed. That is the usual trade: belts for speed, screws for fine positioning and force."
+  },
+  {
+   "id": "screw-problem",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A leadscrew with a {lead} mm lead is turned directly by a motor with a {ppr} PPR encoder, decoded ×4. How many counts does the controller see for each mm the nut moves?",
+   "vars": {"lead": {"pick": [2, 4, 5, 10, 20]}, "ppr": {"pick": [500, 1000, 1024, 2000, 2500]}},
+   "let": {"cpr": "4 * ppr"},
+   "answer": "4 * ppr / lead",
+   "unit": "counts/mm",
+   "hint": "Counts a turn first (×4), then share them over the {lead} mm that one turn moves.",
+   "work": "$CPR = 4 \\times {ppr} = {cpr}$ counts a turn. One turn is {lead} mm: $\\frac{CPR}{L} = \\frac{{cpr}}{{lead}} = {answer}$ counts per mm",
+   "why": "Counts per mm is the counts in a turn divided by the mm in a turn. Dividing the other way ({lead} ÷ {cpr}) gives mm per count: the same fact upside down. Forgetting the ×4 gives a quarter of the answer."
+  },
+  {
+   "id": "count-rate",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "Set any PPR and speed. The readout gives the frequency of A.",
+   "widget": {"name": "encoder", "params": {"ppr": 1000, "rpm": 1200, "dir": 1, "controls": ["ppr", "rpm"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "The drive decodes ×4. How many counts a second does its counter see?",
+    "answer": "4 * freq",
+    "unit": "counts/s",
+    "tolerance": 0.02,
+    "hint": "How many edges does each cycle of A bring, across A and B?",
+    "work": "$4 \\times {freq} = {answer}$ counts a second",
+    "why": "Each cycle of A brings four edges (A up, B up, A down, B down), so ×4 counts $4 \\times {freq} = {answer}$ a second. The frequency on its own is the ×1 rate. From scratch: {rpm} rpm × {ppr} PPR ÷ 60 × 4."
+   }
+  },
+  {
+   "id": "max-rpm",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.2,
+   "q": "A PLC's high-speed counter input takes A/B signals up to {fmax} kHz. The encoder has {ppr} PPR. What is the fastest the motor can turn, in rpm, before the counter starts to miss pulses?",
+   "vars": {"fmax": {"pick": [20, 30, 80, 100]}, "ppr": {"pick": [1000, 1024, 2048, 2500]}},
+   "let": {"hz": "fmax * 1000"},
+   "answer": "fmax * 1000 * 60 / ppr",
+   "unit": "rpm",
+   "hint": "Turn the frequency formula round: $n = \\frac{60 f}{PPR}$, with $f$ in Hz (1 kHz is 1000 Hz).",
+   "work": "$n = \\frac{60 f}{PPR} = \\frac{60 \\times {hz}}{{ppr}} = {answer}$ rpm",
+   "why": "Turn $f = \\frac{n \\times PPR}{60}$ round for $n$: multiply by 60, divide by the PPR. {fmax} kHz is {hz} pulses a second. Leaving it as {fmax} gives an answer 1000 times too small; forgetting the × 60 gives turns a second, not a minute. Any faster and the count drifts: fit an encoder with fewer PPR, or use a faster input."
+  },
+  {
+   "id": "bits-q",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "A single-turn absolute encoder has a resolution of {bits} bits. How many degrees is one step?",
+   "vars": {"bits": {"pick": [10, 12, 13, 16, 17]}},
+   "let": {"n": "POWER(2, bits)"},
+   "answer": "360 / POWER(2, bits)",
+   "unit": "°",
+   "hint": "First the number of positions in a turn: 2 to the power of the number of bits.",
+   "work": "$2^{{bits}} = {n:0}$ positions a turn; $360 \\div {n:0} = {answer}$ degrees",
+   "why": "Each bit doubles the number of positions, so {bits} bits is 2 multiplied by itself {bits} times: {n:0}. Share 360 degrees between them. $360 \\div {bits}$ treats the bits as if they were positions: far too coarse."
+  },
+  {
+   "id": "why-swap",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "While a scanner axis is being rewired, A and B from the motor encoder get swapped. The servo is enabled with its position loop closed. What happens?",
+   "options": ["Nothing: the controller works out the direction by itself", "It runs away: the loop pushes the wrong way until the following-error limit trips it", "It moves at half speed", "It counts twice as many pulses"],
+   "answer": 1,
+   "why": "Swapping A and B makes B lead where A did, so every count goes the wrong way: the motor moves forwards and the position seems to go backwards. The loop sees the error grow and pushes harder the same way, so the error grows faster: a runaway. The controller cannot know which way is right; it only sees the order of A and B. The number of pulses is unchanged. Set a following-error limit (on a Galil, ER with OE) before the first enable, then fix the wiring or reverse the count (CE)."
+  },
+  {
+   "id": "mix-counter-rpm",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A drive's ×4 counter reports {cps} counts a second from a {ppr} PPR encoder. How fast is the motor turning, in rpm?",
+   "vars": {"ppr": {"pick": [500, 1000, 2000, 2500]}, "n0": {"pick": [600, 900, 1200, 1500, 1800, 2400, 3000]}},
+   "let": {"cps": "n0 / 60 * 4 * ppr", "cpr": "4 * ppr", "tps": "n0 / 60", "hz": "n0 / 60 * ppr"},
+   "answer": "cps / (4 * ppr) * 60",
+   "unit": "rpm",
+   "hint": "Are these pulses on A, or counts after ×4 decoding?",
+   "work": "Each turn gives $4 \\times {ppr} = {cpr}$ counts, so ${cps} \\div {cpr} = {tps}$ turns a second, and $\\times 60 = {answer}$ rpm",
+   "why": "These are ×4 **counts**, so divide by 4 × PPR, not by the PPR alone. A scope on the A wire would show the pulse frequency instead, {hz} Hz, and then you divide by the PPR only. Same shape of sum, different rule: always ask whether a number is pulses on A or counts after decoding."
+  },
+  {
+   "id": "mix-roller-metre",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A conveyor measures plates with a {ppr} PPR encoder on a {dia} mm roller, decoded ×4. How many counts come in while the belt moves 1 metre (1000 mm)?",
+   "vars": {"ppr": {"pick": [100, 250, 500, 1000]}, "dia": {"pick": [50, 60, 80, 100]}},
+   "let": {"circ": "PI() * dia", "cpr": "4 * ppr", "turns": "1000 / (PI() * dia)"},
+   "answer": "1000 / (PI() * dia) * 4 * ppr",
+   "unit": "counts",
+   "hint": "A roller moves the belt $\\pi d$ in one turn: how many turns is 1000 mm?",
+   "work": "One turn moves $\\pi \\times {dia} = {circ}$ mm, so 1000 mm is ${turns}$ turns. Each turn is {cpr} counts: ${turns} \\times {cpr} = {answer}$ counts",
+   "why": "The same shape as the leadscrew (distance a turn, then counts a turn), but a roller moves its **circumference** a turn, not its diameter. Using {dia} mm a turn gives a count about three times too big."
+  },
+  {
+   "id": "mix-slip",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 6.2,
+   "q": "A 4-pole induction motor runs from a drive at 50 Hz. The drive's display says 50 Hz; a scope on the shaft encoder (1000 PPR) shows 24 kHz on A. How fast is the shaft really turning?",
+   "options": ["1500 rpm", "3000 rpm", "1440 rpm", "360 rpm"],
+   "answer": 2,
+   "why": "Two different frequencies. The encoder's comes from the shaft itself: $n = \\frac{60 f}{PPR} = \\frac{60 \\times 24\\,000}{1000} = 1440$ rpm. The drive's 50 Hz sets the speed of the rotating field, $n_s = \\frac{120 \\times 50}{4} = 1500$ rpm for 4 poles, and an induction motor's rotor slips a little behind it (here 4%). 3000 rpm is 50 × 60, forgetting the poles. 360 rpm divides by 4 × PPR, but a scope on A shows pulses, not ×4 counts."
+  },
+  {
+   "id": "check-screw",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A scanner axis: a leadscrew with a {lead} mm lead, turned directly by a motor with a {ppr} PPR encoder, counted ×4. How far does the carriage move for each count, in µm (thousandths of a mm)?",
+   "vars": {"lead": {"pick": [4, 5, 10, 16, 20]}, "ppr": {"pick": [500, 1000, 1024, 2000, 2500]}},
+   "let": {"cpr": "4 * ppr", "mm": "lead / (4 * ppr)"},
+   "answer": "lead / (4 * ppr) * 1000",
+   "unit": "µm",
+   "work": "$CPR = 4 \\times {ppr} = {cpr}$. $\\frac{L}{CPR} = \\frac{{lead}}{{cpr}} = {mm}$ mm, which is {answer} µm",
+   "why": "Counts a turn first (×4), then the lead shared between them, then × 1000 for µm. Forgetting the ×4 makes each count four times too big; multiplying by 4 instead of dividing makes it sixteen times too big."
+  },
+  {
+   "id": "check-decode",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "An encoder has {ppr} PPR and the counter uses ×{k} decoding. How many degrees is one count?",
+   "vars": {"ppr": {"pick": [100, 360, 500, 1000, 2500]}, "k": {"pick": [1, 2, 4]}},
+   "let": {"cpr": "k * ppr"},
+   "answer": "360 / (k * ppr)",
+   "unit": "°",
+   "work": "$CPR = {k} \\times {ppr} = {cpr}$ counts a turn; $\\frac{360}{CPR} = \\frac{360}{{cpr}} = {answer}$ degrees",
+   "why": "×1 counts A's rising edges, ×2 both edges of A, ×4 every edge of A and B: here {cpr} counts a turn. One turn, 360 degrees, is shared between them. Using the PPR alone is right only for ×1."
+  },
+  {
+   "id": "check-signals",
+   "type": "match",
+   "stage": "check",
+   "level": 5.0,
+   "q": "Match each to what it is.",
+   "pairs": [
+    ["RS-422 (TTL) output", "5 V on a twisted pair, A+ and A−: noise cancels in the difference"],
+    ["HTL output", "Swings up to the supply, usually 24 V: suits 24 V PLC inputs"],
+    ["Z (index)", "One pulse a turn, at the same place: for homing"],
+    ["Multi-turn absolute encoder", "Knows the position, turns and all, at switch-on"],
+    ["Resolver", "A rotary transformer giving sine and cosine signals: analogue and rugged"]
+   ],
+   "why": "RS-422 and HTL are two ways of getting pulses down a cable: a differential pair, or a big 24 V swing. Z marks one place a turn. An absolute encoder, multi-turn, needs no homing. A resolver is the rugged analogue choice, absolute within one turn."
+  }
+ ]
+}

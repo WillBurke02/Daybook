@@ -1,0 +1,160 @@
+{
+ "id": "plc",
+ "title": "PLCs",
+ "sort": 3,
+ "note": "IEC 61131-3, with examples on Siemens (TIA Portal, SCL) and Allen-Bradley (CCW, Micro800). Menus and names differ between versions; the ideas do not.",
+ "units": [
+  {
+   "id": "plc.basics",
+   "title": "Basics",
+   "lessons": [
+    {
+     "id": "plc.basics.scan-cycle",
+     "title": "The scan cycle",
+     "star": true,
+     "level": 4.5,
+     "kind": "concept"
+    },
+    {
+     "id": "plc.basics.data-types",
+     "title": "Data types and addressing",
+     "star": true,
+     "level": 4.8,
+     "kind": "facts"
+    },
+    {
+     "id": "plc.basics.ladder",
+     "title": "Ladder basics: contacts, coils, seal-in",
+     "star": true,
+     "prereq": [
+      "plc.basics.scan-cycle"
+     ],
+     "level": 4.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.basics.timers-counters",
+     "title": "Timers and counters",
+     "star": true,
+     "prereq": [
+      "plc.basics.ladder"
+     ],
+     "level": 4.8,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.basics.edges",
+     "title": "Edge detection",
+     "prereq": [
+      "plc.basics.scan-cycle"
+     ],
+     "level": 5.0,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "plc.lang",
+   "title": "Languages",
+   "lessons": [
+    {
+     "id": "plc.lang.st",
+     "title": "Structured Text (SCL)",
+     "star": true,
+     "prereq": [
+      "plc.basics.data-types"
+     ],
+     "level": 5.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.lang.state-machines",
+     "title": "State machines",
+     "prereq": [
+      "plc.lang.st"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.lang.fbd-sfc",
+     "title": "FBD and SFC",
+     "level": 5.5,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "plc.process",
+   "title": "Process",
+   "lessons": [
+    {
+     "id": "plc.process.analogue",
+     "title": "Analogue scaling",
+     "prereq": [
+      "plc.basics.data-types"
+     ],
+     "level": 5.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.process.pid-blocks",
+     "title": "PID blocks",
+     "prereq": [
+      "drives.control.pid"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "plc.process.faults",
+     "title": "Fault handling and diagnostics",
+     "level": 6.0,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "plc.comms",
+   "title": "Comms and HMI",
+   "lessons": [
+    {
+     "id": "plc.comms.comms",
+     "title": "Profinet, EtherNet/IP and Modbus",
+     "level": 6.0,
+     "kind": "facts"
+    },
+    {
+     "id": "plc.comms.hmi",
+     "title": "HMI tags",
+     "level": 5.0,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "plc.safety",
+   "title": "Safety",
+   "lessons": [
+    {
+     "id": "plc.safety.safety",
+     "title": "Functional safety basics: ISO 13849, categories and PL, E-stops, safety relays",
+     "level": 6.5,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "plc.practice",
+   "title": "Practice",
+   "lessons": [
+    {
+     "id": "plc.practice.structure",
+     "title": "Good structure and naming",
+     "level": 6.0,
+     "kind": "concept"
+    }
+   ]
+  }
+ ]
+}

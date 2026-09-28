@@ -1,0 +1,337 @@
+{
+ "id": "plc.basics.data-types",
+ "title": "Data types and addressing",
+ "tags": ["plc", "iec61131", "siemens", "data-types", "addressing"],
+ "kind": "facts",
+ "level": 4.8,
+ "minutes": 25,
+ "goals": [
+  "Read a byte in binary, and say why 16 bits give 65 536 values",
+  "Choose BOOL, WORD, INT, DINT, REAL, TIME or STRING for a job, and say what goes wrong at the limits of INT and REAL",
+  "Find an input from its byte.bit address, and say which bytes make up a word such as MW10",
+  "Tell I, Q, M and DB addresses apart, and say why you write with names and what optimised data blocks change"
+ ],
+ "summary": "A **bit** is one 0 or 1: a **BOOL**. 8 bits make a **byte**, 16 a **word**, 32 a **double word** (BYTE, WORD, DWORD).\n\n**Binary**: each place is worth double the one to its right: 1, 2, 4, 8, 16, 32, 64, 128. Add up the places that hold a 1: 0000 1011 is 8 + 2 + 1 = 11. Each extra bit doubles the number of patterns, so $n$ bits give $2^n$ values: a byte 256 (0 to 255), a word $2^{16} = 65\\,536$.\n\n**Numbers**\n\n- **INT**: 16 bits, signed, −32 768 to 32 767. `Count := Count + 1` at 32 767 **wraps** to −32 768, with no fault. (A CTU block stops at the top instead.)\n- **DINT**: 32 bits, about ±2.1 billion: for counts past 32 767 and positions.\n- **REAL**: 32-bit floating point, about 7 significant digits (Siemens promises 6). 16 777 216 + 1 = 16 777 216, a big total can stop growing, and 0.1 added ten times is not exactly 1. Never compare REALs with =.\n- **TIME**: milliseconds in a DINT, T#2s, T#1m30s, up to about 24 days.\n- **STRING**: text, up to 254 characters plus 2 header bytes on Siemens.\n\n**Addresses**: area, byte, bit.\n\n- **I** inputs, **Q** outputs, **M** bit memory, **DB** data blocks (DB1.DBX0.0, DB1.DBW2).\n- Bits run 0 to 7: I0.7 is followed by **I1.0**. Input number (from 0) = 8 × byte + bit.\n- B, W, D give a byte, word or double word: IB0, MW10, MD20.\n- **MW10 is MB10 and MB11**, and MB10 is the **high** byte (big-endian). MW10 and MW11 overlap, so step words by 2 and double words by 4. M10.0 is bit 8 of MW10.\n- TIA Portal shows absolute addresses with %: %I0.0, %MW20.\n\n**Symbolic** addressing (names from the tag table) beats absolute: rewire, and you change one tag. **Optimised** DBs (the default on S7-1200/1500) have no fixed offsets: access by name only, but faster, and retentive tag by tag. **Standard** DBs keep offsets for devices that need absolute addresses.",
+ "resources": [
+  {"when": "before", "kind": "read", "title": "The Mysterious World of the S7 Data Table", "url": "https://www.rtautomation.com/rtas-blog/the-mysterious-world-of-the-s7-data-table/", "by": "Real Time Automation", "minutes": 3, "note": "The S7 memory areas and byte.bit addresses, in a few minutes."},
+  {"when": "after", "kind": "reference", "title": "Using absolute addressing to access CPU data", "url": "https://docs.tia.siemens.cloud/r/simatic_s7_1200_g2_manual_collection_enus_20/plc-concepts-configuration-and-programming/program-structure/data-storage-memory-areas-i/o-and-addressing/using-absolute-addressing-to-access-cpu-data", "by": "Siemens", "minutes": 8, "note": "Siemens' own table of the I, Q, M and DB areas and how bytes, words and double words overlap."},
+  {"when": "after", "kind": "reference", "title": "Data types", "url": "https://docs.tia.siemens.cloud/r/simatic_s7_1200_manual_collection_enus_20/plc-concepts/data-types/data-types", "by": "Siemens", "minutes": 5, "note": "Every S7-1200 data type with its size and range."},
+  {"when": "after", "kind": "read", "title": "Understanding Floating Point Numbers in PLC Programming", "url": "https://control.com/technical-articles/floating-point-numbers-in-plc-programming/", "by": "Control.com", "minutes": 5, "note": "Why REALs are not exact, and what to do about it."}
+ ],
+ "sources": [
+  "IEC 61131-3: Programmable controllers. Part 3: Programming languages",
+  "Siemens, SIMATIC S7-1200 Programmable controller, System Manual",
+  "Hans Berger, Automating with SIMATIC S7-1200 (Publicis)",
+  "IEEE 754: IEEE Standard for Floating-Point Arithmetic"
+ ],
+ "formulas": [
+  {
+   "name": "Values from a number of bits",
+   "tex": "N = 2^n",
+   "match": ["2^"],
+   "says": "Each extra bit doubles the number of patterns, so n bits can hold 2 multiplied by itself n times different values. The top value is one less, because 0 takes a pattern.",
+   "symbols": [["N", "how many different values"], ["n", "how many bits"]],
+   "example": "A byte, 8 bits: $2^8 = 256$ values, 0 to 255. A word, 16 bits: $2^{16} = 65\\,536$ values."
+  },
+  {
+   "name": "The range of a signed whole number",
+   "tex": "-2^{n-1} \\text{ to } 2^{n-1} - 1",
+   "match": ["2^{15}"],
+   "says": "A signed type (INT, DINT) keeps half its patterns for negative numbers. Zero takes one of the other half, so the top is one less than the bottom is below zero.",
+   "symbols": [["n", "how many bits (16 for INT, 32 for DINT)"]],
+   "example": "INT, 16 bits: $-2^{15} = -32\\,768$ to $2^{15} - 1 = 32\\,767$."
+  },
+  {
+   "name": "Input number from a byte.bit address",
+   "tex": "n = 8 \\times \\text{byte} + \\text{bit}",
+   "match": ["\\text{byte}"],
+   "says": "Every whole byte before it holds 8 inputs; then add the bit. To go the other way, divide by 8: the whole number is the byte, the remainder is the bit.",
+   "symbols": [["n", "the input's number, counting I0.0 as 0"], ["\\text{byte}", "the number before the dot"], ["\\text{bit}", "the number after the dot, 0 to 7"]],
+   "example": "I2.3: $8 \\times 2 + 3 = 19$, the twentieth input counting from 1."
+  },
+  {
+   "name": "A word from its two bytes",
+   "tex": "W = 256 \\times H + L",
+   "match": ["256\\times"],
+   "says": "In a Siemens word the byte at the lower address is the high byte: each 1 in it is worth 256. The other byte adds on.",
+   "symbols": [["W", "the value of the word, such as MW10"], ["H", "the high byte, MB10"], ["L", "the low byte, MB11"]],
+   "example": "MB10 = 1 and MB11 = 2: $256 \\times 1 + 2 = 258$ in MW10."
+  },
+  {
+   "name": "A TIME in milliseconds",
+   "tex": "t = 60\\,000 \\times m + 1000 \\times s",
+   "match": ["60\\,000\\times"],
+   "says": "A minute is 60 000 ms and a second is 1000 ms. TIME is stored in milliseconds.",
+   "symbols": [["t", "the time in milliseconds"], ["m", "the minutes"], ["s", "the seconds"]],
+   "example": "T#1m30s: $60\\,000 \\times 1 + 1000 \\times 30 = 90\\,000$ ms."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-overflow",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.6,
+   "q": "Have a go: a guess is fine. An **INT** tag counts boxes: the program does `Count := Count + 1;` once for each box. The count reads 32 767. One more box passes. What does it read now?",
+   "options": ["32 768", "−32 768", "0", "It stays at 32 767"],
+   "answer": 1,
+   "why": "An INT has 16 bits, and 32 767 is the biggest number it can hold. There is no pattern for 32 768, so adding 1 **wraps round** to the most negative, −32 768, like a mileometer rolling over. 32 768 needs a bigger type, such as DINT. Staying at 32 767 is what a CTU counter block does (it stops at the top), not plain adding. 0 is where an unsigned type would wrap to."
+  },
+  {
+   "id": "binary",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bits, bytes and binary",
+   "body": "A **bit** is one 0 or 1: one input, one lamp, type **BOOL**. 8 bits make a **byte**, 16 a **word**, 32 a **double word** (types BYTE, WORD, DWORD).\n\nIn everyday numbers each place is worth ten times the one to its right: units, tens, hundreds. In **binary** each place is worth **double**: 1, 2, 4, 8, 16, 32, 64, 128.\n\nTo read a byte, add up the places that hold a 1. 0000 1011 is 8 + 2 + 1 = **11**.\n\nEach extra bit doubles the number of patterns, so $n$ bits give $2^n$ values ($2^n$ is 2 multiplied by itself $n$ times). A byte: 256 values, 0 to 255. A word: $2^{16} = 65\\,536$.",
+   "more": "Why does each bit double it? One bit has 2 patterns: 0 and 1. Add a second bit, and each of those can have a 0 or a 1 in front: 00, 01, 10, 11. That is 4. A third bit doubles again to 8. Keep going: 16, 32, 64, 128, and 256 for 8 bits. Keep doubling to 16 bits and you reach 65 536.\n\nWorked number: 0010 0101. Number the bits from the right, starting at 0. Bit 0 (worth 1) is on, bit 2 (worth 4) is on, bit 5 (worth 32) is on. $32 + 4 + 1 = 37$.\n\nThe top value is one less than the number of patterns, because 0 takes one: 256 values run from 0 to 255. All eight bits on, 1111 1111, is $128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255$."
+  },
+  {
+   "id": "read-byte",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "A byte holds the bits `{b7}{b6}{b5}{b4} {b3}{b2}{b1}{b0}`. The left-hand bit is bit 7, worth 128; the right-hand bit is bit 0, worth 1. What number is it?",
+   "vars": {"b7": {"pick": [0, 1]}, "b6": {"pick": [0, 1]}, "b5": {"pick": [0, 1]}, "b4": {"pick": [0, 1]}, "b3": {"pick": [0, 1]}, "b2": {"pick": [0, 1]}, "b1": {"pick": [0, 1]}, "b0": {"pick": [0, 1]}},
+   "answer": "128 * b7 + 64 * b6 + 32 * b5 + 16 * b4 + 8 * b3 + 4 * b2 + 2 * b1 + b0",
+   "abs": 0,
+   "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 over the bits, then add up the ones that sit over a 1.",
+   "work": "$128 \\times {b7} + 64 \\times {b6} + 32 \\times {b5} + 16 \\times {b4} + 8 \\times {b3} + 4 \\times {b2} + 2 \\times {b1} + 1 \\times {b0} = {answer:0}$",
+   "why": "Each place is worth double the one to its right, so add the worths of the bits that are 1: {answer:0}. Reading the bits as an everyday number is the slip: in binary, 10 means two, not ten."
+  },
+  {
+   "id": "int-dint",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Whole numbers: INT, DINT and TIME",
+   "body": "**INT** is a whole number in 16 bits. It is **signed**: half of its 65 536 patterns are negative numbers. So an INT runs from **−32 768 to 32 767**. (Zero takes one of the other half, so the top is one less.)\n\n**DINT** (double integer) uses 32 bits: −2 147 483 648 to 2 147 483 647, about ±2.1 billion.\n\nGo past the top and it **wraps**: 32 767 + 1 gives −32 768. The CPU does not stop; you just get a wrong number. (A CTU counter block stops at the top instead.)\n\n**TIME** is a DINT of **milliseconds**: T#2s is 2000, T#1m30s is 90 000. It reaches about 24 days.",
+   "more": "Think of a car's mileometer with five digits: after 99 999 it rolls back to 00 000. An INT does the same, except that the top half of its patterns stand for negative numbers, so it rolls from 32 767 to −32 768.\n\nWorked number: a line makes 40 boxes a minute. How long before an INT count wraps? $32\\,767 \\div 40 \\approx 819$ minutes: under 14 hours. A two-shift day would end with a negative count. A DINT would take about a hundred years.\n\nIn powers of 2: $2^{15} = 32\\,768$, so an INT runs from $-2^{15}$ to $2^{15} - 1$. A DINT runs from $-2^{31}$ to $2^{31} - 1$.\n\nSiemens also has **UINT**, 16 bits with no negatives: 0 to 65 535."
+  },
+  {
+   "id": "int-max",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "Type the highest number an INT can hold.",
+   "vars": {},
+   "answer": "2^15 - 1",
+   "abs": 0,
+   "hint": "16 bits give 65 536 patterns. Half are negative; zero takes one of the rest.",
+   "work": "$2^{15} - 1 = {answer:0}$",
+   "why": "INT is 16 bits and signed: of its 65 536 patterns, half are negative, so it runs from −32 768 to {answer:0}. 65 535 is the top of a UINT, which has no negatives. 32 768 would need a 17th bit."
+  },
+  {
+   "id": "real",
+   "type": "concept",
+   "stage": "learn",
+   "title": "REAL: numbers with a point",
+   "body": "**REAL** holds numbers with a decimal point, such as 21.4 °C or 3.75 bar, in 32 bits. It is **floating point**: it keeps about **7 significant digits** (digits that count; Siemens promises 6) and moves the point to suit. So it reaches huge and tiny numbers, but it is not exact.\n\n- 16 777 216 + 1 = 16 777 216: past about 16.7 million, REALs are more than 1 apart.\n- A running total can **stop growing**: 20 000 000 + 0.5 is still 20 000 000.\n- 0.1 added ten times gives 1.0000001, not 1. Never compare REALs with =: use ≥ or a small band.\n\n**LREAL** (64 bits) keeps about 15 digits.",
+   "more": "Picture a display with only 7 digits and a decimal point that can move. It shows 0.1234567 or 1234567, but not 12345678.9: the last digits fall off the end.\n\nA REAL works like that, in binary. That is also why 0.1 is not exact, in the same way that a third is not exact as 0.333 in decimal.\n\nWorked number: a flow totaliser adds 0.1 litres every scan. After 100 000 scans it should read 10 000 litres. A REAL reads about 9998.6. Once the total passes 16.7 million, adding 0.5 litres does nothing at all.\n\nThe fix: keep counts in a DINT (whole litres, whole pulses) and use REAL for measurements and scaling. For a long-running total, use an LREAL or a DINT of whole units."
+  },
+  {
+   "id": "real-total",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "A **REAL** tag totals the flow: every scan the program adds 0.5 litres to it. The total has reached 20 000 000 litres. What happens next?",
+   "options": ["It keeps going up by 0.5 litres a scan", "It stops going up: the 0.5 is lost each time it is added", "It wraps round to a negative number", "The CPU faults with an overflow"],
+   "answer": 1,
+   "hint": "How many significant digits does a REAL keep? How many does 20 000 000.5 need?",
+   "why": "A REAL keeps only about 7 significant digits. At 20 million the gap between one REAL and the next is 2, so 20 000 000.5 rounds straight back to 20 000 000, scan after scan. It does not wrap: wrapping is what whole-number types (INT, DINT) do at their limit. Keep totals in a DINT of whole units, or in an LREAL."
+  },
+  {
+   "id": "address",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Areas and byte.bit addresses",
+   "body": "A Siemens address gives the **area**, then the **byte**, then the **bit**:\n\n- **I** inputs (I0.0), **Q** outputs (Q0.1), **M** bit memory for internal flags (M10.0), **DB** data blocks (DB1.DBX0.0 is block 1, byte 0, bit 0)\n\nBits are numbered 0 to 7, so the inputs run I0.0 … I0.7, then **I1.0**. There is no I0.8. Counting I0.0 as number 0:\n\n$$n = 8 \\times \\text{byte} + \\text{bit}$$\n\nA letter after the area takes a bigger piece: **B** a byte (IB0), **W** a word (MW20, DB1.DBW2), **D** a double word (MD4, DB1.DBD4). TIA Portal shows absolute addresses with a %: %I0.0, %MW20.",
+   "more": "Think of a street of houses with 8 flats each. The byte is the house number and the bit is the flat, 0 to 7. After flat 7 of house 0 comes flat 0 of house 1.\n\nWorked number: I1.3 is $8 \\times 1 + 3 = 11$ counting from 0, so it is the twelfth input on the card.\n\nThe other way: divide by 8. The whole number is the byte, the remainder is the bit. Input number 21: $21 \\div 8$ is 2 remainder 5, so I2.5.\n\nIB0 is all eight inputs I0.0 to I0.7 read as one byte; IW0 is IB0 and IB1 together.\n\nAllen-Bradley Micro800 does not use byte.bit for its built-in I/O: its inputs are named _IO_EM_DI_00, _IO_EM_DI_01 and so on."
+  },
+  {
+   "id": "input-number",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "Counting I0.0 as input number 0, what number is input I{byt}.{bt}?",
+   "vars": {"byt": [0, 7, 1], "bt": [0, 7, 1]},
+   "answer": "8 * byt + bt",
+   "abs": 0,
+   "hint": "How many inputs are in the bytes before byte {byt}?",
+   "work": "$n = 8 \\times \\text{byte} + \\text{bit} = 8 \\times {byt} + {bt} = {answer:0}$",
+   "why": "Each byte before it holds 8 inputs, then add the bit: {answer:0}. Reading I{byt}.{bt} as a decimal number is the slip: the part after the dot only goes up to 7, so each byte is 8 inputs, not 10."
+  },
+  {
+   "id": "overlap",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Words overlap: MW10 is MB10 and MB11",
+   "body": "Memory is one long row of bytes. A word takes **two** of them, a double word **four**:\n\n- **MW10** is MB10 and MB11\n- **MD10** is MB10, MB11, MB12 and MB13\n\nSiemens puts the **high** byte first (**big-endian**): each 1 in MB10 is worth 256, and MB11 is the low byte.\n\n$$W = 256 \\times H + L$$\n\n($W$ the word, $H$ the high byte, $L$ the low byte.) So **MW10 and MW11 overlap**: both contain MB11, and writing one changes the other. Step words by 2 (MW10, MW12) and double words by 4.\n\nA trap: M10.0 is inside MW10, but it is bit **8** of the word. Bit 0 is M11.0.",
+   "more": "Picture the bytes as numbered boxes in a row. MW10 is a label stuck across boxes 10 and 11. MW11 is a label across boxes 11 and 12. Box 11 is under both labels, so writing a number into MW11 scribbles over the second half of MW10.\n\nWorked number: MW10 holds 258. $258 = 256 \\times 1 + 2$, so MB10 (the high byte) holds 1 and MB11 holds 2.\n\nWhy 256? The low byte counts 0 to 255 on its own. Each 1 in the high byte is worth one full turn of the low byte: 256.\n\nIntel PCs do it the other way round (little-endian), which is why numbers passed between a PC and a PLC sometimes arrive with their bytes swapped."
+  },
+  {
+   "id": "overlap-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A program keeps a box count in MW20 and a speed setpoint in MW21. The count seems to change whenever the setpoint is written. Why?",
+   "options": ["MW20 and MW21 share the byte MB21", "An INT cannot hold a speed", "Bit memory is cleared every scan", "MW21 is not a real address"],
+   "answer": 0,
+   "why": "MW20 is MB20 and MB21; MW21 is MB21 and MB22. They share MB21, so writing either one changes the other. Use MW20 and MW22. MW21 is a legal address, which is why the software does not stop you; and M memory is not cleared each scan."
+  },
+  {
+   "id": "names",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Names, not numbers; optimised data blocks",
+   "body": "**Absolute** addressing uses the address: %I0.0. **Symbolic** addressing uses a name from the tag table: \"Start_PB\". Write with names. If the button is rewired from I0.0 to I1.4, you change one row of the tag table and every rung follows.\n\nOn S7-1200 and S7-1500, new data blocks have **optimised block access**. The CPU lays out the data itself, so the tags have **no fixed offsets** (no fixed byte numbers). You reach them only by name, \"Data\".Speed, never as DB1.DBW2. In return, access is faster, and each tag can be made retentive (kept through a power cut) on its own.\n\nA **standard** DB keeps fixed offsets, for the older HMIs, drivers and PUT/GET links that need absolute addresses.",
+   "more": "An address is like a house number; a name is like the person who lives there. If they move, you still find them by name, as long as the address book (the tag table) is kept up to date.\n\nWorked example: \"Start_PB\" is I0.0 in the tag table, and twenty rungs use it. The button moves to I1.4. Edit one row of the tag table, download, done. With absolute addresses you would hunt down twenty %I0.0s, and probably miss one.\n\nAn optimised DB is like a warehouse where the system picks the shelf: you ask for the part by name. A standard DB has a fixed shelf plan, so a device that only knows the plan (an old HMI, a third-party driver) can go straight to byte 2."
+  },
+  {
+   "id": "optimised-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A data block has optimised block access. What happens if you try to use DB1.DBW2 in your code?",
+   "options": ["It is refused: an optimised DB can only be reached by name", "It reads bytes 2 and 3 as normal", "It reads whichever tag is second in the list", "It works, but only in ladder"],
+   "answer": 0,
+   "why": "In an optimised DB the CPU decides where each tag goes, so byte 2 has no fixed meaning and absolute access is refused. It does not quietly read 'the second tag' either. If a device needs absolute addresses, switch optimised access off for that DB, which makes it a standard DB."
+  },
+  {
+   "id": "match-sizes",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "Match each type to its size.",
+   "pairs": [["BOOL", "1 bit"], ["BYTE", "8 bits, 1 byte"], ["WORD or INT", "16 bits, 2 bytes"], ["DWORD, DINT or REAL", "32 bits, 4 bytes"]],
+   "why": "Everything is built from bytes of 8 bits. INT is the same size as WORD, and DINT and REAL the same size as DWORD: the type decides what the bits mean, not how many there are."
+  },
+  {
+   "id": "order-inputs",
+   "type": "order",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "Put these inputs in the order they come on the card, first to last.",
+   "items": ["I0.6", "I0.7", "I1.0", "I1.1", "I1.7", "I2.0"],
+   "why": "Bits go 0 to 7, and then the next byte starts at .0. So I0.7 is followed by I1.0, and I1.7 by I2.0. There is no I0.8 or I1.8."
+  },
+  {
+   "id": "which-byte",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Counting I0.0 as input number 0, input number {n} is in which input byte? Type the byte number.",
+   "vars": {"n": [8, 63, 1]},
+   "let": {"bit": "MOD(n, 8)"},
+   "answer": "ROUNDDOWN(n / 8, 0)",
+   "abs": 0,
+   "hint": "How many whole 8s fit into {n}?",
+   "work": "${n} \\div 8 = {answer:0}$ remainder {bit:0}, so it is I{answer:0}.{bit:0}",
+   "why": "Each byte holds 8 inputs, so divide by 8: the whole number is the byte, the remainder is the bit. Check it: $8 \\times {answer:0} + {bit:0} = {n}$. Dividing by 10, as if addresses were decimal, is the slip."
+  },
+  {
+   "id": "match-areas",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Match each address to what it is.",
+   "pairs": [["I0.0", "Input byte 0, bit 0"], ["Q0.1", "Output byte 0, bit 1"], ["MW20", "A memory word: MB20 and MB21"], ["DB1.DBX0.0", "Data block 1, byte 0, bit 0"], ["MD4", "A memory double word: MB4 to MB7"], ["IB2", "Input byte 2: I2.0 to I2.7"]],
+   "why": "The first letter is the area (I, Q, M, DB). A B, W or D after it makes it a byte, a word (2 bytes) or a double word (4 bytes), starting at that byte. X marks a single bit inside a data block."
+  },
+  {
+   "id": "high-byte",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "MW{a} holds {w:0}. What number is in MB{a}?",
+   "vars": {"a": {"pick": [10, 20, 30, 40, 100]}, "hi": [1, 120, 1], "lo": [0, 255, 1]},
+   "let": {"b": "a + 1", "w": "256 * hi + lo"},
+   "answer": "hi",
+   "abs": 0,
+   "hint": "MB{a} is the high byte. How many whole 256s are there in {w:0}?",
+   "work": "$W = 256 \\times H + L$: ${w:0} = 256 \\times {hi} + {lo}$, so MB{a} holds {answer:0} and MB{b} holds {lo}",
+   "why": "Siemens puts the high byte at the lower address: MW{a} is 256 × MB{a} + MB{b}. So divide by 256: the whole number, {answer:0}, is MB{a}, and the remainder, {lo}, is MB{b}. Answering {lo} swaps the bytes: that is the order an Intel PC uses, not an S7."
+  },
+  {
+   "id": "time-ms",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "A timer's preset is T#{m}m{s}s. TIME is stored in milliseconds. How many milliseconds is it?",
+   "vars": {"m": {"pick": [1, 2, 3, 5]}, "s": {"pick": [5, 10, 15, 20, 30, 45]}},
+   "answer": "60000 * m + 1000 * s",
+   "abs": 0.5,
+   "work": "$60\\,000 \\times {m} + 1000 \\times {s} = {answer:0}$ ms",
+   "why": "A second is 1000 ms and a minute is 60 s, so 60 000 ms. T#{m}m{s}s is {answer:0} ms. Counting a minute as 1000 ms, or as 100 s, are the usual slips."
+  },
+  {
+   "id": "bytes-count",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.7,
+   "q": "A standard data block holds {n} DINTs followed by {m} INTs, one after another with no gaps. How many bytes do they take?",
+   "vars": {"n": [2, 20, 1], "m": [1, 20, 1]},
+   "answer": "4 * n + 2 * m",
+   "abs": 0,
+   "hint": "How many bits in a DINT and in an INT? How many bits make a byte?",
+   "work": "${n} \\times 4 + {m} \\times 2 = {answer:0}$ bytes",
+   "why": "A DINT is 32 bits, which is 4 bytes; an INT is 16 bits, 2 bytes. Counting bits instead of bytes is the slip: 8 bits make a byte."
+  },
+  {
+   "id": "match-jobs",
+   "type": "match",
+   "stage": "practise",
+   "q": "Match each job to the data type you would choose.",
+   "pairs": [["A guard switch: open or shut", "BOOL"], ["A temperature, 21.4 °C", "REAL"], ["An encoder position, up to ±500 000 counts", "DINT"], ["A delay of 2.5 s", "TIME"], ["A recipe name", "STRING"], ["A drive's 16-bit status word", "WORD"]],
+   "why": "±500 000 is past 32 767, so an INT would wrap: DINT. A temperature has a decimal point: REAL. A status word is 16 separate yes/no bits, so a bit string, WORD, not a number type. A Siemens STRING holds up to 254 characters."
+  },
+  {
+   "id": "why-doubling",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Why do 16 bits give 65 536 different values?",
+   "options": ["Each extra bit doubles the number of patterns: 2 multiplied by itself 16 times", "A word is two bytes, so it holds 256 + 256 values", "Each bit is worth 4096, and 16 × 4096 = 65 536", "Half the patterns are kept for negative numbers"],
+   "answer": 0,
+   "why": "Every pattern of the other bits can have a 0 or a 1 added, so each bit doubles the count: $2^{16} = 65\\,536$. Two bytes together give 256 × 256, not 256 + 256, because every pattern of one byte goes with every pattern of the other. Keeping half for negatives is what INT does with the 65 536; it does not change how many there are."
+  },
+  {
+   "id": "check-wrap",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.2,
+   "q": "An INT tag holds 32 767. The program adds {k} to it. What does it read now?",
+   "vars": {"k": {"pick": [1, 2, 3, 5, 10, 100]}},
+   "let": {"sum": "32767 + k"},
+   "answer": "-32768 + k - 1",
+   "abs": 0,
+   "hint": "Adding 1 takes it to −32 768. Count on from there.",
+   "work": "One past 32 767 is −32 768, so {k} past is $-32\\,768 + {k} - 1 = {answer:0}$",
+   "why": "An INT wraps from the top of its range, 32 767, to the bottom, −32 768. Adding 1 lands on −32 768, and each further 1 counts up from there: {answer:0}. {sum:0} would need a 17th bit, which an INT does not have. A DINT would hold it."
+  },
+  {
+   "id": "check-mw",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.8,
+   "q": "In MW10 on a Siemens S7, which byte is the high byte, the one worth 256 for each 1?",
+   "options": ["MB10", "MB11", "MB9", "It depends on the value"],
+   "answer": 0,
+   "why": "An S7 is big-endian: the byte at the lower address is the high byte, so MW10 = 256 × MB10 + MB11. MB11 would be the high byte on an Intel PC (little-endian). MB9 is not part of MW10 at all."
+  },
+  {
+   "id": "check-types",
+   "type": "match",
+   "stage": "check",
+   "level": 4.5,
+   "q": "Match each type to what it holds.",
+   "pairs": [["BOOL", "One bit: 0 or 1"], ["INT", "16 bits: −32 768 to 32 767"], ["DINT", "32 bits: about ±2.1 billion"], ["REAL", "32 bits, about 7 significant digits"], ["TIME", "Milliseconds, written T#2s"]],
+   "why": "INT and DINT are whole numbers that wrap at their limits; REAL has a point but only about 7 digits; TIME is a DINT counting milliseconds."
+  },
+  {
+   "id": "flash-string",
+   "type": "flash",
+   "stage": "check",
+   "front": "How much text does a Siemens STRING hold, and how many bytes does a full one take?",
+   "back": "Up to 254 characters, plus 2 bytes in front: the maximum length and the actual length. A full-size STRING takes 256 bytes."
+  }
+ ]
+}

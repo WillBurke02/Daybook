@@ -1,0 +1,277 @@
+{
+ "id": "physics",
+ "title": "A-level Physics",
+ "sort": 1,
+ "note": "Weighted towards ultrasonic testing and electricity. Figures such as material velocities are typical values; your procedure and calibration block give the ones to use.",
+ "units": [
+  {
+   "id": "physics.measure",
+   "title": "Measurements",
+   "lessons": [
+    {
+     "id": "physics.measure.uncertainties",
+     "title": "Measurements and uncertainties",
+     "level": 4.5,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "physics.waves",
+   "title": "Waves",
+   "lessons": [
+    {
+     "id": "physics.waves.progressive",
+     "title": "Progressive waves",
+     "star": true,
+     "level": 4.8,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.waves.superposition",
+     "title": "Superposition and standing waves",
+     "star": true,
+     "prereq": [
+      "physics.waves.progressive"
+     ],
+     "level": 5.0,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.waves.refraction",
+     "title": "Refraction and Snell's law",
+     "star": true,
+     "prereq": [
+      "physics.waves.progressive"
+     ],
+     "level": 4.8,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "physics.ut",
+   "title": "Ultrasound and NDT",
+   "lessons": [
+    {
+     "id": "physics.ut.generation",
+     "title": "Generating ultrasound: the piezoelectric effect",
+     "level": 5.0,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.ut.pulse-echo",
+     "title": "Pulse-echo and time of flight",
+     "star": true,
+     "prereq": [
+      "physics.waves.progressive"
+     ],
+     "level": 5.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.ut.impedance",
+     "title": "Acoustic impedance and reflection",
+     "star": true,
+     "prereq": [
+      "physics.ut.pulse-echo"
+     ],
+     "level": 5.3,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.ut.attenuation",
+     "title": "Attenuation and decibels",
+     "star": true,
+     "prereq": [
+      "physics.ut.pulse-echo"
+     ],
+     "level": 5.3,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.ut.couplant",
+     "title": "Couplant",
+     "prereq": [
+      "physics.ut.impedance"
+     ],
+     "level": 4.5,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.ut.probes",
+     "title": "Probes: normal, angle and dual",
+     "star": true,
+     "prereq": [
+      "physics.waves.refraction"
+     ],
+     "level": 5.5,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.ut.near-field",
+     "title": "Near field and beam spread",
+     "prereq": [
+      "physics.ut.probes"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.ut.scans",
+     "title": "A-scan, B-scan and C-scan",
+     "prereq": [
+      "physics.ut.pulse-echo"
+     ],
+     "level": 5.5,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.ut.calibration",
+     "title": "Calibration blocks",
+     "prereq": [
+      "physics.ut.pulse-echo"
+     ],
+     "level": 5.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.ut.sizing",
+     "title": "Flaw sizing basics",
+     "prereq": [
+      "physics.ut.attenuation",
+      "physics.ut.near-field"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "physics.elec",
+   "title": "Electricity",
+   "lessons": [
+    {
+     "id": "physics.elec.charge-current",
+     "title": "Charge, current and potential difference",
+     "star": true,
+     "level": 4.2,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.resistance",
+     "title": "Resistance and resistivity",
+     "star": true,
+     "prereq": [
+      "physics.elec.charge-current"
+     ],
+     "level": 4.6,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.circuits",
+     "title": "Series and parallel",
+     "star": true,
+     "prereq": [
+      "physics.elec.resistance"
+     ],
+     "level": 4.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.dividers",
+     "title": "Potential dividers",
+     "star": true,
+     "prereq": [
+      "physics.elec.circuits"
+     ],
+     "level": 4.8,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.emf",
+     "title": "EMF and internal resistance",
+     "prereq": [
+      "physics.elec.circuits"
+     ],
+     "level": 5.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.capacitors",
+     "title": "Capacitors",
+     "star": true,
+     "prereq": [
+      "physics.elec.circuits"
+     ],
+     "level": 5.3,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.ac",
+     "title": "AC and RMS",
+     "prereq": [
+      "physics.elec.charge-current"
+     ],
+     "level": 5.2,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.elec.oscilloscope",
+     "title": "The oscilloscope",
+     "prereq": [
+      "physics.elec.ac"
+     ],
+     "level": 5.0,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "physics.fields",
+   "title": "Fields",
+   "lessons": [
+    {
+     "id": "physics.fields.electric",
+     "title": "Electric fields",
+     "level": 5.3,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.fields.magnetic",
+     "title": "Magnetic fields",
+     "level": 5.3,
+     "kind": "concept"
+    },
+    {
+     "id": "physics.fields.induction",
+     "title": "Electromagnetic induction",
+     "star": true,
+     "prereq": [
+      "physics.fields.magnetic"
+     ],
+     "level": 5.4,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "physics.more",
+   "title": "In outline",
+   "lessons": [
+    {
+     "id": "physics.more.mechanics",
+     "title": "Mechanics essentials",
+     "level": 4.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "physics.more.thermal-nuclear",
+     "title": "Thermal and nuclear physics in outline",
+     "level": 5.0,
+     "kind": "concept"
+    }
+   ]
+  }
+ ]
+}

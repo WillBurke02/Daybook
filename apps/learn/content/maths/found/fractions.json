@@ -1,0 +1,378 @@
+{
+ "id": "maths.found.fractions",
+ "title": "Fractions, decimals and percentages",
+ "tags": ["maths", "fractions", "percentages"],
+ "kind": "procedure",
+ "level": 2.6,
+ "minutes": 25,
+ "goals": [
+  "Find equivalent fractions and simplify a fraction",
+  "Find a fraction or a percentage of an amount without a calculator",
+  "Change between fractions, decimals and percentages, and compare them",
+  "Increase or decrease an amount by a percentage: a pay rise, a discount, VAT"
+ ],
+ "summary": "A **fraction** is part of a whole cut into **equal** parts. In $\\frac{3}{4}$ the bottom number (**denominator**) is how many parts the whole is cut into; the top number (**numerator**) is how many you have. The line means divide: $\\frac{3}{4} = 3 \\div 4 = 0.75$.\n\n**Equivalent fractions** are the same amount: multiply or divide top and bottom by the same number. $\\frac{3}{4} = \\frac{6}{8}$. To **simplify**, divide both by the same number until only 1 divides both: $\\frac{12}{16} = \\frac{3}{4}$.\n\n**A fraction of an amount**: divide by the bottom, times by the top. $\\frac{3}{4}$ of 60 m: $60 \\div 4 = 15$, $15 \\times 3 = 45$ m.\n\n**Per cent** means out of 100.\n- Fraction to decimal: divide top by bottom.\n- Decimal to percentage: times by 100. Percentage to decimal: divide by 100.\n- Know: $\\frac{1}{2} = 0.5 = 50\\%$, $\\frac{1}{4} = 0.25 = 25\\%$, $\\frac{3}{4} = 0.75 = 75\\%$, $\\frac{1}{10} = 0.1 = 10\\%$, $\\frac{1}{5} = 0.2 = 20\\%$.\n\n**A percentage of an amount**, in your head: 10% is divide by 10; 5% is half of that; 1% is divide by 100. Build the rest: 15% = 10% + 5%. On a calculator: $\\frac{15}{100} \\times 240 = 36$.\n\n**Increase** by a percentage: work it out and add it on. **Decrease**: work it out and take it off. One step: multiply by $1 + \\frac{p}{100}$ (a 5% rise is × 1.05) or $1 - \\frac{p}{100}$ (20% off is × 0.8). **VAT** at the standard rate of 20% is × 1.2.\n\n**Comparing**: change them all to decimals (or all to percentages), then compare. Up 10% then down 10% ends 1% lower, because the second 10% is of a bigger amount.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "Equivalent Fractions, Decimals, Percentages Video", "url": "https://corbettmaths.com/2013/02/15/fdp/", "by": "Corbettmaths", "minutes": 6, "note": "The same amount written three ways."},
+  {"when": "after", "kind": "read", "title": "Converting between percents, fractions, & decimals", "url": "https://www.khanacademy.org/math/cc-sixth-grade-math/x0267d782:cc-6th-rates-and-percentages/x0267d782:equivalent-representations-of-percent-problems/a/converting-between-percents-fractions-decimals", "by": "Khan Academy", "minutes": 5},
+  {"when": "after", "kind": "video", "title": "Percentages of Amounts: Non-calculator Video", "url": "https://corbettmaths.com/2012/08/20/percentages-of-amounts-non-calculator/", "by": "Corbettmaths", "minutes": 7, "note": "Building any percentage from 10%, 5% and 1%."}
+ ],
+ "sources": [
+  "Department for Education, Mathematics programmes of study: key stages 1 and 2. National curriculum in England (2013)",
+  "Department for Education, Mathematics programmes of study: key stage 3. National curriculum in England (2013)",
+  "Department for Education, Mathematics: GCSE subject content and assessment objectives (2013)",
+  "Department for Education, Functional Skills subject content: mathematics (2018)",
+  "GOV.UK, VAT rates (standard rate 20%)"
+ ],
+ "formulas": [
+  {"name": "Equivalent fractions", "tex": "\\frac{a}{b} = \\frac{a \\times k}{b \\times k}", "match": ["\\frac{3\\times2}{4\\times2}"],
+   "says": "Multiply (or divide) the top and the bottom by the same number and the fraction is still the same amount: the pieces are just cut smaller (or bigger).",
+   "symbols": [["a", "the top number (numerator): how many parts you have"], ["b", "the bottom number (denominator): how many equal parts make the whole"], ["k", "any whole number you choose, the same on top and bottom"]],
+   "example": "$\\frac{3}{4} = \\frac{6}{8} = \\frac{75}{100}$; and back down, $\\frac{12}{16} = \\frac{3}{4}$ (divide both by 4)."},
+  {"name": "A fraction of an amount", "tex": "\\frac{a}{b} \\text{ of } N = N \\div b \\times a", "match": ["60\\div4"],
+   "says": "Divide by the bottom number to find one part, then multiply by the top number to take that many parts.",
+   "symbols": [["a", "the top number: how many parts you take"], ["b", "the bottom number: how many equal parts to cut it into"], ["N", "the whole amount (metres, pounds, anything)"]],
+   "example": "$\\frac{3}{4}$ of 60 m: $60 \\div 4 = 15$, then $15 \\times 3 = 45$, so 45 m."},
+  {"name": "Fraction to decimal", "tex": "\\frac{a}{b} = a \\div b", "match": ["3\\div4=0.75"],
+   "says": "The fraction line means divide: top number divided by bottom number gives the decimal.",
+   "symbols": [["a", "the top number"], ["b", "the bottom number"]],
+   "example": "$\\frac{3}{4} = 3 \\div 4 = 0.75$; $\\frac{5}{8} = 5 \\div 8 = 0.625$."},
+  {"name": "Per cent: out of 100", "tex": "p\\% = \\frac{p}{100}", "match": ["\\frac{35}{100}"],
+   "says": "Per cent means out of 100. To turn a percentage into a decimal, divide by 100; to turn a decimal into a percentage, multiply by 100.",
+   "symbols": [["p", "the percentage: how many out of every 100"]],
+   "example": "$35\\% = \\frac{35}{100} = 0.35$; $8\\% = 0.08$; $0.6 = 60\\%$."},
+  {"name": "A percentage of an amount", "tex": "p\\% \\text{ of } N = \\frac{p}{100} \\times N", "match": ["\\frac{15}{100}\\times240"],
+   "says": "Divide the amount by 100 to find 1%, then multiply by the percentage. In your head, build it from 10% (divide by 10), 5% (half of 10%) and 1% (divide by 100).",
+   "symbols": [["p", "the percentage you want"], ["N", "the whole amount"]],
+   "example": "15% of £240: 10% is 24 and 5% is 12, so 36: £36. On a calculator, $\\frac{15}{100} \\times 240 = 36$."},
+  {"name": "Percentage increase", "tex": "\\text{new} = \\text{old} \\times \\left(1 + \\frac{p}{100}\\right)", "match": ["1+\\frac{p}{100}"],
+   "says": "Add the percentage on. In one step: multiply by 1 plus the percentage as a decimal. A 5% rise is × 1.05; adding 20% VAT is × 1.2.",
+   "symbols": [["\\text{old}", "the amount before the change"], ["\\text{new}", "the amount after the change"], ["p", "the percentage increase"]],
+   "example": "£14.00 an hour with a 5% rise: $14 \\times 1.05 = 14.70$, so £14.70."},
+  {"name": "Percentage decrease", "tex": "\\text{new} = \\text{old} \\times \\left(1 - \\frac{p}{100}\\right)", "match": ["1-\\frac{p}{100}"],
+   "says": "Take the percentage off. In one step: multiply by 1 minus the percentage as a decimal. 20% off is × 0.8, because 80% is left.",
+   "symbols": [["\\text{old}", "the amount before the change"], ["\\text{new}", "the amount after the change"], ["p", "the percentage decrease"]],
+   "example": "20% off a £45 tool: $45 \\times 0.8 = 36$, so £36."}
+ ],
+ "cards": [
+  {
+   "id": "try-pay-rise",
+   "type": "numeric",
+   "stage": "try",
+   "level": 2.8,
+   "q": "You earn £{w} an hour. You get a {p}% pay rise. What is your new hourly rate, in pounds? Have a go: a guess is fine.",
+   "vars": {"w": {"pick": [10, 12, 14, 15, 16, 20]}, "p": {"pick": [5, 10, 20]}},
+   "let": {"rise": "w * p / 100"},
+   "answer": "w * (1 + p / 100)",
+   "abs": 0.01,
+   "work": "{p}% of £{w:2} is £{rise:2}. New rate: £{w:2} + £{rise:2} = £{answer:2}.",
+   "why": "Find the rise, then **add it on**. 10% is a tenth: divide by 10. 5% is half of 10%; 20% is double it. Giving just the rise (£{rise:2}) forgets the pay you already had."
+  },
+  {
+   "id": "what-fraction",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What a fraction means",
+   "body": "A **fraction** is part of a whole that has been cut into **equal** parts.\n\nIn $\\frac{3}{4}$, the bottom number (the **denominator**) is how many equal parts the whole is cut into: 4. The top number (the **numerator**) is how many of those parts you have: 3.\n\nThe line in the middle means **divide**: $\\frac{3}{4}$ is $3 \\div 4 = 0.75$.\n\nThe bar shows it. Beside it is the same amount as a decimal and as a percentage (out of 100: more on those soon). Move the sliders and watch.",
+   "widget": {"name": "fraction", "params": {"num": 3, "den": 4, "controls": ["num", "den"]}},
+   "more": "Think of a 1 m length of cable cut into 4 equal pieces. Each piece is a quarter: $\\frac{1}{4}$ m, which is 25 cm. Take 3 pieces and you have $\\frac{3}{4}$ m, 75 cm.\n\nThe bottom number is how many pieces you cut; the top is how many you take. If the pieces are not equal, they are not quarters.\n\nA pizza cut into 8 equal slices with 3 eaten: $\\frac{3}{8}$ has gone and $\\frac{5}{8}$ is left. The two parts make the whole: $\\frac{3}{8} + \\frac{5}{8} = \\frac{8}{8} = 1$."
+  },
+  {
+   "id": "five-eighths",
+   "type": "widget",
+   "stage": "learn",
+   "level": 2.2,
+   "intro": "Now you set it. The bar cuts the whole into equal parts and shades some of them.",
+   "widget": {"name": "fraction", "params": {"num": 1, "den": 2, "controls": ["num", "den"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "Set the bar to $\\frac{5}{8}$: 8 equal parts, 5 shaded. What is $\\frac{5}{8}$ as a decimal?",
+    "answer": "5 / 8",
+    "abs": 0.001,
+    "hint": "The fraction line means divide: $5 \\div 8$. The bar's reading shows it too.",
+    "why": "$\\frac{5}{8} = 5 \\div 8 = 0.625$. Each eighth is 0.125, and five of them make 0.625. That is more than a half (0.5), as the bar shows."
+   }
+  },
+  {
+   "id": "equivalent",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Equivalent fractions and simplifying",
+   "body": "Cut each quarter in half and $\\frac{3}{4}$ becomes $\\frac{6}{8}$: the same amount, in smaller pieces. Fractions that are the same amount are **equivalent**.\n\nTo make one, multiply the top and the bottom by the **same** number:\n$$\\frac{3}{4} = \\frac{3 \\times 2}{4 \\times 2} = \\frac{6}{8}$$\n\nTo **simplify**, divide the top and the bottom by the same number, until no number but 1 divides both:\n$$\\frac{12}{16} = \\frac{12 \\div 4}{16 \\div 4} = \\frac{3}{4}$$\n\nOn the bar, 6 parts of 8 shade exactly as much as 3 parts of 4.",
+   "widget": {"name": "fraction", "params": {"num": 6, "den": 8, "controls": ["num", "den"]}},
+   "more": "A box of 12 fuses, with 9 used. Group the fuses in threes: 4 groups, and the 9 used fill 3 of them. So $\\frac{9}{12} = \\frac{3}{4}$: three quarters of the box has gone. Dividing the top and bottom by 3 is exactly that regrouping.\n\nYou can simplify in small steps. $\\frac{24}{36}$: halve both to get $\\frac{12}{18}$; halve again, $\\frac{6}{9}$; divide both by 3, $\\frac{2}{3}$. Stop when no whole number bigger than 1 divides both.\n\nWhat you must not do is add or take away the same number: $\\frac{3}{4}$ is not $\\frac{4}{5}$."
+  },
+  {
+   "id": "equivalent-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 2.4,
+   "intro": "Equivalent fractions shade the same amount of the bar. This bar is cut into 15 equal parts.",
+   "widget": {"name": "fraction", "params": {"num": 1, "den": 15, "controls": ["num"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "How many of the 15 parts must be shaded to show the same amount as $\\frac{2}{5}$? Set it and see.",
+    "answer": "15 / 5 * 2",
+    "abs": 0.01,
+    "hint": "5 goes into 15 three times. Do the same to the top number.",
+    "why": "From fifths to fifteenths, the bottom is multiplied by 3, so the top must be too: $\\frac{2}{5} = \\frac{2 \\times 3}{5 \\times 3} = \\frac{6}{15}$. With 6 parts shaded, the reading shows 6/15 = 2/5."
+   }
+  },
+  {
+   "id": "fraction-of",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A fraction of an amount",
+   "body": "To find $\\frac{3}{4}$ of 60 m: **divide by the bottom**, then **times by the top**.\n- $60 \\div 4 = 15$: one quarter is 15 m.\n- $15 \\times 3 = 45$: three quarters is 45 m.\n\nThe bottom number cuts the amount into equal parts; the top number says how many parts you take.\n\nWhen the top number is 1, just divide: $\\frac{1}{5}$ of £40 is $40 \\div 5 = 8$, so £8.",
+   "more": "Picture a 60 m drum of cable, and a job that needs three quarters of it. Mark the drum into 4 equal lengths: each is 15 m. Three of those is 45 m.\n\nThe order does not change the answer: $60 \\times 3 = 180$, then $180 \\div 4 = 45$, gives the same. Dividing first just keeps the numbers small, which is easier in your head.\n\nTwo fifths of a £250 bill: one fifth is $250 \\div 5 = 50$, so two fifths is £100."
+  },
+  {
+   "id": "fraction-of-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 2.4,
+   "q": "A drum holds {t} m of cable. A job needs $\\frac{{a}}{{b}}$ of it. How many metres is that?",
+   "vars": {"a": {"pick": [1, 3]}, "b": {"pick": [4, 5, 8, 10]}, "u": [5, 25, 1]},
+   "let": {"t": "b * u", "one": "u"},
+   "answer": "b * u / b * a",
+   "unit": "m",
+   "abs": 0.01,
+   "hint": "Divide by {b} to find one part, then multiply by {a}.",
+   "work": "${{t}} \\div {{b}} = {{one}}$ m is one part; ${{one}} \\times {{a}} = {{answer}}$ m.",
+   "why": "Divide by the bottom, times by the top: {t} ÷ {b} × {a} = {answer} m. Dividing by the top number instead is the usual slip."
+  },
+  {
+   "id": "fdp",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Fractions, decimals and percentages",
+   "body": "**Per cent** means **out of 100**: $35\\% = \\frac{35}{100} = 0.35$.\n- Fraction to decimal: divide top by bottom. $\\frac{1}{4} = 1 \\div 4 = 0.25$.\n- Decimal to percentage: multiply by 100. $0.25 = 25\\%$.\n- Percentage to decimal: divide by 100. $8\\% = 0.08$.\n\nKnow these by heart:\n- $\\frac{1}{2} = 0.5 = 50\\%$\n- $\\frac{1}{4} = 0.25 = 25\\%$ and $\\frac{3}{4} = 0.75 = 75\\%$\n- $\\frac{1}{10} = 0.1 = 10\\%$ and $\\frac{1}{5} = 0.2 = 20\\%$",
+   "widget": {"name": "fraction", "params": {"num": 1, "den": 4, "controls": ["num", "den"]}},
+   "more": "Money makes this easy. A pound is 100 pence, so per cent is like pence in the pound. 25% is 25p in every pound: a quarter. 0.25 of a pound is 25p too, and $\\frac{1}{4}$ of £1 is 25p. Three ways of writing the same 25p.\n\nTo go from a decimal to a percentage, multiply by 100: 0.6 is 60%. Take care with small ones: 0.05 is 5% (5p in the pound), not 50%. 0.5 is 50%.\n\nTo go from a percentage to a fraction, put it over 100 and simplify: $20\\% = \\frac{20}{100} = \\frac{1}{5}$."
+  },
+  {
+   "id": "fdp-match",
+   "type": "match",
+   "stage": "learn",
+   "level": 2.1,
+   "q": "Match each fraction to its decimal and percentage.",
+   "pairs": [
+    ["$\\frac{1}{2}$", "0.5 and 50%"],
+    ["$\\frac{1}{4}$", "0.25 and 25%"],
+    ["$\\frac{3}{4}$", "0.75 and 75%"],
+    ["$\\frac{1}{10}$", "0.1 and 10%"],
+    ["$\\frac{1}{5}$", "0.2 and 20%"]
+   ],
+   "why": "Divide the top by the bottom for the decimal, then multiply by 100 for the percentage. $\\frac{1}{5}$ is $1 \\div 5 = 0.2$, which is 20%, not 5%."
+  },
+  {
+   "id": "percent-of",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A percentage of an amount: build it from 10%",
+   "body": "Without a calculator, build any percentage from a few blocks:\n- **10%**: divide by 10. 10% of £240 is £24.\n- **5%**: half of 10%. 5% of £240 is £12.\n- **1%**: divide by 100. 1% of £240 is £2.40.\n\nThen add blocks together: 15% is 10% + 5%, 20% is 10% doubled, 3% is 1% three times.\n\nSo 15% of £240 is $24 + 12 = 36$: £36.\n\nWith a calculator, use the meaning of per cent: $\\frac{15}{100} \\times 240 = 36$.",
+   "more": "10% is a tenth, so it is just divide by 10: 10% of 240 is 24, and 10% of 36.50 is 3.65. Everything else is built from that.\n\nA 15% tip on a £40 bill: 10% is £4, 5% is half that, £2, so £6 in all. A 3% charge on £600: 1% is £6, so 3% is £18. For 35%: 10% three times, plus 5%.\n\nOr think \"out of 100\": 35% of 200 is 35 for each 100, and there are two hundreds, so 70."
+  },
+  {
+   "id": "percent-of-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Without a calculator: what is {p}% of £{n}? Give the answer in pounds.",
+   "vars": {"p": {"pick": [5, 10, 15, 20, 25, 30, 35]}, "n": {"pick": [40, 60, 80, 120, 240, 360, 500]}},
+   "let": {"ten": "n / 10"},
+   "answer": "p / 100 * n",
+   "abs": 0.01,
+   "hint": "Start from 10% of £{n}, which is £{ten}. 5% is half of that; 1% is £{n} divided by 100.",
+   "work": "10% is £{ten:2}. {p}% is $\\frac{{p}}{100} \\times {{n}} = {{answer}}$, so £{answer:2}.",
+   "why": "10% is a tenth (divide by 10), 5% is half of 10%, and the rest are built from those: {p}% of £{n} is £{answer:2}. On a calculator: {p} ÷ 100 × {n}."
+  },
+  {
+   "id": "pct-change",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Increasing and decreasing by a percentage",
+   "body": "**Increase** by a percentage: work it out, then **add it on**. A 5% pay rise on £14.00 an hour: 5% of 14 is 0.70, so the new rate is £14.70.\n\n**Decrease**: work it out, then **take it off**. 20% off a £45 tool: 20% of 45 is 9, so it costs £36.\n\n**VAT** (the tax added to most prices in the UK) is 20% at the standard rate. \"Plus VAT\" means increase by 20%: £60 plus VAT is $60 + 12 = 72$, so £72.\n\nIn one step: $\\text{new} = \\text{old} \\times \\left(1 + \\frac{p}{100}\\right)$, where $p$ is the percentage. A 5% rise is $\\times 1.05$.",
+   "more": "Think of the old amount as 100%. A 5% rise takes it to 105%, which as a decimal is 1.05. So the new pay is $14 \\times 1.05 = 14.70$.\n\nA 20% cut leaves 80% of it, which is 0.8: $45 \\times 0.8 = 36$. That is $\\text{new} = \\text{old} \\times \\left(1 - \\frac{p}{100}\\right)$.\n\nA price with VAT is 120% of the price without, so multiply by 1.2.\n\nIn your head, \"work it out, then add it on\" is easier. On a calculator, the one-step multiplier is quicker. Both give the same answer."
+  },
+  {
+   "id": "pct-change-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A £{n} drill is reduced by {p}% in a sale. What is the sale price, in pounds?",
+   "vars": {"n": {"pick": [40, 60, 80, 120, 150, 250]}, "p": {"pick": [5, 10, 15, 20, 25]}},
+   "let": {"off": "n * p / 100", "wrong": "n + n * p / 100", "m": "1 - p / 100"},
+   "answer": "n * (1 - p / 100)",
+   "abs": 0.01,
+   "hint": "Find {p}% of £{n}, then take it away.",
+   "work": "{p}% of £{n} is £{off:2}. Sale price: £{n} − £{off:2} = £{answer:2}.",
+   "why": "A decrease: work out the percentage, then **take it off**. Adding it on would give £{wrong:2}, and £{off:2} on its own is the discount, not the price. In one step: ${{n}} \\times {{m}} = {{answer}}$."
+  },
+  {
+   "id": "worked-vat",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A torque wrench costs £85 before VAT. VAT is 20%. What do you pay?",
+   "steps": [
+    {"ask": "Find 10% of £85.", "show": "Divide by 10: $85 \\div 10 = 8.5$, so £8.50."},
+    {"ask": "Find 20%.", "show": "Double the 10%: $8.50 \\times 2 = 17$, so £17."},
+    {"ask": "Add it on.", "show": "$85 + 17 = 102$: you pay £102."},
+    {"ask": "Check with the one-step way.", "show": "Adding 20% is $\\times 1.2$: $85 \\times 1.2 = 102$. The same."}
+   ],
+   "why": "Build 20% from 10%, then add it on, because VAT **increases** the price. The multiplier (× 1.2) is a quick check."
+  },
+  {
+   "id": "faded-payrise",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 2.8,
+   "q": "You earn £450 a week and get a 4% pay rise. What is your new weekly pay?",
+   "steps": [
+    {"ask": "Find 1% of £450.", "show": "Divide by 100: $450 \\div 100 = 4.5$, so £4.50."},
+    {"ask": "Find 4%.", "show": "$4.50 \\times 4 = 18$, so £18."},
+    {"ask": "Add it on.", "show": "$450 + 18 = 468$: £468 a week."},
+    {"ask": "Check with the one-step way.", "show": "A 4% rise is $\\times 1.04$: $450 \\times 1.04 = 468$. The same."}
+   ],
+   "why": "For an awkward percentage like 4%, build it from 1% (divide by 100). Then add it on, because a pay rise is an increase."
+  },
+  {
+   "id": "weekly-rise",
+   "type": "numeric",
+   "stage": "example",
+   "level": 2.8,
+   "q": "You earn £{n} a week and get a {p}% pay rise. What is your new weekly pay, in pounds?",
+   "vars": {"n": [300, 600, 10], "p": {"pick": [2, 3, 4, 5, 6]}},
+   "let": {"one": "n / 100", "rise": "n * p / 100", "mult": "1 + p / 100"},
+   "answer": "n * (1 + p / 100)",
+   "abs": 0.01,
+   "hint": "Find 1% first: divide by 100. Then times by {p}, and add it on.",
+   "work": "1% is £{one:2}, so {p}% is £{rise:2}. New pay: £{n} + £{rise:2} = £{answer:2}.",
+   "why": "Find 1% (divide by 100), times by {p}, then add it on. Or in one step: ${{n}} \\times {{mult}} = {{answer}}$. Giving only £{rise:2} is the rise, not the new pay."
+  },
+  {
+   "id": "simplify-mcq",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 2.2,
+   "q": "Simplify $\\frac{15}{20}$.",
+   "options": ["$\\frac{3}{20}$", "$\\frac{3}{4}$", "$\\frac{5}{10}$", "$\\frac{1}{5}$"],
+   "answer": 1,
+   "hint": "Which number goes into both 15 and 20?",
+   "why": "5 divides both: $\\frac{15 \\div 5}{20 \\div 5} = \\frac{3}{4}$. Dividing only the top ($\\frac{3}{20}$) changes the amount. Taking 10 off both ($\\frac{5}{10}$) is not allowed: only multiply or divide, and do the same to the top and the bottom."
+  },
+  {
+   "id": "drum-widget",
+   "type": "widget",
+   "stage": "practise",
+   "level": 2.4,
+   "intro": "Here the whole bar is a 40 m drum of cable, cut into eighths.",
+   "widget": {"name": "fraction", "params": {"num": 1, "den": 8, "controls": ["num"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "Set the bar to show $\\frac{5}{8}$ of the drum used. How many metres have been used?",
+    "answer": "num / den * 40",
+    "unit": "m",
+    "abs": 0.01,
+    "hint": "One eighth of 40 m is $40 \\div 8$. Then times by the number of eighths.",
+    "why": "One eighth of 40 m is $40 \\div 8 = 5$ m, so {num} eighths is {answer} m."
+   }
+  },
+  {
+   "id": "compare",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 2.9,
+   "q": "Which is the largest?",
+   "options": ["$\\frac{2}{5}$", "38%", "$\\frac{3}{8}$", "0.45"],
+   "answer": 3,
+   "hint": "Change each one to a decimal.",
+   "why": "As decimals: $\\frac{2}{5} = 0.4$, 38% = 0.38 and $\\frac{3}{8} = 0.375$. So 0.45 is the largest. Do not be fooled by the 8 in $\\frac{3}{8}$: a bigger bottom number means smaller pieces."
+  },
+  {
+   "id": "why-up-down",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.2,
+   "q": "A price goes up by 10%. Later, the new price comes down by 10%. Where does it end up?",
+   "options": ["Lower than it started", "Back where it started", "Higher than it started", "It depends on the price"],
+   "answer": 0,
+   "hint": "Try it with £100.",
+   "why": "Try £100: up 10% is £110. Then 10% of £110 is £11, so down to £99. The 10% off is taken from a **bigger** amount, so it takes off more than was added. It always ends 1% lower, whatever the price: $1.1 \\times 0.9 = 0.99$."
+  },
+  {
+   "id": "mix-increase",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 2.8,
+   "q": "A machine makes {n} parts a shift. After a service, its output goes **up** by {p}%. How many parts a shift does it make now?",
+   "vars": {"n": [200, 800, 20], "p": {"pick": [5, 10, 15, 20, 25]}},
+   "let": {"extra": "n * p / 100"},
+   "answer": "n * (1 + p / 100)",
+   "abs": 0.01,
+   "hint": "Up by a percentage: work it out, then add it on.",
+   "work": "{p}% of {n} is {extra}; ${{n}} + {{extra}} = {{answer}}$ parts.",
+   "why": "Up by {p}%: find {p}% ({extra} parts) and **add it on**. Giving just {extra} answers a different question: how many extra parts."
+  },
+  {
+   "id": "mix-percent-of",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 2.5,
+   "q": "A machine makes {n} parts a shift. {p}% of them fail inspection. How many fail?",
+   "vars": {"n": [200, 800, 20], "p": {"pick": [5, 10, 15, 20, 25]}},
+   "answer": "p / 100 * n",
+   "abs": 0.01,
+   "hint": "Is anything going up or down here, or is it just a part of the whole?",
+   "work": "$\\frac{{p}}{100} \\times {{n}} = {{answer}}$ parts.",
+   "why": "This asks only for the {p}% itself: {answer} parts. Nothing is added on or taken off. Compare \"output goes up by {p}%\", where you would add it on."
+  },
+  {
+   "id": "mix-boxes",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 2.0,
+   "q": "A machine makes {n} parts a shift. They are packed {k} to a box. How many boxes a shift?",
+   "vars": {"n": [200, 800, 20], "k": {"pick": [4, 5, 10, 20]}},
+   "answer": "n / k",
+   "abs": 0.01,
+   "hint": "Is this a percentage, or packing into groups?",
+   "work": "${{n}} \\div {{k}} = {{answer}}$ boxes.",
+   "why": "Packing into boxes is grouping: divide. There is no percentage here: {n} ÷ {k} = {answer} boxes. Taking {k}% of {n} would be a different question."
+  },
+  {
+   "id": "check-vat",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A part costs £{n} before VAT. VAT is 20%. What is the price with VAT, in pounds?",
+   "vars": {"n": [15, 95, 5]},
+   "let": {"vat": "n * 0.2"},
+   "answer": "n * 1.2",
+   "abs": 0.01,
+   "work": "20% of £{n} is £{vat:2}; ${{n}} + {{vat}} = {{answer}}$, so £{answer:2}.",
+   "why": "VAT **increases** the price by 20%: find 10% (divide by 10), double it, and add it on. Or multiply by 1.2 in one step."
+  },
+  {
+   "id": "check-fdp",
+   "type": "mcq",
+   "stage": "check",
+   "level": 2.2,
+   "q": "What is 0.05 as a percentage?",
+   "options": ["50%", "5%", "0.05%", "500%"],
+   "answer": 1,
+   "why": "Multiply by 100: $0.05 \\times 100 = 5$, so 5%. 0.05 is five hundredths, like 5p in the pound. 50% would be 0.5, a half."
+  },
+  {
+   "id": "check-fraction-of",
+   "type": "numeric",
+   "stage": "check",
+   "q": "$\\frac{{a}}{{b}}$ of a £{t} repair bill is for parts. How much is for parts, in pounds?",
+   "vars": {"a": {"pick": [2, 3]}, "b": {"pick": [5, 7]}, "u": [10, 60, 5]},
+   "let": {"t": "b * u", "one": "u"},
+   "answer": "b * u / b * a",
+   "abs": 0.01,
+   "work": "${{t}} \\div {{b}} = {{one}}$, then ${{one}} \\times {{a}} = {{answer}}$, so £{answer:2}.",
+   "why": "Divide by the bottom, times by the top. One part is £{t} ÷ {b} = £{one}, and {a} parts is £{answer:2}."
+  }
+ ]
+}

@@ -1,0 +1,770 @@
+{
+ "id": "drives.motors.servo",
+ "title": "Servo motors and amplifiers",
+ "tags": [
+  "drives",
+  "servo",
+  "motion"
+ ],
+ "kind": "concept",
+ "level": 6.0,
+ "minutes": 28,
+ "goals": [
+  "Say what makes a motor a servo, and why the amplifier needs the rotor's angle (commutation)",
+  "Use the torque constant and the back-EMF constant to work out torque from current and voltage from speed",
+  "Explain continuous and peak torque, and why the peak lasts only a short time",
+  "Say which loops the amplifier and a Galil controller each close, and what makes the following error grow",
+  "Work out a load's inertia through a gearbox, and list the commissioning checks for a new axis"
+ ],
+ "summary": "A **servo** is a closed loop: a **permanent-magnet brushless motor**, a **feedback device** (resolver or encoder) and an **amplifier** that keeps correcting from the feedback. The amplifier must know the rotor's angle to switch current into the right windings: **commutation**.\n\n**Torque constant** $K_t$ (Nm/A): torque goes in step with current, $T = K_t I$. The amplifier's current display is a torque meter.\n\n**Back-EMF constant** $K_e$ (V per 1000 rpm): the motor is also a generator, $E = K_e \\times \\frac{n}{1000}$. The back-EMF must stay below what the amplifier can give, so $K_e$ sets the top speed. More turns: more $K_t$, more $K_e$, lower top speed.\n\n**Continuous torque** can be given for ever; **peak** (often about 3 times as much) only for a fraction of a second to a few seconds. Heat goes with current squared, $P = I^2R$: 3 times the torque, 9 times the heat.\n\n**Loops**, innermost first: current (torque), velocity, position. With a Galil and a Metronix:\n\n- torque mode: the Metronix closes current; the Galil closes position, its D term giving the damping\n- velocity mode: the Metronix closes current and velocity; the Galil closes position\n- position mode: the amplifier closes all three\n\nTune from the inside out.\n\n**Feedback**: resolver (rugged, angle within a turn); incremental encoder (counts from power-up, needs homing); absolute encoder (position at power-up; multi-turn counts turns too).\n\n**Following error**: commanded minus actual position. With a P-only position loop round a velocity loop, $e = \\frac{v}{K_v}$. It grows with speed, acceleration, load and friction; gain and **feedforward** (Galil FV, FA) shrink it. Set a limit: Galil ER with OE.\n\n**Inertia ratio**: the load's inertia as the motor feels it, $J_r = \\frac{J_L}{i^2}$, over the motor's own. Up to about 10:1 tunes easily; a big mismatch with a springy coupling rings.\n\n**Commissioning**: motor data and current limits; commutation (identification); direction (a positive command must give a rising count, or it runs away); limits and a following error trip; tune; prove **STO**, which removes torque but does not hold a vertical axis or isolate the motor.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "What Is a Servo Motor and How It Works?",
+   "url": "https://www.realpars.com/blog/servo-motor",
+   "by": "RealPars",
+   "minutes": 9,
+   "note": "Motor, feedback and drive in a closed loop, with a short video."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "What are servo drive loops?",
+   "url": "https://www.motioncontroltips.com/servo-drive-loops/",
+   "by": "Motion Control Tips",
+   "minutes": 2,
+   "note": "The current, velocity and position loops, nested."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Servo motor torque curves: What you need to know",
+   "url": "https://www.motioncontroltips.com/servo-motor-torque-curve/",
+   "by": "Motion Control Tips",
+   "minutes": 3,
+   "note": "The continuous and intermittent zones, and why the curve falls at top speed."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "How gearbox ratio selection impacts inertia matching, servo tuning, and machine performance",
+   "url": "https://www.gamweb.com/gearbox-ratio-selection.html",
+   "by": "GAM",
+   "minutes": 5,
+   "note": "Why a gearbox cuts the inertia by its ratio squared, and what ratio to aim for."
+  }
+ ],
+ "sources": [
+  "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
+  "G. Ellis, Control System Design Guide, 4th edition (Butterworth-Heinemann, 2012)",
+  "Galil Motion Control, DMC-40x0 User Manual",
+  "Metronix, Servo Positioning Controller ARS 2000 Software Manual",
+  "Control Techniques, Servo drives and motors: technical data (Unimotor)",
+  "IEC 61800-5-2: Adjustable speed electrical power drive systems. Part 5-2: Safety requirements. Functional",
+  "IEC 60204-1: Safety of machinery. Electrical equipment of machines. Part 1: General requirements"
+ ],
+ "formulas": [
+  {
+   "name": "Torque from current",
+   "tex": "T = K_t I",
+   "match": [
+    "K_tI"
+   ],
+   "says": "The torque is the torque constant times the current. Double the current, double the torque.",
+   "symbols": [
+    [
+     "T",
+     "the torque (Nm)"
+    ],
+    [
+     "K_t",
+     "the torque constant from the datasheet (Nm per amp)"
+    ],
+    [
+     "I",
+     "the motor current (A)"
+    ]
+   ],
+   "example": "$K_t$ = 1.2 Nm/A at 5 A: $1.2 \\times 5 = 6$ Nm."
+  },
+  {
+   "name": "Current for a torque",
+   "tex": "I = \\frac{T}{K_t}",
+   "match": [
+    "\\frac{T}{K_t}"
+   ],
+   "says": "Torque from current turned round: the current you need is the torque divided by the torque constant.",
+   "symbols": [
+    [
+     "I",
+     "the current needed (A)"
+    ],
+    [
+     "T",
+     "the torque needed (Nm)"
+    ],
+    [
+     "K_t",
+     "the torque constant (Nm/A)"
+    ]
+   ],
+   "example": "9 Nm with $K_t$ = 1.2 Nm/A: $\\frac{9}{1.2} = 7.5$ A."
+  },
+  {
+   "name": "Back-EMF",
+   "tex": "E = K_e \\times \\frac{n}{1000}",
+   "match": [
+    "\\frac{n}{1000}"
+   ],
+   "says": "The voltage the motor makes as a generator rises in step with its speed: the back-EMF constant times the speed in thousands of rpm.",
+   "symbols": [
+    [
+     "E",
+     "the back-EMF (V)"
+    ],
+    [
+     "K_e",
+     "the back-EMF constant (V per 1000 rpm)"
+    ],
+    [
+     "n",
+     "the speed (rpm)"
+    ]
+   ],
+   "example": "$K_e$ = 60 V per 1000 rpm at 3000 rpm: $60 \\times 3 = 180$ V."
+  },
+  {
+   "name": "Torque constant from back-EMF constant",
+   "tex": "K_t \\approx \\frac{K_e}{60}",
+   "match": [
+    "\\frac{K_e}{60}"
+   ],
+   "says": "A rule of thumb for datasheets that give $K_e$ in volts (rms, between two lines) per 1000 rpm and $K_t$ per amp (rms): both come from the same magnets and windings.",
+   "symbols": [
+    [
+     "K_t",
+     "the torque constant (Nm/A)"
+    ],
+    [
+     "K_e",
+     "the back-EMF constant (V per 1000 rpm)"
+    ]
+   ],
+   "example": "$K_e$ = 57 V per 1000 rpm: $K_t \\approx \\frac{57}{60} \\approx 0.95$ Nm/A."
+  },
+  {
+   "name": "Heat in the windings",
+   "tex": "P = I^2R",
+   "match": [
+    "P=I^2R"
+   ],
+   "says": "The heat made in the copper is the current squared times the resistance. Three times the current, nine times the heat.",
+   "symbols": [
+    [
+     "P",
+     "the heat (power lost) in the windings (W)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "R",
+     "the windings' resistance (Ω)"
+    ]
+   ],
+   "example": "twice the torque takes twice the current: $2^2 = 4$ times the heat."
+  },
+  {
+   "name": "Following error at steady speed",
+   "tex": "e = \\frac{v}{K_v}",
+   "match": [
+    "\\frac{v}{K_v}"
+   ],
+   "says": "With a P-only position loop round a velocity loop and no feedforward, the axis lags by the speed divided by the position loop gain.",
+   "symbols": [
+    [
+     "e",
+     "the following error (mm)"
+    ],
+    [
+     "v",
+     "the speed (mm/s)"
+    ],
+    [
+     "K_v",
+     "the position loop gain (per second, /s)"
+    ]
+   ],
+   "example": "100 mm/s with $K_v$ = 50 /s: $\\frac{100}{50} = 2$ mm behind."
+  },
+  {
+   "name": "Reflected inertia",
+   "tex": "J_r = \\frac{J_L}{i^2}",
+   "match": [
+    "\\frac{J_L}{i^2}"
+   ],
+   "says": "Through a gearbox, the motor feels the load's inertia divided by the gear ratio squared.",
+   "symbols": [
+    [
+     "J_r",
+     "the load's inertia as the motor feels it (kg·cm² or kg·m²)"
+    ],
+    [
+     "J_L",
+     "the load's own inertia (same units)"
+    ],
+    [
+     "i",
+     "the gear ratio: 10 for a 10:1 box"
+    ]
+   ],
+   "example": "500 kg·cm² through 10:1: $\\frac{500}{10^2} = 5$ kg·cm²."
+  },
+  {
+   "name": "Inertia ratio",
+   "tex": "\\frac{J_r}{J_m}",
+   "match": [
+    "\\frac{J_r}{J_m}"
+   ],
+   "says": "The load's inertia as the motor feels it, divided by the motor's own. Up to about 10 (10:1) usually tunes easily.",
+   "symbols": [
+    [
+     "J_r",
+     "the reflected load inertia"
+    ],
+    [
+     "J_m",
+     "the motor's own inertia, from its datasheet (same units)"
+    ]
+   ],
+   "example": "5 kg·cm² on a 1.5 kg·cm² motor: $\\frac{5}{1.5} \\approx 3.3$, about 3:1."
+  },
+  {
+   "name": "Counts per turn of an incremental encoder",
+   "tex": "\\text{counts} = 4 \\times \\text{lines}",
+   "match": [
+    "2048\\times4"
+   ],
+   "says": "Two channels, each with a rising and a falling edge for every line, give four counts per line.",
+   "symbols": [
+    [
+     "\\text{lines}",
+     "the encoder's lines (pulses) per turn on each channel"
+    ],
+    [
+     "4",
+     "two channels, two edges each"
+    ]
+   ],
+   "example": "2048 lines: $2048 \\times 4 = 8192$ counts a turn."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-servo",
+   "type": "mcq",
+   "stage": "try",
+   "level": 5.0,
+   "q": "Have a go: a guess is fine. What makes a motor a **servo** motor?",
+   "options": [
+    "It is small and has a gearbox, so it can turn precisely to an angle",
+    "It has a feedback device, and an amplifier keeps correcting the motor from it until it is where it was told to be",
+    "It runs on DC instead of AC",
+    "It has permanent magnets on the rotor, which hold it in position"
+   ],
+   "answer": 1,
+   "why": "**Servo** means it follows a command and corrects itself: a feedback device (a resolver or an encoder) reports where the shaft is, and the amplifier and controller keep pushing until the error is gone. The magnets matter (most industrial servos are permanent-magnet brushless motors), but a magnet motor with no feedback is not a servo. Size, gearboxes and DC are beside the point: big AC servos are common, and many have no gearbox."
+  },
+  {
+   "id": "what-servo",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Motor, feedback, amplifier",
+   "body": "An industrial **servo** has three parts working as one closed loop:\n\n- a **permanent-magnet brushless motor**: magnets on the rotor, three-phase windings in the stator\n- a **feedback device** on the back of the motor, a resolver or an encoder, reporting the shaft's angle\n- an **amplifier** (servo drive), such as a Metronix ARS 2000, which switches current into the windings\n\nThe rotor's magnets carry their own field, fixed to the shaft. So the amplifier must know the rotor's angle to put current into the right windings at the right moment: **commutation**. Get it wrong and the motor jerks, runs away or gives no torque. The same feedback then closes the speed and position loops.",
+   "more": "Think of pushing a child on a swing. Push at the right point of each swing and it goes higher; push at the wrong moment and you fight it. The amplifier pushes on each winding as the rotor's magnets come round, and the feedback tells it when.\n\nAn induction motor on a VFD needs none of this: its rotor's field is induced by the stator, so the stator's field drags it round whatever angle it is at. That is why a VFD can run with no encoder, and a servo cannot.\n\nNumbers: a motor with 4 pairs of poles (8 poles) goes through 4 electrical cycles each turn. At 3000 rpm, 50 turns a second, that is $4 \\times 50 = 200$ cycles a second, and each winding's current must follow the rotor through every one."
+  },
+  {
+   "id": "commutation-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.5,
+   "q": "Why does a permanent-magnet servo motor need a feedback device just to turn, before any position control?",
+   "options": [
+    "The amplifier must know the rotor's angle to switch current into the right windings (commutation)",
+    "To tell the amplifier the supply frequency",
+    "To measure how hot the windings are",
+    "It does not: the stator's field drags the rotor round, as in an induction motor"
+   ],
+   "answer": 0,
+   "why": "Torque comes from the stator current pulling on the rotor's magnets, and that only works if the current is placed at the right angle to them. So the amplifier must know where they are. An induction motor manages without, because its rotor field is induced by the stator; a magnet rotor has its own field, fixed to the shaft. Temperature and supply frequency have nothing to do with it."
+  },
+  {
+   "id": "constants",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Two constants: torque and back-EMF",
+   "body": "The **torque constant**, $K_t$, is the torque for each amp, in Nm/A:\n\n$$T = K_t I$$\n\n$T$ is the torque (Nm), $I$ the current (A). With $K_t$ = 1.2 Nm/A, 5 A gives $1.2 \\times 5 = 6$ Nm. So the amplifier's current display is a torque meter.\n\nThe **back-EMF constant**, $K_e$: a turning motor is also a generator, and makes a voltage (the **back-EMF**; EMF means electromotive force) in step with speed, usually given in volts per 1000 rpm:\n\n$$E = K_e \\times \\frac{n}{1000}$$\n\n$E$ is in volts, $n$ in rpm. With $K_e$ = 60, 3000 rpm makes 180 V. The amplifier must out-push that to drive current in, so $K_e$ sets the **top speed**.",
+   "more": "It is a DC motor's armature again: amps make torque, speed makes volts. Both constants come from the same magnets and windings. A winding with more turns has more of both: more torque per amp, but more back-EMF, so a lower top speed. That is why one motor frame comes in windings for 2000, 3000 or 6000 rpm. On many datasheets $K_t \\approx \\frac{K_e}{60}$: $K_e$ = 57 V per 1000 rpm goes with $K_t \\approx 0.95$ Nm/A.\n\nNumbers: $K_t$ = 0.93 Nm/A and a peak torque of 11.7 Nm need $\\frac{11.7}{0.93} \\approx 12.6$ A. The amplifier must give that, or you never see the peak.\n\nTop speed: $K_e$ = 100 V per 1000 rpm on a 230 V amplifier (a Metronix ARS 2105) makes 230 V at 2300 rpm, so it cannot quite reach 2300 rpm. On 400 V (an ARS 2310) it gets towards 4000 rpm."
+  },
+  {
+   "id": "kt-current",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A servo motor has $K_t$ = {kt} Nm/A. The axis needs {tq} Nm to accelerate. What current must the amplifier give?",
+   "vars": {
+    "kt": {
+     "pick": [
+      0.5,
+      0.8,
+      0.93,
+      1.2,
+      1.5,
+      2.1
+     ]
+    },
+    "tq": [
+     2,
+     20,
+     1
+    ]
+   },
+   "answer": "tq / kt",
+   "unit": "A",
+   "tolerance": 0.02,
+   "work": "$I = \\frac{T}{K_t} = \\frac{{tq}}{{kt}} = {answer}$ A",
+   "why": "Turn $T = K_t I$ round: the current is the torque divided by the torque constant. Multiplying, {tq} × {kt}, is the mistake: a motor with more newton-metres per amp needs **fewer** amps for the same torque.",
+   "hint": "Torque = $K_t$ × current. Undo the times to get the current."
+  },
+  {
+   "id": "envelope",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Continuous and peak torque",
+   "body": "A servo datasheet gives two torques:\n\n- **Continuous** (or **stall**) torque: what the motor can give for ever without overheating.\n- **Peak** torque, often about 3 times as much, for a short time only: from a fraction of a second to a few seconds, depending on the maker. Control Techniques rates its Unimotor peak for 250 ms.\n\nWhy so short? The heat in the windings is the current **squared** times their resistance, $P = I^2R$. Three times the torque takes three times the current, so **nine** times the heat.\n\nOn the **torque–speed curve** the continuous zone sits under the peak zone. Both fall away at high speed, where the back-EMF leaves too little voltage to push the current in.",
+   "more": "You can carry 10 kg all day, or lift 30 kg onto a shelf, but not carry 30 kg all day. Muscles tire; windings overheat.\n\nNumbers: a motor with 4 Nm continuous and 12 Nm peak. A move that needs 12 Nm for 0.1 s to get going, then 2 Nm for the next 2 s, is fine: the peak is brief. Needing 6 Nm all the time is not, though 6 is well under the peak.\n\nThe amplifier has limits too. A Metronix ARS 2105 gives 5 A for ever, 10 A for 5 s and 20 A for 0.5 s. The peak you actually get is the smaller of the motor's peak and $K_t$ times the amplifier's peak current.\n\nWhat counts for heat is the average over the whole cycle, worked out as the **RMS torque**: the steady torque that would make the same heat."
+  },
+  {
+   "id": "heat-square",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A servo motor gives {k} times its continuous torque while it accelerates. How many times its continuous heat do the windings make then?",
+   "vars": {
+    "k": {
+     "pick": [
+      1.5,
+      2,
+      2.5,
+      3
+     ]
+    }
+   },
+   "answer": "k^2",
+   "tolerance": 0.02,
+   "work": "Torque goes with current, and heat with current squared: ${k}^2 = {answer}$ times",
+   "why": "Torque goes in step with current ($T = K_t I$), so {k} times the torque is {k} times the current. Heat is $P = I^2R$: {k} × {k} = {answer} times as much. That is why the peak is only for short bursts. Answering {k} forgets the square.",
+   "hint": "Heat goes with the current squared."
+  },
+  {
+   "id": "cascade",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Three loops: who closes which",
+   "body": "A servo axis has three loops, one inside another, as in the PID lesson: **current** (torque) innermost and fastest, then **velocity**, then **position**. Who closes which depends on the amplifier's mode. With a **Galil** controller and a **Metronix** amplifier:\n\n- **Torque mode**: the Galil's ±10 V output is a current set-point. The Metronix closes the current loop; the Galil closes position, and its D term does the damping a velocity loop would.\n- **Velocity mode**: the ±10 V is a speed set-point. The Metronix closes current and velocity; the Galil closes only position.\n- **Position mode** (step and direction, or a fieldbus): the amplifier closes all three.\n\nWhichever it is, tune from the inside out.",
+   "more": "Think of a crane. The banksman watches the load and signals faster or slower (position). The driver works the lever to hold that speed (velocity). The winch's own control delivers the pull (current). Whoever watches the load closes the position loop.\n\nTorque mode keeps the tuning in one place, the Galil's KP, KI and KD, and Galil's auto-tuner has a method made for torque-mode amplifiers. Velocity mode splits it: tune the Metronix speed loop first, then the Galil's position gain.\n\nThe current loop is set up first, from the motor's resistance and inductance, and then usually left alone.\n\nThe position loop needs the feedback too. Typically the motor's resolver or encoder goes to the Metronix, which passes it on to the Galil as an **encoder emulation** signal: A and B pulses, as if from an encoder."
+  },
+  {
+   "id": "cascade-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A Galil sends ±10 V to a Metronix amplifier set to **velocity** mode. Which loops does the Metronix close?",
+   "options": [
+    "Only current; the Galil closes velocity and position",
+    "Current and velocity; the Galil closes position",
+    "All three: the Galil only sends the target",
+    "None: the Galil closes them all"
+   ],
+   "answer": 1,
+   "why": "In velocity mode the ±10 V means a speed, so the amplifier must close the velocity loop, and inside it the current loop. The Galil compares its target with the encoder and closes position. 'Only current' is torque mode. 'All three' is position mode, driven by step and direction or a fieldbus rather than ±10 V.",
+   "hint": "What does the ±10 V stand for in velocity mode, and which loop has to act on it?"
+  },
+  {
+   "id": "feedback",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Resolvers and encoders",
+   "body": "The feedback device reports the shaft's angle. Three kinds:\n\n- **Resolver**: a small rotary transformer, with no electronics in the motor. Rugged, happy with heat and vibration, and knows the angle within one turn as soon as it is powered.\n- **Incremental encoder**: two pulse trains, A and B, a quarter of a pulse (90°) apart so the counter can tell the direction. At power-up it knows only how far it has moved since, not where it is: the axis must be **homed**, and commutation needs extra signals or a phasing routine.\n- **Absolute encoder** (EnDat, HIPERFACE, BiSS): sends the position as a number. A **multi-turn** one counts turns too, so there is no homing after a power cut.",
+   "more": "Resolution in numbers: a 2048-line incremental encoder has two channels, each with a rising and a falling edge for every line, so the counter sees $2048 \\times 4 = 8192$ counts a turn: about 0.044° each. A 20-bit absolute encoder gives $2^{20}$, over a million, counts a turn.\n\nWhich to fit? A resolver on a hot, shaking machine. A multi-turn absolute encoder where homing is awkward or unsafe after a power cut, as on a long gantry. An incremental encoder where cost matters and homing is easy.\n\nThe Metronix ARS 2000 reads resolvers, incremental encoders and the common absolute types, so the motor usually decides."
+  },
+  {
+   "id": "feedback-q",
+   "type": "match",
+   "stage": "learn",
+   "level": 5.5,
+   "q": "Match each to what it does.",
+   "pairs": [
+    [
+     "Resolver",
+     "A rotary transformer: rugged, and knows the angle within one turn at power-up"
+    ],
+    [
+     "Incremental encoder",
+     "Counts pulses from wherever it started: the axis needs homing"
+    ],
+    [
+     "Multi-turn absolute encoder",
+     "Sends the whole position as a number: no homing after a power cut"
+    ],
+    [
+     "A and B channels 90° apart",
+     "Let the counter tell which way the shaft is turning"
+    ]
+   ],
+   "why": "A resolver is analogue and tough, and gives the angle within a turn. An incremental encoder only counts movement, so after power-up it must be homed. An absolute encoder reports the position itself; a multi-turn one knows which turn it is on too. The 90° between A and B is what shows the direction: which channel changes first."
+  },
+  {
+   "id": "following-error",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Following error",
+   "body": "The **following error** is how far the axis is behind where it should be: the commanded position minus the actual position. The Galil reports it with **TE** (tell error).\n\nWith a P-only position loop around a velocity loop, the axis must lag to ask for any speed at all, as P alone leaves an offset:\n\n$$e = \\frac{v}{K_v}$$\n\n$e$ is the following error, $v$ the speed and $K_v$ the **position loop gain**, per second. At 100 mm/s with $K_v$ = 50 /s: $\\frac{100}{50} = 2$ mm behind.\n\nIt also grows with acceleration, load and friction. **Feedforward** (Galil **FV** and **FA**) sends what the move needs straight to the amplifier, so the loop need not lag.",
+   "more": "Think of towing a trailer on a springy rope. The faster you go, the more the rope stretches, and the further the trailer drops behind. A stiffer rope (more gain) stretches less.\n\nWhy $\\frac{v}{K_v}$? A P-only position loop asks for a speed of $K_v \\times e$. To ask for 100 mm/s with $K_v$ = 50 /s, the error has to be $100 \\div 50 = 2$ mm. Double the gain to 100 /s and it halves to 1 mm, but too much gain makes the axis ring. Galil's KP is in its own units, not per second, but the pattern is the same.\n\nA growing following error is the sign of a jam, a broken coupling or a runaway. So set a limit: Galil **ER** sets the error limit, and **OE** switches the axis off when it is exceeded. The Metronix has its own following error trip too."
+  },
+  {
+   "id": "fe-widget",
+   "type": "widget",
+   "stage": "learn",
+   "level": 6.3,
+   "intro": "A move on an axis whose amplifier is in velocity mode, with a P-only position loop of $K_v$ = 40 /s and no feedforward. Set the distance, top speed and acceleration as you like.",
+   "widget": {
+    "name": "profile",
+    "params": {
+     "D": 500,
+     "v": 250,
+     "a": 500,
+     "shape": "trap",
+     "controls": [
+      "D",
+      "v",
+      "a"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What is the largest following error during this move, in mm? It is largest at the highest speed the move actually reaches.",
+    "answer": "v_peak / 40",
+    "unit": "mm",
+    "tolerance": 0.02,
+    "hint": "Following error = speed ÷ $K_v$. Use the peak speed from the readout: a short move may never reach the top speed you set.",
+    "why": "$e = \\frac{ v }{K_v} = \\frac{{v_peak}}{40} = {answer}$ mm, at the peak speed. It is smaller while the axis speeds up from rest, and back to about 0 once it stops. Velocity feedforward would take most of it away. Using the top speed you set, when the move is too short to reach it, gives too big an answer."
+   }
+  },
+  {
+   "id": "inertia",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Inertia ratio",
+   "body": "**Inertia** ($J$, in kg·m²) is how hard something is to speed up or slow down by turning it. A servo tunes easily when the load's inertia, as the motor feels it, is not too many times the motor's own.\n\nA gearbox helps a lot: the motor feels the load's inertia divided by the ratio **squared**:\n\n$$J_r = \\frac{J_L}{i^2}$$\n\n$J_L$ is the load's inertia, $i$ the gear ratio (10 for 10:1) and $J_r$ the **reflected** inertia. The **inertia ratio** is $\\frac{J_r}{J_m}$, where $J_m$ is the motor's own.\n\nUp to about 10:1 is usually fine, and under 5:1 for a stiff, fast axis. Far above that, any springiness in a belt or coupling makes it ring, and it will only tune soft.",
+   "more": "Think of walking a small dog and a big dog on one springy lead. When the big one lurches, the lead stretches and the small one is yanked about: it cannot control the big one. A small motor on a heavy load, joined by a springy belt, bounces the same way, and the loop can only be tuned soft.\n\nNumbers: a roller of 0.05 kg·m² through a 10:1 gearbox: $\\frac{0.05}{10^2} = 0.0005$ kg·m². Servo datasheets give inertia in kg·cm², and 1 kg·m² is 10 000 kg·cm², so that is 5 kg·cm². With a motor of 1.5 kg·cm²: $\\frac{5}{1.5} \\approx 3.3$, a ratio of about 3:1. Easy.\n\nThe same roller coupled straight to the motor: 500 kg·cm² on 1.5 kg·cm², over 300:1. Hard work, whatever the tuning."
+  },
+  {
+   "id": "inertia-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.3,
+   "q": "A load of {jl} kg·cm² drives through a {i}:1 gearbox to a servo motor of {jm} kg·cm². What is the inertia ratio: the load's inertia as the motor feels it, over the motor's own?",
+   "vars": {
+    "jl": {
+     "pick": [
+      50,
+      100,
+      200,
+      400,
+      800
+     ]
+    },
+    "i": {
+     "pick": [
+      3,
+      5,
+      7,
+      10
+     ]
+    },
+    "jm": {
+     "pick": [
+      0.8,
+      1.5,
+      3,
+      5.4
+     ]
+    }
+   },
+   "let": {
+    "i2": "i^2",
+    "jr": "jl / i^2"
+   },
+   "answer": "jl / i^2 / jm",
+   "tolerance": 0.02,
+   "work": "$J_r = \\frac{J_L}{i^2} = \\frac{{jl}}{{{i}}^2} = {jr}$ kg·cm², so the ratio is $\\frac{{jr}}{{jm}} = {answer}$",
+   "why": "Divide by the ratio **squared**: a {i}:1 gearbox makes the load's inertia {i2} times smaller, as the motor feels it. Dividing by {i} alone is the usual mistake. Then compare with the motor's own inertia: up to about 10 (10:1) tunes easily; far above it, especially with a springy belt or coupling, it is hard.",
+   "hint": "The gearbox divides the load's inertia by the ratio times itself."
+  },
+  {
+   "id": "commissioning",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Commissioning a servo axis",
+   "body": "Before a new axis moves under control:\n\n- **Motor data**: load the motor's data set into the amplifier (poles, currents, $K_t$, feedback type). The current limits protect the motor.\n- **Commutation**: the amplifier must learn where the feedback's zero sits against the magnets, and the phase order. The Metronix finds both in its identification run, with the motor free to turn.\n- **Direction**: a small positive command must make the count go up. If not, the loop pushes the wrong way, harder and harder: a **runaway**.\n- **Limits**: limit switches, software limits, a following error trip.\n- **STO** (Safe Torque Off, IEC 61800-5-2): prove it cuts the torque. It does not hold a vertical axis, and it does not isolate the motor.",
+   "more": "Direction is where most first moves go wrong. With the count reversed, every correction makes the error bigger, and the axis takes off at full torque until something trips it. So set a low following error limit (Galil ER with OE) **before** the first move, keep a hand on the stop, and try a tiny move first.\n\nFix a reversed count in software: Galil's MT or CE commands, or the amplifier's direction setting. Do not swap two motor phases as you might on a VFD: on a servo that upsets the commutation.\n\nA typical order: motor data, identification, a low error limit and the direction check, then tune velocity, then position, then add feedforward. Prove STO before anyone relies on it.\n\nSTO is a **category 0** stop (IEC 60204-1): the torque goes at once and the axis coasts. A vertical axis needs a holding brake as well."
+  },
+  {
+   "id": "runaway-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Commissioning a Galil axis in torque mode, you give a small positive command. The motor takes off, faster and faster, until the error limit trips it. What is the most likely cause?",
+   "options": [
+    "KP is too low, so the loop cannot hold the axis back",
+    "The feedback counts the wrong way: a positive command gives a falling count, so the loop pushes the wrong way",
+    "The acceleration is set too high for the motor's torque",
+    "STO is not wired, so the amplifier cannot stop the motor"
+   ],
+   "answer": 1,
+   "why": "With the count reversed, every correction makes the error bigger, so the loop drives harder and harder: a runaway (positive feedback). Fix it in the controller (Galil MT or CE) or in the amplifier's direction setting, not by swapping motor phases, which upsets the commutation. Low gain makes an axis soft and slow, not a runaway; a high acceleration gives a hard move, not one that keeps speeding up. That is why ER and OE go in before the first move.",
+   "hint": "Which way is the loop pushing, compared with the way the count says the axis is going?"
+  },
+  {
+   "id": "ke-volts",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.5,
+   "q": "A servo motor has $K_e$ = {ke} V per 1000 rpm. What back-EMF does it make at {n} rpm?",
+   "vars": {
+    "ke": {
+     "pick": [
+      30,
+      45,
+      57,
+      60,
+      85,
+      100
+     ]
+    },
+    "n": [
+     500,
+     4500,
+     250
+    ]
+   },
+   "answer": "ke * n / 1000",
+   "unit": "V",
+   "tolerance": 0.02,
+   "work": "$E = K_e \\times \\frac{ n }{1000} = {ke} \\times \\frac{{n}}{1000} = {answer}$ V",
+   "why": "The back-EMF rises in step with speed: {ke} V for every 1000 rpm, so {n} rpm makes {answer} V. The amplifier has to push harder than this to drive current in; as the back-EMF nears its output voltage, the torque runs out. Forgetting to divide by 1000 gives an answer a thousand times too big.",
+   "hint": "$K_e$ is volts per 1000 rpm. How many thousands of rpm is {n} rpm?"
+  },
+  {
+   "id": "fe-gain",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.5,
+   "q": "An axis with a velocity-mode amplifier and a P-only position loop, no feedforward, runs at {v} mm/s. Its following error must stay under {emax} mm. What is the lowest position loop gain $K_v$ that does it?",
+   "vars": {
+    "v": [
+     50,
+     300,
+     25
+    ],
+    "emax": {
+     "pick": [
+      2,
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   "answer": "v / emax",
+   "unit": "/s",
+   "tolerance": 0.02,
+   "work": "$e = \\frac{ v }{K_v}$, so $K_v = \\frac{ v }{ e } = \\frac{{v}}{{emax}} = {answer}$ /s",
+   "why": "Turn $e = \\frac{ v }{K_v}$ round: swap $K_v$ and $e$. To keep the error to {emax} mm at {v} mm/s, the gain must be at least {v} ÷ {emax} = {answer} /s. More gain, less error, until the axis starts to ring; if the machine will not take that much gain, add velocity feedforward instead.",
+   "hint": "In $e = \\frac{ v }{K_v}$, $K_v$ and $e$ can swap places."
+  },
+  {
+   "id": "commission-order",
+   "type": "order",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "Put these in a safe order for commissioning a new servo axis.",
+   "items": [
+    "Load the motor data and current limits into the amplifier",
+    "Run the identification to find the commutation offset and phase order",
+    "Set a low following error limit, then check a small positive command gives a rising count",
+    "Tune the velocity loop, then the position loop",
+    "Add feedforward to cut the following error"
+   ],
+   "why": "Nothing runs until the amplifier knows the motor, and it cannot commutate until identification has found the feedback's offset. The direction check comes before any tuning, with a trip set, because a reversed count gives a runaway. Tune from the inside out, and add feedforward last, once the loops are stable."
+  },
+  {
+   "id": "why-sto",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Why is STO (Safe Torque Off) on its own not enough for a vertical axis, such as a Z axis carrying a spindle?",
+   "options": [
+    "STO is too slow to act",
+    "STO only works in velocity mode",
+    "STO only removes the torque: nothing then holds the axis up, so it needs a holding brake as well",
+    "STO locks the motor shaft, which strains the gearbox"
+   ],
+   "answer": 2,
+   "why": "STO stops the amplifier making torque, at once: a **category 0** stop. It does not brake or hold. A horizontal axis coasts to a stop; a vertical one falls, so it needs a holding brake, itself controlled safely (Safe Brake Control, for example). STO does not lock the shaft, and it does not isolate the motor: the wiring can still be live, so isolate before working on it."
+  },
+  {
+   "id": "mix-kt-ke",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.8,
+   "q": "A servo motor's datasheet gives $K_t$ = {kt} Nm/A and $K_e$ = {ke} V per 1000 rpm. The amplifier shows {cur} A at {n} rpm. What torque is the motor giving?",
+   "vars": {
+    "kt": {
+     "pick": [
+      0.6,
+      0.93,
+      1.2,
+      1.4,
+      2
+     ]
+    },
+    "cur": [
+     1,
+     12,
+     0.5
+    ],
+    "n": {
+     "pick": [
+      1000,
+      1500,
+      2000,
+      3000
+     ]
+    }
+   },
+   "let": {
+    "ke": "ROUND(kt * 60, 0)",
+    "emf": "ROUND(kt * 60, 0) * n / 1000"
+   },
+   "answer": "kt * cur",
+   "unit": "Nm",
+   "tolerance": 0.02,
+   "work": "$T = K_t I = {kt} \\times {cur} = {answer}$ Nm",
+   "why": "Torque comes from current: $T = K_t I$. The speed and $K_e$ give the back-EMF instead, {emf} V here: that decides the top speed, not the torque. Bringing $K_e$ or the speed into it is the trap.",
+   "hint": "Which constant links amps to newton-metres?"
+  },
+  {
+   "id": "mix-gearbox",
+   "type": "match",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A servo motor drives a load through a 10:1 gearbox: the motor turns 10 times for each turn of the load. Ignoring losses, match each to how it compares.",
+   "pairs": [
+    [
+     "The load's speed, against the motor's",
+     "Divided by 10"
+    ],
+    [
+     "The torque at the load, against the motor's",
+     "Times 10"
+    ],
+    [
+     "The load's inertia as the motor feels it, against its real inertia",
+     "Divided by 100"
+    ]
+   ],
+   "why": "Speed goes down by the ratio and torque goes up by it, so the power is the same on both sides. Inertia is divided by the ratio **squared**: the gearbox cuts both how fast the motor must spin the load up and how hard the load pushes back. Dividing the inertia by 10 only is the usual mistake."
+  },
+  {
+   "id": "mix-servo-vfd",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.8,
+   "q": "Which of these needs the rotor's angle from a feedback device just to run at all?",
+   "options": [
+    "An induction motor on a VFD in V/f",
+    "A permanent-magnet servo motor on a servo amplifier",
+    "An induction motor on a VFD in sensorless vector",
+    "A DC motor on a Sprint DC drive"
+   ],
+   "answer": 1,
+   "why": "The magnet rotor has its own field, fixed to the shaft, so the amplifier must place the current by angle: commutation. An induction motor's rotor field is induced by the stator, so V/f and sensorless vector need no sensor (closed-loop vector uses an encoder for accuracy, not to run at all). A DC motor's brushes and commutator do the switching mechanically."
+  },
+  {
+   "id": "check-servo",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.5,
+   "q": "An axis has a permanent-magnet servo motor and a Metronix amplifier, but the feedback cable has been left unplugged. What happens when it is enabled?",
+   "options": [
+    "It runs open loop, like an induction motor on V/f, just less accurately",
+    "It runs at the right speed but slowly drifts off position, with nothing to correct it",
+    "It cannot run as a servo: with no rotor angle it cannot commutate, and with no feedback it cannot close its loops, so the amplifier trips on a feedback fault",
+    "It runs away at full speed, because there is no feedback to hold it back"
+   ],
+   "answer": 2,
+   "why": "A servo is motor, feedback and amplifier in one closed loop. Without the feedback the amplifier does not know where the magnets are, so it cannot put current in the right windings, and it has nothing to close the loops with. Servo amplifiers watch for this and trip with a feedback fault instead of moving. A runaway comes from feedback that is connected but counts the wrong way, not from none at all."
+  },
+  {
+   "id": "check-torque-mode",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A Galil drives a Metronix amplifier in **torque** mode with ±10 V. Which loops does each close?",
+   "options": [
+    "Metronix: current. Galil: position, with its D term giving the damping in place of a velocity loop",
+    "Metronix: current and velocity. Galil: position",
+    "Metronix: all three. Galil: none",
+    "Galil: current and position. Metronix: velocity"
+   ],
+   "answer": 0,
+   "why": "In torque mode the ±10 V is a current (torque) set-point, so the Metronix closes only the current loop. There is no separate velocity loop: the Galil's PID closes position, and its D term, which reacts to how fast the error is changing, gives the damping. Current and velocity in the amplifier is velocity mode. The current loop is always the amplifier's: it is far too fast for the controller to close."
+  },
+  {
+   "id": "check-inertia",
+   "type": "numeric",
+   "stage": "check",
+   "level": 6.5,
+   "q": "A roller of {jl} kg·m² is driven through a gearbox with a ratio of {i}:1. What is its inertia as the motor feels it, in kg·cm² (1 kg·m² = 10 000 kg·cm²)?",
+   "vars": {
+    "jl": {
+     "pick": [
+      0.02,
+      0.05,
+      0.1,
+      0.2
+     ]
+    },
+    "i": {
+     "pick": [
+      4,
+      5,
+      8,
+      10
+     ]
+    }
+   },
+   "let": {
+    "i2": "i^2",
+    "jr": "jl / i^2"
+   },
+   "answer": "jl / i^2 * 10000",
+   "unit": "kg·cm²",
+   "tolerance": 0.02,
+   "work": "$J_r = \\frac{J_L}{i^2} = \\frac{{jl}}{{i2}} = {jr}$ kg·m², times 10 000: {answer} kg·cm²",
+   "why": "Divide by the ratio squared ({i} × {i} = {i2}), then change units: × 10 000 for kg·cm², the unit servo datasheets use. Dividing by {i} only leaves it {i} times too big.",
+   "hint": "Divide by the ratio squared, then × 10 000 for kg·cm²."
+  }
+ ]
+}

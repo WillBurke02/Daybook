@@ -1,0 +1,510 @@
+{
+ "id": "maths.found.formulas",
+ "title": "Rearranging formulas",
+ "tags": ["algebra", "formulas", "electrical"],
+ "kind": "procedure",
+ "level": 4.1,
+ "minutes": 25,
+ "goals": [
+  "Say what each letter in a formula stands for, and what the formula says",
+  "Change the subject of a formula by undoing its operations in reverse order",
+  "Rearrange formulas with fractions, squares, square roots and brackets",
+  "Use a rearranged formula to work out a value, such as a current from Ohm's law"
+ ],
+ "summary": "The **subject** of a formula is the letter on its own on one side: in $V = IR$ it is $V$. **Changing the subject** turns the formula round to give the letter you want.\n\nIt is the same fact written another way. $3 \\times 4 = 12$ also means $12 \\div 4 = 3$. So $V = IR$ also means $I = \\frac{V}{R}$ and $R = \\frac{V}{I}$.\n\n**The method**\n\n- List what was done to the letter you want, in order.\n- Undo each job in **reverse** order, doing the same to **both sides**.\n- Opposites: add and take away; times and divide; square and square root.\n\n**A letter on the bottom** of a fraction: multiply both sides by it first. $v = \\frac{d}{t}$ gives $vt = d$, then $t = \\frac{d}{v}$.\n\n**Pulse-echo**: $d = \\frac{vt}{2}$. Undo the halving (times 2), then the times $v$: $t = \\frac{2d}{v}$. For the speed, $v = \\frac{2d}{t}$.\n\n**Squares**: $P = I^2R$. Divide by $R$, then square root: $I = \\sqrt{\\frac{P}{R}}$. The area of a circle, $A = \\pi r^2$, gives $r = \\sqrt{\\frac{A}{\\pi}}$.\n\n**Brackets**: $F = \\frac{9C}{5} + 32$. The add 32 was done last, so take it off first, then times 5, then divide by 9: $C = \\frac{5(F - 32)}{9}$. The bracket says: take the 32 off before anything else.\n\n**Check** with numbers you know: $V = IR$ with 3 A and 4 Ω gives 12 V, so your $R = \\frac{V}{I}$ should give $12 \\div 3 = 4$ Ω back.\n\nBefore you start, ask: is the letter I want already the subject? Then just **substitute**. If not, **rearrange** first.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "Changing the Subject Video", "url": "https://corbettmaths.com/2013/12/23/changing-the-subject-video-7/", "by": "Corbettmaths", "minutes": 8},
+  {"when": "after", "kind": "video", "title": "Rearrange formulas to isolate specific variables", "url": "https://www.youtube.com/watch?v=eTSVTTg_QZ4", "by": "Khan Academy", "minutes": 5},
+  {"when": "after", "kind": "interactive", "title": "Changing the Subject Practice Questions", "url": "https://corbettmaths.com/2018/04/04/changing-the-subject/", "by": "Corbettmaths", "minutes": 15, "note": "More questions to practise on, with answers."}
+ ],
+ "sources": [
+  "Department for Education, Mathematics GCSE subject content and assessment objectives (2013)",
+  "John Bird, Bird's Basic Engineering Mathematics, 8th edition (Routledge, 2021)",
+  "Hughes Electrical and Electronic Technology, 10th edition (Pearson)",
+  "J. and H. Krautkrämer, Ultrasonic Testing of Materials, 4th edition (Springer)"
+ ],
+ "formulas": [
+  {
+   "name": "Ohm's law",
+   "tex": "V = IR",
+   "match": ["V=IR"],
+   "says": "The voltage across a resistor is the current through it times its resistance.",
+   "symbols": [["V", "the voltage (volts, V)"], ["I", "the current (amps, A)"], ["R", "the resistance (ohms, Ω)"]],
+   "example": "3 A through 4 Ω: $V = 3 \\times 4 = 12$ V."
+  },
+  {
+   "name": "Current from Ohm's law",
+   "tex": "I = \\frac{V}{R}",
+   "match": ["I=\\frac{V}{R}"],
+   "says": "Ohm's law turned round: the current is the voltage divided by the resistance.",
+   "symbols": [["I", "the current (A)"], ["V", "the voltage (V)"], ["R", "the resistance (Ω)"]],
+   "example": "12 V across 4 Ω: $12 \\div 4 = 3$ A."
+  },
+  {
+   "name": "Resistance from Ohm's law",
+   "tex": "R = \\frac{V}{I}",
+   "match": ["R=\\frac{V}{I}"],
+   "says": "Ohm's law turned round: the resistance is the voltage divided by the current.",
+   "symbols": [["R", "the resistance (Ω)"], ["V", "the voltage (V)"], ["I", "the current (A)"]],
+   "example": "24 V drives 0.5 A: $24 \\div 0.5 = 48$ Ω."
+  },
+  {
+   "name": "Electrical power",
+   "tex": "P = VI",
+   "match": ["P=VI"],
+   "says": "The power is the voltage times the current.",
+   "symbols": [["P", "the power (watts, W)"], ["V", "the voltage (V)"], ["I", "the current (A)"]],
+   "example": "230 V and 10 A: $230 \\times 10 = 2300$ W."
+  },
+  {
+   "name": "Current from power",
+   "tex": "I = \\frac{P}{V}",
+   "match": ["I=\\frac{P}{V}"],
+   "says": "The power formula turned round: the current is the power divided by the voltage.",
+   "symbols": [["I", "the current (A)"], ["P", "the power (W)"], ["V", "the voltage (V)"]],
+   "example": "a 2300 W heater on 230 V: $2300 \\div 230 = 10$ A."
+  },
+  {
+   "name": "Speed",
+   "tex": "v = \\frac{d}{t}",
+   "match": ["v=\\frac{d}{t}"],
+   "says": "The speed is the distance divided by the time.",
+   "symbols": [["v", "the speed (m/s)"], ["d", "the distance (m)"], ["t", "the time (s)"]],
+   "example": "100 m in 20 s: $100 \\div 20 = 5$ m/s."
+  },
+  {
+   "name": "Distance from speed and time",
+   "tex": "d = vt",
+   "match": ["d=vt"],
+   "says": "The distance is the speed times the time.",
+   "symbols": [["d", "the distance (m)"], ["v", "the speed (m/s)"], ["t", "the time (s)"]],
+   "example": "0.4 m/s for 30 s: $0.4 \\times 30 = 12$ m."
+  },
+  {
+   "name": "Time from distance and speed",
+   "tex": "t = \\frac{d}{v}",
+   "match": ["t=\\frac{d}{v}"],
+   "says": "The time is the distance divided by the speed.",
+   "symbols": [["t", "the time (s)"], ["d", "the distance (m)"], ["v", "the speed (m/s)"]],
+   "example": "60 m at 1.5 m/s: $60 \\div 1.5 = 40$ s."
+  },
+  {
+   "name": "Depth from the echo time",
+   "tex": "d = \\frac{vt}{2}",
+   "match": ["\\frac{vt}{2}"],
+   "says": "The depth of a flaw is the speed of sound times the echo time, **halved**, because the sound goes there and back.",
+   "symbols": [["d", "the depth (mm)"], ["v", "the speed of sound in the metal (mm per µs; steel about 5.92)"], ["t", "the time for the echo to come back (µs, millionths of a second)"]],
+   "example": "steel, echo at 10 µs: $5.92 \\times 10 \\div 2 = 29.6$ mm."
+  },
+  {
+   "name": "Echo time from the depth",
+   "tex": "t = \\frac{2d}{v}",
+   "match": ["\\frac{2d}{v}"],
+   "says": "The pulse-echo rule turned round: twice the depth (down and back up) divided by the speed.",
+   "symbols": [["t", "the echo time (µs)"], ["d", "the depth (mm)"], ["v", "the speed of sound (mm per µs)"]],
+   "example": "29.6 mm of steel: $2 \\times 29.6 \\div 5.92 = 10$ µs."
+  },
+  {
+   "name": "Speed of sound from a calibration block",
+   "tex": "v = \\frac{2d}{t}",
+   "match": ["v=\\frac{2d}{t}"],
+   "says": "The pulse-echo rule turned round for the speed: a block of known thickness and a measured echo time give the speed of sound.",
+   "symbols": [["v", "the speed of sound (mm per µs)"], ["d", "the block's thickness (mm)"], ["t", "the measured echo time (µs)"]],
+   "example": "a 25 mm block echoing at 8.45 µs: $50 \\div 8.45 \\approx 5.92$ mm per µs."
+  },
+  {
+   "name": "Power turned to heat in a resistor",
+   "tex": "P = I^2R",
+   "match": ["P=I^2R"],
+   "says": "The power is the current squared (times itself), times the resistance.",
+   "symbols": [["P", "the power (W)"], ["I", "the current (A); $I^2$ is $I \\times I$"], ["R", "the resistance (Ω)"]],
+   "example": "5 A through 4 Ω: $5^2 \\times 4 = 25 \\times 4 = 100$ W."
+  },
+  {
+   "name": "Current from power and resistance",
+   "tex": "I = \\sqrt{\\frac{P}{R}}",
+   "match": ["\\sqrt{\\frac{P}{R}}"],
+   "says": "$P = I^2R$ turned round: divide the power by the resistance, then take the square root.",
+   "symbols": [["I", "the current (A)"], ["P", "the power (W)"], ["R", "the resistance (Ω)"]],
+   "example": "100 W in 4 Ω: $\\sqrt{100 \\div 4} = \\sqrt{25} = 5$ A."
+  },
+  {
+   "name": "Area of a circle",
+   "tex": "A = \\pi r^2",
+   "match": ["\\pi r^2"],
+   "says": "The area inside a circle is pi times the radius squared.",
+   "symbols": [["A", "the area (mm², if the radius is in mm)"], ["\\pi", "pi, about 3.142"], ["r", "the radius: centre to edge, half the diameter"]],
+   "example": "radius 10 mm: $3.142 \\times 100 \\approx 314$ mm²."
+  },
+  {
+   "name": "Radius from the area",
+   "tex": "r = \\sqrt{\\frac{A}{\\pi}}",
+   "match": ["\\sqrt{\\frac{A}{\\pi}}"],
+   "says": "The area of a circle turned round: divide the area by pi, then take the square root.",
+   "symbols": [["r", "the radius"], ["A", "the area"], ["\\pi", "pi, about 3.142"]],
+   "example": "314 mm²: $\\sqrt{314 \\div 3.142} \\approx \\sqrt{99.9} \\approx 10.0$ mm."
+  },
+  {
+   "name": "Celsius to Fahrenheit",
+   "tex": "F = \\frac{9C}{5} + 32",
+   "match": ["\\frac{9C}{5}+32"],
+   "says": "Times the Celsius temperature by 9, divide by 5, then add 32.",
+   "symbols": [["F", "the temperature in degrees Fahrenheit (°F)"], ["C", "the temperature in degrees Celsius (°C)"]],
+   "example": "100 °C: $900 \\div 5 + 32 = 212$ °F."
+  },
+  {
+   "name": "Fahrenheit to Celsius",
+   "tex": "C = \\frac{5(F - 32)}{9}",
+   "match": ["\\frac{5(F-32)}{9}"],
+   "says": "Take 32 off the Fahrenheit temperature, times by 5, then divide by 9.",
+   "symbols": [["C", "the temperature in °C"], ["F", "the temperature in °F"]],
+   "example": "176 °F: $(176 - 32) \\times 5 \\div 9 = 144 \\times 5 \\div 9 = 80$ °C."
+  },
+  {
+   "name": "Pay for the hours you work",
+   "tex": "P = rh",
+   "match": ["P=rh"],
+   "says": "Your pay is the hourly rate times the number of hours.",
+   "symbols": [["P", "the pay (£)"], ["r", "the rate (£ per hour)"], ["h", "the number of hours worked"]],
+   "example": "£15 an hour for 8 hours: $15 \\times 8 = 120$, so £120."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-current",
+   "type": "mcq",
+   "stage": "try",
+   "level": 3.9,
+   "q": "Have a go: a guess is fine. **Ohm's law** is $V = IR$: the voltage $V$ (volts) equals the current $I$ (amps) times the resistance $R$ (ohms). Which of these gives the current $I$?",
+   "options": ["$I = VR$", "$I = \\frac{V}{R}$", "$I = \\frac{R}{V}$", "$I = V - R$"],
+   "answer": 1,
+   "why": "Numbers first: $12 = 3 \\times 4$ means $3 = 12 \\div 4$. In the same way, $V = I \\times R$ means $I = V \\div R$. $I = VR$ multiplies when you need to divide; $\\frac{R}{V}$ divides the wrong way up. Check with 12 V and 4 Ω: $\\frac{12}{4} = 3$ A, and $3 \\times 4 = 12$."
+  },
+  {
+   "id": "subject",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The subject of a formula",
+   "body": "A **formula** is a rule linking letters. In **Ohm's law**, $V = IR$:\n\n- $V$ is the voltage, in volts (V)\n- $I$ is the current, in amps (A)\n- $R$ is the resistance, in ohms (Ω)\n\nIt says: the voltage is the current times the resistance.\n\nThe letter on its own on one side is the **subject**. Here it is $V$, so the formula hands you $V$ straight away. If you know $V$ and $R$ and want $I$, you **change the subject**: turn the formula round so $I$ is on its own.\n\nNumbers show how: $12 = 3 \\times 4$ also means $12 \\div 4 = 3$. So $V = IR$ also means $I = \\frac{V}{R}$.",
+   "more": "Think of a 'fact family' from school: $3 \\times 4 = 12$, $4 \\times 3 = 12$, $12 \\div 4 = 3$, $12 \\div 3 = 4$. Four ways of writing one fact.\n\nA formula is a fact about letters, so it has a family too. $V = IR$, $I = \\frac{V}{R}$ and $R = \\frac{V}{I}$ are the same rule written three ways. Each has a different subject, and you pick the one whose subject is the thing you want.\n\nWorked number: a lamp on a 24 V supply has a resistance of 48 Ω. You want the current, so use the version with $I$ as the subject: $I = \\frac{V}{R} = \\frac{24}{48} = 0.5$ A. Check it the other way: $0.5 \\times 48 = 24$ V. Right."
+  },
+  {
+   "id": "subject-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "Ohm's law is $V = IR$. Which formula gives the resistance $R$?",
+   "options": ["$R = VI$", "$R = \\frac{V}{I}$", "$R = \\frac{I}{V}$", "$R = V - I$"],
+   "answer": 1,
+   "why": "Numbers: $12 = 3 \\times 4$, so $4 = \\frac{12}{3}$: the voltage divided by the current. So $R = \\frac{V}{I}$. $R = VI$ multiplies instead of dividing. $\\frac{I}{V}$ is upside down: 3 A and 12 V would give 0.25 Ω instead of 4 Ω."
+  },
+  {
+   "id": "undo",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Undo what was done to the letter",
+   "body": "To change the subject, look at what was done to the letter you want. Then **undo** it, doing the **same to both sides**, just as with equations.\n\nThe opposites: add and take away; times and divide; square and square root.\n\nSpeed is $v = \\frac{d}{t}$: the speed $v$ (metres per second, m/s) is the distance $d$ (metres) divided by the time $t$ (seconds).\n\nTo get $d$: $d$ was **divided by** $t$, so **multiply** both sides by $t$:\n\n$$d = vt$$\n\nNumbers: 100 m in 20 s is $100 \\div 20 = 5$ m/s. And $5 \\times 20 = 100$ m back again.",
+   "more": "Changing the subject is solving an equation with letters instead of numbers. The moves are the same.\n\nWith numbers: $5 = \\frac{d}{20}$. Something divided by 20 is 5. Multiply both sides by 20: $d = 100$.\n\nWith letters: $v = \\frac{d}{t}$. Multiply both sides by $t$: $vt = d$. Swap the sides so the subject is on the left: $d = vt$. (A formula means the same either way round, as $12 = 3 \\times 4$ and $3 \\times 4 = 12$ do.)\n\nWorked number: a conveyor runs at 0.4 m/s for 30 s. $d = vt = 0.4 \\times 30 = 12$ m of belt has gone past."
+  },
+  {
+   "id": "undo-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.6,
+   "q": "A conveyor belt runs at {v} m/s. How far does a box on it travel in {t} s? Start from $v = \\frac{ d }{ t }$ and turn it round for the distance.",
+   "vars": {"v": {"pick": [0.2, 0.25, 0.4, 0.5, 0.8, 1.2]}, "t": [5, 60, 5]},
+   "answer": "v * t",
+   "unit": "m",
+   "work": "$d = vt = {v} \\times {t} = {answer}$ m",
+   "why": "$d$ was divided by $t$, so multiply both sides by $t$: $d = vt$. Dividing ({v} ÷ {t}) is the slip: a box that rides for longer goes further, so the answer must grow with the time."
+  },
+  {
+   "id": "bottom",
+   "type": "concept",
+   "stage": "learn",
+   "title": "When the letter is on the bottom",
+   "body": "From $v = \\frac{d}{t}$, how long does a journey take? Now $t$ is on the **bottom** of the fraction.\n\nGet it off the bottom first: multiply both sides by $t$.\n\n$$vt = d$$\n\nNow $t$ is multiplied by $v$, so divide both sides by $v$:\n\n$$t = \\frac{d}{v}$$\n\nNumbers: 100 m at 5 m/s takes $100 \\div 5 = 20$ s.\n\nThe same two moves turn $I = \\frac{V}{R}$ into $R = \\frac{V}{I}$.",
+   "more": "A letter on the bottom of a fraction is awkward to reach, so bring it up first. Multiplying both sides by it cancels it from the bottom: $\\frac{d}{t} \\times t$ is just $d$, as $\\frac{100}{20} \\times 20 = 100$.\n\nThen it is an ordinary times, undone by dividing.\n\nWorked number: a forklift covers 60 m at 1.5 m/s. How long does it take? $t = \\frac{d}{v} = \\frac{60}{1.5} = 40$ s. Check with the original: $\\frac{60}{40} = 1.5$ m/s. Right.\n\nA handy test for any rearranged formula: does it make sense? Further to go, longer time: $d$ on top. Faster, shorter time: $v$ on the bottom."
+  },
+  {
+   "id": "bottom-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "A conveyor runs at {v} m/s. How long does a box take to travel {d} m along it?",
+   "vars": {"v": {"pick": [0.2, 0.25, 0.4, 0.5, 0.8]}, "d": [2, 30, 1]},
+   "answer": "d / v",
+   "unit": "s",
+   "hint": "Start from $v = \\frac{ d }{ t }$. Get $t$ off the bottom first.",
+   "work": "$t = \\frac{ d }{ v } = \\frac{{d}}{{v}} = {answer}$ s",
+   "why": "Multiply both sides by $t$ ($vt = d$), then divide both sides by $v$: $t = \\frac{ d }{ v }$. Multiplying {d} by {v} would give a time that grows when the belt runs faster, which cannot be right."
+  },
+  {
+   "id": "echo",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Two jobs to undo: the pulse-echo rule",
+   "body": "In ultrasonic testing the depth of a flaw is\n\n$$d = \\frac{vt}{2}$$\n\n$d$ is the depth, $v$ the speed of sound in the metal and $t$ the time for the echo to come back. It says: speed times time, **halved**, because the sound goes there and back.\n\nTo get $t$, list what was done to it: **times $v$**, then **divide by 2**. Undo in reverse:\n\n- times both sides by 2: $2d = vt$\n- divide both sides by $v$: $t = \\frac{2d}{v}$\n\nFor the speed instead: $v = \\frac{2d}{t}$. That is how a flaw detector is set up on a block of known thickness.",
+   "more": "Numbers first. Steel carries sound at about 5.92 mm per microsecond (µs, a millionth of a second). A flaw 29.6 mm deep: the sound goes down and back, $2 \\times 29.6 = 59.2$ mm, which takes $59.2 \\div 5.92 = 10$ µs. That is $t = \\frac{2d}{v}$.\n\nYou can see the order by going forwards and back. Forwards from $t = 10$: times $v$ gives 59.2, divide by 2 gives 29.6. Backwards from 29.6: times 2 gives 59.2, divide by $v$ gives 10. Each step undoes its partner, last first.\n\nFor calibration: a 25 mm block echoes at 8.45 µs. $v = \\frac{2d}{t} = \\frac{50}{8.45} \\approx 5.92$ mm per µs."
+  },
+  {
+   "id": "echo-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "Start from $d = \\frac{vt}{2}$. Which gives the speed $v$?",
+   "options": ["$v = \\frac{d}{2t}$", "$v = \\frac{dt}{2}$", "$v = \\frac{2d}{t}$", "$v = \\frac{2t}{d}$"],
+   "answer": 2,
+   "hint": "Undo the divide by 2 first.",
+   "why": "Times both sides by 2: $2d = vt$. Divide both sides by $t$: $v = \\frac{2d}{t}$. $\\frac{d}{2t}$ halves again instead of undoing the halving; that is the usual slip. Check: 29.6 mm and 10 µs give $\\frac{59.2}{10} = 5.92$."
+  },
+  {
+   "id": "squares",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Squares and square roots",
+   "body": "$I^2$ means $I \\times I$, the current **squared**. A **square root** undoes it: $4^2 = 16$ and $\\sqrt{16} = 4$.\n\nThe power turned to heat in a resistor is\n\n$$P = I^2R$$\n\n$P$ is the power (watts, W), $I$ the current (A), $R$ the resistance (Ω). It says: the current squared, times the resistance.\n\nTo get $I$: it was squared, then multiplied by $R$. Undo in reverse: divide by $R$, then square root.\n\n$$I = \\sqrt{\\frac{P}{R}}$$\n\nThe area $A$ of a circle of radius $r$ (centre to edge) is $A = \\pi r^2$. It turns round the same way: $r = \\sqrt{\\frac{A}{\\pi}}$.",
+   "more": "Squaring and square-rooting are opposites, like times and divide. $5^2 = 25$ and $\\sqrt{25} = 5$.\n\nWhy divide by $R$ **before** the square root? Because in $I^2R$ the squaring was done first and the times $R$ last. Undo the last job first.\n\nWorked number: a 4 Ω resistor turns 100 W into heat. $I^2 = \\frac{100}{4} = 25$, so $I = \\sqrt{25} = 5$ A. Check: $5^2 \\times 4 = 25 \\times 4 = 100$ W. Right.\n\nA square root is often a decimal: $\\sqrt{50} \\approx 7.07$. With no calculator, type SQRT(50) in the answer box."
+  },
+  {
+   "id": "squares-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "A heater element of {R} Ω turns {P} W into heat. $P = I^2R$. What current flows through it?",
+   "vars": {"R": [2, 30, 1], "k": [1, 10, 1]},
+   "let": {"P": "k^2 * R", "k2": "P / R"},
+   "answer": "SQRT(P / R)",
+   "unit": "A",
+   "hint": "Divide by $R$ first, then take the square root.",
+   "work": "$I = \\sqrt{\\frac{ P }{ R }} = \\sqrt{\\frac{{P}}{{R}}} = \\sqrt{{k2}} = {answer}$ A",
+   "why": "Undo in reverse: $I$ was squared, then multiplied by $R$. So divide by $R$ (giving {k2}), then square root ({answer} A). Square-rooting {P} first and then dividing by {R} undoes the jobs in the wrong order and gives the wrong current."
+  },
+  {
+   "id": "brackets",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Formulas with brackets",
+   "body": "To turn a temperature $C$ in degrees Celsius (°C) into $F$ in degrees Fahrenheit (°F):\n\n$$F = \\frac{9C}{5} + 32$$\n\nIt says: times by 9, divide by 5, then add 32. Water boils at 100 °C: $900 \\div 5 + 32 = 212$ °F.\n\nTo get $C$, undo in reverse:\n\n- take 32 from both sides: $F - 32 = \\frac{9C}{5}$\n- times both sides by 5: $5(F - 32) = 9C$\n- divide both sides by 9: $C = \\frac{5(F - 32)}{9}$\n\nThe **bracket** says: take 32 off first, then multiply the whole result by 5. Check: $(212 - 32) \\times 5 \\div 9 = 100$.",
+   "more": "Why the bracket? Without it, $5F - 32$ would mean 'times $F$ by 5, then take 32': a different order and a different answer. The bracket keeps $F - 32$ together as one amount, so the 5 multiplies all of it.\n\nWorked number: a datasheet gives 176 °F. $176 - 32 = 144$. $144 \\times 5 = 720$. $720 \\div 9 = 80$ °C.\n\nThe pattern for any formula: write down the jobs done to your letter, in order (here: times 9, divide by 5, add 32). Then undo them from the end (take 32, times 5, divide by 9)."
+  },
+  {
+   "id": "brackets-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "A pump datasheet gives a fluid temperature of {F} °F. What is that in °C? Start from $F = \\frac{9C}{5} + 32$.",
+   "vars": {"C0": [5, 150, 5]},
+   "let": {"F": "9 * C0 / 5 + 32", "f32": "F - 32"},
+   "answer": "5 * (F - 32) / 9",
+   "unit": "°C",
+   "hint": "What was done last in the formula? Undo that first.",
+   "work": "$C = \\frac{5(F - 32)}{9} = \\frac{5 \\times {f32}}{9} = {answer}$ °C",
+   "why": "Undo in reverse: take 32 off first ({F} − 32 = {f32}), then times by 5, then divide by 9. Taking the 32 off at the end instead gives the wrong answer: it was added last, so it must come off first."
+  },
+  {
+   "id": "worked-radius",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A round bar has a cross-section area of 314 mm². What is its radius? Use $A = \\pi r^2$.",
+   "steps": [
+    {"ask": "What was done to $r$, in order?", "show": "It was squared, then multiplied by $\\pi$."},
+    {"ask": "Undo the times $\\pi$: divide both sides by $\\pi$.", "show": "$r^2 = \\frac{A}{\\pi}$"},
+    {"ask": "Undo the square: square root both sides.", "show": "$r = \\sqrt{\\frac{A}{\\pi}}$"},
+    {"ask": "Put the numbers in.", "show": "$r = \\sqrt{\\frac{314}{\\pi}} = \\sqrt{99.9} \\approx 10.0$ mm"},
+    {"ask": "Check it.", "show": "$\\pi \\times 10^2 \\approx 314.2$ mm². Close to 314. Right."}
+   ],
+   "why": "Rearrange first, then put the numbers in: the letters show you the order of the jobs. Square-rooting 314 before dividing by $\\pi$ undoes the jobs in the wrong order."
+  },
+  {
+   "id": "faded-current",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 4.3,
+   "q": "A 50 Ω resistor must not turn more than 2 W into heat. What is the largest current it can take? Use $P = I^2R$.",
+   "steps": [
+    {"ask": "What was done to $I$, in order?", "show": "It was squared, then multiplied by $R$."},
+    {"ask": "Undo the times $R$.", "show": "$I^2 = \\frac{P}{R} = \\frac{2}{50} = 0.04$"},
+    {"ask": "Undo the square.", "show": "$I = \\sqrt{0.04} = 0.2$ A, which is 200 mA (milliamps: thousandths of an amp)."},
+    {"ask": "Check it.", "show": "$0.2^2 \\times 50 = 0.04 \\times 50 = 2$ W. Right."}
+   ],
+   "why": "The same order as the circle: divide, then square root. $\\sqrt{0.04}$ is 0.2 because $0.2 \\times 0.2 = 0.04$."
+  },
+  {
+   "id": "radius-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 4.4,
+   "q": "A round shaft has a cross-section area of {A} mm². What is its radius? ($A = \\pi r^2$.)",
+   "vars": {"r0": [3, 30, 1]},
+   "let": {"A": "ROUND(PI() * r0^2, 0)", "rq": "A / PI()"},
+   "answer": "SQRT(A / PI())",
+   "unit": "mm",
+   "hint": "Divide by $\\pi$ first, then square root. You can type SQRT({A}/PI()).",
+   "work": "$r = \\sqrt{\\frac{ A }{\\pi}} = \\sqrt{\\frac{{A}}{\\pi}} = \\sqrt{{rq}} = {answer}$ mm",
+   "why": "$r$ was squared, then multiplied by $\\pi$. Undo in reverse: divide by $\\pi$, then square root. Halving instead of square-rooting is a common slip: a square root is not a half."
+  },
+  {
+   "id": "ohm-r",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.8,
+   "q": "A solenoid coil on a {V} V supply draws {I} A. What is its resistance? ($V = IR$.)",
+   "vars": {"V": {"pick": [12, 24, 48, 110, 230]}, "I": {"pick": [0.1, 0.2, 0.25, 0.5, 1, 2]}},
+   "answer": "V / I",
+   "unit": "Ω",
+   "work": "$R = \\frac{ V }{ I } = \\frac{{V}}{{I}} = {answer}$ Ω",
+   "why": "$R$ was multiplied by $I$, so divide both sides by $I$: $R = \\frac{ V }{ I }$. Multiplying ({V} × {I}) gives the power in watts, not the resistance."
+  },
+  {
+   "id": "power-current",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "Electrical power is $P = VI$: the power $P$ (watts) is the voltage $V$ (volts) times the current $I$ (amps). A {P} W heater runs on 230 V. What current does it draw?",
+   "vars": {"P": {"pick": [500, 1000, 1500, 2000, 2500, 3000]}},
+   "answer": "P / 230",
+   "unit": "A",
+   "work": "$I = \\frac{ P }{ V } = \\frac{{P}}{230} = {answer}$ A",
+   "why": "$I$ is multiplied by $V$, so divide both sides by $V$: $I = \\frac{ P }{ V }$. Dividing the other way, $\\frac{230}{{P}}$, gives a current that falls as the heater gets more powerful, which cannot be right."
+  },
+  {
+   "id": "circuit-check",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.1,
+   "intro": "Two resistors in **series**: one after the other, so the current has one path through both. The total resistance is $R_1 + R_2$ (the small 1 and 2 just label the two resistors). Set the battery and the resistors as you like.",
+   "widget": {"name": "circuit", "params": {"V": 12, "R1": 100, "R2": 220, "mode": "series", "controls": ["V", "R1", "R2"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "Work out the current from the battery, in amps, with $I = \\frac{ V }{ R }$ and the total resistance. Then check it against the reading.",
+    "answer": "I",
+    "unit": "A",
+    "tolerance": 0.02,
+    "hint": "Add the two resistances first.",
+    "why": "Total resistance: {R1} + {R2} = {Rt} Ω. $I = \\frac{ V }{ R } = \\frac{{V}}{{Rt}} = {I}$ A. If the reading is in milliamps (mA), divide by 1000 for amps. Using one resistor on its own gives too big a current: the current has to get through both."
+   }
+  },
+  {
+   "id": "echo-time",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.4,
+   "q": "Steel carries sound at 5.92 mm per µs. A flaw is {d} mm deep. How long after the pulse does its echo come back? ($d = \\frac{vt}{2}$.)",
+   "vars": {"d": [3, 60, 1]},
+   "answer": "2 * d / 5.92",
+   "unit": "µs",
+   "hint": "Undo the halving first, then the times $v$.",
+   "work": "$t = \\frac{2d}{v} = \\frac{2 \\times {d}}{5.92} = {answer}$ µs",
+   "why": "Rearranged: $t = \\frac{2d}{v}$. The sound goes down and back, {d} mm each way. Forgetting the 2 gives half the time: the one-way trip only."
+  },
+  {
+   "id": "why-order",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "To make $I$ the subject of $P = I^2R$, why do you divide by $R$ **before** taking the square root?",
+   "options": [
+    "Dividing always comes before square roots",
+    "It does not matter which you do first",
+    "The squaring was done first and the times $R$ last, and you undo the last job first",
+    "Because $R$ is always bigger than $I$"
+   ],
+   "answer": 2,
+   "why": "Undo in reverse order, as you take off boots before socks. $I$ was squared, then multiplied by $R$, so the times $R$ comes off first. It does matter: with $P = 100$ and $R = 4$, $\\sqrt{100} \\div 4 = 2.5$, but the right answer is $\\sqrt{100 \\div 4} = \\sqrt{25} = 5$ A. And there is no 'always' rule about dividing: it depends on the order the jobs were done."
+  },
+  {
+   "id": "order-celsius",
+   "type": "order",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "Put the steps in order to make $C$ the subject of $F = \\frac{9C}{5} + 32$.",
+   "items": [
+    "Take 32 from both sides: $F - 32 = \\frac{9C}{5}$",
+    "Multiply both sides by 5: $5(F - 32) = 9C$",
+    "Divide both sides by 9: $C = \\frac{5(F - 32)}{9}$",
+    "Check with a pair you know: 212 °F should give 100 °C"
+   ],
+   "why": "Undo in reverse: the add 32 was the last job, so it comes off first; then undo the divide by 5; then the times 9. A check with numbers you know catches slips."
+  },
+  {
+   "id": "mix-sub-or-rearrange",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 3.8,
+   "q": "Ohm's law, $V = IR$. Which question can you answer by putting the numbers straight in, **without** rearranging?",
+   "options": [
+    "A 12 V supply drives 0.5 A. What is the resistance?",
+    "A 12 V supply is across 24 Ω. What is the current?",
+    "A 9 V battery drives 3 A. What is the resistance?",
+    "A 0.5 A current flows through 220 Ω. What is the voltage?"
+   ],
+   "answer": 3,
+   "why": "$V$ is already the subject, so when you want $V$, just substitute: $0.5 \\times 220 = 110$ V. The others want $I$ or $R$, so turn the formula round first: $I = \\frac{V}{R}$ or $R = \\frac{V}{I}$. Ask first: is the letter I want already on its own?"
+  },
+  {
+   "id": "mix-pay-rate",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.6,
+   "q": "Pay is $P = rh$: the hourly rate $r$ (£ an hour) times the hours $h$. You were paid £{p:2} for {h} hours. What was your hourly rate?",
+   "vars": {"h": [4, 40, 1], "r0": {"pick": [11.5, 12, 12.5, 14, 15, 16, 18, 20]}},
+   "let": {"p": "r0 * h"},
+   "answer": "p / h",
+   "unit": "£ per hour",
+   "work": "$r = \\frac{ P }{ h } = \\frac{{p}}{{h}} = {answer}$",
+   "why": "Rearrange first: $r$ is multiplied by $h$, so divide both sides by $h$. It is the same move as $R = \\frac{V}{I}$: 'this = that times that' turns round the same way whatever the letters."
+  },
+  {
+   "id": "mix-square-order",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.0,
+   "q": "$P = I^2R$. The current is 3 A and the resistance 10 Ω. What is the power?",
+   "options": ["900 W", "60 W", "90 W", "30 W"],
+   "answer": 2,
+   "why": "Only $I$ is squared: $3^2 = 9$, then $9 \\times 10 = 90$ W. 900 W squares $I$ and $R$ together, $(3 \\times 10)^2$; 60 W doubles the 3 instead of squaring it. This one is substituting, not rearranging: $P$ is already the subject."
+  },
+  {
+   "id": "check-power-current",
+   "type": "mcq",
+   "stage": "check",
+   "level": 3.9,
+   "q": "Electrical power is $P = VI$ (watts = volts × amps). Which formula gives the current $I$?",
+   "options": ["$I = PV$", "$I = \\frac{V}{P}$", "$I = \\frac{P}{V}$", "$I = P - V$"],
+   "answer": 2,
+   "why": "$I$ is multiplied by $V$, so divide both sides by $V$: $I = \\frac{P}{V}$. Check: 2300 W on 230 V is $\\frac{2300}{230} = 10$ A, and $230 \\times 10 = 2300$. $\\frac{V}{P}$ is upside down, and $PV$ multiplies when you should divide."
+  },
+  {
+   "id": "check-calibrate",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.7,
+   "q": "A steel calibration block is {d} mm thick. Its back-wall echo comes back at {t} µs. Find the speed of sound, in mm per µs. ($d = \\frac{vt}{2}$.)",
+   "vars": {"d": {"pick": [10, 20, 25, 50, 100]}, "v0": [5.85, 5.95, 0.01]},
+   "let": {"t": "ROUND(2 * d / v0, 2)"},
+   "answer": "2 * d / t",
+   "unit": "mm per µs",
+   "tolerance": 0.01,
+   "hint": "Undo the halving, then divide by $t$.",
+   "work": "$v = \\frac{2d}{ t } = \\frac{2 \\times {d}}{{t}} = {answer}$ mm per µs",
+   "why": "Rearranged for the speed: times both sides by 2, then divide by $t$, so $v = \\frac{2d}{ t }$. Leaving out the 2 gives half the real speed, because the echo time is there and back."
+  },
+  {
+   "id": "check-match",
+   "type": "match",
+   "stage": "check",
+   "level": 4.3,
+   "q": "Match each formula to the same formula rearranged for the letter shown.",
+   "pairs": [
+    ["$V = IR$, for $R$", "$R = \\frac{V}{I}$"],
+    ["$v = \\frac{d}{t}$, for $t$", "$t = \\frac{d}{v}$"],
+    ["$P = I^2R$, for $I$", "$I = \\sqrt{\\frac{P}{R}}$"],
+    ["$d = \\frac{vt}{2}$, for $t$", "$t = \\frac{2d}{v}$"]
+   ],
+   "why": "Undo in reverse order each time: a letter on the bottom comes up first; the square root comes after dividing; the halving is undone by doubling."
+  }
+ ]
+}

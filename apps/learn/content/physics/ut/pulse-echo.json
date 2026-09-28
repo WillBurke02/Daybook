@@ -1,0 +1,733 @@
+{
+ "id": "physics.ut.pulse-echo",
+ "title": "Pulse-echo and time of flight",
+ "tags": [
+  "ut",
+  "ndt"
+ ],
+ "kind": "procedure",
+ "level": 5.0,
+ "minutes": 20,
+ "goals": [
+  "Work out how deep a reflector is from its echo time, and the echo time from a depth",
+  "Read an A-scan: the initial pulse, a flaw echo, the back-wall echo and its repeats",
+  "Compare two echo heights in decibels",
+  "Set the velocity on a calibration block, and choose a probe for flaws near the surface"
+ ],
+ "summary": "**Pulse-echo** means one probe sends a short burst of ultrasound and listens for it to come back. Sound reflects from any boundary: the back wall, or a flaw on the way.\n\nThe flaw detector times the round trip, so the depth of a reflector is\n\n$$d = \\frac{vt}{2}$$\n\nwith $v$ the velocity in that material and $t$ the time there and back. Turn it round for the time: $t = \\tfrac{2d}{v}$. In steel (about 5920 m/s) each millimetre adds about 0.34 µs to the round trip. Through-transmission (a second probe on the far face) crosses once: no halving.\n\n**The A-scan** is time across (calibrated as depth) and echo height up. From the left: the initial pulse, any flaw echo, the back-wall echo, then its repeats at 2, 3, 4… times the first, each smaller. An echo half-way to the back wall is half-way through the part.\n\n**Decibels** compare echo heights: $20\\log_{10}(A_1/A_2)$. +6 dB doubles an echo, −6 dB halves it.\n\n**Calibration** runs the rule backwards on a block of the same material and known thickness: $v = \\tfrac{2d}{t}$. The screen is a clock, so a wrong velocity puts every echo at the wrong depth.\n\n**The dead zone** is the depth hidden under the initial pulse. For flaws near the surface use a twin-crystal probe or a delay line.\n\n**If the back wall vanishes** with nothing in its place, suspect lost coupling or a tilted reflector sending the sound elsewhere.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "What is Ultrasonic Testing and How Does it Work?",
+   "url": "https://www.twi-global.com/technical-knowledge/faqs/ultrasonic-testing",
+   "by": "TWI",
+   "minutes": 5,
+   "note": "The big picture: what UT finds and where it is used."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "How do Ultrasonic NDT Thickness Gauges work?",
+   "url": "https://www.elcometer.com/en/how-do-ultrasonic-ndt-thickness-gauges-work",
+   "by": "Elcometer",
+   "minutes": 4,
+   "note": "The same rule inside a thickness gauge."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Theory of Operation",
+   "url": "https://ims.evidentscientific.com/en/learn/ndt-tutorials/thickness-gauge/introduction/operation",
+   "by": "Evident",
+   "minutes": 5
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Basic Principles of Ultrasonic Testing",
+   "url": "https://www.nde-ed.org/NDETechniques/Ultrasonics/Introduction/description.xhtml",
+   "by": "NDE-Ed (Iowa State University)",
+   "minutes": 6,
+   "note": "The A-scan and pulse-echo, with pictures."
+  }
+ ],
+ "sources": [
+  "BS EN ISO 16810: Non-destructive testing. Ultrasonic testing. General principles",
+  "BS EN ISO 16809: Non-destructive testing. Ultrasonic thickness measurement",
+  "J. and H. Krautkrämer, Ultrasonic Testing of Materials, 4th edition (Springer)",
+  "NDE-Ed, Ultrasonics: introduction and A-scan presentation (nde-ed.org)"
+ ],
+ "formulas": [
+  {
+   "name": "Depth from the echo time",
+   "tex": "d = \\frac{vt}{2}",
+   "match": [
+    "\\frac{vt}{2}"
+   ],
+   "says": "How deep the reflector is: the speed of sound times the time, **halved**, because the time on the screen is there **and back**.",
+   "symbols": [
+    [
+     "d",
+     "the depth: how far down the reflector is (metres; × 1000 for mm)"
+    ],
+    [
+     "v",
+     "the speed of sound in that material (m/s): steel about 5920, aluminium about 6320"
+    ],
+    [
+     "t",
+     "the round-trip time, from the pulse going in to the echo coming back (s; 1 µs is 0.000001 s)"
+    ],
+    [
+     "\\div 2",
+     "halve it: the sound went there and back"
+    ]
+   ],
+   "example": "steel, echo at 10 µs: $5920 \\times 0.00001 = 0.0592$ m there and back, halved is 0.0296 m, about 29.6 mm."
+  },
+  {
+   "name": "Echo time from the depth",
+   "tex": "t = \\frac{2d}{v}",
+   "match": [
+    "\\frac{2d}{v}"
+   ],
+   "says": "The same rule turned round: twice the depth (there and back) divided by the speed.",
+   "symbols": [
+    [
+     "t",
+     "the round-trip time (s)"
+    ],
+    [
+     "2d",
+     "two times the depth: down and back up"
+    ],
+    [
+     "v",
+     "the speed of sound (m/s)"
+    ]
+   ],
+   "example": "30 mm of steel: $2 \\times 0.030 \\div 5920 \\approx 0.0000101$ s, about 10.1 µs."
+  },
+  {
+   "name": "Velocity from a calibration block",
+   "tex": "v = \\frac{2d}{t}",
+   "match": [
+    "v=\\frac{2d}{t}"
+   ],
+   "says": "Calibration runs the rule backwards: a block of known thickness and the time you measure give the speed to set on the flaw detector.",
+   "symbols": [
+    [
+     "v",
+     "the velocity to set (m/s)"
+    ],
+    [
+     "d",
+     "the block's known thickness (m)"
+    ],
+    [
+     "t",
+     "the measured time of the first back-wall echo (s)"
+    ]
+   ],
+   "example": "a 25 mm block, echo at 8.45 µs: $2 \\times 0.025 \\div 0.00000845 \\approx 5917$ m/s."
+  },
+  {
+   "name": "Through-transmission: no halving",
+   "tex": "t = \\frac{d}{v}",
+   "match": [
+    "t=\\frac{d}{v}"
+   ],
+   "says": "With a second probe on the far side the sound crosses once, so there is nothing to halve.",
+   "symbols": [
+    [
+     "t",
+     "the time to cross (s)"
+    ],
+    [
+     "d",
+     "the thickness (m)"
+    ],
+    [
+     "v",
+     "the speed of sound (m/s)"
+    ]
+   ]
+  },
+  {
+   "name": "Decibels between two echoes",
+   "tex": "\\text{dB} = 20\\log_{10}\\left(\\frac{A_1}{A_2}\\right)",
+   "match": [
+    "20\\log_{10}"
+   ],
+   "says": "How much bigger one echo is than another, in decibels. Divide the heights, take the log, times 20. **+6 dB doubles** an echo; −6 dB halves it; +20 dB is ten times.",
+   "symbols": [
+    [
+     "A_1, A_2",
+     "the two echo heights (% of screen height)"
+    ],
+    [
+     "\\log_{10}",
+     "the log: the power of 10 that makes the number (log 2 is about 0.3)"
+    ],
+    [
+     "20",
+     "20, not 10, because heights are amplitudes (10 is for power)"
+    ]
+   ],
+   "example": "80% against 40%: the ratio is 2, $20 \\times 0.301 \\approx 6$ dB."
+  },
+  {
+   "name": "Wavelength",
+   "tex": "\\lambda = \\frac{v}{f}",
+   "match": [
+    "\\lambda=\\frac{v}{f}"
+   ],
+   "says": "The length of one wave: the speed divided by how many waves a second. The smallest flaw you can hope to find is about half a wavelength.",
+   "symbols": [
+    [
+     "\\lambda",
+     "lambda, the wavelength (m)"
+    ],
+    [
+     "v",
+     "the speed of sound (m/s)"
+    ],
+    [
+     "f",
+     "the probe's frequency (Hz; 5 MHz is 5 000 000 Hz)"
+    ]
+   ],
+   "example": "5 MHz in steel: $5920 \\div 5\\,000\\,000 \\approx 0.0012$ m, 1.2 mm."
+  }
+ ],
+ "cards": [
+  {
+   "id": "echo-between",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.5,
+   "q": "On a plate you know is 40 mm thick, an echo appears about half-way between the initial pulse and the back-wall echo. What is it most likely to be?",
+   "options": [
+    "A reflector (a flaw) at about 20 mm deep",
+    "The second back-wall echo",
+    "Electrical noise from the probe lead",
+    "The couplant layer"
+   ],
+   "answer": 0,
+   "why": "Anything between the initial pulse and the first back-wall echo comes from a reflector shallower than the back wall. Half the time means half the depth."
+  },
+  {
+   "id": "idea",
+   "type": "concept",
+   "stage": "learn",
+   "title": "One probe, there and back",
+   "body": "In **pulse-echo** testing one probe both sends and listens. It sends a short burst of ultrasound into the part; the sound travels until it meets a boundary (the back wall, or a flaw), and part of it reflects straight back to the same probe.\n\nThe flaw detector times the round trip. Knowing the speed of sound in the material, the distance to the reflector is\n\n$$d = \\frac{vt}{2}$$\n\nhalved because the sound went there **and back**."
+  },
+  {
+   "id": "why-half",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "In $d = \\tfrac{vt}{2}$, why is the time halved?",
+   "options": [
+    "The sound travels to the reflector and back, so $t$ covers the distance twice",
+    "Half the energy is lost at the reflector",
+    "The probe only listens for half the time",
+    "Longitudinal waves travel at half speed in steel"
+   ],
+   "answer": 0,
+   "why": "The flaw detector measures the **round trip**. The one-way distance is half of $vt$."
+  },
+  {
+   "id": "ascan-screen",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The A-scan",
+   "body": "The A-scan plots **time** across (calibrated as depth) against **amplitude** up the screen (% of full screen height).\n\n- On the left, the **initial pulse**: the probe's own transmission.\n- Part way along, a **flaw echo**, if something reflects before the back wall.\n- Further on, the **back-wall echo** from the far surface, then its repeats.\n\nMove the flaw and the thickness and watch the echoes move.",
+   "widget": {
+    "name": "ascan",
+    "params": {
+     "thickness": 30,
+     "flaw": 12,
+     "controls": [
+      "thickness",
+      "flaw",
+      "size"
+     ]
+    }
+   }
+  },
+  {
+   "id": "match-terms",
+   "type": "match",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "Match each term to what it means on the A-scan.",
+   "pairs": [
+    [
+     "Initial pulse",
+     "The probe's own transmission, at the left of the screen"
+    ],
+    [
+     "Back-wall echo",
+     "Sound returned from the far surface"
+    ],
+    [
+     "Flaw echo",
+     "Sound returned from something before the far surface"
+    ],
+    [
+     "Time base",
+     "The horizontal axis: time, calibrated as depth"
+    ],
+    [
+     "Gate",
+     "A window that reads the first echo rising through it"
+    ]
+   ]
+  },
+  {
+   "id": "dead-zone",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The dead zone",
+   "body": "While the crystal is still ringing from its own pulse it cannot hear an echo. The region just under the surface, hidden under the initial pulse, is the **dead zone**.\n\nTo see near the surface: use a **twin-crystal** (dual) probe, with one crystal to send and one to receive, or a probe with a **delay line**, which moves the initial pulse off the part. A higher frequency gives a shorter pulse and a thinner dead zone."
+  },
+  {
+   "id": "near-surface",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "You need to find laminations 1 to 2 mm below the surface of a thin plate. Which probe suits best?",
+   "options": [
+    "A twin-crystal probe, or one with a delay line",
+    "A low-frequency single-crystal contact probe",
+    "An angle probe at 70°",
+    "Any probe with more gain"
+   ],
+   "answer": 0,
+   "why": "With one crystal doing both jobs, the first millimetres sit in the dead zone. Separate send and receive crystals, or a delay line, clear it. More gain only makes the initial pulse wider."
+  },
+  {
+   "id": "worked-depth",
+   "type": "steps",
+   "stage": "example",
+   "q": "Steel at 5920 m/s. A flaw echo sits at 4.8 µs. How deep is the flaw?",
+   "steps": [
+    {
+     "ask": "What is the one-way time?",
+     "show": "$4.8 \\div 2 = 2.4$ µs, because 4.8 µs was there and back."
+    },
+    {
+     "ask": "How far does sound go in that time?",
+     "show": "$5920 \\text{ m/s} \\times 2.4 \\times 10^{-6} \\text{ s} = 0.0142$ m"
+    },
+    {
+     "ask": "In millimetres?",
+     "show": "$0.0142 \\text{ m} = 14.2$ mm deep."
+    }
+   ],
+   "why": "Halve first, then multiply: or multiply first and halve. Either way $d = \\tfrac{vt}{2}$.",
+   "worked": true
+  },
+  {
+   "id": "faded-thickness",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "Aluminium at 6320 m/s. The first back-wall echo is at 9.5 µs. How thick is the plate?",
+   "steps": [
+    {
+     "ask": "What is the one-way time?",
+     "show": "$9.5 \\div 2 = 4.75$ µs: the echo time is there and back."
+    },
+    {
+     "ask": "How far does sound go in that time?",
+     "show": "$6320 \\text{ m/s} \\times 4.75 \\times 10^{-6} \\text{ s} = 0.0300$ m"
+    },
+    {
+     "ask": "In millimetres?",
+     "show": "$0.0300 \\text{ m} = 30.0$ mm thick."
+    }
+   ],
+   "why": "The same two moves every time: halve the round trip, then distance = speed × time. Watch the units: µs is $10^{-6}$ s."
+  },
+  {
+   "id": "thickness-from-time",
+   "type": "numeric",
+   "stage": "example",
+   "q": "Steel, longitudinal velocity {v} m/s. The back-wall echo is at {t} µs. How thick is the plate?",
+   "vars": {
+    "v": [
+     5850,
+     5950,
+     10
+    ],
+    "t": [
+     5,
+     20,
+     0.5
+    ]
+   },
+   "answer": "v * t / 1e6 / 2 * 1000",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$d = \\tfrac{1}{2} \\times {v} \\text{ m/s} \\times {t} \\times 10^{-6} \\text{ s} = {answer}$ mm",
+   "why": "Pulse-echo: the sound goes there and back, so $d = \\tfrac{vt}{2}$. Keep the units straight: µs is $10^{-6}$ s, and the answer in metres times 1000 is millimetres."
+  },
+  {
+   "id": "flaw-depth-al",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Aluminium, {v} m/s. A flaw echo shows at {t} µs. How deep is the flaw?",
+   "vars": {
+    "v": [
+     6300,
+     6340,
+     10
+    ],
+    "t": [
+     2,
+     12,
+     0.2
+    ]
+   },
+   "answer": "v * t / 2000",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$d = {v} \\times {t} \\times 10^{-6} \\div 2 = {answer}$ mm",
+   "why": "Same rule as the back wall: half the round-trip time, times the velocity."
+  },
+  {
+   "id": "gate-read",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "The **gate** is the orange bar. The flaw detector reads the first echo that rises through it: its time and height. Move the gate onto the flaw echo.",
+   "widget": {
+    "name": "ascan",
+    "params": {
+     "thickness": 40,
+     "flaw": 18,
+     "size": 0.6,
+     "gain": 22,
+     "gate": [
+      2,
+      2
+     ],
+     "controls": [
+      "gate",
+      "gain"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "The plate is steel at 5920 m/s. With the gate on the flaw echo, how deep is the flaw?",
+    "answer": "flaw",
+    "unit": "mm",
+    "tolerance": 0.04,
+    "why": "The gate reads the time of flight; the depth is $\\tfrac{vt}{2}$. Here the flaw sits at {flaw} mm."
+   }
+  },
+  {
+   "id": "six-db",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.3,
+   "intro": "Gain is in decibels. Watch the back-wall echo as you change it.",
+   "widget": {
+    "name": "ascan",
+    "params": {
+     "thickness": 25,
+     "gain": 14,
+     "controls": [
+      "gain"
+     ]
+    }
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "An echo sits at 40% screen height. How much gain brings it to 80%?",
+    "options": [
+     "+6 dB",
+     "+3 dB",
+     "+12 dB",
+     "+40 dB"
+    ],
+    "answer": 0,
+    "why": "Amplitude in dB is $20\\log_{10}(A_2/A_1)$. Doubling is $20\\log_{10} 2 \\approx 6$ dB; so +6 dB doubles an echo and −6 dB halves it."
+   }
+  },
+  {
+   "id": "db-ratio",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.6,
+   "q": "One echo is at {a}% screen height, another at {b}%. How many dB higher is the first?",
+   "vars": {
+    "a": [
+     60,
+     100,
+     10
+    ],
+    "b": [
+     10,
+     40,
+     5
+    ]
+   },
+   "answer": "20 * LOG10(a / b)",
+   "unit": "dB",
+   "abs": 0.3,
+   "work": "$20\\log_{10}\\left(\\frac{{a}}{{b}}\\right) = {answer}$ dB",
+   "why": "Echo heights are amplitudes, so the dB difference is $20\\log_{10}$ of their ratio (not 10, which is for power)."
+  },
+  {
+   "id": "velocity-cal",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "A calibration block {T} mm thick gives its first back-wall echo at {tt} µs. What is the velocity in the block?",
+   "vars": {
+    "T": [
+     20,
+     50,
+     5
+    ],
+    "v0": [
+     5890,
+     5950,
+     10
+    ]
+   },
+   "let": {
+    "tt": "ROUND(2 * T / v0 * 1000, 2)"
+   },
+   "answer": "2 * T / tt * 1000",
+   "unit": "m/s",
+   "tolerance": 0.01,
+   "work": "$v = \\frac{2d}{t} = \\frac{2 \\times {T} \\times 10^{-3}}{{tt} \\times 10^{-6}} = {answer}$ m/s",
+   "why": "Calibration runs the rule backwards: a known thickness and a measured time give the velocity to set on the flaw detector."
+  },
+  {
+   "id": "why-same-material",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Why is the range calibrated on a block of the same material as the part?",
+   "options": [
+    "The time base turns time into depth using the velocity, which changes with the material",
+    "Blocks of other materials are not allowed to touch the probe",
+    "It keeps the gain the same",
+    "The initial pulse is wider in other materials"
+   ],
+   "answer": 0,
+   "why": "The screen is really a clock. Depth on it is only right if the velocity set matches the material: aluminium (about 6320 m/s) read on a steel setting (about 5920 m/s) puts every echo in the wrong place."
+  },
+  {
+   "id": "repeats",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Why are there several back-wall echoes, evenly spaced and each smaller than the last?",
+   "options": [
+    "The sound bounces between the two surfaces; each round trip takes the same time and loses some energy",
+    "The probe sends several pulses for each one you see",
+    "Each echo comes from a deeper flaw",
+    "The flaw detector copies the first echo to help you read it"
+   ],
+   "answer": 0,
+   "why": "After the first back-wall echo, some sound reflects again off the top surface and makes another round trip, and again. Attenuation and losses at each reflection make each repeat smaller."
+  },
+  {
+   "id": "third-echo",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "A steel plate {d} mm thick at 5920 m/s. At what time is the **third** back-wall echo?",
+   "vars": {
+    "d": [
+     10,
+     40,
+     1
+    ]
+   },
+   "let": {
+    "t1": "2 * d / 5920 * 1000"
+   },
+   "answer": "3 * t1",
+   "unit": "µs",
+   "tolerance": 0.02,
+   "work": "First echo at $t_1 = {t1}$ µs; the third at $3t_1 = {answer}$ µs.",
+   "why": "The repeats are evenly spaced: the n-th back-wall echo is at n times the first."
+  },
+  {
+   "id": "attenuation-repeats",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.3,
+   "intro": "Attenuation is the sound lost as it travels. Turn it up and compare the echoes.",
+   "widget": {
+    "name": "ascan",
+    "params": {
+     "thickness": 20,
+     "gain": 26,
+     "atten": 0.02,
+     "controls": [
+      "atten",
+      "gain"
+     ]
+    }
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "As attenuation goes up, which falls fastest?",
+    "options": [
+     "The later back-wall echoes",
+     "The first back-wall echo",
+     "The initial pulse",
+     "They all fall by the same amount"
+    ],
+    "answer": 0,
+    "why": "Loss in dB grows with the distance travelled. The later echoes have travelled further, so they lose the most."
+   }
+  },
+  {
+   "id": "through-trans",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.3,
+   "q": "**Through-transmission**: one probe sends from one face of a steel plate and a second probe on the far face receives. The plate is {d} mm thick, velocity 5920 m/s. How long does the pulse take to arrive?",
+   "vars": {
+    "d": [
+     10,
+     80,
+     2
+    ]
+   },
+   "answer": "d / 5920 * 1000",
+   "unit": "µs",
+   "tolerance": 0.02,
+   "work": "$t = \\frac{ d }{v} = \\frac{{d} \\times 10^{-3}}{5920} = {answer}$ µs",
+   "why": "No echo here: the sound crosses once, so $t = \\tfrac{ d }{v}$ with no factor of 2. Halve only when the same probe hears its own echo."
+  },
+  {
+   "id": "wavelength-mix",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A {f} MHz probe on steel (5920 m/s). What is the wavelength in the steel?",
+   "vars": {
+    "f": {
+     "pick": [
+      1,
+      2,
+      2.25,
+      4,
+      5,
+      10
+     ]
+    }
+   },
+   "answer": "5920 / (f * 1e6) * 1000",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$\\lambda = \\frac{v}{f} = \\frac{5920}{{f} \\times 10^{6}} = {answer}$ mm",
+   "why": "Same velocity, different rule: $v = f\\lambda$ from the waves lesson. The wavelength sets the smallest flaw you can hope to find (about half a wavelength)."
+  },
+  {
+   "id": "range-time",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "The screen is set to show {R} mm of steel (5920 m/s) across its width. How much time is that?",
+   "vars": {
+    "R": [
+     50,
+     200,
+     25
+    ]
+   },
+   "answer": "2 * R / 5920 * 1000",
+   "unit": "µs",
+   "tolerance": 0.02,
+   "work": "$t = \\frac{2R}{v} = {answer}$ µs",
+   "why": "The range is a round-trip time. A screen showing 100 mm of steel is about 34 µs wide."
+  },
+  {
+   "id": "no-backwall",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.4,
+   "q": "The back-wall echo suddenly drops to nothing, and no other echo appears. What should you suspect first?",
+   "options": [
+    "Lost coupling, or a reflector tilted so the sound goes elsewhere",
+    "The plate has become thinner",
+    "The gain has been turned up",
+    "Nothing: a missing back wall means the metal is sound"
+   ],
+   "answer": 0,
+   "why": "No echo at all means the sound either never went in (check the couplant and the contact) or went somewhere else, such as off an angled flaw. Losing the back wall is itself an indication worth recording."
+  },
+  {
+   "id": "order-measure",
+   "type": "order",
+   "stage": "mix",
+   "q": "Put the steps of a thickness reading in order.",
+   "items": [
+    "Calibrate the range on a block of the same material and known thickness",
+    "Put couplant on the test surface",
+    "Place the probe and hold it steady",
+    "Find the first back-wall echo and read its position",
+    "Record the reading and where it was taken"
+   ],
+   "why": "Calibrate before you measure; couplant before the probe; and a reading is no use without where it was taken."
+  },
+  {
+   "id": "check-quarter",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.6,
+   "q": "A steel plate is 60 mm thick. An echo shows a quarter of the way from the initial pulse to the first back-wall echo. Where is the reflector?",
+   "options": [
+    "About 15 mm deep",
+    "About 30 mm deep",
+    "About 45 mm deep",
+    "It is the second back-wall echo"
+   ],
+   "answer": 0,
+   "why": "Time is proportional to depth on a calibrated screen. A quarter of the time to the back wall is a quarter of the thickness: $60 \\div 4 = 15$ mm."
+  },
+  {
+   "id": "time-from-thickness",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A steel plate {d} mm thick, velocity 5920 m/s. At what time does the first back-wall echo appear?",
+   "vars": {
+    "d": [
+     10,
+     60,
+     1
+    ]
+   },
+   "answer": "2 * d / 5920 * 1000",
+   "unit": "µs",
+   "tolerance": 0.02,
+   "work": "$t = \\frac{2d}{v} = \\frac{2 \\times {d} \\times 10^{-3}}{5920} = {answer}$ µs",
+   "why": "Turn the rule round: $t = \\tfrac{2d}{v}$. A handy figure: in steel, every millimetre of thickness adds about 0.34 µs to the round trip."
+  },
+  {
+   "id": "flash-formula",
+   "type": "flash",
+   "stage": "check",
+   "front": "Pulse-echo: the depth of a reflector from its time of flight?",
+   "back": "$d = \\tfrac{vt}{2}$, with $t$ the round-trip time and $v$ the velocity in that material."
+  },
+  {
+   "id": "flash-steel-v",
+   "type": "flash",
+   "stage": "check",
+   "level": 4.8,
+   "front": "Typical longitudinal velocity in steel? And in aluminium?",
+   "back": "Steel about 5920 m/s; aluminium about 6320 m/s. Typical values: the procedure and a calibration block give the ones to use."
+  }
+ ]
+}

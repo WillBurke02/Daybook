@@ -1,0 +1,442 @@
+{
+ "id": "drives.motion.profiles",
+ "title": "Motion profiles: trapezoidal and S-curve",
+ "tags": ["drives", "motion", "profiles", "servo"],
+ "kind": "procedure",
+ "level": 5.8,
+ "minutes": 25,
+ "goals": [
+  "Say in plain words what distance, speed and acceleration mean, with their units: mm, mm/s and mm/s²",
+  "Read a speed–time graph: its steepness is the acceleration and the area under it is the distance",
+  "Time a trapezoidal move: the ramps, the part at full speed and the total",
+  "Spot a move too short to reach full speed, and work out the speed it peaks at and how long it takes",
+  "Explain what jerk is, why an S-curve cuts vibration and wear, and what it costs"
+ ],
+ "summary": "**Distance** is how far (mm). **Speed** is how far each second (mm/s): at a steady speed, $d = vt$. **Acceleration** is how much the speed rises each second (mm/s², \"per second per second\"): from standstill, $v = at$. **Deceleration** is the same thing, slowing down.\n\nA point-to-point move speeds up at $a$ to the top speed $v$, runs, then slows down at the same rate. Speed against time is a **trapezoid**.\n\n- Time to reach full speed: $t_{acc} = \\frac{v}{a}$\n- Distance to reach it: $d_{acc} = \\frac{v^2}{2a}$\n- Time at full speed: $t_{const} = \\frac{D - 2d_{acc}}{v}$, with $D$ the whole move\n- Total: $t_{total} = 2t_{acc} + t_{const}$, or in one line $t_{total} = \\frac{D}{v} + \\frac{v}{a}$\n\nThe **area under the speed–time graph is the distance**: a rectangle for the flat part, a triangle (half the base times the height) for each ramp.\n\nExample: 500 mm at 250 mm/s and 500 mm/s². Each ramp takes 0.5 s and covers 62.5 mm; the other 375 mm at full speed take 1.5 s; 2.5 s in all.\n\n**Too short to reach full speed**: if $D$ is less than $\\frac{v^2}{a}$, the ramps do not fit. It speeds up for half the move and slows down for the other half: a **triangle**, peaking at $v_{peak} = \\sqrt{aD}$ and taking $t_{total} = 2\\sqrt{\\frac{D}{a}}$. A higher top speed then changes nothing; only more acceleration helps.\n\nDoubling the acceleration saves only $\\frac{v}{2a}$: the ramps get quicker, the rest does not.\n\n**Jerk** is how fast the acceleration changes, $j = \\frac{\\Delta a}{\\Delta t}$ (mm/s³). A trapezoid's acceleration jumps at every corner: a kick that sets arms, belts and probes ringing and wears the mechanics. An **S-curve** ramps the acceleration in and out: rounded corners, less vibration and wear. The price: longer for the same peak acceleration, or a higher peak acceleration (more peak torque) for the same time.\n\nControllers want counts: multiply mm/s and mm/s² by the counts per mm. On a Galil: SP, AC and DC, with IT to smooth. On an S7-1500: Velocity, Acceleration, Deceleration and Jerk.",
+ "resources": [
+  {"when": "before", "kind": "read", "title": "What is a motion profile?", "url": "https://www.motioncontroltips.com/what-is-a-motion-profile/", "by": "Motion Control Tips", "minutes": 4, "note": "Trapezoidal and S-curve profiles in a few pictures."},
+  {"when": "after", "kind": "read", "title": "Mathematics of Motion Control Profiles", "url": "https://www.pmdcorp.com/resources/type/articles/get/mathematics-of-motion-control-profiles-article", "by": "Performance Motion Devices", "minutes": 10, "note": "The same sums, and the S-curve's, worked in full."},
+  {"when": "after", "kind": "video", "title": "Motion Control - S-curve Move Profile (Part 8 of 8)", "url": "https://www.youtube.com/watch?v=hf1_k3VE_XU", "by": "AutomationDirect", "minutes": 6, "note": "Why S-curves are gentler on the machine."}
+ ],
+ "sources": [
+  "G. Ellis, Control System Design Guide, 4th edition (Butterworth-Heinemann, 2012)",
+  "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
+  "Performance Motion Devices, Mathematics of Motion Control Profiles (pmdcorp.com)",
+  "Galil Motion Control, DMC-40x0 Command Reference (SP, AC, DC, IT)",
+  "Siemens, SIMATIC S7-1500 Motion Control, Function Manual (MC_MoveAbsolute)"
+ ],
+ "formulas": [
+  {
+   "name": "Distance at a steady speed",
+   "tex": "d = vt",
+   "match": ["d=vt"],
+   "says": "At a steady speed, the distance is the speed times the time.",
+   "symbols": [["d", "the distance (mm)"], ["v", "the speed (mm/s)"], ["t", "the time (s)"]],
+   "example": "250 mm/s for 2 s: $250 \\times 2 = 500$ mm."
+  },
+  {
+   "name": "Speed after accelerating from standstill",
+   "tex": "v = at",
+   "match": ["v=at"],
+   "says": "Starting from standstill, the speed is the acceleration times the time spent accelerating.",
+   "symbols": [["v", "the speed reached (mm/s)"], ["a", "the acceleration: how much the speed rises each second (mm/s²)"], ["t", "the time spent accelerating (s)"]],
+   "example": "500 mm/s² for 0.5 s: $500 \\times 0.5 = 250$ mm/s."
+  },
+  {
+   "name": "Time to reach full speed",
+   "tex": "t_{acc} = \\frac{v}{a}",
+   "match": ["t_{acc}=\\frac{v}{a}"],
+   "says": "The top speed divided by how much the speed rises each second. Slowing down at the same rate takes the same time.",
+   "symbols": [["t_{acc}", "the acceleration time (s); one name, read \"t acc\""], ["v", "the top speed (mm/s)"], ["a", "the acceleration (mm/s²)"]],
+   "example": "250 mm/s at 500 mm/s²: $250 \\div 500 = 0.5$ s."
+  },
+  {
+   "name": "The ramp as a triangle",
+   "tex": "d_{acc} = \\tfrac{1}{2} \\times t_{acc} \\times v",
+   "match": ["\\frac{1}{2}\\timest_{acc}"],
+   "says": "The distance covered while speeding up is the area of the triangle under the ramp: half the base (the time) times the height (the top speed). On average it goes half the top speed.",
+   "symbols": [["d_{acc}", "the distance covered while speeding up (mm)"], ["t_{acc}", "the acceleration time (s)"], ["v", "the top speed (mm/s)"]],
+   "example": "$\\tfrac{1}{2} \\times 0.5 \\times 250 = 62.5$ mm."
+  },
+  {
+   "name": "Distance to reach full speed",
+   "tex": "d_{acc} = \\frac{v^2}{2a}",
+   "match": ["\\frac{v^2}{2a}"],
+   "says": "The same triangle with $t_{acc} = \\frac{v}{a}$ put in: the top speed squared, divided by twice the acceleration. Slowing down covers the same again.",
+   "symbols": [["d_{acc}", "the distance covered while speeding up (mm)"], ["v", "the top speed (mm/s); $v^2$ is $v \\times v$"], ["a", "the acceleration (mm/s²)"]],
+   "example": "250 mm/s at 500 mm/s²: $\\frac{250^2}{2 \\times 500} = \\frac{62\\,500}{1000} = 62.5$ mm."
+  },
+  {
+   "name": "Time at full speed",
+   "tex": "t_{const} = \\frac{D - 2d_{acc}}{v}",
+   "match": ["t_{const}="],
+   "says": "Take both ramps off the whole move; the distance left is covered at full speed.",
+   "symbols": [["t_{const}", "the time at constant (full) speed (s)"], ["D", "the whole move (mm)"], ["d_{acc}", "the distance of one ramp (mm)"], ["v", "the top speed (mm/s)"]],
+   "example": "a 500 mm move with 62.5 mm ramps: $\\frac{500 - 125}{250} = 1.5$ s."
+  },
+  {
+   "name": "Total time",
+   "tex": "t_{total} = 2t_{acc} + t_{const}",
+   "match": ["t_{total}=2t_{acc}"],
+   "says": "Speeding up, running and slowing down, added together.",
+   "symbols": [["t_{total}", "the whole move (s)"], ["t_{acc}", "the time of one ramp (s)"], ["t_{const}", "the time at full speed (s)"]],
+   "example": "$0.5 + 1.5 + 0.5 = 2.5$ s."
+  },
+  {
+   "name": "Total time: the shortcut",
+   "tex": "t_{total} = \\frac{D}{v} + \\frac{v}{a}",
+   "match": ["\\frac{D}{v}+\\frac{v}{a}"],
+   "says": "The whole distance at full speed, plus one ramp time: the two ramps together cost exactly one ramp time extra. For a trapezoid only.",
+   "symbols": [["t_{total}", "the whole move (s)"], ["D", "the whole move's distance (mm)"], ["v", "the top speed (mm/s)"], ["a", "the acceleration (mm/s²)"]],
+   "example": "$\\frac{500}{250} + \\frac{250}{500} = 2 + 0.5 = 2.5$ s."
+  },
+  {
+   "name": "Does it reach full speed?",
+   "tex": "D \\ge \\frac{v^2}{a}",
+   "match": ["\\frac{v^2}{a}"],
+   "says": "The two ramps need $2d_{acc} = \\frac{v^2}{a}$ of distance between them. If the move is shorter than that, it never reaches the top speed: a triangle.",
+   "symbols": [["D", "the whole move (mm)"], ["v", "the top speed (mm/s)"], ["a", "the acceleration (mm/s²)"]],
+   "example": "400 mm/s at 1000 mm/s² needs $\\frac{400^2}{1000} = 160$ mm: a 100 mm move is a triangle."
+  },
+  {
+   "name": "Peak speed of a triangle",
+   "tex": "v_{peak} = \\sqrt{aD}",
+   "match": ["\\sqrt{aD}"],
+   "says": "Speed up for half the distance, slow down for the other half. The speed it peaks at is the square root of the acceleration times the distance.",
+   "symbols": [["v_{peak}", "the highest speed it reaches (mm/s)"], ["a", "the acceleration (mm/s²)"], ["D", "the whole move (mm)"]],
+   "example": "1000 mm/s² over 100 mm: $\\sqrt{100\\,000} \\approx 316$ mm/s."
+  },
+  {
+   "name": "Time for a triangle",
+   "tex": "t_{total} = 2\\sqrt{\\frac{D}{a}}",
+   "match": ["2\\sqrt{\\frac{D}{a}}"],
+   "says": "Two ramps, each taking the peak speed divided by the acceleration, which works out as twice the square root of the distance over the acceleration.",
+   "symbols": [["t_{total}", "the whole move (s)"], ["D", "the whole move (mm)"], ["a", "the acceleration (mm/s²)"]],
+   "example": "100 mm at 1000 mm/s²: $2\\sqrt{0.1} \\approx 2 \\times 0.316 = 0.63$ s."
+  },
+  {
+   "name": "Jerk",
+   "tex": "j = \\frac{\\Delta a}{\\Delta t}",
+   "match": ["\\frac{\\Deltaa}{\\Deltat}"],
+   "says": "How fast the acceleration changes: the change in acceleration divided by the time the change takes. A trapezoid changes it in an instant; an S-curve ramps it.",
+   "symbols": [["j", "the jerk (mm/s³)"], ["\\Delta a", "the change in acceleration (mm/s²)"], ["\\Delta t", "the time the change takes (s)"]],
+   "example": "0 to 1000 mm/s² in 0.25 s: $1000 \\div 0.25 = 4000$ mm/s³."
+  },
+  {
+   "name": "Counts per millimetre",
+   "tex": "\\text{counts per mm} = \\frac{CPR}{L}",
+   "match": ["\\frac{CPR}{L}"],
+   "says": "From the encoders lesson: the counts in one turn divided by the millimetres one turn moves. Multiply a speed in mm/s (or an acceleration in mm/s²) by it to get counts a second (or counts/s²).",
+   "symbols": [["CPR", "counts per revolution after ×4 decoding: 4 × the PPR"], ["L", "the distance moved in one turn (mm): the lead of a leadscrew"]],
+   "example": "2500 PPR on a 5 mm lead: $\\frac{10\\,000}{5} = 2000$ counts per mm, so 100 mm/s is 200 000 counts a second."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-move",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A scanner axis moves 500 mm. It speeds up from standstill at 500 mm/s² (its speed rises by 500 mm/s every second) to a top speed of 250 mm/s, runs at that speed, then slows down at 500 mm/s² and stops. How long does the whole move take?",
+   "options": ["2.0 s", "2.5 s", "3.0 s", "1.5 s"],
+   "answer": 1,
+   "why": "Speeding up takes $250 \\div 500 = 0.5$ s, and on average it is going only half the top speed, so it covers 62.5 mm. Slowing down is the same. The middle $500 - 125 = 375$ mm at 250 mm/s takes 1.5 s. Total: $0.5 + 1.5 + 0.5 = 2.5$ s. 2.0 s is distance ÷ top speed, as if it jumped to full speed at once. 3.0 s adds both ramps on top of that, forgetting that they cover distance too. 1.5 s is only the part at full speed."
+  },
+  {
+   "id": "svd",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Distance, speed and acceleration",
+   "body": "Three words, three units.\n\n- **Distance**: how far, in **mm**.\n- **Speed**: how far each second, in **mm/s** (millimetres per second). At 250 mm/s for 2 s the axis goes $250 \\times 2 = 500$ mm: distance is speed times time, $d = vt$.\n- **Acceleration**: how much the **speed** rises each second, in **mm/s²** (read \"millimetres per second per second\"). At 500 mm/s², the speed goes up by 500 mm/s every second. From standstill, after 0.5 s it is doing $500 \\times 0.5 = 250$ mm/s: speed is acceleration times time, $v = at$.\n\nSlowing down is **deceleration**: the same idea, with the speed falling.",
+   "more": "Think of a car. The distance is the miles on the clock, the speed is the speedometer, and the acceleration is how quickly the speedometer needle climbs when you put your foot down.\n\n\"Per second per second\" sounds odd, but it only means the speed changes by that much each second. At 500 mm/s²:\n\n- after 0.1 s: 50 mm/s\n- after 0.2 s: 100 mm/s\n- after 0.5 s: 250 mm/s\n\nA scanner's numbers: at 100 mm/s, a 300 mm scan line takes $300 \\div 100 = 3$ s once it is up to speed.\n\nSpeed is how fast the distance changes; acceleration is how fast the speed changes. In maths, each is the **derivative** (the rate of change) of the one before."
+  },
+  {
+   "id": "accel-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "An axis starts from standstill and accelerates at {accel} mm/s² for {tt} s. How fast is it going then?",
+   "vars": {"accel": {"pick": [200, 400, 500, 800, 1000, 2000]}, "tt": {"pick": [0.1, 0.2, 0.25, 0.4, 0.5]}},
+   "answer": "accel * tt",
+   "unit": "mm/s",
+   "hint": "Each second the speed rises by {accel} mm/s. What part of a second is it?",
+   "work": "$v = at = {accel} \\times {tt} = {answer}$ mm/s",
+   "why": "Acceleration is how much the speed rises each second: {accel} mm/s every second, for {tt} s, is {answer} mm/s. Dividing ({accel} ÷ {tt}) is the slip: less time must mean **less** speed, not more."
+  },
+  {
+   "id": "trapezoid",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The trapezoid: up, along, down",
+   "body": "A point-to-point move has three parts:\n\n- **speed up** at the acceleration $a$ until it reaches the top speed $v$\n- **run** at $v$\n- **slow down** at the same rate, and stop on the spot\n\nOn a graph of speed against time that makes a **trapezoid**: a flat-topped hill. The steepness of each side is the acceleration.\n\nThe time to speed up is the top speed divided by how much the speed rises each second:\n\n$$t_{acc} = \\frac{v}{a}$$\n\n$t_{acc}$ (\"t acc\") is one name: the acceleration time, in seconds. 250 mm/s at 500 mm/s²: $250 \\div 500 = 0.5$ s. Slowing down takes the same. Change the acceleration below and watch the sides.",
+   "widget": {"name": "profile", "params": {"D": 500, "v": 250, "a": 500, "shape": "trap", "controls": ["a"]}},
+   "more": "Think of driving between two sets of traffic lights. You pull away, cruise, then brake to stop at the next line. Plot the speedometer against time and you get the same flat-topped hill.\n\nDouble the acceleration and the sides are twice as steep, so the ramps take half the time.\n\nWorked number, a top speed of 200 mm/s:\n\n- at 400 mm/s²: $t_{acc} = 200 \\div 400 = 0.5$ s\n- at 800 mm/s²: $t_{acc} = 200 \\div 800 = 0.25$ s\n\nWhy not accelerate as hard as possible? Force is mass times acceleration, so harder acceleration needs more motor torque, and it shakes the machine more. The motor, the drive and the mechanics set the limit."
+  },
+  {
+   "id": "tacc-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "An axis has a top speed of {vtop} mm/s and an acceleration of {accel} mm/s². How long does it take to reach full speed from standstill?",
+   "vars": {"vtop": {"pick": [100, 150, 200, 250, 300, 400]}, "accel": {"pick": [250, 500, 800, 1000, 2000]}},
+   "answer": "vtop / accel",
+   "unit": "s",
+   "hint": "How many lots of {accel} mm/s make {vtop} mm/s?",
+   "work": "$t_{acc} = \\frac{v}{a} = \\frac{{vtop}}{{accel}} = {answer}$ s",
+   "why": "The speed rises by {accel} mm/s each second, and it must rise by {vtop} mm/s, so it takes {vtop} ÷ {accel} = {answer} s. Multiplying ({vtop} × {accel}) gives a huge number: harder acceleration must mean a **shorter** ramp."
+  },
+  {
+   "id": "area",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The area under the graph is the distance",
+   "body": "On a speed–time graph, the **area** under the line is the **distance**. A steady 250 mm/s for 2 s is a rectangle: $250 \\times 2 = 500$ mm.\n\nThe ramp up is a **triangle**: half the base times the height, $\\tfrac{1}{2} \\times t_{acc} \\times v$. Put in $t_{acc} = \\frac{v}{a}$ and it becomes\n\n$$d_{acc} = \\frac{v^2}{2a}$$\n\nthe distance to reach full speed ($v^2$ is $v \\times v$). 250 mm/s at 500 mm/s²: $\\frac{62\\,500}{1000} = 62.5$ mm. Slowing down covers the same.\n\nWith $D$ the whole move, the rest, $D - 2d_{acc}$, is at full speed:\n\n$$t_{const} = \\frac{D - 2d_{acc}}{v}$$\n\nThe total: $t_{total} = 2t_{acc} + t_{const}$.",
+   "widget": {"name": "profile", "params": {"D": 500, "v": 250, "a": 500, "shape": "trap", "controls": ["D"]}},
+   "more": "Speed added up over time gives distance, just as pay per hour added up over the hours gives your wages. On the graph, that adding up is the area. (Maths calls it **integrating**.)\n\nWhy is a ramp a triangle? The speed climbs steadily from 0 to $v$, so on average it is doing half of $v$. Half of 250 mm/s for 0.5 s: $\\tfrac{1}{2} \\times 0.5 \\times 250 = 62.5$ mm.\n\nThe whole 500 mm move:\n\n- ramps: $2 \\times 62.5 = 125$ mm, 0.5 s each\n- at full speed: $500 - 125 = 375$ mm, $375 \\div 250 = 1.5$ s\n- total: $0.5 + 1.5 + 0.5 = 2.5$ s\n\nShortcut, for a trapezoid: $t_{total} = \\frac{D}{v} + \\frac{v}{a} = 2 + 0.5 = 2.5$ s. The two ramps together cost one ramp time extra."
+  },
+  {
+   "id": "dacc-q",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "A 1000 mm move at a top speed of 250 mm/s. Set the acceleration to anything you like.",
+   "widget": {"name": "profile", "params": {"D": 1000, "v": 250, "a": 500, "shape": "trap", "controls": ["a"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "How far does the axis travel while it speeds up, in mm?",
+    "answer": "v^2 / (2 * a)",
+    "unit": "mm",
+    "tolerance": 0.02,
+    "hint": "The ramp is a triangle: $d_{acc} = \\frac{v^2}{2a}$, with the top speed 250 mm/s.",
+    "work": "$d_{acc} = \\frac{250^2}{2 \\times {a}} = {answer}$ mm",
+    "why": "Speeding up is a triangle on the graph: half the ramp time ({t_acc} s) times 250 mm/s, which is $\\frac{62\\,500}{2 \\times {a}} = {answer}$ mm. Using $\\frac{v^2}{ a }$ gives both ramps together, twice this. Top speed times ramp time forgets that on average it goes only half the top speed."
+   }
+  },
+  {
+   "id": "triangle",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Too short to reach full speed",
+   "body": "Speeding up and slowing down together need $2d_{acc} = \\frac{v^2}{a}$ of distance. If the move is shorter than that, the axis never reaches the top speed you set. It speeds up for half the distance, then slows down for the other half. The graph is a **triangle**.\n\nIt peaks at\n\n$$v_{peak} = \\sqrt{aD}$$\n\nthe square root of the acceleration times the distance. 400 mm/s at 1000 mm/s² needs $\\frac{400^2}{1000} = 160$ mm. A 100 mm move peaks at $\\sqrt{1000 \\times 100} \\approx 316$ mm/s, and takes $2 \\times \\frac{316}{1000} \\approx 0.63$ s.\n\nDrag the distance below 160 mm and watch the flat top vanish.",
+   "widget": {"name": "profile", "params": {"D": 300, "v": 400, "a": 1000, "shape": "trap", "controls": ["D"]}},
+   "more": "Think of two sets of lights only 50 m apart. You pull away, and before you reach the speed limit you must brake. Your top speed is set by the distance, not the limit.\n\nWhere does $\\sqrt{aD}$ come from? Each half of the move, $\\frac{D}{2}$, is one ramp: $\\frac{D}{2} = \\frac{v_{peak}^2}{2a}$. Multiply both sides by $2a$: $aD = v_{peak}^2$. The square root undoes the square: $v_{peak} = \\sqrt{aD}$.\n\nWorked number: 50 mm at 1000 mm/s². $v_{peak} = \\sqrt{50\\,000} \\approx 224$ mm/s. Each ramp takes $224 \\div 1000 \\approx 0.22$ s, so the move takes about 0.45 s.\n\nOn short scan steps this is normal. Raising the top speed then does nothing; only more acceleration helps."
+  },
+  {
+   "id": "vpeak-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A scan step of {dist} mm, with the top speed set to {vtop} mm/s and the acceleration to {accel} mm/s². First check whether it reaches full speed; then give the highest speed it actually reaches, in mm/s.",
+   "vars": {"vtop": {"pick": [400, 500, 600]}, "accel": {"pick": [500, 1000]}, "dist": {"pick": [20, 50, 80, 100, 150]}},
+   "let": {"need": "vtop^2 / accel"},
+   "answer": "SQRT(accel * dist)",
+   "unit": "mm/s",
+   "hint": "Does $2d_{acc} = \\frac{v^2}{a}$ fit inside the move? If not, use $v_{peak} = \\sqrt{aD}$.",
+   "work": "Full speed needs $\\frac{{vtop}^2}{{accel}} = {need}$ mm, more than {dist} mm: a triangle. $v_{peak} = \\sqrt{aD} = \\sqrt{{accel} \\times {dist}} = {answer}$ mm/s",
+   "why": "The ramps would need {need} mm to reach {vtop} mm/s, and the move is only {dist} mm. So it speeds up for half the distance and slows down for the other half, peaking at $\\sqrt{aD}$. Answering {vtop} mm/s is the trap: that is only what you asked for, not what it gets to."
+  },
+  {
+   "id": "scurve",
+   "type": "concept",
+   "stage": "learn",
+   "title": "S-curves and jerk",
+   "body": "At each corner of a trapezoid the acceleration jumps from nothing to full in an instant. **Jerk** is how fast the acceleration changes (mm/s³):\n\n$$j = \\frac{\\Delta a}{\\Delta t}$$\n\nthe change in acceleration divided by the time it takes. A jump means a huge jerk: a kick that sets arms, belts and probes ringing, sloshes the water in an immersion tank, and wears gears and couplings.\n\nAn **S-curve** profile ramps the acceleration up and down instead, so the speed graph gets rounded corners, like a stretched S. Less vibration and wear.\n\nThe price: with the same peak acceleration it takes **longer**; to take the **same time** it needs a **higher peak** acceleration, so more peak torque.",
+   "widget": {"name": "profile", "params": {"D": 500, "v": 250, "a": 500, "shape": "s", "controls": ["shape"]}},
+   "more": "Think of a bus driver. A bad one stamps on the accelerator: the bus lurches and the standing passengers stagger. That lurch is jerk. A good one squeezes the pedal down: the same acceleration in the end, with no lurch.\n\nWorked number, the S-curve in the picture. It keeps the trapezoid's 0.5 s ramps. Its acceleration climbs from 0 to 1000 mm/s² in 0.25 s, then falls back to 0 in the next 0.25 s. The jerk is $1000 \\div 0.25 = 4000$ mm/s³. The average is still 500 mm/s², but the peak is double.\n\nOn a Galil, the IT command smooths moves this way (IT 1 means no smoothing), and the move takes a little longer. In a Siemens S7-1500 motion block such as MC_MoveAbsolute, you give a Jerk as well as the acceleration."
+  },
+  {
+   "id": "scurve-q",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "Switch the shape between Trapezoidal and S-curve, and read the numbers under the graph.",
+   "widget": {"name": "profile", "params": {"D": 500, "v": 250, "a": 500, "shape": "trap", "controls": ["shape"]}},
+   "ask": {
+    "type": "mcq",
+    "q": "What does this S-curve change, compared with the trapezoid?",
+    "options": ["The same total time, but twice the peak acceleration: 1000 mm/s² instead of 500", "A shorter move, with the same peak acceleration", "The same peak acceleration, but the move takes twice as long", "It covers less distance"],
+    "answer": 0,
+    "why": "This S-curve keeps the trapezoid's times, so it reaches 250 mm/s in the same 0.5 s: the same average acceleration, 500 mm/s². But its acceleration starts and ends at zero instead of jumping, so it has to peak higher: here double, 1000 mm/s². The distance is the 500 mm you asked for either way."
+   }
+  },
+  {
+   "id": "worked-move",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A scanner axis moves 300 mm. Its top speed is 200 mm/s, and it accelerates and decelerates at 800 mm/s². How long does the move take?",
+   "steps": [
+    {"ask": "Time to reach full speed.", "show": "$t_{acc} = \\frac{v}{a} = \\frac{200}{800} = 0.25$ s"},
+    {"ask": "Distance to reach full speed.", "show": "$d_{acc} = \\frac{v^2}{2a} = \\frac{200^2}{2 \\times 800} = \\frac{40\\,000}{1600} = 25$ mm. As a triangle: $\\tfrac{1}{2} \\times 0.25 \\times 200 = 25$ mm."},
+    {"ask": "Does it reach full speed?", "show": "The ramps need $2 \\times 25 = 50$ mm, and the move is 300 mm: yes, a trapezoid."},
+    {"ask": "Time at full speed.", "show": "$t_{const} = \\frac{D - 2d_{acc}}{v} = \\frac{300 - 50}{200} = 1.25$ s"},
+    {"ask": "Total time.", "show": "$t_{total} = 2t_{acc} + t_{const} = 0.25 + 1.25 + 0.25 = 1.75$ s. Check with the shortcut: $\\frac{D}{v} + \\frac{v}{a} = 1.5 + 0.25 = 1.75$ s."}
+   ],
+   "why": "Always do the check in step 3 before going on. If the ramps need more than the whole move, it is a triangle, and $t_{const}$ would come out as a minus number. The shortcut is a good check, but for a trapezoid only."
+  },
+  {
+   "id": "faded-move",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "q": "A 150 mm move with a top speed of 300 mm/s, accelerating and decelerating at 1500 mm/s². How long does it take?",
+   "steps": [
+    {"ask": "Time to reach full speed.", "show": "$t_{acc} = \\frac{300}{1500} = 0.2$ s"},
+    {"ask": "Distance to reach full speed.", "show": "$d_{acc} = \\frac{300^2}{2 \\times 1500} = \\frac{90\\,000}{3000} = 30$ mm"},
+    {"ask": "Does it reach full speed?", "show": "The ramps need $2 \\times 30 = 60$ mm, less than 150 mm: yes, a trapezoid."},
+    {"ask": "Time at full speed.", "show": "$t_{const} = \\frac{150 - 60}{300} = 0.3$ s"},
+    {"ask": "Total time.", "show": "$t_{total} = 0.2 + 0.3 + 0.2 = 0.7$ s. Shortcut: $\\frac{150}{300} + \\frac{300}{1500} = 0.5 + 0.2 = 0.7$ s."}
+   ],
+   "why": "A short, brisk move: more than half the time goes on the ramps. On short moves the acceleration matters more than the top speed."
+  },
+  {
+   "id": "move-problem",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A scanner axis moves {dist} mm with a top speed of {vtop} mm/s, accelerating and decelerating at {accel} mm/s². How long does the move take?",
+   "vars": {"dist": {"pick": [200, 300, 400, 500, 600]}, "vtop": {"pick": [100, 150, 200, 250]}, "accel": {"pick": [500, 1000, 1500, 2000]}},
+   "let": {"ta": "vtop / accel", "da": "vtop^2 / (2 * accel)", "tc": "(dist - 2 * da) / vtop"},
+   "answer": "2 * ta + tc",
+   "unit": "s",
+   "hint": "Four steps: $t_{acc}$, then $d_{acc}$, then $t_{const}$, then add them up.",
+   "work": "$t_{acc} = \\frac{{vtop}}{{accel}} = {ta}$ s; $d_{acc} = \\frac{{vtop}^2}{2 \\times {accel}} = {da}$ mm, so the ramps fit; $t_{const} = \\frac{{dist} - 2 \\times {da}}{{vtop}} = {tc}$ s; $t_{total} = 2 \\times {ta} + {tc} = {answer}$ s",
+   "why": "Ramp time, ramp distance, check they fit, the rest at full speed, then add up. Distance ÷ top speed alone ({dist} ÷ {vtop}) forgets the ramps, where the axis averages only half speed. Check with the shortcut: $\\frac{D}{v} + \\frac{v}{a}$."
+  },
+  {
+   "id": "flat-dist",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "Top speed 250 mm/s, acceleration 500 mm/s². Set the distance to anything from 200 mm up.",
+   "widget": {"name": "profile", "params": {"D": 600, "v": 250, "a": 500, "shape": "trap", "controls": ["D"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "How far does the axis travel at full speed, in mm?",
+    "answer": "v * t_const",
+    "unit": "mm",
+    "tolerance": 0.02,
+    "hint": "Take both ramps off the whole move. Each ramp covers $\\frac{v^2}{2a}$, which is 62.5 mm here.",
+    "work": "At full speed for {t_const} s: $250 \\times {t_const} = {answer}$ mm",
+    "why": "Each ramp covers $\\frac{250^2}{2 \\times 500} = 62.5$ mm, so the flat part is the move less 125 mm: {answer} mm. Taking off only one ramp is the usual slip: the axis has to slow down as well as speed up. Below 125 mm there is no flat part at all: a triangle."
+   }
+  },
+  {
+   "id": "save-time",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.3,
+   "q": "A {dist} mm move runs at a top speed of {vtop} mm/s. You raise the acceleration (and the deceleration) from {accel} to {acc2} mm/s². How much time does the move save?",
+   "vars": {"dist": {"pick": [300, 400, 500]}, "vtop": {"pick": [100, 150, 200]}, "accel": {"pick": [500, 1000]}},
+   "let": {"acc2": "2 * accel", "t1": "dist / vtop + vtop / accel", "t2": "dist / vtop + vtop / acc2"},
+   "answer": "t1 - t2",
+   "unit": "s",
+   "hint": "Work out the shortcut $\\frac{D}{v} + \\frac{v}{a}$ twice, or spot which part changes.",
+   "work": "Before: $\\frac{{dist}}{{vtop}} + \\frac{{vtop}}{{accel}} = {t1}$ s. After: $\\frac{{dist}}{{vtop}} + \\frac{{vtop}}{{acc2}} = {t2}$ s. Saved: {answer} s",
+   "why": "Only the ramps get quicker. In the shortcut $t_{total} = \\frac{D}{v} + \\frac{v}{a}$, the distance part $\\frac{D}{v}$ does not change. Doubling $a$ halves the $\\frac{v}{a}$ part, so you save $\\frac{v}{2a}$, {answer} s, whatever the distance. Twice the acceleration does **not** halve the move."
+  },
+  {
+   "id": "tri-time",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.3,
+   "q": "A short index move of {dist} mm, with a top speed of {vtop} mm/s and an acceleration of {accel} mm/s². How long does it take?",
+   "vars": {"vtop": {"pick": [300, 400, 500]}, "accel": {"pick": [1000, 2000]}, "dist": {"pick": [10, 20, 30, 40]}},
+   "let": {"need": "vtop^2 / accel", "vp": "SQRT(accel * dist)", "ta": "SQRT(accel * dist) / accel", "wrong": "dist / vtop + vtop / accel"},
+   "answer": "2 * SQRT(dist / accel)",
+   "unit": "s",
+   "hint": "Check $\\frac{v^2}{a}$ against the move first.",
+   "work": "Full speed needs {need} mm, more than {dist} mm: a triangle. $v_{peak} = \\sqrt{{accel} \\times {dist}} = {vp}$ mm/s. Each ramp: ${vp} \\div {accel} = {ta}$ s. Total: $2 \\times {ta} = {answer}$ s",
+   "why": "A triangle has no flat part: it speeds up for half the distance and slows down for the other half. The shortcut $\\frac{D}{v} + \\frac{v}{a}$ gives {wrong} s here, but it assumes the axis reaches {vtop} mm/s, and it never does. In one line: $t_{total} = 2\\sqrt{\\frac{D}{a}}$."
+  },
+  {
+   "id": "why-jerk",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A long, light scanner arm rings (wobbles) for a moment at the start and the end of each ramp of a trapezoidal move. Switching to an S-curve cures it. Why?",
+   "options": ["The S-curve uses less acceleration at every moment", "The trapezoid's acceleration jumps from nothing to full in an instant, and that kick sets the arm ringing; the S-curve ramps it in", "The S-curve has a lower top speed", "The trapezoid covers more distance"],
+   "answer": 1,
+   "why": "The ringing starts at the corners, where the acceleration (and so the force on the arm) changes in an instant: a huge jerk. The S-curve changes the acceleration gradually, so the arm is not kicked. It does **not** use less acceleration everywhere: to take the same time, its peak acceleration is higher. The top speed and the distance are whatever you set."
+  },
+  {
+   "id": "order-steps",
+   "type": "order",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "Put the steps for timing a point-to-point move in order.",
+   "items": [
+    "Time to reach full speed: $t_{acc} = \\frac{v}{a}$",
+    "Distance to reach full speed: $d_{acc} = \\frac{v^2}{2a}$",
+    "Check the ramps fit: is $2d_{acc}$ no more than $D$? If not, it is a triangle",
+    "Time at full speed: $t_{const} = \\frac{D - 2d_{acc}}{v}$",
+    "Add up: $t_{total} = 2t_{acc} + t_{const}$"
+   ],
+   "why": "Each step needs the one before. The check comes before $t_{const}$: if the ramps need more than the whole move, $t_{const}$ would come out as a minus number, and you need the triangle rules instead."
+  },
+  {
+   "id": "mix-shape",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.5,
+   "q": "A move of {dist} mm, with a top speed of {vtop} mm/s and an acceleration of {accel} mm/s². How long does it take? Check first whether it reaches full speed.",
+   "vars": {"vtop": {"pick": [200, 300, 400]}, "accel": {"pick": [500, 1000, 2000]}, "dist": {"pick": [50, 100, 200, 400, 800]}},
+   "let": {"need": "vtop^2 / accel", "trap": "dist / vtop + vtop / accel", "tri": "2 * SQRT(dist / accel)"},
+   "answer": "IF(dist >= vtop^2 / accel, dist / vtop + vtop / accel, 2 * SQRT(dist / accel))",
+   "unit": "s",
+   "hint": "Is {dist} mm at least $\\frac{v^2}{a}$, which is {need} mm here?",
+   "work": "Full speed needs $\\frac{v^2}{a} = {need}$ mm; the move is {dist} mm. If that fits (a trapezoid): $\\frac{D}{v} + \\frac{v}{a} = {trap}$ s. If not (a triangle): $2\\sqrt{\\frac{D}{a}} = {tri}$ s. Here: {answer} s",
+   "why": "Two moves can look alike and need different rules. If the ramps fit inside the move, it is a trapezoid; if not, it never reaches {vtop} mm/s and the triangle rule applies. The trapezoid rule on a triangle gives too long a time; distance ÷ top speed on its own ignores the ramps altogether."
+  },
+  {
+   "id": "mix-galil",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A Galil drives a scanner axis: a leadscrew with a {lead} mm lead, turned directly by a motor with a {ppr} PPR encoder (×4 decoding). You want a top speed of {vtop} mm/s. The Galil's speed command, SP, is in counts a second. What SP do you set?",
+   "vars": {"lead": {"pick": [5, 10, 20]}, "ppr": {"pick": [1000, 2000, 2500]}, "vtop": {"pick": [50, 100, 200, 250]}},
+   "let": {"cpr": "4 * ppr", "cpm": "4 * ppr / lead", "accc": "500 * 4 * ppr / lead"},
+   "answer": "vtop * 4 * ppr / lead",
+   "unit": "counts/s",
+   "hint": "First the counts in one mm: counts a turn ÷ mm a turn.",
+   "work": "Counts per mm: $\\frac{CPR}{L} = \\frac{{cpr}}{{lead}} = {cpm}$. Speed: ${vtop} \\times {cpm} = {answer}$ counts a second",
+   "why": "The profile sums are the same in any unit; the controller just wants counts. Multiply mm/s by counts per mm. Acceleration (AC) and deceleration (DC) convert the same way: 500 mm/s² is $500 \\times {cpm} = {accc}$ counts/s². Dividing by the counts per mm, or forgetting the ×4, are the usual slips."
+  },
+  {
+   "id": "mix-formula",
+   "type": "mcq",
+   "stage": "mix",
+   "q": "An axis speeds up from standstill at 800 mm/s² until it reaches 400 mm/s. How far does it travel while speeding up?",
+   "options": ["0.5 mm", "100 mm", "200 mm", "0.25 mm"],
+   "answer": 1,
+   "why": "Distance while speeding up is the ramp triangle: $d_{acc} = \\frac{v^2}{2a} = \\frac{160\\,000}{1600} = 100$ mm. 0.5 is $\\frac{v}{a}$: the **time** in seconds, not a distance. 200 mm is the top speed times that 0.5 s, as if it did 400 mm/s the whole way (it averages half), or $\\frac{v^2}{a}$, both ramps. 0.25 forgets to square the speed."
+  },
+  {
+   "id": "check-conveyor",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A transfer conveyor moves a plate {dist} m. It accelerates at {accel} m/s² to {vtop} m/s, runs, then decelerates at the same rate to a stop. How long does the transfer take?",
+   "vars": {"dist": {"pick": [0.8, 1, 1.2, 1.5, 2]}, "vtop": {"pick": [0.2, 0.3, 0.4, 0.5]}, "accel": {"pick": [0.5, 1, 2]}},
+   "let": {"ta": "vtop / accel", "da": "vtop^2 / (2 * accel)", "tc": "(dist - 2 * da) / vtop"},
+   "answer": "2 * ta + tc",
+   "unit": "s",
+   "work": "$t_{acc} = \\frac{{vtop}}{{accel}} = {ta}$ s; $d_{acc} = \\frac{{vtop}^2}{2 \\times {accel}} = {da}$ m; $t_{const} = \\frac{{dist} - 2 \\times {da}}{{vtop}} = {tc}$ s; $t_{total} = {answer}$ s",
+   "why": "The same rules work in metres: ramp time, ramp distance, the rest at full speed. In one line, $\\frac{D}{v} + \\frac{v}{a}$ gives {answer} s. Distance ÷ speed alone ({dist} ÷ {vtop}) forgets that the plate averages only half speed on the ramps."
+  },
+  {
+   "id": "check-short",
+   "type": "mcq",
+   "stage": "check",
+   "level": 6.0,
+   "q": "A 50 mm index move is set to a top speed of 400 mm/s and an acceleration of 1000 mm/s². What happens?",
+   "options": ["It reaches 400 mm/s for a moment, then stops", "It runs at 400 mm/s all the way", "It never reaches 400 mm/s: it peaks at about 224 mm/s", "It cannot make the move at all"],
+   "answer": 2,
+   "why": "Ramps to 400 mm/s would need $\\frac{400^2}{1000} = 160$ mm, more than the 50 mm move. So it speeds up for 25 mm and slows down for 25 mm, peaking at $\\sqrt{aD} = \\sqrt{1000 \\times 50} \\approx 224$ mm/s. Even touching 400 mm/s would take 160 mm. The move still happens, as a triangle."
+  },
+  {
+   "id": "check-scurve",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.5,
+   "q": "What does an S-curve profile give up in return for smoother motion with less vibration?",
+   "options": ["Accuracy: it stops in the wrong place", "Distance: it covers less of the move", "Time or acceleration: with the same peak acceleration it takes longer, or to take the same time it needs a higher peak acceleration", "Nothing: it is faster as well as smoother"],
+   "answer": 2,
+   "why": "Ramping the acceleration in and out means spending part of each ramp below the peak acceleration. So either the move takes longer, or the peak acceleration (and the motor's peak torque) must go up to make up for it. It still ends at the same place, over the same distance."
+  }
+ ]
+}

@@ -1,0 +1,754 @@
+{
+ "id": "drives.motors.vf-vector",
+ "title": "V/f and vector control",
+ "tags": [
+  "drives",
+  "vfd",
+  "induction motor",
+  "vector control"
+ ],
+ "kind": "concept",
+ "level": 6.3,
+ "minutes": 28,
+ "goals": [
+  "Explain why a drive changes a motor's speed by changing the frequency, and work out the voltage it gives at any frequency (V/f)",
+  "Say what happens above base speed (field weakening) and what boost and slip compensation do, with numbers",
+  "Explain vector control in plain words: the current split into a flux part and a torque part, like a DC drive's field and armature",
+  "Choose V/f, sensorless vector or closed-loop vector for a job, and say why several motors on one drive must be V/f",
+  "Say what autotune measures and when to run it again"
+ ],
+ "summary": "A drive sets the speed by setting the **frequency**. The field turns at the **synchronous speed**, $n_s = \\frac{120 f}{p}$ ($f$ in Hz, $p$ the number of poles); the rotor runs a little slower, by the **slip**. At the same load the slip in rpm stays about the same at any frequency.\n\n**V/f (scalar) control** keeps the voltage in step with the frequency, so the **flux** stays the same: full torque at any speed up to 50 Hz (**constant torque**). A 400 V, 50 Hz motor gets $\\frac{V}{f} = \\frac{400}{50} = 8$ V/Hz: 200 V at 25 Hz. Full voltage at low frequency over-fluxes it: high current, heat, trips.\n\n**Above base speed** the drive has no more than 400 V to give. V/f falls, so the flux falls: **field weakening**. At rated current the torque falls about as $\\frac{50}{f}$, so the power stays about the same (**constant power**). The breakdown torque falls faster, as $\\left(\\frac{50}{f}\\right)^2$.\n\n**Boost** adds voltage at low frequency, where the windings' resistance takes a big share of it. Too much: over-current and heat.\n\n**Slip compensation** estimates the slip from the current and adds it to the frequency: $f_\\text{slip} = \\frac{(n_s - n)\\,p}{120}$.\n\n**Vector control** (field-oriented control) splits the stator current into two parts at right angles, like a DC motor's field and armature:\n\n- $I_d$, the **flux** part, held steady\n- $I_q$, the **torque** part, moved fast: $T \\propto I_q$\n- together, $I = \\sqrt{I_d^2 + I_q^2}$\n\n**Sensorless vector** works out the rotor's flux and speed from its motor model: strong down to a hertz or two, speed to a fraction of a per cent. **Closed-loop vector** reads an encoder: full torque at zero speed, speed to about 0.01%. V/f holds speed only to within the slip, 1 to 3%.\n\n**Autotune** measures the motor for the model: enter the nameplate, then a static or (better) rotating tune. Redo it if the motor or its wiring changes.\n\n**Which one**\n\n- Fans, pumps, several motors on one drive: V/f\n- Conveyors, mixers, heavy starts: sensorless vector\n- Hoists, winders, holding at zero speed: closed-loop vector",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Choosing VFD control modes",
+   "url": "https://www.processingmagazine.com/pumps-motors-drives/variable-frequency-drives/article/21141739/automation-direct-choosing-vfd-control-modes",
+   "by": "Processing Magazine (AutomationDirect)",
+   "minutes": 7,
+   "note": "V/Hz, sensorless vector and closed-loop vector side by side, and when to use each."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Defining Scalar and Vector Control in VFD Outputs",
+   "url": "https://control.com/technical-articles/defining-vector-and-scalar-control-for-vfds/",
+   "by": "Control.com",
+   "minutes": 5,
+   "note": "Scalar against vector control, in a few pages."
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Understanding Field-Oriented Control | Motor Control, Part 4",
+   "url": "https://www.mathworks.com/videos/motor-control-part-4-understanding-field-oriented-control-1587967749983.html",
+   "by": "MathWorks",
+   "minutes": 10,
+   "note": "How the drive splits the current into flux and torque parts, with animations."
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "ABB drives: Technical guide book",
+   "url": "https://library.e.abb.com/public/a209d9dc29b24b789e0650b8de9c3f22/TechnicalGuideBook_EN_3AFE64514482_RevI.pdf",
+   "by": "ABB",
+   "minutes": 45,
+   "note": "Scalar and direct torque control, multi-motor drives, the ID run, and dimensioning a drive."
+  }
+ ],
+ "sources": [
+  "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
+  "ABB, Technical guide book (3AFE64514482)",
+  "ABB, Technical guide No. 7: Dimensioning of a drive system (3AFE64362569)",
+  "Santerno, Sinus Penta programming instructions (15R0102B1)",
+  "IEC 60034-1: Rotating electrical machines. Part 1: Rating and performance"
+ ],
+ "formulas": [
+  {
+   "name": "Synchronous speed",
+   "tex": "n_s = \\frac{120 f}{p}",
+   "match": [
+    "\\frac{120f}{p}"
+   ],
+   "says": "The speed of the turning magnetic field: 120 times the frequency, divided by the number of poles. The rotor runs a little slower than this.",
+   "symbols": [
+    [
+     "n_s",
+     "the synchronous speed (rpm)"
+    ],
+    [
+     "f",
+     "the frequency the drive gives (Hz)"
+    ],
+    [
+     "p",
+     "the number of poles (2, 4, 6 …; a 4-pole motor runs near 1500 rpm at 50 Hz)"
+    ]
+   ],
+   "example": "4 poles at 25 Hz: $n_s = \\frac{120 \\times 25}{4} = 750$ rpm."
+  },
+  {
+   "name": "Volts per hertz",
+   "tex": "\\frac{V}{f} = \\frac{V_n}{f_n}",
+   "match": [
+    "\\frac{V}{f}"
+   ],
+   "says": "V/f control keeps the voltage divided by the frequency the same as on the nameplate, so the flux in the motor stays the same at any speed up to base speed.",
+   "symbols": [
+    [
+     "V",
+     "the voltage the drive gives (V)"
+    ],
+    [
+     "f",
+     "the frequency the drive gives (Hz)"
+    ],
+    [
+     "V_n",
+     "the motor's rated (nameplate) voltage (V)"
+    ],
+    [
+     "f_n",
+     "the motor's rated frequency (Hz), usually 50"
+    ]
+   ],
+   "example": "a 400 V, 50 Hz motor: $\\frac{400}{50} = 8$ V/Hz, so 200 V at 25 Hz and 80 V at 10 Hz."
+  },
+  {
+   "name": "Slip as a frequency",
+   "tex": "f_\\text{slip} = \\frac{(n_s - n)\\,p}{120}",
+   "match": [
+    "f_\\text{slip}"
+   ],
+   "says": "The slip in rpm turned into hertz: what slip compensation adds to the frequency to hold the speed.",
+   "symbols": [
+    [
+     "f_\\text{slip}",
+     "the slip frequency (Hz)"
+    ],
+    [
+     "n_s",
+     "the synchronous speed (rpm)"
+    ],
+    [
+     "n",
+     "the shaft speed (rpm)"
+    ],
+    [
+     "p",
+     "the number of poles"
+    ]
+   ],
+   "example": "4 poles, 1440 rpm at 50 Hz: $\\frac{(1500 - 1440) \\times 4}{120} = 2$ Hz."
+  },
+  {
+   "name": "Torque above base speed",
+   "tex": "T \\approx T_n \\times \\frac{50}{f}",
+   "match": [
+    "\\frac{50}{f}"
+   ],
+   "says": "Above 50 Hz the voltage cannot rise, so the flux falls, and the torque the motor gives at rated current falls in proportion. One and a half times the speed, two-thirds of the torque: the power stays about the same.",
+   "symbols": [
+    [
+     "T",
+     "the torque at rated current (Nm)"
+    ],
+    [
+     "T_n",
+     "the rated torque (Nm)"
+    ],
+    [
+     "f",
+     "the frequency, above 50 Hz"
+    ],
+    [
+     "50",
+     "the base frequency (Hz), where the drive reaches full voltage"
+    ]
+   ],
+   "example": "rated 49 Nm, at 75 Hz: $49 \\times \\frac{50}{75} \\approx 33$ Nm."
+  },
+  {
+   "name": "Breakdown torque above base speed",
+   "tex": "T_\\text{max} \\propto \\left(\\frac{50}{f}\\right)^2",
+   "match": [
+    "\\left(\\frac{50}{"
+   ],
+   "says": "The most torque the motor can give before it stalls (the breakdown torque) falls faster than the rated torque above base speed: with the square of the frequency ratio.",
+   "symbols": [
+    [
+     "T_\\text{max}",
+     "the breakdown (pull-out) torque (Nm), typically 2 to 3 times rated at 50 Hz"
+    ],
+    [
+     "f",
+     "the frequency, above 50 Hz"
+    ],
+    [
+     "\\propto",
+     "goes in proportion to"
+    ]
+   ],
+   "example": "at 75 Hz: $\\left(\\frac{50}{75}\\right)^2 \\approx 0.44$, under half its 50 Hz value."
+  },
+  {
+   "name": "Power from torque and speed",
+   "tex": "P = \\frac{T n}{9550}",
+   "match": [
+    "\\frac{Tn}{9550}"
+   ],
+   "says": "Mechanical power is torque times speed. With the torque in Nm and the speed in rpm, dividing by 9550 gives kW.",
+   "symbols": [
+    [
+     "P",
+     "the power (kW)"
+    ],
+    [
+     "T",
+     "the torque (Nm)"
+    ],
+    [
+     "n",
+     "the speed (rpm)"
+    ],
+    [
+     "9550",
+     "turns Nm × rpm into kW: 60 000 ÷ 2π, rounded"
+    ]
+   ],
+   "example": "49 Nm at 1460 rpm: $\\frac{49 \\times 1460}{9550} \\approx 7.5$ kW."
+  },
+  {
+   "name": "The two parts of the current",
+   "tex": "I = \\sqrt{I_d^2 + I_q^2}",
+   "match": [
+    "I_d^2"
+   ],
+   "says": "Vector control splits the motor current into a flux part and a torque part at right angles. They add like the sides of a right-angled triangle: square each, add, then take the square root.",
+   "symbols": [
+    [
+     "I",
+     "the motor current, as a clamp meter reads it (A)"
+    ],
+    [
+     "I_d",
+     "the flux (magnetising) part (A)"
+    ],
+    [
+     "I_q",
+     "the torque part (A)"
+    ]
+   ],
+   "example": "$I_d = 5$ A, $I_q = 12$ A: $\\sqrt{25 + 144} = \\sqrt{169} = 13$ A."
+  },
+  {
+   "name": "Torque follows the torque current",
+   "tex": "T \\propto I_q",
+   "match": [
+    "\\propto I_q"
+   ],
+   "says": "With the flux held steady, the torque goes in proportion to the torque part of the current: double $I_q$, double the torque, as a DC motor's torque follows its armature current.",
+   "symbols": [
+    [
+     "T",
+     "the torque (Nm)"
+    ],
+    [
+     "I_q",
+     "the torque part of the current (A)"
+    ],
+    [
+     "\\propto",
+     "goes in proportion to"
+    ]
+   ],
+   "example": "12 A of $I_q$ gives 36 Nm, so 8 A gives $36 \\times \\frac{8}{12} = 24$ Nm."
+  },
+  {
+   "name": "Fan and pump loads",
+   "tex": "T \\propto n^2 \\text{ and } P \\propto n^3",
+   "match": [
+    "\\frac{60}{50}"
+   ],
+   "says": "A fan or centrifugal pump needs torque that rises with the speed squared, and power with the speed cubed. A little more speed costs a lot more power.",
+   "symbols": [
+    [
+     "T",
+     "the torque the fan needs (Nm)"
+    ],
+    [
+     "P",
+     "the power it needs (kW)"
+    ],
+    [
+     "n",
+     "its speed"
+    ],
+    [
+     "\\propto",
+     "goes in proportion to"
+    ]
+   ],
+   "example": "60 Hz instead of 50: torque $\\left(\\frac{60}{50}\\right)^2 = 1.44$ times, power $\\left(\\frac{60}{50}\\right)^3 \\approx 1.73$ times."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-voltage",
+   "type": "mcq",
+   "stage": "try",
+   "level": 5.8,
+   "q": "Have a go: a guess is fine. A drive runs a 400 V, 50 Hz motor at 25 Hz, half its rated speed. What voltage should the drive give the motor?",
+   "options": [
+    "400 V: a motor always gets its full voltage",
+    "200 V",
+    "100 V",
+    "800 V"
+   ],
+   "answer": 1,
+   "why": "Half the frequency, half the voltage: 400 V ÷ 50 Hz is 8 volts per hertz, and $8 \\times 25 = 200$ V. That keeps the magnetism in the motor (its **flux**) the same, so it can still give full torque. The full 400 V at 25 Hz would push twice the flux the iron is built for: it saturates, the current shoots up, the motor gets hot and the drive trips. 100 V would leave it with half the flux: weak, and quick to stall."
+  },
+  {
+   "id": "speed",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Frequency sets the speed",
+   "body": "A **VFD** (variable frequency drive) sets a motor's speed by setting the **frequency** of the three-phase supply it makes.\n\nThe magnetic field in the stator turns at the **synchronous speed**:\n\n$$n_s = \\frac{120 f}{p}$$\n\n$n_s$ is in rpm, $f$ is the frequency in Hz, and $p$ the number of poles. A 4-pole motor: 1500 rpm at 50 Hz, 750 rpm at 25 Hz.\n\nThe rotor turns a little slower than the field. That gap, the **slip**, is what makes the torque.\n\nThe graph is torque against speed, with the load as the flat line. Slide the frequency (up to 50 Hz): with the voltage turned down in step, the whole curve slides along and keeps its shape.",
+   "widget": {
+    "name": "motor",
+    "params": {
+     "f": 50,
+     "poles": 4,
+     "load": 100,
+     "controls": [
+      "f"
+     ]
+    }
+   },
+   "more": "The rotor chases the turning field and never quite catches it. If it did, no current would be induced in its bars, and there would be no torque. The harder the load pulls back, the further it lags.\n\nNumbers: a 4-pole motor on 50 Hz: $n_s = \\frac{120 \\times 50}{4} = 1500$ rpm. Its nameplate says 1440 rpm at full load, so the slip is $1500 - 1440 = 60$ rpm. At 25 Hz, $n_s = 750$ rpm, and at the same load the slip is still about 60 rpm, so the shaft turns at about 690 rpm.\n\nSo the slip in **rpm** stays about the same, but as a **share** of the speed it grows at low frequency: 4% at 50 Hz, 8% at 25 Hz.\n\nWhy 120? 60 seconds a minute, and poles come in pairs: $\\frac{60 f}{p/2} = \\frac{120 f}{p}$."
+  },
+  {
+   "id": "slip-rpm",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.8,
+   "intro": "Full load on a 4-pole motor. Set any frequency from 10 to 50 Hz. The readout gives the shaft speed and the synchronous speed.",
+   "widget": {
+    "name": "motor",
+    "params": {
+     "f": 30,
+     "poles": 4,
+     "load": 100,
+     "controls": [
+      "f"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What is the slip in rpm: the synchronous speed minus the shaft speed? Then try another frequency.",
+    "answer": "ns - n",
+    "unit": "rpm",
+    "abs": 2,
+    "hint": "Take the shaft speed away from the synchronous speed.",
+    "why": "{ns} − {n} ≈ {answer} rpm. At any other frequency it comes out the same, about 63 rpm here: with V/f held, the curve slides without changing shape, so the same load takes the same slip in rpm. As a share of the speed it grows as the frequency falls: {slip:1}% here, against about 4% at 50 Hz."
+   }
+  },
+  {
+   "id": "vf",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Why the voltage follows the frequency",
+   "body": "The stator windings are coils. The lower the frequency, the more current a coil lets through for each volt, and the more **magnetic flux** it drives into the iron.\n\nSo to keep the flux right, the drive keeps the voltage divided by the frequency the same as on the nameplate: **V/f** control (say \"V over f\"), also called **scalar** control.\n\n$$\\frac{V}{f} = \\frac{400}{50} = 8 \\text{ V/Hz}$$\n\nA 400 V, 50 Hz motor gets 8 volts for each hertz: 200 V at 25 Hz, 80 V at 10 Hz. With its flux steady, the motor can give its full rated torque at any speed up to 50 Hz. This is the **constant torque** range.",
+   "more": "A transformer follows the same rule. Feed a 400 V, 50 Hz transformer 400 V at 25 Hz and it tries to carry twice its design flux. The iron **saturates** (it cannot take much more magnetism), the magnetising current shoots up, and it overheats. A motor's iron is the same: it is designed for the flux it gets at 400 V and 50 Hz.\n\nNumbers: at 30 Hz, $8 \\times 30 = 240$ V. At 5 Hz, $8 \\times 5 = 40$ V.\n\nA 230/400 V motor wired in delta is a 230 V motor: it needs $\\frac{230}{50} = 4.6$ V/Hz. You never set the ratio yourself: the drive works it out from the rated voltage and frequency you enter.\n\nOne catch at low speed: a motor cooled by the fan on its own shaft gets less air, so long runs at low speed and full torque can overheat it."
+  },
+  {
+   "id": "vf-volts",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "A {vn} V, 50 Hz motor runs on V/f control at {f} Hz. What voltage should the drive give it?",
+   "vars": {
+    "vn": {
+     "pick": [
+      230,
+      400,
+      690
+     ]
+    },
+    "f": [
+     5,
+     45,
+     5
+    ]
+   },
+   "let": {
+    "ratio": "vn / 50"
+   },
+   "answer": "vn * f / 50",
+   "unit": "V",
+   "tolerance": 0.02,
+   "work": "$\\frac{V}{ f } = \\frac{{vn}}{50} = {ratio}$ V/Hz, so $V = {ratio} \\times {f} = {answer}$ V",
+   "why": "The volts per hertz stay at the nameplate's: {vn} ÷ 50 = {ratio} V/Hz, times {f} Hz. Giving the full {vn} V at {f} Hz is the mistake that matters most: it over-fluxes the motor, which then runs hot and trips the drive.",
+   "hint": "First the volts per hertz: the rated voltage ÷ 50."
+  },
+  {
+   "id": "patches",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Boost and slip compensation",
+   "body": "Plain V/f has two weak spots, and most drives have a setting for each.\n\n**Low speed: boost.** Some voltage is always lost pushing current through the windings' resistance. Say 10 V: nothing much out of 400 V at 50 Hz, but a quarter of the 40 V at 5 Hz. The flux sags just when a loaded conveyor must start. **Boost** adds a little voltage at low frequency. Too much over-fluxes a lightly loaded motor: over-current and heat.\n\n**Under load: slip compensation.** The drive judges the load from its current, estimates the slip, and adds that much frequency:\n\n$$f_\\text{slip} = \\frac{(n_s - n)\\,p}{120}$$\n\nA 4-pole motor rated 1440 rpm slips 60 rpm: $\\frac{60 \\times 4}{120} = 2$ Hz.",
+   "more": "Boost is like a long hose to a sprinkler: some pressure is always lost in the hose. With the tap full on you hardly notice; nearly shut, the hose loss takes most of what is left. At 3 Hz, 8 V/Hz gives 24 V; if 10 V is lost in the windings, only 14 V is left to make flux. Set boost only as high as the job needs.\n\nSlip compensation is the synchronous speed formula turned round: for a 4-pole motor each hertz is worth 30 rpm. A nameplate of 1455 rpm means $1500 - 1455 = 45$ rpm of slip at full load: $\\frac{45 \\times 4}{120} = 1.5$ Hz. Asked for 50 Hz at full load, the drive gives about 51.5 Hz, and the shaft turns near 1500 rpm. Enter the nameplate speed exactly: the drive takes the rated slip from it."
+  },
+  {
+   "id": "boost-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A conveyor on V/f control starts well when empty. With a full belt it stalls at a few hertz and the drive trips on over-current. Which setting should you look at first?",
+   "options": [
+    "The boost at low frequency",
+    "The maximum frequency",
+    "The deceleration ramp",
+    "The motor's rated voltage: set it lower"
+   ],
+   "answer": 0,
+   "why": "At a few hertz the winding resistance takes a big share of the small voltage, so the flux and the torque sag just when the loaded belt needs them most. Boost puts that voltage back (or use sensorless vector, which works it out for itself). The maximum frequency and the deceleration ramp do nothing at start-up. A lower rated voltage would lower the V/f and weaken the motor further.",
+   "hint": "What is special about the voltage at a few hertz?"
+  },
+  {
+   "id": "field-weakening",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Above base speed: field weakening",
+   "body": "Up to 50 Hz, the **base speed**, the drive raises the voltage with the frequency. At 50 Hz it reaches 400 V, and it cannot give more than its own supply.\n\nSo above 50 Hz the voltage stays at 400 V while the frequency rises. V/f falls, and the flux with it: **field weakening**.\n\nLess flux means less torque for each amp. At rated current the torque falls about as $\\frac{50}{f}$: at 75 Hz, $\\frac{50}{75}$, two-thirds of rated. Half as fast again, a third less torque: the power stays about the same, so this is the **constant power** range.\n\nThe breakdown torque falls faster, with the square: at 75 Hz, $\\left(\\frac{50}{75}\\right)^2$, under half.",
+   "more": "Think of a car in top gear: more speed, less pull. The engine's power is the same; it comes out as speed instead of force.\n\nPower is torque times speed. In kW:\n\n$$P = \\frac{T n}{9550}$$\n\n$T$ is the torque in Nm, $n$ the speed in rpm, and 9550 turns them into kW.\n\nNumbers: a 7.5 kW, 4-pole motor gives 49 Nm at 1460 rpm: $\\frac{49 \\times 1460}{9550} \\approx 7.5$ kW. At 75 Hz it turns about 2210 rpm, and at rated current gives about $49 \\times \\frac{50}{75} \\approx 33$ Nm: $\\frac{33 \\times 2210}{9550} \\approx 7.6$ kW, the same power.\n\nSo a machine that needs full torque at high speed needs a bigger motor or different gearing, not just a higher frequency."
+  },
+  {
+   "id": "fw-torque",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A motor gives its rated {tn} Nm up to 50 Hz. Above that the drive is at full voltage. About how much torque can it give at rated current at {f} Hz?",
+   "vars": {
+    "tn": {
+     "pick": [
+      10,
+      25,
+      49,
+      72,
+      98
+     ]
+    },
+    "f": [
+     55,
+     100,
+     5
+    ]
+   },
+   "answer": "tn * 50 / f",
+   "unit": "Nm",
+   "tolerance": 0.03,
+   "work": "$T \\approx T_n \\times \\frac{50}{ f } = {tn} \\times \\frac{50}{{f}} = {answer}$ Nm",
+   "why": "Above 50 Hz the voltage is stuck at the supply's, so the flux, and the torque for each amp, fall as $\\frac{50}{{f}}$. The power stays about the same: {f} Hz is $\\frac{{f}}{50}$ times the speed at $\\frac{50}{{f}}$ times the torque. Expecting the full {tn} Nm up there is the usual mistake. Squaring the ratio gives the breakdown torque, not the torque at rated current.",
+   "hint": "Above base speed the power stays about the same: more speed, less torque, in the same proportion."
+  },
+  {
+   "id": "vector",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Vector control: the current split in two",
+   "body": "A Sprint or Parker DC drive has two separate currents: the **field** current makes the magnetism and is held steady; the **armature** current makes the torque, and moves fast.\n\nAn induction motor has only its three stator currents, doing both jobs at once. **Vector control** (also **field-oriented control**, FOC) uses a model of the motor to split them into two parts at right angles:\n\n- $I_d$, the **flux** (magnetising) part, like the field current: held steady\n- $I_q$, the **torque** part, like the armature current: moved to set the torque\n\nWith the flux steady, torque goes in proportion to $I_q$: $T \\propto I_q$. So it answers a torque demand in milliseconds, like a DC drive.",
+   "more": "Why 'at right angles'? The three phase currents together act like one current that turns with the field, like the hand of a clock. Vector control looks at that hand from the flux's point of view, and splits it into the part lined up with the flux ($I_d$) and the part square to it ($I_q$). The square part turns the motor, as a spanner turns a nut best when pushed square to its handle.\n\nThe two parts add like the sides of a right-angled triangle:\n\n$$I = \\sqrt{I_d^2 + I_q^2}$$\n\nNumbers: $I_d = 5$ A and $I_q = 12$ A give $\\sqrt{25 + 144} = \\sqrt{169} = 13$ A on the display. Double the load and $I_q$ goes to about 24 A, while $I_d$ stays at 5 A.\n\nTo split them, the drive must know which way the flux points: from its model (sensorless) or from an encoder."
+  },
+  {
+   "id": "vector-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A conveyor runs at steady speed on a vector drive. A heavy load drops onto the belt. What does the drive do with the two parts of the current?",
+   "options": [
+    "Raises the torque part $I_q$ quickly and holds the flux part $I_d$ steady",
+    "Raises the flux part $I_d$ and holds $I_q$ steady",
+    "Nothing: it holds its voltage and frequency, and the motor slips further",
+    "Raises $I_d$ and $I_q$ together, in step"
+   ],
+   "answer": 0,
+   "why": "Torque follows $I_q$, as a DC motor's torque follows its armature current, so that is the one to move, and fast. $I_d$ sets the flux, like a DC motor's field, and stays steady below base speed. Holding voltage and frequency and letting the motor slip is what a plain V/f drive does. Raising $I_d$ as well would over-flux the motor for no gain."
+  },
+  {
+   "id": "sensorless",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Sensorless or closed-loop vector",
+   "body": "To split the current, the drive must know which way the rotor's flux points and how fast the rotor turns.\n\n- **Sensorless vector** works that out from the voltages it gives and the currents it measures, using its motor model. Full torque down to a hertz or two; speed to a fraction of a per cent (ABB quotes 0.3% for an 11 kW motor). Near 0 Hz the model has little to go on, so it cannot hold full torque at standstill for long.\n- **Closed-loop vector** reads an **encoder** on the shaft: full torque at zero speed for as long as you like; speed to about 0.01%.\n\nV/f holds speed only to within the slip: 1 to 3%.",
+   "more": "In fog, sensorless is judging your speed from the engine note: fine when moving, poor when nearly stopped. Closed loop is a speedometer: exact at any speed, even zero. That is why a **hoist** wants closed loop: when the brake lifts, the motor must hold the full load at zero speed.\n\nNumbers: a 4-pole motor rated 1460 rpm slips 40 rpm at full load. V/f without slip compensation loses up to that 40 rpm, 2.7%. ABB's sensorless figure is about a tenth of the slip, 4 rpm. With an encoder, 0.01% of 1500 rpm is 0.15 rpm.\n\nOn a Santerno Sinus Penta the three are IFD (V/f), VTC (sensorless vector) and FOC (vector with an encoder).\n\n**Which to use:** V/f for fans, pumps and several motors on one drive; sensorless vector for conveyors and mixers with heavy starts; closed loop for hoists, winders and holding at zero speed."
+  },
+  {
+   "id": "which-mode",
+   "type": "match",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "Match each job to the control mode that suits it best.",
+   "pairs": [
+    [
+     "A centrifugal pump",
+     "V/f"
+    ],
+    [
+     "A loaded conveyor that must start smoothly",
+     "Sensorless vector"
+    ],
+    [
+     "A crane hoist that must hold its load at zero speed",
+     "Closed-loop vector, with an encoder"
+    ]
+   ],
+   "why": "A pump needs little torque at low speed and no precision, so V/f is simplest. A heavy start needs vector control's grip on flux and torque, and sensorless does it without an encoder. Holding a load at zero speed needs the rotor's position exactly: only an encoder gives that."
+  },
+  {
+   "id": "autotune",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Autotune: the drive measures the motor",
+   "body": "Vector control is only as good as its **motor model**: the windings' resistance and inductances, and the current it takes just to magnetise the motor. The nameplate does not give these, so the drive measures them: **autotune** (ABB calls it an ID run).\n\n1. Enter the **nameplate** exactly: voltage, current, frequency, speed, power, power factor.\n2. **Static** autotune: the motor stays still while the drive injects current and measures. Use it when the load cannot come off, as on a hoist.\n3. **Rotating** autotune: the motor spins for a while, ideally with no load. It measures the magnetising current too, so the model is better.\n\nRun it again whenever the motor, its cable or its star/delta connection changes.",
+   "more": "It is like a tailor measuring you before cutting a suit. The label (the nameplate) gives the size; the tape measure gives the fit.\n\nWhy the rotating run is better: to measure the magnetising current, the drive spins the motor unloaded and sees how much current it takes just to magnetise it. On a 400 V motor rated 13 A that might be about 5 A. With the load on, it cannot tell magnetising current from load current, so it has to estimate.\n\nA good order on site: check the motor is wired star or delta for the drive's voltage, enter the nameplate, choose the control mode, autotune, jog slowly to check the direction, then couple the load and set the ramps and the speed loop under load.\n\nA V/f drive needs only the nameplate, though many still measure the stator resistance to set the boost."
+  },
+  {
+   "id": "autotune-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A vector drive has run a 5.5 kW conveyor motor well for years. The motor fails, and the fitters fit a 7.5 kW one from stores. What must happen before it runs?",
+   "options": [
+    "Enter the new nameplate data and autotune again",
+    "Nothing: the drive learns the new motor as it runs",
+    "Switch the drive to closed-loop vector",
+    "Double the boost"
+   ],
+   "answer": 0,
+   "why": "The model in the drive belongs to the old motor. With the wrong resistance, inductances and magnetising current it splits the current wrongly: poor torque, hunting speed or trips. So: new nameplate data, a new autotune, and a check that the drive is rated for the bigger motor's current. Boost is a V/f setting, and closed loop does not fix a wrong model."
+  },
+  {
+   "id": "slip-hz",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A {p}-pole motor's nameplate says {n} rpm at 50 Hz. How many hertz must slip compensation add at full load to bring it back to its synchronous speed?",
+   "vars": {
+    "p": {
+     "pick": [
+      2,
+      4,
+      6
+     ]
+    },
+    "sp": [
+     2,
+     5,
+     0.5
+    ]
+   },
+   "let": {
+    "ns": "6000 / p",
+    "n": "ROUND(ns * (1 - sp / 100), 0)",
+    "ds": "ns - n",
+    "rph": "120 / p"
+   },
+   "answer": "(ns - n) * p / 120",
+   "unit": "Hz",
+   "tolerance": 0.02,
+   "work": "$n_s = \\frac{120 \\times 50}{{p}} = {ns}$ rpm. Slip: ${ns} - {n} = {ds}$ rpm. $f_\\text{slip} = \\frac{{ds} \\times {p}}{120} = {answer}$ Hz",
+   "why": "A {p}-pole motor turns {ns} rpm at 50 Hz, so each hertz is worth {rph} rpm, and {ds} rpm of slip is {answer} Hz. Adding the slip in rpm straight onto the frequency, or dividing by 30 whatever the poles, are the usual mistakes.",
+   "hint": "First the synchronous speed at 50 Hz, then the slip in rpm, then turn rpm into hertz."
+  },
+  {
+   "id": "id-iq",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A vector drive shows a flux current $I_d$ of {flux} A and a torque current $I_q$ of {torq} A. What current would a clamp meter read on one motor lead?",
+   "vars": {
+    "flux": [
+     3,
+     9,
+     1
+    ],
+    "torq": [
+     4,
+     20,
+     1
+    ]
+   },
+   "let": {
+    "sq": "flux^2 + torq^2",
+    "plain": "flux + torq"
+   },
+   "answer": "SQRT(flux^2 + torq^2)",
+   "unit": "A",
+   "tolerance": 0.02,
+   "work": "$I = \\sqrt{I_d^2 + I_q^2} = \\sqrt{{{flux}}^2 + {{torq}}^2} = \\sqrt{{sq}} = {answer}$ A",
+   "why": "The two parts are at right angles, so they add like the sides of a right-angled triangle: square each, add, then take the square root. Adding them straight, {flux} + {torq} = {plain} A, is the mistake: too much. The meter sees the whole current; only the drive's model sees the split.",
+   "hint": "Square each, add them, then take the square root."
+  },
+  {
+   "id": "why-multi",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Six small roller-table motors run from one drive. Why should the drive be set to V/f, not vector control?",
+   "options": [
+    "Vector control needs a model of one motor; six motors in parallel, some loaded and some not, fit no single model",
+    "V/f gives more torque at low speed, which six small motors need to start together",
+    "Vector control can give only one frequency, and each motor needs its own",
+    "Six motors together draw more current than vector control can measure"
+   ],
+   "answer": 0,
+   "why": "Vector control splits the current using one motor's resistance, inductances and magnetising current. Six motors in parallel, sharing the load unevenly, do not behave like any one motor, so the split is wrong. V/f only sets a voltage and a frequency, which all six can share. (ABB lets identical, evenly loaded motors be treated as one big motor, but advises V/f if the number running can change.) The drive sees only the total current, so each motor needs its own overload protection. V/f does not give more low-speed torque: vector does."
+  },
+  {
+   "id": "delta-87",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.8,
+   "q": "A 230/400 V, 50 Hz motor is wired in **delta**, its 230 V connection, and fed from a 400 V drive. The drive keeps the motor's own volts per hertz, $\\frac{V}{f} = \\frac{230}{50}$. At what frequency does it reach its full 400 V?",
+   "answer": "400 / (230 / 50)",
+   "unit": "Hz",
+   "tolerance": 0.02,
+   "work": "$\\frac{V}{f} = \\frac{230}{50} = 4.6$ V/Hz, so $f = \\frac{400}{4.6} = {answer}$ Hz",
+   "why": "This is the **87 Hz** trick: full flux, and so full torque, all the way to about 87 Hz, for about 1.73 times the motor's 50 Hz power. The motor draws its delta current, so the drive must be sized for that, and the motor and the machine must be fine at that speed. 50 Hz is the tempting wrong answer: that is where a star-wired motor reaches 400 V.",
+   "hint": "Volts per hertz first, from the 230 V delta rating. Then how many hertz make 400 V?"
+  },
+  {
+   "id": "mix-volts",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A 400 V, 50 Hz motor is on a 400 V drive in V/f control. What voltage does the drive give it at {f} Hz?",
+   "vars": {
+    "f": [
+     10,
+     80,
+     5
+    ]
+   },
+   "let": {
+    "v1": "8 * f"
+   },
+   "answer": "MIN(400, 8 * f)",
+   "unit": "V",
+   "abs": 1,
+   "work": "V/f asks for $8 \\times {f} = {v1}$ V. The drive can give at most 400 V, so it gives {answer} V.",
+   "why": "Below 50 Hz: 8 V per hertz. From 50 Hz up the drive is out of voltage: it holds 400 V and the flux falls (field weakening). Carrying on at 8 V per hertz above 50 Hz gives a voltage the drive does not have.",
+   "hint": "Is {f} Hz above or below base speed?"
+  },
+  {
+   "id": "mix-fan",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 6.8,
+   "q": "A fan motor draws its rated current at 50 Hz. To get more air, someone sets the drive to 60 Hz. A fan's torque rises with the speed squared. What happens?",
+   "options": [
+    "It overloads: the fan wants about 1.44 times rated torque, and above 50 Hz the motor gives only about 0.83 times at rated current",
+    "It copes: above 50 Hz the motor has constant power, so it has power to spare",
+    "It copes: the drive raises the voltage to 480 V to keep V/f",
+    "The fan settles back to its 50 Hz speed by itself"
+   ],
+   "answer": 0,
+   "why": "Two rules at once. The fan: torque rises with the speed squared, $\\left(\\frac{60}{50}\\right)^2 = 1.44$, and power with the cube, about 1.73 times. The motor: above 50 Hz it is field weakening, and at rated current gives only about $\\frac{50}{60} \\approx 0.83$ of rated torque. Constant power means the **same** power, not 1.73 times as much. And a drive on a 400 V supply cannot make 480 V.",
+   "hint": "Work out what the fan needs at 60 Hz, then what the motor can give above base speed."
+  },
+  {
+   "id": "mix-fixes",
+   "type": "match",
+   "stage": "mix",
+   "level": 6.3,
+   "q": "Match each problem on a V/f drive to its cause or cure.",
+   "pairs": [
+    [
+     "Stalls starting a loaded conveyor at 2 to 3 Hz",
+     "Add boost"
+    ],
+    [
+     "Speed drops about 40 rpm as the load comes on",
+     "Slip compensation"
+    ],
+    [
+     "Runs hot and trips on over-current at low speed, lightly loaded",
+     "Too much boost: turn it down"
+    ],
+    [
+     "Stalls under load at 70 Hz, though fine at 50 Hz",
+     "Field weakening: less torque above 50 Hz"
+    ]
+   ],
+   "why": "Boost is for weak starts; too much of it over-fluxes a light motor. Slip compensation holds the speed as the load comes on. Above base speed the voltage has run out, so the torque falls: no setting cures that, only a bigger motor or different gearing."
+  },
+  {
+   "id": "check-overflux",
+   "type": "mcq",
+   "stage": "check",
+   "level": 6.0,
+   "q": "A drive is set up wrongly: it gives the full 400 V to a 400 V, 50 Hz motor while running it at 20 Hz. What happens?",
+   "options": [
+    "Nothing bad: more voltage just gives more torque",
+    "The motor runs faster than its 20 Hz speed",
+    "The motor is short of flux and stalls",
+    "The motor is over-fluxed: the iron saturates, the current climbs, and it runs hot or trips the drive"
+   ],
+   "answer": 3,
+   "why": "V/f should give $8 \\times 20 = 160$ V. At 400 V the motor would get 2.5 times its design flux; the iron saturates and the magnetising current climbs, so it overheats and the drive trips on over-current. Past saturation, extra voltage gives current and heat, not useful torque. The speed is set by the frequency, not the voltage, and a shortage of flux comes from too **little** voltage."
+  },
+  {
+   "id": "check-hoist",
+   "type": "mcq",
+   "stage": "check",
+   "level": 6.0,
+   "q": "A new hoist must hold its full load at zero speed when the brake lifts, then lower it slowly and smoothly. Which control mode?",
+   "options": [
+    "V/f with plenty of boost",
+    "Sensorless vector",
+    "Closed-loop vector, with an encoder",
+    "V/f with slip compensation"
+   ],
+   "answer": 2,
+   "why": "At zero speed a sensorless drive's model has almost nothing to measure, so it cannot hold full torque at standstill for long. An encoder tells the drive exactly where the rotor is, so it can give full torque at 0 rpm. Boost and slip compensation are V/f patches: neither lets a V/f drive hold a load still at 0 Hz."
+  },
+  {
+   "id": "check-iq",
+   "type": "numeric",
+   "stage": "check",
+   "q": "At full load a vector drive shows a torque current $I_q$ of {q1} A, and the motor gives {t1} Nm. Later $I_q$ reads {q2} A, with the flux current unchanged. About what torque is the motor giving now?",
+   "vars": {
+    "q1": {
+     "pick": [
+      8,
+      10,
+      12,
+      16,
+      20
+     ]
+    },
+    "t1": {
+     "pick": [
+      24,
+      36,
+      49,
+      72
+     ]
+    },
+    "pc": [
+     30,
+     120,
+     10
+    ]
+   },
+   "let": {
+    "q2": "q1 * pc / 100"
+   },
+   "answer": "t1 * q2 / q1",
+   "unit": "Nm",
+   "tolerance": 0.02,
+   "work": "$T \\propto I_q$, so $T = {t1} \\times \\frac{{q2}}{{q1}} = {answer}$ Nm",
+   "why": "With the flux held steady, torque goes in proportion to $I_q$, as a DC motor's torque follows its armature current. {q2} A is {pc}% of {q1} A, so the torque is {pc}% of {t1} Nm. The total current would not do: it includes the flux part, which stays the same whatever the load.",
+   "hint": "Torque goes in proportion to $I_q$. What share of {q1} A is {q2} A?"
+  }
+ ]
+}

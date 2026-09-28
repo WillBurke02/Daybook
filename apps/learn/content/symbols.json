@@ -1,0 +1,334 @@
+{
+ "about": "Formula help: how to read the maths. re is tried on a card's maths with spaces removed and \\tfrac made \\frac; the first that apply are shown.",
+ "symbols": [
+  {
+   "re": "\\\\frac\\{d[a-zA-Z]*\\}\\{d[a-zA-Z]+\\}|\\\\frac\\{d\\^2",
+   "tex": "\\frac{dy}{dx}",
+   "name": "A derivative: how fast something changes",
+   "says": "Read it \"d y by d x\". It is **not** a fraction to cancel: it means how much $y$ changes for each bit that $x$ changes, right at that point. On a graph it is the **gradient** (the steepness). With time on the bottom, $\\frac{de}{dt}$ is how fast $e$ is changing each second.",
+   "example": "if $x$ is distance in metres and $t$ is time in seconds, $\\frac{dx}{dt}$ is the speed in metres per second. A speedometer shows a derivative."
+  },
+  {
+   "re": "\\\\dot\\{",
+   "tex": "\\dot{x}",
+   "name": "A dot over a letter",
+   "says": "How fast that quantity changes each second: $\\dot{x}$ is the same as $\\frac{dx}{dt}$.",
+   "example": "$\\dot{x}$ for a position is a speed."
+  },
+  {
+   "re": "[a-zA-Z]'\\(|[a-zA-Z]'",
+   "tex": "f'(x)",
+   "name": "A dash after a letter (f dash)",
+   "says": "The derivative of a function: its gradient at $x$. $f'(x)$ says the same as $\\frac{dy}{dx}$ when $y = f(x)$.",
+   "example": "if $f(x) = x^2$ then $f'(x) = 2x$: at $x = 3$ the curve climbs 6 for each 1 across."
+  },
+  {
+   "re": "\\\\int",
+   "tex": "\\int e\\,dt",
+   "name": "An integral: adding up over time (or area)",
+   "says": "The long S stands for **sum**. $\\int e\\,dt$ adds up $e$ over time: each moment's value times a tiny bit of time, all added together. On a graph it is the **area under the curve**. The $dt$ says what you are adding along.",
+   "example": "speed × time is distance, so adding up (integrating) the speed over a journey gives how far you went. A small error kept up for a long time adds up to a big integral."
+  },
+  {
+   "re": "\\\\int_",
+   "tex": "\\int_a^b",
+   "name": "Numbers on an integral sign",
+   "says": "Where to start and stop adding: from the bottom number $a$ to the top one $b$.",
+   "example": "$\\int_0^3 2\\,dt = 6$: 2 every second for 3 seconds."
+  },
+  {
+   "re": "\\\\sum",
+   "tex": "\\sum",
+   "name": "A capital sigma: add them all up",
+   "says": "$\\sum$ means add up every one of what follows, usually for each value of a counter written underneath.",
+   "example": "$\\sum_{n=1}^{3} n = 1 + 2 + 3 = 6$."
+  },
+  {
+   "re": "\\\\lim",
+   "tex": "\\lim_{h \\to 0}",
+   "name": "A limit",
+   "says": "What the expression gets closer and closer to as $h$ shrinks towards 0, even if you can never put $h = 0$ in.",
+   "example": "it is how the gradient at a point is defined: the slope of a line through two points as they move together."
+  },
+  {
+   "re": "\\\\Delta",
+   "tex": "\\Delta t",
+   "name": "Delta: a change in",
+   "says": "$\\Delta$ (capital delta) in front of a letter means **the change in** it: the later value minus the earlier one. $\\Delta t$ is a length of time; $\\Delta V$ a change in voltage.",
+   "example": "the tank went from 20 °C to 35 °C: $\\Delta T = 15$ °C."
+  },
+  {
+   "re": "(^|[^a-zA-Z\\\\])e\\^|\\\\exp",
+   "tex": "e^{x}",
+   "name": "e to the power",
+   "says": "$e$ here is a fixed number, about 2.718 (as $\\pi$ is about 3.142). $e^{x}$ is the curve of natural growth; $e^{-t/\\tau}$ is a decay that shrinks by the same share every second. (Careful: in control, a plain $e$ with no power is the **error**.)",
+   "example": "a capacitor discharging: $V = V_0 e^{-t/RC}$ falls to about 37% after one time constant."
+  },
+  {
+   "re": "\\\\ln",
+   "tex": "\\ln x",
+   "name": "ln: the natural logarithm",
+   "says": "The power you would raise $e$ to, to get $x$. It undoes $e^{x}$: $\\ln(e^{x}) = x$.",
+   "example": "$\\ln 1 = 0$, and $\\ln e = 1$."
+  },
+  {
+   "re": "\\\\log",
+   "tex": "\\log_{10} x",
+   "name": "log: how many tens multiply to make it",
+   "says": "$\\log_{10} x$ is the power of 10 that gives $x$. It turns multiplying into adding, which is why decibels use it.",
+   "example": "$\\log_{10} 1000 = 3$, because $10^3 = 1000$. $\\log_{10} 2 \\approx 0.3$."
+  },
+  {
+   "re": "\\\\sin|\\\\cos|\\\\tan",
+   "tex": "\\sin\\theta",
+   "name": "sin, cos, tan: angles and ratios",
+   "says": "For an angle $\\theta$ in a right-angled triangle: $\\sin\\theta$ = opposite ÷ hypotenuse, $\\cos\\theta$ = adjacent ÷ hypotenuse, $\\tan\\theta$ = opposite ÷ adjacent. They also describe anything that goes round or waves (AC, vibration).",
+   "example": "$\\sin 30^\\circ = 0.5$: a slope 30° up a ramp 10 m long rises 5 m."
+  },
+  {
+   "re": "\\\\pi",
+   "tex": "\\pi",
+   "name": "pi",
+   "says": "About 3.1416: how many times a circle's diameter goes round its edge.",
+   "example": "a circle 10 cm across is $10\\pi \\approx 31.4$ cm round."
+  },
+  {
+   "re": "\\\\omega",
+   "tex": "\\omega",
+   "name": "omega (small ω)",
+   "says": "Usually a speed of turning or of an oscillation, in radians a second: $\\omega = 2\\pi f$.",
+   "example": "50 Hz mains: $\\omega = 2\\pi \\times 50 \\approx 314$ rad/s."
+  },
+  {
+   "re": "\\\\Omega",
+   "tex": "\\Omega",
+   "name": "Ohm (capital Ω)",
+   "says": "The unit of resistance: volts per amp.",
+   "example": "a 1 kΩ resistor passes 1 mA for each volt across it."
+  },
+  {
+   "re": "\\\\theta",
+   "tex": "\\theta",
+   "name": "theta (θ)",
+   "says": "Usually an angle. In control, a **dead time**: how long before a change shows at all.",
+   "example": "a 45° probe: $\\theta = 45^\\circ$."
+  },
+  {
+   "re": "\\\\tau",
+   "tex": "\\tau",
+   "name": "tau (τ)",
+   "says": "A **time constant**: how quickly something settles. After one $\\tau$ it has done about 63% of its change; after five, all but 1%.",
+   "example": "a tank that takes 10 s to reach 63% of a new temperature has $\\tau = 10$ s."
+  },
+  {
+   "re": "\\\\lambda",
+   "tex": "\\lambda",
+   "name": "lambda (λ)",
+   "says": "Usually a **wavelength**: the distance from one peak of a wave to the next. $v = f\\lambda$.",
+   "example": "5 MHz in steel: $\\lambda = 5920 \\div 5\\,000\\,000 \\approx 1.2$ mm."
+  },
+  {
+   "re": "\\\\rho",
+   "tex": "\\rho",
+   "name": "rho (ρ)",
+   "says": "Usually **density** (kg per cubic metre), or resistivity.",
+   "example": "steel is about 7850 kg/m³."
+  },
+  {
+   "re": "\\\\mu",
+   "tex": "\\mu",
+   "name": "mu (μ)",
+   "says": "As a prefix, **micro**: a millionth ($10^{-6}$), as in µs and µF. As a letter, often friction.",
+   "example": "4.8 µs is 0.0000048 s."
+  },
+  {
+   "re": "\\\\phi|\\\\varphi",
+   "tex": "\\phi",
+   "name": "phi (φ)",
+   "says": "Usually a **phase angle**: how far one wave is behind another, or a magnetic flux.",
+   "example": "current lagging voltage by 30°: $\\phi = 30^\\circ$."
+  },
+  {
+   "re": "\\\\alpha|\\\\beta|\\\\gamma|\\\\sigma|\\\\eta|\\\\epsilon|\\\\varepsilon",
+   "tex": "\\alpha\\ \\beta\\ \\sigma\\ \\eta",
+   "name": "Other Greek letters",
+   "says": "Just names for quantities, like x and y. Common ones: $\\alpha$ (alpha) an angle or a coefficient, $\\beta$ (beta) a transistor's gain, $\\sigma$ (sigma) a standard deviation or a stress, $\\eta$ (eta) an efficiency.",
+   "example": "$\\eta = 0.9$ means 90% efficient."
+  },
+  {
+   "re": "\\\\propto",
+   "tex": "\\propto",
+   "name": "Proportional to",
+   "says": "$a \\propto b$: if $b$ doubles, $a$ doubles.",
+   "example": "the current through a resistor $\\propto$ the voltage across it."
+  },
+  {
+   "re": "\\\\approx",
+   "tex": "\\approx",
+   "name": "Approximately equal",
+   "says": "Near enough equal: rounded, or a good estimate.",
+   "example": "$\\pi \\approx 3.14$."
+  },
+  {
+   "re": "\\\\le|\\\\ge|<|>|\\\\lt|\\\\gt",
+   "tex": "a \\le b",
+   "name": "Less than, greater than",
+   "says": "$<$ less than; $>$ greater than; $\\le$ less than or equal to; $\\ge$ greater than or equal to. The wide end faces the bigger number.",
+   "example": "$x \\ge 4$: 4 or more."
+  },
+  {
+   "re": "\\\\pm",
+   "tex": "\\pm",
+   "name": "Plus or minus",
+   "says": "Two answers, or a range either side.",
+   "example": "$10 \\pm 0.5$ mm: anything from 9.5 to 10.5 mm."
+  },
+  {
+   "re": "\\\\neq",
+   "tex": "\\neq",
+   "name": "Not equal",
+   "says": "The two sides are not the same.",
+   "example": "$2 + 2 \\neq 5$."
+  },
+  {
+   "re": "\\\\infty",
+   "tex": "\\infty",
+   "name": "Infinity",
+   "says": "Without end: bigger than any number.",
+   "example": "an open circuit has a resistance of (nearly) $\\infty$."
+  },
+  {
+   "re": "\\\\sqrt",
+   "tex": "\\sqrt{x}",
+   "name": "Square root",
+   "says": "The number that, times itself, makes $x$. It undoes squaring.",
+   "example": "$\\sqrt{25} = 5$, because $5 \\times 5 = 25$."
+  },
+  {
+   "re": "\\\\times10\\^",
+   "tex": "5.92 \\times 10^{3}",
+   "name": "Standard form: a number × a power of 10",
+   "says": "A short way to write very big or very small numbers. The power says how many places to move the decimal point: right for a plus, left for a minus.",
+   "example": "$5.92 \\times 10^{3} = 5920$; $4.8 \\times 10^{-6} = 0.0000048$."
+  },
+  {
+   "re": "\\^",
+   "tex": "x^{2}",
+   "name": "A small raised number: a power",
+   "says": "How many of that number are multiplied together. A power of $-1$ means divide: $x^{-1} = \\frac{1}{x}$. A power of $\\frac{1}{2}$ is a square root.",
+   "example": "$3^2 = 3 \\times 3 = 9$; $10^{3} = 1000$; $10^{-3} = 0.001$."
+  },
+  {
+   "re": "_",
+   "tex": "K_{p}",
+   "name": "A small letter below: part of the name",
+   "says": "A subscript just tells similar things apart. It is **not** multiplied: $K_p$ reads \"K p\", the proportional gain; $V_1$ is the first voltage; $t_{acc}$ the time to accelerate.",
+   "example": "$R_1$ and $R_2$ are two different resistors."
+  },
+  {
+   "re": "\\\\frac",
+   "tex": "\\frac{a}{b}",
+   "name": "A fraction line: divide",
+   "says": "The top divided by the bottom. Work out the top and the bottom first, then divide.",
+   "example": "$\\frac{vt}{2}$ is $v$ times $t$, then halved."
+  },
+  {
+   "re": "\\\\cdot|\\\\times",
+   "tex": "a \\times b",
+   "name": "Times",
+   "says": "$\\times$ and a raised dot $\\cdot$ both mean multiply.",
+   "example": "$3 \\cdot 4 = 12$."
+  },
+  {
+   "re": "(?<![\\\\a-zA-Z])[a-zA-Z]{2}(?![a-zA-Z])|[0-9][a-zA-Z]",
+   "tex": "vt",
+   "name": "Letters side by side: usually multiply",
+   "says": "Two letters (or a number and a letter) written together are usually multiplied: $vt$ is $v \\times t$, $IR$ is $I \\times R$, and $2d$ is $2 \\times d$. Three exceptions: an **abbreviation** is one name ($SP$ is the set-point, $PV$ the process value, not S times P); the $d$ in $\\frac{dy}{dx}$ belongs to the derivative; and $dt$ at the end of an integral says what you add up along (time).",
+   "example": "if $v = 5920$ and $t = 0.00001$, $vt = 0.0592$."
+  },
+  {
+   "re": "[0-9a-zA-Z}]\\(",
+   "tex": "3(x + 2)",
+   "name": "A number just before a bracket: multiply",
+   "says": "Multiply everything inside the bracket by it: $3(x + 2) = 3x + 6$. (A single letter like $f$ before a bracket can instead be a function: see $f(x)$.)",
+   "example": "$2(l + w)$ is the distance round a rectangle."
+  },
+  {
+   "re": "\\\\div",
+   "tex": "\\div",
+   "name": "Divide",
+   "says": "$\\div$ means divide, the same as a fraction line.",
+   "example": "$12 \\div 4 = 3$."
+  },
+  {
+   "re": "[0-9a-zA-Z]:[0-9a-zA-Z]",
+   "tex": "3:1",
+   "name": "A colon between numbers: a ratio",
+   "says": "How the parts compare: $3:1$ means 3 parts of one thing to every 1 part of the other (4 parts in all).",
+   "example": "a 3:1 gear ratio: the motor turns 3 times for each turn of the output."
+  },
+  {
+   "re": "\\\\Rightarrow|\\\\implies",
+   "tex": "\\Rightarrow",
+   "name": "A double arrow: so",
+   "says": "The step before leads to the one after: \"so\" or \"which means\".",
+   "example": "$2x = 6 \\Rightarrow x = 3$."
+  },
+  {
+   "re": "\\\\to|\\\\rightarrow",
+   "tex": "\\to",
+   "name": "An arrow",
+   "says": "\"Goes to\" or \"becomes\": in a limit, the value it gets closer to; elsewhere, a step or a change.",
+   "example": "$h \\to 0$: $h$ gets smaller and smaller."
+  },
+  {
+   "re": "\\\\dots|\\\\ldots|\\\\cdots",
+   "tex": "\\dots",
+   "name": "Three dots",
+   "says": "And so on, in the same pattern.",
+   "example": "$1, 2, 3, \\dots, 10$ is every whole number from 1 to 10."
+  },
+  {
+   "re": "\\\\([-0-9a-zA-Z.]+,[-0-9a-zA-Z.]+\\\\)",
+   "tex": "(x, y)",
+   "name": "Two numbers in brackets: a point",
+   "says": "Coordinates: how far across ($x$), then how far up ($y$).",
+   "example": "$(3, 5)$ is 3 across and 5 up."
+  },
+  {
+   "re": "[a-zA-Z]\\([a-zA-Z]\\)",
+   "tex": "f(x)",
+   "name": "f(x): a rule applied to x",
+   "says": "Read \"f of x\". A function: a rule that turns an input into an output. $f(3)$ means use the rule with 3 put in. It is **not** f times x.",
+   "example": "if $f(x) = 2x + 1$ then $f(3) = 7$."
+  },
+  {
+   "re": "\\\\left\\||\\|",
+   "tex": "|x|",
+   "name": "Straight bars: the size",
+   "says": "The value without its sign.",
+   "example": "$|-7| = 7$."
+  },
+  {
+   "re": "\\\\overline|\\\\bar",
+   "tex": "\\bar{x}",
+   "name": "A bar over a letter",
+   "says": "In statistics, the **mean** (average). In logic, **NOT**.",
+   "example": "$\\bar{x}$ of 2, 4 and 6 is 4."
+  },
+  {
+   "re": "\\\\circ",
+   "tex": "30^\\circ",
+   "name": "Degrees",
+   "says": "An angle (a full turn is 360°), or a temperature in °C.",
+   "example": "a right angle is 90°."
+  },
+  {
+   "re": "\\\\%",
+   "tex": "\\%",
+   "name": "Per cent",
+   "says": "Out of a hundred: 25% is $\\frac{25}{100} = 0.25$.",
+   "example": "20% of £150 is £30."
+  }
+ ]
+}

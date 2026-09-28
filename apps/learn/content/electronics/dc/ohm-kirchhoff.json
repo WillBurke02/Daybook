@@ -1,0 +1,454 @@
+{
+ "id": "electronics.dc.ohm-kirchhoff",
+ "title": "Ohm's and Kirchhoff's laws",
+ "tags": ["electrical", "circuits", "ohm", "kirchhoff"],
+ "kind": "procedure",
+ "level": 4.3,
+ "minutes": 25,
+ "goals": [
+  "Say what voltage, current and resistance are in plain words, and where the water-pipe picture breaks down",
+  "Work out a voltage, current or resistance with Ohm's law, in mA and kΩ as well as A and Ω",
+  "Find the total resistance of resistors in series and in parallel, and the power in a resistor",
+  "Use Kirchhoff's current and voltage laws to find a missing current or voltage, and work out a potential divider",
+  "Size a series resistor for an LED, and read a 4–20 mA loop as a voltage"
+ ],
+ "summary": "**Voltage** ($V$, volts) is the electrical push between two points. **Current** ($I$, amps) is how much charge flows past each second. **Resistance** ($R$, ohms, Ω) is how hard a part makes it to flow. Water picture: pressure, flow, a narrow pipe. Its limits: current is **not used up** (what goes into a lamp comes out; the lamp uses energy), and it flows only round a **complete loop**.\n\n**Ohm's law**: $V = IR$. Turn it round by undoing, not with a triangle: $I = \\frac{V}{R}$ and $R = \\frac{V}{I}$.\n\n**Prefixes**: m (milli) a thousandth, k (kilo) a thousand, M (mega) a million, µ (micro) a millionth. Volts ÷ kΩ = mA, and mA × kΩ = V.\n\n**Power** (watts, W): $P = VI = I^2R = \\frac{V^2}{R}$. Use the form that fits what you know. Double the current and a resistor gets four times as hot.\n\n**Series** (one path): one current through all; resistances add, $R_t = R_1 + R_2$.\n\n**Parallel** (side by side): the same voltage across each; $\\frac{1}{R_t} = \\frac{1}{R_1} + \\frac{1}{R_2}$, or for two, $R_t = \\frac{R_1 R_2}{R_1 + R_2}$ (product over sum). Always less than the smallest.\n\n**Kirchhoff's current law (KCL)**: the current into any point equals the current out: $I = I_1 + I_2$.\n\n**Kirchhoff's voltage law (KVL)**: round any loop, the voltage drops add up to the supply: $V = V_1 + V_2$.\n\n**Potential divider**: two resistors in series share the supply in proportion: $V_2 = V \\times \\frac{R_2}{R_1 + R_2}$.\n\n**In the panel**\n\n- LED resistor: $R = \\frac{V_s - V_f}{I}$, then check its wattage.\n- 4–20 mA across 250 Ω gives 1–5 V.\n- A 24 V PLC input draws a few mA.\n- A long cable drops $IR$ in each core, out and back.",
+ "resources": [
+  {"when": "before", "kind": "read", "title": "Ohm's Law", "url": "https://theengineeringmindset.com/ohms-law/", "by": "The Engineering Mindset", "minutes": 9},
+  {"when": "after", "kind": "read", "title": "Kirchhoff's Circuit Laws", "url": "https://www.electronics-tutorials.ws/dccircuits/dcp_4.html", "by": "Electronics Tutorials", "minutes": 9},
+  {"when": "after", "kind": "read", "title": "Resistors in Series and Parallel", "url": "https://www.electronics-tutorials.ws/resistor/res_5.html", "by": "Electronics Tutorials", "minutes": 8},
+  {"when": "after", "kind": "video", "title": "Ohm's Law, Kirchhoff's Laws, and Power Equations", "url": "https://www.allaboutcircuits.com/video-tutorials/essential-concepts-of-electric-circuits/", "by": "All About Circuits", "minutes": 15}
+ ],
+ "sources": [
+  "Hughes Electrical and Electronic Technology, 10th edition (Pearson)",
+  "P. Horowitz and W. Hill, The Art of Electronics, 3rd edition (Cambridge University Press, 2015)",
+  "IEC 61131-2: Programmable controllers. Part 2: Equipment requirements and tests"
+ ],
+ "formulas": [
+  {
+   "name": "Ohm's law",
+   "tex": "V = IR",
+   "match": ["V=IR"],
+   "says": "The voltage across a resistor is the current through it times its resistance. Double the current, double the voltage.",
+   "symbols": [["V", "the voltage across it (volts, V)"], ["I", "the current through it (amps, A; 1 mA is 0.001 A)"], ["R", "its resistance (ohms, Ω; 1 kΩ is 1000 Ω)"]],
+   "example": "0.5 A through a 48 Ω heater: $V = 0.5 \\times 48 = 24$ V."
+  },
+  {
+   "name": "Current from Ohm's law",
+   "tex": "I = \\frac{V}{R}",
+   "match": ["I=\\frac{V}{R}"],
+   "says": "Ohm's law turned round: the current is the voltage divided by the resistance. More push, more current; more resistance, less.",
+   "symbols": [["I", "the current (A)"], ["V", "the voltage (V)"], ["R", "the resistance (Ω)"]],
+   "example": "24 V across a 4.7 kΩ PLC input: $24 \\div 4700 \\approx 0.0051$ A, about 5.1 mA."
+  },
+  {
+   "name": "Resistance from Ohm's law",
+   "tex": "R = \\frac{V}{I}",
+   "match": ["R=\\frac{V}{I}"],
+   "says": "Ohm's law turned round: the resistance is the voltage divided by the current.",
+   "symbols": [["R", "the resistance (Ω)"], ["V", "the voltage (V)"], ["I", "the current (A)"]],
+   "example": "a coil draws 0.2 A from 24 V: $24 \\div 0.2 = 120$ Ω."
+  },
+  {
+   "name": "Power",
+   "tex": "P = VI",
+   "match": ["P=VI"],
+   "says": "The power (how fast energy is turned into heat, light or movement) is the voltage times the current.",
+   "symbols": [["P", "the power (watts, W)"], ["V", "the voltage (V)"], ["I", "the current (A)"]],
+   "example": "24 V at 2 A: $24 \\times 2 = 48$ W."
+  },
+  {
+   "name": "Power from the current and the resistance",
+   "tex": "P = I^2R",
+   "match": ["P=I^2R"],
+   "says": "The current squared (times itself), times the resistance. Only the current is squared. Double the current and the heat goes up four times.",
+   "symbols": [["P", "the power (W)"], ["I", "the current (A); $I^2$ is $I \\times I$"], ["R", "the resistance (Ω)"]],
+   "example": "3 A in 10 Ω: $3^2 \\times 10 = 9 \\times 10 = 90$ W."
+  },
+  {
+   "name": "Power from the voltage and the resistance",
+   "tex": "P = \\frac{V^2}{R}",
+   "match": ["\\frac{V^2}{R}"],
+   "says": "The voltage squared, divided by the resistance. Handy when you know the voltage across a resistor but not the current.",
+   "symbols": [["P", "the power (W)"], ["V", "the voltage across the resistor (V); $V^2$ is $V \\times V$"], ["R", "the resistance (Ω)"]],
+   "example": "24 V across 48 Ω: $24^2 \\div 48 = 576 \\div 48 = 12$ W."
+  },
+  {
+   "name": "Resistors in series",
+   "tex": "R_t = R_1 + R_2",
+   "match": ["R_t=R_1+R_2"],
+   "says": "Resistors one after the other (one path) just add up. It works for any number: add them all.",
+   "symbols": [["R_t", "the total resistance (Ω)"], ["R_1", "the first resistor (Ω)"], ["R_2", "the second resistor (Ω)"]],
+   "example": "100 Ω and 200 Ω in series: $100 + 200 = 300$ Ω."
+  },
+  {
+   "name": "Resistors in parallel",
+   "tex": "\\frac{1}{R_t} = \\frac{1}{R_1} + \\frac{1}{R_2}",
+   "match": ["\\frac{1}{R_t}"],
+   "says": "Resistors side by side: add up one-over each resistance, then turn the answer back over. The total is always less than the smallest.",
+   "symbols": [["R_t", "the total resistance (Ω)"], ["R_1", "the first resistor (Ω)"], ["R_2", "the second resistor (Ω)"], ["\\frac{1}{R}", "one over R: 1 divided by that resistance"]],
+   "example": "100 Ω and 300 Ω: $0.01 + 0.00333 = 0.01333$, and $1 \\div 0.01333 = 75$ Ω."
+  },
+  {
+   "name": "Two in parallel: product over sum",
+   "tex": "R_t = \\frac{R_1 R_2}{R_1 + R_2}",
+   "match": ["\\frac{R_1R_2}{R_1+R_2}"],
+   "says": "For exactly two resistors in parallel: multiply them (the product), add them (the sum), and divide the first by the second.",
+   "symbols": [["R_t", "the total resistance (Ω)"], ["R_1", "the first resistor (Ω)"], ["R_2", "the second resistor (Ω)"]],
+   "example": "100 Ω and 300 Ω: $\\frac{100 \\times 300}{100 + 300} = \\frac{30\\,000}{400} = 75$ Ω."
+  },
+  {
+   "name": "Potential divider",
+   "tex": "V_2 = V \\times \\frac{R_2}{R_1 + R_2}",
+   "match": ["\\frac{R_2}{R_1+R_2}"],
+   "says": "Two resistors in series share the supply in proportion to their resistance: $R_2$ gets its share of the total resistance as its share of the voltage.",
+   "symbols": [["V_2", "the voltage across $R_2$ (V)"], ["V", "the supply voltage across both (V)"], ["R_1", "the other resistor (Ω)"], ["R_2", "the resistor you want the voltage across (Ω)"]],
+   "example": "24 V across 3 kΩ and 1 kΩ: $24 \\times \\frac{1}{4} = 6$ V across the 1 kΩ, and the other 18 V across the 3 kΩ."
+  },
+  {
+   "name": "Kirchhoff's current law (KCL)",
+   "tex": "I = I_1 + I_2 + I_3 + \\dots",
+   "match": ["I=I_1+I_2"],
+   "says": "The current into any point equals the current out. A supply current that splits into branches is the sum of the branch currents: nothing piles up and nothing leaks.",
+   "symbols": [["I", "the total current into the junction (A)"], ["I_1, I_2, I_3", "the currents out along each branch (A)"]],
+   "example": "a fuse carries 0.5 A to three loads; two draw 0.2 A and 0.1 A, so the third draws $0.5 - 0.2 - 0.1 = 0.2$ A."
+  },
+  {
+   "name": "Kirchhoff's voltage law (KVL)",
+   "tex": "V = V_1 + V_2 + \\dots",
+   "match": ["V=V_1+V_2"],
+   "says": "Go round any closed loop and the voltage drops across the parts add up to the supply voltage.",
+   "symbols": [["V", "the supply voltage (V)"], ["V_1, V_2", "the voltage drop across each part in the loop (V)"]],
+   "example": "24 V across 100 Ω and 200 Ω in series: 8 V + 16 V = 24 V."
+  },
+  {
+   "name": "Series resistor for an LED",
+   "tex": "R = \\frac{V_s - V_f}{I}",
+   "match": ["\\frac{V_s-V_f}{I}"],
+   "says": "The resistor takes whatever voltage the LED does not (KVL), at the current you want the LED to run at (Ohm's law).",
+   "symbols": [["R", "the series resistor (Ω)"], ["V_s", "the supply voltage (V)"], ["V_f", "the LED's forward voltage, what it drops when lit (V): about 2 V for red, about 3 V for white or blue"], ["I", "the LED current you want (A; 10 mA is 0.01 A)"]],
+   "example": "24 V, a red LED (2 V), 10 mA: $\\frac{24 - 2}{0.01} = 2200$ Ω, which is 2.2 kΩ."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-share",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A 24 V supply feeds two resistors **in series** (one after the other, so the current has one path through both): 1 kΩ (1000 ohms) and 2 kΩ (2000 ohms). What voltage is across the 2 kΩ resistor?",
+   "options": ["16 V", "8 V", "12 V", "24 V"],
+   "answer": 0,
+   "why": "The two share the 24 V in proportion to their resistance. The total is 3 kΩ, and the 2 kΩ is two of those three parts, so it takes $\\frac{2}{3}$ of 24 V: 16 V. The 1 kΩ takes the other 8 V, and $16 + 8 = 24$. 12 V would be an equal split, right only for equal resistors; 24 V across each would be true only in parallel."
+  },
+  {
+   "id": "vir",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Voltage, current and resistance",
+   "body": "Three words do all the work.\n\n- **Voltage** ($V$, in volts, V) is the electrical **push** between two points. 24 V pushes twice as hard as 12 V.\n- **Current** ($I$, in amps, A) is how much electric **charge** (carried by electrons in the wire) flows past a point each second.\n- **Resistance** ($R$, in ohms, Ω) is how hard a part makes it for current to flow.\n\nThe **water-pipe picture**: voltage is the pressure difference a pump makes, current is the flow of water, resistance is a narrow section of pipe.\n\nWhere it breaks: current is **not used up**. What flows into a lamp flows out of it; what the lamp uses is **energy**. And current flows only round a **complete loop** back to the supply.",
+   "more": "Picture a pump pushing water round a closed loop of pipe with one narrow section. The pump is the supply, and the pressure difference it makes is the voltage. The water moving is the current. The narrow section is the resistance: squeeze it tighter and less flows for the same pressure.\n\nWorked number: a 24 V supply across a 48 Ω heater element. Twice the push would give twice the flow; twice the resistance, half the flow. Here 0.5 A flows (the next card shows why).\n\nTwo places the picture misleads. A cut pipe spills water, but a cut wire (an **open circuit**) stops the current dead: nothing leaks out. And a voltage is always *between* two points, like the pressure difference across the narrow section: that is why a meter needs both leads on."
+  },
+  {
+   "id": "vir-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.6,
+   "q": "A lamp on a 24 V supply draws 0.5 A in the wire going into it. What current flows in the wire coming out of it, back to the supply?",
+   "options": ["Less than 0.5 A: the lamp uses some up", "0.5 A: the same", "0 A: the lamp uses it all", "More than 0.5 A"],
+   "answer": 1,
+   "why": "Current is not used up: every bit of charge that goes in comes out. What the lamp uses is **energy**, turned into light and heat. 'Less comes out' is the common slip from picturing current as fuel; a meter in either wire reads the same 0.5 A."
+  },
+  {
+   "id": "ohm",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Ohm's law",
+   "body": "Numbers first. A 48 Ω heater element on 24 V draws 0.5 A. And $0.5 \\times 48 = 24$.\n\nThat is **Ohm's law**:\n\n$$V = IR$$\n\nIt says: the voltage across a resistor is the current through it times its resistance. $V$ in volts, $I$ in amps, $R$ in ohms.\n\nTurn it round as in rearranging formulas: undo what was done to the letter you want.\n\n- $I$ was multiplied by $R$, so divide both sides by $R$: $I = \\frac{V}{R}$\n- For $R$, divide both sides by $I$: $R = \\frac{V}{I}$\n\nCheck it makes sense: more push, more current; more resistance, less current.",
+   "more": "Picture the heater again. Double the voltage to 48 V and the current doubles to 1 A. Double the resistance instead, to 96 Ω on 24 V, and the current halves to 0.25 A. Ohm's law is that pattern written down.\n\nWorked number: a solenoid coil reads 60 Ω on a meter. On 24 V, $I = \\frac{V}{R} = \\frac{24}{60} = 0.4$ A.\n\nThe other way: a coil draws 0.2 A from 24 V. $R = \\frac{V}{I} = \\frac{24}{0.2} = 120$ Ω.\n\nYou may have met the **triangle** (V on top, I and R below). It works for this one formula only. Undoing the steps works for every formula you will meet, so use that, and check with numbers: $0.2 \\times 120 = 24$. Right."
+  },
+  {
+   "id": "ohm-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "A solenoid valve coil measures {R} Ω. It runs on 24 V. What current does it draw?",
+   "vars": {"R": {"pick": [48, 60, 80, 96, 120, 240]}},
+   "answer": "24 / R",
+   "unit": "A",
+   "work": "$I = \\frac{V}{ R } = \\frac{24}{{R}} = {answer}$ A",
+   "why": "Turn $V = IR$ round: $I$ is multiplied by $R$, so divide both sides by $R$: $I = \\frac{V}{ R }$. Multiplying 24 × {R} gives a huge number, not a current: more resistance must mean **less** current."
+  },
+  {
+   "id": "prefixes",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Milli, kilo and mega",
+   "body": "Real circuits use small currents and big resistances, so the units carry **prefixes**:\n\n- **m** (milli) is a thousandth: 1 mA = 0.001 A. A PLC input draws a few mA.\n- **k** (kilo) is a thousand: 4.7 kΩ = 4700 Ω.\n- **M** (mega) is a million: 1 MΩ = 1 000 000 Ω.\n- **µ** (micro) is a millionth: 1 µA = 0.000001 A.\n\nTo use a formula, turn everything into plain volts, amps and ohms first. Or use the shortcut: **volts ÷ kΩ = mA**, because the thousands cancel. 24 V across 4.7 kΩ: $24 \\div 4.7 \\approx 5.1$ mA.",
+   "more": "Why does volts ÷ kΩ give mA? Written out in full: $24 \\div 4700 \\approx 0.0051$ A. That is a lot of zeros to lose track of. Dividing by thousands of ohms gives an answer a thousand times smaller than amps, which is milliamps: $24 \\div 4.7 \\approx 5.1$ mA. The same current, easier to read.\n\nIt works the other way too: mA × kΩ = V. 20 mA through 250 Ω (0.25 kΩ) is $20 \\times 0.25 = 5$ V.\n\nThe usual slip is mixing them: 24 ÷ 4.7 read as amps gives 5.1 A, a thousand times too much. Keep a matching pair of units, or change everything to V, A and Ω first."
+  },
+  {
+   "id": "plc-input",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "A 24 V PLC input behaves roughly like a resistor of {R} kΩ. How much current does it draw when the sensor switches it on? Answer in mA.",
+   "vars": {"R": {"pick": [3.3, 4.7, 5.6, 6.8]}},
+   "answer": "24 / R",
+   "unit": "mA",
+   "work": "$I = \\frac{V}{ R } = \\frac{24}{{R}} = {answer}$ mA (volts ÷ kΩ gives mA)",
+   "why": "Volts ÷ kΩ gives milliamps: {answer} mA. That is normal: the PLC standard (IEC 61131-2) allows 2 to 15 mA for a standard 24 V input that is on. Reading 24 ÷ {R} as amps would be a thousand times too much: several amps into one input."
+  },
+  {
+   "id": "series",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Series: one path, the voltages add up",
+   "body": "In **series** the parts are one after the other, so the current has **one path**. The same current flows through each.\n\nThe resistances **add**: $R_t = R_1 + R_2$. ($R_t$ is the total; the small 1 and 2 just name the two resistors.)\n\nEach resistor takes a share of the supply, its **voltage drop**: $V_1 = IR_1$ and $V_2 = IR_2$. The drops add up to the supply:\n\n$$V = V_1 + V_2$$\n\nThat is **Kirchhoff's voltage law** (KVL): round any loop, the drops add up to the supply. The bigger resistor takes the bigger share.\n\nMove the sliders: the two voltages always add up to the battery's.",
+   "widget": {"name": "circuit", "params": {"V": 24, "R1": 100, "R2": 200, "mode": "series", "controls": ["V", "R1", "R2"]}},
+   "more": "Picture two narrow sections in one pipe, one after the other. All the water goes through both, so the flow is the same in each. The pump's pressure is used up across the two, the tighter one taking more.\n\nWorked number: 24 V across 100 Ω and 200 Ω in series. Total $R_t = 100 + 200 = 300$ Ω. Current $I = \\frac{24}{300} = 0.08$ A (80 mA). Across the 100 Ω: $0.08 \\times 100 = 8$ V. Across the 200 Ω: $0.08 \\times 200 = 16$ V. Check with KVL: $8 + 16 = 24$ V. Right.\n\nThat is the try question again: twice the resistance, twice the share. Two resistors sharing a voltage like this are called a **potential divider**."
+  },
+  {
+   "id": "series-q",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "Set the battery and the two resistors to anything you like. Work the answer out yourself, then check it against the picture.",
+   "widget": {"name": "circuit", "params": {"V": 12, "R1": 220, "R2": 330, "mode": "series", "controls": ["V", "R1", "R2"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "What is the voltage $V_2$ across R2? Total resistance first, then the current, then $V_2 = IR_2$.",
+    "answer": "V2",
+    "unit": "V",
+    "tolerance": 0.02,
+    "hint": "Add the two resistances, then $I = \\frac{ V }{R_t}$.",
+    "why": "Total $R_t$ = {R1} + {R2} = {Rt} Ω. Current $I = \\frac{{V}}{{Rt}} = {I}$ A. So $V_2 = IR_2 = {V2}$ V. Check with KVL: {V1} + {V2} = {V} V. Using R2 alone for the current forgets that the current has to get through both."
+   }
+  },
+  {
+   "id": "parallel",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Parallel: side by side, the currents add up",
+   "body": "In **parallel** the parts sit side by side, each wired straight across the supply. Each gets the **full voltage** and takes its own current: $I_1 = \\frac{V}{R_1}$ and $I_2 = \\frac{V}{R_2}$.\n\nWhere the wires join, the currents add up:\n\n$$I = I_1 + I_2$$\n\nThat is **Kirchhoff's current law** (KCL): the current into any point equals the current out.\n\nTwo paths let more current through, so the total resistance **falls**. Add up one-over each resistor, then turn the answer back over:\n\n$$\\frac{1}{R_t} = \\frac{1}{R_1} + \\frac{1}{R_2}$$\n\nFor two, **product over sum** is quicker: $R_t = \\frac{R_1 R_2}{R_1 + R_2}$. The total is always **less than the smallest**.",
+   "widget": {"name": "circuit", "params": {"V": 12, "R1": 100, "R2": 300, "mode": "parallel", "controls": ["V", "R1", "R2"]}},
+   "more": "Picture a second pipe added beside the first. The pump's pressure is across both, and the water now has two ways through, so more flows in total. Adding a path can only make it easier, which is why the total resistance is less than either one.\n\nWorked number: 100 Ω and 300 Ω in parallel on 12 V. $I_1 = \\frac{12}{100} = 0.12$ A and $I_2 = \\frac{12}{300} = 0.04$ A. KCL: the supply gives $0.12 + 0.04 = 0.16$ A. Total resistance $\\frac{12}{0.16} = 75$ Ω.\n\nProduct over sum agrees: $\\frac{100 \\times 300}{100 + 300} = \\frac{30\\,000}{400} = 75$ Ω, less than the smaller 100 Ω. So does one-over: $0.01 + 0.00333 = 0.01333$, and $1 \\div 0.01333 = 75$ Ω. Do not forget that last turn back over.\n\nTwo equal resistors in parallel make half of one: two 100 Ω make 50 Ω."
+  },
+  {
+   "id": "parallel-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.4,
+   "intro": "Two resistors in parallel. Set them as you like, work out the supply current, then check it against the picture.",
+   "widget": {"name": "circuit", "params": {"V": 24, "R1": 200, "R2": 600, "mode": "parallel", "controls": ["V", "R1", "R2"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "What current does the battery supply, in mA? Work out each branch current, then add them (KCL).",
+    "answer": "I * 1000",
+    "unit": "mA",
+    "tolerance": 0.02,
+    "hint": "Each resistor has the full battery voltage across it: $I_1 = \\frac{ V }{R_1}$.",
+    "why": "Each branch has the full {V} V across it: $I_1 = {I1}$ A and $I_2 = {I2}$ A. KCL: the supply gives the sum, {I} A, which is {answer} mA (× 1000 for mA). Sharing the voltage between them, as in series, is the slip: in parallel each gets all of it."
+   }
+  },
+  {
+   "id": "power",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Power: how fast energy is used",
+   "body": "**Power** ($P$, in watts, W) is how fast a part turns electrical energy into heat, light or movement.\n\n$$P = VI$$\n\nThe power is the voltage times the current. 24 V at 2 A is 48 W.\n\nFor a resistor, put Ohm's law into it and you get two more forms:\n\n- $P = I^2R$ when you know the current ($I^2$ is $I \\times I$)\n- $P = \\frac{V^2}{R}$ when you know the voltage\n\nAll three give the same answer: pick the one that uses what you know. Every resistor has a **power rating** (0.25 W is common). Go over it and it overheats.",
+   "more": "Where do the other two come from? Swap $V$ for $IR$ in $P = VI$: $P = IR \\times I = I^2R$. Swap $I$ for $\\frac{V}{R}$: $P = V \\times \\frac{V}{R} = \\frac{V^2}{R}$. No new physics, just Ohm's law put in.\n\nWorked number, all three ways: 24 V across a 48 Ω heater draws 0.5 A.\n\n- $P = VI = 24 \\times 0.5 = 12$ W\n- $P = I^2R = 0.25 \\times 48 = 12$ W\n- $P = \\frac{V^2}{R} = \\frac{576}{48} = 12$ W\n\nThe square matters: double the current through a resistor and the heat goes up **four** times. That is why a modest overload makes a resistor so much hotter."
+  },
+  {
+   "id": "power-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A {R} Ω resistor has {V} V across it. How much power does it turn into heat?",
+   "vars": {"R": {"pick": [100, 220, 470, 1000]}, "V": {"pick": [5, 10, 12, 24]}},
+   "answer": "V^2 / R",
+   "unit": "W",
+   "hint": "You know the voltage and the resistance. Which form of the power formula uses just those two?",
+   "work": "$P = \\frac{V^2}{ R } = \\frac{{V}^2}{{R}} = {answer}$ W",
+   "why": "You know $V$ and $R$, so $P = \\frac{V^2}{ R }$ does it in one step: {V} squared, divided by {R}. Forgetting to square ({V} ÷ {R}) gives the current in amps, not the power."
+  },
+  {
+   "id": "worked-divider",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A **potential divider** is two resistors in series, used to get a smaller voltage from a bigger one. 24 V is across $R_1$ = 3 kΩ and $R_2$ = 1 kΩ in series. What voltage is across $R_2$?",
+   "steps": [
+    {"ask": "The total resistance (series: add).", "show": "$R_t = R_1 + R_2 = 3 + 1 = 4$ kΩ"},
+    {"ask": "The current (Ohm's law; volts ÷ kΩ = mA).", "show": "$I = \\frac{V}{R_t} = \\frac{24}{4} = 6$ mA, the same through both."},
+    {"ask": "The voltage across $R_2$.", "show": "$V_2 = IR_2 = 6 \\times 1 = 6$ V (mA × kΩ = V)"},
+    {"ask": "Check with Kirchhoff's voltage law.", "show": "$V_1 = 6 \\times 3 = 18$ V, and $18 + 6 = 24$ V. Right."},
+    {"ask": "The shortcut, in one line.", "show": "$V_2 = V \\times \\frac{R_2}{R_1 + R_2} = 24 \\times \\frac{1}{4} = 6$ V: $R_2$'s share of the total resistance is its share of the voltage."}
+   ],
+   "why": "Both laws in one: series adds the resistances and carries one current; KVL says the shares add up to the supply. The slip is $\\frac{R_2}{R_1}$ ($\\frac{1}{3}$ of 24 V = 8 V): the share is of the **total**, $R_1 + R_2$."
+  },
+  {
+   "id": "faded-divider",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 4.4,
+   "q": "12 V is across $R_1$ = 4.7 kΩ and $R_2$ = 3.3 kΩ in series. What voltage is across $R_2$?",
+   "steps": [
+    {"ask": "The total resistance.", "show": "$R_t = 4.7 + 3.3 = 8$ kΩ"},
+    {"ask": "The current.", "show": "$I = \\frac{12}{8} = 1.5$ mA"},
+    {"ask": "The voltage across $R_2$.", "show": "$V_2 = 1.5 \\times 3.3 = 4.95$ V"},
+    {"ask": "Check with KVL.", "show": "$V_1 = 1.5 \\times 4.7 = 7.05$ V, and $7.05 + 4.95 = 12$ V. Right."}
+   ],
+   "why": "Or in one line: $V_2 = 12 \\times \\frac{3.3}{8} = 4.95$ V. The bigger resistor, $R_1$, takes the bigger share."
+  },
+  {
+   "id": "divider-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 4.4,
+   "q": "A potential divider: {V} V is across $R_1$ = {ra} kΩ and $R_2$ = {rb} kΩ in series. What voltage is across $R_2$?",
+   "vars": {"V": {"pick": [5, 10, 12, 24]}, "ra": {"pick": [1, 2.2, 3.3, 4.7, 10]}, "rb": {"pick": [1, 2.2, 3.3, 4.7, 10]}},
+   "let": {"rt": "ra + rb", "ma": "V / (ra + rb)"},
+   "answer": "V * rb / (ra + rb)",
+   "unit": "V",
+   "hint": "Add the resistances, find the current, then $V_2 = IR_2$.",
+   "work": "$R_t = {ra} + {rb} = {rt}$ kΩ; $I = \\frac{{V}}{{rt}} = {ma}$ mA; $V_2 = IR_2 = {ma} \\times {rb} = {answer}$ V",
+   "why": "In one line, $V_2 = V \\times \\frac{R_2}{R_1 + R_2}$: $R_2$ takes its share of the **total** resistance. Dividing by $R_1$ alone, or splitting the voltage equally, are the usual slips."
+  },
+  {
+   "id": "led-resistor",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.7,
+   "q": "An indicator LED (a light-emitting diode) on a {vs} V supply should run at {ma} mA. When lit it drops {vf} V across itself: its **forward voltage**. What resistor goes in series with it?",
+   "vars": {"vs": {"pick": [12, 24]}, "vf": {"pick": [1.8, 2, 2.2, 3]}, "ma": {"pick": [5, 10, 15, 20]}},
+   "let": {"vr": "vs - vf", "pw": "(vs - vf) * ma / 1000"},
+   "answer": "(vs - vf) / ma * 1000",
+   "unit": "Ω",
+   "hint": "Kirchhoff's voltage law first: how much of the supply is left for the resistor?",
+   "work": "$R = \\frac{V_s - V_f}{I} = \\frac{{vr}}{{ma} \\times 10^{-3}} = {answer}$ Ω",
+   "why": "KVL: the LED takes {vf} V, so the resistor must drop the other {vr} V. Ohm's law: {vr} V ÷ {ma} mA = {answer} Ω (volts ÷ mA gives kΩ, so × 1000 for ohms). Using the full {vs} V forgets the LED's share. In practice pick the next standard value up, and check the wattage: this resistor turns {pw:2} W into heat, and at 24 V a 0.25 W resistor can be too small."
+  },
+  {
+   "id": "loop-250",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "A pressure transmitter sends a **4–20 mA** signal: 4 mA at the bottom of its range, 20 mA at the top. The analogue input measures it as the voltage across a 250 Ω resistor. The loop carries {ma} mA. What voltage is across the resistor?",
+   "vars": {"ma": [4, 20, 0.5]},
+   "answer": "ma / 1000 * 250",
+   "unit": "V",
+   "work": "$V = IR = {ma} \\times 10^{-3} \\times 250 = {answer}$ V",
+   "why": "Ohm's law, and mA × kΩ = V: 250 Ω is 0.25 kΩ, so {ma} × 0.25 = {answer} V. 4 mA gives 1 V and 20 mA gives 5 V: that is why 250 Ω is the usual choice, it turns 4–20 mA into 1–5 V. Leaving the current in mA as if it were amps gives a thousand volts or more."
+  },
+  {
+   "id": "widget-rt",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.6,
+   "intro": "Parallel again. Set R1 and R2 to any two values.",
+   "widget": {"name": "circuit", "params": {"V": 12, "R1": 470, "R2": 680, "mode": "parallel", "controls": ["R1", "R2"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "What is the total resistance $R_t$? Use product over sum, then check it is less than the smaller resistor.",
+    "answer": "Rt",
+    "unit": "Ω",
+    "tolerance": 0.02,
+    "hint": "$R_t = \\frac{R_1 R_2}{R_1 + R_2}$: multiply them, add them, divide.",
+    "why": "$R_t = \\frac{{R1} \\times {R2}}{{R1} + {R2}} = {Rt}$ Ω, less than the smaller one. Adding them ({R1} + {R2}) is the series rule: in parallel a second path makes it **easier** for current to flow, so the total goes down."
+   }
+  },
+  {
+   "id": "why-parallel",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.4,
+   "q": "Why is the total resistance of resistors in parallel always **less** than the smallest one?",
+   "options": [
+    "The voltage is shared between them, so each passes less current",
+    "Each extra resistor is another path, so more current flows for the same voltage",
+    "Current is used up in the first resistor, so the second carries less",
+    "The resistors cancel each other out"
+   ],
+   "answer": 1,
+   "why": "Each resistor in parallel has the full voltage across it and passes its own current; KCL adds them up. More total current from the same voltage means less total resistance ($R = \\frac{V}{I}$). The voltage is *not* shared in parallel (that is series), and current is never used up."
+  },
+  {
+   "id": "mix-fuse-kcl",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.5,
+   "q": "A 24 V supply feeds three things through one fuse: a relay coil drawing {a} mA, a sensor drawing {b} mA, and a solenoid valve. The fuse carries {tot} A. What current does the solenoid valve draw, in mA?",
+   "vars": {"a": {"pick": [20, 25, 40, 50]}, "b": {"pick": [10, 15, 20, 30]}, "s0": {"pick": [150, 200, 250, 300, 400, 500]}},
+   "let": {"tot": "(a + b + s0) / 1000", "totma": "a + b + s0"},
+   "answer": "totma - a - b",
+   "unit": "mA",
+   "hint": "What goes into the junction comes out. Turn the fuse current into mA first.",
+   "work": "{tot} A is {totma} mA. $I_3 = {totma} - {a} - {b} = {answer}$ mA",
+   "why": "Kirchhoff's current law: everything that comes through the fuse goes out through the three loads, $I = I_1 + I_2 + I_3$. So the missing one is the total minus the other two. Adding all three numbers is the slip: the fuse current is already the total."
+  },
+  {
+   "id": "mix-cable-drop",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A 24 V supply feeds a solenoid valve at the far end of a long cable. The solenoid draws {cur} A. Each of the two cable cores (out and back) has a resistance of {rc} Ω. What voltage actually reaches the solenoid?",
+   "vars": {"cur": {"pick": [0.5, 0.75, 1, 1.5, 2]}, "rc": {"pick": [0.2, 0.3, 0.5, 0.8, 1]}},
+   "let": {"drop": "cur * rc"},
+   "answer": "24 - 2 * cur * rc",
+   "unit": "V",
+   "hint": "Kirchhoff's voltage law: round the loop, the 24 V is shared between the out core, the solenoid and the back core.",
+   "work": "Each core drops $IR = {cur} \\times {rc} = {drop}$ V. The solenoid gets $24 - 2 \\times {drop} = {answer}$ V",
+   "why": "KVL round the loop: $V = V_1 + V_2 + V_3$, the out core, the solenoid and the back core. The current goes out on one core and back on the other, so there are **two** drops of {drop} V to take off, not one. This is why long runs to 24 V valves need thicker cable: with too little voltage the coil may not pull in."
+  },
+  {
+   "id": "mix-which",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.2,
+   "q": "A 10 Ω brake resistor carries 3 A. What power does it turn into heat?",
+   "options": ["30 W", "900 W", "90 W", "3.3 W"],
+   "answer": 2,
+   "why": "You know $I$ and $R$, so use $P = I^2R$. Only the current is squared: $3^2 \\times 10 = 9 \\times 10 = 90$ W. 30 W is $IR$, which is the voltage (30 V), not the power. 900 W squares the resistance too. Check another way: $V = 30$ V, and $P = VI = 30 \\times 3 = 90$ W."
+  },
+  {
+   "id": "check-share",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.4,
+   "q": "A {V} V supply feeds two resistors in series: $R_1$ = {ra} kΩ and $R_2$ = {rb} kΩ. What voltage is across $R_1$?",
+   "vars": {"V": {"pick": [12, 24]}, "ra": {"pick": [1, 2, 3, 5]}, "rb": {"pick": [1, 2, 3, 5]}},
+   "let": {"rt": "ra + rb", "ma": "V / (ra + rb)"},
+   "answer": "V * ra / (ra + rb)",
+   "unit": "V",
+   "work": "$R_t = {rt}$ kΩ; $I = \\frac{{V}}{{rt}} = {ma}$ mA; $V_1 = IR_1 = {ma} \\times {ra} = {answer}$ V",
+   "why": "Series: one current through both, and the supply shares out in proportion to resistance. $R_1$ is {ra} parts of {rt}, so it takes $\\frac{{ra}}{{rt}}$ of the {V} V. An equal split is right only for equal resistors."
+  },
+  {
+   "id": "check-parallel",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.5,
+   "q": "A {ra} Ω and a {rb} Ω resistor are wired in parallel. What is their total resistance?",
+   "vars": {"ra": {"pick": [100, 220, 330, 470, 1000]}, "rb": {"pick": [150, 680, 1000, 2200, 4700]}},
+   "answer": "ra * rb / (ra + rb)",
+   "unit": "Ω",
+   "hint": "Product over sum. Your answer must be smaller than both.",
+   "work": "$R_t = \\frac{R_1 R_2}{R_1 + R_2} = \\frac{{ra} \\times {rb}}{{ra} + {rb}} = {answer}$ Ω",
+   "why": "Product over sum for two in parallel. Adding them ({ra} + {rb}) is the series rule; in parallel the second path lowers the total, so the answer is always below the smaller resistor."
+  },
+  {
+   "id": "check-power",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.8,
+   "q": "A 4–20 mA loop runs at {ma} mA through a 250 Ω measuring resistor. How much power does the resistor turn into heat? Answer in mW (milliwatts: thousandths of a watt).",
+   "vars": {"ma": [4, 20, 1]},
+   "let": {"pw": "(ma / 1000)^2 * 250"},
+   "answer": "(ma / 1000)^2 * 250 * 1000",
+   "unit": "mW",
+   "hint": "You know the current and the resistance: $P = I^2R$, with the current in amps.",
+   "work": "$P = I^2R = ({ma} \\times 10^{-3})^2 \\times 250 = {pw}$ W $= {answer}$ mW",
+   "why": "$P = I^2R$ with $I$ in amps. At 20 mA that is $0.02^2 \\times 250 = 0.1$ W, so a 0.25 W resistor is plenty. Squaring 20 (not 0.02) gives 100 000 W: always turn mA into amps before you square."
+  }
+ ]
+}

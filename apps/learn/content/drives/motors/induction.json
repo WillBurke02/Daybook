@@ -1,0 +1,425 @@
+{
+ "id": "drives.motors.induction",
+ "title": "Induction motors and slip",
+ "tags": ["drives", "motors", "induction", "slip"],
+ "kind": "concept",
+ "level": 5.3,
+ "minutes": 25,
+ "goals": [
+  "Explain how three phases make a rotating field, and reverse a motor by swapping two phases",
+  "Work out the synchronous speed from the frequency and the poles, or the pole pairs",
+  "Explain why the rotor must slip, and work out the slip in rpm and in %",
+  "Read the torque–speed curve: starting, pull-up and breakdown torque, and the stable region",
+  "Read a nameplate: the poles, the full-load slip and the rated torque"
+ ],
+ "summary": "Three windings round the **stator**, fed with three currents that peak a third of a cycle apart, make **one magnetic field that turns**. Swap any two phases and it turns the other way.\n\n**Synchronous speed** is the field's speed:\n\n$$n_s = \\frac{120 f}{p}$$\n\n$f$ is the frequency (Hz), $p$ the number of poles, $n_s$ in rpm. On 50 Hz: 2 poles 3000 rpm, 4 poles 1500, 6 poles 1000, 8 poles 750. With **pole pairs** (poles ÷ 2) use 60 instead: $n_s = \\frac{60 f}{\\text{pole pairs}}$. A VFD changes $f$, and so the speed.\n\n**Slip.** The field sweeping past the rotor's bars (the **squirrel cage**) induces current in them, and current in a magnetic field feels a force. If the rotor caught up there would be no current and no torque, so it always runs a little slower:\n\n$$s = \\frac{n_s - n}{n_s}$$\n\n× 100 for %. 1500 and 1460 rpm: 40 rpm, 2.7%. Speed from slip: $n = n_s(1 - s)$.\n\n**Slip grows with load**, roughly in proportion in the normal range: half load, about half the full-load slip. The speed changes only a few per cent.\n\n**Torque–speed curve**, from standstill: **starting (locked-rotor) torque**, often about twice rated; a dip, the **pull-up torque**; the peak, the **breakdown torque**, often 2 to 3 times rated; then steeply down to 0 at $n_s$. The **stable** region is the steep part between breakdown and $n_s$: more load, it slows, it makes more torque. Past the peak it stalls, drawing a starting current often 6 to 8 times rated.\n\n**Nameplate.** The rated speed is the speed at full load. The synchronous speed is the next one above it (1460 → 1500, so 4-pole); the gap is the full-load slip. Rated torque: $T = \\frac{9550 P}{n}$, with $P$ in kW and $n$ in rpm: 7.5 kW at 1460 rpm is about 49 N m.\n\n**On a VFD** (volts per hertz steady) the slip speed in rpm for a given torque stays about the same at any frequency, so the slip in % grows as the frequency falls.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "How does an Induction Motor work?", "url": "https://www.youtube.com/watch?v=N7TZ4gm3aUg", "by": "The Engineering Mindset", "minutes": 11, "note": "The rotating field and the squirrel cage, animated."},
+  {"when": "after", "kind": "read", "title": "Tesla Polyphase Induction Motors", "url": "https://www.allaboutcircuits.com/textbook/alternating-current/chpt-13/tesla-polyphase-induction-motors/", "by": "All About Circuits", "minutes": 20, "note": "Rotating field, slip and the torque curve. American: 60 Hz, so 1800 rpm for 4 poles."},
+  {"when": "after", "kind": "reference", "title": "Electrical Induction Motors - Slip", "url": "https://www.engineeringtoolbox.com/electrical-motor-slip-d_652.html", "by": "The Engineering ToolBox", "minutes": 4, "note": "The slip formulas and a table of synchronous speeds."}
+ ],
+ "sources": [
+  "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
+  "IEC 60034-1: Rotating electrical machines. Part 1: Rating and performance",
+  "IEC 60034-12: Rotating electrical machines. Part 12: Starting performance of single-speed three-phase cage induction motors"
+ ],
+ "formulas": [
+  {
+   "name": "Synchronous speed",
+   "tex": "n_s = \\frac{120 f}{p}",
+   "match": ["\\frac{120f}{p}"],
+   "says": "How fast the magnetic field turns, in rpm: 120 times the supply frequency, divided by the number of poles. More poles, a slower field; a higher frequency, a faster one.",
+   "symbols": [["n_s", "the synchronous speed: how fast the field turns (rpm, revolutions per minute)"], ["f", "the supply frequency (Hz, cycles a second): 50 Hz on UK mains, or whatever the drive puts out"], ["p", "the number of poles: 2, 4, 6 or 8 (always even)"]],
+   "example": "4 poles on 50 Hz: $\\frac{120 \\times 50}{4} = \\frac{6000}{4} = 1500$ rpm."
+  },
+  {
+   "name": "Synchronous speed from pole pairs",
+   "tex": "n_s = \\frac{60 f}{\\text{pole pairs}}",
+   "match": ["\\frac{60f}{"],
+   "says": "The same speed, worked from the pole pairs (the poles halved), which some drives and datasheets ask for. The 60 is the seconds in a minute: the field moves on one pair of poles each cycle.",
+   "symbols": [["n_s", "the synchronous speed (rpm)"], ["f", "the frequency (Hz)"], ["\\text{pole pairs}", "the number of poles halved: a 4-pole motor has 2 pole pairs"]],
+   "example": "2 pole pairs on 50 Hz: $\\frac{60 \\times 50}{2} = 1500$ rpm, the same as 4 poles."
+  },
+  {
+   "name": "Slip",
+   "tex": "s = \\frac{n_s - n}{n_s}",
+   "match": ["\\frac{n_s-n}{n_s}"],
+   "says": "How far the rotor lags behind the field, as a share of the field's speed. Multiply by 100 for a percentage.",
+   "symbols": [["s", "the slip: a fraction (0.03), or × 100 a percentage (3%)"], ["n_s", "the synchronous speed (rpm)"], ["n", "the rotor's real speed (rpm)"], ["n_s - n", "the slip speed: the gap in rpm"]],
+   "example": "field at 1500 rpm, rotor at 1460 rpm: $\\frac{1500 - 1460}{1500} = \\frac{40}{1500} \\approx 0.027$, which is 2.7%."
+  },
+  {
+   "name": "Speed from the slip",
+   "tex": "n = n_s(1 - s)",
+   "match": ["n_s(1-s)"],
+   "says": "The rotor speed is the synchronous speed with the slip taken off: take the slip (as a fraction) away from 1, then multiply.",
+   "symbols": [["n", "the rotor speed (rpm)"], ["n_s", "the synchronous speed (rpm)"], ["s", "the slip as a fraction: 3% is 0.03"]],
+   "example": "1500 rpm with 3% slip: $1500 \\times (1 - 0.03) = 1500 \\times 0.97 = 1455$ rpm."
+  },
+  {
+   "name": "Slip grows with the load",
+   "tex": "n_s - n \\approx (n_s - n_r) \\times \\frac{T}{T_r}",
+   "match": ["\\frac{T}{T_r}"],
+   "says": "In the normal working range the slip speed is roughly in proportion to the load torque: half the rated torque, about half the full-load slip. An estimate: it no longer holds near breakdown.",
+   "symbols": [["n_s", "the synchronous speed (rpm)"], ["n", "the rotor speed now (rpm)"], ["n_s - n", "the slip speed now (rpm)"], ["n_r", "the rated speed, off the nameplate (rpm)"], ["n_s - n_r", "the full-load slip speed (rpm)"], ["T", "the load torque now"], ["T_r", "the rated (full-load) torque"], ["\\frac{T}{T_r}", "the load as a fraction of rated: 50% is 0.5"]],
+   "example": "nameplate 1460 rpm (40 rpm slip) at half load: about $40 \\times 0.5 = 20$ rpm slip, so about 1480 rpm."
+  },
+  {
+   "name": "Torque from power and speed",
+   "tex": "T = \\frac{9550 P}{n}",
+   "match": ["\\frac{9550P}{n}"],
+   "says": "The torque in newton metres from the power in kilowatts and the speed in rpm. The 9550 sorts out the units (it is 60 000 ÷ 2π).",
+   "symbols": [["T", "the torque (N m, newton metres)"], ["P", "the power at the shaft (kW)"], ["n", "the speed (rpm)"], ["9550", "a fixed number that turns kW and rpm into N m"]],
+   "example": "7.5 kW at 1460 rpm: $\\frac{9550 \\times 7.5}{1460} \\approx 49$ N m."
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-nameplate",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A **4-pole** induction motor runs straight off the 50 Hz mains at full load. Which speed would you expect on its nameplate?",
+   "options": ["3000 rpm", "Exactly 1500 rpm", "About 1460 rpm", "About 1000 rpm"],
+   "answer": 2,
+   "why": "On 50 Hz a 4-pole motor's magnetic field turns at 1500 rpm: its **synchronous speed**. The rotor must turn a little slower than the field, or no current would be induced in it and it would make no torque. At full load it lags by a few per cent: about 1460 rpm. Exactly 1500 is the field, not the shaft. 3000 rpm is a 2-pole motor, and 1000 rpm a 6-pole one."
+  },
+  {
+   "id": "field",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Three phases make a rotating field",
+   "body": "The **stator** (the fixed outer part) has three sets of windings, one per phase, spaced evenly round it.\n\nThe three phase currents peak one after another, a third of a cycle apart. So the strongest pull moves from winding to winding, round and round: together they make **one magnetic field that turns**, at a steady strength, with nothing moving but the current.\n\nOn a 2-pole winding (one north, one south) the field goes round once every cycle. 50 Hz is 50 cycles a second, so 50 turns a second: $50 \\times 60 = 3000$ turns a minute, 3000 **rpm**.\n\nSwap any two phases and the peaks come in the other order: the field turns the other way.",
+   "more": "Think of chaser lights round a fairground sign. Each bulb only switches on and off in its own place, but because they come on one after another, a bright spot seems to run round. The three windings do that with magnetism: each one only gets stronger and weaker, but the peak moves round the stator.\n\nWith numbers: the phases peak at L1, then a third of a cycle later at L2, then L3, then L1 again. On 50 Hz one cycle takes $1 \\div 50 = 0.02$ s, which is 20 ms. So on a 2-pole winding the field goes round once every 20 ms: 50 times a second, 3000 times a minute.\n\nThe rotor in the middle is dragged round by that turning field. That is all an induction motor is: a rotating field, and a rotor that follows it."
+  },
+  {
+   "id": "field-reverse",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "You have just wired a conveyor motor direct on line (straight onto the three-phase supply). It runs backwards. With the supply isolated, what is the usual fix?",
+   "options": [
+    "Move all three phases along one terminal: L1 to L2, L2 to L3, L3 to L1",
+    "Change the motor from delta to star",
+    "Swap any two of the three phases",
+    "Nothing can be done: it needs a motor wound for the other direction"
+   ],
+   "answer": 2,
+   "why": "Swapping two phases changes the order in which the windings peak, so the field turns the other way and the rotor follows it. Moving all three along one keeps the same order round the motor (L2, L3, L1 is still the same sequence), so it still runs backwards. Star or delta changes the voltage on each winding, not the direction. On a VFD, use the drive's direction setting, or swap two motor leads at the drive's output with it isolated."
+  },
+  {
+   "id": "sync",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Synchronous speed: frequency and poles",
+   "body": "A winding can have more than one north and south: **4 poles**, 6 or 8. Then each cycle the field moves on only one pair of poles, not a whole turn. On 50 Hz:\n\n- 2 poles: 3000 rpm\n- 4 poles: 1500 rpm\n- 6 poles: 1000 rpm\n- 8 poles: 750 rpm\n\nThis field speed is the **synchronous speed**:\n\n$$n_s = \\frac{120 f}{p}$$\n\nIn words: 120 times the frequency, divided by the number of poles. $n_s$ is in rpm, $f$ is the frequency in Hz, $p$ the number of poles. A drive changes $f$, and so the speed: a 4-pole motor at 25 Hz has $n_s = 750$ rpm.\n\nMove the controls and watch $n_s$.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 4, "load": 0, "controls": ["f", "poles"]}},
+   "more": "Why 120? Take a 4-pole motor on 50 Hz. Each cycle the field moves on one pair of poles. There are 2 pairs round the stator, so one cycle is half a turn. 50 cycles a second is 25 turns a second, and $25 \\times 60 = 1500$ turns a minute.\n\nThe formula does those steps in one: $\\frac{120 \\times 50}{4} = \\frac{6000}{4} = 1500$ rpm. The 120 is the 60 seconds in a minute, times 2 because poles come in pairs.\n\nSome drives and datasheets ask for **pole pairs** instead (the poles halved). Then use 60: $n_s = \\frac{60 f}{\\text{pole pairs}} = \\frac{60 \\times 50}{2} = 1500$ rpm. The same answer. Mixing them up (120 with pole pairs) doubles it."
+  },
+  {
+   "id": "sync-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.5,
+   "intro": "Set any frequency and number of poles, as a drive might. Work out the synchronous speed yourself first, then check it against the picture.",
+   "widget": {"name": "motor", "params": {"f": 35, "poles": 4, "load": 0, "controls": ["f", "poles"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "What is the synchronous speed $n_s$?",
+    "answer": "ns",
+    "unit": "rpm",
+    "tolerance": 0.01,
+    "hint": "120 times the frequency, then divide by the number of poles.",
+    "why": "$n_s = \\frac{120 \\times {{f}}}{{poles}} = {ns}$ rpm. More poles means a slower field; a higher frequency, a faster one. Dividing by the pole **pairs** instead of the poles doubles the answer: with 120, use the number of poles."
+   }
+  },
+  {
+   "id": "slip",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The rotor must slip",
+   "body": "The usual rotor is a **squirrel cage**: aluminium or copper bars, joined by a ring at each end.\n\nThe field sweeping past the bars **induces** a voltage in them, as in a transformer, so current flows round the cage. Current in a magnetic field feels a force, and the rotor is dragged round after the field.\n\nBut if the rotor caught up, the field would no longer move past the bars: no current, no force. So it always runs a little slower. The gap is the **slip**:\n\n$$s = \\frac{n_s - n}{n_s}$$\n\nIn words: synchronous speed minus rotor speed $n$, divided by synchronous speed. Times 100 for %. 1500 and 1460 rpm: $40 \\div 1500 \\approx 0.027$, 2.7%.",
+   "more": "Think of a sailing boat with the wind behind it. The wind pushes the sail only while it is moving faster than the boat. If the boat reached the wind's speed, the sail would hang slack and the boat would slow again. So it settles a little slower than the wind, just enough to keep the push it needs. The field is the wind; the rotor is the boat.\n\nWith numbers: a 6-pole motor on 50 Hz has a field at 1000 rpm. Its rotor runs at 970 rpm. The **slip speed** is $1000 - 970 = 30$ rpm, and the slip is $30 \\div 1000 = 0.03$, which is 3%.\n\nThe field passes the bars only at the slip speed, so the rotor current alternates slowly: at 3% slip on 50 Hz, $0.03 \\times 50 = 1.5$ times a second."
+  },
+  {
+   "id": "slip-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A motor with {poles} poles runs on the 50 Hz mains at {n} rpm. What is its slip, in %?",
+   "vars": {"poles": {"pick": [2, 4, 6, 8]}, "sp": [1.5, 5, 0.5]},
+   "let": {"ns": "6000 / poles", "n": "ROUND(ns * (1 - sp / 100), 0)", "gap": "ns - n"},
+   "answer": "(ns - n) / ns * 100",
+   "unit": "%",
+   "abs": 0.05,
+   "hint": "Synchronous speed first: 120 × 50, divided by the poles.",
+   "work": "$n_s = \\frac{120 \\times 50}{{poles}} = {ns}$ rpm. Slip speed: ${ns} - {n} = {gap}$ rpm. $s = \\frac{{gap}}{{ns}} \\times 100 = {answer:2}$%",
+   "why": "First the synchronous speed from the poles, then the gap, then the gap as a share of the synchronous speed. Dividing by the rotor speed ({n}) instead is the usual mistake: the slip is always a share of the **field's** speed."
+  },
+  {
+   "id": "load",
+   "type": "concept",
+   "stage": "learn",
+   "title": "More load, more slip",
+   "body": "With no load, the rotor runs within a whisker of synchronous speed: a 4-pole motor might do 1498 rpm.\n\nAdd load torque and the rotor slows a little. The field now sweeps past the bars faster, so more current is induced and more torque made. It settles where the motor's torque equals the load's.\n\nIn the normal range the slip is roughly **in proportion to the load**: at half the rated torque, about half the full-load slip. So the speed hardly changes: a few per cent from no load to full load.\n\nIn the picture, the dot is where the motor runs: where its curve meets the load line. Move the load and watch the slip.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 4, "load": 100, "controls": ["load"]}},
+   "more": "Think of cycling on the flat, then into a headwind. You slow a little, push harder, and settle at a new speed where your push matches the wind. The motor does the same, but it pushes harder by slipping more.\n\nWith numbers: a 4-pole motor with 1460 rpm on its nameplate slips $1500 - 1460 = 40$ rpm at full load.\n\n- half load: about $40 \\times 0.5 = 20$ rpm slip, so about 1480 rpm\n- a quarter load: about 10 rpm slip, so about 1490 rpm\n- no load: nearly 1500 rpm\n\nThat is why an induction motor on the mains is called a (nearly) **constant-speed** motor. It works the other way too: a motor with 1460 rpm on its plate that is running at 1480 rpm is only about half loaded."
+  },
+  {
+   "id": "load-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.3,
+   "intro": "A 4-pole motor on 50 Hz. Set the load torque anywhere you like up to 200% of rated.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 4, "load": 60, "controls": ["load"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "Read the speeds under the picture. What is the **slip speed**, $n_s - n$, in rpm?",
+    "answer": "ns - n",
+    "unit": "rpm",
+    "abs": 1,
+    "hint": "The synchronous speed and the rotor speed are both written under the picture. Take one from the other.",
+    "why": "$n_s - n = {ns} - {n:0} = {answer:0}$ rpm at {load}% load. Up to about rated torque, double the load and the slip speed roughly doubles too. The slip speed is the gap in rpm; the slip in % is that gap divided by $n_s$, times 100."
+   }
+  },
+  {
+   "id": "curve",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The torque–speed curve",
+   "body": "Start the motor from standstill and its torque changes with speed:\n\n- **Starting (locked-rotor) torque**, at 0 rpm: often about twice rated.\n- **Pull-up torque**: a dip on the way up, the least it gives while speeding up.\n- **Breakdown torque**: the peak, often 2 to 3 times rated.\n- Then it falls steeply to 0 at synchronous speed.\n\nThe motor runs on that steep part, between breakdown and $n_s$: the **stable** region. More load there, it slows a little and makes more torque. Past the peak, slowing makes **less** torque: it stalls.\n\nThe picture is a simple textbook motor: it has no dip, and a lower start than most real ones.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 4, "load": 150, "controls": ["load"]}},
+   "more": "Think of a tug of war. As the other side pulls harder, you dig in and pull harder too, up to your limit. Past that limit you do not just hold: you lose your footing and go over. The breakdown torque is the motor's limit.\n\nWith numbers: a 7.5 kW motor at 1460 rpm has a rated torque of about 49 N m. With breakdown at 2.5 times rated, it can ride a brief overload up to about $2.5 \\times 49 \\approx 122$ N m. A jam needing 130 N m stalls it.\n\nStalled or starting, the field sweeps past the still bars at full speed, so the current is huge: often 6 to 8 times rated. So a stalled motor must be tripped quickly, by the overload relay or the drive."
+  },
+  {
+   "id": "curve-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.0,
+   "intro": "Raise the load torque slowly, a step at a time, from 150% towards 300%.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 4, "load": 150, "controls": ["load"]}},
+   "ask": {
+    "type": "mcq",
+    "q": "What happens once the load passes the peak of the curve (about 250% on this motor)?",
+    "options": [
+     "It slows a little more and carries on at a lower speed",
+     "The motor stalls: past the peak, slowing down gives less torque, not more",
+     "It speeds back up to synchronous speed",
+     "Nothing: an induction motor can give any torque if you wait"
+    ],
+    "answer": 1,
+    "why": "On the steep side of the curve, slowing down means more slip and so more torque: the motor finds a new balance. The peak is the most it can give. Past it, more slip means **less** torque, so it slows more, gives less still, and stops. That peak is the **breakdown** (pull-out) torque.",
+    "hint": "Look at the curve to the left of its peak. As the speed falls there, does the torque rise or fall?"
+   }
+  },
+  {
+   "id": "nameplate",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Reading a nameplate",
+   "body": "A typical IEC nameplate:\n\n- **7.5 kW**: the power at the shaft, at full load\n- **400 V Δ / 690 V Y**: delta (Δ) for a 400 V supply, star (Y) for 690 V\n- **14.6 A**: the full-load current at 400 V\n- **50 Hz, 1460 rpm** (also written r/min or min⁻¹, per minute): the speed at full load\n\nThe synchronous speed is the next one **above** the rated speed, from 3000, 1500, 1000 and 750: here 1500, so it is **4-pole**. The full-load slip is $1500 - 1460 = 40$ rpm, 2.7%.\n\nThe rated torque is $T = \\frac{9550 P}{n}$, with $P$ in kW and $n$ in rpm: $\\frac{9550 \\times 7.5}{1460} \\approx 49$ N m.",
+   "more": "Rounding up to the next synchronous speed works because the slip is only a few per cent. 1460 rpm cannot be a 2-pole motor (that would be over 50% slip), and it cannot be a 6-pole one (as a motor, the rotor never runs faster than its field). So it is 1500: 4 poles.\n\nThe same way: 2940 rpm is 2-pole (60 rpm slip, 2%); 970 rpm is 6-pole (30 rpm, 3%); 720 rpm is 8-pole (30 rpm, 4%). Small motors slip more, big ones less: a 4-pole one might do 1400 rpm at 0.37 kW, 1485 at 90 kW.\n\nCommissioning a VFD, you type in the plate's power, voltage, current, frequency, speed and cos φ (the power factor). The drive works out the slip from the rated speed, so a wrong speed spoils its slip compensation."
+  },
+  {
+   "id": "nameplate-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A motor's nameplate says 50 Hz and {n} rpm. It does not give the poles. What is its full-load slip, in %?",
+   "vars": {"poles": {"pick": [2, 4, 6, 8]}, "sp": [1.5, 5, 0.5]},
+   "let": {"ns": "6000 / poles", "n": "ROUND(ns * (1 - sp / 100), 0)", "gap": "ns - n"},
+   "answer": "(ns - n) / ns * 100",
+   "unit": "%",
+   "abs": 0.05,
+   "hint": "Which of 3000, 1500, 1000 and 750 rpm is just above {n}?",
+   "work": "The next synchronous speed above {n} rpm is {ns} rpm ({poles} poles). Slip speed: ${ns} - {n} = {gap}$ rpm. $s = \\frac{{gap}}{{ns}} \\times 100 = {answer:2}$%",
+   "why": "The rotor runs a few per cent below its field, so the synchronous speed is the next one **above** the nameplate speed. Taking the one below would mean the rotor outruns its field, which a motor cannot do; taking one further up would mean a slip of 30% or more, far too much for a motor at full load."
+  },
+  {
+   "id": "p-pole-pairs",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A drive's motor data screen asks for **pole pairs**, and shows {pp}. The drive is running the motor at {f} Hz. What is the synchronous speed?",
+   "vars": {"pp": {"pick": [1, 2, 3, 4]}, "f": [10, 60, 5]},
+   "let": {"poles": "pp * 2"},
+   "answer": "60 * f / pp",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "hint": "With pole pairs, the number on top is 60, not 120.",
+   "work": "$n_s = \\frac{60 f}{\\text{pole pairs}} = \\frac{60 \\times {{f}}}{{pp}} = {answer}$ rpm",
+   "why": "{pp} pole pairs means {poles} poles, and $\\frac{120 \\times {{f}}}{{poles}}$ gives the same {answer} rpm. Using 120 with pole pairs doubles the answer: an easy mistake when copying motor data from one drive to another."
+  },
+  {
+   "id": "p-torque",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A motor's nameplate reads {P} kW at {n} rpm. What is its rated (full-load) torque?",
+   "vars": {"P": {"pick": [0.75, 1.5, 2.2, 4, 5.5, 7.5, 11, 15, 22]}, "n": {"pick": [1420, 1440, 1455, 1460, 1470]}},
+   "answer": "9550 * P / n",
+   "unit": "N m",
+   "tolerance": 0.02,
+   "hint": "9550 times the kW, divided by the rpm.",
+   "work": "$T = \\frac{9550 P}{ n } = \\frac{9550 \\times {{P}}}{{n}} = {answer}$ N m",
+   "why": "Power is torque times turning speed, and with $P$ in kW and $n$ in rpm the 9550 does the unit conversion. Worth knowing when you size a gearbox, a coupling or a test rig's torque transducer: the motor gives this torque all day, and 2 to 3 times it for a moment. Dividing the other way (speed ÷ power) gives nonsense: more power at the same speed must mean more torque."
+  },
+  {
+   "id": "p-half-load",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "A 4-pole motor on 50 Hz has {nr} rpm on its nameplate. It is driving a pump at about {L}% of its rated torque. Roughly what speed does it run at?",
+   "vars": {"nr": {"pick": [1440, 1450, 1455, 1460, 1465, 1470, 1475]}, "L": {"pick": [25, 40, 50, 60, 75]}},
+   "let": {"fl": "1500 - nr", "sl": "(1500 - nr) * L / 100"},
+   "answer": "1500 - (1500 - nr) * L / 100",
+   "unit": "rpm",
+   "abs": 1,
+   "hint": "Find the full-load slip in rpm first, then take {L}% of it.",
+   "work": "Full-load slip: $1500 - {nr} = {fl}$ rpm. At {L}% load: ${fl} \\times {L} \\div 100 = {sl}$ rpm. Speed: $1500 - {sl} = {answer}$ rpm.",
+   "why": "In the normal range the slip speed is roughly in proportion to the load torque, so take that share of the full-load slip off 1500. Taking {L}% of the **speed** is the tempting mistake: the speed hardly changes, and only the small slip scales with the load. It is an estimate: good up to rated torque, but not near breakdown."
+  },
+  {
+   "id": "p-poles-widget",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.3,
+   "intro": "The load is at 100%. Try each number of poles in turn.",
+   "widget": {"name": "motor", "params": {"f": 50, "poles": 2, "load": 100, "controls": ["poles"]}},
+   "ask": {
+    "type": "mcq",
+    "q": "What do you see?",
+    "options": [
+     "More poles, faster",
+     "The speed stays the same; only the torque curve changes",
+     "More poles, slower: synchronous 3000, 1500, 1000 and 750 rpm, with the rotor a little below each",
+     "Only the 2-pole motor slips"
+    ],
+    "answer": 2,
+    "why": "The poles are on the bottom of $n_s = \\frac{120 f}{p}$, so more poles means a slower field. Every one of them slips below its own synchronous speed under load. That is why a fan or a pump is often given a 4- or 6-pole motor: slower, with no gearbox."
+   }
+  },
+  {
+   "id": "p-why-slip",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.5,
+   "q": "Why can an induction motor never turn at exactly its synchronous speed on its own, even with no load on the shaft?",
+   "options": [
+    "The mains frequency drops whenever a motor is running",
+    "The rotor is too heavy to keep up with the field",
+    "At synchronous speed the field would not move past the rotor bars: no current, so no torque, and even the bearings and the cooling fan need a little",
+    "Makers design it slower on purpose, as a safety margin"
+   ],
+   "answer": 2,
+   "why": "Torque comes from current induced in the bars, and current is induced only while the field sweeps past them. At synchronous speed there is no sweeping, so no torque. Even with no load the motor has bearing friction and its own cooling fan to turn, so it needs a small slip. The rotor's weight changes only how long it takes to get up to speed, not where it settles."
+  },
+  {
+   "id": "p-curve-order",
+   "type": "order",
+   "stage": "practise",
+   "q": "Starting from standstill, put these points on a motor's torque–speed curve in order of speed, slowest first.",
+   "items": [
+    "Starting (locked-rotor) torque, at 0 rpm",
+    "Pull-up torque, the dip while speeding up",
+    "Breakdown torque, the peak",
+    "The full-load running point",
+    "Synchronous speed, where the torque falls to zero"
+   ],
+   "why": "The motor starts with its locked-rotor torque, dips to its pull-up torque, climbs to the breakdown peak, then drops steeply. It runs on that steep part, a few per cent below synchronous speed, where the torque would be zero."
+  },
+  {
+   "id": "mix-gearbox",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A 4-pole motor on 50 Hz, with {nr} rpm on its nameplate, drives a conveyor through a {g}:1 gearbox. At full load, how fast does the gearbox output turn?",
+   "vars": {"nr": {"pick": [1440, 1450, 1460, 1470]}, "g": {"pick": [5, 10, 15, 20, 25, 30]}},
+   "answer": "nr / g",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "hint": "At full load, which speed does the motor shaft really turn at?",
+   "work": "${nr} \\div {g} = {answer}$ rpm",
+   "why": "At full load the motor turns at its nameplate speed, {nr} rpm, not the 1500 rpm of its field. A {g}:1 gearbox turns its output once for every {g} turns of the motor, so divide. Using 1500 rpm overstates the output speed by the slip; multiplying by the ratio instead of dividing is the other mistake."
+  },
+  {
+   "id": "mix-pole-pairs",
+   "type": "mcq",
+   "stage": "mix",
+   "q": "You are entering motor data into a drive. The nameplate says 50 Hz and 1455 rpm. The drive asks for the **number of pole pairs**. What do you enter?",
+   "options": ["4", "1", "2", "3"],
+   "answer": 2,
+   "why": "1455 rpm is just below 1500, so it is a 4-pole motor: $n_s = \\frac{120 \\times 50}{4} = 1500$ rpm. Pole pairs are the poles halved: **2**. Entering 4 (the poles) tells the drive the synchronous speed is 750 rpm, and its speed and slip sums will all be wrong. Always check whether a drive wants poles or pole pairs."
+  },
+  {
+   "id": "mix-vfd-slip",
+   "type": "widget",
+   "stage": "mix",
+   "level": 6.0,
+   "intro": "Now the motor is on a VFD, which holds the volts per hertz steady. The load stays at 100%. Set the frequency anywhere from 10 to 50 Hz.",
+   "widget": {"name": "motor", "params": {"f": 25, "poles": 4, "load": 100, "controls": ["f"]}},
+   "ask": {
+    "type": "numeric",
+    "q": "What is the slip speed, $n_s - n$, in rpm? Try two or three frequencies before you answer.",
+    "answer": "ns - n",
+    "unit": "rpm",
+    "abs": 1,
+    "hint": "Synchronous speed from the frequency, then take the rotor speed off it.",
+    "why": "At {f} Hz: $n_s = {ns}$ rpm and the rotor turns at {n:0} rpm, a slip speed of {answer:0} rpm. With volts per hertz held steady, the slip **speed** for a given torque stays about the same at any frequency, so the slip **percentage** grows as the frequency falls: {slip:2}% here, against about 4% at 50 Hz. Taking the same % off at every frequency is the tempting mistake."
+   }
+  },
+  {
+   "id": "check-6pole",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.0,
+   "q": "A **6-pole** induction motor runs on the 50 Hz mains at full load. Which nameplate speed fits?",
+   "options": ["Exactly 1000 rpm", "About 970 rpm", "About 1460 rpm", "About 2940 rpm"],
+   "answer": 1,
+   "why": "$n_s = \\frac{120 \\times 50}{6} = 1000$ rpm, and at full load the rotor slips a few per cent below it: about 970 rpm. Exactly 1000 would mean no slip, so no torque. 1460 rpm is a 4-pole motor, and 2940 rpm a 2-pole one."
+  },
+  {
+   "id": "check-speed",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "A motor with {poles} poles runs on 50 Hz with {sp}% slip. What speed does its shaft turn at?",
+   "vars": {"poles": {"pick": [2, 4, 6, 8]}, "sp": [1, 6, 0.5]},
+   "let": {"ns": "6000 / poles", "s": "sp / 100", "gap": "ns * sp / 100"},
+   "answer": "ns * (1 - sp / 100)",
+   "unit": "rpm",
+   "abs": 1,
+   "hint": "Synchronous speed first, then take {sp}% of it off.",
+   "work": "$n_s = {ns}$ rpm. $n = n_s(1 - s) = {ns} \\times (1 - {s}) = {answer}$ rpm",
+   "why": "Take the slip off: {sp}% of {ns} is {gap} rpm, so the shaft turns at {answer} rpm. Adding it, as if the rotor ran faster than its field, is the mistake: as a motor it always runs slower."
+  },
+  {
+   "id": "check-stable",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.5,
+   "q": "On a motor's torque–speed curve, where does it run steadily under load?",
+   "options": [
+    "Anywhere between standstill and the breakdown torque",
+    "Exactly at synchronous speed",
+    "At the pull-up torque",
+    "On the steep part, between the breakdown torque and synchronous speed"
+   ],
+   "answer": 3,
+   "why": "On the steep part, more load slows it a little, which gives more torque, so it settles. Below the breakdown speed, slowing gives **less** torque, so a motor there only slows further: it passes through that part only while starting. At exactly synchronous speed there is no torque at all."
+  },
+  {
+   "id": "check-match",
+   "type": "match",
+   "stage": "check",
+   "level": 4.8,
+   "q": "Match each term to its meaning.",
+   "pairs": [
+    ["Synchronous speed", "How fast the magnetic field turns: $\\frac{120 f}{p}$"],
+    ["Slip", "How far the rotor lags the field, as a share of synchronous speed"],
+    ["Breakdown torque", "The most torque the motor can give before it stalls"],
+    ["Locked-rotor torque", "The torque it gives at standstill, when starting"],
+    ["Rated speed", "The nameplate speed, at full load"]
+   ],
+   "why": "The field turns at the synchronous speed; the rotor lags it by the slip, more as the load grows, until the load passes the breakdown torque and it stalls. The nameplate speed is one point on that curve: full load."
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "id": "electronics",
+ "title": "Electronics",
+ "sort": 2,
+ "note": "Practical electronics for controls: what is on the panel and the PCB.",
+ "units": [
+  {
+   "id": "electronics.dc",
+   "title": "DC circuits",
+   "lessons": [
+    {
+     "id": "electronics.dc.ohm-kirchhoff",
+     "title": "Ohm's and Kirchhoff's laws",
+     "star": true,
+     "prereq": [
+      "physics.elec.circuits"
+     ],
+     "level": 4.3,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "electronics.parts",
+   "title": "Components",
+   "lessons": [
+    {
+     "id": "electronics.parts.diodes",
+     "title": "Diodes and rectifiers",
+     "level": 5.0,
+     "kind": "concept"
+    },
+    {
+     "id": "electronics.parts.transistors",
+     "title": "Transistors as switches",
+     "star": true,
+     "prereq": [
+      "electronics.dc.ohm-kirchhoff"
+     ],
+     "level": 5.3,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.parts.opamps",
+     "title": "Op-amps",
+     "level": 5.8,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.parts.filters",
+     "title": "Filters",
+     "prereq": [
+      "physics.elec.capacitors"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.parts.power",
+     "title": "Power supplies and regulation",
+     "prereq": [
+      "electronics.parts.diodes"
+     ],
+     "level": 5.8,
+     "kind": "concept"
+    }
+   ]
+  },
+  {
+   "id": "electronics.digital",
+   "title": "Digital",
+   "lessons": [
+    {
+     "id": "electronics.digital.logic",
+     "title": "Digital logic",
+     "level": 4.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.digital.adc-dac",
+     "title": "ADC and DAC",
+     "level": 5.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.digital.pwm",
+     "title": "PWM",
+     "level": 5.3,
+     "kind": "procedure"
+    }
+   ]
+  },
+  {
+   "id": "electronics.signals",
+   "title": "Signals and sensors",
+   "lessons": [
+    {
+     "id": "electronics.signals.sensors",
+     "title": "Sensors and signals: 4–20 mA, 0–10 V, PT100, thermocouples, encoders",
+     "star": true,
+     "level": 5.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "electronics.signals.emc",
+     "title": "EMC and grounding basics",
+     "level": 6.0,
+     "kind": "concept"
+    }
+   ]
+  }
+ ]
+}

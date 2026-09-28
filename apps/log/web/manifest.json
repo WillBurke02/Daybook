@@ -1,0 +1,63 @@
+{
+  "name": "Log · Daybook",
+  "short_name": "Log",
+  "description": "A diary of the day and the work day.",
+  "id": "/log/",
+  "start_url": "/log/",
+  "scope": "/log/",
+  "display": "standalone",
+  "background_color": "#e8ebea",
+  "theme_color": "#d9772b",
+  "icons": [
+    {
+      "src": "/assets/icons/log-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/log-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/log-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/log-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "share_target": {
+    "action": "/log/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "photo",
+          "accept": [
+            "image/*"
+          ]
+        }
+      ]
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Today",
+      "url": "/log/#/day"
+    },
+    {
+      "name": "Timeline",
+      "url": "/log/#/timeline"
+    }
+  ]
+}
