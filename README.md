@@ -49,7 +49,7 @@ data/learn.db    Learn: your progress and your own cards (the courses are files)
 Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data demo-data`.
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
-`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, and `node tests/<name>.check.mjs` for formula, math,
+`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
 learn, content and web.
 
 ## Money
@@ -115,8 +115,16 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
 - **My cards**: write your own (a flash card, or any type as JSON), file them in
   your own lessons or any course lesson, and import a CSV of `front,back,topic`.
   A wrong answer becomes a flash card of its own, due at once.
+- **Whiteboard and calculator** beside any card: **W** and **C**, or the links on
+  the card. The board takes a pen (with pressure), a finger or a mouse; pen,
+  eraser, four colours, plain, squared or graph paper, undo and redo. One board a
+  card, kept: when the card comes back it offers your working from last time. The
+  calculator is the same formula engine the answers use, knows SI prefixes
+  (`4.7k`, `220µ`, `2.5m`), degrees or radians, `ans`, and shows engineering
+  notation; **Use this answer** puts the result in the card's box. Docked on the
+  right; on a narrow window, a sheet from the bottom.
 
-Keys: 1–4 answer or rate, Enter check, ↓ next.
+Keys: 1–4 answer or rate, Enter check, ↓ next, W whiteboard, C calculator.
 
 ### Writing content
 

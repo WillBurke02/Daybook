@@ -1193,3 +1193,33 @@ li.st-unwritten { border-style: dashed; border-left-width: 1px; background: tran
 li.st-unwritten .ltitle { font-weight: 400; color: var(--ink-3); }
 li.st-unwritten .lstatus { font-weight: 400; color: var(--ink-3); }
 li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
+
+/* ---- Learn's tool dock: a whiteboard and a calculator beside the card ------------------------ */
+:root { --dock-w: min(440px, 42vw); }
+.dock { position: fixed; top: 0; right: 0; bottom: 0; width: var(--dock-w); z-index: 65; background: var(--raised);
+        border-left: 1px solid var(--rule); display: flex; flex-direction: column; box-shadow: -4px 0 18px rgba(0,0,0,.08); }
+.dock > header { padding: 8px 10px; border-bottom: 1px solid var(--rule-soft); gap: 6px; }
+.dock > header .chip[aria-pressed="true"] { background: var(--c-learn, var(--accent)); border-color: var(--c-learn, var(--accent)); color: var(--on-accent, #fff); }
+.dock kbd { font: 10px var(--mono); opacity: .7; }
+.dock > .wb, .dock > .calc { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px; }
+body.tooling { padding-right: var(--dock-w); }
+body.tooling .feedwrap { right: var(--dock-w); }
+.wb-canvas { flex: 1; min-height: 180px; width: 100%; touch-action: none; background: var(--panel); border: 1px solid var(--rule-soft);
+             border-radius: var(--r, 6px); cursor: crosshair; display: block; }
+.wb-qbox .wb-q { max-height: 24vh; overflow: auto; padding: 4px 2px; }
+.wb-tools { gap: 6px; }
+.swatches { display: inline-flex; gap: 6px; align-items: center; }
+.swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--raised); background: var(--sw); box-shadow: 0 0 0 1px var(--rule);
+          padding: 0; cursor: pointer; }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.wb-last { gap: 8px; padding: 6px 8px; border-radius: 6px; background: var(--c-learn-soft, var(--accent-soft)); }
+.calc-tape { flex: 1; min-height: 60px; overflow: auto; margin: 0; padding: 0; list-style: none; font: 13px var(--mono); }
+.calc-tape li { padding: 3px 6px; cursor: pointer; border-radius: 4px; display: flex; justify-content: space-between; gap: 12px; }
+.calc-tape li:hover { background: var(--panel-2); }
+.calc-out { font-size: 1.5em; min-height: 1.6em; text-align: right; overflow-wrap: anywhere; }
+.calc-in { flex: 1; min-width: 0; font: 15px var(--mono); padding: 6px 8px; }
+@media (max-width: 900px) {
+  .dock { top: auto; left: 0; width: auto; height: 62vh; border-left: 0; border-top: 1px solid var(--rule); box-shadow: 0 -4px 18px rgba(0,0,0,.14); }
+  body.tooling { padding-right: 0; padding-bottom: 62vh; }
+  body.tooling .feedwrap { right: 0; bottom: 62vh; }
+}

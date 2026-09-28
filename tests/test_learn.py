@@ -312,3 +312,20 @@ rw = R("GET", "rework")
 assert rw["reports"][0]["card_id"] == card and rw["reports"][0]["note"] == "the answer looks wrong"
 print("ok — report a problem")
 
+
+# === your working on the whiteboard, kept per card ===============================================
+board = [{"c": 0, "w": 2.5, "p": [[10, 20, 0.5], [30.5, 40, 0.7]]}]
+assert R("GET", "sketch", q={"card": [card]}) is None
+R("POST", "sketch", {"card_id": card, "strokes": board, "paper": "graph"})
+got = R("GET", "sketch", q={"card": [card]})
+assert json.loads(got["strokes"]) == board and got["paper"] == "graph" and got["updated"]
+R("POST", "sketch", {"card_id": card, "strokes": board, "paper": "wallpaper"})
+assert R("GET", "sketch", q={"card": [card]})["paper"] is None, "only the papers there are"
+try:
+    R("POST", "sketch", {"card_id": card, "strokes": [{"p": [[1, 2, 3]] * 600000}]})
+    raise SystemExit("FAIL: kept a board far too big")
+except api.Err as e:
+    assert e.code == 400
+R("POST", "sketch", {"card_id": card, "strokes": []})
+assert R("GET", "sketch", q={"card": [card]}) is None, "a cleared board is forgotten"
+print("ok — whiteboard working kept per card")

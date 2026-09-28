@@ -9,6 +9,7 @@ import * as levels from './views/levels.js';
 import * as notes from './views/notes.js';
 import { brief } from './cards.js';
 import { formulasPanel } from './formulas.js';
+import { toggle } from './tools.js';
 
 export default {
   name: 'learn', title: 'Learn', home: 'today', period: false,
@@ -21,7 +22,8 @@ export default {
   setup: ['mine'],
   quick: [{ label: 'Start the feed', href: '#/feed' }],
   sqlHint: 'SELECT subject, COUNT(*) FROM v_card GROUP BY subject',
-  keys: [['1–4', 'Answer, or rate a card'], ['Enter', 'Check'], ['↓ or Space', 'The next card in the feed'],
+  keymap: { w: () => toggle('board'), c: () => toggle('calc') },
+  keys: [['W', 'Whiteboard beside the card'], ['C', 'Calculator beside the card'], ['1–4', 'Answer, or rate a card'], ['Enter', 'Check'], ['↓ or Space', 'The next card in the feed'],
          ['← →', 'Too easy (a card answered before) / save for later, in the feed']],
   file: shell => [
     { label: 'Start the feed', fn: () => shell.go('feed') },

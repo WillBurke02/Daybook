@@ -873,4 +873,20 @@ def route(db, method, p, query, body, ctx):
         return 200, {"leeches": leeches, "reports": reports}
     if p == ["import"] and method == "POST":
         return 200, import_csv(db, body.get("text") or "")
+    if p == ["sketch"] and method == "GET":                      # your working on a card, from last time
+        r = db.execute("SELECT * FROM sketch WHERE card_id = ?", (g("card"),)).fetchone()
+        return 200, dict(r) if r else None
+    if p == ["sketch"] and method == "POST":
+        strokes, paper = body.get("strokes") or [], body.get("paper")
+        text = json.dumps(strokes, separators=(",", ":"))
+        if not isinstance(strokes, list) or len(text) > 4_000_000:
+            raise Err(400, "that board is too big to keep")
+        if not strokes:
+            db.execute("DELETE FROM sketch WHERE card_id = ?", (body.get("card_id"),))
+        else:
+            db.execute("INSERT INTO sketch (card_id, strokes, paper, updated) VALUES (?, ?, ?, ?) ON CONFLICT(card_id) "
+                       "DO UPDATE SET strokes = excluded.strokes, paper = excluded.paper, updated = excluded.updated",
+                       (body.get("card_id"), text, paper if paper in ("plain", "squared", "graph") else None, _now()))
+        db.commit()
+        return 200, {"ok": True}
     return None

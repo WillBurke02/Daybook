@@ -11,6 +11,7 @@ import { tex, split } from './ui/math.js';
 import { draw, compute, fill, read, right, fmt } from './template.js';
 import { compile, machine, scan, test } from './st.js';
 import { formulaHelp, mathsOf } from './formulas.js';
+import { toggle } from './tools.js';
 
 // ---- text: paragraphs, - lists, **bold**, *italic*, `code`, $maths$ ------------------------
 
@@ -382,6 +383,8 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
       WHY[item.why] ? el('span', { class: 'chip' }, WHY[item.why]) : null,
       JSON.stringify(c).includes('$') ? el('button', { class: 'link small fhelpbtn', type: 'button', title: 'What this formula means, letter by letter',
         onclick: () => formulaHelp(mathsOf(c, values), item.id.split('/')[0]) }, 'Formula help') : null,
+      el('button', { class: 'link small', type: 'button', title: 'A whiteboard beside the card (W)', onclick: () => toggle('board') }, 'Whiteboard'),
+      el('button', { class: 'link small', type: 'button', title: 'A calculator beside the card (C)', onclick: () => toggle('calc') }, 'Calculator'),
       el('button', { class: 'link small report', type: 'button', title: 'Report a problem with this card', onclick: () => report(item.id) }, 'Report')),
     face, hint, sure, result);
   let finished = false;

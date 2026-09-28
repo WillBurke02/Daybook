@@ -14,6 +14,12 @@
   newest commit's code and puts it in place. data/, backups/ and a portable python/ are
   never touched; code older than the databases is refused; the code replaced is kept, and
   `daybook.py update --rollback` puts it back. Checks: tests/test_update.py.
+- **Whiteboard and calculator beside every card** (apps/learn/web/tools.js, calc.js): W and
+  C, or the card's links. One board per card, kept in learn.db (migration 003, `sketch`)
+  and offered as "your working last time" when the card comes back. The calculator runs
+  the formula engine with SI prefixes, degrees or radians, ans, engineering notation and
+  "Use this answer". Docked on a wide window, a bottom sheet on a narrow one; no floating or
+  popped-out windows (add them if docked proves too tight). Checks: tests/calc.check.mjs.
 
 ## 3.0 — in progress (not released)
 
