@@ -14,7 +14,7 @@ const tpl = await load('apps/learn/web/template.js');
 const st = await load('apps/learn/web/st.js');
 const { tex, split } = await load('web/ui/math.js');
 const { parse, key } = await load('web/core/formula.js');
-const TYPES = ['concept', 'widget', 'mcq', 'numeric', 'steps', 'order', 'match', 'flash', 'code'];
+const TYPES = ['concept', 'widget', 'mcq', 'numeric', 'steps', 'order', 'match', 'flash', 'code', 'explain', 'spot'];
 
 const files = dir => readdirSync(dir).flatMap(f => statSync(join(dir, f)).isDirectory() ? files(join(dir, f)) : [join(dir, f)]);
 const lessons = new Map(), problems = [];
@@ -127,6 +127,23 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
     if (c.type === 'match' && !(c.pairs?.length >= 3)) bad(at, 'a match card has 3 or more pairs');
     if (c.type === 'steps' && !(c.steps?.length >= 2 && c.steps.every(s => s.show))) bad(at, 'steps: two or more, each with something to show');
     if (c.type === 'flash' && !(c.front && c.back)) bad(at, 'a flash card has a front and a back');
+    if (c.type === 'explain') {
+      if (!c.q || !c.model) bad(at, 'explain the step: a question (q) and a model answer (model)');
+      if (c.points && !(Array.isArray(c.points) && c.points.length >= 2 && c.points.length <= 6 && c.points.every(p => typeof p === 'string')))
+        bad(at, 'explain: points are 2 to 6 things a good answer says');
+    }
+    if (c.type === 'spot') {
+      if (!(Array.isArray(c.lines) && c.lines.length >= 3 && c.lines.length <= 9)) bad(at, 'spot the mistake: 3 to 9 lines');
+      else if (!(Number.isInteger(c.wrong) && c.wrong >= 0 && c.wrong < c.lines.length)) bad(at, 'spot: wrong is the index of the line with the mistake');
+      if (!c.fix || !c.why) bad(at, 'spot: the line put right (fix) and why it was wrong (why)');
+      if (c.mono && c.lines?.some(l => l.includes('$'))) bad(at, 'spot: mono lines are shown as they are: no maths');
+    }
+    if (c.predict) {
+      const p = c.predict;
+      if (c.type !== 'widget') bad(at, 'predict goes on a widget card: the guess unlocks its controls');
+      if (!p.q || !(Array.isArray(p.options) && p.options.length >= 2 && p.options.length <= 5)) bad(at, 'predict: a question and 2 to 5 options');
+      if (p.answer != null && !(p.answer >= 0 && p.answer < (p.options || []).length)) bad(at, 'predict: answer is one of the options, or left out');
+    }
     if (c.type === 'code') {
       const parts = c.code.split('___');
       if (parts.length - 1 !== (c.solution || []).length) bad(at, 'one solution for each ___ blank');
@@ -160,6 +177,11 @@ function template(les, where) {
   else mathOK(`${where} summary`, { summary: les.summary }, {});
   if (!(Array.isArray(les.sources) && les.sources.length)) bad(where, 'sources: what the lesson was checked against');
   if (!(Array.isArray(les.resources) && les.resources.length)) bad(where, 'resources: something to read or watch');
+  for (const b of les.bench || []) {
+    if (!b.task || typeof b.task !== 'string') bad(where, 'a bench task says what to do (task)');
+    if (b.check && !(Array.isArray(b.check) && b.check.every(x => typeof x === 'string'))) bad(where, 'a bench task\'s check is a list of steps');
+    mathOK(`${where} bench`, b, {});
+  }
   for (const r of les.resources || []) {
     if (!['before', 'after', 'during'].includes(r.when)) bad(where, `resource ${r.title}: when is before, during or after`);
     if (!['video', 'read', 'interactive', 'reference', 'listen'].includes(r.kind)) bad(where, `resource ${r.title}: kind is video, read, interactive, reference or listen`);

@@ -247,6 +247,12 @@
     "tolerance": 0.02,
     "hint": "Each resistor has the full battery voltage across it: $I_1 = \\frac{ V }{R_1}$.",
     "why": "Each branch has the full {V} V across it: $I_1 = {I1}$ A and $I_2 = {I2}$ A. KCL: the supply gives the sum, {I} A, which is {answer} mA (× 1000 for mA). Sharing the voltage between them, as in series, is the slip: in parallel each gets all of it."
+   },
+   "predict": {
+    "q": "Before you touch anything: if you make $R_2$ **bigger**, what happens to the current the battery supplies?",
+    "options": ["It goes up", "It goes down", "It stays the same"],
+    "answer": 1,
+    "why": "A bigger $R_2$ passes less current in its own branch ($I_2 = \\frac{ V }{R_2}$). $R_1$'s branch still has the full voltage and carries the same as before. The battery supplies the sum of the two, so it falls."
    }
   },
   {
@@ -284,6 +290,19 @@
     {"ask": "The shortcut, in one line.", "show": "$V_2 = V \\times \\frac{R_2}{R_1 + R_2} = 24 \\times \\frac{1}{4} = 6$ V: $R_2$'s share of the total resistance is its share of the voltage."}
    ],
    "why": "Both laws in one: series adds the resistances and carries one current; KVL says the shares add up to the supply. The slip is $\\frac{R_2}{R_1}$ ($\\frac{1}{3}$ of 24 V = 8 V): the share is of the **total**, $R_1 + R_2$."
+  },
+  {
+   "id": "explain-divider",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: 24 V across $R_1$ = 3 kΩ and $R_2$ = 1 kΩ in series. Step 2 was $I = \\frac{V}{R_t} = \\frac{24}{4} = 6$ mA.",
+   "q": "Why does step 2 divide by the **total** resistance, 4 kΩ, and not by $R_2$ alone? Say it in your own words.",
+   "model": "In series there is only one path, so one current flows through both resistors. The 24 V is across the pair of them, pushing that one current through all 4 kΩ, so the current is 24 ÷ 4 = 6 mA. Dividing by $R_2$ alone (24 ÷ 1 = 24 mA) would only be right if $R_2$ were the only thing across the supply. Once the current is known, Ohm's law on $R_2$ alone gives its share: 6 mA × 1 kΩ = 6 V.",
+   "points": [
+    "In series there is one path, so the same current flows through both resistors",
+    "The whole 24 V is across both together, so it pushes the current through the total resistance",
+    "Only after that does Ohm's law on one resistor give that resistor's voltage"
+   ]
   },
   {
    "id": "faded-divider",
@@ -373,6 +392,22 @@
    "why": "Each resistor in parallel has the full voltage across it and passes its own current; KCL adds them up. More total current from the same voltage means less total resistance ($R = \\frac{V}{I}$). The voltage is *not* shared in parallel (that is series), and current is never used up."
   },
   {
+   "id": "spot-parallel",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Someone worked out the total resistance of 220 Ω and 330 Ω in **parallel**. One line has a mistake in it. Which?",
+   "lines": [
+    "Two in parallel: $R_t = \\frac{R_1 R_2}{R_1 + R_2}$ (product over sum)",
+    "The top: $220 \\times 330 = 72600$",
+    "The bottom: $220 + 330 = 550$",
+    "$R_t = \\frac{72600}{550} = 1320$ Ω"
+   ],
+   "wrong": 3,
+   "fix": "$R_t = \\frac{72600}{550} = 132$ Ω",
+   "why": "72600 ÷ 550 is 132, not 1320: a slip of the decimal point. A quick check would have caught it: two resistors in parallel always come to **less** than the smaller one, and 1320 Ω is more than both."
+  },
+  {
    "id": "mix-fuse-kcl",
    "type": "numeric",
    "stage": "mix",
@@ -449,6 +484,18 @@
    "hint": "You know the current and the resistance: $P = I^2R$, with the current in amps.",
    "work": "$P = I^2R = ({ma} \\times 10^{-3})^2 \\times 250 = {pw}$ W $= {answer}$ mW",
    "why": "$P = I^2R$ with $I$ in amps. At 20 mA that is $0.02^2 \\times 250 = 0.1$ W, so a 0.25 W resistor is plenty. Squaring 20 (not 0.02) gives 100 000 W: always turn mA into amps before you square."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Prove Ohm's law on the bench with a multimeter: a **1 kΩ resistor** (0.25 W or bigger) on a DC bench supply set to **12 V or less**. At 12 V it carries 12 mA and turns 0.14 W into heat, well within its rating.",
+   "check": [
+    "With the supply off and the resistor out of circuit, measure its resistance",
+    "Switch on and measure the voltage across the resistor",
+    "Measure the current with the meter **in series** (on its mA range, leads in the mA socket)",
+    "Work out V ÷ I and compare it with the resistance you measured",
+    "Put the meter lead back in the V socket before you measure a voltage again"
+   ]
   }
  ]
 }

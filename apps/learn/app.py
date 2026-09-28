@@ -39,7 +39,7 @@ OTHERS = ("money", "log")
 LABELS = {"card": "card", "card_state": "review", "lesson_state": "lesson place", "study": "study time"}
 # the courses are files, loaded on every start; only your own subjects, lessons and cards sync
 SYNC_WHERE = {t: "{r}.source <> 'file'" for t in ("subject", "unit", "lesson", "card")}
-TYPES = ("concept", "widget", "mcq", "numeric", "steps", "order", "match", "flash", "code")
+TYPES = ("concept", "widget", "mcq", "numeric", "steps", "order", "match", "flash", "code", "explain", "spot")
 
 SEARCH = [
     ("card", "SELECT c.id, c.lesson_id, c.type, c.text, l.title AS lesson, s.title AS subject FROM card c "
@@ -66,6 +66,8 @@ def front(card):
 def _floor(card):
     """The chance of getting a card right by guessing: 1/options for multiple choice."""
     c = card.get("ask") if card.get("type") == "widget" else card
+    if c and c.get("type") == "spot" and c.get("lines"):
+        return round(1 / len(c["lines"]), 3)
     return round(1 / len(c["options"]), 3) if c and c.get("type") == "mcq" and c.get("options") else 0.0
 
 
@@ -95,7 +97,7 @@ def read_content(folder=CONTENT):
                                 "star": int(bool(les.get("star"))), "prereq": json.dumps(les.get("prereq") or []),
                                 "tags": " ".join(les.get("tags") or []), "note": les.get("note"),
                                 "level": les.get("level", u.get("level")), "kind": les.get("kind"), "minutes": les.get("minutes"),
-                                "goals": None, "summary": None, "resources": None, "sources": None})
+                                "goals": None, "summary": None, "resources": None, "sources": None, "bench": None})
         by_id = {x["id"]: x for x in lessons}
 
         def add_card(c, lesson_id, sort, path, stage=None):
@@ -132,7 +134,7 @@ def read_content(folder=CONTENT):
                         row[k] = les[k]
                 if les.get("kind") and les["kind"] not in KINDS:
                     raise ValueError(f"{path}: kind {les['kind']!r}; the kinds are {', '.join(KINDS)}")
-                for k in ("goals", "resources", "sources"):
+                for k in ("goals", "resources", "sources", "bench"):
                     row[k] = _json(les.get(k))
                 if "prereq" in les:
                     row["prereq"] = json.dumps(les["prereq"])
@@ -386,12 +388,13 @@ def _recall(r, now=None):
 
 COLD_MODES = ("calibrate", "checkpoint", "testout", "review", "comeback")
 NO_SCHEDULE = ("calibrate", "testout")              # these ask, but only to find your level
+SELF_RATED = ("flash", "steps", "explain")           # you say how it went; nothing is marked
 
 
 def _rating(body, card_type, correct):
     if body.get("too_easy"):
         return "easy"
-    if body.get("rating") in fsrs.RATINGS and card_type in ("flash", "steps"):
+    if body.get("rating") in fsrs.RATINGS and card_type in SELF_RATED:
         return body["rating"]                        # you rated it yourself
     if correct is None:
         return None
@@ -798,7 +801,7 @@ def route(db, method, p, query, body, ctx):
         les = db.execute("SELECT * FROM v_lesson WHERE id = ?", (lid,)).fetchone()
         if not les:
             raise Err(404, "no such lesson")
-        full = db.execute("SELECT goals, summary, resources, sources FROM lesson WHERE id = ?", (lid,)).fetchone()
+        full = db.execute("SELECT goals, summary, resources, sources, bench FROM lesson WHERE id = ?", (lid,)).fetchone()
         pre_ids = json.loads(les["prereq"] or "[]")
         pre = [dict(r) for r in db.execute(
             f"SELECT id, title, mastered, asks, learned FROM v_lesson WHERE id IN ({','.join('?' * len(pre_ids))})", pre_ids)] if pre_ids else []
@@ -806,7 +809,7 @@ def route(db, method, p, query, body, ctx):
             db.execute("SELECT theta, sd FROM skill WHERE scope = ?", (les["subject_id"],)).fetchone()
         notes = db.execute("SELECT notes FROM lesson_state WHERE lesson_id = ?", (lid,)).fetchone()
         return 200, {"lesson": {**dict(les), **{k_: (json.loads(full[k_]) if full[k_] and k_ != "summary" else full[k_])
-                                                for k_ in ("goals", "summary", "resources", "sources")}},
+                                                for k_ in ("goals", "summary", "resources", "sources", "bench")}},
                      "cards": lesson_cards(db, lid), "prereq": pre, "warmup": warmup(db, les),
                      "you": _level.describe(k["theta"], k["sd"]) if k else None, "notes": notes[0] if notes else None}
     if p[:2] == ["lesson", "place"] and method == "POST":

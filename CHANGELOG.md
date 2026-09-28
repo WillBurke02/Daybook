@@ -20,6 +20,13 @@
   the formula engine with SI prefixes, degrees or radians, ans, engineering notation and
   "Use this answer". Docked on a wide window, a bottom sheet on a narrow one; no floating or
   popped-out windows (add them if docked proves too tight). Checks: tests/calc.check.mjs.
+- **More ways to make it stick**: *predict, then see* on widget cards (the controls unlock once you
+  have guessed); *explain the step* (say why in your own words, then the model answer and its key
+  points); *spot the mistake* (working, rungs or code with one line wrong). *Bench tasks* at the end
+  of a lesson, with a checklist and a line for today's Log. *Listen*: a lesson's summary read aloud,
+  at the lesson's end and on Notes. The card table loses its CHECK on type (migration 004): the files
+  are checked as they load, so a new kind of card needs no migration. Ohm's and Kirchhoff's laws has
+  one of each. Written up in CONTENT-BRIEF.md; checked by tests/content.check.mjs.
 
 ## 3.0 — in progress (not released)
 

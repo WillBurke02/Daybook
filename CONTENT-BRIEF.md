@@ -30,6 +30,7 @@ available). Numbers in answers are worked by the formula, never typed in.
  "resources": [{"when": "before|during|after", "kind": "video|read|interactive|reference|listen", "title": "...", "url": "https://...", "by": "...", "minutes": 5, "note": "optional: one line on why"}],
  "sources": ["The books, standards, datasheets or manuals the lesson was checked against: real ones only"],
  "formulas": [ ...see Explaining... ],
+ "bench": [{"task": "One job to try on the bench or on site, safe as written", "check": ["step", "step"]}],
  "cards": [ ... ]
 }
 ```
@@ -85,6 +86,11 @@ He said: in PID he did not know what derivatives were or what the formulas meant
 
 Aim for 18–28 cards. The warm-up stage is automatic: do not write it.
 
+**Bench tasks** (`bench` in the lesson file): one or two things to try for real, on the bench or on site,
+with a short checklist. They show at the end of the lesson, and a line goes to today's Log when he has done
+one. Safe as written: say the voltage, the rating, the isolation, the meter range. Nothing mains-voltage, and
+nothing that needs a permit, unless the lesson is about exactly that and says so.
+
 Kinds: **procedure** (a method you carry out: all stages, example chain required),
 **concept** (why/what: try can be a problem to attempt; example optional),
 **facts** (terms, data types, standards: short learn cards, then flash/match/order; no mix).
@@ -110,7 +116,10 @@ Ids: lower case words and dashes, unique in the lesson, and **forever** (progres
 - `match`: `{q, pairs: [["term", "meaning"], ... 3+], why?}`.
 - `flash`: `{front, back}` (self-rated).
 - `code`: Structured Text with `___` blanks; see scan-cycle.json. `{q, code, inputs, outputs, solution: [one per blank], tests: [{name, steps: [{set, scans?, expect?}]}], why, blank_size?}`. Tests scan every 100 ms. The interpreter (`apps/learn/web/st.js`) knows BOOL, INT family, REAL, TIME (T#2s), IF/CASE/FOR/WHILE, TON TOF TP CTU CTD R_TRIG F_TRIG SR RS.
-- `widget`: `{intro, widget: {name, params}, ask: {type: "mcq" | "numeric", ...}}`. A numeric ask's `answer` can use what the widget reports (names in its REPORTS), e.g. `"answer": "q_on"`, so the question is about whatever he set. No vars on widget asks.
+- `widget`: `{intro, widget: {name, params}, ask: {type: "mcq" | "numeric", ...}, predict?}`. A numeric ask's `answer` can use what the widget reports (names in its REPORTS), e.g. `"answer": "q_on"`, so the question is about whatever he set. No vars on widget asks.
+  - `predict` (**predict, then see**): `{q, options: [2–5], answer?, why?}`. The controls stay locked until he commits to a guess about what will happen ("if you make $R_2$ bigger, the supply current…"); afterwards the card says whether he was right and gives `why`. Guessing first, even wrongly, makes what he then sees stick. Put it on the widget card where the lesson's key cause-and-effect first shows. Leave `answer` out for an open "what do you expect?".
+- `explain` (**explain the step**): `{q, context?, model, points?}`. After a worked example: "Why does step 2 divide by the total?" He types his answer (not marked), then sees `model` (≤ 120 words) and ticks the `points` (2–6) his made, and rates himself. `context` repeats the step so the card stands alone. One per procedure lesson, straight after the worked example.
+- `spot` (**spot the mistake**): `{q, lines: [3–9], wrong: <index>, fix, why, mono?}`. Working, a ladder rung per line, or a listing with **one** line wrong; he picks it. `fix` is the line put right; `why` says what the slip was and the check that catches it (a sanity check, a units check). The mistake is a real one people make (a decimal point, the wrong formula, a normally closed contact where an open one belongs). `mono: true` shows the lines monospaced with their spaces (code, rungs; no maths in them).
 
 Maths: `$...$` inline, `$$...$$` display. TeX subset: `\frac \tfrac \sqrt \times \div \cdot \text{} \log \sin \ln ^{} _{} \approx \le \ge \pm \Omega \omega \theta \Delta \pi \lambda \mu \circ`, etc. The check fails any maths that does not parse. Units outside maths are plain text: "5920 m/s", "4.8 µs", "10 kΩ".
 Formatting in text: `**bold**`, `*italic*`, `` `code` ``, "- " lists, blank line = new paragraph. No tables, no headings.

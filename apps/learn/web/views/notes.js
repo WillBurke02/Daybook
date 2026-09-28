@@ -2,7 +2,7 @@
 // under each. One page to read back over, and to print.
 import { api } from '../api.js';
 import { el } from '../core/dom.js';
-import { rich } from '../cards.js';
+import { rich, listenButton } from '../cards.js';
 import { notesBox, lessonHref } from './courses.js';
 
 const notesPanel = { title: 'Notes', w: 12, async render(body, ctx) {
@@ -21,7 +21,8 @@ const notesPanel = { title: 'Notes', w: 12, async render(body, ctx) {
   for (const r of rows) {
     if (r.unit !== unit) { unit = r.unit; body.append(el('h2', { class: 'nunit' }, unit)); }
     body.append(el('section', { class: 'nlesson', id: `n-${r.id}` },
-      el('h3', {}, el('a', { href: lessonHref(r.id) }, r.title), r.learned ? el('span', { class: 'chip on' }, 'learned') : null),
+      el('h3', {}, el('a', { href: lessonHref(r.id) }, r.title), r.learned ? el('span', { class: 'chip on' }, 'learned') : null,
+        r.summary ? listenButton(r.summary) : null),
       r.summary ? el('div', { class: 'lsummary' }, rich(r.summary)) : el('p', { class: 'note' }, 'Not written yet.'),
       el('details', { open: !!r.notes }, el('summary', {}, 'Your notes'), notesBox(r.id, r.notes))));
   }

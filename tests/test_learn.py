@@ -329,3 +329,13 @@ except api.Err as e:
 R("POST", "sketch", {"card_id": card, "strokes": []})
 assert R("GET", "sketch", q={"card": [card]}) is None, "a cleared board is forgotten"
 print("ok — whiteboard working kept per card")
+
+# === explain the step is rated by you; spot the mistake is marked, and a guess is 1 in so many lines ======
+ex, sp = "electronics.dc.ohm-kirchhoff/explain-divider", "electronics.dc.ohm-kirchhoff/spot-parallel"
+R("POST", "answer", {"card_id": ex, "mode": "lesson", "correct": True, "rating": "hard"})
+assert db.execute("SELECT last_rating FROM card_state WHERE card_id = ?", (ex,)).fetchone()[0] == "hard"
+R("POST", "answer", {"card_id": sp, "mode": "lesson", "correct": False})
+assert tuple(db.execute("SELECT floor, correct FROM answer WHERE card_id = ? ORDER BY id DESC", (sp,)).fetchone()) == (0.25, 0)
+les = R("GET", "lesson", q={"id": ["electronics.dc.ohm-kirchhoff"]})["lesson"]
+assert les["bench"] and les["bench"][0]["check"], "the lesson carries its bench task"
+print("ok — explain (self-rated), spot the mistake (marked), bench tasks")

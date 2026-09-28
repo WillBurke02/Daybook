@@ -4,8 +4,10 @@
 // reading or watching first, and ends with its summary, your notes and where to go next.
 // Prerequisites show but never lock.
 import { api } from '../api.js';
+import { appApi } from '../core/api.js';
 import { el, flash, seg, readVal, writeVal } from '../core/dom.js';
-import { frame, rich } from '../cards.js';
+import { state } from '../core/state.js';
+import { frame, rich, listenButton } from '../cards.js';
 import { formulaHelp, loadFormulas, mathsOf } from '../formulas.js';
 import { stageChip, levelText } from './levels.js';
 
@@ -218,8 +220,10 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
         hasCheck && learned ? 'Its check questions come back in about a day, a week and three weeks; right each time and it is solid.'
           : hasCheck ? 'The check questions you missed come back first, and the lesson counts as learned once you get them all right.'
           : 'The cards you answered come back in Review when they are due.'),
-      lesson.summary ? [el('h4', {}, 'Summary'), el('div', { class: 'lsummary' }, rich(lesson.summary))] : null,
+      lesson.summary ? [el('div', { class: 'row mid' }, el('h4', {}, 'Summary'), listenButton(lesson.summary)),
+        el('div', { class: 'lsummary' }, rich(lesson.summary))] : null,
       fbtn(),
+      lesson.bench?.length ? [el('h4', {}, 'Try it on the bench or on site'), lesson.bench.map(b => benchTask(b, id))] : null,
       resources((lesson.resources || []).filter(r => r.when !== 'before'), 'To go further'),
       el('h4', {}, 'Your notes'), notesBox(id, got.notes),
       el('div', { class: 'row' },
@@ -278,6 +282,21 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   body.append(stages, track, stage, el('div', { class: 'row mid lnav' }, prev, count, el('span', { class: 'spacer' }), next));
   if (pos >= 0) show(pos); else intro();
 } };
+
+/** Doing it for real: a job to try on the bench or on site, a checklist, and a line for today's Log. */
+function benchTask(b, lessonId) {
+  const ticks = (b.check || []).map(x => el('label', {}, el('input', { type: 'checkbox' }), rich(x)));
+  const found = el('input', { class: 'sm', placeholder: 'What you found (optional)', style: 'flex:1;min-width:200px' });
+  const hasLog = (state.meta?.apps || []).some(a => a.name === 'log');
+  const log = hasLog ? el('button', { class: 'btn plain sm', type: 'button', onclick: async () => {
+    const done = ticks.filter(t => t.querySelector('input').checked).map(t => `- ${t.textContent.trim()}`);
+    const text = [`Bench: ${String(b.task).replace(/\*\*|`/g, '')}`, ...done, found.value.trim(),
+                  `#bench #${lessonId.split('.').pop()}`].filter(Boolean).join('\n');
+    try { await appApi('log').send('quick', { text }); flash('Added to today in Log'); log.disabled = true; } catch (e) { flash(e.message); }
+  } }, 'Add to today’s Log') : null;
+  return el('div', { class: 'bench' }, rich(b.task), ticks.length ? el('div', { class: 'points' }, ticks) : null,
+    el('div', { class: 'row mid' }, found, log));
+}
 
 /** Test out: the lesson's hardest questions. All right and it is learned; its cards start as reviews. */
 async function testOut(body, ctx, lesson) {

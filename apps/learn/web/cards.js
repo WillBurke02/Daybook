@@ -272,18 +272,95 @@ const TYPES = {
     add(face, c.intro ? rich(c.intro, values) : null);
     const w = el('div', { class: 'widget' });
     const seen = {};
+    // predict, then see: with c.predict you commit to a guess before the controls unlock. Guessing
+    // first, even wrongly, makes what you then see stick (the prequestion effect).
+    const p = c.predict;
+    let predicted = p ? null : -1, guess = null;
+    const inner = { ...c.ask, id: c.id }, ask = el('div', { class: 'ask', hidden: !!p });
+    if (p) {
+      w.inert = true;
+      w.classList.add('locked');
+      const choose = i => {
+        predicted = i;
+        guess.replaceChildren(rich(`You predicted: ${p.options[i]}. Now try it and see.`, values));
+        guess.classList.add('made');
+        w.inert = false;
+        w.classList.remove('locked');
+        ask.hidden = false;
+      };
+      guess = el('div', { class: 'predict' }, el('p', { class: 'small' }, el('strong', {}, 'Predict first. '),
+        el('span', { class: 'muted' }, 'The controls unlock when you have.')), rich(p.q, values),
+        el('div', { class: 'options' }, p.options.map((o, i) => el('button', { class: 'opt', type: 'button', onclick: () => choose(i) },
+          el('span', { class: 'num muted' }, `${i + 1}`), rich(o, values)))));
+      guess.keys = e => { const n = '12345'.indexOf(e.key); if (n >= 0 && n < p.options.length) { choose(n); return true; } };
+      add(face, guess);
+    }
     add(face, w);
     mountWidget(w, c.widget, r => Object.assign(seen, r));
     // then a question about it: an mcq, or a numeric whose answer may use what the widget reports (its names
     // are the report's keys). The values are read when you check, so they are the widget's as you left it.
-    const inner = { ...c.ask, id: c.id }, ask = el('div', { class: 'ask' });
     add(face, ask);
+    const told = !p ? done : out => {
+      const mine = p.options[predicted];
+      const note = p.answer == null ? `You predicted: ${mine}.` : predicted === p.answer ? `Your prediction was right: ${mine}.`
+        : `You predicted: ${mine}. What happens: ${p.options[p.answer]}.`;
+      done({ ...out, work: [note, p.why, out.work].filter(Boolean).join('\n\n') });
+    };
     const now = () => { const v = { ...values, ...seen }; try { return compute(inner, v); } catch { return v; } };
     const live = new Proxy({}, {
       get: (_, k) => now()[k], has: (_, k) => k in now(),
       ownKeys: () => Reflect.ownKeys(now()), getOwnPropertyDescriptor: () => ({ enumerable: true, configurable: true }),
     });
-    return TYPES[inner.type](inner, ask, done, live);
+    const keys = TYPES[inner.type](inner, ask, told, live);
+    return e => predicted == null ? guess.keys(e) : keys?.(e);
+  },
+
+  // Explain the step: why does it follow, in your own words; then the model answer to compare with.
+  // Saying why is one of the surest ways to learn from a worked example (self-explanation).
+  explain(c, face, done, values) {
+    add(face, c.context ? el('div', { class: 'context' }, rich(c.context, values)) : null, rich(c.q, values));
+    const mine = el('textarea', { rows: 4, class: 'mine', placeholder: 'In your own words… (for you; not marked)', 'aria-label': 'Your explanation' });
+    let rates = null;
+    const compare = el('button', { class: 'btn', type: 'button', onclick: () => {
+      if (!mine.value.trim()) { flash('Write something first: even a rough go helps it stick'); mine.focus(); return; }
+      mine.readOnly = true;
+      mine.blur();
+      compare.remove();
+      rates = rateButtons(done, c.why);
+      add(face, el('div', { class: 'model' }, el('h4', {}, 'A model answer'), rich(c.model, values)),
+        c.points?.length ? [el('p', { class: 'muted small' }, 'Tick each point yours made:'),
+          el('div', { class: 'points' }, c.points.map(pt => el('label', {}, el('input', { type: 'checkbox' }), rich(pt, values))))] : null,
+        el('p', { class: 'muted small' }, 'How did yours compare?'), rates);
+    } }, 'Compare');
+    mine.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); compare.click(); } });
+    add(face, mine, el('div', { class: 'row mid' }, compare, el('span', { class: 'muted small' }, 'Ctrl+Enter')));
+    queueMicrotask(() => { if (face.closest('.lcard.current')) mine.focus({ preventScroll: true }); });
+    return e => rates?.keys(e);
+  },
+
+  // Spot the mistake: working, a rung or a listing with one line wrong. Find it; then see it put right.
+  spot(c, face, done, values) {
+    add(face, rich(c.q || 'One line has a mistake in it. Which?', values));
+    let answered = false;
+    const show = t => c.mono ? el('code', {}, fill(t, values)) : rich(t, values);
+    const pick = (i, b) => {
+      if (answered) return;
+      answered = true;
+      const correct = i === c.wrong;
+      lines.querySelectorAll('button').forEach(x => { x.disabled = true; if (+x.dataset.i === c.wrong) x.classList.add('right'); });
+      if (!correct) b.classList.add('wrong');
+      done({ correct, rating: ratingFor(correct), answer: correct ? null : `line ${c.wrong + 1}`,
+             work: c.fix ? `**Put right:** ${fill(c.fix, values)}` : null, why: c.why ? fill(c.why, values) : null,
+             mistake: { front: `${plain(c.q || 'Spot the mistake', values)}\n\n${c.lines.map((l, k) => `${k + 1}. ${plain(l, values)}`).join('\n')}`,
+                        back: `Line ${c.wrong + 1}.${c.fix ? ' Put right: ' + plain(c.fix, values) : ''}${c.why ? '\n\n' + c.why : ''}` } });
+    };
+    const lines = el('div', { class: 'spot' + (c.mono ? ' mono' : '') }, c.lines.map((t, i) => {
+      const b = el('button', { class: 'opt', type: 'button', data: { i } }, el('span', { class: 'num muted' }, `${i + 1}`), show(t));
+      b.addEventListener('click', () => pick(i, b));
+      return b;
+    }));
+    add(face, lines);
+    return e => { const n = '123456789'.indexOf(e.key); if (n >= 0 && n < c.lines.length) { lines.children[n].click(); return true; } };
   },
 
   code(c, face, done) {
@@ -349,7 +426,26 @@ const WHY = { review: 'Review', new: 'New', practice: 'Practice', lesson: '', wa
               struggle: 'Coming back', calibrate: '', checkpoint: 'Checkpoint', testout: 'Test out', comeback: 'Comeback', again: 'Again' };
 const SURE = [[0, 'Guess'], [1, 'Think so'], [2, 'Sure']];
 // the kinds of card whose answer is marked, not self-rated: "how sure?" is asked of these
-const MARKED = new Set(['mcq', 'numeric', 'order', 'match', 'code', 'widget']);
+const MARKED = new Set(['mcq', 'numeric', 'order', 'match', 'code', 'widget', 'spot']);
+
+/** Read aloud in the browser's own voice: for the drive or the walk. Null where there is no speech. */
+export function listenButton(text) {
+  if (!('speechSynthesis' in window)) return null;
+  const said = String(text).replace(/\$\$?([^$]+)\$\$?/g, (_, m) => m.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '$1 over $2')
+    .replace(/\\(times|cdot)/g, ' times ').replace(/\\approx/g, ' about ').replace(/\^\{?2\}?/g, ' squared ')
+    .replace(/\\([a-zA-Z]+)/g, ' $1 ').replace(/[{}^_]/g, ' ')).replace(/\*\*|`/g, '').replace(/^- /gm, '');
+  const b = el('button', { class: 'btn plain sm', type: 'button', title: 'Read it aloud' }, 'Listen');
+  b.addEventListener('click', () => {
+    if (speechSynthesis.speaking) { speechSynthesis.cancel(); b.textContent = 'Listen'; return; }
+    const u = new SpeechSynthesisUtterance(said);
+    u.lang = 'en-GB';
+    u.rate = 0.95;
+    u.onend = u.onerror = () => { b.textContent = 'Listen'; };
+    speechSynthesis.speak(u);
+    b.textContent = 'Stop';
+  });
+  return b;
+}
 
 /** "Report a problem": a note on the card, for the Needs rework list. */
 export function report(id) {
