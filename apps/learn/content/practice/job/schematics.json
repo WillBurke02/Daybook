@@ -18,7 +18,7 @@
   "Follow a coil's cross-references to every contact it works, and back",
   "Trace a control path from supply to coil, and plan where to measure"
  ],
- "summary": "**At rest.** A schematic shows everything with the power off, nothing pressed, coils de-energised and sensors not actuated. **Normally open** and **normally closed** mean the state as drawn, not what happens while the machine runs: a limit switch drawn NO is closed while a cylinder holds it in.\n\n**Symbols** (IEC 60617): a coil is a rectangle; a fuse a rectangle with a line through it; a motor a circle with M (3~ for three-phase); a lamp a circle with a cross.\n\n**Device letters** (IEC 81346-2, and older habits: the drawing's legend wins): -K relay or contactor, -Q isolator, breaker or contactor, -F fuse or overload, -S button or switch, -P or -H lamp, -M motor, -X terminal strip, -T transformer, -B sensor. -X1:7 is terminal 7 on strip X1. Prefixes: = the plant section, + the location, - the device.\n\n**Terminal numbers.** Coil: **A1 and A2**. Main poles: 1–2, 3–4, 5–6. Auxiliaries: two digits. The **first** is the contact's position (1st, 2nd…); the **second** its function: **1–2 normally closed, 3–4 normally open**. So 13–14 NO, 21–22 NC, 43–44 NO. 5–6 and 7–8 are special: the overload's **95–96** is NC (it opens on a trip; in series with the coil) and **97–98** NO (to a trip lamp or PLC input).\n\n**Cross-references.** Pages have numbered columns. Under each coil, a table lists its contacts with page and column, e.g. 13–14 /5.2. Beside each contact, a reference back to its coil, e.g. -K1 /3.4. A coil on page 3 can work contacts on page 12: follow the numbers.\n\n**Power and control.** The power circuit (isolator, fuses, main poles, overload, motor) usually comes first; control circuits after, between two supply rails. Contacts in series all must close (AND); in parallel any one (OR).\n\n**Tracing a fault**: find the coil, follow its path back to the supply, list each contact and terminal on the way, then measure from 0 V at each point, using terminal strips where you can. Where the voltage disappears, the open contact is just before it.",
+ "summary": "**At rest.** A schematic shows everything with the power off, nothing pressed, coils de-energised and sensors not actuated. **Normally open** and **normally closed** mean the state as drawn, not what happens while the machine runs: a limit switch drawn NO is closed while a cylinder holds it in.\n\n**Symbols** (IEC 60617): a coil is a rectangle; a fuse a rectangle with a line through it; a motor a circle with M (3~ for three-phase); a lamp a circle with a cross.\n\n**Device letters** (IEC 81346-2, and older habits: the drawing's legend wins): -K relay or contactor, -Q isolator, breaker or contactor, -F fuse or overload, -S button or switch, -P or -H lamp, -M motor, -X terminal strip, -T transformer, -B sensor. -X1:7 is terminal 7 on strip X1. Prefixes: = the plant section, + the location, - the device.\n\n**Terminal numbers.** Coil: **A1 and A2**. Main poles: 1–2, 3–4, 5–6. Auxiliaries: two digits. The **first** is the contact's position (1st, 2nd…); the **second** its function: **1–2 normally closed, 3–4 normally open**. So 13–14 NO, 21–22 NC, 43–44 NO. 5–6 and 7–8 are special: the overload's **95–96** is NC (it opens on a trip; in series with the coil) and **97–98** NO (to a trip lamp or PLC input).\n\n**Cross-references.** Pages have numbered columns. Under each coil, a table lists its contacts with page and column, e.g. 13–14 /5.2. Beside each contact, a reference back to its coil, e.g. -K1 /3.4. A coil on page 3 can work contacts on page 12: follow the numbers.\n\n**Power and control.** The power circuit (isolator, fuses, main poles, overload, motor) usually comes first; control circuits after, between two supply rails. Contacts in series all must close (AND); in parallel any one (OR).\n\n**Tracing a fault** (24 V DC, measuring only, if authorised; keep clear of the 400 V parts): find the coil, follow its path back to the supply, list each contact and terminal on the way, then measure from 0 V at each point, using terminal strips where you can. Where the voltage disappears, the open contact is just before it.",
  "resources": [
   {
    "when": "before",
@@ -80,12 +80,12 @@
    "stage": "try",
    "q": "A contactor's auxiliary block has contacts marked **13–14** and **21–22**. Which one is normally open?",
    "options": [
-    "13–14",
     "21–22",
+    "13–14",
     "Both",
     "You cannot tell without the datasheet"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "The second digit gives the function: 3–4 is normally open, 1–2 normally closed. The first digit only numbers the contacts (1st, 2nd). So 13–14 is the first contact, NO; 21–22 the second, NC."
   },
   {
@@ -102,10 +102,10 @@
    "level": 5.0,
    "q": "A limit switch is drawn with a **normally open** contact. In normal running, a closed guard presses the switch in. What is the contact doing while the machine runs?",
    "options": [
-    "Closed: 'normally open' is its state as drawn, not pressed; pressed, it closes",
-    "Open, as the drawing shows",
+    "Closed",
+    "Open, as the drawing shows it",
     "It depends on whether the machine is powered",
-    "Half open"
+    "Open: NO contacts stay open while running"
    ],
    "answer": 0,
    "why": "The drawing shows the switch not actuated. The guard actuates it, so the NO contact closes. Reading the drawing as 'what it is doing now' is the classic slip."
@@ -162,12 +162,12 @@
    "level": 4.3,
    "q": "Which of these is a **normally closed** auxiliary contact?",
    "options": [
-    "21–22",
     "13–14",
     "43–44",
-    "A1–A2"
+    "A1–A2",
+    "21–22"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "Second digits 1–2 mean normally closed. 13–14 and 43–44 end in 3–4: normally open. A1–A2 is the coil, not a contact."
   },
   {
@@ -183,12 +183,12 @@
    "stage": "learn",
    "q": "Under contactor -K2's coil on page 3, the contact table shows `43–44 /7.5`. What does that tell you?",
    "options": [
-    "A normally open contact of K2, terminals 43–44, is used on page 7, column 5",
-    "K2's coil is on page 7, column 5",
-    "Terminal strip X7, terminal 5",
-    "The contact is normally closed and on page 4"
+    "K2's coil is drawn on page 7, column 5",
+    "Terminal 5 on terminal strip X7 is used",
+    "K2's NO contact 43–44 is used on page 7, column 5",
+    "K2's NC contact is used on page 4, column 3"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "The table under a coil points out to its contacts: 43–44 is K2's fourth contact, NO, and /7.5 is page 7, column 5. The reference beside that contact will point back: -K2 /3.x."
   },
   {
@@ -205,12 +205,12 @@
    "level": 4.6,
    "q": "A coil's path runs: stop button (NC) — overload 95–96 — start button (NO), with the contactor's own 13–14 in parallel with the start button. What keeps the coil energised after start is released?",
    "options": [
-    "The contactor's own 13–14, closed by the coil, carries the current in place of the start button, as long as stop and the overload stay closed",
-    "The start button stays closed",
-    "The overload's 95–96",
+    "The start button, which stays closed once pressed",
+    "K1's own 13–14, which the coil has closed",
+    "The overload's 95–96, in parallel with start",
     "Nothing: the coil drops out when start is released"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "That is the seal-in: the coil closes its own NO contact, which bypasses the start button. Pressing stop, or an overload trip opening 95–96, breaks the series path and the coil drops out."
   },
   {
@@ -218,7 +218,7 @@
    "type": "steps",
    "stage": "example",
    "worked": true,
-   "q": "Motor -M1 will not start. Its contactor -K1 has its coil on page 4, column 3. Use the drawing to plan what to measure.",
+   "q": "Motor -M1 will not start. Its contactor -K1 has its coil on page 4, column 3. Use the drawing to plan what to measure. (Live testing: 24 V DC control, measuring only, with GS38 probes, and only if you are authorised. Keep clear of the 400 V parts, and make sure the machine is safe to start if the fault clears while start is held.)",
    "steps": [
     {
      "ask": "Find the coil.",
@@ -238,7 +238,7 @@
     },
     {
      "ask": "Plan the measurements.",
-     "show": "Press start. Measure A1 to A2: 24 V there means the coil or contactor is at fault. 0 V: measure from 0 V to each point back along the path: A1, then after -F1, -S1, -S0 and -F2. The open contact is between the last point with 24 V and the first without."
+     "show": "Press start. Measure A1 to A2: 24 V there means the coil or contactor is at fault. 0 V: measure from 0 V at each point from the supply towards the coil: after -F2, after -S0, after -S1, after -F1 (A1). The open contact is just before the first point with no voltage. 24 V at A1 but nothing across A1–A2 means the break is in A2's return."
     }
    ],
    "why": "Start at the coil, work back along the path the drawing gives, and measure where the drawing lets you reach easily. The slip is forgetting that the overload's 95–96 is in the control path: a tripped overload looks like a dead start button."
@@ -311,12 +311,12 @@
    "level": 4.6,
    "q": "An overload relay has contacts **95–96** and **97–98**. Which goes in series with the contactor's coil?",
    "options": [
-    "95–96: it is normally closed and opens on a trip, dropping the contactor out",
     "97–98",
-    "Either: they are the same",
-    "Neither: an overload switches the motor current itself"
+    "Either: they do the same job",
+    "Neither: an overload breaks the motor current itself",
+    "95–96"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "95–96 is NC (5–6 is the special NC pair), so it breaks the coil's path on a trip. 97–98 is NO and closes on a trip: wire it to a trip lamp or a PLC input. The overload itself does not break the motor current: the contactor does."
   },
   {
@@ -369,12 +369,12 @@
    "level": 4.3,
    "q": "The drawing shows a wire from **-X2:17** to **-S3:13**. What are you looking for?",
    "options": [
-    "Terminal 17 on terminal strip X2, wired to terminal 13 of push-button or switch S3",
-    "Contactor X2's 17th contact",
-    "Page 17, column 13",
-    "A wire number 17 on page 2"
+    "The 17th contact of contactor X2, wired to S3",
+    "Page 17, column 13 of the drawing set",
+    "Terminal 17 on strip X2, wired to S3's terminal 13",
+    "Wire number 17, on page 2, to switch S3"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "-X is a terminal strip and the number after the colon is the terminal; -S3:13 is terminal 13 on device S3, here an NO contact (a second digit of 3). Page references are written /page.column."
   },
   {
@@ -384,12 +384,12 @@
    "level": 4.4,
    "q": "Why are schematics drawn with the power off and nothing pressed?",
    "options": [
-    "So everyone reads the same thing: each contact's drawn position is its unactuated state, whatever the machine is doing",
-    "Because the machine is usually off",
-    "To show which contacts are broken",
-    "So the drawing shows the machine running"
+    "Because the machine is usually switched off",
+    "So every contact is drawn in one fixed state: at rest",
+    "To show which contacts have failed open",
+    "So the drawing shows the machine while running"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "A drawing has to be true all the time. The running state changes second by second; the rest state does not. You work out the running state yourself from what is actuated."
   },
   {
@@ -399,28 +399,28 @@
    "level": 5.2,
    "q": "A stop button's **NC** contact, 11–12, is wired to PLC input I0.1. In the ladder program, which contact on I0.1 lets the motor run while nobody presses stop?",
    "options": [
-    "A normally open contact, [ I0.1 ]: the input is on (1) while the NC button is closed",
+    "A normally open contact, [ I0.1 ]",
     "A normally closed contact, [/I0.1 ]",
-    "Either: they do the same",
-    "No contact: stop buttons are wired straight to the motor"
+    "Either: they behave the same way",
+    "None: stop buttons wire straight to the motor"
    ],
    "answer": 0,
-   "why": "From the ladder lesson: the program sees the input's state, not the button's. Not pressed, the NC button is closed, so the input is 1, and an NO contact on it passes power. It also fails safe: a broken wire makes the input 0 and stops the motor."
+   "why": "The program sees the input's state, not the button's. Not pressed, the NC button is closed, so the input is 1, and an NO contact on it passes power. It also fails safe: a broken wire makes the input 0 and stops the motor."
   },
   {
    "id": "mix-volts",
    "type": "mcq",
    "stage": "mix",
    "level": 4.9,
-   "q": "In a 24 V DC control path with its coil energised, you measure from 0 V to each side of a **closed** contact in the path. What do you read?",
+   "q": "In a 24 V DC control path with its coil energised, you measure from 0 V to each side of a **closed** contact between +24 V and A1. What do you read?",
    "options": [
-    "About 24 V on both sides: a closed contact drops almost nothing",
     "24 V on one side, 0 V on the other",
     "About 12 V on each side",
-    "0 V on both sides"
+    "0 V on both sides",
+    "About 24 V on both sides"
    ],
-   "answer": 0,
-   "why": "Kirchhoff's voltage law, from the circuits lesson: nearly all of the 24 V is across the coil, the only real load. A closed contact has almost no resistance, so almost no volts across it. 24 V on one side and 0 V on the other means an open contact."
+   "answer": 3,
+   "why": "Kirchhoff's voltage law: nearly all of the 24 V is across the coil, the only real load. A closed contact has almost no resistance, so almost no volts across it. 24 V on one side and 0 V on the other means an open contact."
   },
   {
    "id": "mix-power",
@@ -429,12 +429,12 @@
    "level": 4.3,
    "q": "Which of these is part of the **power** circuit, not the control circuit?",
    "options": [
-    "The contactor's main poles, 1–2, 3–4 and 5–6",
     "The contactor's coil, A1–A2",
     "The auxiliary contact 13–14",
-    "The stop button"
+    "The main poles, 1–2, 3–4 and 5–6",
+    "The stop button's 11–12"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "The main poles carry the motor's current. The coil, the auxiliaries and the buttons are all control: they decide when the main poles close."
   },
   {
@@ -443,12 +443,12 @@
    "stage": "check",
    "q": "On a contactor, contacts **43–44** are:",
    "options": [
-    "The fourth auxiliary contact, normally open",
     "The fourth auxiliary contact, normally closed",
+    "The fourth auxiliary contact, normally open",
     "A main pole",
     "The coil"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "First digit 4: the fourth contact. Second digits 3–4: normally open."
   },
   {
@@ -458,10 +458,10 @@
    "level": 4.6,
    "q": "Beside a contact on page 12 is the reference `-K3 /4.6`. What does it mean?",
    "options": [
-    "The contact belongs to K3, whose coil is on page 4, column 6",
-    "It is contact number 4.6 of K3",
-    "Terminal 6 on strip X4",
-    "K3 has 4 contacts, 6 of them used"
+    "It belongs to K3, whose coil is on page 4, column 6",
+    "It is contact number 4.6 on relay K3's block",
+    "It is wired to terminal 6 on strip X4",
+    "K3 has 4 contacts, of which 6 are used"
    ],
    "answer": 0,
    "why": "A contact's reference points back to its coil: /page.column. The coil's contact table points the other way."
@@ -473,12 +473,12 @@
    "level": 5.0,
    "q": "A pressure switch is drawn with a **normally closed** contact. In service, the air is on and the pressure is high enough to operate it. What is the contact doing?",
    "options": [
-    "Open: drawn at rest (no pressure) it is closed; pressure operates it and opens it",
-    "Closed, as drawn",
+    "Closed, as it is drawn",
     "It depends on the wire colour",
-    "Closed, because NC means always closed"
+    "Closed: NC means always closed",
+    "Open"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "The drawing shows no pressure. Once the pressure operates the switch, the NC contact opens. Always ask: is this device actuated right now?"
   }
  ]

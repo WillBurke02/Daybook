@@ -18,7 +18,7 @@
   "Work out a tightening torque from a target preload, $T = KFd$",
   "Tighten a joint properly: the right torque for its condition, a star pattern, in stages"
  ],
- "summary": "**Property class** (ISO 898-1), stamped on the head. For class a.b: nominal tensile strength = a × 100 MPa; yield strength = that × b ÷ 10. **8.8**: 800 MPa, yield 640. **10.9**: 1000, yield 900. **12.9**: 1200, yield 1080. MPa is newtons per square millimetre. Use a nut of the matching class (8 with 8.8, 10 with 10.9). Stainless: **A2-70** (304 type, 700 MPa), **A4-80** (316 type, better against salt and chemicals, 800 MPa).\n\n**Threads.** **M10** is metric, 10 mm across, coarse pitch (1.5 mm) unless a fine one is written: M10 × 1.25. Inch threads: UNC and UNF (US kit), BSW (old British). Pipe: BSP, G parallel and R taper; NPT on US kit. Similar sizes can start and then jam: check with a thread gauge. **Tapping drill**, metric coarse: about diameter − pitch (M10: 8.5 mm).\n\n**Preload.** A tightened bolt is a stretched spring: its pull clamps the parts together, and friction between them carries the load. Too little: the joint moves, the bolt loosens or breaks in fatigue. Too much: it yields or strips. A common target is about 70% of the force that would yield it: $F = \\sigma A_s$, strength × stress area.\n\n**Torque.** Torque is force × lever length, $T = Fr$. About 90% of the tightening torque goes on friction (half under the head, most of the rest in the threads); only about 10% stretches the bolt. So $T = KFd$, with the **nut factor** K about 0.2 for plain dry steel and lower (about 0.15) oiled. Oil a bolt and use the dry torque: far more preload, maybe a yielded bolt. Use the figure for your condition (dry, oiled, threadlocker) from the manual.\n\n**Technique.** A calibrated torque wrench, used in the middle of its range; pull smoothly, stop at the click, never use it to undo. Tighten groups in a **star pattern, in stages** (about a third, two-thirds, full, then a check round). Replace nyloc nuts and tab washers rather than reuse them. Stainless on stainless can gall (cold-weld): use anti-seize, and its torque.",
+ "summary": "**Property class** (ISO 898-1), stamped on the head. For class a.b: nominal tensile strength = a × 100 MPa; yield strength = that × b ÷ 10. **8.8**: 800 MPa, yield 640. **10.9**: 1000, yield 900. **12.9**: 1200, yield 1080. MPa is newtons per square millimetre. Use a nut of the matching class (8 with 8.8, 10 with 10.9). Stainless: **A2-70** (304 type, 700 MPa), **A4-80** (316 type, better against salt and chemicals, 800 MPa).\n\n**Threads.** **M10** is metric, 10 mm across, coarse pitch (1.5 mm) unless a fine one is written: M10 × 1.25. Inch threads: UNC and UNF (US kit), BSW (old British). Pipe: BSP, G parallel and R taper; NPT on US kit. Similar sizes can start and then jam: check with a thread gauge. **Tapping drill**, metric coarse: about diameter − pitch (M10: 8.5 mm).\n\n**Preload.** A tightened bolt is a stretched spring: its pull clamps the parts together, and friction between them carries the load. Too little: the joint moves, the bolt loosens or breaks in fatigue. Too much: it yields or strips. A common target is about 70% of the force that would yield it: $F = \\sigma A_s$, strength × stress area.\n\n**Torque.** Torque is force × lever length, $T = Fr$. About 90% of the tightening torque goes on friction (half under the head, most of the rest in the threads); only about 10% stretches the bolt. So $T = KFd$, with the **nut factor** K about 0.2 for steel as supplied and about 0.15 oiled or greased. Grease a bolt and use the as-supplied torque: far more preload, maybe a yielded bolt. Use the figure for your condition (dry, oiled, threadlocker) from the manual.\n\n**Technique.** A calibrated torque wrench, used in the middle of its range; pull smoothly, stop at the click, never use it to undo. Tighten groups in a **star pattern, in stages** (about a third, two-thirds, full, then a check round). Replace nyloc nuts and tab washers rather than reuse them. Stainless on stainless can gall (cold-weld): use anti-seize, and its torque.",
  "resources": [
   {
    "when": "before",
@@ -144,7 +144,7 @@
     ],
     [
      "K",
-     "the nut factor: about 0.2 dry, about 0.15 oiled (no units)"
+     "the nut factor: about 0.2 as supplied, about 0.15 oiled or greased (no units)"
     ],
     [
      "F",
@@ -174,15 +174,15 @@
    "id": "try-oil",
    "type": "mcq",
    "stage": "try",
-   "q": "A torque table gives 49 N·m for a **dry** M10 bolt. You oil the threads, then tighten it to 49 N·m. What happens to the clamping force?",
+   "q": "A torque table gives 49 N·m for an M10 bolt **as supplied**, with its light factory oil film. You coat the threads in grease, then tighten to 49 N·m. What happens to the clamping force?",
    "options": [
-    "It is higher than intended, possibly enough to stretch the bolt for good: with less friction, more of the torque becomes stretch",
-    "It is the same: the torque is the same",
-    "It is lower: oil lets the bolt slip back",
-    "It is the same, but the bolt runs cooler"
+    "The same: the torque is the same",
+    "Higher than intended",
+    "Lower: the grease lets the bolt slip back",
+    "The same, but the bolt runs cooler"
    ],
-   "answer": 0,
-   "why": "Most of the torque is spent on friction. Oil cuts the friction, so the same torque turns into much more stretch, and so more preload. Tighten to the torque for the condition the bolt is actually in."
+   "answer": 1,
+   "why": "Most of the torque is spent on friction. Grease cuts the friction, so the same torque turns into much more stretch, and so more preload, possibly enough to stretch the bolt for good. Tighten to the torque for the condition the bolt is actually in."
   },
   {
    "id": "grades",
@@ -213,7 +213,8 @@
    "tolerance": 0.001,
    "work": "Tensile: {ya} × 100 = {rm} MPa. Yield: {rm} × {yb} ÷ 10 = {answer} MPa.",
    "why": "The first number gives the tensile strength; the second, how much of it is yield.",
-   "hint": "First the tensile strength: the first number × 100."
+   "hint": "First the tensile strength: the first number × 100.",
+   "level": 4.2
   },
   {
    "id": "threads",
@@ -275,12 +276,13 @@
    },
    "let": {
     "d": "IF(k = 1, 6, IF(k = 2, 8, IF(k = 3, 10, 12)))",
-    "sa": "IF(k = 1, 20.1, IF(k = 2, 36.6, IF(k = 3, 58, 84.3)))"
+    "sa": "IF(k = 1, 20.1, IF(k = 2, 36.6, IF(k = 3, 58, 84.3)))",
+    "fn": "y * sa"
    },
    "answer": "y * sa / 1000",
    "unit": "kN",
    "tolerance": 0.01,
-   "work": "$F = \\sigma A_s = {{y}} \\times {{sa}} = {answer:1}$ kN (÷ 1000 for kN)",
+   "work": "$F = \\sigma A_s = {{y}} \\times {{sa}} = {fn:0}$ N $= {answer:1}$ kN",
    "why": "MPa is newtons per mm², so MPa × mm² gives newtons. Divide by 1000 for kilonewtons.",
    "hint": "Stress × area. Then newtons to kilonewtons."
   },
@@ -289,7 +291,7 @@
    "type": "concept",
    "stage": "learn",
    "title": "Torque, friction and the nut factor",
-   "body": "**Torque** is force × lever length: $T = Fr$. 200 N on a handle 0.25 m long is 50 N·m.\n\nWe set a torque because preload cannot be seen. But only about **10%** of the torque stretches the bolt; about **90%** goes on friction, under the head and in the threads. So:\n\n$$T = KFd$$\n\nT the torque (N·m), F the preload (N), d the diameter (m), and **K the nut factor**, which holds all the friction: about **0.2** for plain dry steel, about **0.15** oiled.\n\nChange the friction and the same torque gives a different preload. Use the torque for the bolt's real condition: dry, oiled, plated or with threadlocker.",
+   "body": "**Torque** is force × lever length: $T = Fr$. 200 N on a handle 0.25 m long is 50 N·m.\n\nWe set a torque because preload cannot be seen. But only about **10%** of the torque stretches the bolt; about **90%** goes on friction, under the head and in the threads. So:\n\n$$T = KFd$$\n\nT the torque (N·m), F the preload (N), d the diameter (m), and **K the nut factor**, which holds all the friction: about **0.2** for plain steel as supplied (dry, or with the light factory oil film most tables assume), about **0.15** oiled or greased.\n\nChange the friction and the same torque gives a different preload. Use the torque for the bolt's real condition: dry, oiled, plated or with threadlocker.",
    "more": "Try it with numbers. An M10 bolt (d = 0.010 m) wants 25 kN of preload. Dry, K = 0.2: $T = 0.2 \\times 25\\,000 \\times 0.010 = 50$ N·m.\n\nNow oil it, so K falls to about 0.15, and still tighten to 50 N·m. The preload is $F = \\frac{T}{Kd} = \\frac{50}{0.15 \\times 0.010} \\approx 33\\,000$ N: a third more than planned, and close to the 37 kN that yields an 8.8 bolt. Nothing about the torque wrench changed; only the friction did."
   },
   {
@@ -332,10 +334,10 @@
    "level": 4.5,
    "q": "How do you tighten the eight bolts on a pipe flange?",
    "options": [
-    "A star (cross) pattern, in stages: all to about a third, then two-thirds, then full torque, then a check round",
-    "Each bolt to full torque in turn, going round the circle",
+    "A star pattern, in stages, then a check round",
+    "Each bolt to full torque, going round the circle",
     "Two opposite bolts to full torque, then the rest",
-    "All of them as tight as possible by hand, then one pass with the wrench"
+    "All tight by hand, then one pass with the wrench"
    ],
    "answer": 0,
    "why": "Stages and a star pattern pull the faces together evenly, so the gasket is squeezed flat. Full torque bolt by bolt round the circle tilts the flange: the last bolts tighten a joint that is already skewed, and it leaks."
@@ -345,7 +347,7 @@
    "type": "steps",
    "stage": "example",
    "worked": true,
-   "q": "A motor's foot bolts are M12, class 8.8, fitted dry. There is no torque in the manual. Work out a tightening torque from a target preload.",
+   "q": "A motor's foot bolts are M12, class 8.8, fitted as supplied (K = 0.2). There is no torque in the manual. Work out a tightening torque from a target preload.",
    "steps": [
     {
      "ask": "Stress area.",
@@ -369,7 +371,7 @@
     },
     {
      "ask": "Sanity check.",
-     "show": "Published tables give about 85 N·m for M12 8.8 with a light oil film: close. Use the maker's figure whenever there is one."
+     "show": "Published tables (bolts as supplied, light oil film, close to K = 0.2) give about 85 N·m for M12 8.8: close. Use the maker's figure whenever there is one."
     }
    ],
    "why": "Grade → yield → force → preload → torque. Two slips to avoid: using the full 12 mm diameter for the stress area (it is less, 84.3 mm², because the thread cuts into it), and forgetting the diameter is in metres."
@@ -452,7 +454,7 @@
    "answer": "kf * fp * d / 1000",
    "unit": "N·m",
    "tolerance": 0.02,
-   "work": "Yield {y} MPa. Force to yield: {y} × {sa} = {fy} N. 70% of it: {fp:0} N. Torque: {kf} × {fp:0} × {d} ÷ 1000 = {answer:1} N·m.",
+   "work": "Yield {y} MPa. Force to yield: {y} × {sa} = {fy:0} N. 70% of it: {fp:0} N. Torque: {kf} × {fp:0} × {d} ÷ 1000 = {answer:1} N·m.",
    "why": "The same chain as the worked example: grade, yield, force, preload, torque.",
    "hint": "Yield strength first, then × stress area, × 0.7, then $T = KFd$ with d in metres."
   },
@@ -494,12 +496,12 @@
    "level": 5.2,
    "q": "A stainless steel bolt in a stainless nut locks solid halfway through tightening and will not move either way. What happened, and how do you avoid it?",
    "options": [
-    "It galled: the threads cold-welded under pressure. Use anti-seize, tighten slowly, and use the torque for that condition",
     "The torque wrench was set too low",
-    "Stainless threads are always one size smaller",
-    "The nut was the wrong hand"
+    "Stainless threads are one size smaller",
+    "The nut was the wrong hand of thread",
+    "It galled: the threads cold-welded"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "Stainless surfaces tear and weld together when rubbed hard under load, and heat from fast tightening makes it worse. Anti-seize changes K too, so use a torque made for it."
   },
   {
@@ -526,12 +528,12 @@
    "level": 4.6,
    "q": "A replacement bolt starts in a tapped hole, then goes stiff after two turns. What is likely?",
    "options": [
-    "The wrong thread: perhaps an inch bolt in a metric hole, or a fine pitch in a coarse one. Stop, and check with a thread gauge",
-    "It needs more torque to get past the stiff bit",
-    "The hole needs oil",
+    "It needs more torque to get past the stiff part",
+    "The hole needs oil to let the bolt through",
+    "The wrong thread: stop and check it with a gauge",
     "Bolts are always stiff after two turns"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "Near-miss threads start, then bind as the pitch error builds up. Forcing it strips the hole, which is far harder to fix than the bolt."
   },
   {
@@ -541,12 +543,12 @@
    "level": 4.2,
    "q": "Should you reuse a nyloc nut?",
    "options": [
-    "Generally no: its nylon insert grips less each time, so fit a new one",
-    "Yes, always",
+    "Yes, always: they last for ever",
+    "Generally no: fit a new one",
     "Yes, if you tighten it harder",
-    "Only on stainless bolts"
+    "Only on stainless steel bolts"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "The locking comes from the nylon being deformed by the thread. Once used, it has less grip, and more torque does not bring it back."
   },
   {
@@ -586,7 +588,7 @@
    "level": 4.8,
    "q": "You know the torque and the wrench length, and want the **force on your hand**. Which formula?",
    "options": [
-    "$F = \\frac{ T }{ r }$: the torque divided by the lever length",
+    "$F = \\frac{ T }{ r }$",
     "$F = \\frac{ T }{ Kd }$",
     "$F = \\sigma A_s$",
     "$F = KTd$"
@@ -631,12 +633,12 @@
    "level": 4.8,
    "q": "A torque table for an **oiled** bolt says 40 N·m. You fit the bolt **dry** and tighten it to 40 N·m. What do you get?",
    "options": [
-    "Less preload than intended: dry, more of the torque goes on friction",
     "The intended preload",
     "More preload than intended",
-    "A yielded bolt"
+    "A yielded bolt",
+    "Less preload than intended"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "The reverse of oiling a dry bolt. Dry friction is higher, so less of the 40 N·m becomes stretch, and the joint may work loose. Match the torque to the condition."
   },
   {

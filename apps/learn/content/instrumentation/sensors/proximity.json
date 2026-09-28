@@ -20,7 +20,7 @@
   "Check a sensor is fast enough for gear teeth or parts going past",
   "Split a 'sensor works but the PLC doesn't see it' fault with one measurement"
  ],
- "summary": "A **proximity sensor** detects a target without touching it and switches an output on or off.\n\n**Inductive**: a coil's magnetic field; **metal only**. The rated distance **Sn** is for a mild-steel plate. Design within the **assured distance**, $0.81 \\times S_n$, and multiply by the metal's **correction factor** from the datasheet (roughly: stainless 0.7, brass 0.5, aluminium 0.4, copper 0.3). **Flush** (shielded) types can sit in metal; **non-flush** reach further but need clear space round the face.\n\n**Capacitive**: sees anything that is not air: plastic, wood, grain, water, even through a plastic tank wall. Set its sensitivity for the job; build-up and condensation fool it.\n\n**Photoelectric**: a light beam. **Through-beam** (separate sender and receiver): longest range, most reliable. **Retro-reflective** (bounces off a reflector): shiny parts can fool it, so use a **polarised** type. **Diffuse** (bounces off the target): shortest range, depends on colour.\n\n**Magnetic** (reed or Hall) sensors clip to air cylinders and see the magnet in the piston.\n\n**Wiring** (3-wire DC): **brown +24 V, blue 0 V, black output** (white: a second, opposite output). **PNP** switches the black wire to **+24 V**: the PLC input sits between black and 0 V. **NPN** switches black to **0 V**: the load sits between +24 V and black. UK and European kit is mostly PNP. The input card must match: a PNP sensor needs an input whose common goes to 0 V. The wrong pairing never turns on, while the sensor's own LED still lights.\n\n**Meter checks**, black to blue with the target present: PNP about 24 V, NPN about 0 V.\n\n**Speed**: a gear with N teeth at n rpm gives $\\frac{Nn}{60}$ pulses a second. That must be below the sensor's maximum switching frequency. **Hysteresis** (it switches off a little further out than it switches on) stops chatter at the edge.\n\n**Fault finding**: sensor LED on but PLC input off? Measure at the PLC input terminal. Voltage there: the input or its common. None: the cable, terminals or fuse.",
+ "summary": "A **proximity sensor** detects a target without touching it and switches an output on or off.\n\n**Inductive**: a coil's magnetic field; **metal only**. The rated distance **Sn** is for a mild-steel plate. Design within the **assured distance**, $0.81 \\times S_n$, and multiply by the metal's **correction factor** from the datasheet (roughly: stainless 0.7, brass 0.5, aluminium 0.4, copper 0.3). **Flush** (shielded) types can sit in metal; **non-flush** reach further but need clear space round the face.\n\n**Capacitive**: sees anything that is not air: plastic, wood, grain, water, even through a plastic tank wall. Set its sensitivity for the job; build-up and condensation fool it.\n\n**Photoelectric**: a light beam. **Through-beam** (separate sender and receiver): longest range, most reliable. **Retro-reflective** (bounces off a reflector): shiny parts can fool it, so use a **polarised** type. **Diffuse** (bounces off the target): shortest range, depends on colour.\n\n**Magnetic** (reed or Hall) sensors clip to air cylinders and see the magnet in the piston.\n\n**Wiring** (3-wire DC): **brown +24 V, blue 0 V, black output** (white: a second, opposite output). **PNP** switches the black wire to **+24 V**: the PLC input sits between black and 0 V. **NPN** switches black to **0 V**: the load sits between +24 V and black. UK and European kit is mostly PNP. The input card must match: a PNP sensor needs an input whose common goes to 0 V. The wrong pairing never turns on, while the sensor's own LED still lights.\n\n**Meter checks**, black to blue with the target present: PNP about 24 V, NPN about 0 V.\n\n**Speed**: a gear with N teeth at n rpm gives $\\frac{Nn}{60}$ pulses a second. That must be below the sensor's maximum switching frequency. **Hysteresis** (it switches off a little further out than it switches on) stops chatter at the edge.\n\n**Fault finding**: sensor LED on but PLC input off? Measure from the PLC input terminal to 0 V (24 V DC, measuring only, if authorised). 24 V there: the input or its common. None: the cable, terminals or fuse.",
  "resources": [
   {
    "when": "before",
@@ -142,7 +142,7 @@
  ],
  "bench": [
   {
-   "task": "Wire a 24 V DC PNP inductive sensor to a bench power supply (current limit about 100 mA) with a 24 V lamp or relay coil as its load, then measure it. Low voltage only; no PLC needed.",
+   "task": "Wire a 24 V DC PNP inductive sensor to a bench power supply (current limit about 100 mA) with a 24 V relay coil or LED indicator drawing under 50 mA as its load, then measure it. Low voltage only; no PLC needed.",
    "check": [
     "Brown to +24 V, blue to 0 V, the load from black to 0 V",
     "Bring a steel spanner up to the face: find where it switches on and where it switches off (the hysteresis)",
@@ -158,12 +158,12 @@
    "stage": "try",
    "q": "An inductive sensor rated 8 mm reliably detects a **steel** bracket 6 mm away. The bracket is changed to **aluminium**, still 6 mm away. What happens?",
    "options": [
-    "It will probably stop detecting it: inductive sensors see aluminium only about half as far as steel, or less",
-    "Nothing changes: both are metal",
-    "It detects it from further away, because aluminium conducts better",
-    "It detects it only when the machine is running"
+    "Nothing changes: both metals are seen the same",
+    "It will probably stop seeing it: aluminium is seen less far",
+    "It sees it further away: aluminium conducts better",
+    "It sees it only when the bracket is moving"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "The rated distance is for mild steel. Aluminium's correction factor is typically about 0.4, so this sensor reliably sees it only to about 2.6 mm. Better conductivity does not help: an inductive sensor senses the losses in the target, and aluminium makes fewer."
   },
   {
@@ -246,9 +246,9 @@
    "level": 5.0,
    "q": "A capacitive sensor on the outside of a plastic tank switches when the liquid reaches it. Lately it stays on even with the tank empty. What is most likely?",
    "options": [
-    "Liquid or sludge clinging to the inside of the wall at the sensor, or condensation on its face: clean it, or turn the sensitivity down",
-    "The liquid is not metal",
-    "The sensor is PNP and the PLC is NPN",
+    "A film of liquid or condensation on the wall at the sensor",
+    "The liquid is not metal, so the sensor cannot see it",
+    "The sensor is PNP and the PLC input expects NPN",
     "The tank wall is too thin to sense through"
    ],
    "answer": 0,
@@ -268,12 +268,12 @@
    "level": 4.7,
    "q": "A retro-reflective sensor keeps missing shiny stainless trays passing between it and its reflector. What fixes it?",
    "options": [
-    "A polarised retro-reflective sensor with a corner-cube reflector, or a through-beam pair",
-    "A bigger reflector",
-    "Turning the sensor to dark-on",
-    "A diffuse sensor aimed at the trays"
+    "A bigger reflector, so that more of the light returns",
+    "Setting the sensor to dark-on instead of light-on",
+    "A diffuse sensor aimed at the trays instead",
+    "A polarised retro-reflective sensor, or a through-beam pair"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "The shiny tray reflects the beam straight back, so the sensor thinks the beam is still unbroken. A polarised sensor accepts only light whose polarisation the corner-cube reflector has turned; a mirror-like surface returns it unturned. A bigger reflector changes nothing, and a diffuse sensor struggles with shiny targets too."
   },
   {
@@ -291,12 +291,12 @@
    "level": 4.6,
    "q": "A PNP sensor is on (its target is there). What does a meter read from its black wire to its blue wire?",
    "options": [
-    "About 24 V",
     "About 0 V",
     "About 12 V",
+    "About 24 V",
     "It depends on the target's metal"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "PNP switches black to +24 V, and blue is 0 V. An NPN sensor, switched on, would read about 0 V: its output is pulled down to the blue wire."
   },
   {
@@ -367,12 +367,12 @@
    "level": 5.2,
    "q": "A replacement sensor turns out to be **NPN**. The PLC input card is wired for PNP sensors, with its common at 0 V. What happens?",
    "options": [
-    "The input never turns on: when the sensor switches, it pulls the input to 0 V, and the other side of the input is already at 0 V",
-    "It works, but back to front: on when the target is away",
-    "It works normally: NPN and PNP are just brand names",
-    "The PLC input is always on"
+    "It works back to front: on when the target is away",
+    "The input never turns on",
+    "It works normally: PNP and NPN only differ in name",
+    "The PLC input stays on all the time"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "Current needs a voltage across the input. With the common at 0 V, only a +24 V signal drives current through it, and an NPN sensor never gives one. The sensor's LED still lights, which is what makes this confusing on a breakdown."
   },
   {
@@ -399,13 +399,13 @@
    "level": 5.0,
    "q": "A sensor's LED lights when the target is there, but the PLC input stays off. What is the best next check?",
    "options": [
-    "With the target there, measure the voltage at the PLC input terminal to its common",
-    "Replace the sensor",
-    "Move the sensor closer to the target",
-    "Change the PLC input card"
+    "Measure from the PLC input terminal to 0 V, target present",
+    "Replace the sensor, since it may be switching weakly",
+    "Move the sensor closer to the target and try again",
+    "Change the PLC input card for a new one"
    ],
    "answer": 0,
-   "why": "The LED shows the sensor's output switched, so the fault lies between the sensor and the PLC: the cable, a terminal, a fuse, the input, or the common. Measuring at the input splits that in two: 24 V there means look at the input and its common; nothing means look back along the cable."
+   "why": "The LED shows the sensor's output switched, so the fault lies between the sensor and the PLC. Measure from the input terminal to 0 V: 24 V there means the input card or its common (measure 1M to 0 V next); 0 V means the cable, a terminal or a fuse. (Live testing: 24 V DC control, measuring only, with GS38 probes, and only if you are authorised. Keep clear of the 400 V parts, and make sure the machine is safe to start if the fault clears.)"
   },
   {
    "id": "max-rpm",
@@ -443,12 +443,12 @@
    "level": 4.5,
    "q": "Why is a through-beam pair the most reliable choice for boxes that may be dirty, shiny or any colour?",
    "options": [
-    "The box only has to block the beam, so its colour, shine and angle do not matter, and the strong signal leaves spare margin for dirt",
-    "Through-beam sensors use a laser",
-    "It needs only one part to wire",
-    "It detects metal as well"
+    "Through-beam sensors use a laser, which is brighter",
+    "It needs only one part to mount and wire",
+    "It detects metal targets as well as cardboard",
+    "It only has to block the beam, whatever its colour or shine"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "A diffuse sensor depends on light coming back off the box, so colour and finish matter. A retro-reflective one can be fooled by shine. Through-beam only asks: is the beam blocked? The cost is two parts to mount and wire."
   },
   {
@@ -495,7 +495,7 @@
    "unit": "mA",
    "tolerance": 0.01,
    "work": "$I = \\frac{ V }{ R } = \\frac{24}{{{r}}} = {answer:2}$ mA (volts ÷ kΩ gives mA)",
-   "why": "Ohm's law, from the circuits lesson. A few milliamps, far below the 100 mA or more a sensor output can switch, so one sensor can drive an input easily.",
+   "why": "Ohm's law. A few milliamps, far below the 100 mA or more a sensor output can switch, so one sensor can drive an input easily.",
    "hint": "Which law links volts, ohms and amps?"
   },
   {
@@ -505,12 +505,12 @@
    "level": 4.3,
    "q": "Plastic bottles full of water pass along a conveyor. Which sensor will **not** see a bottle?",
    "options": [
-    "Inductive: there is no metal in it",
     "Capacitive",
     "Through-beam photoelectric",
+    "Inductive",
     "Diffuse photoelectric"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "Inductive sensors need metal. The water makes the bottle easy for a capacitive sensor, and either photoelectric type can see it, though a clear bottle may need a sensor made for transparent objects."
   },
   {
@@ -520,12 +520,12 @@
    "level": 4.5,
    "q": "An inductive sensor was set up near the edge of its range on a **steel** part. The part is changed to **brass**. What do you expect?",
    "options": [
-    "It may miss the part: brass is only seen at about half the steel distance",
-    "It sees it further away",
-    "No change: the sensor sees any metal equally",
-    "It sees it only when the part moves"
+    "It sees it further away than steel",
+    "It may miss the part",
+    "No change: it sees any metal equally",
+    "It sees it only while the part moves"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "Brass's correction factor is about 0.5. Near the edge for steel means well out of range for brass. Move the sensor closer, or use a 'factor 1' sensor that sees all metals at the same distance."
   },
   {
@@ -535,10 +535,10 @@
    "level": 4.8,
    "q": "An **NPN** sensor is on (its target is there). What does a meter read from its black wire to its blue wire?",
    "options": [
-    "About 0 V: NPN switches the black wire to 0 V",
+    "About 0 V",
     "About 24 V",
     "About 12 V",
-    "Nothing: an NPN sensor has no output voltage"
+    "Nothing: an NPN sensor has no output"
    ],
    "answer": 0,
    "why": "Blue is 0 V and the NPN output is switched to it, so the two are at the same voltage. Measure black to brown instead and you see about 24 V across the load's side. A PNP sensor would read about 24 V black to blue."
@@ -564,7 +564,7 @@
     ],
     [
      "White",
-     "A second, opposite output (4-wire types)"
+     "A second, opposite output (on many 4-wire types)"
     ]
    ],
    "why": "The IEC colours for DC sensors. The white output is on when the black one is off, handy when you need both."

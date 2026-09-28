@@ -18,7 +18,7 @@
   "Carry out safe isolation in order: identify, isolate, lock off, prove, test every pair, prove again",
   "Find the supplies and stored energy that the main isolator leaves behind"
  ],
- "summary": "**The law.** The Electricity at Work Regulations 1989 expect work to be done **dead**. Live work is allowed only when it is unreasonable for the equipment to be dead, reasonable to work live, *and* suitable precautions are taken (regulation 14). Equipment made dead must be kept dead (regulation 13).\n\n**Isolation** means cut off from every source of supply, with a gap that cannot be closed by accident. An isolator locked OFF with **your own padlock**, the key in your pocket, and a warning notice. Several people: a **multi-lock hasp**, one lock each. An **emergency stop, a stop button, a contactor, a PLC output or a drive's Safe Torque Off is not isolation**: they stop the machine, but wiring stays live, contacts can weld, and anyone can reset them.\n\n**The tester.** An approved **two-pole voltage indicator** (BS EN 61243-3) and its **proving unit**. GS38: finger barriers; bare probe tips 4 mm or less, better 2 mm or spring-loaded shrouds; fused or current-limited leads. Not a multimeter (wrong range, lead in the wrong socket: a false 'dead'). Not a non-contact voltage stick (it only hints).\n\n**The procedure.**\n\n1. Identify every source of supply.\n2. Isolate.\n3. Lock off, notice on, keep the key.\n4. **Prove** the tester on the proving unit.\n5. **Test** dead at the point of work, between every pair of conductors.\n6. **Prove** the tester again.\n7. Deal with other supplies and stored energy; only then start.\n\n**Every pair**: n conductors need $\\frac{n(n-1)}{2}$ tests. Single-phase (L, N, E): 3. Three-phase with neutral: 10. Three-phase, no neutral: 6. Phase-to-phase alone is not enough: motor windings join the phases, so one live phase reads 0 V between phases.\n\n**Prove again**, because a tester that fails mid-test shows 'dead' on a live circuit.\n\n**What the isolator leaves.** **Orange wires** (BS EN 60204-1) are fed from elsewhere and stay live. A drive's **DC bus** stays charged: wait the time on its label, then measure. Also UPS and second supplies, and air, hydraulics, springs and raised loads.\n\nOnly isolate equipment you are trained and authorised to work on.",
+ "summary": "**The law.** The Electricity at Work Regulations 1989 expect work to be done **dead**. Live work is allowed only when it is unreasonable for the equipment to be dead, reasonable to work live, *and* suitable precautions are taken (regulation 14). Equipment made dead must be kept dead (regulation 13).\n\n**Isolation** means cut off from every source of supply, with a gap that cannot be closed by accident. An isolator locked OFF with **your own padlock**, the key in your pocket, and a warning notice. Several people: a **multi-lock hasp**. An **emergency stop, a stop button, a contactor, a PLC output or a drive's Safe Torque Off is not isolation**: they stop the machine, but wiring stays live, contacts can weld, and anyone can reset them.\n\n**The tester.** An approved **two-pole voltage indicator** (BS EN 61243-3) and its **proving unit**. GS38: finger barriers; bare probe tips 4 mm or less, better 2 mm or spring-loaded shrouds; fused or current-limited leads. Not a multimeter (wrong range, lead in the wrong socket: a false 'dead'). Not a non-contact voltage stick (it only hints).\n\n**The procedure.**\n\n1. Identify every source of supply.\n2. Isolate.\n3. Lock off, notice on, keep the key.\n4. **Prove** the tester on the proving unit.\n5. **Test** dead at the point of work, between every pair of conductors.\n6. **Prove** the tester again.\n7. Deal with other supplies and stored energy; only then start.\n\n**Every pair**: n conductors need $\\frac{n(n-1)}{2}$ tests. Single-phase (L, N, E): 3. Three-phase with neutral: 10. Three-phase, no neutral: 6. Phase-to-phase alone is not enough: motor windings join the phases, so one live phase reads 0 V between phases.\n\n**Prove again**, because a tester that fails mid-test shows 'dead' on a live circuit.\n\n**What the isolator leaves.** Its own incoming terminals stay live. **Orange wires** (BS EN 60204-1) are circuits it does not switch off. A drive's **DC bus** stays charged: wait the time on its label, then measure. Also UPS and second supplies, and air, hydraulics, springs and raised loads.\n\nIsolate only what you are trained and authorised to.",
  "resources": [
   {
    "when": "before",
@@ -134,12 +134,12 @@
    "stage": "try",
    "q": "A machine has stopped with its **emergency stop** pressed in and latched. You need to replace a contactor in its control panel. Is it safe to start?",
    "options": [
-    "No: an emergency stop is not isolation. Isolate at the isolator, lock it off and prove dead first",
-    "Yes: the emergency stop cuts all power to the machine",
-    "Yes, as long as the button stays latched in",
-    "Yes, if the motors have stopped turning"
+    "Yes: the emergency stop cuts all the power",
+    "No: isolate, lock off and prove dead first",
+    "Yes, while the button stays latched in",
+    "Yes, once the motors have stopped turning"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "An emergency stop stops the machine through its control circuit, usually by dropping contactors or a safety relay. The supply into the panel is still live, a contactor can weld shut, and anyone can twist the button out. Only isolation, locked off and proved dead, makes wiring safe to touch. A stopped motor tells you nothing about the voltage."
   },
   {
@@ -156,10 +156,10 @@
    "level": 3.6,
    "q": "Under the Electricity at Work Regulations, when may you work on or near a live conductor?",
    "options": [
-    "Only when it is unreasonable for it to be dead, reasonable to work live, and suitable precautions are taken: all three",
-    "When the job takes less than ten minutes",
-    "Whenever you wear insulated gloves",
-    "When a supervisor agrees it saves production time"
+    "When it is unreasonable to work dead and reasonable to work live, with precautions",
+    "When the job is short and someone stands by, ready to switch it off",
+    "Whenever you wear insulated gloves and use properly insulated tools",
+    "When a supervisor signs to say it saves a costly production stop"
    ],
    "answer": 0,
    "why": "Regulation 14 needs all three. Gloves are one possible precaution, not a permission. Time and production pressure are not reasons at all. Live **testing**, such as fault finding, can meet the conditions; live **working** to avoid a shutdown usually cannot."
@@ -169,7 +169,7 @@
    "type": "concept",
    "stage": "learn",
    "title": "Isolation, and what is not",
-   "body": "**Isolation** means cutting a circuit off from **every** source of supply, with a gap that cannot be closed by accident, and **securing** it.\n\nThat is: an **isolator** switched OFF and locked with **your own padlock**, the only key in your pocket, and a **warning notice** on it. If others work on the same machine, each adds a lock to a **multi-lock hasp**. Taking out fuses can count too, if you keep them and lock the holder.\n\nThese are **not** isolation: an **emergency stop**, a stop button, a **contactor**, a PLC output, a drive's **Safe Torque Off**. They stop the machine, but the wiring stays live, contacts can weld, and anyone can press start."
+   "body": "**Isolation** (regulation 12) means cutting a circuit off from **every** source of supply, with a gap that cannot be closed by accident, and **securing** it.\n\nThat is: an **isolator** switched OFF and locked with **your own padlock**, the only key in your pocket, and a **warning notice** on it. If others work on the same machine, each adds a lock to a **multi-lock hasp**. Taking out fuses can count too, if you keep them and lock the holder.\n\nThese are **not** isolation: an **emergency stop**, a stop button, a **contactor**, a PLC output, a drive's **Safe Torque Off** (an input that stops the drive making torque). They stop the machine, but the wiring stays live, contacts can weld, and anyone can press start."
   },
   {
    "id": "isolate-q",
@@ -178,12 +178,12 @@
    "level": 3.7,
    "q": "Which of these is isolation?",
    "options": [
-    "The panel's main isolator switched OFF and locked with your own padlock",
-    "The emergency stop pressed and latched",
+    "The emergency stop pressed in and latched",
     "The drive's Safe Torque Off input switched off",
-    "The PLC output to the motor contactor turned off"
+    "The PLC output to the motor contactor turned off",
+    "The main isolator OFF, locked with your own padlock"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "Only the isolator makes a secured break in every supply conductor. The others are control functions. Safe Torque Off stops the drive making torque, but its terminals and DC bus stay live. An emergency stop or a PLC output drops a contactor, which can weld or be switched on again."
   },
   {
@@ -200,12 +200,12 @@
    "level": 3.8,
    "q": "Which should you use to prove a 400 V circuit dead?",
    "options": [
-    "A two-pole voltage indicator to GS38, proved on its proving unit before and after",
-    "A multimeter on its 750 V AC range",
-    "A non-contact voltage stick",
-    "A neon test screwdriver"
+    "A multimeter set to its 750 V AC range",
+    "A non-contact voltage stick, held to each core",
+    "A two-pole voltage indicator, proved before and after",
+    "A neon test screwdriver on each terminal"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "A voltage indicator has no ranges to get wrong, and is proved before and after. A multimeter may be right this time, but it is one slip (the wrong range, a lead in the amps socket) from a false 'dead' or a flash. A voltage stick can miss a live conductor, for example in screened cable. A neon screwdriver puts you in the circuit."
   },
   {
@@ -221,12 +221,12 @@
    "stage": "learn",
    "q": "You prove your tester, test the circuit dead, then prove the tester again, and this time **it shows nothing** on the proving unit. What now?",
    "options": [
-    "Treat the circuit as live: get a working tester and do the whole prove, test, prove again",
-    "Carry on: the circuit tested dead",
+    "Carry on: the circuit had already tested dead",
+    "Treat it as live and start again with a working tester",
     "Tap the tester until it lights up, then carry on",
     "Test the circuit once more with the same tester"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "The tester failed at some point, perhaps before your test. Every 'dead' reading since its last good proof is worthless. Start again with a tester that works. Testing again with the broken one would just show 'dead' again."
   },
   {
@@ -262,7 +262,7 @@
    "type": "concept",
    "stage": "learn",
    "title": "What the isolator leaves live",
-   "body": "Locking off the main isolator does not always make everything dead.\n\n- **Orange wires** in a panel (BS EN 60204-1): circuits fed from somewhere else, such as an interlock from the next machine, that stay live with the isolator off. Find their source and isolate that too.\n- **Other supplies**: a UPS, a separate control or heater supply, a second feed.\n- **Stored charge**: a drive's **DC bus capacitors** stay charged at several hundred volts after isolation. Wait the time on the drive's label, then measure.\n- **Other energy**: compressed air, hydraulics, springs, raised loads. Vent, block or lower them."
+   "body": "Locking off the main isolator does not always make everything dead.\n\n- **The isolator's own incoming terminals** and the cable feeding them stay live: keep clear, and check their shroud is in place.\n- **Orange wires** (BS EN 60204-1): circuits the isolator does not switch off, fed from its line side or from another panel. Isolate their source too. Orange is recommended, not guaranteed: the drawings and your test decide.\n- **Other supplies**: a UPS, a separate control supply, a second feed.\n- **Stored charge**: a drive's **DC bus** capacitors stay charged at several hundred volts. Wait the time on its label, then measure.\n- **Other energy**: air, hydraulics, springs, raised loads."
   },
   {
    "id": "other-q",
@@ -271,13 +271,13 @@
    "level": 3.8,
    "q": "You lock off a panel's main isolator. Inside, some wires are **orange**. What does that tell you?",
    "options": [
-    "They may still be live from another source: find it and isolate it before you touch them",
-    "They are earth conductors",
-    "They are dead: the main isolator switches everything in the panel",
-    "They are low-voltage control wiring and always safe"
+    "They may be live from another supply: find it and isolate it",
+    "They are earth conductors, safe to touch",
+    "They are dead: the main isolator switches everything",
+    "They are low-voltage control wiring, always safe"
    ],
    "answer": 0,
-   "why": "BS EN 60204-1 uses orange for circuits the main isolator does not switch off, such as interlocks fed from another panel; the panel should carry a warning label too. Earth is green and yellow. Assuming the isolator killed everything is exactly the mistake the colour is there to stop."
+   "why": "BS EN 60204-1 uses orange for circuits the main isolator does not switch off, fed from its line side or from another panel, such as interlocks; the panel should carry a warning label too. Earth is green and yellow. Assuming the isolator killed everything is exactly the mistake the colour is there to stop."
   },
   {
    "id": "worked-fan",
@@ -398,12 +398,12 @@
    "level": 3.9,
    "q": "Why test for dead **at the point of work**, rather than at the isolator you switched off?",
    "options": [
-    "It proves dead the conductors you will actually touch, and catches the wrong isolator, a second feed or a wiring mistake",
     "A voltage indicator reads more accurately further from the isolator",
-    "Testing at an isolator blows the tester's fuses",
-    "The law says tests must be made at least a metre from the isolator"
+    "Testing at the isolator would blow the tester's lead fuses",
+    "The law says tests must be made a metre from the isolator",
+    "It tests what you will touch: it catches the wrong isolator or a second feed"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "A test at the isolator only shows that the isolator's output is dead. If the drawings are wrong, the circuit is fed from two places, or you switched off the wrong isolator, the wires in front of you can still be live."
   },
   {
@@ -431,12 +431,12 @@
    "level": 3.5,
    "q": "A colleague needs to work on the same machine while your padlock is on its isolator. What is right?",
    "options": [
-    "They add their own padlock to a multi-lock hasp: the isolator cannot be switched on until every lock is off",
-    "You give them your key",
-    "They rely on your lock, since you are both working on it",
+    "You give them your key to keep",
+    "They rely on your lock, since you both work there",
+    "They add their own lock to a multi-lock hasp",
     "You take your lock off and they fit theirs"
    ],
-   "answer": 0,
+   "answer": 2,
    "why": "Each lock protects the person who fitted it, and only they remove it. With a shared key, or one lock for two people, one of you can put the power back on while the other is still inside."
   },
   {
@@ -446,12 +446,12 @@
    "level": 4.3,
    "q": "A drive has been isolated and locked off, and its display has gone dark. Can you now touch its power terminals?",
    "options": [
-    "No: wait the time on its warning label, then prove the DC bus dead with a voltage indicator",
     "Yes: a dark display means the capacitors are empty",
-    "Yes, if the motor has stopped",
-    "Yes, once Safe Torque Off is switched on as well"
+    "No: wait the label's time, then prove the DC bus dead",
+    "Yes, as long as the motor has stopped turning",
+    "Yes, once Safe Torque Off is active as well"
    ],
-   "answer": 0,
+   "answer": 1,
    "why": "The display's power supply stops long before the DC bus capacitors discharge; they can hold several hundred volts for minutes. The label gives the time; measuring proves it. Safe Torque Off does nothing to stored charge."
   },
   {
@@ -471,7 +471,7 @@
    "type": "numeric",
    "stage": "mix",
    "level": 4.3,
-   "q": "A test lead has a {r} kΩ current-limiting resistor in it. If its probe slips onto {v} V, what is the most current that can flow through the lead, in mA?",
+   "q": "A test lead has a {r} kΩ current-limiting resistor in it. If the tester fails short while its probes are across {v} V, what is the most current that can flow through the lead, in mA?",
    "vars": {
     "v": {
      "pick": [
@@ -491,7 +491,7 @@
    "unit": "mA",
    "tolerance": 0.01,
    "work": "$I = \\frac{ V }{ R } = \\frac{{{v}}}{{{r}}} = {answer:2}$ mA (volts ÷ kΩ gives mA)",
-   "why": "Ohm's law from the circuits lesson: the resistor limits a slip to a few milliamps, instead of the thousands of amps a short across a supply can draw. That is why GS38 asks for fused or current-limited leads.",
+   "why": "Ohm's law: the resistor limits a fault to a few milliamps, instead of the thousands of amps a short across a supply can draw. That is why GS38 asks for fused or current-limited leads.",
    "hint": "Which law links volts, ohms and amps?"
   },
   {
@@ -526,10 +526,10 @@
    "stage": "check",
    "q": "A machine's guard is open and its interlock has dropped out the motor contactor. You want to work in the motor's terminal box. What must you do first?",
    "options": [
-    "Isolate at the isolator, lock off and prove dead: an open guard interlock is not isolation",
+    "Isolate, lock off and prove dead first",
     "Nothing: the contactor is open, so the motor is dead",
     "Keep the guard open so the interlock stays off",
-    "Press the emergency stop as well"
+    "Press the emergency stop in as well"
    ],
    "answer": 0,
    "why": "A guard interlock, like an emergency stop, works through the control circuit. The contactor can weld, the interlock can be bypassed or reset, and the supply side is live whatever happens. Isolation is the break you lock and prove."
@@ -541,12 +541,12 @@
    "level": 4.2,
    "q": "Your multimeter, on its 750 V AC range, reads 0 V between L and N. Why is that not proof the circuit is dead?",
    "options": [
-    "A meter can be faulty or wrongly set, it was not proved before and after, and L–N is only one of the pairs: use a proved voltage indicator on every pair",
-    "It is proof: 0 V is 0 V",
-    "It is proof, as long as the reading is steady",
-    "Multimeters can only read DC"
+    "It is proof: 0 V on any meter means 0 V",
+    "It is proof, as long as the reading stays steady",
+    "Multimeters can only read DC voltages properly",
+    "The meter was not proved, and L–N is one of three pairs"
    ],
-   "answer": 0,
+   "answer": 3,
    "why": "Two gaps: the instrument was not proved, and one pair was tested. L–E and N–E could still be live, for example with a shared neutral or a fault to earth."
   },
   {
