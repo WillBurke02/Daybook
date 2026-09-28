@@ -52,6 +52,13 @@
   (IEC symbols, terminal numbers, cross-references), fault finding (evidence, half-split, one change
   at a time) and fasteners (property classes, threads, torque and preload). Each has an explain card,
   a spot-the-mistake card and a bench task.
+- **The whiteboard and calculator are windows**: drag each by its title bar, resize it from the corner,
+  have both open at once; each comes back where it was left. (They were one panel pinned to the
+  right, one tool at a time.) The calculator is a real one: pressable keys as well as typing, Shift
+  for the inverse functions; **Graph** plots up to three functions of x (drag, zoom, read values,
+  fit); **Solve** finds every root of an equation in x in a range and graphs it. Implicit times (2x,
+  3sin(30), (1+2)(3)) and −2^2 = −4, as a calculator reads them. Built on the formula engine, so it
+  works offline; Desmos and GeoGebra would need the internet (and Desmos a key).
 - **Calibration banks** for all sixteen subjects, 643 questions (3 or more per outline lesson), so
   Find my level works everywhere. The first five were reviewed (rounding that marked right answers
   wrong, tolerances, placeholders inside maths, levels).

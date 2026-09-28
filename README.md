@@ -121,13 +121,17 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   your own lessons or any course lesson, and import a CSV of `front,back,topic`.
   A wrong answer becomes a flash card of its own, due at once.
 - **Whiteboard and calculator** beside any card: **W** and **C**, or the links on
-  the card. The board takes a pen (with pressure), a finger or a mouse; pen,
-  eraser, four colours, plain, squared or graph paper, undo and redo. One board a
-  card, kept: when the card comes back it offers your working from last time. The
-  calculator is the same formula engine the answers use, knows SI prefixes
-  (`4.7k`, `220µ`, `2.5m`), degrees or radians, `ans`, and shows engineering
-  notation; **Use this answer** puts the result in the card's box. Docked on the
-  right; on a narrow window, a sheet from the bottom.
+  the card. Each is its own window: drag it by its title bar, resize it from the
+  corner, have both open at once; each comes back where you left it. The board
+  takes a pen (with pressure), a finger or a mouse; pen, eraser, four colours,
+  plain, squared or graph paper, undo and redo. One board a card, kept: when the
+  card comes back it offers your working from last time. The calculator types or
+  takes its keys (Shift for sin⁻¹ and the like): **Calc** for sums, with SI
+  prefixes (`4.7k`, `220µ`), degrees or radians, `ans` and engineering notation,
+  and **Use this answer** into the card's box; **Graph** for up to three
+  functions of x (drag to move, scroll to zoom, point to read values, Fit y);
+  **Solve** for an equation in x (`x^2 - 5 = 3x`), every root in a range, then
+  Graph it. `2x`, `3sin(30)` and `(1+2)(3)` read as written; `-2^2` is −4.
 
 - **Courses from elsewhere** (My cards): an Anki deck (`.apkg`), a Moodle XML or
   GIFT quiz, or a Daybook course pack (`.zip`) becomes a subject of its own.

@@ -23,4 +23,19 @@ assert.ok(calc('"text"').error);
 assert.equal(eng(4700), '4.7 k'); assert.equal(eng(0.00022), '220 µ'); assert.equal(eng(999999), '1 M');
 assert.equal(eng(-0.0015), '-1.5 m'); assert.equal(eng(12), '12'); assert.equal(eng(0), '0');
 assert.equal(plain(0.1 + 0.2), '0.3'); assert.equal(plain(1e-9), '1e-9'); assert.equal(plain(0.49999999999999994), '0.5');
-console.log('ok — calculator: prefixes, degrees, ans, log, engineering notation, errors');
+// as written by hand, and as a calculator reads it
+near('2x', 6, { vars: { x: 3 } }); near('3x^2', 27, { vars: { x: 3 } }); near('x(x+1)', 12, { vars: { x: 3 } }); near('2sin(30)', 1);
+near('(1+2)(3)', 9); near('-2^2', -4); near('(-2)^2', 4); near('2^-1', 0.5); near('3*-2^2', -12); near('5-2', 3); near('1e-3k', 1);
+near('-x^2', -9, { vars: { x: 3 } }); near('2--3', 5); near('10-4.7k/1k', 5.3);
+assert.ok(calc('y*2').error.startsWith('Unknown name'));
+const { compile, solve, step } = await load('apps/learn/web/calc.js');
+const f = compile('x^2 - 4'); assert.equal(f({ x: 3 }), 5); assert.ok(Number.isNaN(compile('1/x')({ x: 0 })));
+const roots = eq => solve(eq).roots.map(r => +r.toFixed(6));
+assert.deepEqual(roots('x^2 - 5 = 3x'), [-1.192582, 4.192582]);
+assert.deepEqual(roots('2x + 3 = 11'), [4]);
+assert.deepEqual(roots('sin(x) = 0.5'), [30]);                                    // degrees, between −100 and 100
+assert.deepEqual(solve('tan(x) = 0', { a: 45, b: 135 }).roots, [90].filter(() => false));   // 90° is an asymptote, not a root
+assert.deepEqual(roots('x^3 = 8'), [2]);
+assert.ok(solve('3 = 4').error && solve('x = 1 = 2').error);
+assert.equal(step(20), 2); assert.equal(step(1), 0.1); assert.equal(step(700), 100);
+console.log('ok — calculator: prefixes, degrees, ans, log, engineering notation, errors, implicit times, graphs and equations');
