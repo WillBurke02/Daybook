@@ -100,7 +100,7 @@ Kinds: **procedure** (a method you carry out: all stages, example chain required
 Ids: lower case words and dashes, unique in the lesson, and **forever** (progress hangs off them).
 
 - `concept`: `{title, body, widget?, more?}`. body ≤ 120 words; `more` ≤ 150 words (see Explaining).
-- `mcq`: `{q, options: [3–5 strings], answer: <index>, why, hint?}`. Put the right answer anywhere (they are shuffled on screen, but vary it anyway). Distractors are real mistakes people make.
+- `mcq`: `{q, options: [3–5 strings], answer: <index>, why, hint?}`. Put the right answer anywhere (they are shuffled on screen, but vary it anyway). Distractors are real mistakes people make. **The right option must not give itself away**: keep all options alike in length and detail (a bare claim each), and put the reasoning in `why`. The check fails a right option much longer than every wrong one.
 - `numeric`: `{q, vars, let?, answer, unit?, tolerance? | abs?, work, why, hint?}`
   - `vars`: `{"t": [lo, hi, step]}` or `{"f": {"pick": [1, 2, 5]}}`. Drawn fresh each time.
   - `let`: `{"t1": "2 * d / 5920 * 1000"}`, worked in order, usable in text as `{t1}`.

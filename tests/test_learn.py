@@ -44,7 +44,7 @@ f = learn.feed(db, 6, subjects=["physics"], rng=rng)
 assert [c["id"] for c in f[:2]] == [f"{pe}/echo-between", f"{pe}/idea"], "the first physics lesson with cards, from the top"
 assert all(c["why"] == "new" for c in f)
 mixed = learn.feed(db, 40, rng=rng)
-with_cards = {c["lesson_id"].split(".")[0] for c in cards}
+with_cards = {c["lesson_id"].split(".")[0] for c in cards if c["stage"] != "calibrate"}   # bank questions only place you
 assert {c["subject_id"] for c in mixed} == with_cards, "every subject with cards takes a turn"
 assert len({c["id"] for c in mixed}) == len(mixed), "no card twice in one batch"
 ex = learn.feed(db, 3, exclude=[f"{pe}/echo-between"], subjects=["physics"], rng=rng)

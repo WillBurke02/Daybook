@@ -544,9 +544,9 @@
     "q": "With only P, where does the PV end up?",
     "options": [
      "Short of the set point, however long you wait",
-     "Exactly on the set point",
-     "Above the set point",
-     "Back at zero"
+     "Exactly on the set point, after a while",
+     "Above the set point, and it stays there",
+     "Back at zero, once the error is gone"
     ],
     "answer": 0,
     "why": "P needs an error to make any output, so it settles where the error is just big enough to hold the PV there. More $K_p$ shrinks that offset but brings overshoot.",
@@ -705,9 +705,9 @@
     "q": "What does raising $K_d$ to 3 do?",
     "options": [
      "Cuts the overshoot, to about 24%",
-     "Removes the offset",
-     "Makes it unstable",
-     "Nothing"
+     "Removes the steady offset entirely",
+     "Makes the loop go unstable",
+     "Nothing visible on the trend"
     ],
     "answer": 0,
     "why": "D pushes against the PV's rate of change, braking the rise before it overshoots. It does nothing for the steady offset: that is I's job."
@@ -857,10 +857,10 @@
     "type": "mcq",
     "q": "What happens as $K_p$ goes up?",
     "options": [
-     "It gets faster but overshoots more, until around 9 the swings grow and the loop is unstable",
-     "It gets slower",
-     "The offset grows",
-     "Nothing changes: P only sets the final value"
+     "Faster, with more overshoot, then unstable near 9",
+     "It gets slower and more sluggish",
+     "The steady offset grows larger",
+     "Nothing: P only sets the final value"
     ],
     "answer": 0,
     "why": "More gain answers harder. With the dead time, the correction arrives late; turn the gain up far enough and each correction overshoots the last, so the swings grow."
@@ -887,9 +887,9 @@
     "type": "mcq",
     "q": "What does too much integral action do?",
     "options": [
-     "It overshoots and swings before settling (about 38% overshoot at 0.4)",
-     "It leaves an offset",
-     "It makes the rise slower",
+     "Overshoot and swings (about 38% at 0.4)",
+     "It leaves a steady offset",
+     "It makes the rise much slower",
      "Nothing: more is always better"
     ],
     "answer": 0,
@@ -933,10 +933,10 @@
    "level": 6.0,
    "q": "The PV signal is noisy. Why can derivative action make things worse?",
    "options": [
-    "D reacts to the rate of change, and noise changes fast, so the output jumps about",
-    "D ignores noise completely",
-    "D adds a steady offset",
-    "D slows the scan"
+    "D reacts to fast changes, and noise changes fast",
+    "D ignores noise completely, so it cannot",
+    "D adds a steady offset to the output",
+    "D slows down the PLC's scan"
    ],
    "answer": 0,
    "why": "Noise wiggles fast, and fast wiggles have a steep slope even when they are small. D multiplies that slope, so the output jumps about. Filter the derivative (most blocks have a filter time), filter the signal, or leave D out. D does not add an offset: a steady signal has a slope of 0."
@@ -1074,10 +1074,10 @@
    "level": 6.5,
    "q": "Why do many PID blocks take the derivative of the PV rather than of the error?",
    "options": [
-    "A step in the set point would make $de/dt$ huge for one scan and kick the output",
-    "It is cheaper to calculate",
+    "A set-point step would kick the output for a scan",
+    "It is cheaper to calculate on a PLC",
     "The PV is always smoother than the set point",
-    "The error has no derivative"
+    "The error has no derivative to take"
    ],
    "answer": 0,
    "why": "The set-point jumps in an instant, so the error jumps, and the slope of a jump is enormous for one scan. D on the error turns that into a kick of output. The process itself cannot jump, so taking D on the PV gives the same braking without the kick: $u = K_p e + K_i \\int e\\,dt - K_d \\frac{dPV}{dt}$. While the set-point is steady, $\\frac{de}{dt} = -\\frac{dPV}{dt}$, so nothing else changes.",
@@ -1090,9 +1090,9 @@
    "level": 6.3,
    "q": "A valve is fully open but the PV is still below the set point. What goes wrong with the integral term, and what is the cure?",
    "options": [
-    "It keeps growing (wind-up), so the PV overshoots badly later; anti-wind-up stops the integral while the output is at its limit",
+    "It keeps growing, so the PV later overshoots; anti-wind-up stops it",
     "It shrinks to zero; the cure is more gain",
-    "Nothing: the integral stops by itself",
+    "Nothing: the integral stops by itself at the limit",
     "The D term takes over; the cure is to remove D"
    ],
    "answer": 0,

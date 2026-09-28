@@ -24,8 +24,9 @@ LEFT JOIN card_state st ON st.card_id = c.id;
 CREATE VIEW v_lesson AS
 SELECT l.id, l.title, l.unit_id, u.title AS unit, u.subject_id, s.title AS subject, l.sort, u.sort AS unit_sort,
        s.sort AS subject_sort, l.star, l.prereq, l.tags, l.source, l.level, l.kind, l.minutes,
-       COUNT(c.id) AS cards,
-       SUM(c.type <> 'concept' AND COALESCE(json_extract(c.data, '$.worked'), 0) = 0) AS asks,
+       SUM(c.id IS NOT NULL AND COALESCE(c.stage, '') <> 'calibrate') AS cards,   -- bank questions place you; they are not the lesson
+       SUM(c.type <> 'concept' AND COALESCE(json_extract(c.data, '$.worked'), 0) = 0 AND COALESCE(c.stage, '') <> 'calibrate') AS asks,
+       SUM(COALESCE(c.stage, '') = 'calibrate') AS bank,
        SUM(st.card_id IS NOT NULL) AS seen,
        SUM(c.type <> 'concept' AND COALESCE(json_extract(c.data, '$.worked'), 0) = 0
            AND (st.stability >= 21 OR (st.right_days >= 3 AND st.struggle = 0))) AS mastered,
@@ -43,7 +44,7 @@ GROUP BY l.id;
 
 CREATE VIEW v_subject AS
 SELECT subject_id AS id, subject AS title, subject_sort AS sort, COUNT(*) AS lessons, SUM(cards > 0) AS written,
-       SUM(cards) AS cards, SUM(asks) AS asks, SUM(seen) AS seen, SUM(mastered) AS mastered, SUM(due) AS due,
+       SUM(cards) AS cards, SUM(asks) AS asks, SUM(bank) AS bank, SUM(seen) AS seen, SUM(mastered) AS mastered, SUM(due) AS due,
        SUM(learned IS NOT NULL) AS learned, SUM(struggles) AS struggles
 FROM v_lesson GROUP BY subject_id;
 

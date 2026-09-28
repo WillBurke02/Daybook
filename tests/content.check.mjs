@@ -101,6 +101,8 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!Array.isArray(q.options) || q.options.length < 3 || q.options.length > 5) bad(at, 'an mcq has 3 to 5 options');
       if (!(q.answer >= 0 && q.answer < (q.options || []).length)) bad(at, 'the answer is not one of the options');
       if (!q.why) bad(at, 'an mcq gives its reason (why)');
+      const right = String(q.options?.[q.answer] ?? '').length, wrong = Math.max(...(q.options || []).filter((_, i) => i !== q.answer).map(o => String(o).length));
+      if (right > 1.5 * wrong && right - wrong > 12) bad(at, 'the right option gives itself away by being much the longest: trim it, and put the reason in why');
     }
     if (q.type === 'numeric') {
       numeric++;

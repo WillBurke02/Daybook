@@ -1,7 +1,12 @@
 {
  "id": "drives.motors.dc",
  "title": "DC drives",
- "tags": ["drives", "motors", "dc", "thyristor"],
+ "tags": [
+  "drives",
+  "motors",
+  "dc",
+  "thyristor"
+ ],
  "kind": "concept",
  "level": 5.8,
  "minutes": 30,
@@ -14,9 +19,33 @@
  ],
  "summary": "A DC motor has a **field** winding (on the stator, a few amps, makes the flux $\\phi$) and an **armature** (the rotor, the main current, fed through brushes and a commutator). The drive feeds both.\n\n**Back EMF.** Turning, the motor is also a generator: $E = k\\phi n$. With the field steady, $k\\phi$ is one number, in volts per rpm. The drive's voltage must beat it: $V_a = E + I_a R_a$.\n\n**Speed follows armature voltage:** $n = \\frac{V_a - I_a R_a}{k\\phi}$. The $I_a R_a$ drop is small, so speed is nearly in proportion to $V_a$, drooping a little with load.\n\n**Current is torque:** $T = k\\phi I_a$, with $k\\phi$ in N m per amp (9.55 × the volts per rpm). The current limit is a torque limit. At standstill there is no back EMF, so unlimited the current would be $\\frac{V_a}{R_a}$: huge.\n\n**Base speed**: full field, rated armature voltage. Above it, **weaken the field**: less flux, faster ($n \\approx \\frac{n_b}{x}$), less torque per amp, about constant power. **Field loss**: a light load runs away, a heavy one stalls at full current, so there is a **field fail** trip.\n\n**Thyristor bridge:** six SCRs; fire later (a bigger $\\alpha$) for less voltage: $V_d = 1.35 V \\cos\\alpha$. On 400 V: 540 V at 0°, 0 V at 90°, negative beyond.\n\n**2Q** (one bridge, non-regenerative: Sprint PL, Parker 591): current one way, so torque one way; it cannot brake a forward-running motor. **4Q** (two bridges, regenerative: Sprint PLX, Parker 590): torque either way, braking energy back to the mains. An **overhauling** load (a test-rig dyno, an unwind, a downhill conveyor) needs 4Q.\n\n**Speed feedback** (makers' figures): armature voltage with **IR compensation** about 2%; analogue tacho about 0.1%; encoder about 0.01%. Field weakening needs a tacho or an encoder.\n\n**Commissioning:** check the armature and field nameplate values; set the current calibration and field current; autotune the current loop; run on armature voltage feedback and prove the tacho's polarity and scaling; then switch to tacho and tune the speed loop. A reversed tacho runs away.",
  "resources": [
-  {"when": "before", "kind": "read", "title": "DC Motor Speed Control", "url": "https://control.com/textbook/variable-speed-motor-controls/dc-motor-speed-control/", "by": "Control.com", "minutes": 8, "note": "Counter-EMF, field control, SCR drives and tacho feedback, in plain words."},
-  {"when": "after", "kind": "read", "title": "DC Motor Drive Basics - Part 2: Thyristor Drive Overview (cont.)", "url": "https://www.eetimes.com/dc-motor-drive-basics-part-2-thyristor-drive-overview-cont/", "by": "Austin Hughes, EE Times", "minutes": 15, "note": "Four-quadrant operation, regeneration and double-converter drives, from Hughes's book."},
-  {"when": "after", "kind": "read", "title": "DC Motor Drive Basics - Part 3: Control arrangements for DC drives", "url": "https://www.eetimes.com/dc-motor-drive-basics-part-3-control-arrangements-for-dc-drives/", "by": "Austin Hughes, EE Times", "minutes": 18, "note": "Current and speed loops, tacho against armature voltage feedback, IR compensation and field weakening."}
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "DC Motor Speed Control",
+   "url": "https://control.com/textbook/variable-speed-motor-controls/dc-motor-speed-control/",
+   "by": "Control.com",
+   "minutes": 8,
+   "note": "Counter-EMF, field control, SCR drives and tacho feedback, in plain words."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "DC Motor Drive Basics - Part 2: Thyristor Drive Overview (cont.)",
+   "url": "https://www.eetimes.com/dc-motor-drive-basics-part-2-thyristor-drive-overview-cont/",
+   "by": "Austin Hughes, EE Times",
+   "minutes": 15,
+   "note": "Four-quadrant operation, regeneration and double-converter drives, from Hughes's book."
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "DC Motor Drive Basics - Part 3: Control arrangements for DC drives",
+   "url": "https://www.eetimes.com/dc-motor-drive-basics-part-3-control-arrangements-for-dc-drives/",
+   "by": "Austin Hughes, EE Times",
+   "minutes": 18,
+   "note": "Current and speed loops, tacho against armature voltage feedback, IR compensation and field weakening."
+  }
  ],
  "sources": [
   "A. Hughes and B. Drury, Electric Motors and Drives: Fundamentals, Types and Applications, 5th edition (Newnes, 2019)",
@@ -28,65 +57,209 @@
   {
    "name": "Back EMF",
    "tex": "E = k\\phi n",
-   "match": ["E=k\\phin"],
+   "match": [
+    "E=k\\phin"
+   ],
    "says": "The voltage a turning DC motor makes inside itself: the motor constant times the flux times the speed. Double the speed, double the back EMF.",
-   "symbols": [["E", "the back EMF: the voltage made inside the turning motor (V)"], ["k", "a constant set by how the armature is wound"], ["\\phi", "phi, the flux: the strength of the magnetic field, set by the field current"], ["k\\phi", "the two together: one number while the field is steady, in volts per rpm"], ["n", "the speed (rpm)"]],
+   "symbols": [
+    [
+     "E",
+     "the back EMF: the voltage made inside the turning motor (V)"
+    ],
+    [
+     "k",
+     "a constant set by how the armature is wound"
+    ],
+    [
+     "\\phi",
+     "phi, the flux: the strength of the magnetic field, set by the field current"
+    ],
+    [
+     "k\\phi",
+     "the two together: one number while the field is steady, in volts per rpm"
+    ],
+    [
+     "n",
+     "the speed (rpm)"
+    ]
+   ],
    "example": "0.25 V per rpm at 1750 rpm: $E = 0.25 \\times 1750 = 437.5$ V."
   },
   {
    "name": "Armature voltage",
    "tex": "V_a = E + I_a R_a",
-   "match": ["V_a=E+I_aR_a"],
+   "match": [
+    "V_a=E+I_aR_a"
+   ],
    "says": "The drive's armature voltage covers the back EMF plus the drop across the armature's own resistance (Kirchhoff's voltage law).",
-   "symbols": [["V_a", "the armature voltage the drive applies (V)"], ["E", "the back EMF (V)"], ["I_a", "the armature current (A)"], ["R_a", "the armature resistance (Ω), brushes included"]],
+   "symbols": [
+    [
+     "V_a",
+     "the armature voltage the drive applies (V)"
+    ],
+    [
+     "E",
+     "the back EMF (V)"
+    ],
+    [
+     "I_a",
+     "the armature current (A)"
+    ],
+    [
+     "R_a",
+     "the armature resistance (Ω), brushes included"
+    ]
+   ],
    "example": "437.5 V back EMF, 90 A through 0.25 Ω: $437.5 + 90 \\times 0.25 = 460$ V."
   },
   {
    "name": "Speed from the armature voltage",
    "tex": "n = \\frac{V_a - I_a R_a}{k\\phi}",
-   "match": ["\\frac{V_a-I_aR_a}{k\\phi}"],
+   "match": [
+    "\\frac{V_a-I_aR_a}{k\\phi}"
+   ],
    "says": "The speed is the armature voltage less the resistance drop, divided by the motor constant. The drop is small, so the speed is nearly in proportion to the armature voltage.",
-   "symbols": [["n", "the speed (rpm)"], ["V_a", "the armature voltage (V)"], ["I_a R_a", "the drop across the armature resistance: current times resistance (V)"], ["k\\phi", "the motor constant at this field (V per rpm)"]],
+   "symbols": [
+    [
+     "n",
+     "the speed (rpm)"
+    ],
+    [
+     "V_a",
+     "the armature voltage (V)"
+    ],
+    [
+     "I_a R_a",
+     "the drop across the armature resistance: current times resistance (V)"
+    ],
+    [
+     "k\\phi",
+     "the motor constant at this field (V per rpm)"
+    ]
+   ],
    "example": "460 V, 90 A, 0.25 Ω, 0.25 V per rpm: $\\frac{460 - 22.5}{0.25} = 1750$ rpm."
   },
   {
    "name": "Speed droop with load",
    "tex": "\\Delta n = \\frac{I_a R_a}{k\\phi}",
-   "match": ["\\frac{I_aR_a}{k\\phi}"],
+   "match": [
+    "\\frac{I_aR_a}{k\\phi}"
+   ],
    "says": "How far the speed falls as the current rises, if nothing corrects it: the extra resistance drop, turned into rpm. IR compensation adds that voltage back.",
-   "symbols": [["\\Delta n", "the fall in speed (rpm)"], ["I_a R_a", "the drop across the armature resistance (V)"], ["k\\phi", "the motor constant (V per rpm)"]],
+   "symbols": [
+    [
+     "\\Delta n",
+     "the fall in speed (rpm)"
+    ],
+    [
+     "I_a R_a",
+     "the drop across the armature resistance (V)"
+    ],
+    [
+     "k\\phi",
+     "the motor constant (V per rpm)"
+    ]
+   ],
    "example": "90 A, 0.25 Ω, 0.25 V per rpm: $\\frac{22.5}{0.25} = 90$ rpm."
   },
   {
    "name": "Armature current",
    "tex": "I_a = \\frac{V_a - E}{R_a}",
-   "match": ["\\frac{V_a-E}{R_a}"],
+   "match": [
+    "\\frac{V_a-E}{R_a}"
+   ],
    "says": "Only the difference between the drive's voltage and the back EMF pushes current through the armature (Ohm's law). At standstill there is no back EMF yet, so without a current limit the current would be huge.",
-   "symbols": [["I_a", "the armature current (A)"], ["V_a", "the armature voltage (V)"], ["E", "the back EMF (V)"], ["R_a", "the armature resistance (Ω)"]],
+   "symbols": [
+    [
+     "I_a",
+     "the armature current (A)"
+    ],
+    [
+     "V_a",
+     "the armature voltage (V)"
+    ],
+    [
+     "E",
+     "the back EMF (V)"
+    ],
+    [
+     "R_a",
+     "the armature resistance (Ω)"
+    ]
+   ],
    "example": "460 V against 437.5 V through 0.25 Ω: $\\frac{22.5}{0.25} = 90$ A. At standstill: $\\frac{460}{0.25} = 1840$ A."
   },
   {
    "name": "Torque from current",
    "tex": "T = k\\phi I_a",
-   "match": ["T=k\\phiI_a"],
+   "match": [
+    "T=k\\phiI_a"
+   ],
    "says": "The torque is the motor constant times the armature current. With the field steady, torque is in proportion to current, so the current limit is a torque limit.",
-   "symbols": [["T", "the torque (N m)"], ["k\\phi", "the same motor constant, in N m per amp: 9.55 times the volts per rpm"], ["I_a", "the armature current (A)"]],
+   "symbols": [
+    [
+     "T",
+     "the torque (N m)"
+    ],
+    [
+     "k\\phi",
+     "the same motor constant, in N m per amp: 9.55 times the volts per rpm"
+    ],
+    [
+     "I_a",
+     "the armature current (A)"
+    ]
+   ],
    "example": "2.39 N m per amp at 90 A: $2.39 \\times 90 \\approx 215$ N m."
   },
   {
    "name": "Field weakening",
    "tex": "n \\approx \\frac{n_b}{x}",
-   "match": ["\\frac{n_b}{x}"],
+   "match": [
+    "\\frac{n_b}{x}"
+   ],
    "says": "Above base speed, with the armature voltage at its rating: weaken the flux to a fraction of full and the speed rises to the base speed divided by that fraction. The torque at rated current falls to that fraction of rated.",
-   "symbols": [["n", "the new speed (rpm)"], ["n_b", "the base speed: full field, rated armature voltage (rpm)"], ["x", "the flux as a fraction of full: 70% is 0.7"]],
+   "symbols": [
+    [
+     "n",
+     "the new speed (rpm)"
+    ],
+    [
+     "n_b",
+     "the base speed: full field, rated armature voltage (rpm)"
+    ],
+    [
+     "x",
+     "the flux as a fraction of full: 70% is 0.7"
+    ]
+   ],
    "example": "base 1750 rpm, flux at 70%: $1750 \\div 0.7 = 2500$ rpm, with 70% of rated torque at rated current."
   },
   {
    "name": "Thyristor bridge voltage",
    "tex": "V_d = 1.35 V \\cos\\alpha",
-   "match": ["1.35V\\cos\\alpha"],
+   "match": [
+    "1.35V\\cos\\alpha"
+   ],
    "says": "The average DC voltage from a fully controlled six-thyristor bridge: 1.35 times the supply's line voltage, times the cosine of the firing angle. Fire later, less voltage; past 90°, negative.",
-   "symbols": [["V_d", "the average DC output voltage (V)"], ["V", "the AC supply's line voltage (V): 400 V in the UK"], ["\\alpha", "alpha, the firing angle: how late in each cycle the thyristors are fired (degrees)"], ["\\cos\\alpha", "the cosine of that angle: 1 at 0°, 0.5 at 60°, 0 at 90°"]],
+   "symbols": [
+    [
+     "V_d",
+     "the average DC output voltage (V)"
+    ],
+    [
+     "V",
+     "the AC supply's line voltage (V): 400 V in the UK"
+    ],
+    [
+     "\\alpha",
+     "alpha, the firing angle: how late in each cycle the thyristors are fired (degrees)"
+    ],
+    [
+     "\\cos\\alpha",
+     "the cosine of that angle: 1 at 0°, 0.5 at 60°, 0 at 90°"
+    ]
+   ],
    "example": "400 V, fired at 60°: $1.35 \\times 400 \\times 0.5 = 270$ V."
   }
  ],
@@ -97,7 +270,12 @@
    "stage": "try",
    "level": 5.0,
    "q": "Have a go: a guess is fine. A DC motor on a thyristor drive runs light (no load). With 230 V on its armature it turns at 920 rpm. The drive raises the armature voltage to 460 V; the field stays the same. About what speed now?",
-   "options": ["About 920 rpm: the voltage sets the torque, not the speed", "About 1840 rpm", "About 3680 rpm", "About 460 rpm"],
+   "options": [
+    "About 920 rpm: the voltage sets the torque, not the speed",
+    "About 1840 rpm",
+    "About 3680 rpm",
+    "About 460 rpm"
+   ],
    "answer": 1,
    "why": "Double the armature voltage, double the speed. As it turns, a DC motor makes its own voltage, the **back EMF**, in proportion to its speed, and it speeds up until that nearly matches what the drive applies. Running light, very little is lost in the winding, so 460 V gives about $2 \\times 920 = 1840$ rpm. On a DC motor it is the **current** that sets the torque."
   },
@@ -116,10 +294,22 @@
    "level": 4.8,
    "q": "Match each part to its job.",
    "pairs": [
-    ["Field winding", "Makes the magnetic field (the flux) from a small, steady current"],
-    ["Armature", "The rotor winding that carries the main current"],
-    ["Commutator and brushes", "Feed current into the turning armature, switching it from coil to coil"],
-    ["Armature bridge", "The drive's big thyristor bridge that sets the armature voltage"]
+    [
+     "Field winding",
+     "Makes the magnetic field (the flux) from a small, steady current"
+    ],
+    [
+     "Armature",
+     "The rotor winding that carries the main current"
+    ],
+    [
+     "Commutator and brushes",
+     "Feed current into the turning armature, switching it from coil to coil"
+    ],
+    [
+     "Armature bridge",
+     "The drive's big thyristor bridge that sets the armature voltage"
+    ]
    ],
    "why": "The field makes the flux; the armature carries the current that pushes against it; the commutator keeps that push one way as it turns. The drive feeds the armature from its main bridge and the field from a separate, smaller supply."
   },
@@ -137,8 +327,38 @@
    "stage": "learn",
    "level": 5.0,
    "q": "A DC motor's armature has {va} V across it and draws {ia} A. Its armature resistance is {ra} Ω. What is the back EMF?",
-   "vars": {"va": {"pick": [220, 300, 400, 440, 460]}, "ia": {"pick": [10, 20, 40, 60, 90]}, "ra": {"pick": [0.15, 0.2, 0.25, 0.3, 0.4]}},
-   "let": {"drop": "ia * ra"},
+   "vars": {
+    "va": {
+     "pick": [
+      220,
+      300,
+      400,
+      440,
+      460
+     ]
+    },
+    "ia": {
+     "pick": [
+      10,
+      20,
+      40,
+      60,
+      90
+     ]
+    },
+    "ra": {
+     "pick": [
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4
+     ]
+    }
+   },
+   "let": {
+    "drop": "ia * ra"
+   },
    "answer": "va - ia * ra",
    "unit": "V",
    "abs": 0.5,
@@ -159,8 +379,43 @@
    "type": "numeric",
    "stage": "learn",
    "q": "A DC motor's constant $k\\phi$ is {k} V per rpm at full field, and its armature resistance is {ra} Ω. The drive applies {va} V and the armature draws {ia} A. What speed does it run at?",
-   "vars": {"k": {"pick": [0.2, 0.25, 0.3]}, "ra": {"pick": [0.2, 0.25, 0.3]}, "va": {"pick": [200, 250, 300, 350, 400, 460]}, "ia": {"pick": [20, 40, 60, 90]}},
-   "let": {"emf": "va - ia * ra"},
+   "vars": {
+    "k": {
+     "pick": [
+      0.2,
+      0.25,
+      0.3
+     ]
+    },
+    "ra": {
+     "pick": [
+      0.2,
+      0.25,
+      0.3
+     ]
+    },
+    "va": {
+     "pick": [
+      200,
+      250,
+      300,
+      350,
+      400,
+      460
+     ]
+    },
+    "ia": {
+     "pick": [
+      20,
+      40,
+      60,
+      90
+     ]
+    }
+   },
+   "let": {
+    "emf": "va - ia * ra"
+   },
    "answer": "(va - ia * ra) / k",
    "unit": "rpm",
    "tolerance": 0.002,
@@ -182,7 +437,27 @@
    "stage": "learn",
    "level": 5.0,
    "q": "A DC motor's constant is {kt} N m per amp at full field. The armature draws {ia} A. What torque does it make?",
-   "vars": {"kt": {"pick": [1.2, 1.9, 2.4, 3.1, 4.5]}, "ia": {"pick": [20, 35, 50, 75, 90, 120]}},
+   "vars": {
+    "kt": {
+     "pick": [
+      1.2,
+      1.9,
+      2.4,
+      3.1,
+      4.5
+     ]
+    },
+    "ia": {
+     "pick": [
+      20,
+      35,
+      50,
+      75,
+      90,
+      120
+     ]
+    }
+   },
    "answer": "kt * ia",
    "unit": "N m",
    "tolerance": 0.01,
@@ -202,8 +477,30 @@
    "type": "numeric",
    "stage": "learn",
    "q": "A DC motor has a base speed of {nb} rpm. Holding rated armature voltage, the drive weakens the field to {x}% of full flux. Roughly what speed does it run at?",
-   "vars": {"nb": {"pick": [1150, 1500, 1750, 2000, 2300]}, "x": {"pick": [50, 60, 70, 75, 80, 90]}},
-   "let": {"xf": "x / 100"},
+   "vars": {
+    "nb": {
+     "pick": [
+      1150,
+      1500,
+      1750,
+      2000,
+      2300
+     ]
+    },
+    "x": {
+     "pick": [
+      50,
+      60,
+      70,
+      75,
+      80,
+      90
+     ]
+    }
+   },
+   "let": {
+    "xf": "x / 100"
+   },
    "answer": "nb * 100 / x",
    "unit": "rpm",
    "tolerance": 0.01,
@@ -225,8 +522,21 @@
    "stage": "learn",
    "level": 6.0,
    "q": "A fully controlled three-phase thyristor bridge runs from a 400 V supply with a firing angle of {a}° (cos {a}° = {c:3}). What average DC voltage does it give?",
-   "vars": {"a": {"pick": [0, 15, 30, 45, 60, 75]}},
-   "let": {"c": "COS(RADIANS(a))"},
+   "vars": {
+    "a": {
+     "pick": [
+      0,
+      15,
+      30,
+      45,
+      60,
+      75
+     ]
+    }
+   },
+   "let": {
+    "c": "COS(RADIANS(a))"
+   },
    "answer": "1.35 * 400 * COS(RADIANS(a))",
    "unit": "V",
    "abs": 2,
@@ -271,8 +581,35 @@
    "stage": "learn",
    "level": 6.0,
    "q": "A DC drive runs on armature voltage feedback with **no** IR compensation. The motor has $R_a$ = {ra} Ω and a constant of {k} V per rpm. As the load comes on, the armature current rises from nearly 0 to {ia} A. By how much does the speed fall?",
-   "vars": {"ra": {"pick": [0.15, 0.2, 0.25, 0.3, 0.4]}, "k": {"pick": [0.2, 0.25, 0.3]}, "ia": {"pick": [30, 50, 70, 90]}},
-   "let": {"drop": "ia * ra"},
+   "vars": {
+    "ra": {
+     "pick": [
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4
+     ]
+    },
+    "k": {
+     "pick": [
+      0.2,
+      0.25,
+      0.3
+     ]
+    },
+    "ia": {
+     "pick": [
+      30,
+      50,
+      70,
+      90
+     ]
+    }
+   },
+   "let": {
+    "drop": "ia * ra"
+   },
    "answer": "ia * ra / k",
    "unit": "rpm",
    "tolerance": 0.01,
@@ -285,7 +622,12 @@
    "type": "mcq",
    "stage": "practise",
    "q": "A DC drive on a coating line must hold its speed within 0.1%, and must also run above base speed with a weakened field. Which speed feedback?",
-   "options": ["Armature voltage with IR compensation", "Armature current", "An analogue tacho or an encoder", "Field current"],
+   "options": [
+    "Armature voltage with IR compensation",
+    "Armature current",
+    "An analogue tacho or an encoder",
+    "Field current"
+   ],
    "answer": 2,
    "why": "Armature voltage feedback is good to only about 2%, and once the field is weakened it cannot measure speed at all, because the back EMF then depends on the flux as well as the speed. A tacho (about 0.1%) or an encoder (about 0.01%) measures the shaft itself. Current tells you torque, not speed."
   },
@@ -296,10 +638,10 @@
    "level": 6.3,
    "q": "The field fuse on a DC drive blows while the motor runs lightly loaded on armature voltage feedback. Why is a **field fail** trip needed?",
    "options": [
-    "The motor stops at once and nothing is harmed: the trip only saves time",
-    "The armature current falls to zero, which damages the thyristors",
-    "With almost no flux, the motor must spin far faster to make its back EMF, so it can run away to a dangerous speed",
-    "The field winding overheats"
+    "It stops at once and nothing is harmed at all",
+    "The armature current falls to zero and damages the thyristors",
+    "It can run away: with almost no flux it must spin far faster",
+    "The field winding overheats and burns out"
    ],
    "answer": 2,
    "why": "The drive holds the armature voltage, and $E = k\\phi n$: with the flux nearly gone, only a much higher speed makes that back EMF, so a light load **runs away**. A heavy load stalls instead, with full current, because the torque per amp has collapsed, and the current burns the stalled commutator. Either way, the drive must remove the armature supply as soon as the field current is lost. A blown fuse means no field current at all, so nothing in the field can overheat."
@@ -314,7 +656,7 @@
     "The current limit is set too low",
     "The field current is set too high",
     "The IR compensation is set to zero",
-    "The tacho is wired the wrong way round, so the speed loop pushes the wrong way"
+    "The tacho is wired the wrong way round"
    ],
    "answer": 3,
    "why": "With the tacho reversed, the drive sees the speed as negative. The faster the motor goes, the further below the set-point it seems, so the drive pushes harder: **positive feedback**, a runaway. That is why you check the tacho's polarity and volts per 1000 rpm while still on armature voltage feedback. Too low a current limit makes it sluggish; too much field makes it slower, not faster.",
@@ -343,9 +685,9 @@
    "q": "On a DC drive, the speed follows the armature voltage. What mainly sets the speed of an induction motor on a VFD?",
    "options": [
     "The output voltage, in the same way",
-    "The output current",
-    "The output frequency: the synchronous speed $\\frac{120 f}{p}$, less a little slip",
-    "The field current"
+    "The output current to the motor",
+    "The output frequency, less a little slip",
+    "The field current, as on a DC motor"
    ],
    "answer": 2,
    "why": "An induction motor follows its rotating field, and the field's speed is set by the frequency: $n_s = \\frac{120 f}{p}$, with the rotor a little slower. A VFD changes its voltage too, but only to keep the flux right (V/f). On a DC motor there is no frequency: the speed comes from the back EMF, $E = k\\phi n$, so from the armature voltage."
@@ -356,8 +698,36 @@
    "stage": "mix",
    "level": 6.3,
    "q": "A DC motor has $R_a$ = {ra} Ω. Turning at speed, it makes a back EMF of {emf} V, and the drive applies {va} V. What armature current flows?",
-   "vars": {"ra": {"pick": [0.2, 0.25, 0.3, 0.4]}, "ia0": {"pick": [20, 40, 60, 80, 100]}, "va": {"pick": [400, 440, 460]}},
-   "let": {"emf": "va - ia0 * ra", "stall": "va / ra"},
+   "vars": {
+    "ra": {
+     "pick": [
+      0.2,
+      0.25,
+      0.3,
+      0.4
+     ]
+    },
+    "ia0": {
+     "pick": [
+      20,
+      40,
+      60,
+      80,
+      100
+     ]
+    },
+    "va": {
+     "pick": [
+      400,
+      440,
+      460
+     ]
+    }
+   },
+   "let": {
+    "emf": "va - ia0 * ra",
+    "stall": "va / ra"
+   },
    "answer": "(va - emf) / ra",
    "unit": "A",
    "tolerance": 0.01,
@@ -385,8 +755,33 @@
    "stage": "check",
    "level": 5.0,
    "q": "A DC motor on a thyristor drive runs light (almost no current). At {va1} V on the armature it turns at {n1} rpm. With the field unchanged, what speed at {va2} V?",
-   "vars": {"va1": {"pick": [100, 150, 200, 230]}, "k": {"pick": [0.2, 0.25]}, "va2": {"pick": [300, 350, 400, 460]}},
-   "let": {"n1": "va1 / k"},
+   "vars": {
+    "va1": {
+     "pick": [
+      100,
+      150,
+      200,
+      230
+     ]
+    },
+    "k": {
+     "pick": [
+      0.2,
+      0.25
+     ]
+    },
+    "va2": {
+     "pick": [
+      300,
+      350,
+      400,
+      460
+     ]
+    }
+   },
+   "let": {
+    "n1": "va1 / k"
+   },
    "answer": "n1 * va2 / va1",
    "unit": "rpm",
    "tolerance": 0.01,
@@ -399,8 +794,29 @@
    "stage": "check",
    "level": 5.3,
    "q": "A DC motor gives {tr} N m at its rated armature current of {ir} A. The drive's current limit is set to {cl}% of rated. With full field, what is the most torque it can give?",
-   "vars": {"ir": {"pick": [25, 45, 90, 150, 250]}, "cl": {"pick": [100, 125, 150, 200]}},
-   "let": {"tr": "ROUND(ir * 2.4, 0)", "ilim": "ir * cl / 100"},
+   "vars": {
+    "ir": {
+     "pick": [
+      25,
+      45,
+      90,
+      150,
+      250
+     ]
+    },
+    "cl": {
+     "pick": [
+      100,
+      125,
+      150,
+      200
+     ]
+    }
+   },
+   "let": {
+    "tr": "ROUND(ir * 2.4, 0)",
+    "ilim": "ir * cl / 100"
+   },
    "answer": "tr * cl / 100",
    "unit": "N m",
    "tolerance": 0.01,
@@ -413,10 +829,10 @@
    "stage": "check",
    "q": "A DC motor on a single-bridge (2Q) drive runs a conveyor forward. You ask it to stop quickly. What happens?",
    "options": [
-    "It brakes hard, returning the energy to the mains",
-    "It reverses at once",
-    "It coasts down: one bridge cannot make the reverse current that braking needs",
-    "It stops dead, because the thyristors turn off"
+    "It brakes hard, returning energy to the mains",
+    "It reverses direction at once",
+    "It coasts: one bridge cannot brake",
+    "It stops dead as the thyristors turn off"
    ],
    "answer": 2,
    "why": "Braking a forward-running motor needs torque against the motion, so current the other way, and a thyristor bridge passes current only one way. So it coasts, unless a braking resistor is switched in. A 4Q drive, with its second bridge, would brake it and send the energy back to the mains."

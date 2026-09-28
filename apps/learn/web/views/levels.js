@@ -34,7 +34,7 @@ export function ladder(level) {
 
 const calibratePanel = { title: 'Find my level', w: 12, async render(body, ctx) {
   ctx.setTitle('');
-  const subjects = (await api.view('v_subject', { order: 'sort' })).filter(s => s.id !== 'mine' && s.asks > 0);   // nothing to ask: not offered
+  const subjects = (await api.view('v_subject', { order: 'sort' })).filter(s => s.id !== 'mine' && (s.asks || s.bank));   // nothing to ask: not offered
   const sid = ctx.params.s;
   const subject = subjects.find(s => s.id === sid);
   if (!subject) {

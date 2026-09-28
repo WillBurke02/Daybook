@@ -1,7 +1,12 @@
 {
  "id": "maths.found.ratio",
  "title": "Ratio, proportion and rates",
- "tags": ["maths", "ratio", "proportion", "rates"],
+ "tags": [
+  "maths",
+  "ratio",
+  "proportion",
+  "rates"
+ ],
  "kind": "procedure",
  "level": 3.1,
  "minutes": 25,
@@ -14,10 +19,40 @@
  ],
  "summary": "A **ratio** compares amounts. A mortar of 3 parts sand to 1 part cement is **3 : 1**, read \"3 to 1\". The order matters. **Simplify** it like a fraction, dividing both numbers by the same number: $12 : 8 = 3 : 2$. Put both amounts in the same units first.\n\nA ratio also splits a whole: 3 : 1 is 4 parts, so $\\frac{3}{4}$ and $\\frac{1}{4}$.\n\n**Sharing in a ratio**: add the parts, find one part, multiply. £200 in the ratio 3 : 2 is 5 parts; one part is £40; the shares are £120 and £80. Check they add up to the total.\n\n**Direct proportion**: double one, and the other doubles (hours and pay). The **unitary method**: find the amount for **one**, then multiply. 4 people need 300 g, so 1 needs 75 g and 6 need 450 g.\n\nNot everything is direct: more fitters on a job take **less** time.\n\nA **rate** is an amount **per** something: £ per hour, litres per minute. $\\text{speed} = \\frac{\\text{distance}}{\\text{time}}$; turned round, distance = speed × time and time = distance ÷ speed. Keep the units matched.\n\n**Best buy**: compare the price of one of each.\n\n**Scale drawings**: on a 1 : 50 drawing, real = drawing × 50, and drawing = real ÷ 50.\n\n**Gear ratio** = driven teeth ÷ driver teeth. A 12-tooth driver on a 36-tooth gear is 3 : 1: the output turns 3 times slower (1500 rpm in, 500 rpm out) with about 3 times the torque, less a little lost to friction.",
  "resources": [
-  {"when": "before", "kind": "video", "title": "Ratio – Sharing the total Video", "url": "https://corbettmaths.com/2013/03/03/ratio-sharing-the-total/", "by": "Corbettmaths", "minutes": 5, "note": "Add the parts, find one part, multiply."},
-  {"when": "after", "kind": "video", "title": "Direct Proportion Video", "url": "https://corbettmaths.com/2013/04/04/direct-proportion/", "by": "Corbettmaths", "minutes": 5},
-  {"when": "after", "kind": "read", "title": "GCSE Ratio Questions Explained (With Worked Examples)", "url": "https://mathsgenie.co.uk/blog/gcse-ratio-questions-explained", "by": "Maths Genie", "minutes": 9, "note": "More kinds of ratio question, each worked."},
-  {"when": "after", "kind": "video", "title": "Intro to rates", "url": "https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates/pre-algebra-rates/v/introduction-to-rates", "by": "Khan Academy", "minutes": 4}
+  {
+   "when": "before",
+   "kind": "video",
+   "title": "Ratio – Sharing the total Video",
+   "url": "https://corbettmaths.com/2013/03/03/ratio-sharing-the-total/",
+   "by": "Corbettmaths",
+   "minutes": 5,
+   "note": "Add the parts, find one part, multiply."
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Direct Proportion Video",
+   "url": "https://corbettmaths.com/2013/04/04/direct-proportion/",
+   "by": "Corbettmaths",
+   "minutes": 5
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "GCSE Ratio Questions Explained (With Worked Examples)",
+   "url": "https://mathsgenie.co.uk/blog/gcse-ratio-questions-explained",
+   "by": "Maths Genie",
+   "minutes": 9,
+   "note": "More kinds of ratio question, each worked."
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Intro to rates",
+   "url": "https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates/pre-algebra-rates/v/introduction-to-rates",
+   "by": "Khan Academy",
+   "minutes": 4
+  }
  ],
  "sources": [
   "Department for Education, Mathematics programmes of study: key stage 3. National curriculum in England (2013)",
@@ -27,27 +62,90 @@
   "John Bird and Carl Ross, Mechanical Engineering Principles (Routledge): simple machines and gear trains"
  ],
  "formulas": [
-  {"name": "Sharing in a ratio", "tex": "\\text{one part} = \\frac{\\text{total}}{a + b}", "match": ["\\text{one part}"],
+  {
+   "name": "Sharing in a ratio",
+   "tex": "\\text{one part} = \\frac{\\text{total}}{a + b}",
+   "match": [
+    "\\text{one part}"
+   ],
    "says": "Add the numbers in the ratio to get the number of parts. Divide the total by that to find one part. Then multiply one part by each number in the ratio.",
-   "symbols": [["a, b", "the two numbers in the ratio $a : b$"], ["\\text{total}", "the amount being shared"]],
-   "example": "£200 in the ratio 3 : 2: $3 + 2 = 5$ parts, one part is $200 \\div 5 = 40$, so the shares are £120 and £80."},
-  {"name": "Direct proportion", "tex": "y = kx", "match": ["y=kx"],
+   "symbols": [
+    [
+     "a, b",
+     "the two numbers in the ratio $a : b$"
+    ],
+    [
+     "\\text{total}",
+     "the amount being shared"
+    ]
+   ],
+   "example": "£200 in the ratio 3 : 2: $3 + 2 = 5$ parts, one part is $200 \\div 5 = 40$, so the shares are £120 and £80."
+  },
+  {
+   "name": "Direct proportion",
+   "tex": "y = kx",
+   "match": [
+    "y=kx"
+   ],
    "says": "Two amounts are in direct proportion when one is always the same number of times the other: double one and the other doubles. That number is the amount for one.",
-   "symbols": [["y", "the amount you want: pay, flour, cost"], ["x", "how many: hours, people, metres"], ["k", "the amount for one: £ per hour, grams per person, £ per metre"]],
-   "example": "£15 an hour: $k = 15$, so 11 hours pays $15 \\times 11 = 165$, £165."},
-  {"name": "Speed", "tex": "\\text{speed} = \\frac{\\text{distance}}{\\text{time}}", "match": ["\\frac{\\text{distance}}{\\text{time}}"],
+   "symbols": [
+    [
+     "y",
+     "the amount you want: pay, flour, cost"
+    ],
+    [
+     "x",
+     "how many: hours, people, metres"
+    ],
+    [
+     "k",
+     "the amount for one: £ per hour, grams per person, £ per metre"
+    ]
+   ],
+   "example": "£15 an hour: $k = 15$, so 11 hours pays $15 \\times 11 = 165$, £165."
+  },
+  {
+   "name": "Speed",
+   "tex": "\\text{speed} = \\frac{\\text{distance}}{\\text{time}}",
+   "match": [
+    "\\frac{\\text{distance}}{\\text{time}}"
+   ],
    "says": "How far you go in each unit of time: divide the distance by the time. Turned round: distance = speed × time, and time = distance ÷ speed.",
-   "example": "120 miles in 3 hours: $120 \\div 3 = 40$ mph. At 40 mph, 2 hours covers $40 \\times 2 = 80$ miles."},
-  {"name": "A rate", "tex": "\\text{rate} = \\frac{\\text{amount}}{\\text{time}}", "match": ["\\frac{\\text{amount}}{\\text{time}}"],
+   "example": "120 miles in 3 hours: $120 \\div 3 = 40$ mph. At 40 mph, 2 hours covers $40 \\times 2 = 80$ miles."
+  },
+  {
+   "name": "A rate",
+   "tex": "\\text{rate} = \\frac{\\text{amount}}{\\text{time}}",
+   "match": [
+    "\\frac{\\text{amount}}{\\text{time}}"
+   ],
    "says": "How much for each unit of time: litres per minute, pounds per hour. \"Per\" means \"for each\", and the fraction line is the \"per\". Time to finish = amount ÷ rate.",
-   "example": "90 litres in 6 minutes: $90 \\div 6 = 15$ litres per minute."},
-  {"name": "Scale drawings", "tex": "\\text{real} = \\text{drawing} \\times n", "match": ["\\text{real}=\\text{drawing}\\times"],
+   "example": "90 litres in 6 minutes: $90 \\div 6 = 15$ litres per minute."
+  },
+  {
+   "name": "Scale drawings",
+   "tex": "\\text{real} = \\text{drawing} \\times n",
+   "match": [
+    "\\text{real}=\\text{drawing}\\times"
+   ],
    "says": "On a drawing at a scale of 1 : n, every real length is n times the length on the drawing. Multiply to go from drawing to real; divide to go from real to drawing.",
-   "symbols": [["n", "the second number of the scale: on a 1 : 50 drawing, 50"]],
-   "example": "1 : 50, a wall drawn 12 cm long: $12 \\times 50 = 600$ cm, which is 6 m."},
-  {"name": "Gear ratio", "tex": "\\text{gear ratio} = \\frac{\\text{driven teeth}}{\\text{driver teeth}}", "match": ["\\frac{\\text{driven teeth}}{\\text{driver teeth}}"],
+   "symbols": [
+    [
+     "n",
+     "the second number of the scale: on a 1 : 50 drawing, 50"
+    ]
+   ],
+   "example": "1 : 50, a wall drawn 12 cm long: $12 \\times 50 = 600$ cm, which is 6 m."
+  },
+  {
+   "name": "Gear ratio",
+   "tex": "\\text{gear ratio} = \\frac{\\text{driven teeth}}{\\text{driver teeth}}",
+   "match": [
+    "\\frac{\\text{driven teeth}}{\\text{driver teeth}}"
+   ],
    "says": "How many turns the driver makes for one turn of the driven gear. The output speed is the input speed divided by the ratio; the torque (turning force) is multiplied by it, less a little lost to friction.",
-   "example": "12-tooth driver, 36-tooth driven: $36 \\div 12 = 3$, a 3 : 1 ratio. 1500 rpm in gives $1500 \\div 3 = 500$ rpm out."}
+   "example": "12-tooth driver, 36-tooth driven: $36 \\div 12 = 3$, a 3 : 1 ratio. 1500 rpm in gives $1500 \\div 3 = 500$ rpm out."
+  }
  ],
  "cards": [
   {
@@ -55,8 +153,21 @@
    "type": "numeric",
    "stage": "try",
    "q": "Two fitters share a £{t} bonus in the ratio 3 : 2: the first gets £3 for every £2 the second gets. How much does the first fitter get, in pounds? A guess is fine.",
-   "vars": {"t": {"pick": [100, 150, 200, 250, 300, 500]}},
-   "let": {"one": "t / 5"},
+   "vars": {
+    "t": {
+     "pick": [
+      100,
+      150,
+      200,
+      250,
+      300,
+      500
+     ]
+    }
+   },
+   "let": {
+    "one": "t / 5"
+   },
    "answer": "t / 5 * 3",
    "abs": 0.01,
    "work": "$3 + 2 = 5$ parts. One part: ${{t}} \\div 5 = {{one}}$. First fitter: $3 \\times {{one}} = {{answer}}$, so £{answer}.",
@@ -76,7 +187,12 @@
    "stage": "learn",
    "level": 2.6,
    "q": "A stores holds 24 M8 bolts and 16 M10 bolts. What is the ratio of M8 to M10 bolts, in its simplest form?",
-   "options": ["2 : 3", "12 : 8", "3 : 2", "6 : 4"],
+   "options": [
+    "2 : 3",
+    "12 : 8",
+    "3 : 2",
+    "6 : 4"
+   ],
    "answer": 2,
    "hint": "What is the biggest number that goes into both 24 and 16?",
    "why": "Divide both by 8, the biggest number that goes into both: $24 : 16 = 3 : 2$. 12 : 8 and 6 : 4 are the same ratio, but not in simplest form. 2 : 3 has the order the wrong way round: that is M10 to M8."
@@ -87,7 +203,17 @@
    "stage": "learn",
    "title": "Sharing in a ratio",
    "body": "To share £200 in the ratio 3 : 2:\n- **Add the parts**: $3 + 2 = 5$ parts in all.\n- **Find one part**: $\\text{one part} = 200 \\div 5 = 40$.\n- **Multiply**: $3 \\times 40 = 120$ and $2 \\times 40 = 80$.\n- **Check**: $120 + 80 = 200$.\n\nSo the first share is £120 and the second £80.\n\nThe first share is 3 of the 5 parts: $\\frac{3}{5}$ of the whole. The second is $\\frac{2}{5}$. The bar shows 3 : 2 as 3 parts shaded out of 5.",
-   "widget": {"name": "fraction", "params": {"num": 3, "den": 5, "controls": ["num", "den"]}},
+   "widget": {
+    "name": "fraction",
+    "params": {
+     "num": 3,
+     "den": 5,
+     "controls": [
+      "num",
+      "den"
+     ]
+    }
+   },
    "more": "Picture the £200 put into five equal envelopes of £40. The first fitter gets 3 envelopes (£120) and the second gets 2 (£80). \"Add the parts, find one part\" just means: count the envelopes, and see what goes in each.\n\nTwo slips to avoid. The ratio 3 : 2 is shares, not pounds, so it does not mean £3 and £2. And divide by the **total** number of parts (5), not by 3 or by 2.\n\nThree people work the same way. £240 in the ratio 1 : 2 : 3 is 6 parts of £40: £40, £80 and £120."
   },
   {
@@ -95,7 +221,17 @@
    "type": "widget",
    "stage": "learn",
    "intro": "A ratio is parts of a whole. A cleaning fluid is mixed 1 : 4, concentrate to water. Set the bar to show the concentrate as a fraction of the whole mix.",
-   "widget": {"name": "fraction", "params": {"num": 1, "den": 2, "controls": ["num", "den"]}},
+   "widget": {
+    "name": "fraction",
+    "params": {
+     "num": 1,
+     "den": 2,
+     "controls": [
+      "num",
+      "den"
+     ]
+    }
+   },
    "ask": {
     "type": "numeric",
     "q": "How many litres of concentrate go into 20 litres of this mix?",
@@ -120,8 +256,28 @@
    "stage": "learn",
    "level": 3.0,
    "q": "A recipe for {a} people needs {g} g of rice. How much rice is needed for {b} people?",
-   "vars": {"a": {"pick": [2, 4, 5]}, "pp": [50, 90, 5], "b": [3, 12, 1]},
-   "let": {"g": "a * pp"},
+   "vars": {
+    "a": {
+     "pick": [
+      2,
+      4,
+      5
+     ]
+    },
+    "pp": [
+     50,
+     90,
+     5
+    ],
+    "b": [
+     3,
+     12,
+     1
+    ]
+   },
+   "let": {
+    "g": "a * pp"
+   },
    "answer": "a * pp / a * b",
    "unit": "g",
    "abs": 0.01,
@@ -143,8 +299,25 @@
    "stage": "learn",
    "level": 2.8,
    "q": "A van covers {d} miles in {t} hours. What is its average speed (its speed on average over the whole trip)?",
-   "vars": {"t": {"pick": [2, 3, 4, 1.5, 2.5]}, "s": [30, 60, 2]},
-   "let": {"d": "s * t"},
+   "vars": {
+    "t": {
+     "pick": [
+      2,
+      3,
+      4,
+      1.5,
+      2.5
+     ]
+    },
+    "s": [
+     30,
+     60,
+     2
+    ]
+   },
+   "let": {
+    "d": "s * t"
+   },
    "answer": "s * t / t",
    "unit": "mph",
    "abs": 0.01,
@@ -166,8 +339,23 @@
    "stage": "learn",
    "level": 3.4,
    "q": "On a 1 : {s} drawing, a cable tray is drawn {L} cm long. How long is the real tray, in metres?",
-   "vars": {"s": {"pick": [20, 50, 100]}, "L": [2, 15, 0.5]},
-   "let": {"cm": "L * s"},
+   "vars": {
+    "s": {
+     "pick": [
+      20,
+      50,
+      100
+     ]
+    },
+    "L": [
+     2,
+     15,
+     0.5
+    ]
+   },
+   "let": {
+    "cm": "L * s"
+   },
    "answer": "L * s / 100",
    "unit": "m",
    "abs": 0.001,
@@ -189,8 +377,38 @@
    "stage": "learn",
    "level": 3.4,
    "q": "A motor turns a {a}-tooth gear at {n} rpm. It drives a {b}-tooth gear. How fast does the driven gear turn?",
-   "vars": {"a": {"pick": [10, 12, 15, 20]}, "k": {"pick": [2, 3, 4, 5]}, "n": {"pick": [1200, 1500, 1800, 2400, 3000]}},
-   "let": {"b": "a * k", "ratio": "a * k / a", "wrong": "n * a * k / a"},
+   "vars": {
+    "a": {
+     "pick": [
+      10,
+      12,
+      15,
+      20
+     ]
+    },
+    "k": {
+     "pick": [
+      2,
+      3,
+      4,
+      5
+     ]
+    },
+    "n": {
+     "pick": [
+      1200,
+      1500,
+      1800,
+      2400,
+      3000
+     ]
+    }
+   },
+   "let": {
+    "b": "a * k",
+    "ratio": "a * k / a",
+    "wrong": "n * a * k / a"
+   },
    "answer": "n / (a * k / a)",
    "unit": "rpm",
    "tolerance": 0.01,
@@ -205,10 +423,22 @@
    "worked": true,
    "q": "A £360 bonus is shared between Amir and Beth in the ratio 5 : 4. How much does each get?",
    "steps": [
-    {"ask": "Add the parts.", "show": "$5 + 4 = 9$ parts."},
-    {"ask": "Find one part.", "show": "$\\text{one part} = 360 \\div 9 = 40$, so £40."},
-    {"ask": "Multiply each side.", "show": "Amir: $5 \\times 40 = 200$, so £200. Beth: $4 \\times 40 = 160$, so £160."},
-    {"ask": "Check they add up.", "show": "$200 + 160 = 360$. Right."}
+    {
+     "ask": "Add the parts.",
+     "show": "$5 + 4 = 9$ parts."
+    },
+    {
+     "ask": "Find one part.",
+     "show": "$\\text{one part} = 360 \\div 9 = 40$, so £40."
+    },
+    {
+     "ask": "Multiply each side.",
+     "show": "Amir: $5 \\times 40 = 200$, so £200. Beth: $4 \\times 40 = 160$, so £160."
+    },
+    {
+     "ask": "Check they add up.",
+     "show": "$200 + 160 = 360$. Right."
+    }
    ],
    "why": "Add, divide, multiply, check. The check matters: if the shares do not add back to the total, a step slipped."
   },
@@ -220,10 +450,22 @@
    "level": 3.3,
    "q": "A dry concrete mix is 1 : 2 : 4, cement to sand to gravel. How much of each is in 350 kg of mix?",
    "steps": [
-    {"ask": "Add the parts.", "show": "$1 + 2 + 4 = 7$ parts. Three numbers in a ratio work just like two."},
-    {"ask": "Find one part.", "show": "$\\text{one part} = 350 \\div 7 = 50$ kg."},
-    {"ask": "Multiply each part.", "show": "Cement $1 \\times 50 = 50$ kg, sand $2 \\times 50 = 100$ kg, gravel $4 \\times 50 = 200$ kg."},
-    {"ask": "Check they add up.", "show": "$50 + 100 + 200 = 350$ kg. Right."}
+    {
+     "ask": "Add the parts.",
+     "show": "$1 + 2 + 4 = 7$ parts. Three numbers in a ratio work just like two."
+    },
+    {
+     "ask": "Find one part.",
+     "show": "$\\text{one part} = 350 \\div 7 = 50$ kg."
+    },
+    {
+     "ask": "Multiply each part.",
+     "show": "Cement $1 \\times 50 = 50$ kg, sand $2 \\times 50 = 100$ kg, gravel $4 \\times 50 = 200$ kg."
+    },
+    {
+     "ask": "Check they add up.",
+     "show": "$50 + 100 + 200 = 350$ kg. Right."
+    }
    ],
    "why": "The same steps with three parts. Dividing 350 by 3 (because there are three materials) is the slip: divide by the number of **parts**, 7."
   },
@@ -232,8 +474,32 @@
    "type": "numeric",
    "stage": "example",
    "q": "Two shifts share a £{t} bonus in the ratio {a} : {b}, by hours worked. How much does the first shift get, in pounds?",
-   "vars": {"a": {"pick": [3, 5, 7]}, "b": {"pick": [1, 2, 4]}, "u": [10, 60, 5]},
-   "let": {"parts": "a + b", "t": "(a + b) * u", "second": "b * u"},
+   "vars": {
+    "a": {
+     "pick": [
+      3,
+      5,
+      7
+     ]
+    },
+    "b": {
+     "pick": [
+      1,
+      2,
+      4
+     ]
+    },
+    "u": [
+     10,
+     60,
+     5
+    ]
+   },
+   "let": {
+    "parts": "a + b",
+    "t": "(a + b) * u",
+    "second": "b * u"
+   },
    "answer": "(a + b) * u / (a + b) * a",
    "abs": 0.01,
    "hint": "Add the parts first. Then find one part.",
@@ -262,8 +528,24 @@
    "stage": "practise",
    "level": 3.2,
    "q": "A pump delivers {r} litres per minute. How many minutes does it take to fill a {v} litre tank?",
-   "vars": {"r": {"pick": [20, 25, 40, 50]}, "m": [3, 30, 1]},
-   "let": {"v": "r * m"},
+   "vars": {
+    "r": {
+     "pick": [
+      20,
+      25,
+      40,
+      50
+     ]
+    },
+    "m": [
+     3,
+     30,
+     1
+    ]
+   },
+   "let": {
+    "v": "r * m"
+   },
    "answer": "r * m / r",
    "unit": "minutes",
    "abs": 0.01,
@@ -278,9 +560,9 @@
    "level": 3.5,
    "q": "4 fitters take 6 hours to do a job. Someone uses direct proportion and says 8 fitters will take 12 hours. Why is that wrong?",
    "options": [
-    "More fitters get it done **faster**: as one goes up the other goes down, so about 3 hours",
+    "More fitters finish **faster**: about 3 hours",
     "It is right: twice the fitters, twice the time",
-    "8 is not a multiple of 6, so proportion does not work",
+    "8 is not a multiple of 6, so it cannot work",
     "Time can never be worked out from a ratio"
    ],
    "answer": 0,
@@ -293,8 +575,24 @@
    "stage": "practise",
    "level": 3.7,
    "q": "A delivery is {d} miles away. At an average speed of {s} mph, how many **minutes** will it take?",
-   "vars": {"s": {"pick": [30, 40, 50, 60]}, "d": [10, 90, 5]},
-   "let": {"h": "d / s"},
+   "vars": {
+    "s": {
+     "pick": [
+      30,
+      40,
+      50,
+      60
+     ]
+    },
+    "d": [
+     10,
+     90,
+     5
+    ]
+   },
+   "let": {
+    "h": "d / s"
+   },
    "answer": "d / s * 60",
    "unit": "minutes",
    "tolerance": 0.01,
@@ -308,7 +606,16 @@
    "stage": "mix",
    "level": 2.8,
    "q": "A {t} kg load of scrap metal: $\\frac{2}{5}$ of it is copper. How many kg of copper?",
-   "vars": {"t": {"pick": [70, 140, 210, 350]}},
+   "vars": {
+    "t": {
+     "pick": [
+      70,
+      140,
+      210,
+      350
+     ]
+    }
+   },
    "answer": "t / 5 * 2",
    "unit": "kg",
    "abs": 0.01,
@@ -322,7 +629,16 @@
    "stage": "mix",
    "level": 3.3,
    "q": "A {t} kg load of scrap metal is copper and steel in the ratio 2 : 5. How many kg of copper?",
-   "vars": {"t": {"pick": [70, 140, 210, 350]}},
+   "vars": {
+    "t": {
+     "pick": [
+      70,
+      140,
+      210,
+      350
+     ]
+    }
+   },
    "answer": "t / (2 + 5) * 2",
    "unit": "kg",
    "abs": 0.01,
@@ -336,8 +652,29 @@
    "stage": "mix",
    "level": 3.0,
    "q": "A £{n} order gets a {p}% trade discount. What do you pay, in pounds?",
-   "vars": {"n": {"pick": [80, 120, 200, 240, 350]}, "p": {"pick": [5, 10, 15, 20]}},
-   "let": {"off": "n * p / 100", "m": "1 - p / 100"},
+   "vars": {
+    "n": {
+     "pick": [
+      80,
+      120,
+      200,
+      240,
+      350
+     ]
+    },
+    "p": {
+     "pick": [
+      5,
+      10,
+      15,
+      20
+     ]
+    }
+   },
+   "let": {
+    "off": "n * p / 100",
+    "m": "1 - p / 100"
+   },
    "answer": "n * (1 - p / 100)",
    "abs": 0.01,
    "hint": "A discount is a percentage decrease.",
@@ -350,8 +687,23 @@
    "stage": "check",
    "level": 3.2,
    "q": "Cutting fluid is mixed water to concentrate in the ratio {a} : 1. How many litres of water are in {t} litres of mix?",
-   "vars": {"a": {"pick": [9, 19]}, "u": [2, 10, 1]},
-   "let": {"parts": "a + 1", "t": "(a + 1) * u"},
+   "vars": {
+    "a": {
+     "pick": [
+      9,
+      19
+     ]
+    },
+    "u": [
+     2,
+     10,
+     1
+    ]
+   },
+   "let": {
+    "parts": "a + 1",
+    "t": "(a + 1) * u"
+   },
    "answer": "(a + 1) * u / (a + 1) * a",
    "unit": "litres",
    "abs": 0.01,
@@ -363,8 +715,33 @@
    "type": "numeric",
    "stage": "check",
    "q": "{n} m of cable costs £{c:2}. How much do {m} m cost, in pounds?",
-   "vars": {"n": {"pick": [4, 5, 10, 25]}, "pp": {"pick": [1.2, 0.8, 2.5, 1.6, 3.4]}, "m": [3, 40, 1]},
-   "let": {"c": "n * pp"},
+   "vars": {
+    "n": {
+     "pick": [
+      4,
+      5,
+      10,
+      25
+     ]
+    },
+    "pp": {
+     "pick": [
+      1.2,
+      0.8,
+      2.5,
+      1.6,
+      3.4
+     ]
+    },
+    "m": [
+     3,
+     40,
+     1
+    ]
+   },
+   "let": {
+    "c": "n * pp"
+   },
    "answer": "n * pp / n * m",
    "abs": 0.01,
    "work": "1 m: ${{c}} \\div {{n}} = {{pp}}$, so £{pp:2}. {m} m: ${{pp}} \\times {{m}} = {{answer}}$, so £{answer:2}.",

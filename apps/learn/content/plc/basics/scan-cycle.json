@@ -234,7 +234,7 @@
     "type": "mcq",
     "q": "With A on and B off, after a scan, is the lamp on?",
     "options": [
-     "No: the second line overwrites the first, and only the final value is written out",
+     "No: the second line overwrites the first",
      "Yes: A turned it on first",
      "It flickers on and off every scan",
      "It depends on how fast the scan is"
@@ -250,10 +250,10 @@
    "level": 4.8,
    "q": "In one scan the program sets output Q0.0 TRUE on line 10, then FALSE on line 50. What does the real output do?",
    "options": [
-    "Nothing: it stays off, because only the value at the end of the scan is written out",
-    "It pulses on for the time between lines 10 and 50",
+    "Nothing: only the end-of-scan value is written",
+    "It pulses on between lines 10 and 50",
     "It turns on and stays on",
-    "The PLC faults"
+    "The PLC faults on the double write"
    ],
    "answer": 0,
    "why": "The program only changes the output image. The real output is written once, at the end of the scan, with whatever value is there then."
@@ -418,9 +418,9 @@
    "q": "Why does a PLC copy all its inputs into memory at the start of a scan, instead of reading each input at the moment a line of the program needs it?",
    "options": [
     "Reading an input directly is impossible",
-    "So every line of the program sees the same values all through the scan",
-    "To make the scan take longer",
-    "So the outputs are written faster"
+    "So every line sees the same values all scan",
+    "To make the scan take a little longer",
+    "So the outputs can be written faster"
    ],
    "answer": 1,
    "why": "With a snapshot, an input cannot change half-way through the program, so two lines that test the same input always agree. Reading directly is possible (direct or peripheral access), but it is kept for special cases."
@@ -432,10 +432,10 @@
    "level": 4.8,
    "q": "A loop in the program keeps it from finishing a scan. What stops the PLC hanging for ever?",
    "options": [
-    "The watchdog: if a scan runs over the maximum cycle time, the CPU faults or goes to stop",
+    "The watchdog: overrun, and the CPU stops",
     "Nothing: it waits until the loop ends",
-    "The outputs keep being written in the meantime",
-    "The inputs switch off"
+    "The outputs keep being written meanwhile",
+    "The inputs are all switched off"
    ],
    "answer": 0,
    "why": "Every PLC watches its own scan time. On a Siemens S7-1200/1500 the maximum cycle time is set in the CPU properties (150 ms unless changed); check your own CPU's setting."
@@ -515,10 +515,10 @@
    "level": 5.3,
    "q": "You need an input's state right now, in the middle of a scan, not the copy taken at the start. What do you use?",
    "options": [
-    "Direct (peripheral) access, such as %I0.0:P on a Siemens CPU",
-    "A longer scan time",
+    "Direct (peripheral) access, such as %I0.0:P",
+    "A longer scan time, set in the CPU",
     "A second copy of the program",
-    "An output instead"
+    "An output used instead of the input"
    ],
    "answer": 0,
    "why": "Most PLCs can read or write the real I/O directly, bypassing the process image. On Siemens it is the :P suffix; other makes have immediate I/O instructions. Use it sparingly: the image is there to keep a scan consistent."

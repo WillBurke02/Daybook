@@ -646,9 +646,9 @@
    "level": 6.8,
    "q": "A fan motor draws its rated current at 50 Hz. To get more air, someone sets the drive to 60 Hz. A fan's torque rises with the speed squared. What happens?",
    "options": [
-    "It overloads: the fan wants about 1.44 times rated torque, and above 50 Hz the motor gives only about 0.83 times at rated current",
-    "It copes: above 50 Hz the motor has constant power, so it has power to spare",
-    "It copes: the drive raises the voltage to 480 V to keep V/f",
+    "It overloads: the fan needs more torque than the motor has",
+    "It copes: above 50 Hz the motor has power to spare",
+    "It copes: the drive raises the voltage to 480 V",
     "The fan settles back to its 50 Hz speed by itself"
    ],
    "answer": 0,
@@ -691,7 +691,7 @@
     "Nothing bad: more voltage just gives more torque",
     "The motor runs faster than its 20 Hz speed",
     "The motor is short of flux and stalls",
-    "The motor is over-fluxed: the iron saturates, the current climbs, and it runs hot or trips the drive"
+    "It is over-fluxed: it saturates, draws more current and runs hot"
    ],
    "answer": 3,
    "why": "V/f should give $8 \\times 20 = 160$ V. At 400 V the motor would get 2.5 times its design flux; the iron saturates and the magnetising current climbs, so it overheats and the drive trips on over-current. Past saturation, extra voltage gives current and heat, not useful torque. The speed is set by the frequency, not the voltage, and a shortage of flux comes from too **little** voltage."

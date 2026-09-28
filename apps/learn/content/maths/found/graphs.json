@@ -1,7 +1,11 @@
 {
  "id": "maths.found.graphs",
  "title": "Straight-line graphs: gradient and intercept",
- "tags": ["graphs", "algebra", "sensors"],
+ "tags": [
+  "graphs",
+  "algebra",
+  "sensors"
+ ],
  "kind": "procedure",
  "level": 4.2,
  "minutes": 20,
@@ -14,9 +18,31 @@
  ],
  "summary": "**Coordinates** $(x, y)$ give a point: across by $x$, then up by $y$. Negative means left or down. $(0, 0)$ is the **origin**.\n\n**Plotting**: make a table, work out $y$ for a few values of $x$, plot the points, join them with a ruler. For $y = 2x + 1$: $(0, 1)$, $(1, 3)$, $(2, 5)$.\n\n**Gradient** is how steep the line is: how much $y$ goes up for each 1 across.\n\n$$\\text{gradient} = \\frac{\\text{rise}}{\\text{run}}$$\n\nPick two points; the rise is the change in $y$, the run the change in $x$. A line going down to the right has a negative gradient.\n\n**A gradient is a rate**, in the up-axis units per across-axis unit: £ per hour on a pay graph, mm per °C on a graph of length against temperature.\n\n**The intercept** $c$ is where the line crosses the $y$-axis, at $x = 0$: a starting value, such as a call-out fee.\n\n$$y = mx + c$$\n\n$m$ is the gradient, $c$ the intercept. In $y = 3x - 5$, $m = 3$ and $c = -5$.\n\n**Parallel lines** have the same gradient.\n\n**The equation from two points**: find $m = \\frac{y_2 - y_1}{x_2 - x_1}$, then put one point into $y = mx + c$ and solve for $c$. Check with the other point.\n\n**4 to 20 mA sensors**: the reading is a straight line against the current. For a 0 to 10 bar transmitter, 4 mA is 0 bar and 20 mA is 10 bar: $m = \\frac{10}{16} = 0.625$ bar per mA and $c = -2.5$, so pressure $= 0.625 \\times \\text{current} - 2.5$. At 12 mA, half-way, it reads 5 bar.",
  "resources": [
-  {"when": "before", "kind": "video", "title": "y=mx+c Video", "url": "https://corbettmaths.com/2013/05/29/ymxc/", "by": "Corbettmaths", "minutes": 7},
-  {"when": "after", "kind": "video", "title": "Intro to slope-intercept form", "url": "https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:forms-of-linear-equations/x2f8bb11595b61c86:intro-to-slope-intercept-form/v/slope-intercept-form", "by": "Khan Academy", "minutes": 8, "note": "American books say slope for gradient and write y = mx + b."},
-  {"when": "after", "kind": "video", "title": "Finding the Equation of a Straight Line Video", "url": "https://corbettmaths.com/2013/05/29/finding-the-equation-of-a-straight-line/", "by": "Corbettmaths", "minutes": 7}
+  {
+   "when": "before",
+   "kind": "video",
+   "title": "y=mx+c Video",
+   "url": "https://corbettmaths.com/2013/05/29/ymxc/",
+   "by": "Corbettmaths",
+   "minutes": 7
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Intro to slope-intercept form",
+   "url": "https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:forms-of-linear-equations/x2f8bb11595b61c86:intro-to-slope-intercept-form/v/slope-intercept-form",
+   "by": "Khan Academy",
+   "minutes": 8,
+   "note": "American books say slope for gradient and write y = mx + b."
+  },
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Finding the Equation of a Straight Line Video",
+   "url": "https://corbettmaths.com/2013/05/29/finding-the-equation-of-a-straight-line/",
+   "by": "Corbettmaths",
+   "minutes": 7
+  }
  ],
  "sources": [
   "Department for Education, Mathematics GCSE subject content and assessment objectives (2013)",
@@ -27,49 +53,147 @@
   {
    "name": "A straight line",
    "tex": "y = mx + c",
-   "match": ["y=mx+c"],
+   "match": [
+    "y=mx+c"
+   ],
    "says": "Every straight line: $y$ is the gradient times $x$, plus the intercept.",
-   "symbols": [["y", "the value up the graph"], ["x", "the value across the graph"], ["m", "the gradient: how much $y$ goes up for each 1 across"], ["c", "the intercept: where the line crosses the $y$-axis (the value of $y$ when $x = 0$)"]],
+   "symbols": [
+    [
+     "y",
+     "the value up the graph"
+    ],
+    [
+     "x",
+     "the value across the graph"
+    ],
+    [
+     "m",
+     "the gradient: how much $y$ goes up for each 1 across"
+    ],
+    [
+     "c",
+     "the intercept: where the line crosses the $y$-axis (the value of $y$ when $x = 0$)"
+    ]
+   ],
    "example": "$y = 2x + 3$ at $x = 4$: $2 \\times 4 + 3 = 11$."
   },
   {
    "name": "Gradient: rise over run",
    "tex": "\\text{gradient} = \\frac{\\text{rise}}{\\text{run}}",
-   "match": ["\\frac{\\text{rise}}{\\text{run}}"],
+   "match": [
+    "\\frac{\\text{rise}}{\\text{run}}"
+   ],
    "says": "How steep a line is: how far it goes up between two points, divided by how far across.",
-   "symbols": [["\\text{rise}", "the change in $y$ between the two points (negative if the line goes down)"], ["\\text{run}", "the change in $x$ between the same two points"]],
+   "symbols": [
+    [
+     "\\text{rise}",
+     "the change in $y$ between the two points (negative if the line goes down)"
+    ],
+    [
+     "\\text{run}",
+     "the change in $x$ between the same two points"
+    ]
+   ],
    "example": "from $(1, 3)$ to $(4, 9)$: rise 6, run 3, gradient $6 \\div 3 = 2$."
   },
   {
    "name": "Gradient from two points",
    "tex": "m = \\frac{y_2 - y_1}{x_2 - x_1}",
-   "match": ["\\frac{y_2-y_1}{x_2-x_1}"],
+   "match": [
+    "\\frac{y_2-y_1}{x_2-x_1}"
+   ],
    "says": "Rise over run, written with the coordinates of the two points: the second minus the first, top and bottom.",
-   "symbols": [["m", "the gradient"], ["x_1, y_1", "the coordinates of the first point"], ["x_2, y_2", "the coordinates of the second point"]],
+   "symbols": [
+    [
+     "m",
+     "the gradient"
+    ],
+    [
+     "x_1, y_1",
+     "the coordinates of the first point"
+    ],
+    [
+     "x_2, y_2",
+     "the coordinates of the second point"
+    ]
+   ],
    "example": "$(1, 5)$ and $(3, 9)$: $\\frac{9 - 5}{3 - 1} = \\frac{4}{2} = 2$."
   },
   {
    "name": "Intercept from a point on the line",
    "tex": "c = y_1 - mx_1",
-   "match": ["c=y_1-mx_1"],
+   "match": [
+    "c=y_1-mx_1"
+   ],
    "says": "Once you know the gradient, put a point into $y = mx + c$ and solve for $c$: the $y$ of the point, take away the gradient times its $x$.",
-   "symbols": [["c", "the intercept"], ["y_1", "the point's $y$"], ["m", "the gradient"], ["x_1", "the point's $x$"]],
+   "symbols": [
+    [
+     "c",
+     "the intercept"
+    ],
+    [
+     "y_1",
+     "the point's $y$"
+    ],
+    [
+     "m",
+     "the gradient"
+    ],
+    [
+     "x_1",
+     "the point's $x$"
+    ]
+   ],
    "example": "gradient 2 through $(1, 5)$: $c = 5 - 2 \\times 1 = 3$."
   },
   {
    "name": "A 4 to 20 mA signal as a reading",
    "tex": "\\text{value} = m \\times \\text{current} + c",
-   "match": ["m\\times\\text{current}"],
+   "match": [
+    "m\\times\\text{current}"
+   ],
    "says": "A sensor's calibration line: the reading is a straight line against the current in the loop.",
-   "symbols": [["\\text{value}", "the reading (bar, °C, metres…)"], ["\\text{current}", "the loop current (mA, from 4 to 20)"], ["m", "the gradient: the span divided by 16 mA"], ["c", "the intercept: puts 4 mA at the bottom of the range"]],
+   "symbols": [
+    [
+     "\\text{value}",
+     "the reading (bar, °C, metres…)"
+    ],
+    [
+     "\\text{current}",
+     "the loop current (mA, from 4 to 20)"
+    ],
+    [
+     "m",
+     "the gradient: the span divided by 16 mA"
+    ],
+    [
+     "c",
+     "the intercept: puts 4 mA at the bottom of the range"
+    ]
+   ],
    "example": "0 to 10 bar: $m = 0.625$, $c = -2.5$. At 12 mA: $0.625 \\times 12 - 2.5 = 5$ bar."
   },
   {
    "name": "Gradient of a 4 to 20 mA line",
    "tex": "m = \\frac{\\text{span}}{16}",
-   "match": ["\\frac{\\text{span}}{16}"],
+   "match": [
+    "\\frac{\\text{span}}{16}"
+   ],
    "says": "The whole range of the sensor is spread over the 16 mA from 4 to 20, so each mA is worth the span divided by 16.",
-   "symbols": [["m", "the gradient (reading units per mA)"], ["\\text{span}", "the top of the range take away the bottom"], ["16", "20 mA take away 4 mA"]],
+   "symbols": [
+    [
+     "m",
+     "the gradient (reading units per mA)"
+    ],
+    [
+     "\\text{span}",
+     "the top of the range take away the bottom"
+    ],
+    [
+     "16",
+     "20 mA take away 4 mA"
+    ]
+   ],
    "example": "−50 to 150 °C: span 200, $m = 200 \\div 16 = 12.5$ °C per mA."
   }
  ],
@@ -99,7 +223,12 @@
    "stage": "learn",
    "level": 3.0,
    "q": "Which point is 3 to the right of the origin and 5 **down**?",
-   "options": ["$(-5, 3)$", "$(3, -5)$", "$(5, -3)$", "$(-3, 5)$"],
+   "options": [
+    "$(-5, 3)$",
+    "$(3, -5)$",
+    "$(5, -3)$",
+    "$(-3, 5)$"
+   ],
    "answer": 1,
    "why": "Across first, then up: 3 right is $x = 3$; 5 down is $y = -5$. $(-5, 3)$ and $(5, -3)$ have the numbers the wrong way round, and $(-3, 5)$ is 3 left and 5 up."
   },
@@ -109,7 +238,23 @@
    "stage": "learn",
    "title": "Plotting a line from a table",
    "body": "A rule like $y = 2x + 1$ gives a $y$ for every $x$: double $x$, then add 1.\n\nMake a **table of values**. Pick a few $x$ values and work out each $y$:\n\n- $x = 0$: $y = 0 + 1 = 1$\n- $x = 1$: $y = 2 + 1 = 3$\n- $x = 2$: $y = 4 + 1 = 5$\n- $x = 3$: $y = 6 + 1 = 7$\n\nPlot the points $(0, 1)$, $(1, 3)$, $(2, 5)$, $(3, 7)$ and join them with a ruler. They lie on a **straight line**: for each step of 1 across, $y$ goes up by the same amount, 2.",
-   "widget": {"name": "grapher", "params": {"f": "x", "a": 2, "d": 1, "controls": [], "x": [-10, 10], "y": [-10, 10]}},
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x",
+     "a": 2,
+     "d": 1,
+     "controls": [],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -10,
+      10
+     ]
+    }
+   },
    "more": "A table is just substituting, again and again. It is like a price list: 1 m of cable costs this much, 2 m costs that much.\n\nWhy work out three or more points when two would fix a line? The third is a check. If it is not in line with the others, one of your sums is wrong.\n\nWorked example: $y = 3x - 2$.\n\n- $x = 0$: $3 \\times 0 - 2 = -2$\n- $x = 1$: $3 - 2 = 1$\n- $x = 2$: $6 - 2 = 4$\n\nThe points are $(0, -2)$, $(1, 1)$, $(2, 4)$. For each step across, $y$ goes up 3."
   },
   {
@@ -118,7 +263,23 @@
    "stage": "learn",
    "level": 3.3,
    "q": "For the line $y = {m}x + {c}$, what is $y$ when $x = {p}$?",
-   "vars": {"m": [2, 6, 1], "c": [1, 9, 1], "p": [1, 8, 1]},
+   "vars": {
+    "m": [
+     2,
+     6,
+     1
+    ],
+    "c": [
+     1,
+     9,
+     1
+    ],
+    "p": [
+     1,
+     8,
+     1
+    ]
+   },
    "answer": "m * p + c",
    "work": "$y = {m} \\times {p} + {c} = {answer}$",
    "why": "Substitute: multiply $x$ by {m}, then add {c}. Multiply before you add: adding first, {m} × ({p} + {c}), would be a different rule."
@@ -137,8 +298,39 @@
    "stage": "learn",
    "level": 4.0,
    "q": "A line goes through $({x1}, {y1})$ and $({x2}, {y2})$. What is its gradient?",
-   "vars": {"x1": [0, 4, 1], "dx": [1, 5, 1], "y1": [0, 10, 1], "m0": {"pick": [-3, -2, -1, 1, 2, 3, 4]}},
-   "let": {"x2": "x1 + dx", "y2": "y1 + m0 * dx", "rise": "y2 - y1"},
+   "vars": {
+    "x1": [
+     0,
+     4,
+     1
+    ],
+    "dx": [
+     1,
+     5,
+     1
+    ],
+    "y1": [
+     0,
+     10,
+     1
+    ],
+    "m0": {
+     "pick": [
+      -3,
+      -2,
+      -1,
+      1,
+      2,
+      3,
+      4
+     ]
+    }
+   },
+   "let": {
+    "x2": "x1 + dx",
+    "y2": "y1 + m0 * dx",
+    "rise": "y2 - y1"
+   },
    "answer": "(y2 - y1) / (x2 - x1)",
    "hint": "The rise is the change in $y$; the run is the change in $x$. Take both in the same order.",
    "work": "Rise $= {y2} - {y1} = {rise}$. Run $= {x2} - {x1} = {dx}$. Gradient $= {rise} \\div {dx} = {answer}$.",
@@ -158,7 +350,12 @@
    "stage": "learn",
    "level": 3.8,
    "q": "A straight-line graph of pay (£, up) against hours worked (across) goes through $(0, 0)$ and $(6, 87)$. What does its gradient tell you?",
-   "options": ["The total pay: £87", "The pay rate: £14.50 an hour", "The hours worked: 6", "About 0.07 hours per pound"],
+   "options": [
+    "The total pay: £87",
+    "The pay rate: £14.50 an hour",
+    "The hours worked: 6",
+    "About 0.07 hours per pound"
+   ],
    "answer": 1,
    "why": "Gradient = rise over run = $87 \\div 6 = 14.5$, in £ per hour: the rate of pay. £87 is one point on the line, not its steepness. 0.07 is run over rise, the wrong way up."
   },
@@ -168,7 +365,26 @@
    "stage": "learn",
    "title": "y = mx + c",
    "body": "Every straight line can be written\n\n$$y = mx + c$$\n\n- $m$ is the **gradient**: it multiplies $x$.\n- $c$ is the **intercept**: where the line crosses the $y$-axis. At $x = 0$ the $mx$ part is 0, so $y = c$.\n\nSo $y = 3x - 5$ has gradient 3 and crosses the $y$-axis at $-5$.\n\nOn the graph, the slider marked **a** is the gradient and the slider marked **d** is the intercept. Move them and watch: the gradient tilts the line; the intercept slides it up and down.",
-   "widget": {"name": "grapher", "params": {"f": "x", "a": 1, "d": 2, "controls": ["a", "d"], "x": [-10, 10], "y": [-10, 10]}},
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x",
+     "a": 1,
+     "d": 2,
+     "controls": [
+      "a",
+      "d"
+     ],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -10,
+      10
+     ]
+    }
+   },
    "more": "Think of a call-out charge: £40 to turn up, then £25 an hour. Cost $= 25 \\times \\text{hours} + 40$. That is $y = mx + c$ with $m = 25$ (the rate, £ per hour) and $c = 40$ (the cost at 0 hours).\n\nOn its graph the line starts at 40 on the cost axis: the fee you pay even for no time at all. Then it climbs 25 for every hour.\n\nA line through the origin has $c = 0$: it is just $y = mx$.\n\nWatch the sign: $y = 2x - 7$ has $c = -7$, so it crosses the $y$-axis below the origin."
   },
   {
@@ -177,7 +393,26 @@
    "stage": "learn",
    "level": 4.0,
    "intro": "Set any line you like with the gradient slider (**a**) and the intercept slider (**d**). Its equation shows above the graph.",
-   "widget": {"name": "grapher", "params": {"f": "x", "a": 2, "d": -1, "controls": ["a", "d"], "x": [-10, 10], "y": [-10, 10]}},
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x",
+     "a": 2,
+     "d": -1,
+     "controls": [
+      "a",
+      "d"
+     ],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -10,
+      10
+     ]
+    }
+   },
    "ask": {
     "type": "numeric",
     "q": "For your line, what is $y$ when $x = 3$? Work it out from the equation, then check it on the graph.",
@@ -201,8 +436,27 @@
    "stage": "learn",
    "level": 4.4,
    "q": "A 0 to {S} bar pressure transmitter sends 4 to 20 mA. The PLC reads {I} mA. What is the pressure?",
-   "vars": {"S": {"pick": [4, 6, 8, 10, 16, 40]}, "I": [5, 19, 0.5]},
-   "let": {"g": "S / 16", "c4": "4 * S / 16"},
+   "vars": {
+    "S": {
+     "pick": [
+      4,
+      6,
+      8,
+      10,
+      16,
+      40
+     ]
+    },
+    "I": [
+     5,
+     19,
+     0.5
+    ]
+   },
+   "let": {
+    "g": "S / 16",
+    "c4": "4 * S / 16"
+   },
    "answer": "S * (I - 4) / 16",
    "unit": "bar",
    "hint": "The span of {S} bar is spread over the 16 mA from 4 to 20.",
@@ -216,11 +470,26 @@
    "worked": true,
    "q": "Find the equation of the straight line through $(1, 5)$ and $(3, 9)$.",
    "steps": [
-    {"ask": "Find the gradient.", "show": "Rise $9 - 5 = 4$, run $3 - 1 = 2$. $m = 4 \\div 2 = 2$."},
-    {"ask": "Put $m$ and one point into $y = mx + c$.", "show": "Using $(1, 5)$: $5 = 2 \\times 1 + c$, so $5 = 2 + c$."},
-    {"ask": "Solve for $c$.", "show": "Take 2 from both sides: $c = 3$."},
-    {"ask": "Write the equation.", "show": "$y = 2x + 3$"},
-    {"ask": "Check with the other point.", "show": "$(3, 9)$: $2 \\times 3 + 3 = 9$. Right."}
+    {
+     "ask": "Find the gradient.",
+     "show": "Rise $9 - 5 = 4$, run $3 - 1 = 2$. $m = 4 \\div 2 = 2$."
+    },
+    {
+     "ask": "Put $m$ and one point into $y = mx + c$.",
+     "show": "Using $(1, 5)$: $5 = 2 \\times 1 + c$, so $5 = 2 + c$."
+    },
+    {
+     "ask": "Solve for $c$.",
+     "show": "Take 2 from both sides: $c = 3$."
+    },
+    {
+     "ask": "Write the equation.",
+     "show": "$y = 2x + 3$"
+    },
+    {
+     "ask": "Check with the other point.",
+     "show": "$(3, 9)$: $2 \\times 3 + 3 = 9$. Right."
+    }
    ],
    "why": "Two jobs: the gradient from rise over run, then the intercept by putting one point into $y = mx + c$ and solving. The other point checks the answer. Taking $c$ as the first $y$ (5) is a slip: that only works for a point with $x = 0$."
   },
@@ -232,10 +501,22 @@
    "level": 4.3,
    "q": "Find the equation of the straight line through $(2, 7)$ and $(5, 16)$.",
    "steps": [
-    {"ask": "Find the gradient.", "show": "Rise $16 - 7 = 9$, run $5 - 2 = 3$. $m = 9 \\div 3 = 3$."},
-    {"ask": "Put $m$ and one point into $y = mx + c$.", "show": "Using $(2, 7)$: $7 = 3 \\times 2 + c$, so $7 = 6 + c$."},
-    {"ask": "Solve for $c$.", "show": "Take 6 from both sides: $c = 1$."},
-    {"ask": "Write the equation and check it with the other point.", "show": "$y = 3x + 1$. Check $(5, 16)$: $3 \\times 5 + 1 = 16$. Right."}
+    {
+     "ask": "Find the gradient.",
+     "show": "Rise $16 - 7 = 9$, run $5 - 2 = 3$. $m = 9 \\div 3 = 3$."
+    },
+    {
+     "ask": "Put $m$ and one point into $y = mx + c$.",
+     "show": "Using $(2, 7)$: $7 = 3 \\times 2 + c$, so $7 = 6 + c$."
+    },
+    {
+     "ask": "Solve for $c$.",
+     "show": "Take 6 from both sides: $c = 1$."
+    },
+    {
+     "ask": "Write the equation and check it with the other point.",
+     "show": "$y = 3x + 1$. Check $(5, 16)$: $3 \\times 5 + 1 = 16$. Right."
+    }
    ],
    "why": "Gradient first, then $c$ from one point, then check with the other point."
   },
@@ -245,8 +526,39 @@
    "stage": "example",
    "level": 4.5,
    "q": "A straight line goes through $({x1}, {y1})$ and $({x2}, {y2})$. Where does it cross the $y$-axis? (What is $c$?)",
-   "vars": {"x1": [1, 4, 1], "dx": [1, 4, 1], "m0": {"pick": [1, 2, 3, 4]}, "c0": [-5, 8, 1]},
-   "let": {"x2": "x1 + dx", "y1": "m0 * x1 + c0", "y2": "m0 * (x1 + dx) + c0", "rise": "y2 - y1", "mm": "(y2 - y1) / dx", "mx": "(y2 - y1) / dx * x1"},
+   "vars": {
+    "x1": [
+     1,
+     4,
+     1
+    ],
+    "dx": [
+     1,
+     4,
+     1
+    ],
+    "m0": {
+     "pick": [
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    "c0": [
+     -5,
+     8,
+     1
+    ]
+   },
+   "let": {
+    "x2": "x1 + dx",
+    "y1": "m0 * x1 + c0",
+    "y2": "m0 * (x1 + dx) + c0",
+    "rise": "y2 - y1",
+    "mm": "(y2 - y1) / dx",
+    "mx": "(y2 - y1) / dx * x1"
+   },
    "answer": "y1 - (y2 - y1) / (x2 - x1) * x1",
    "abs": 0.01,
    "hint": "Find the gradient first. Then put one point into $y = mx + c$.",
@@ -259,11 +571,34 @@
    "stage": "practise",
    "level": 4.0,
    "intro": "Lines with the **same gradient** are **parallel**: they run side by side and never meet. Move only the intercept slider (**d**) and watch: the line slides up and down, but its slope stays the same.",
-   "widget": {"name": "grapher", "params": {"f": "x", "a": 2, "d": 1, "controls": ["d"], "x": [-10, 10], "y": [-10, 10]}},
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x",
+     "a": 2,
+     "d": 1,
+     "controls": [
+      "d"
+     ],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -10,
+      10
+     ]
+    }
+   },
    "ask": {
     "type": "mcq",
     "q": "Which line is parallel to $y = 2x + 1$?",
-    "options": ["$y = x + 1$", "$y = -2x + 1$", "$y = 4x + 2$", "$y = 2x - 4$"],
+    "options": [
+     "$y = x + 1$",
+     "$y = -2x + 1$",
+     "$y = 4x + 2$",
+     "$y = 2x - 4$"
+    ],
     "answer": 3,
     "why": "Parallel means the same gradient, and the gradient is the number in front of $x$: 2. The intercept can be anything. $y = x + 1$ shares the intercept, not the slope; $y = -2x + 1$ slopes the other way; $y = 4x + 2$ is twice as steep."
    }
@@ -274,8 +609,37 @@
    "stage": "practise",
    "level": 4.4,
    "q": "A tank drains at a steady rate. It holds {v1} litres at 0 minutes and {v2} litres after {t} minutes. What is the gradient of the graph of litres (up) against minutes (across)?",
-   "vars": {"t": {"pick": [5, 10, 15, 20]}, "r": {"pick": [4, 5, 6, 8, 10, 12]}, "v1": {"pick": [400, 500, 600]}},
-   "let": {"v2": "v1 - r * t", "drop": "r * t"},
+   "vars": {
+    "t": {
+     "pick": [
+      5,
+      10,
+      15,
+      20
+     ]
+    },
+    "r": {
+     "pick": [
+      4,
+      5,
+      6,
+      8,
+      10,
+      12
+     ]
+    },
+    "v1": {
+     "pick": [
+      400,
+      500,
+      600
+     ]
+    }
+   },
+   "let": {
+    "v2": "v1 - r * t",
+    "drop": "r * t"
+   },
    "answer": "(v2 - v1) / t",
    "unit": "litres per minute",
    "hint": "The level is falling, so the rise is negative.",
@@ -289,10 +653,10 @@
    "level": 4.0,
    "q": "On a straight line, you find the gradient from two points close together. A workmate uses two points far apart on the same line. Why do you both get the same answer?",
    "options": [
-    "You don't: points further apart give a bigger gradient",
-    "Because both points share the same intercept",
-    "A straight line is equally steep everywhere: further apart, the rise and the run grow in the same proportion",
-    "Because every straight line passes through the origin"
+    "You don't: points further apart give more",
+    "Both points share the same intercept",
+    "A straight line is equally steep everywhere",
+    "Every straight line passes through the origin"
    ],
    "answer": 2,
    "why": "Further apart, the rise is bigger, but the run is bigger in the same proportion, so rise ÷ run is the same. That is what makes it a straight line. The rise alone does grow, which is why 'bigger gradient' is tempting. Points far apart are still better in practice: small errors in reading the graph matter less."
@@ -303,8 +667,30 @@
    "stage": "practise",
    "level": 5.0,
    "q": "A temperature transmitter covers {lo} °C to {hi} °C on 4 to 20 mA. It sends {I} mA. What is the temperature?",
-   "vars": {"lo": {"pick": [-50, -20]}, "sp": {"pick": [100, 200]}, "I": [5, 19, 1]},
-   "let": {"hi": "lo + sp", "g": "sp / 16", "c": "lo - 4 * sp / 16"},
+   "vars": {
+    "lo": {
+     "pick": [
+      -50,
+      -20
+     ]
+    },
+    "sp": {
+     "pick": [
+      100,
+      200
+     ]
+    },
+    "I": [
+     5,
+     19,
+     1
+    ]
+   },
+   "let": {
+    "hi": "lo + sp",
+    "g": "sp / 16",
+    "c": "lo - 4 * sp / 16"
+   },
    "answer": "lo + sp * (I - 4) / 16",
    "unit": "°C",
    "abs": 0.5,
@@ -333,8 +719,27 @@
    "stage": "mix",
    "level": 4.6,
    "q": "A 0 to {S} bar transmitter follows pressure $= {g} \\times \\text{current} - {c4}$. What current, in mA, will the PLC see at {p} bar?",
-   "vars": {"S": {"pick": [10, 16, 20, 40]}, "k": [1, 7, 1]},
-   "let": {"g": "S / 16", "c4": "4 * S / 16", "p": "S * k / 8", "pc": "S * k / 8 + 4 * S / 16"},
+   "vars": {
+    "S": {
+     "pick": [
+      10,
+      16,
+      20,
+      40
+     ]
+    },
+    "k": [
+     1,
+     7,
+     1
+    ]
+   },
+   "let": {
+    "g": "S / 16",
+    "c4": "4 * S / 16",
+    "p": "S * k / 8",
+    "pc": "S * k / 8 + 4 * S / 16"
+   },
    "answer": "(p + c4) / g",
    "unit": "mA",
    "hint": "This time you know the pressure and want the current: solve the equation.",
@@ -362,8 +767,27 @@
    "stage": "check",
    "level": 3.9,
    "q": "A straight line goes through $(0, {c})$ and $({r}, {y2})$. For each 1 across, how much does it go up?",
-   "vars": {"c": [1, 6, 1], "r": [2, 6, 1], "m0": [1, 5, 1]},
-   "let": {"y2": "c + m0 * r", "rise": "m0 * r"},
+   "vars": {
+    "c": [
+     1,
+     6,
+     1
+    ],
+    "r": [
+     2,
+     6,
+     1
+    ],
+    "m0": [
+     1,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "y2": "c + m0 * r",
+    "rise": "m0 * r"
+   },
    "answer": "(y2 - c) / r",
    "work": "Rise $= {y2} - {c} = {rise}$. Run $= {r}$. Gradient $= {rise} \\div {r} = {answer}$.",
    "why": "Rise over run. The line starts at {c}, not 0, so take that off before you divide: {y2} ÷ {r} would be too big."
@@ -374,7 +798,12 @@
    "stage": "check",
    "level": 3.9,
    "q": "A line has a gradient of $-2$ and crosses the $y$-axis at 5. What is its equation?",
-   "options": ["$y = 5x - 2$", "$y = 2x + 5$", "$y = -2x - 5$", "$y = -2x + 5$"],
+   "options": [
+    "$y = 5x - 2$",
+    "$y = 2x + 5$",
+    "$y = -2x - 5$",
+    "$y = -2x + 5$"
+   ],
    "answer": 3,
    "why": "In $y = mx + c$ the gradient $m$ multiplies $x$ and the intercept $c$ is added: $m = -2$, $c = 5$. $y = 5x - 2$ swaps them; $y = 2x + 5$ loses the minus, so it slopes up instead of down; $y = -2x - 5$ crosses at $-5$, not 5."
   },
@@ -384,8 +813,26 @@
    "stage": "check",
    "level": 4.4,
    "q": "A level sensor covers 0 to {S} metres of a tank on 4 to 20 mA. It sends {I} mA. How deep is the liquid?",
-   "vars": {"S": {"pick": [2, 3, 4, 5, 8]}, "I": [5, 19, 1]},
-   "let": {"g": "S / 16", "above": "I - 4"},
+   "vars": {
+    "S": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      8
+     ]
+    },
+    "I": [
+     5,
+     19,
+     1
+    ]
+   },
+   "let": {
+    "g": "S / 16",
+    "above": "I - 4"
+   },
    "answer": "S * (I - 4) / 16",
    "unit": "m",
    "hint": "Take off the live zero of 4 mA first.",

@@ -269,10 +269,10 @@
    "level": 5.0,
    "q": "Have a go: a guess is fine. What makes a motor a **servo** motor?",
    "options": [
-    "It is small and has a gearbox, so it can turn precisely to an angle",
-    "It has a feedback device, and an amplifier keeps correcting the motor from it until it is where it was told to be",
+    "A small size and a gearbox for precision",
+    "Feedback, with an amplifier correcting it",
     "It runs on DC instead of AC",
-    "It has permanent magnets on the rotor, which hold it in position"
+    "Magnets on the rotor that hold its position"
    ],
    "answer": 1,
    "why": "**Servo** means it follows a command and corrects itself: a feedback device (a resolver or an encoder) reports where the shaft is, and the amplifier and controller keep pushing until the error is gone. The magnets matter (most industrial servos are permanent-magnet brushless motors), but a magnet motor with no feedback is not a servo. Size, gearboxes and DC are beside the point: big AC servos are common, and many have no gearbox."
@@ -528,10 +528,10 @@
    "stage": "learn",
    "q": "Commissioning a Galil axis in torque mode, you give a small positive command. The motor takes off, faster and faster, until the error limit trips it. What is the most likely cause?",
    "options": [
-    "KP is too low, so the loop cannot hold the axis back",
-    "The feedback counts the wrong way: a positive command gives a falling count, so the loop pushes the wrong way",
-    "The acceleration is set too high for the motor's torque",
-    "STO is not wired, so the amplifier cannot stop the motor"
+    "KP is too low to hold the axis back",
+    "The feedback counts the wrong way",
+    "The acceleration is set too high",
+    "STO is not wired, so it cannot stop"
    ],
    "answer": 1,
    "why": "With the count reversed, every correction makes the error bigger, so the loop drives harder and harder: a runaway (positive feedback). Fix it in the controller (Galil MT or CE) or in the amplifier's direction setting, not by swapping motor phases, which upsets the commutation. Low gain makes an axis soft and slow, not a runaway; a high acceleration gives a hard move, not one that keeps speeding up. That is why ER and OE go in before the first move.",
@@ -616,10 +616,10 @@
    "stage": "practise",
    "q": "Why is STO (Safe Torque Off) on its own not enough for a vertical axis, such as a Z axis carrying a spindle?",
    "options": [
-    "STO is too slow to act",
-    "STO only works in velocity mode",
-    "STO only removes the torque: nothing then holds the axis up, so it needs a holding brake as well",
-    "STO locks the motor shaft, which strains the gearbox"
+    "STO is too slow to act on a falling axis",
+    "STO only works when the drive is in velocity mode",
+    "STO removes torque, and nothing then holds the axis up",
+    "STO locks the shaft, which strains the gearbox"
    ],
    "answer": 2,
    "why": "STO stops the amplifier making torque, at once: a **category 0** stop. It does not brake or hold. A horizontal axis coasts to a stop; a vertical one falls, so it needs a holding brake, itself controlled safely (Safe Brake Control, for example). STO does not lock the shaft, and it does not isolate the motor: the wiring can still be live, so isolate before working on it."
@@ -709,10 +709,10 @@
    "level": 5.5,
    "q": "An axis has a permanent-magnet servo motor and a Metronix amplifier, but the feedback cable has been left unplugged. What happens when it is enabled?",
    "options": [
-    "It runs open loop, like an induction motor on V/f, just less accurately",
-    "It runs at the right speed but slowly drifts off position, with nothing to correct it",
-    "It cannot run as a servo: with no rotor angle it cannot commutate, and with no feedback it cannot close its loops, so the amplifier trips on a feedback fault",
-    "It runs away at full speed, because there is no feedback to hold it back"
+    "It runs open loop, like an induction motor on V/f",
+    "It runs at the right speed but drifts off position",
+    "It cannot run: no commutation, no loops; it trips",
+    "It runs away at full speed with nothing to hold it"
    ],
    "answer": 2,
    "why": "A servo is motor, feedback and amplifier in one closed loop. Without the feedback the amplifier does not know where the magnets are, so it cannot put current in the right windings, and it has nothing to close the loops with. Servo amplifiers watch for this and trip with a feedback fault instead of moving. A runaway comes from feedback that is connected but counts the wrong way, not from none at all."
@@ -723,9 +723,9 @@
    "stage": "check",
    "q": "A Galil drives a Metronix amplifier in **torque** mode with ±10 V. Which loops does each close?",
    "options": [
-    "Metronix: current. Galil: position, with its D term giving the damping in place of a velocity loop",
+    "Metronix: current. Galil: position, with D for damping",
     "Metronix: current and velocity. Galil: position",
-    "Metronix: all three. Galil: none",
+    "Metronix: all three loops. Galil: none of them",
     "Galil: current and position. Metronix: velocity"
    ],
    "answer": 0,
