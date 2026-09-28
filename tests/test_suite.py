@@ -35,7 +35,7 @@ for p in [suite.store_path()] + [suite.path(n) for n in SUITE.apps]:
 # === the password and sessions ================================================
 assert suite.password_is_default() and suite.password_ok("pass") and not suite.password_ok("nope")
 s1 = suite.make_session()
-assert suite.session_ok(s1) and not suite.session_ok(s1[:-1] + "0") and not suite.session_ok("rubbish")
+assert suite.session_ok(s1) and not suite.session_ok(s1[:-1] + ("1" if s1[-1] == "0" else "0")) and not suite.session_ok("rubbish")
 assert not suite.session_ok(suite.make_session(days=-1)), "an expired session is refused"
 for bad in ("short", "pass"):
     try:
