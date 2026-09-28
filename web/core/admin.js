@@ -21,7 +21,7 @@ export async function render(main, { reload, app, pages: all }) {
   main.querySelector('.pagehead')?.set(`Admin`, `Every app, then ${app.title}’s own`);
   if (state.meta.password_default) main.querySelector('.pagehead .ctl')?.append(el('span', { class: 'chip bad' }, 'Still using the default password'));
   main.append(g);
-  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), keys(), sync(), themes(),
+  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), keys(), sync(), version(), themes(),
            el('h2', { class: 'admin-h' }, app.title), databases(), pages(reload), columns(reload),
            data(), sql(reload), views(reload), backups(reload), health());
 }
@@ -511,6 +511,37 @@ function sync() {
   };
   draw().catch(e => box.replaceChildren(el('p', { class: 'note deb' }, e.message)));
   return panel('Sync between computers', 6, box);
+}
+
+// --- the code: newer from GitHub --------------------------------------------------------
+// The code lives on GitHub; change it there from anywhere, and each computer takes it here.
+
+function version() {
+  const box = el('div', { class: 'stack' });
+  const when = iso => iso ? dateUK(iso.slice(0, 10)) : '';
+  const check = async () => {
+    box.replaceChildren(el('p', { class: 'note' }, 'Asking GitHub…'));
+    let u;
+    try { u = await suite.update.check(); } catch (e) { return box.replaceChildren(el('p', { class: 'note deb' }, e.message), again()); }
+    box.replaceChildren(
+      table([{ k: 0, label: '' }, { k: 1, label: '' }], [
+        ['Version', u.version],
+        ['This copy', u.current ? `${u.current.message} (${when(u.current.at)})` : u.git ? 'a git checkout' : 'not installed by an update'],
+        [`On GitHub (${u.repo})`, `${u.latest.message} (${when(u.latest.at)})`]]),
+      !u.available ? el('p', { class: 'note cre' }, 'Up to date.')
+        : u.git ? el('p', { class: 'note' }, 'This copy is a git checkout: update it with git pull.')
+        : el('div', { class: 'row' }, el('button', { class: 'btn sm', onclick: e => {
+            e.target.disabled = true;
+            suite.update.now().then(() => box.replaceChildren(el('p', { class: 'note cre' },
+              'Updated. Close Daybook and open it again to use it; each database is backed up and moved on as it opens.')))
+              .catch(err => { flash(err.message); e.target.disabled = false; });
+          } }, 'Update now')),
+      el('p', { class: 'note' }, 'Your data is never touched. The code it replaces is kept: ', el('code', {}, 'python daybook.py update --rollback'),
+        ' puts it back.'));
+  };
+  const again = () => el('button', { class: 'btn plain sm', onclick: check }, 'Check for newer code');
+  box.append(again());
+  return panel('Daybook version', 6, box);
 }
 
 // --- keys: the calendar feed and the phone ------------------------------------------

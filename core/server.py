@@ -33,6 +33,7 @@ from . import api as _api
 from . import db as _db
 from . import suite as _suite
 from . import sync as _sync
+from . import update as _update
 from .suite import SUITE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -211,6 +212,14 @@ class Handler(BaseHTTPRequestHandler):
                 ("Set-Cookie", self._cookie(_suite.make_session(), _suite.SESSION_DAYS * 86400))])
         if p[:1] == ["sync"]:
             return self._sync(method, p[1:], body or {})
+        if p == ["update"]:
+            try:
+                if method == "GET":
+                    return self._send(200, dict(_update.check(), version=_db.APP_VERSION))
+                if method == "POST":
+                    return self._send(200, {"installed": _update.update(data=SUITE.data)})
+            except ValueError as e:
+                return self._send(400, {"error": str(e)})
         if p[:1] == ["token"] and len(p) == 2 and p[1] in ("cal", "capture"):
             return self._send(200, {"token": _suite.token(p[1], reset=method == "POST")})
         db = _suite.store()

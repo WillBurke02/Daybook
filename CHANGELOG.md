@@ -7,7 +7,13 @@
   computer's own, in a folder they all reach (OneDrive, Google Drive, USB, a NAS) or a
   private GitHub repository; each computer applies the others'. Newest change per field
   wins; a value that lost goes to Change history, where Undo brings it back. Admin → Sync
-  between computers, or `daybook.py sync`. Checks: tests/test_sync.py.
+  between computers, or `daybook.py sync`. Checks: tests/test_sync.py. Tried on the demo
+  data: a second computer joins and every row of every table matches, to the last digit.
+- **Update from GitHub** (core/update.py): Admin → Daybook version, or `daybook.py update`.
+  The code lives on GitHub, so it can be changed from anywhere; each computer takes the
+  newest commit's code and puts it in place. data/, backups/ and a portable python/ are
+  never touched; code older than the databases is refused; the code replaced is kept, and
+  `daybook.py update --rollback` puts it back. Checks: tests/test_update.py.
 
 ## 3.0 — in progress (not released)
 

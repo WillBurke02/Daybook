@@ -110,9 +110,11 @@ def tables(db, app):
         if not pk:
             continue                          # ponytail: a table without a key does not sync; none has one today
         types = {c["name"]: (c["type"] or "").upper() for c in cols}
+        fks = db.execute(f"PRAGMA foreign_key_list({_q(n)})").fetchall()
         out[n] = {"cols": [c["name"] for c in cols], "pk": pk, "where": where.get(n),
                   "surrogate": pk == ["id"] and types["id"] == "INTEGER",
-                  "fk": {f["from"]: f["table"] for f in db.execute(f"PRAGMA foreign_key_list({_q(n)})").fetchall()}}
+                  "notnull": {c["name"] for c in cols if c["notnull"]},
+                  "fk": {f["from"]: f["table"] for f in fks}, "ondelete": {f["from"]: f["on_delete"] for f in fks}}
     for i in out.values():
         i["ref"] = {c: p for c, p in i["fk"].items() if p in out and out[p]["surrogate"]}
         i["data"] = [c for c in i["cols"] if not (i["surrogate"] and c == "id")]
@@ -125,10 +127,15 @@ def _val(i, c, r):
     return f"(SELECT gid FROM sync_id WHERE tbl = {_lit(p)} AND id = {v} ORDER BY rowid LIMIT 1)" if p else v
 
 
+def _exact(v):
+    """A value for a JSON function: a real with all 17 digits (SQLite's JSON keeps 15)."""
+    return f"CASE WHEN typeof({v}) = 'real' THEN json(printf('%!.17g', {v})) ELSE {v} END"
+
+
 def _key(i, t, r):
     if i["surrogate"]:
         return f"(SELECT gid FROM sync_id WHERE tbl = {_lit(t)} AND id = {r}.id ORDER BY rowid LIMIT 1)"
-    return "json_array(" + ", ".join(_val(i, c, r) for c in i["pk"]) + ")"
+    return "json_array(" + ", ".join(_exact(_val(i, c, r)) for c in i["pk"]) + ")"
 
 
 def _obj(i, r, cols, changed=False):
@@ -137,7 +144,7 @@ def _obj(i, r, cols, changed=False):
         return "'{}'"
     parts = [f"SELECT {_lit(c)} AS c, {_val(i, c, r)} AS v" + (f" WHERE OLD.{_q(c)} IS NOT NEW.{_q(c)}" if changed else "")
              for c in cols]
-    return f"(SELECT json_group_object(c, v) FROM ({' UNION ALL '.join(parts)}))"
+    return f"(SELECT json_group_object(c, {_exact('v')}) FROM ({' UNION ALL '.join(parts)}))"
 
 
 GUARD = "(SELECT v FROM sync_meta WHERE k = 'applying') = 0"
@@ -196,10 +203,11 @@ def rebuild_triggers(db, app):
 # --- rows made without the triggers ----------------------------------------------------------
 
 def _order(T):
-    """Parents before children, so a child's gid can name its parent's."""
+    """Parents before children, so a child's gid can name its parent's, and a
+    child arrives after its parent."""
     done, out = set(), []
     while len(out) < len(T):
-        ready = [t for t in T if t not in done and all(p in done or p == t for p in T[t]["ref"].values())]
+        ready = [t for t in T if t not in done and all(p in done or p == t or p not in T for p in T[t]["fk"].values())]
         for t in ready or [t for t in T if t not in done]:          # a loop between tables: take them as they come
             done.add(t)
             out.append(t)
@@ -219,15 +227,19 @@ def adopt(db, T):
         only = f" AND ({i['where'].format(r='NEW')})" if i["where"] else ""
         if i["surrogate"]:
             raw = ", ".join(f"NEW.{_q(c)} AS {_q('raw_' + c)}" for c in i["ref"]) or "NULL"
-            for _ in range(100):                   # a row naming another in its own table waits a round for it
+            fresh, stuck = [], False
+            for _ in range(1000):                  # a row naming another of its own table waits a round for it
                 rows = db.execute(f"SELECT NEW.id, {raw}, {_obj(i, 'NEW', i['data'])} AS d FROM {_q(t)} AS NEW "
                                   f"WHERE NEW.id NOT IN (SELECT id FROM sync_id WHERE tbl = ?){only} ORDER BY NEW.id",
                                   (t,)).fetchall()
+                if not rows:
+                    break
                 made = 0
                 for r in rows:
                     d = json.loads(r["d"])
-                    if any(r["raw_" + c] is not None and d.get(c) is None for c in i["ref"]):
+                    if not stuck and any(r["raw_" + c] is not None and d.get(c) is None for c in i["ref"]):
                         continue
+                    # rows that name each other (a transfer's two sides) are keyed without the names they wait on
                     base = "h" + hashlib.sha1((t + "\0" + json.dumps(d, sort_keys=True)).encode()).hexdigest()[:20]
                     gid, n = base, 0
                     while db.execute("SELECT 1 FROM sync_id WHERE gid = ? UNION ALL SELECT 1 FROM sync_row "
@@ -235,10 +247,12 @@ def adopt(db, T):
                         n += 1
                         gid = f"{base}.{n}"
                     db.execute("INSERT INTO sync_id (gid, tbl, id) VALUES (?, ?, ?)", (gid, t, r["id"]))
-                    db.execute("INSERT INTO sync_out (t, tbl, op, key, data) VALUES (?, ?, 'i', ?, ?)", (t0, t, gid, r["d"]))
+                    fresh.append((r["id"], gid))
                     made += 1
-                if not made:
-                    break
+                stuck = not made
+            for rid, gid in fresh:                 # every gid is known now, so the references travel whole
+                d = db.execute(f"SELECT {_obj(i, 'NEW', i['data'])} FROM {_q(t)} AS NEW WHERE NEW.id = ?", (rid,)).fetchone()[0]
+                db.execute("INSERT INTO sync_out (t, tbl, op, key, data) VALUES (?, ?, 'i', ?, ?)", (t0, t, gid, d))
         else:
             have = {r[0] for r in db.execute("SELECT key FROM sync_row WHERE tbl = ?", (t,))}
             have |= {r[0] for r in db.execute("SELECT key FROM sync_out WHERE tbl = ?", (t,))}
@@ -268,7 +282,8 @@ def _put_rec(db, t, key, ver, dead):
 
 def _natkey(db, i, data):
     """A row's key as its own table's trigger would have written it, from its values as they travel."""
-    return db.execute("SELECT json_array(" + ",".join("?" * len(i["pk"])) + ")", [data.get(c) for c in i["pk"]]).fetchone()[0]
+    return db.execute("SELECT json_array(" + ",".join(_exact("?") for _ in i["pk"]) + ")",
+                      [x for c in i["pk"] for x in (data.get(c),) * 3]).fetchone()[0]
 
 
 def _note(db, T, e, stamp):
@@ -385,17 +400,26 @@ def _local_id(db, parent, gid):
 
 def _to_local(db, i, data):
     """Values as they travel, made this computer's: gids back to ids. Unknown columns
-    (one added in Admin on the other computer) are left out."""
-    out = {}
+    (one added in Admin on the other computer) are left out. Returns (values, later):
+    later holds references to rows not here yet, left empty for now; WAIT when one
+    of those cannot be left empty; GONE when the row went with a deleted parent."""
+    out, later = {}, {}
     for c, v in data.items():
         if c not in i["cols"]:
             continue
         if c in i["ref"] and v is not None:
-            v = _local_id(db, i["ref"][c], v)
-            if v in (WAIT, GONE):
-                return v
+            got = _local_id(db, i["ref"][c], v)
+            if got == GONE:
+                if i["ondelete"].get(c) != "SET NULL":
+                    return GONE
+                got = None
+            elif got == WAIT:
+                if c in i["notnull"] or c in i["pk"]:
+                    return WAIT
+                later[c], got = v, None
+            v = got
         out[c] = v
-    return out
+    return out, later
 
 
 def _locate(db, i, t, key):
@@ -409,6 +433,7 @@ def _locate(db, i, t, key):
     where = _to_local(db, i, dict(zip(i["pk"], json.loads(key))))
     if where in (WAIT, GONE):
         return None, key
+    where = where[0]
     w = " AND ".join(f"{_q(c)} IS ?" for c in i["pk"])
     return (where if db.execute(f"SELECT 1 FROM {_q(t)} WHERE {w}", [where[c] for c in i["pk"]]).fetchone()
             else None), key
@@ -440,6 +465,7 @@ class Applier:
     def __init__(self, db, app, T):
         self.db, self.app, self.T = db, app, T
         self.problems, self.touched = [], set()
+        self.later, self.file = [], None          # references to rows further on in the batch; the file being applied
 
     def apply(self, e, stamp, dev):
         i = self.T.get(e["tbl"])
@@ -467,11 +493,12 @@ class Applier:
             return True
         if vals == WAIT:
             return WAIT
+        vals, later = vals
         if where is None:
-            return WAIT if op == "u" else self._insert(i, t, key, vals, stamp, dev)
-        return self._update(i, t, canon, where, vals, e.get("old"), stamp, dev)
+            return WAIT if op == "u" else self._insert(i, t, key, vals, stamp, dev, later)
+        return self._update(i, t, canon, where, vals, e.get("old"), stamp, dev, later=later)
 
-    def _insert(self, i, t, key, vals, stamp, dev):
+    def _insert(self, i, t, key, vals, stamp, dev, later=None):
         db = self.db
         cols = list(vals)
         try:
@@ -488,14 +515,17 @@ class Applier:
             db.execute("INSERT OR REPLACE INTO sync_id (gid, tbl, id) VALUES (?, ?, ?)", (key, t, other["id"]))
             canon = db.execute("SELECT gid FROM sync_id WHERE tbl = ? AND id = ? ORDER BY rowid LIMIT 1",
                                (t, other["id"])).fetchone()[0]
-            return self._update(i, t, canon, other, vals, None, stamp, dev, merging=True)
+            return self._update(i, t, canon, other, vals, None, stamp, dev, merging=True, later=later)
         if i["surrogate"]:
             db.execute("INSERT OR REPLACE INTO sync_id (gid, tbl, id) VALUES (?, ?, ?)", (key, t, cur.lastrowid))
         _put_rec(db, t, key, {c: stamp for c in cols}, None)
+        if later:
+            self.later.append((t, {"id": cur.lastrowid} if i["surrogate"] else {c: vals[c] for c in i["pk"]},
+                               key, later, stamp, self.file))
         self.touched.add(t)
         return True
 
-    def _update(self, i, t, canon, where, vals, old, stamp, dev, merging=False):
+    def _update(self, i, t, canon, where, vals, old, stamp, dev, merging=False, later=None):
         db = self.db
         w = " AND ".join(f"{_q(c)} IS ?" for c in where)
         cur = dict(db.execute(f"SELECT * FROM {_q(t)} WHERE {w}", list(where.values())).fetchone())
@@ -528,6 +558,8 @@ class Applier:
                 return True
             self.touched.add(t)
         _put_rec(db, t, canon, ver, dead)
+        if later:
+            self.later.append((t, where, canon, {c: v for c, v in later.items() if ver.get(c) == stamp}, stamp, self.file))
         if lost:
             from . import db as _db
             label = getattr(self.app, "LABELS", {}).get(t, t.replace("_", " "))
@@ -545,6 +577,7 @@ class Applier:
             return WAIT
         if vals == GONE:
             return True
+        vals = vals[0]
         new = _natkey(db, i, data)
         where, _ = _locate(db, i, t, key)
         ver, dead = _rec(db, t, key)
@@ -561,6 +594,27 @@ class Applier:
         _put_rec(db, t, new, {c: max(ver.get(c, ""), stamp) for c in vals}, None)
         self.touched.add(t)
         return True
+
+
+    def settle(self):
+        """Fill in the references left empty for rows that came later in the batch.
+        Returns the files still waiting on a row that has not come at all."""
+        waiting = set()
+        for t, where, canon, later, stamp, name in self.later:
+            i, sets = self.T[t], {}
+            ver = _rec(self.db, t, canon)[0]
+            for c, gid in later.items():
+                if ver.get(c) != stamp:
+                    continue                  # changed again since, by a newer change
+                got = _local_id(self.db, i["ref"][c], gid)
+                if got == WAIT:
+                    waiting.add(name)
+                elif got != GONE:
+                    sets[c] = got
+            if sets:
+                self.db.execute(f"UPDATE {_q(t)} SET " + ", ".join(f"{_q(c)} = ?" for c in sets) + " WHERE "
+                                + " AND ".join(f"{_q(c)} IS ?" for c in where), list(sets.values()) + list(where.values()))
+        return waiting
 
 
 def import_(db, app, T, root, key):
@@ -596,8 +650,10 @@ def import_(db, app, T, root, key):
     _set(db, "applying", 1)
     try:
         for stamp, name, _n, e, dev in batch:
+            ap.file = name
             if ap.apply(e, stamp, dev) == WAIT:
                 waiting.add(name)
+        waiting |= ap.settle()
     finally:
         _set(db, "applying", 0)
     for name in files:
@@ -730,8 +786,10 @@ def setup(kind, path=None, repo=None, token=None, branch="main", code=None):
     root = root_of(cfg)
     os.makedirs(root, exist_ok=True)
     try:
+        if kind == "github" and not (_gh(cfg, "GET", f"/repos/{repo}") or {}).get("private"):
+            raise ValueError(f"{repo} is public or not found: use a private repository, which the token can write to")
         remote = github_pull(cfg, root) if kind == "github" else None
-    except (OSError, ValueError) as ex:
+    except OSError as ex:
         raise ValueError(f"GitHub not reached: {ex}")
     check_path = os.path.join(root, CHECK)
     key = key_of(code) if code else None

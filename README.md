@@ -49,7 +49,7 @@ data/learn.db    Learn: your progress and your own cards (the courses are files)
 Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data demo-data`.
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
-`tests/test_suite.py`, `tests/test_sync.py`, and `node tests/<name>.check.mjs` for formula, math,
+`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, and `node tests/<name>.check.mjs` for formula, math,
 learn, content and web.
 
 ## Money
@@ -227,6 +227,26 @@ python daybook.py sync                                                          
   two becomes two sets of transactions.
 - For GitHub: a **private** repository and a fine-grained token with read and
   write access to its contents. The files go in `daybook-sync/`.
+
+## Updating
+
+The code lives on GitHub (`WillBurke02/Daybook`): change it there, from anywhere,
+and each computer takes the newest with Admin → **Daybook version** → Update now,
+or:
+
+```sh
+python daybook.py update             # the newest code from GitHub
+python daybook.py update --check     # is there any?
+python daybook.py update --rollback  # the code from before the last update
+```
+
+Then close Daybook and open it again. Your data is never touched: `core/`,
+`apps/`, `web/` and `tests/` are replaced whole and the files beside
+`daybook.py` overwritten; `data/`, `backups/` and a portable `python/` stay as
+they are. Code older than your databases is refused. A copy that is a git
+checkout is updated with `git pull` instead. `DAYBOOK_UPDATE_REPO` and
+`DAYBOOK_UPDATE_BRANCH` point it somewhere else; `DAYBOOK_GITHUB_TOKEN` for a
+private repository.
 
 ## The phone, and a Raspberry Pi
 

@@ -77,4 +77,8 @@ export const suite = Object.assign(client('/api/'), {
     code:   ()   => suite.get('sync/code'),
     leave:  ()   => suite.send('sync/leave', {}),
   },
+  update: {
+    check: () => suite.get('update'),
+    now:   () => suite.send('update', {}),
+  },
 });

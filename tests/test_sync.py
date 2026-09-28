@@ -70,7 +70,15 @@ run({"log": [("INSERT INTO entry (day, at, kind, text) VALUES ('2026-09-01', '08
      "money": [("INSERT INTO account (name, kind) VALUES ('Current', 'current')", ()),
                ("INSERT INTO category (parent_id, name) VALUES (NULL, 'Bench')", ()),
                ("INSERT INTO txn (account_id, date, description, amount, category_id) "
-                "VALUES (1, '2026-09-02', 'SCREWFIX', -12.5, (SELECT id FROM category WHERE name = 'Bench'))", ())],
+                "VALUES (1, '2026-09-02', 'SCREWFIX', -12.5, (SELECT id FROM category WHERE name = 'Bench'))", ()),
+               # a transfer: two rows that name each other, made before sync was on
+               ("INSERT INTO account (name, kind) VALUES ('Saver', 'savings')", ()),
+               ("INSERT INTO txn (account_id, date, description, amount) VALUES (1, '2026-09-02', 'TO SAVER', -100)", ()),
+               ("INSERT INTO txn (account_id, date, description, amount) VALUES (2, '2026-09-02', 'FROM CURRENT', 100)", ()),
+               ("UPDATE txn SET link_id = (SELECT id FROM txn WHERE amount = 100) WHERE amount = -100", ()),
+               ("UPDATE txn SET link_id = (SELECT id FROM txn WHERE amount = -100) WHERE amount = 100", ()),
+               ("INSERT INTO payslip (pay_date) VALUES ('2026-08-28')", ()),
+               ("INSERT INTO payslip_line (pay_date, grp, label, amount) VALUES ('2026-08-28', 'pay', 'Basic', 2400)", ())],
      "learn": [("INSERT INTO card (id, lesson_id, type, text, data, source) VALUES ('own/x', 'mine.cards', 'flash', 'Q', '{}', 'own')", ()),
                ("INSERT INTO answer (card_id, mode, correct) VALUES ('own/x', 'feed', 1)", ())]})
 file_cards = q("learn", "SELECT COUNT(*) FROM card WHERE source = 'file'")[0][0]
@@ -111,6 +119,9 @@ assert q("log", "SELECT day, text FROM entry") == [("2026-09-01", "Swapped the d
 assert q("log", "SELECT COUNT(*) FROM attachment")[0][0] == 1
 assert q("money", "SELECT a.name, t.amount, c.name FROM txn t JOIN account a ON a.id = t.account_id "
                   "JOIN category c ON c.id = t.category_id") == [("Current", -12.5, "Bench")]
+assert q("money", "SELECT t.description, u.description FROM txn t JOIN txn u ON u.id = t.link_id ORDER BY t.amount") == [
+    ("TO SAVER", "FROM CURRENT"), ("FROM CURRENT", "TO SAVER")], "rows that name each other arrive whole"
+assert q("money", "SELECT label, amount FROM payslip_line") == [("Basic", 2400.0)]
 assert q("money", "SELECT COUNT(*) FROM category")[0][0] == categories
 assert q("money", "SELECT COUNT(*) FROM setting")[0][0] == settings, "the defaults made on both are one set"
 assert q("money", "SELECT COUNT(*) FROM bank_holiday")[0][0] == holidays
@@ -184,7 +195,7 @@ run({"money": [("INSERT INTO payslip (pay_date) VALUES ('2026-09-25')", ()),
 use(A); sync.run()
 use(B); sync.run()
 run({"money": [("UPDATE payslip SET pay_date = '2026-09-26' WHERE pay_date = '2026-09-25'", ())]})
-assert both(lambda: q("money", "SELECT p.pay_date, l.label, l.amount FROM payslip p JOIN payslip_line l USING (pay_date)")) == [
+assert both(lambda: q("money", "SELECT p.pay_date, l.label, l.amount FROM payslip p JOIN payslip_line l USING (pay_date) WHERE pay_date > '2026-09'")) == [
     ("2026-09-26", "Basic", 2500.0)]
 print("ok — a row whose own key changes moves, its children with it")
 
@@ -271,6 +282,10 @@ class FakeGitHub(BaseHTTPRequestHandler):
 
     def do_GET(self):
         SEEN.append(self.headers.get("Authorization"))
+        if self.path.endswith("/repos/will/daybook-data"):
+            return self._json(200, {"private": True})
+        if self.path.endswith("/repos/will/daybook"):
+            return self._json(200, {"private": False})
         if "/git/trees/" in self.path:
             if not REPO:
                 return self._json(409, {"message": "Git Repository is empty."})
@@ -293,6 +308,11 @@ sync.API = f"http://127.0.0.1:{gh.server_address[1]}"
 C, D = os.path.join(tmp.name, "c"), os.path.join(tmp.name, "d")
 use(C)
 run({"log": [("INSERT INTO entry (day, kind, text) VALUES ('2026-10-01', 'work', 'Sent by GitHub')", ())]})
+try:
+    sync.setup("github", repo="will/daybook", token="tok")
+    raise SystemExit("FAIL: synced into a public repository")
+except ValueError as e:
+    assert "public" in str(e)
 gcode = sync.setup("github", repo="will/daybook-data", token="tok")
 assert "daybook-sync/daybook-sync.json" in REPO and any(p.startswith("daybook-sync/log/") for p in REPO), list(REPO)
 assert b"Sent by GitHub" not in b"".join(REPO.values())

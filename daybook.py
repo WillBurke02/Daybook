@@ -14,6 +14,7 @@
     python3 daybook.py sync --folder PATH  start syncing with other computers through a folder
     python3 daybook.py sync --folder PATH --code CODE      join from another computer
     python3 daybook.py sync                one round now, and what it did
+    python3 daybook.py update              take the newest code from GitHub (--check, --rollback)
 """
 import argparse
 import getpass
@@ -268,7 +269,7 @@ def cmd_sync(a):
                       f"--code {code}")
     except ValueError as e:
         raise _db.Stop(str(e))
-    out = _sync.run()
+    out = _sync.STATE.last if (a.folder or a.github) else _sync.run()      # setting up ran the first round
     if out is None:
         print("Sync is not on. Start it:  python3 daybook.py sync --folder <a folder OneDrive or Google Drive keeps>")
         return 1
@@ -281,6 +282,31 @@ def cmd_sync(a):
     if out.get("error"):
         print(f"  ! {out['error']}")
         return 1
+    return 0
+
+
+def cmd_update(a):
+    """The newest code from GitHub, put in place; the data is left as it is."""
+    from core import update
+    _setup(a)
+    try:
+        if a.rollback:
+            update.rollback()
+            print("The code from before the last update is back. Open Daybook again to use it.")
+            return 0
+        info = update.check()
+        have = (info["current"] or {}).get("message") or "not installed by update"
+        print(f"This copy: {have}\nOn GitHub ({info['repo']}): {info['latest']['message']} ({info['latest']['at'][:10]})")
+        if not info["available"]:
+            print("Up to date.")
+            return 0
+        if a.check:
+            print("There is newer code: python3 daybook.py update")
+            return 0
+        update.update(data=SUITE.data)
+    except ValueError as e:
+        raise _db.Stop(str(e))
+    print("Updated. Close Daybook and open it again; each database is backed up and moved on as it opens.")
     return 0
 
 
@@ -324,6 +350,9 @@ def main(argv=None):
     s.add_argument("--branch", default="main")
     s.add_argument("--code", help="the sync code, to join from another computer")
     s.add_argument("--leave", action="store_true", help="stop syncing this computer")
+    s = add("update"); s.set_defaults(fn=cmd_update)
+    s.add_argument("--check", action="store_true", help="only say whether there is newer code")
+    s.add_argument("--rollback", action="store_true", help="put back the code from before the last update")
     s = add("import"); s.set_defaults(fn=cmd_import)
     s.add_argument("files", nargs="+")
     s.add_argument("--account", type=int, required=True, help="account id (see Settings)")
