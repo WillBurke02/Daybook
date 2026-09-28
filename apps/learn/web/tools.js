@@ -105,7 +105,7 @@ function follow(handle, win, name, to) {
   });
 }
 
-addEventListener('resize', () => { for (const [name, w] of Object.entries(wins)) if (!w.win.hidden) {
+globalThis.addEventListener?.('resize', () => { for (const [name, w] of Object.entries(wins)) if (!w.win.hidden) {
   const b = w.win.getBoundingClientRect(); place(w.win, name, { x: b.left, y: b.top, w: b.width, h: b.height }); } });
 
 // ---- the whiteboard ---------------------------------------------------------------------------
