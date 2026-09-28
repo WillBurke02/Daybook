@@ -32,6 +32,7 @@ from urllib.parse import urlparse, parse_qs, unquote, quote
 from . import api as _api
 from . import db as _db
 from . import suite as _suite
+from . import sync as _sync
 from .suite import SUITE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -208,6 +209,8 @@ class Handler(BaseHTTPRequestHandler):
             # every other device is signed out; this one gets a fresh cookie
             return self._send(200, {"ok": True}, extra=[
                 ("Set-Cookie", self._cookie(_suite.make_session(), _suite.SESSION_DAYS * 86400))])
+        if p[:1] == ["sync"]:
+            return self._sync(method, p[1:], body or {})
         if p[:1] == ["token"] and len(p) == 2 and p[1] in ("cal", "capture"):
             return self._send(200, {"token": _suite.token(p[1], reset=method == "POST")})
         db = _suite.store()
@@ -219,6 +222,28 @@ class Handler(BaseHTTPRequestHandler):
             self._send(409, {"error": f"that would break a rule in the data: {e}"})
         finally:
             db.close()
+
+    def _sync(self, method, p, body):
+        """Sync between computers: its state, starting or joining it, a round now, its code, leaving."""
+        try:
+            if p == [] and method == "GET":
+                return self._send(200, _sync.status())
+            if p == [] and method == "POST":
+                code = _sync.setup(body.get("kind"), path=body.get("path"), repo=body.get("repo"),
+                                   token=body.get("token"), branch=body.get("branch") or "main", code=body.get("code"))
+                return self._send(200, dict(_sync.status(), code=code))
+            if p == ["now"] and method == "POST":
+                _sync.run()
+                return self._send(200, _sync.status())
+            if p == ["code"] and method == "GET":
+                cfg = _sync.config()
+                return self._send(200, {"code": _sync.code_of(bytes.fromhex(cfg["key"])) if cfg else None})
+            if p == ["leave"] and method == "POST":
+                _sync.leave()
+                return self._send(200, _sync.status())
+        except ValueError as e:
+            return self._send(400, {"error": str(e)})
+        return self._send(404, {"error": "no such endpoint"})
 
     def _capture_ok(self, path):
         """The phone's quick-capture key opens exactly one door: <app>/api/quick."""
@@ -238,6 +263,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             code, payload = _api.route(db, method, parts, query, body, ctx)
             self._send(code, payload)
+            if method in WRITE_METHODS:
+                _sync.soon()
         except _api.Err as e:
             self._send(e.code, {"error": e.msg})
         except sqlite3.IntegrityError as e:

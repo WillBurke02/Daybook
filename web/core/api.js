@@ -70,4 +70,11 @@ export const suite = Object.assign(client('/api/'), {
   logout:   ()       => suite.send('logout', {}),
   password: (old, nw) => suite.send('password', { old, new: nw }),
   token:    (name, reset) => reset ? suite.send(`token/${name}`, {}) : suite.get(`token/${name}`),
+  sync: {
+    status: ()   => suite.get('sync'),
+    setup:  body => suite.send('sync', body),
+    now:    ()   => suite.send('sync/now', {}),
+    code:   ()   => suite.get('sync/code'),
+    leave:  ()   => suite.send('sync/leave', {}),
+  },
 });

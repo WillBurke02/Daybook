@@ -217,7 +217,7 @@ def main():
             webbrowser.open(URL + "/")
         time.sleep(3)                        # long enough for the new window to be given our icon
         return
-    from core import db as _db, server, suite
+    from core import db as _db, server, suite, sync
     try:
         suite.setup()
         suite.open_all()                     # checks, backs up and migrates every database, as `serve` does
@@ -228,11 +228,13 @@ def main():
         return say(f"Daybook could not start on port {PORT}: {e}.\n"
                    "Another program is using it. Set DAYBOOK_PORT to a different number.")
     threading.Thread(target=srv.serve_forever, daemon=True).start()
+    sync.start()
     print(f"{time.strftime('%Y-%m-%d %H:%M')} serving {suite.SUITE.data} at {URL}")
     try:
         window()
     finally:
         srv.shutdown()
+        sync.run()                           # the last minute's changes go out before it stops
 
 
 if __name__ == "__main__":

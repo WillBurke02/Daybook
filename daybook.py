@@ -11,6 +11,9 @@
     python3 daybook.py export              one zip of every database
     python3 daybook.py install             Start menu and desktop shortcuts to Daybook.pyw
     python3 daybook.py install --service   a systemd service (Raspberry Pi)
+    python3 daybook.py sync --folder PATH  start syncing with other computers through a folder
+    python3 daybook.py sync --folder PATH --code CODE      join from another computer
+    python3 daybook.py sync                one round now, and what it did
 """
 import argparse
 import getpass
@@ -21,7 +24,7 @@ import webbrowser
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from core import db as _db, server, suite as _suite   # noqa: E402
+from core import db as _db, server, suite as _suite, sync as _sync   # noqa: E402
 from core.suite import SUITE                          # noqa: E402
 
 
@@ -57,9 +60,11 @@ def cmd_serve(a):
     print("   ctrl-c to stop")
     if a.open:
         webbrowser.open(url)
+    _sync.start()
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
+        _sync.run()                                # what was changed in the last minute goes out too
         print("\nbye")
 
 
@@ -242,6 +247,43 @@ def cmd_install(a):
           "drive letter; run install again if it moves.")
 
 
+def cmd_sync(a):
+    """Start, join, run or leave sync. The folder is any one every computer can reach:
+    OneDrive, Google Drive, Dropbox, a NAS, a USB stick; or a GitHub repository."""
+    _setup(a)
+    _suite.open_all()
+    try:
+        if a.leave:
+            _sync.leave()
+            print("Sync is off on this computer. Its data stays as it is.")
+            return 0
+        if a.folder or a.github:
+            token = a.token or _suite.env("GITHUB_TOKEN")
+            code = _sync.setup("github" if a.github else "folder", path=a.folder, repo=a.github,
+                               token=token, branch=a.branch, code=a.code)
+            print(f"Syncing through {_sync.status()['where']}.")
+            if not a.code:
+                print(f"\nThe sync code, for each other computer (keep it somewhere safe; it never goes in the folder):\n\n"
+                      f"    {code}\n\nOn the next computer:  python3 daybook.py sync --folder <its path to the same folder> "
+                      f"--code {code}")
+    except ValueError as e:
+        raise _db.Stop(str(e))
+    out = _sync.run()
+    if out is None:
+        print("Sync is not on. Start it:  python3 daybook.py sync --folder <a folder OneDrive or Google Drive keeps>")
+        return 1
+    for name, r in out["apps"].items():
+        if r.get("off"):
+            continue
+        print(f"  {name:<6} sent {r.get('sent', 0)} file(s), took {r.get('got', 0)} change(s)"
+              + (f", {r['waiting']} file(s) waiting on others" if r.get("waiting") else "")
+              + ("".join(f"\n         ! {x}" for x in r.get("problems", [])) + (f"\n         ! {r['error']}" if r.get("error") else "")))
+    if out.get("error"):
+        print(f"  ! {out['error']}")
+        return 1
+    return 0
+
+
 # --- entry -------------------------------------------------------------------
 
 def main(argv=None):
@@ -275,6 +317,13 @@ def main(argv=None):
     s = add("install"); s.set_defaults(fn=cmd_install)
     s.add_argument("--service", action="store_true", help="a systemd unit instead of shortcuts (Raspberry Pi)")
     s.add_argument("--allow-host", action="append", default=[], metavar="NAME")
+    s = add("sync"); s.set_defaults(fn=cmd_sync)
+    s.add_argument("--folder", help="start or join sync through this folder")
+    s.add_argument("--github", metavar="OWNER/REPO", help="start or join sync through a GitHub repository")
+    s.add_argument("--token", help="for --github: a token that can write to it (or DAYBOOK_GITHUB_TOKEN)")
+    s.add_argument("--branch", default="main")
+    s.add_argument("--code", help="the sync code, to join from another computer")
+    s.add_argument("--leave", action="store_true", help="stop syncing this computer")
     s = add("import"); s.set_defaults(fn=cmd_import)
     s.add_argument("files", nargs="+")
     s.add_argument("--account", type=int, required=True, help="account id (see Settings)")

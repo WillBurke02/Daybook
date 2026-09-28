@@ -21,7 +21,7 @@ export async function render(main, { reload, app, pages: all }) {
   main.querySelector('.pagehead')?.set(`Admin`, `Every app, then ${app.title}’s own`);
   if (state.meta.password_default) main.querySelector('.pagehead .ctl')?.append(el('span', { class: 'chip bad' }, 'Still using the default password'));
   main.append(g);
-  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), keys(), themes(),
+  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), keys(), sync(), themes(),
            el('h2', { class: 'admin-h' }, app.title), databases(), pages(reload), columns(reload),
            data(), sql(reload), views(reload), backups(reload), health());
 }
@@ -444,6 +444,73 @@ function password() {
       } catch (e) { flash(e.message); }
     } }, 'Change')),
     el('p', { class: 'note' }, 'One password opens every app. Changing it signs every other device out.'));
+}
+
+// --- sync: the same data on more than one computer ----------------------------------
+// Each computer writes its changes to files of its own in a folder they all reach,
+// encrypted with the sync code, and reads the others'. Nothing needs a server.
+
+function sync() {
+  const box = el('div', { class: 'stack' });
+  const copy = async text => { try { await navigator.clipboard.writeText(text); flash('Copied'); } catch { flash('Select it and copy by hand'); } };
+  const act = (label, fn, cls = 'btn plain sm') => el('button', { class: cls, onclick: async e => {
+    e.target.disabled = true;
+    try { await fn(); } catch (err) { flash(err.message); } finally { e.target.disabled = false; }
+  } }, label);
+  const showCode = code => dialog('The sync code', el('div', { class: 'stack' },
+    el('div', { class: 'keyrow' }, el('input', { value: code, readonly: true, onfocus: e => e.target.select() }),
+      el('button', { class: 'btn plain sm', onclick: () => copy(code) }, 'Copy')),
+    el('p', { class: 'note' }, 'Type it on each other computer, in Admin → Sync, with the same folder. Keep it in your password ',
+      'manager: it unlocks the files, and it never goes in the folder. Lose it and a new sync has to be started.')), []);
+  const draw = async () => {
+    const st = await suite.sync.status();
+    if (st.on) {
+      const last = st.last || {};
+      const apps = Object.entries(last.apps || {}).filter(([, r]) => !r.off);
+      box.replaceChildren(
+        table([{ k: 0, label: '' }, { k: 1, label: '' }], [
+          ['Through', st.where], ['This computer', st.device],
+          ['Last round', last.at ? last.at.slice(0, 16) : 'not yet'],
+          ...apps.map(([name, r]) => [name[0].toUpperCase() + name.slice(1), r.error ? el('span', { class: 'deb' }, r.error)
+            : `sent ${r.sent} file${r.sent === 1 ? '' : 's'}, took ${r.got} change${r.got === 1 ? '' : 's'}`
+              + (r.waiting ? `, ${r.waiting} waiting for files still on their way` : '')])]),
+        ...[last.error, ...apps.flatMap(([, r]) => r.problems || [])].filter(Boolean)
+          .map(x => el('p', { class: 'note deb' }, x)),
+        el('div', { class: 'row' },
+          act('Sync now', async () => { await suite.sync.now(); draw(); }, 'btn sm'),
+          act('Show the code', async () => showCode((await suite.sync.code()).code)),
+          act('Leave…', () => dialog('Stop syncing this computer?', el('p', {},
+            'Its data stays as it is and the other computers carry on. To join again later you need the code; ',
+            'rows changed here meanwhile may then show twice.'),
+            [{ label: 'Leave sync', cls: 'btn danger', fn: async () => { await suite.sync.leave(); draw(); } }]))),
+        el('p', { class: 'note' }, 'A round runs every minute and a few seconds after a change. The newest change to each ',
+          'field wins; when both computers changed the same one, the one it replaced is in Change history, and Undo brings it back.'));
+      return;
+    }
+    const kind = select([{ v: 'folder', label: 'A folder (OneDrive, Google Drive, a USB stick)' }, { v: 'github', label: 'A GitHub repository' }],
+      'folder', { class: 'sm' });
+    const path = el('input', { class: 'sm', placeholder: 'e.g. C:\\Users\\you\\OneDrive\\Daybook sync', style: 'flex:1;min-width:240px' });
+    const repo = el('input', { class: 'sm', placeholder: 'owner/repository (private)', style: 'width:220px' });
+    const token = el('input', { class: 'sm', type: 'password', placeholder: 'token that can write to it', autocomplete: 'off', style: 'width:220px' });
+    const code = el('input', { class: 'sm', placeholder: 'the sync code, when joining', autocomplete: 'off', style: 'width:300px' });
+    const folderRow = el('div', { class: 'row' }, path), ghRow = el('div', { class: 'row', hidden: true }, repo, token);
+    kind.addEventListener('change', () => { folderRow.hidden = kind.value !== 'folder'; ghRow.hidden = kind.value !== 'github'; });
+    box.replaceChildren(
+      el('div', { class: 'row' }, kind), folderRow, ghRow,
+      el('div', { class: 'row' }, code, act('Start or join', async () => {
+        const r = await suite.sync.setup({ kind: kind.value, path: path.value.trim(), repo: repo.value.trim(),
+                                            token: token.value.trim(), code: code.value.trim() || undefined });
+        flash(code.value.trim() ? 'Joined' : 'Sync started');
+        if (!code.value.trim()) showCode(r.code);
+        draw();
+      }, 'btn sm')),
+      el('p', { class: 'note' }, 'The first computer leaves the code empty and is given one. Each other computer picks the same folder ',
+        '(wherever it sits on that computer) and types the code; what it already has is matched up, not doubled. ',
+        'Every computer keeps working offline and catches up when the folder is back. For GitHub, make a private repository ',
+        'and a fine-grained token with read and write access to its contents.'));
+  };
+  draw().catch(e => box.replaceChildren(el('p', { class: 'note deb' }, e.message)));
+  return panel('Sync between computers', 6, box);
 }
 
 // --- keys: the calendar feed and the phone ------------------------------------------

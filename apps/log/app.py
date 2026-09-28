@@ -25,6 +25,7 @@ SOURCES = {
 OTHERS = ("money", "learn")
 LABELS = {"entry": "entry", "attachment": "attachment"}
 SHARE_MAX = 25 * 1024 * 1024        # one shared file; larger ones are refused, not truncated
+SYNC_SKIP = ("inbox",)              # a shared photo waits here until Log files it; the filed one syncs
 
 SEARCH = [
     ("entry", "SELECT e.id, e.day AS date, e.at, e.kind, e.text, e.tags, "
@@ -46,6 +47,19 @@ def before_write(db, name, row):
         row["tags"] = tags_of(row["text"])
     if name == "entry" and row.get("id"):
         row["updated"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+
+def sync_merge(db, name, mine, theirs):
+    """The same day's diary started on two computers before they synced: keep both
+    texts, in an order both work out the same way, so neither computer's is lost."""
+    if name != "entry" or mine.get("kind") != "day" or not mine.get("text") or not theirs.get("text"):
+        return None
+    a, b = mine["text"], theirs["text"]
+    if b in a or a in b:
+        text = a if len(a) >= len(b) else b
+    else:
+        text = "\n\n".join(sorted((a, b)))
+    return {"text": text, "tags": tags_of(text)}
 
 
 # --- adding ------------------------------------------------------------------------

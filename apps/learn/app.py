@@ -37,6 +37,8 @@ SOURCES = {
 }
 OTHERS = ("money", "log")
 LABELS = {"card": "card", "card_state": "review", "lesson_state": "lesson place", "study": "study time"}
+# the courses are files, loaded on every start; only your own subjects, lessons and cards sync
+SYNC_WHERE = {t: "{r}.source <> 'file'" for t in ("subject", "unit", "lesson", "card")}
 TYPES = ("concept", "widget", "mcq", "numeric", "steps", "order", "match", "flash", "code")
 
 SEARCH = [

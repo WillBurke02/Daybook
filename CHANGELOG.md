@@ -1,5 +1,14 @@
 # Changes
 
+## 4.0 — in progress (not released)
+
+- **Sync between computers** (core/sync.py): each computer keeps its own databases and
+  works offline. Changes are captured by triggers and written to encrypted files of each
+  computer's own, in a folder they all reach (OneDrive, Google Drive, USB, a NAS) or a
+  private GitHub repository; each computer applies the others'. Newest change per field
+  wins; a value that lost goes to Change history, where Undo brings it back. Admin → Sync
+  between computers, or `daybook.py sync`. Checks: tests/test_sync.py.
+
 ## 3.0 — in progress (not released)
 
 Opens a 2.2 database and moves it on (Money migrations 002 and 003, Learn 002). All

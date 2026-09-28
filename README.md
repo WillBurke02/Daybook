@@ -49,7 +49,7 @@ data/learn.db    Learn: your progress and your own cards (the courses are files)
 Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data demo-data`.
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
-`tests/test_suite.py`, and `node tests/<name>.check.mjs` for formula, math,
+`tests/test_suite.py`, `tests/test_sync.py`, and `node tests/<name>.check.mjs` for formula, math,
 learn, content and web.
 
 ## Money
@@ -187,6 +187,46 @@ Admin (☰, or the foot of the sidebar) works on the app you are in.
 Formulas (added columns, rows and panels) have functions such as `SUM`, `IF`,
 `ROUND`, `SQRT`, `LOG10`, `SIN`, dates and periods; the box shows what fits as
 you type.
+
+## More than one computer
+
+Each computer runs its own Daybook and keeps working offline. **Sync** keeps them
+the same through a folder they can all reach: OneDrive, Google Drive, Dropbox, a
+NAS, a USB stick, or a private GitHub repository. No server is needed.
+
+On the first computer, Admin → **Sync between computers**: pick the folder, leave
+the code empty, **Start**. You are given a **sync code**: keep it in your password
+manager. On each other computer, pick the same folder (wherever it is on that
+computer), type the code, **Join**. From the command line:
+
+```sh
+python daybook.py sync --folder "C:\Users\you\OneDrive\Daybook sync"             # the first computer
+python daybook.py sync --folder "D:\OneDrive\Daybook sync" --code ABCD-EFGH-…    # each other one
+python daybook.py sync --github you/daybook-data --token …                       # or through GitHub
+python daybook.py sync                                                           # a round now
+```
+
+- Each computer writes its changes to files of its own, never changed once
+  written, so OneDrive never has two versions of a file to choose between. The
+  databases themselves never go in the folder (a synced SQLite file corrupts).
+- The files are encrypted with the sync code. Without it, the folder is noise.
+- A round runs every minute, a few seconds after each change, and as Daybook
+  closes. Offline, changes wait; they go when the folder is back.
+- The newest change to each field wins. When both computers changed the same
+  field, the value that lost is in **Change history**, and **Undo** brings it
+  back. A diary started on both the same day keeps both texts.
+- The courses are not synced (every copy of Daybook has them); your progress,
+  your own cards, Money and Log are.
+- A computer that joins keeps what it has: rows that are the same on both are
+  matched, not doubled. Its settings give way to the ones already in use.
+- **Restoring a backup** on a synced computer brings the file back, then the next
+  round brings the changes made since back too. To take back a change, use
+  Undo, which syncs like any other change.
+- A copy made in Admin → Databases to try things on does not sync.
+- Import a bank statement on one computer only: the same statement imported on
+  two becomes two sets of transactions.
+- For GitHub: a **private** repository and a fine-grained token with read and
+  write access to its contents. The files go in `daybook-sync/`.
 
 ## The phone, and a Raspberry Pi
 

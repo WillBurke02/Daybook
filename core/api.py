@@ -19,7 +19,7 @@ import sys
 from . import db as _db
 
 OPS = {"gte": ">=", "lte": "<=", "like": "LIKE", "ne": "<>", "gt": ">", "lt": "<"}
-HIDDEN = {"secret", "schema_version", "app_db"}          # never through the generic API
+HIDDEN = {"secret", "schema_version", "app_db", "sync_meta", "sync_id", "sync_row", "sync_out", "sync_file"}  # never through the generic API
 ADMIN_WRITE = {"layout", "custom_view", "field_meta", "theme", "ui_text"}  # structure, not data
 RESERVED_Q = {"order", "limit", "offset", "desc", "t", "search"}
 
@@ -710,7 +710,12 @@ def drop_column(db, table, col, ctx):
     if sqlite3.sqlite_version_info < (3, 35):
         raise Err(400, f"removing a column needs SQLite 3.35 or newer (this is {sqlite3.sqlite_version})")
     _db.back_up(ctx.db_path, ctx.backup_dir, label="columns")
-    db.execute(f'ALTER TABLE "{table}" DROP COLUMN "{col}"')
+    _db.drop_views(db)                  # a view or a sync trigger naming the column would block it
+    try:
+        db.execute(f'ALTER TABLE "{table}" DROP COLUMN "{col}"')
+    except sqlite3.Error as e:
+        _db.rebuild_views(db, ctx.app)
+        raise Err(400, f"could not remove it: {e}")
     db.execute("DELETE FROM field_meta WHERE tbl = ? AND col = ?", (table, col))
     _db.log_change(db, "schema", table, f"Removed column {col} from {table}")
     db.commit()

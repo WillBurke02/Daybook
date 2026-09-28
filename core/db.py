@@ -33,6 +33,7 @@ def connect(path):
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA foreign_keys = ON")
     db.execute("PRAGMA busy_timeout = 10000")
+    db.execute("PRAGMA recursive_triggers = ON")      # so INSERT OR REPLACE's delete reaches sync's triggers
     return db
 
 
@@ -109,8 +110,11 @@ def migrate(db, app, log=print):
 
 
 def drop_views(db):
+    """Views, and sync's triggers: both derived, and either can block a migration."""
+    from . import sync
     for (name,) in db.execute("SELECT name FROM sqlite_master WHERE type='view'").fetchall():
         db.execute(f'DROP VIEW IF EXISTS "{name}"')
+    sync.drop_triggers(db)
 
 
 def rebuild_views(db, app):
@@ -129,6 +133,8 @@ def rebuild_views(db, app):
             db.execute(f'CREATE VIEW "{r[0]}" AS {r[1]}')
         except sqlite3.Error as e:
             errors[r[0]] = str(e)
+    from . import sync
+    sync.rebuild_triggers(db, app)
     db.commit()
 
 
