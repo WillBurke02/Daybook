@@ -177,9 +177,9 @@ Ohm's and Kirchhoff's laws, pulse-echo and acoustic impedance, the PLC basics
 (scan cycle, data types, ladder, timers and counters, edges), the drives
 lessons (motors, V/f and vector, DC, servo, encoders, PID, motion profiles), and
 the first curriculum batch: safe isolation, proximity sensors, IP addressing,
-reading schematics, fault finding, fasteners. Maths, physics, electronics, PLCs
-and drives have calibration banks (`calibrate.json`) for Find my level; a
-subject with nothing to ask yet is not offered there.
+reading schematics, fault finding, fasteners. Every subject has a calibration
+bank (`calibrate.json`, 643 questions, 3 or more per outline lesson) for Find
+my level; bank questions place you and never count as a lesson's cards.
 
 ## Making it yours
 

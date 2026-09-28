@@ -52,10 +52,16 @@
   (IEC symbols, terminal numbers, cross-references), fault finding (evidence, half-split, one change
   at a time) and fasteners (property classes, threads, torque and preload). Each has an explain card,
   a spot-the-mistake card and a bench task.
-- **Calibration banks** reviewed (rounding that marked right answers wrong, tolerances, placeholders
-  inside maths, levels) and extended to the new outline lessons: 262 questions.
-- **Find my level** offers only subjects with something to ask; on **Courses** a subject with nothing
-  written yet starts closed.
+- **Calibration banks** for all sixteen subjects, 643 questions (3 or more per outline lesson), so
+  Find my level works everywhere. The first five were reviewed (rounding that marked right answers
+  wrong, tolerances, placeholders inside maths, levels).
+- **Multiple choice** no longer gives the answer away: across every bank and lesson the right option
+  was usually the longest; options are rebalanced, and the content check now fails a right option
+  much longer than every wrong one.
+- **Bank questions are not lesson cards**: an unwritten lesson shows as Not written yet (it showed
+  "3 cards"), "start here" after placement points at a written lesson, and subject and lesson
+  progress count only the lessons' own cards. On **Courses** a subject with nothing written yet
+  starts closed.
 
 Still to check: the resource links in the six batch-1 lessons were found by web search but not
 opened (the build machine's network blocks those sites). Open each once and replace any dead one.
