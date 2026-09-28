@@ -1,0 +1,573 @@
+{
+ "id": "instrumentation.sensors.proximity",
+ "title": "Proximity and position sensors: inductive, capacitive, photoelectric, NPN and PNP",
+ "tags": [
+  "sensors",
+  "proximity",
+  "inductive",
+  "capacitive",
+  "photoelectric",
+  "PNP",
+  "NPN"
+ ],
+ "kind": "concept",
+ "level": 4.8,
+ "minutes": 25,
+ "goals": [
+  "Pick inductive, capacitive, photoelectric or magnetic sensing for a target and a distance",
+  "Work out a safe sensing distance from Sn, the assured-distance margin and the target's metal",
+  "Wire a PNP or NPN sensor to a PLC input that matches it, and say what a meter should read",
+  "Check a sensor is fast enough for gear teeth or parts going past",
+  "Split a 'sensor works but the PLC doesn't see it' fault with one measurement"
+ ],
+ "summary": "A **proximity sensor** detects a target without touching it and switches an output on or off.\n\n**Inductive**: a coil's magnetic field; **metal only**. The rated distance **Sn** is for a mild-steel plate. Design within the **assured distance**, $0.81 \\times S_n$, and multiply by the metal's **correction factor** from the datasheet (roughly: stainless 0.7, brass 0.5, aluminium 0.4, copper 0.3). **Flush** (shielded) types can sit in metal; **non-flush** reach further but need clear space round the face.\n\n**Capacitive**: sees anything that is not air: plastic, wood, grain, water, even through a plastic tank wall. Set its sensitivity for the job; build-up and condensation fool it.\n\n**Photoelectric**: a light beam. **Through-beam** (separate sender and receiver): longest range, most reliable. **Retro-reflective** (bounces off a reflector): shiny parts can fool it, so use a **polarised** type. **Diffuse** (bounces off the target): shortest range, depends on colour.\n\n**Magnetic** (reed or Hall) sensors clip to air cylinders and see the magnet in the piston.\n\n**Wiring** (3-wire DC): **brown +24 V, blue 0 V, black output** (white: a second, opposite output). **PNP** switches the black wire to **+24 V**: the PLC input sits between black and 0 V. **NPN** switches black to **0 V**: the load sits between +24 V and black. UK and European kit is mostly PNP. The input card must match: a PNP sensor needs an input whose common goes to 0 V. The wrong pairing never turns on, while the sensor's own LED still lights.\n\n**Meter checks**, black to blue with the target present: PNP about 24 V, NPN about 0 V.\n\n**Speed**: a gear with N teeth at n rpm gives $\\frac{Nn}{60}$ pulses a second. That must be below the sensor's maximum switching frequency. **Hysteresis** (it switches off a little further out than it switches on) stops chatter at the edge.\n\n**Fault finding**: sensor LED on but PLC input off? Measure at the PLC input terminal. Voltage there: the input or its common. None: the cable, terminals or fuse.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Inductive Sensor Explained: Different Types and Applications",
+   "url": "https://www.realpars.com/blog/inductive-sensor",
+   "by": "RealPars",
+   "minutes": 6
+  },
+  {
+   "when": "during",
+   "kind": "read",
+   "title": "A Look Inside the Circuit Construction of an NPN and PNP Sensor",
+   "url": "https://control.com/technical-articles/a-look-inside-the-circuit-construction-of-a-npn-and-pnp-sensor/",
+   "by": "Control.com",
+   "minutes": 7
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "What Is a Photoelectric Sensor? Types and Working Principle",
+   "url": "https://www.realpars.com/blog/photoelectric-sensor",
+   "by": "RealPars",
+   "minutes": 6
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Inductive proximity sensor targets: material does matter",
+   "url": "https://www.balluff.com/en-us/blog/inductive-proximity-sensor-targets-material-does-matter",
+   "by": "Balluff",
+   "minutes": 4
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Proximity sensor types: inductive, capacitive and ultrasonic",
+   "url": "https://www.datasensing.com/eng/media-center/white-papers/proximity-sensor-types-inductive-capacitive-and-ultrasonic-wpd-84.html",
+   "by": "Datasensing",
+   "minutes": 8
+  }
+ ],
+ "sources": [
+  "IEC 60947-5-2: Low-voltage switchgear and controlgear. Part 5-2: Control circuit devices and switching elements. Proximity switches",
+  "IEC 61131-2: Programmable controllers. Part 2: Equipment requirements and tests",
+  "Omron: Technical Guide, Photoelectric Sensors",
+  "Siemens: S7-1200 Programmable controller System Manual (digital input wiring)"
+ ],
+ "formulas": [
+  {
+   "name": "Working sensing distance",
+   "tex": "s = 0.81 \\times S_n \\times k",
+   "match": [
+    "0.81 \\times S_n \\times k"
+   ],
+   "says": "Start from the rated distance on mild steel, keep to the assured 81% of it, then shrink it again for a target that is not mild steel.",
+   "symbols": [
+    [
+     "s",
+     "the distance you can rely on (mm)"
+    ],
+    [
+     "S_n",
+     "the rated sensing distance on the datasheet, for a mild-steel plate (mm)"
+    ],
+    [
+     "k",
+     "the correction factor for the target's metal (1 for mild steel, about 0.4 for aluminium: check the datasheet)"
+    ]
+   ],
+   "example": "Sn = 8 mm, aluminium target: $0.81 \\times 8 \\times 0.4 \\approx 2.6$ mm."
+  },
+  {
+   "name": "Pulses per second from a gear",
+   "tex": "f = \\frac{Nn}{60}",
+   "match": [
+    "\\frac{Nn}{60}"
+   ],
+   "says": "Each revolution passes N teeth; n revolutions a minute is n ÷ 60 a second.",
+   "symbols": [
+    [
+     "f",
+     "pulses per second (hertz, Hz)"
+    ],
+    [
+     "N",
+     "the number of teeth (or targets) per revolution"
+    ],
+    [
+     "n",
+     "the speed (revolutions per minute, rpm)"
+    ]
+   ],
+   "example": "A 30-tooth gear at 1200 rpm: $\\frac{30 \\times 1200}{60} = 600$ Hz."
+  },
+  {
+   "name": "Ohm's law",
+   "tex": "I = \\frac{V}{R}",
+   "match": [
+    "\\frac{V}{R}"
+   ],
+   "says": "The current is the voltage divided by the resistance.",
+   "symbols": [
+    [
+     "I",
+     "the current (A; mA if R is in kΩ)"
+    ],
+    [
+     "V",
+     "the voltage (V)"
+    ],
+    [
+     "R",
+     "the resistance (Ω, or kΩ)"
+    ]
+   ],
+   "example": "24 V into a 6 kΩ input: 24 ÷ 6 = 4 mA."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Wire a 24 V DC PNP inductive sensor to a bench power supply (current limit about 100 mA) with a 24 V lamp or relay coil as its load, then measure it. Low voltage only; no PLC needed.",
+   "check": [
+    "Brown to +24 V, blue to 0 V, the load from black to 0 V",
+    "Bring a steel spanner up to the face: find where it switches on and where it switches off (the hysteresis)",
+    "Try an aluminium or brass part: how much closer must it be?",
+    "With the target there, measure black to blue (about 24 V), then take it away (about 0 V)"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-alu",
+   "type": "mcq",
+   "stage": "try",
+   "q": "An inductive sensor rated 8 mm reliably detects a **steel** bracket 6 mm away. The bracket is changed to **aluminium**, still 6 mm away. What happens?",
+   "options": [
+    "It will probably stop detecting it: inductive sensors see aluminium only about half as far as steel, or less",
+    "Nothing changes: both are metal",
+    "It detects it from further away, because aluminium conducts better",
+    "It detects it only when the machine is running"
+   ],
+   "answer": 0,
+   "why": "The rated distance is for mild steel. Aluminium's correction factor is typically about 0.4, so this sensor reliably sees it only to about 2.6 mm. Better conductivity does not help: an inductive sensor senses the losses in the target, and aluminium makes fewer."
+  },
+  {
+   "id": "family",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Four ways to sense without touching",
+   "body": "A **proximity sensor** switches an output when a target is near, without touching it. Choose by what the target is made of and how far away it is:\n\n- **Inductive**: a magnetic field; sees **metal only**, up to a few tens of millimetres at most.\n- **Capacitive**: an electric field; sees **almost anything** that is not air, even through a plastic wall.\n- **Photoelectric**: a **light beam**; sees most things, from millimetres to many metres.\n- **Magnetic** (reed or Hall): sees a **magnet**, such as the one in an air cylinder's piston.\n\nA mechanical **limit switch** does touch: it is simple and can be seen working, and safety-rated ones force their contacts open."
+  },
+  {
+   "id": "family-q",
+   "type": "match",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "Match each job with the sensor for it.",
+   "pairs": [
+    [
+     "A steel bracket 5 mm away",
+     "Inductive"
+    ],
+    [
+     "Grain level, through a plastic hopper wall",
+     "Capacitive"
+    ],
+    [
+     "Cardboard boxes across a 2 m conveyor",
+     "Photoelectric"
+    ],
+    [
+     "The piston inside an aluminium air cylinder",
+     "Magnetic (reed or Hall)"
+    ]
+   ],
+   "why": "Inductive for metal close up; capacitive for non-metals and through non-metal walls; photoelectric for distance; magnetic to see a piston magnet through the cylinder's aluminium body."
+  },
+  {
+   "id": "inductive",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Inductive: metal, and how far",
+   "body": "A coil in the face makes a changing magnetic field. Metal in the field soaks up energy (eddy currents), and the sensor switches.\n\nThe datasheet's **rated distance, Sn**, is measured on a **mild-steel plate**. Two things shrink it:\n- Rely only on the **assured distance**: $0.81 \\times S_n$, which allows for temperature and batch spread.\n- Other metals are seen less far: multiply by the **correction factor**, roughly stainless 0.7, brass 0.5, aluminium 0.4, copper 0.3. Check the datasheet.\n\n**Flush** (shielded) sensors can sit flush in a metal bracket. **Non-flush** ones reach further but need clear space round the face.",
+   "more": "Picture the steel plate the datasheet was measured with as the 'full marks' target. Anything else scores less. Suppose an M18 non-flush sensor has Sn = 8 mm. First take off the safety margin: 8 × 0.81 = 6.5 mm is as far as you should count on, even for mild steel. Then for aluminium, × 0.4: 6.5 × 0.4 ≈ 2.6 mm. So a bracket that worked at 6 mm in steel needs to be under about 2.6 mm in aluminium. Some sensors, sold as 'factor 1', see all metals at the same distance: worth it when targets vary."
+  },
+  {
+   "id": "inductive-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "An inductive sensor's rated distance is Sn = {sn} mm. Keeping to the assured distance, $0.81 \\times S_n$, how far away can you rely on it seeing a **mild-steel** target, in mm?",
+   "vars": {
+    "sn": {
+     "pick": [
+      2,
+      4,
+      5,
+      8,
+      10,
+      15
+     ]
+    }
+   },
+   "answer": "0.81 * sn",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$0.81 \\times {{sn}} = {answer:2}$ mm",
+   "why": "Mild steel is what Sn is measured on, so its factor is 1: only the 81% margin comes off.",
+   "hint": "Mild steel needs no correction factor. Just take 81% of Sn."
+  },
+  {
+   "id": "capacitive",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Capacitive: almost anything",
+   "body": "A capacitive sensor's face is one plate of a capacitor; the surroundings are the other. Anything with a **dielectric constant** above air's (it stores electric field better than air) changes the capacitance: plastic, wood, grain, powder and, strongly, **water**.\n\nSo it can see a **liquid through a plastic tank wall**, or granules in a hopper.\n\nThe price: it sees almost everything, so you set its **sensitivity** (a small screw or teach button) for each job. **Build-up**, condensation or a wet film on the face can hold it on, and a metal wall blocks it completely."
+  },
+  {
+   "id": "capacitive-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A capacitive sensor on the outside of a plastic tank switches when the liquid reaches it. Lately it stays on even with the tank empty. What is most likely?",
+   "options": [
+    "Liquid or sludge clinging to the inside of the wall at the sensor, or condensation on its face: clean it, or turn the sensitivity down",
+    "The liquid is not metal",
+    "The sensor is PNP and the PLC is NPN",
+    "The tank wall is too thin to sense through"
+   ],
+   "answer": 0,
+   "why": "A capacitive sensor sees any film of material in front of it. A coating left behind looks just like a full tank. Not metal is fine: that is the point of a capacitive sensor. A PNP/NPN mismatch would stop it ever reading on, not hold it on."
+  },
+  {
+   "id": "photo",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Photoelectric: three layouts",
+   "body": "- **Through-beam**: a sender and a separate receiver face each other; the target breaks the beam. Longest range and most reliable, but two parts to mount and wire.\n- **Retro-reflective**: sender and receiver in one body, bouncing the beam off a **reflector**. One part to wire. A **shiny** target can bounce the beam back and fool it: a **polarised** type, with a corner-cube reflector, ignores such reflections.\n- **Diffuse**: the beam bounces off the **target** itself. Simplest to fit, shortest range, and dark or shiny targets change the range. **Background suppression** types ignore anything beyond a set distance.\n\n**Light-on** or **dark-on** sets whether the output is on when light is received or when it is blocked."
+  },
+  {
+   "id": "photo-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.7,
+   "q": "A retro-reflective sensor keeps missing shiny stainless trays passing between it and its reflector. What fixes it?",
+   "options": [
+    "A polarised retro-reflective sensor with a corner-cube reflector, or a through-beam pair",
+    "A bigger reflector",
+    "Turning the sensor to dark-on",
+    "A diffuse sensor aimed at the trays"
+   ],
+   "answer": 0,
+   "why": "The shiny tray reflects the beam straight back, so the sensor thinks the beam is still unbroken. A polarised sensor accepts only light whose polarisation the corner-cube reflector has turned; a mirror-like surface returns it unturned. A bigger reflector changes nothing, and a diffuse sensor struggles with shiny targets too."
+  },
+  {
+   "id": "pnp",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Wiring: PNP and NPN",
+   "body": "Three-wire DC sensors: **brown +24 V, blue 0 V, black the output** (white: a second, opposite output on 4-wire types).\n\nThe sensor is a switch. **PNP** switches the black wire to **+24 V**; **NPN** switches it to **0 V**:\n\n```\nPNP:  +24V --[sensor]-- black --[PLC input]-- 0V\nNPN:  +24V --[ load ]-- black --[sensor]----- 0V\n```\n\nUK and European kit is mostly **PNP**; Japanese and some US kit, NPN. The PLC input must match: a PNP sensor needs an input whose **common goes to 0 V**, so current flows in from the sensor. The wrong pairing never turns on, while the sensor's own LED still lights.",
+   "more": "Ask which side of the load the switch is on. PNP puts the switch on the +24 V side, like a light switch in the live: when it closes, the black wire rises to 24 V and current flows through the PLC input down to 0 V. NPN puts the switch on the 0 V side: when it closes, the black wire drops to 0 V and current flows from +24 V through the load into the sensor.\n\nSo a meter from black to blue (0 V) with the target present reads about **24 V for PNP** and about **0 V for NPN**. With no target: 0 V for PNP; for NPN, whatever the load pulls it to, often 24 V."
+  },
+  {
+   "id": "pnp-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A PNP sensor is on (its target is there). What does a meter read from its black wire to its blue wire?",
+   "options": [
+    "About 24 V",
+    "About 0 V",
+    "About 12 V",
+    "It depends on the target's metal"
+   ],
+   "answer": 0,
+   "why": "PNP switches black to +24 V, and blue is 0 V. An NPN sensor, switched on, would read about 0 V: its output is pulled down to the blue wire."
+  },
+  {
+   "id": "speed",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Fast enough? Switching frequency",
+   "body": "Every sensor has a **maximum switching frequency** on its datasheet: how many on-off cycles a second it can follow. Past it, pulses merge and counts go missing.\n\nCounting gear teeth: a gear with **N** teeth turning at **n** rpm passes $\\frac{Nn}{60}$ teeth a second (n ÷ 60 is revolutions per second).\n\nA 30-tooth gear at 1200 rpm: $\\frac{30 \\times 1200}{60} = 600$ pulses a second. A sensor rated 500 Hz would miss some. So would a PLC input with a slow filter: fast counts need a high-speed counter input.\n\n**Hysteresis** is different: the sensor switches off a little further out than it switched on, so a target sitting at the edge does not chatter."
+  },
+  {
+   "id": "speed-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {t}-tooth steel gear turns at {n} rpm past an inductive sensor. How many pulses a second does the sensor see, in Hz?",
+   "vars": {
+    "t": {
+     "pick": [
+      12,
+      20,
+      30,
+      60
+     ]
+    },
+    "n": {
+     "pick": [
+      300,
+      600,
+      1200,
+      1500
+     ]
+    }
+   },
+   "answer": "t * n / 60",
+   "unit": "Hz",
+   "tolerance": 0.01,
+   "work": "$f = \\frac{Nn}{60} = \\frac{{{t}} \\times {{n}}}{60} = {answer}$ Hz",
+   "why": "Teeth per revolution × revolutions per second. Forgetting the ÷ 60 gives pulses a minute, 60 times too many.",
+   "hint": "How many revolutions a second is {n} rpm?"
+  },
+  {
+   "id": "sa-steel",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "An inductive sensor has Sn = {sn} mm. The target is **brass** (correction factor 0.5). Keeping to the assured distance, how far away can you rely on it, in mm?",
+   "vars": {
+    "sn": {
+     "pick": [
+      4,
+      5,
+      8,
+      10,
+      15
+     ]
+    }
+   },
+   "answer": "0.81 * sn * 0.5",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$s = 0.81 \\times S_n \\times k = 0.81 \\times {{sn}} \\times 0.5 = {answer:2}$ mm",
+   "why": "Both reductions apply: the 81% margin for any target, then the brass factor.",
+   "hint": "Two multiplications: the margin, then the metal."
+  },
+  {
+   "id": "mismatch",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "A replacement sensor turns out to be **NPN**. The PLC input card is wired for PNP sensors, with its common at 0 V. What happens?",
+   "options": [
+    "The input never turns on: when the sensor switches, it pulls the input to 0 V, and the other side of the input is already at 0 V",
+    "It works, but back to front: on when the target is away",
+    "It works normally: NPN and PNP are just brand names",
+    "The PLC input is always on"
+   ],
+   "answer": 0,
+   "why": "Current needs a voltage across the input. With the common at 0 V, only a +24 V signal drives current through it, and an NPN sensor never gives one. The sensor's LED still lights, which is what makes this confusing on a breakdown."
+  },
+  {
+   "id": "spot-common",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.0,
+   "mono": true,
+   "q": "This wiring list is for a **PNP** sensor into an S7-1200 input. One line is wrong. Which?",
+   "lines": [
+    "Sensor brown  -> +24 V",
+    "Sensor blue   -> 0 V",
+    "Sensor black  -> PLC input I0.3",
+    "PLC common 1M -> +24 V"
+   ],
+   "wrong": 3,
+   "fix": "PLC common 1M -> 0 V",
+   "why": "A PNP sensor puts +24 V on the input, so the input's common must go back to 0 V for current to flow. With 1M at +24 V, both sides of the input sit at 24 V when the sensor is on: no current, and the input never turns on. (1M to +24 V is how you would wire NPN sensors.)"
+  },
+  {
+   "id": "led-plc",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A sensor's LED lights when the target is there, but the PLC input stays off. What is the best next check?",
+   "options": [
+    "With the target there, measure the voltage at the PLC input terminal to its common",
+    "Replace the sensor",
+    "Move the sensor closer to the target",
+    "Change the PLC input card"
+   ],
+   "answer": 0,
+   "why": "The LED shows the sensor's output switched, so the fault lies between the sensor and the PLC: the cable, a terminal, a fuse, the input, or the common. Measuring at the input splits that in two: 24 V there means look at the input and its common; nothing means look back along the cable."
+  },
+  {
+   "id": "max-rpm",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "A sensor's maximum switching frequency is {f} Hz. It counts the teeth of a {t}-tooth gear. What is the fastest the gear can turn before counts go missing, in rpm?",
+   "vars": {
+    "f": {
+     "pick": [
+      200,
+      500,
+      1000
+     ]
+    },
+    "t": {
+     "pick": [
+      20,
+      30,
+      60
+     ]
+    }
+   },
+   "answer": "f * 60 / t",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "work": "$n = \\frac{60f}{N} = \\frac{60 \\times {{f}}}{{{t}}} = {answer}$ rpm",
+   "why": "Rearrange $f = \\frac{Nn}{60}$ for n. In practice stay well below it: the rating assumes an ideal target.",
+   "hint": "Pulses a second ÷ teeth = revolutions a second. Then × 60."
+  },
+  {
+   "id": "why-through",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Why is a through-beam pair the most reliable choice for boxes that may be dirty, shiny or any colour?",
+   "options": [
+    "The box only has to block the beam, so its colour, shine and angle do not matter, and the strong signal leaves spare margin for dirt",
+    "Through-beam sensors use a laser",
+    "It needs only one part to wire",
+    "It detects metal as well"
+   ],
+   "answer": 0,
+   "why": "A diffuse sensor depends on light coming back off the box, so colour and finish matter. A retro-reflective one can be fooled by shine. Through-beam only asks: is the beam blocked? The cost is two parts to mount and wire."
+  },
+  {
+   "id": "mix-alu",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.3,
+   "q": "An inductive sensor has Sn = {sn} mm. The target is aluminium (factor 0.4). Keeping to the assured distance, how close must the target come, in mm?",
+   "vars": {
+    "sn": {
+     "pick": [
+      5,
+      8,
+      10,
+      15,
+      20
+     ]
+    }
+   },
+   "answer": "0.81 * sn * 0.4",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "$0.81 \\times {{sn}} \\times 0.4 = {answer:2}$ mm",
+   "why": "Margin, then metal: 0.81 × 0.4 is about a third of Sn.",
+   "hint": "Which two factors apply?"
+  },
+  {
+   "id": "mix-input",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.3,
+   "q": "A PLC input behaves like a {r} kΩ resistor. What current does a PNP sensor send into it at 24 V, in mA?",
+   "vars": {
+    "r": {
+     "pick": [
+      3.3,
+      4.7,
+      5.6,
+      6.8
+     ]
+    }
+   },
+   "answer": "24 / r",
+   "unit": "mA",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{ V }{ R } = \\frac{24}{{{r}}} = {answer:2}$ mA (volts ÷ kΩ gives mA)",
+   "why": "Ohm's law, from the circuits lesson. A few milliamps, far below the 100 mA or more a sensor output can switch, so one sensor can drive an input easily.",
+   "hint": "Which law links volts, ohms and amps?"
+  },
+  {
+   "id": "mix-which",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.3,
+   "q": "Plastic bottles full of water pass along a conveyor. Which sensor will **not** see a bottle?",
+   "options": [
+    "Inductive: there is no metal in it",
+    "Capacitive",
+    "Through-beam photoelectric",
+    "Diffuse photoelectric"
+   ],
+   "answer": 0,
+   "why": "Inductive sensors need metal. The water makes the bottle easy for a capacitive sensor, and either photoelectric type can see it, though a clear bottle may need a sensor made for transparent objects."
+  },
+  {
+   "id": "check-brass",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.5,
+   "q": "An inductive sensor was set up near the edge of its range on a **steel** part. The part is changed to **brass**. What do you expect?",
+   "options": [
+    "It may miss the part: brass is only seen at about half the steel distance",
+    "It sees it further away",
+    "No change: the sensor sees any metal equally",
+    "It sees it only when the part moves"
+   ],
+   "answer": 0,
+   "why": "Brass's correction factor is about 0.5. Near the edge for steel means well out of range for brass. Move the sensor closer, or use a 'factor 1' sensor that sees all metals at the same distance."
+  },
+  {
+   "id": "check-npn",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.8,
+   "q": "An **NPN** sensor is on (its target is there). What does a meter read from its black wire to its blue wire?",
+   "options": [
+    "About 0 V: NPN switches the black wire to 0 V",
+    "About 24 V",
+    "About 12 V",
+    "Nothing: an NPN sensor has no output voltage"
+   ],
+   "answer": 0,
+   "why": "Blue is 0 V and the NPN output is switched to it, so the two are at the same voltage. Measure black to brown instead and you see about 24 V across the load's side. A PNP sensor would read about 24 V black to blue."
+  },
+  {
+   "id": "check-colours",
+   "type": "match",
+   "stage": "check",
+   "level": 4.0,
+   "q": "Match each wire of a DC proximity sensor with what it is.",
+   "pairs": [
+    [
+     "Brown",
+     "+24 V supply"
+    ],
+    [
+     "Blue",
+     "0 V"
+    ],
+    [
+     "Black",
+     "The switched output"
+    ],
+    [
+     "White",
+     "A second, opposite output (4-wire types)"
+    ]
+   ],
+   "why": "The IEC colours for DC sensors. The white output is on when the black one is off, handy when you need both."
+  }
+ ]
+}

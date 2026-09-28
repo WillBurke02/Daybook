@@ -1,0 +1,576 @@
+{
+ "id": "networks.ip.addressing",
+ "title": "IP addresses, subnets and gateways",
+ "tags": [
+  "networks",
+  "IP",
+  "subnet",
+  "gateway",
+  "Ethernet"
+ ],
+ "kind": "procedure",
+ "level": 4.8,
+ "minutes": 25,
+ "goals": [
+  "Read an IPv4 address and its subnet mask, and say which part is the network and which the device",
+  "Decide whether two devices are on the same subnet, for /24 and for masks like 255.255.255.192",
+  "Set a laptop's address to go online to a PLC, choosing a free, usable address",
+  "Work out how many devices a subnet holds, and its network and broadcast addresses",
+  "Say what the default gateway is for, and what 169.254 and duplicate addresses mean"
+ ],
+ "summary": "An **IPv4 address** is four numbers from 0 to 255, such as 192.168.0.10. Each number is one byte (8 bits), 32 bits in all.\n\nThe **subnet mask** splits it: the **network** part (which street) and the **host** part (which house). 255.255.255.0, written **/24**, means the first three numbers are the network and the last one the device.\n\n**Same subnet**: two devices talk directly only if their network parts match. With /24, the first three numbers must be the same. Otherwise the traffic goes to the **default gateway**, a router on your own subnet. No gateway, no route: a direct cable does not help if the addresses do not match.\n\n**Unusable addresses**: in each subnet the first address (host bits all 0) names the network, and the last (host bits all 1) is the **broadcast** to everyone. Usable: $2^{32-p} - 2$, with p the prefix. /24: 254 addresses, .1 to .254.\n\n**Masks that split the last number**: block size = 256 − the mask's last number. 255.255.255.192 (/26): blocks of 64, starting at .0, .64, .128 and .192. An address belongs to the block it falls in: .70 is in .64 to .127 (network .64, broadcast .127). Mask numbers: 128 /25, 192 /26, 224 /27, 240 /28, 248 /29, 252 /30.\n\n**Private ranges** (RFC 1918), used inside sites: 10.x.x.x, 172.16 to 172.31, 192.168.x.x. **169.254.x.x**: the PC asked for an address (DHCP) and nobody answered. **127.0.0.1**: the PC itself.\n\n**Going online to a PLC** at 192.168.0.1/24: set the laptop to a free address in the same subnet, such as 192.168.0.100 with mask 255.255.255.0. Not .0, not .255, not one in use (check the IP list; ping it first: no reply). Then ping the PLC.\n\n**Duplicate addresses** make both devices drop in and out.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "The Subnet Mask",
+   "url": "https://www.networkacademy.io/ccna/ip-subnetting/the-subnet-mask",
+   "by": "NetworkAcademy.IO",
+   "minutes": 8
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "TCP/IP addressing and subnetting",
+   "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcpip-addressing-and-subnetting",
+   "by": "Microsoft Learn",
+   "minutes": 15
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Intro to Siemens S7-1200 PLC and TIA Portal Programming",
+   "url": "https://control.com/technical-articles/intro-to-siemens-s7-1200-plc-and-tia-portal-programming/",
+   "by": "Control.com",
+   "minutes": 10,
+   "note": "Includes setting the PC's address to go online to a PLC."
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "RFC 1918: Address Allocation for Private Internets",
+   "url": "https://www.rfc-editor.org/rfc/rfc1918",
+   "by": "IETF",
+   "minutes": 5
+  }
+ ],
+ "sources": [
+  "RFC 791: Internet Protocol",
+  "RFC 1918: Address Allocation for Private Internets",
+  "RFC 4632: Classless Inter-domain Routing (CIDR)",
+  "RFC 3927: Dynamic Configuration of IPv4 Link-Local Addresses",
+  "Siemens: S7-1200 Programmable controller System Manual (PROFINET: assigning IP addresses)"
+ ],
+ "formulas": [
+  {
+   "name": "Usable addresses in a subnet",
+   "tex": "2^{32-p} - 2",
+   "match": [
+    "2^{32-p}"
+   ],
+   "says": "The host part has 32 − p bits, giving that power of 2 addresses. Two are taken: the network address and the broadcast.",
+   "symbols": [
+    [
+     "p",
+     "the prefix length: the number after the slash, such as 24 in /24"
+    ]
+   ],
+   "example": "/26: $2^{6} - 2 = 64 - 2 = 62$ devices."
+  },
+  {
+   "name": "Block size",
+   "tex": "b = 256 - m",
+   "match": [
+    "256 - m"
+   ],
+   "says": "How many addresses each subnet holds, when the mask splits the last number. Subnets start at every multiple of b.",
+   "symbols": [
+    [
+     "b",
+     "the block size: addresses per subnet"
+    ],
+    [
+     "m",
+     "the mask's last number that is not 255, such as 192"
+    ]
+   ],
+   "example": "255.255.255.192: $b = 256 - 192 = 64$, so subnets start at .0, .64, .128 and .192."
+  }
+ ],
+ "bench": [
+  {
+   "task": "On a Windows PC, look at your own network settings, then test a connection. Nothing is changed.",
+   "check": [
+    "Run `ipconfig` in a command prompt: note the IPv4 address, subnet mask and default gateway",
+    "From the mask, write down the network address and the usable range",
+    "Ping the default gateway: `ping` followed by its address",
+    "Ping 127.0.0.1: the PC's own network software",
+    "If you have a spare PLC or switch on the bench, set a free address in its subnet and ping it"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-laptop",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Your laptop is 192.168.1.50, mask 255.255.255.0. A PLC is 192.168.0.1, same mask. You plug a cable straight from the laptop into the PLC. Can you go online?",
+   "options": [
+    "No: they are on different subnets. Set the laptop to a free 192.168.0.x address",
+    "Yes: the cable connects them directly",
+    "Yes: all 192.168 addresses can talk to each other",
+    "Only if you set a default gateway on the laptop"
+   ],
+   "answer": 0,
+   "why": "With mask 255.255.255.0 the first three numbers are the network: 192.168.1 and 192.168.0 differ. The laptop decides from the addresses, not the cable, that the PLC is elsewhere and sends to its gateway. A gateway would not help either: there is no router on that cable."
+  },
+  {
+   "id": "address",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Address and mask",
+   "body": "An **IPv4 address** is four numbers from **0 to 255**, such as 192.168.0.10. Each number is one byte (8 bits), so 32 bits in all.\n\nLike a postal address, part says which street (the **network**) and part which house (the **host**, or device). The **subnet mask** says where the split is:\n\n- **255.255.255.0**: the first three numbers are the network, the last one the device.\n- Written **/24**: the first 24 bits are the network.\n\nEvery device on a network needs an address and a mask; to reach other networks it also needs a **default gateway**."
+  },
+  {
+   "id": "address-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "Which of these is **not** a valid IPv4 address?",
+   "options": [
+    "192.168.1.256",
+    "10.0.0.1",
+    "172.16.254.1",
+    "192.168.100.200"
+   ],
+   "answer": 0,
+   "why": "Each number is one byte, 0 to 255. 256 does not fit in 8 bits."
+  },
+  {
+   "id": "same",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Same subnet, or the gateway",
+   "body": "Before sending, a device compares the destination with its own address, using its mask:\n\n- **Same network part**: send it straight there, across the switch or cable.\n- **Different**: send it to the **default gateway**, a router on its own subnet, which passes it on.\n\nWith /24, the network part is the first three numbers. So 192.168.10.5 can talk directly to 192.168.10.200, but not to 192.168.11.5.\n\nThis is why a laptop plugged straight into a PLC may not reach it: the decision is made by the addresses, not the cable."
+  },
+  {
+   "id": "same-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "A device is 192.168.10.5 with mask 255.255.255.0. Which address can it reach **without** a router?",
+   "options": [
+    "192.168.10.200",
+    "192.168.11.5",
+    "192.169.10.5",
+    "10.168.10.5"
+   ],
+   "answer": 0,
+   "why": "Only 192.168.10.200 shares the network part, 192.168.10. The others differ in the first three numbers, some by a single digit, which is all it takes."
+  },
+  {
+   "id": "hosts",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Network, broadcast and the usable rest",
+   "body": "In every subnet, two addresses are taken:\n\n- the **first** (host part all 0s) names the **network**, such as 192.168.0.0\n- the **last** (host part all 1s) is the **broadcast**, sent to every device, such as 192.168.0.255\n\nNeither can be given to a device. A /24 has 256 addresses, so **254 usable**: .1 to .254.\n\nIn general, with prefix **p** there are 32 − p host bits, so $2^{32-p}$ addresses and $2^{32-p} - 2$ usable ones.",
+   "more": "Count the host bits and double for each one. A /24 leaves 8 bits for the host: 8 doublings of 1 is 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 = 256 patterns, from 00000000 (0) to 11111111 (255). Take off all-0s (the network) and all-1s (the broadcast): 254 left. A /26 leaves 32 − 26 = 6 bits: $2^6 = 64$ patterns, 62 usable. Each bit you add to the prefix halves the subnet."
+  },
+  {
+   "id": "hosts-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "How many addresses can be given to devices in a /{p} subnet?",
+   "vars": {
+    "p": {
+     "pick": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+     ]
+    }
+   },
+   "answer": "2 ^ (32 - p) - 2",
+   "abs": 0.01,
+   "work": "$2^{32 - {{p}}} - 2 = {answer}$",
+   "why": "32 − {p} host bits give $2^{32-p}$ addresses; the network and broadcast addresses come off.",
+   "hint": "How many bits are left for the host? Double for each one, then take 2 off."
+  },
+  {
+   "id": "blocks",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Masks that split the last number",
+   "body": "Some masks end in a number other than 0, such as **255.255.255.192**. Then the last number is split too.\n\nWork out the **block size**: $b = 256 - m$, where m is the mask's last number. 256 − 192 = **64**, so subnets start at .0, .64, .128 and .192.\n\nAn address belongs to the block it falls in: **.70** is in the **.64** block, which runs .64 to .127: network .64, broadcast .127, devices .65 to .126.\n\nThe common ones: 128 is /25, 192 /26, 224 /27, 240 /28, 248 /29, 252 /30."
+  },
+  {
+   "id": "blocks-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A device is 192.168.1.{h} with mask 255.255.255.{m}. What is the last number of its **network** address?",
+   "vars": {
+    "m": {
+     "pick": [
+      128,
+      192,
+      224,
+      240,
+      248
+     ]
+    },
+    "h": [
+     1,
+     254,
+     1
+    ]
+   },
+   "let": {
+    "b": "256 - m"
+   },
+   "answer": "ROUNDDOWN(h / b, 0) * b",
+   "abs": 0.01,
+   "work": "Block size $256 - {{m}} = {b}$. The biggest multiple of {b} not above {h} is {answer}.",
+   "why": "Subnets start at multiples of the block size; the network address is the start of the block the address falls in.",
+   "hint": "Block size = 256 − {m}. Which multiple of it is just at or below {h}?"
+  },
+  {
+   "id": "private",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Addresses with a meaning",
+   "body": "- **Private ranges** (RFC 1918): 10.x.x.x, 172.16.x.x to 172.31.x.x, and 192.168.x.x. Used inside sites and homes; never routed across the internet. Machine networks nearly always use them.\n- **169.254.x.x**: the PC is set to get its address automatically (**DHCP**), and no DHCP server answered, so it made one up.\n- **127.0.0.1**: the PC itself.\n\nPLCs, drives and HMIs usually have fixed (**static**) addresses, listed on the drawings or an IP list. Office PCs usually use DHCP."
+  },
+  {
+   "id": "private-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A PC's `ipconfig` shows its address as 169.254.23.7. What does that tell you?",
+   "options": [
+    "It is set to get an address automatically, and no DHCP server answered",
+    "It has a fixed address set by hand",
+    "It is on the internet",
+    "It is working normally on the site network"
+   ],
+   "answer": 0,
+   "why": "169.254 is the self-assigned range a PC falls back on. Look for the DHCP server, or, on a machine network with no DHCP, set a static address in the right subnet."
+  },
+  {
+   "id": "worked-online",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "Your laptop is 10.0.5.20, mask 255.255.255.0. The PLC is 10.0.6.15, same mask, and you connect with a direct cable. Get online.",
+   "steps": [
+    {
+     "ask": "Which part is the network?",
+     "show": "Mask 255.255.255.0 is /24: the first three numbers."
+    },
+    {
+     "ask": "Compare the networks.",
+     "show": "Laptop 10.0.5, PLC 10.0.6: different, so the laptop will not send to the PLC directly."
+    },
+    {
+     "ask": "Choose a new laptop address.",
+     "show": "One in 10.0.6.x: not .0 (the network), not .255 (the broadcast), not in use. Check the IP list and ping it first: 10.0.6.200 gives no reply, so take it."
+    },
+    {
+     "ask": "Set it.",
+     "show": "Laptop: 10.0.6.200, mask 255.255.255.0. No gateway needed on a direct cable."
+    },
+    {
+     "ask": "Test.",
+     "show": "`ping 10.0.6.15`: replies, so go online. Put the laptop back to its old settings afterwards."
+    }
+   ],
+   "why": "Match the network part, pick a usable free address, then prove it with a ping. The usual slip is changing the PLC's address instead, which can break its links to the HMI and drives."
+  },
+  {
+   "id": "explain-online",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: the laptop was 10.0.5.20/24 and the PLC 10.0.6.15/24, joined by a direct cable.",
+   "q": "Why can the laptop not reach the PLC before its address is changed, when the cable joins them directly? Say it in your own words.",
+   "model": "Before sending anything, the laptop uses its mask to ask: is this address on my network? With /24 its network is 10.0.5, and 10.0.6.15 is not in it. So it does not send straight down the cable; it sends to its default gateway, the router that should forward traffic to other networks. On a direct cable there is no router, so the traffic goes nowhere. The cable is fine; the addresses tell the laptop not to use it directly. Once the laptop is in 10.0.6.x, the PLC counts as local.",
+   "points": [
+    "The laptop compares network parts using its mask",
+    "10.0.6.15 is not in the laptop's network, 10.0.5",
+    "Traffic for other networks goes to the default gateway, not straight down the cable",
+    "There is no router on a direct cable, so it never arrives"
+   ]
+  },
+  {
+   "id": "faded-26",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.2,
+   "q": "A camera is 192.168.1.70 and a PC 192.168.1.130, both with mask 255.255.255.192. Are they on the same subnet?",
+   "steps": [
+    {
+     "ask": "Block size.",
+     "show": "$256 - 192 = 64$."
+    },
+    {
+     "ask": "Where do the blocks start?",
+     "show": ".0, .64, .128 and .192."
+    },
+    {
+     "ask": "The camera's block.",
+     "show": ".70 is in .64 to .127."
+    },
+    {
+     "ask": "The PC's block.",
+     "show": ".130 is in .128 to .191."
+    },
+    {
+     "ask": "Same subnet?",
+     "show": "No: different blocks. They need a router between them, or one of them moved."
+    }
+   ],
+   "why": "With /24 they would share 192.168.1 and talk directly. The mask, not the first three numbers, decides."
+  },
+  {
+   "id": "problem-broadcast",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.3,
+   "q": "A device is 192.168.1.{h} with mask 255.255.255.{m}. What is the last number of its subnet's **broadcast** address?",
+   "vars": {
+    "m": {
+     "pick": [
+      128,
+      192,
+      224,
+      240
+     ]
+    },
+    "h": [
+     1,
+     254,
+     1
+    ]
+   },
+   "let": {
+    "b": "256 - m",
+    "net": "ROUNDDOWN(h / b, 0) * b"
+   },
+   "answer": "net + b - 1",
+   "abs": 0.01,
+   "work": "Block size {b}; the block starts at {net}; the broadcast is the block's last address: {net} + {b} − 1 = {answer}.",
+   "why": "The broadcast is one below the start of the next block.",
+   "hint": "Find the block first, then its last address."
+  },
+  {
+   "id": "prefix-q",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A mask is 255.255.255.{m}. What is its prefix length, the number after the slash?",
+   "vars": {
+    "m": {
+     "pick": [
+      0,
+      128,
+      192,
+      224,
+      240,
+      248,
+      252
+     ]
+    }
+   },
+   "answer": "24 + LOG10(256 / (256 - m)) / LOG10(2)",
+   "abs": 0.01,
+   "work": "Three 255s give 24 bits; {m} adds the rest: /{answer}.",
+   "why": "Each 255 is 8 bits of 1s. 128 is 1 more bit, 192 is 2, 224 is 3, 240 is 4, 248 is 5, 252 is 6.",
+   "hint": "Start from 24 for the three 255s. How many 1 bits make {m}?"
+  },
+  {
+   "id": "gateway",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A PLC at 192.168.0.10/24 must send data to a server at 10.1.1.5. What must the PLC have set?",
+   "options": [
+    "A default gateway: a router's address on its own subnet, such as 192.168.0.1",
+    "The server's address as its own gateway",
+    "A mask of 255.0.0.0",
+    "Nothing: IP finds the way on its own"
+   ],
+   "answer": 0,
+   "why": "The server is on another network, so the PLC hands the traffic to its gateway. The gateway must be on the PLC's own subnet, or the PLC cannot reach it either. Widening the mask would make the PLC wrongly think the server is local."
+  },
+  {
+   "id": "spot-ip",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.8,
+   "mono": true,
+   "q": "Addresses planned for a machine network. One is wrong. Which?",
+   "lines": [
+    "PLC:    192.168.0.1    mask 255.255.255.0",
+    "HMI:    192.168.0.2    mask 255.255.255.0",
+    "Drive:  192.168.0.10   mask 255.255.255.0",
+    "Laptop: 192.168.0.255  mask 255.255.255.0"
+   ],
+   "wrong": 3,
+   "fix": "Laptop: 192.168.0.100  mask 255.255.255.0",
+   "why": ".255 is the broadcast address of 192.168.0.0/24, so no device can have it. Any free address from .1 to .254 will do."
+  },
+  {
+   "id": "duplicate",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Two devices on a network are accidentally given the same IP address. What happens?",
+   "options": [
+    "Both drop in and out: traffic goes to whichever answered last, so connections fail at random",
+    "The newer one is ignored and the older one works normally",
+    "The switch gives one of them a new address",
+    "Nothing: IP addresses can be shared"
+   ],
+   "answer": 0,
+   "why": "Other devices learn which hardware (MAC) address goes with each IP address, and relearn it whenever either duplicate talks. Intermittent faults that come and go with a device being switched on are a classic sign. Ping the address with the suspect unplugged: a reply means someone else has it."
+  },
+  {
+   "id": "why-mask",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "Why does a device need a subnet mask as well as its address?",
+   "options": [
+    "To tell which addresses are on its own network (send directly) and which are not (send to the gateway)",
+    "To encrypt its traffic",
+    "To set its speed",
+    "To choose between TCP and UDP"
+   ],
+   "answer": 0,
+   "why": "The mask is how a device draws the line round its own network. A wrong mask makes it treat local devices as remote, or remote ones as local; either way some traffic never arrives."
+  },
+  {
+   "id": "mix-16",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A laptop is 172.16.5.10 and a PLC 172.16.200.3, both with mask 255.255.0.0. Are they on the same subnet?",
+   "options": [
+    "Yes: /16 makes only the first two numbers the network, and both are 172.16",
+    "No: the third numbers differ",
+    "No: 172.16 is not a private range",
+    "Only with a gateway"
+   ],
+   "answer": 0,
+   "why": "The 'first three numbers' habit comes from /24. Here the mask is 255.255.0.0, so only 172.16 must match."
+  },
+  {
+   "id": "mix-bits",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "A mask's last number has its top {k} bits set to 1 and the rest 0. What is it in decimal?",
+   "vars": {
+    "k": [
+     1,
+     8,
+     1
+    ]
+   },
+   "answer": "256 - 2 ^ (8 - k)",
+   "abs": 0.01,
+   "work": "The {k} top bits are worth 128, 64, 32, … added up: $256 - 2^{8 - {{k}}} = {answer}$.",
+   "why": "Binary place values, from the data types lesson: 128, 64, 32, 16, 8, 4, 2, 1. Top bits set: 128, 192, 224, 240, 248, 252, 254, 255.",
+   "hint": "Add the place values of the top {k} bits: 128 + 64 + …"
+  },
+  {
+   "id": "mix-count",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.3,
+   "q": "How many addresses can be given to devices in a /{p} subnet?",
+   "vars": {
+    "p": {
+     "pick": [
+      16,
+      20,
+      22,
+      23
+     ]
+    }
+   },
+   "answer": "2 ^ (32 - p) - 2",
+   "abs": 0.01,
+   "work": "$2^{32 - {{p}}} - 2 = {answer}$",
+   "why": "The same rule works for prefixes shorter than 24: more host bits, many more addresses.",
+   "hint": "32 − {p} host bits."
+  },
+  {
+   "id": "check-online",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A PLC is 192.168.0.1/24. Which laptop setting lets you go online to it with a direct cable?",
+   "options": [
+    "192.168.0.50, mask 255.255.255.0",
+    "192.168.1.50, mask 255.255.255.0",
+    "192.168.0.1, mask 255.255.255.0",
+    "192.168.0.255, mask 255.255.255.0"
+   ],
+   "answer": 0,
+   "why": "Same network, a usable address, not in use. 192.168.1.50 is another subnet; 192.168.0.1 is the PLC's own address (a duplicate); .255 is the broadcast."
+  },
+  {
+   "id": "check-hosts",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "How many addresses can be given to devices in a /{p} subnet?",
+   "vars": {
+    "p": {
+     "pick": [
+      25,
+      26,
+      27,
+      28
+     ]
+    }
+   },
+   "answer": "2 ^ (32 - p) - 2",
+   "abs": 0.01,
+   "work": "$2^{32 - {{p}}} - 2 = {answer}$",
+   "why": "Host bits give the addresses; the network and broadcast come off."
+  },
+  {
+   "id": "check-network",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.3,
+   "q": "A device is 10.0.0.{h} with mask 255.255.255.{m}. What is the last number of its network address?",
+   "vars": {
+    "m": {
+     "pick": [
+      192,
+      224,
+      240
+     ]
+    },
+    "h": [
+     1,
+     254,
+     1
+    ]
+   },
+   "let": {
+    "b": "256 - m"
+   },
+   "answer": "ROUNDDOWN(h / b, 0) * b",
+   "abs": 0.01,
+   "work": "Block size {b}; the start of the block holding {h} is {answer}.",
+   "why": "Block size from the mask, then the multiple just at or below the address."
+  }
+ ]
+}

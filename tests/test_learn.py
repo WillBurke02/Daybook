@@ -44,14 +44,15 @@ f = learn.feed(db, 6, subjects=["physics"], rng=rng)
 assert [c["id"] for c in f[:2]] == [f"{pe}/echo-between", f"{pe}/idea"], "the first physics lesson with cards, from the top"
 assert all(c["why"] == "new" for c in f)
 mixed = learn.feed(db, 40, rng=rng)
-assert len({c["subject_id"] for c in mixed}) == 5, "every subject with cards takes a turn"
+with_cards = {c["lesson_id"].split(".")[0] for c in cards}
+assert {c["subject_id"] for c in mixed} == with_cards, "every subject with cards takes a turn"
 assert len({c["id"] for c in mixed}) == len(mixed), "no card twice in one batch"
 ex = learn.feed(db, 3, exclude=[f"{pe}/echo-between"], subjects=["physics"], rng=rng)
 assert ex[0]["id"] == f"{pe}/idea", "the ones already on screen are left out"
 db.execute("UPDATE setting SET value=? WHERE key='subjects_on'", (json.dumps(["plc"]),))
 assert {c["subject_id"] for c in learn.feed(db, 10, rng=rng)} == {"plc"}, "only the subjects that are on"
 db.execute("UPDATE setting SET value='' WHERE key='subjects_on'")
-db.execute("UPDATE setting SET value=? WHERE key='weights'", (json.dumps({"maths": 0, "physics": 0, "drives": 0, "electronics": 0}),))
+db.execute("UPDATE setting SET value=? WHERE key='weights'", (json.dumps({s: 0 for s in with_cards - {"plc"}}),))
 assert {c["subject_id"] for c in learn.feed(db, 10, rng=rng)} == {"plc"}, "a weight of 0 gives way while any other subject has cards"
 db.execute("UPDATE setting SET value='{}' WHERE key='weights'")
 db.commit()

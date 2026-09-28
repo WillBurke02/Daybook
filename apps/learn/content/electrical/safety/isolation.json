@@ -1,0 +1,564 @@
+{
+ "id": "electrical.safety.isolation",
+ "title": "Safe isolation and lock-off: proving dead, GS38, the Electricity at Work Regulations",
+ "tags": [
+  "safety",
+  "isolation",
+  "lock-off",
+  "EAWR",
+  "GS38"
+ ],
+ "kind": "procedure",
+ "level": 4.0,
+ "minutes": 25,
+ "goals": [
+  "Say what the Electricity at Work Regulations expect: dead working, with live work the rare exception",
+  "Tell real isolation from things that only stop a machine (an emergency stop, a contactor, Safe Torque Off)",
+  "Choose test gear that meets GS38, and say why a multimeter or a voltage stick will not do",
+  "Carry out safe isolation in order: identify, isolate, lock off, prove, test every pair, prove again",
+  "Find the supplies and stored energy that the main isolator leaves behind"
+ ],
+ "summary": "**The law.** The Electricity at Work Regulations 1989 expect work to be done **dead**. Live work is allowed only when it is unreasonable for the equipment to be dead, reasonable to work live, *and* suitable precautions are taken (regulation 14). Equipment made dead must be kept dead (regulation 13).\n\n**Isolation** means cut off from every source of supply, with a gap that cannot be closed by accident. An isolator locked OFF with **your own padlock**, the key in your pocket, and a warning notice. Several people: a **multi-lock hasp**, one lock each. An **emergency stop, a stop button, a contactor, a PLC output or a drive's Safe Torque Off is not isolation**: they stop the machine, but wiring stays live, contacts can weld, and anyone can reset them.\n\n**The tester.** An approved **two-pole voltage indicator** (BS EN 61243-3) and its **proving unit**. GS38: finger barriers; bare probe tips 4 mm or less, better 2 mm or spring-loaded shrouds; fused or current-limited leads. Not a multimeter (wrong range, lead in the wrong socket: a false 'dead'). Not a non-contact voltage stick (it only hints).\n\n**The procedure.**\n\n1. Identify every source of supply.\n2. Isolate.\n3. Lock off, notice on, keep the key.\n4. **Prove** the tester on the proving unit.\n5. **Test** dead at the point of work, between every pair of conductors.\n6. **Prove** the tester again.\n7. Deal with other supplies and stored energy; only then start.\n\n**Every pair**: n conductors need $\\frac{n(n-1)}{2}$ tests. Single-phase (L, N, E): 3. Three-phase with neutral: 10. Three-phase, no neutral: 6. Phase-to-phase alone is not enough: motor windings join the phases, so one live phase reads 0 V between phases.\n\n**Prove again**, because a tester that fails mid-test shows 'dead' on a live circuit.\n\n**What the isolator leaves.** **Orange wires** (BS EN 60204-1) are fed from elsewhere and stay live. A drive's **DC bus** stays charged: wait the time on its label, then measure. Also UPS and second supplies, and air, hydraulics, springs and raised loads.\n\nOnly isolate equipment you are trained and authorised to work on.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Best Practice Guide 2: the management of electrical safety and safe isolation procedures for low voltage installations",
+   "url": "https://www.electricalsafetyfirst.org.uk/professional-resources/best-practice-guides/",
+   "by": "Electrical Safety First",
+   "minutes": 20,
+   "note": "The UK industry's step-by-step isolation procedure, with flowcharts."
+  },
+  {
+   "when": "during",
+   "kind": "reference",
+   "title": "GS38: Electrical test equipment for use on low voltage electrical systems",
+   "url": "https://www.hse.gov.uk/pubns/books/gs38.htm",
+   "by": "HSE",
+   "minutes": 10,
+   "note": "Free. What your probes, leads and voltage indicator must be like."
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "HSG85: Electricity at work: Safe working practices",
+   "url": "https://www.hse.gov.uk/pubns/books/hsg85.htm",
+   "by": "HSE",
+   "minutes": 30
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "The Electricity at Work Regulations 1989",
+   "url": "https://www.legislation.gov.uk/uksi/1989/635/contents",
+   "by": "legislation.gov.uk",
+   "minutes": 10,
+   "note": "The regulations themselves: 12, 13, 14 and 16 are the ones in this lesson."
+  }
+ ],
+ "sources": [
+  "The Electricity at Work Regulations 1989 (SI 1989/635)",
+  "HSE HSR25: Memorandum of guidance on the Electricity at Work Regulations 1989, 3rd edition (2015)",
+  "HSE GS38: Electrical test equipment for use on low voltage electrical systems, 4th edition (2015)",
+  "HSE HSG85: Electricity at work: Safe working practices, 3rd edition (2013)",
+  "Electrical Safety First, Best Practice Guide 2: Guidance on the management of electrical safety and safe isolation procedures for low voltage installations (issue 4)",
+  "BS EN 60204-1: Safety of machinery. Electrical equipment of machines. General requirements",
+  "BS EN 61243-3: Live working. Voltage detectors. Two-pole low-voltage type"
+ ],
+ "formulas": [
+  {
+   "name": "How many tests prove a circuit dead",
+   "tex": "\\frac{n(n-1)}{2}",
+   "match": [
+    "\\frac{n(n-1)}{2}"
+   ],
+   "says": "Every conductor is tested against every other one, once. Each of the n conductors pairs with the n − 1 others; halving stops each pair counting twice (L1–L2 is the same test as L2–L1).",
+   "symbols": [
+    [
+     "n",
+     "the number of conductors at the point of work, earth included"
+    ]
+   ],
+   "example": "Three-phase with neutral is L1, L2, L3, N and E, so n = 5: $\\frac{5 \\times 4}{2} = 10$ tests."
+  },
+  {
+   "name": "Ohm's law",
+   "tex": "I = \\frac{V}{R}",
+   "match": [
+    "\\frac{V}{R}"
+   ],
+   "says": "The current is the voltage divided by the resistance: more resistance, less current.",
+   "symbols": [
+    [
+     "I",
+     "the current (amps, A)"
+    ],
+    [
+     "V",
+     "the voltage (volts, V)"
+    ],
+    [
+     "R",
+     "the resistance (ohms, Ω)"
+    ]
+   ],
+   "example": "230 V across 100 kΩ: 230 ÷ 100 = 2.3 mA (volts ÷ kΩ gives mA)."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Check your own voltage indicator against GS38, then prove it on its proving unit. No circuit is touched: the proving unit makes its own voltage.",
+   "check": [
+    "The probes have finger barriers",
+    "The bare tips are 4 mm or less (2 mm, or spring-loaded shrouds, is better)",
+    "The leads are fused or current-limited, with no cracks, cuts or bare copper",
+    "It is marked BS EN 61243-3, and in date if your site checks them",
+    "It shows a voltage on the proving unit"
+   ]
+  },
+  {
+   "task": "Plan one machine's isolation on paper, without switching anything: from its drawings, list every source of supply and stored energy, and where each is isolated.",
+   "check": [
+    "The main isolator, and what it feeds",
+    "Any orange wiring, and where its supply comes from",
+    "Each drive's discharge time, from its label",
+    "Air, hydraulics, springs or raised loads, and how each is made safe",
+    "Compare your list with the site's isolation procedure for that machine, if there is one"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-estop",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A machine has stopped with its **emergency stop** pressed in and latched. You need to replace a contactor in its control panel. Is it safe to start?",
+   "options": [
+    "No: an emergency stop is not isolation. Isolate at the isolator, lock it off and prove dead first",
+    "Yes: the emergency stop cuts all power to the machine",
+    "Yes, as long as the button stays latched in",
+    "Yes, if the motors have stopped turning"
+   ],
+   "answer": 0,
+   "why": "An emergency stop stops the machine through its control circuit, usually by dropping contactors or a safety relay. The supply into the panel is still live, a contactor can weld shut, and anyone can twist the button out. Only isolation, locked off and proved dead, makes wiring safe to touch. A stopped motor tells you nothing about the voltage."
+  },
+  {
+   "id": "law",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The law: work dead",
+   "body": "The **Electricity at Work Regulations 1989** (EAWR) cover all work on electrical systems in Great Britain. In short:\n\n- **Regulation 13**: equipment made dead for work must be kept dead while the work goes on.\n- **Regulation 14**: no work on or near live conductors unless *all three* hold: it is unreasonable for it to be dead, it is reasonable to work live, and suitable precautions are taken.\n- **Regulation 16**: only people with the knowledge and experience to avoid danger, or properly supervised, do the work.\n\nSo **dead working is normal**, and live work is the rare exception. \"It's quicker live\" is never a reason."
+  },
+  {
+   "id": "law-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.6,
+   "q": "Under the Electricity at Work Regulations, when may you work on or near a live conductor?",
+   "options": [
+    "Only when it is unreasonable for it to be dead, reasonable to work live, and suitable precautions are taken: all three",
+    "When the job takes less than ten minutes",
+    "Whenever you wear insulated gloves",
+    "When a supervisor agrees it saves production time"
+   ],
+   "answer": 0,
+   "why": "Regulation 14 needs all three. Gloves are one possible precaution, not a permission. Time and production pressure are not reasons at all. Live **testing**, such as fault finding, can meet the conditions; live **working** to avoid a shutdown usually cannot."
+  },
+  {
+   "id": "isolate",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Isolation, and what is not",
+   "body": "**Isolation** means cutting a circuit off from **every** source of supply, with a gap that cannot be closed by accident, and **securing** it.\n\nThat is: an **isolator** switched OFF and locked with **your own padlock**, the only key in your pocket, and a **warning notice** on it. If others work on the same machine, each adds a lock to a **multi-lock hasp**. Taking out fuses can count too, if you keep them and lock the holder.\n\nThese are **not** isolation: an **emergency stop**, a stop button, a **contactor**, a PLC output, a drive's **Safe Torque Off**. They stop the machine, but the wiring stays live, contacts can weld, and anyone can press start."
+  },
+  {
+   "id": "isolate-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.7,
+   "q": "Which of these is isolation?",
+   "options": [
+    "The panel's main isolator switched OFF and locked with your own padlock",
+    "The emergency stop pressed and latched",
+    "The drive's Safe Torque Off input switched off",
+    "The PLC output to the motor contactor turned off"
+   ],
+   "answer": 0,
+   "why": "Only the isolator makes a secured break in every supply conductor. The others are control functions. Safe Torque Off stops the drive making torque, but its terminals and DC bus stay live. An emergency stop or a PLC output drops a contactor, which can weld or be switched on again."
+  },
+  {
+   "id": "tester",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The tester: GS38",
+   "body": "Prove dead with an approved **two-pole voltage indicator** (made to BS EN 61243-3) and its **proving unit**: a small box that makes a known voltage to test it on.\n\nThe HSE's guidance **GS38** says the probes and leads need:\n- **finger barriers**, so your fingers stay back from the tips\n- bare metal tips of **4 mm or less**, better 2 mm, or spring-loaded shrouded tips\n- **fused** or current-limited leads, well insulated and undamaged\n\n**Not a multimeter**: it can be on the wrong range or function, or have a lead in the wrong socket, and read 0 V on a live circuit. **Not a non-contact voltage stick**: it only hints, and can miss a live conductor."
+  },
+  {
+   "id": "tester-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "Which should you use to prove a 400 V circuit dead?",
+   "options": [
+    "A two-pole voltage indicator to GS38, proved on its proving unit before and after",
+    "A multimeter on its 750 V AC range",
+    "A non-contact voltage stick",
+    "A neon test screwdriver"
+   ],
+   "answer": 0,
+   "why": "A voltage indicator has no ranges to get wrong, and is proved before and after. A multimeter may be right this time, but it is one slip (the wrong range, a lead in the amps socket) from a false 'dead' or a flash. A voltage stick can miss a live conductor, for example in screened cable. A neon screwdriver puts you in the circuit."
+  },
+  {
+   "id": "prove",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Prove, test, prove",
+   "body": "A tester showing nothing might mean the circuit is dead, **or** that the tester is broken. So:\n\n1. **Prove** the tester on the proving unit: it must show a voltage.\n2. **Test** the circuit you isolated, at the **point of work**: it must show nothing.\n3. **Prove** the tester again.\n\nStep 3 is the one people skip. If the tester failed during step 2 (a lead broken inside, a blown lead fuse), its 'dead' readings meant nothing. Proving it again shows it was working all along.\n\nTest at the point of work, not at the isolator: that is what you will touch, and it catches the wrong isolator."
+  },
+  {
+   "id": "prove-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "You prove your tester, test the circuit dead, then prove the tester again, and this time **it shows nothing** on the proving unit. What now?",
+   "options": [
+    "Treat the circuit as live: get a working tester and do the whole prove, test, prove again",
+    "Carry on: the circuit tested dead",
+    "Tap the tester until it lights up, then carry on",
+    "Test the circuit once more with the same tester"
+   ],
+   "answer": 0,
+   "why": "The tester failed at some point, perhaps before your test. Every 'dead' reading since its last good proof is worthless. Start again with a tester that works. Testing again with the broken one would just show 'dead' again."
+  },
+  {
+   "id": "pairs",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Test every pair",
+   "body": "Test between **every pair** of conductors, earth included: a fault or a wrong connection can put a voltage between any two.\n\nSingle-phase (L, N, E): L–N, L–E, N–E. **3 tests.**\n\nThree-phase with neutral (L1, L2, L3, N, E): phase to phase (3), each phase to N (3), each phase to E (3), and N–E (1). **10 tests.**\n\nThe rule: **n** conductors give $\\frac{n(n-1)}{2}$ pairs. Each conductor pairs with the n − 1 others, and halving stops each pair counting twice (L1–L2 is L2–L1).",
+   "more": "Think of handshakes. Five people in a room each shake hands with everyone else once. Each person shakes 4 hands: 5 × 4 = 20. But every handshake was counted twice, once by each of the two people, so there are 20 ÷ 2 = 10. Conductors work the same way: five conductors (L1, L2, L3, N, E) give 10 tests; three (L, N, E) give 3 × 2 ÷ 2 = 3.\n\nWhy bother with N–E? A neutral can be live: shared with (borrowed from) another circuit that is still on, or carrying current back from something still running. It is the test people forget."
+  },
+  {
+   "id": "pairs-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "At the point of work there are {n} conductors, earth included. How many tests does proving them dead take?",
+   "vars": {
+    "n": {
+     "pick": [
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   "answer": "n * (n - 1) / 2",
+   "abs": 0.01,
+   "work": "$\\frac{n(n-1)}{2} = \\frac{{{n}} \\times ({{n}} - 1)}{2} = {answer}$",
+   "why": "Every conductor against every other, once: 3 conductors give 3 tests, 4 give 6, 5 give 10.",
+   "hint": "Each of the {n} conductors is tested against each of the others. Then halve: L1–L2 and L2–L1 are the same test."
+  },
+  {
+   "id": "other",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What the isolator leaves live",
+   "body": "Locking off the main isolator does not always make everything dead.\n\n- **Orange wires** in a panel (BS EN 60204-1): circuits fed from somewhere else, such as an interlock from the next machine, that stay live with the isolator off. Find their source and isolate that too.\n- **Other supplies**: a UPS, a separate control or heater supply, a second feed.\n- **Stored charge**: a drive's **DC bus capacitors** stay charged at several hundred volts after isolation. Wait the time on the drive's label, then measure.\n- **Other energy**: compressed air, hydraulics, springs, raised loads. Vent, block or lower them."
+  },
+  {
+   "id": "other-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "You lock off a panel's main isolator. Inside, some wires are **orange**. What does that tell you?",
+   "options": [
+    "They may still be live from another source: find it and isolate it before you touch them",
+    "They are earth conductors",
+    "They are dead: the main isolator switches everything in the panel",
+    "They are low-voltage control wiring and always safe"
+   ],
+   "answer": 0,
+   "why": "BS EN 60204-1 uses orange for circuits the main isolator does not switch off, such as interlocks fed from another panel; the panel should carry a warning label too. Earth is green and yellow. Assuming the isolator killed everything is exactly the mistake the colour is there to stop."
+  },
+  {
+   "id": "worked-fan",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 230 V single-phase extractor fan over a machine needs a new motor. It is fed through its own local isolator. Carry out safe isolation.",
+   "steps": [
+    {
+     "ask": "Identify the supply.",
+     "show": "From the drawings and labels: the local isolator, fed from way 6 of the distribution board. Check for a second feed: some fans have a permanent live for a run-on timer."
+    },
+    {
+     "ask": "Isolate.",
+     "show": "Switch the local isolator OFF. (If it cannot be locked, isolate at the board instead: way 6 off, with a lock fitted to the breaker.)"
+    },
+    {
+     "ask": "Secure it.",
+     "show": "Your own padlock on the isolator, the key in your pocket, and a warning notice: \"Danger: do not switch on. Work in progress\", with your name."
+    },
+    {
+     "ask": "Prove the tester.",
+     "show": "Voltage indicator on the proving unit: it shows a voltage."
+    },
+    {
+     "ask": "Test dead at the point of work.",
+     "show": "At the fan's terminals: L–N, L–E, N–E. All show nothing. (3 conductors: $\\frac{3 \\times 2}{2} = 3$ tests.)"
+    },
+    {
+     "ask": "Prove the tester again.",
+     "show": "On the proving unit: it still shows a voltage, so the tests were real."
+    },
+    {
+     "ask": "Start work.",
+     "show": "Only now. If you leave the job, the lock stays on until you come back or hand over properly."
+    }
+   ],
+   "why": "The order matters: lock off before you test, so nothing can switch it back on in between; prove the tester on both sides of the test. The usual slip is testing at the isolator instead of at the fan. That proves the isolator's output dead, not the wires in your hand."
+  },
+  {
+   "id": "explain-reprove",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: step 4 proved the tester on the proving unit, step 5 tested L–N, L–E and N–E at the fan (all dead), and step 6 proved the tester again.",
+   "q": "Why prove the tester **again** in step 6, when it worked in step 4? Say it in your own words.",
+   "model": "A tester can fail at any moment: a lead can break inside its insulation, the fuse in a lead can blow, a probe can miss the terminal. If it failed during step 5, it would show 'dead' on a live circuit, and step 4 cannot tell you that, because it came first. Proving it afterwards shows it was still working when it gave those readings, so the 'dead' results can be trusted. If it fails the second proof, every reading since the first proof is worthless: start again.",
+   "points": [
+    "A tester can fail between the first proof and the test",
+    "A failed tester shows 'dead', the same as a dead circuit",
+    "Proving it afterwards shows it was working when it tested",
+    "If the second proof fails, the whole test is done again"
+   ]
+  },
+  {
+   "id": "faded-drive",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 4.4,
+   "q": "A conveyor motor runs from a 400 V drive in a panel: three-phase, no neutral. You are changing the motor. Carry out safe isolation.",
+   "steps": [
+    {
+     "ask": "Identify the supplies.",
+     "show": "The panel's main isolator feeds the drive. The drawings also show orange wires: an interlock fed from the next machine. Note both."
+    },
+    {
+     "ask": "Isolate and secure.",
+     "show": "Main isolator OFF, your padlock on, key kept, warning notice. If you will touch the orange wiring, isolate it at its source too."
+    },
+    {
+     "ask": "Let the stored energy go.",
+     "show": "Wait the time on the drive's warning label. A dark display is not proof: the DC bus capacitors outlast it."
+    },
+    {
+     "ask": "Prove, test, prove.",
+     "show": "Prove the tester. At the motor: U–V, V–W, U–W, U–E, V–E, W–E, all dead ($\\frac{4 \\times 3}{2} = 6$ tests). Check the drive's DC bus is near 0 V. Prove the tester again."
+    },
+    {
+     "ask": "Start work.",
+     "show": "Now disconnect the motor. Your lock stays on until the new one is connected and the job is signed off."
+    }
+   ],
+   "why": "Two things differ from the fan: a drive holds charge after isolation, so you wait and then measure; and three phases with no neutral are 4 conductors, so 6 tests. The orange wires are the panel telling you that not everything dies with the main isolator."
+  },
+  {
+   "id": "order-problem",
+   "type": "order",
+   "stage": "example",
+   "level": 3.8,
+   "q": "Put safe isolation in order.",
+   "items": [
+    "Identify every source of supply",
+    "Switch off at the isolator",
+    "Lock it off with your own padlock and fit a warning notice",
+    "Prove the voltage indicator on the proving unit",
+    "Test dead between every pair of conductors at the point of work",
+    "Prove the voltage indicator again",
+    "Start work"
+   ],
+   "why": "Lock off before you test, so nothing can switch it back on in between. The tester is proved on both sides of the test, so you know it worked while it tested."
+  },
+  {
+   "id": "pairs-three",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "A three-phase supply **with neutral** (L1, L2, L3, N and E) feeds a panel you are about to work in. How many tests does proving it dead take?",
+   "answer": "5 * 4 / 2",
+   "abs": 0.01,
+   "work": "$\\frac{5 \\times 4}{2} = 10$: L1–L2, L1–L3, L2–L3, L1–N, L2–N, L3–N, L1–E, L2–E, L3–E and N–E.",
+   "why": "Ten, and N–E is the one most often missed. A neutral shared with a circuit that is still on can be live.",
+   "hint": "Count the conductors first, earth included."
+  },
+  {
+   "id": "why-point",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.9,
+   "q": "Why test for dead **at the point of work**, rather than at the isolator you switched off?",
+   "options": [
+    "It proves dead the conductors you will actually touch, and catches the wrong isolator, a second feed or a wiring mistake",
+    "A voltage indicator reads more accurately further from the isolator",
+    "Testing at an isolator blows the tester's fuses",
+    "The law says tests must be made at least a metre from the isolator"
+   ],
+   "answer": 0,
+   "why": "A test at the isolator only shows that the isolator's output is dead. If the drawings are wrong, the circuit is fed from two places, or you switched off the wrong isolator, the wires in front of you can still be live."
+  },
+  {
+   "id": "spot-motor",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.4,
+   "q": "Someone proved a three-phase motor dead (no neutral) like this. One step is wrong. Which?",
+   "lines": [
+    "Identify the motor's supply from the drawings: isolator Q3",
+    "Switch Q3 off, lock it with my own padlock, hang a warning notice",
+    "Prove the voltage indicator on the proving unit",
+    "At the motor terminals, test U–V, V–W and U–W: all dead",
+    "Prove the voltage indicator on the proving unit again",
+    "Start work"
+   ],
+   "wrong": 3,
+   "fix": "At the motor terminals, test all six pairs: U–V, V–W, U–W, U–E, V–E and W–E: all dead",
+   "why": "Three phases and earth are 4 conductors: $\\frac{4 \\times 3}{2} = 6$ tests. Phase to phase alone can miss a live phase: the motor windings join U, V and W, so if one phase is still connected, all three terminals sit at mains voltage to earth and every phase-to-phase test reads 0 V. Count the conductors, work out the pairs, tick each one off."
+  },
+  {
+   "id": "lock-share",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.5,
+   "q": "A colleague needs to work on the same machine while your padlock is on its isolator. What is right?",
+   "options": [
+    "They add their own padlock to a multi-lock hasp: the isolator cannot be switched on until every lock is off",
+    "You give them your key",
+    "They rely on your lock, since you are both working on it",
+    "You take your lock off and they fit theirs"
+   ],
+   "answer": 0,
+   "why": "Each lock protects the person who fitted it, and only they remove it. With a shared key, or one lock for two people, one of you can put the power back on while the other is still inside."
+  },
+  {
+   "id": "drive-dark",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "A drive has been isolated and locked off, and its display has gone dark. Can you now touch its power terminals?",
+   "options": [
+    "No: wait the time on its warning label, then prove the DC bus dead with a voltage indicator",
+    "Yes: a dark display means the capacitors are empty",
+    "Yes, if the motor has stopped",
+    "Yes, once Safe Torque Off is switched on as well"
+   ],
+   "answer": 0,
+   "why": "The display's power supply stops long before the DC bus capacitors discharge; they can hold several hundred volts for minutes. The label gives the time; measuring proves it. Safe Torque Off does nothing to stored charge."
+  },
+  {
+   "id": "mix-count",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.2,
+   "q": "A three-phase motor circuit has **no neutral**: L1, L2, L3 and earth. How many tests prove it dead?",
+   "answer": "4 * 3 / 2",
+   "abs": 0.01,
+   "work": "$\\frac{4 \\times 3}{2} = 6$: L1–L2, L1–L3, L2–L3, L1–E, L2–E, L3–E.",
+   "why": "Four conductors, not five: no neutral means no N tests. Using 10 from the with-neutral case is the slip.",
+   "hint": "Count the conductors that are actually there."
+  },
+  {
+   "id": "mix-ohm",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.3,
+   "q": "A test lead has a {r} kΩ current-limiting resistor in it. If its probe slips onto {v} V, what is the most current that can flow through the lead, in mA?",
+   "vars": {
+    "v": {
+     "pick": [
+      230,
+      400
+     ]
+    },
+    "r": {
+     "pick": [
+      100,
+      220,
+      470
+     ]
+    }
+   },
+   "answer": "v / r",
+   "unit": "mA",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{ V }{ R } = \\frac{{{v}}}{{{r}}} = {answer:2}$ mA (volts ÷ kΩ gives mA)",
+   "why": "Ohm's law from the circuits lesson: the resistor limits a slip to a few milliamps, instead of the thousands of amps a short across a supply can draw. That is why GS38 asks for fused or current-limited leads.",
+   "hint": "Which law links volts, ohms and amps?"
+  },
+  {
+   "id": "mix-energy",
+   "type": "match",
+   "stage": "mix",
+   "level": 4.0,
+   "q": "Match each hazard left after isolation with what makes it safe.",
+   "pairs": [
+    [
+     "A drive's DC bus",
+     "Wait the time on its label, then measure it dead"
+    ],
+    [
+     "Orange wires in the panel",
+     "Find their other supply and isolate that too"
+    ],
+    [
+     "An air cylinder",
+     "Isolate the air, lock the valve and vent the pressure"
+    ],
+    [
+     "A raised platen or load",
+     "Lower it, or prop it mechanically"
+    ]
+   ],
+   "why": "Isolation deals with the supply; stored energy needs its own step. Each of these can shock or crush with the isolator locked off."
+  },
+  {
+   "id": "check-interlock",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A machine's guard is open and its interlock has dropped out the motor contactor. You want to work in the motor's terminal box. What must you do first?",
+   "options": [
+    "Isolate at the isolator, lock off and prove dead: an open guard interlock is not isolation",
+    "Nothing: the contactor is open, so the motor is dead",
+    "Keep the guard open so the interlock stays off",
+    "Press the emergency stop as well"
+   ],
+   "answer": 0,
+   "why": "A guard interlock, like an emergency stop, works through the control circuit. The contactor can weld, the interlock can be bypassed or reset, and the supply side is live whatever happens. Isolation is the break you lock and prove."
+  },
+  {
+   "id": "check-meter",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.2,
+   "q": "Your multimeter, on its 750 V AC range, reads 0 V between L and N. Why is that not proof the circuit is dead?",
+   "options": [
+    "A meter can be faulty or wrongly set, it was not proved before and after, and L–N is only one of the pairs: use a proved voltage indicator on every pair",
+    "It is proof: 0 V is 0 V",
+    "It is proof, as long as the reading is steady",
+    "Multimeters can only read DC"
+   ],
+   "answer": 0,
+   "why": "Two gaps: the instrument was not proved, and one pair was tested. L–E and N–E could still be live, for example with a shared neutral or a fault to earth."
+  },
+  {
+   "id": "check-pairs",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.0,
+   "q": "How many tests prove a single-phase circuit dead, with L, N and E at the point of work?",
+   "answer": "3 * 2 / 2",
+   "abs": 0.01,
+   "work": "$\\frac{3 \\times 2}{2} = 3$: L–N, L–E and N–E.",
+   "why": "Three conductors, three pairs. Stopping at L–N is the common slip."
+  }
+ ]
+}

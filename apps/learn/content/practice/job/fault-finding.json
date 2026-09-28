@@ -1,0 +1,506 @@
+{
+ "id": "practice.job.fault-finding",
+ "title": "Fault finding: a method (evidence, half-split, one change at a time)",
+ "tags": [
+  "fault finding",
+  "troubleshooting",
+  "half-split",
+  "root cause",
+  "maintenance"
+ ],
+ "kind": "procedure",
+ "level": 5.0,
+ "minutes": 25,
+ "goals": [
+  "Gather the evidence before touching anything: symptoms, alarms, what changed",
+  "Check the simple, likely causes first, safely",
+  "Half-split a chain of contacts, terminals or devices, and say how many tests it takes",
+  "Change one thing at a time, and put back what did not help",
+  "Fix the root cause rather than the symptom, prove the fix and record it"
+ ],
+ "summary": "**1. Evidence first.** What exactly happens, and when? Read the alarm history. Ask the operator what they saw. Ask what changed: maintenance, parameters, a new product, the weather. Can it be made to happen again, safely? Most faults are found by thinking before touching.\n\n**2. Simple and likely first.** Supplies on, fuses and breakers, emergency stops reset, guards shut, air on, the mode selector, a sensor knocked out of line. Try the causes that are likely *and* quick to check.\n\n**3. Use the drawing** to decide what could cause every symptom you have seen.\n\n**4. Half-split.** For a chain of parts in series (a control path, a safety chain, a signal from sensor to PLC), test in the **middle**. Good there: the fault is further on. Bad: it is before. Each test halves what is left, so n parts take at most $\\log_2 n$ tests, rounded up: 8 parts, 3 tests; 100 parts, 7.\n\n**5. One change at a time.** Test after each. If it did not help, put it back. Swapping several parts at once hides which one mattered, wastes good parts and can add new faults. Back up parameters before changing them.\n\n**6. Root cause.** A blown fuse, a tripped overload, a failed sensor: ask **why**, and keep asking (the **5 whys**) until you reach something you can fix for good. Raising an overload setting or fitting a bigger fuse hides the fault and removes the protection.\n\n**7. Prove and record.** Run it under the conditions that made it fail. Write down the symptom, the cause and the fix.\n\n**Intermittent faults**: record them. Trend or trace the PLC signals, so the next stop shows which one dropped first.\n\n**Safely**: isolate for any work. Live measurement is allowed only when it cannot be done dead (EAWR regulation 14), with a GS38 tester, and measuring only. Never bridge out a safety switch to test. Forcing PLC outputs bypasses the program's interlocks: only with authority and with the machine made safe.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "The Beauty of Half-Splitting",
+   "url": "https://www.ecmweb.com/maintenance-repair-operations/article/20889049/the-beauty-of-half-splitting",
+   "by": "EC&M",
+   "minutes": 6
+  },
+  {
+   "when": "during",
+   "kind": "video",
+   "title": "Troubleshooting Strategies",
+   "url": "https://www.allaboutcircuits.com/video-lectures/troubleshooting-strategies/",
+   "by": "All About Circuits",
+   "minutes": 15
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Electrical Fault Finding: The 6-Step Systematic Method",
+   "url": "https://www.totalskills.co.uk/guides/electrical-fault-finding",
+   "by": "Total Skills UK",
+   "minutes": 8
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Root Cause Analysis Using the 5 Whys Method",
+   "url": "https://fiixsoftware.com/blog/5-whys-simple-root-cause-analysis/",
+   "by": "Fiix",
+   "minutes": 7
+  }
+ ],
+ "sources": [
+  "Kuphaldt, T. R.: Lessons In Industrial Instrumentation, chapter 'Problem-solving and diagnostic strategies'",
+  "The Electricity at Work Regulations 1989, regulation 14",
+  "HSE HSG85: Electricity at work: Safe working practices, 3rd edition (2013)",
+  "HSE GS38: Electrical test equipment for use on low voltage electrical systems, 4th edition (2015)"
+ ],
+ "formulas": [
+  {
+   "name": "Half-split: tests needed",
+   "tex": "t = \\log_2 n",
+   "match": [
+    "\\log_2 n"
+   ],
+   "says": "How many times you can halve n before one part is left. Round it up to a whole number of tests.",
+   "symbols": [
+    [
+     "t",
+     "the most tests half-splitting needs"
+    ],
+    [
+     "n",
+     "the number of parts (contacts, terminals, devices) in the chain"
+    ]
+   ],
+   "example": "16 contacts: 16, 8, 4, 2, 1 is four halvings, so $\\log_2 16 = 4$ tests. 100 contacts: $\\log_2 100 \\approx 6.6$, so 7 tests."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Half-split on the bench: wire 4 to 8 small switches or links in series from a 12 V or 24 V DC bench supply (current limit about 100 mA) to a lamp or relay coil. Have someone open one switch while you look away, then find it.",
+   "check": [
+    "Keep one meter lead on 0 V; put the other in the middle of the chain first",
+    "Count your tests: no more than $\\log_2 n$, rounded up",
+    "Say after each test which half is ruled out",
+    "Swap roles and try again, recording each fault in a short log"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-fuse",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A machine's 24 V control fuse has blown. You fit a new one and the machine runs again. Is the job finished?",
+   "options": [
+    "No: find out why it blew. The fuse did its job; a short or overload caused it, and will again",
+    "Yes: it runs",
+    "Yes, if you fit a bigger fuse to be safe",
+    "Only if it blows again this week"
+   ],
+   "answer": 0,
+   "why": "A blown fuse is a symptom. Something drew too much current: a pinched wire, a failing coil, a shorted sensor. Find it, or the fuse blows again, perhaps at a worse moment. A bigger fuse removes the protection the cable relies on."
+  },
+  {
+   "id": "evidence",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Evidence before tools",
+   "body": "Before you open a panel, collect what is already known:\n\n- **The symptom**, exactly: what happens, and what should happen?\n- **Alarms**: the HMI and drive alarm history, with times.\n- **What changed**: maintenance, parameters, a new product, a new shift, hot weather.\n- **When**: always, only when warm, only on one product, once an hour?\n- **The operator**: what they saw and heard, in their words.\n\nIf it is safe, watch it happen. Write it down as you go. Most faults are found by thinking before touching: the evidence tells you where *not* to look."
+  },
+  {
+   "id": "evidence-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A packing machine started jamming this morning. What do you do first?",
+   "options": [
+    "Ask the operator what happened and what has changed, and read the alarm history",
+    "Replace the sensor nearest the jam",
+    "Download a fresh copy of the PLC program",
+    "Strip down the infeed"
+   ],
+   "answer": 0,
+   "why": "Evidence narrows the search at no cost. It may turn out the film roll changed at 06:00, or the jam alarm names one station. Replacing or stripping things first is guessing."
+  },
+  {
+   "id": "obvious",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Simple and likely first",
+   "body": "Check the causes that are **likely** and **quick** (and safe) before the rare and hard:\n\n- Supplies: isolator on, fuses and breakers, the incoming voltage\n- Emergency stops reset, guards shut, the safety relay happy\n- Air on and at pressure; hydraulics running\n- The mode selector (hand, auto, off), a key switch\n- A sensor knocked out of line, a dirty photo-eye\n\nA dead drive is far more often a tripped breaker than a failed drive. The saying: when you hear hooves, think horses, not zebras."
+  },
+  {
+   "id": "obvious-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "A drive shows no display, and its motor will not run. What do you check first?",
+   "options": [
+    "The drive's supply: its isolator, fuses or breaker, and the incoming voltage",
+    "Replace the drive",
+    "Reload its parameters",
+    "The motor's encoder"
+   ],
+   "answer": 0,
+   "why": "A blank display means the drive has no power. The supply is likely and quick to check. Parameters and encoders cannot blank a display, and replacing the drive first would be a costly guess (and a new drive would not light either)."
+  },
+  {
+   "id": "split",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Half-splitting",
+   "body": "Many faults sit somewhere along a **chain** of parts in series: a coil's control path, a safety chain of guard switches, a signal from sensor to PLC.\n\nTest in the **middle** of the chain. Good there: everything before it is fine, so the fault is further on. Bad: it is before. Then test the middle of the half that is left.\n\nEach test halves the suspects, so n parts take at most $t = \\log_2 n$ tests, rounded up: 8 parts, 3 tests; 16, 4; 100, 7. Testing one by one from an end could take up to n − 1.",
+   "more": "It is the higher-or-lower game. I think of a number from 1 to 100. Guess 50: 'lower'. Guess 25: 'higher'. Guess 37… Each guess halves what is left, and 7 guesses always find it, because halving 100 seven times gets below 1. Guessing 1, 2, 3… could take 99.\n\n$\\log_2 n$ just means 'how many times can I halve n?'. For 8: 8 → 4 → 2 → 1, three halvings. On a real chain, choose middle points you can reach easily, such as a terminal strip, even if they are not exactly in the middle."
+  },
+  {
+   "id": "split-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "{n} contacts are in series, and one is open. With half-splitting, how many tests at most will find it?",
+   "vars": {
+    "n": {
+     "pick": [
+      4,
+      8,
+      16,
+      32,
+      64
+     ]
+    }
+   },
+   "answer": "ROUNDUP(LOG10(n) / LOG10(2) - 0.000001, 0)",
+   "abs": 0.01,
+   "work": "$\\log_2 {{n}} = {answer}$: halve {n} until one is left, counting the halvings.",
+   "why": "Each test halves the suspects: 4 → 2 tests, 8 → 3, 16 → 4, 32 → 5, 64 → 6.",
+   "hint": "How many times can you halve {n} before one is left?"
+  },
+  {
+   "id": "one-change",
+   "type": "concept",
+   "stage": "learn",
+   "title": "One change at a time",
+   "body": "When you change something, test straight away. If it did not help, **put it back** before trying the next thing.\n\nSwapping several parts at once (**shotgunning**):\n- hides which change fixed it, so you learn nothing and the fault may return\n- throws away good parts\n- can add new faults: a wrong part, a loose terminal, a lost setting\n\nThe same goes for parameters and PLC changes: **back up** first, note the old value, change one thing, test."
+  },
+  {
+   "id": "one-change-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "You swapped a sensor, its cable and the PLC input card all at once, and the fault went away. What is wrong with that?",
+   "options": [
+    "You do not know which one was faulty, so good parts may be scrapped and the real cause is unknown",
+    "Nothing: the machine works",
+    "The PLC needs a new program after a card change",
+    "Sensors should always be changed in pairs"
+   ],
+   "answer": 0,
+   "why": "It may even have been a loose terminal that got remade during the swap. One change at a time, testing after each, tells you which change mattered."
+  },
+  {
+   "id": "root",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Root cause, proof and a record",
+   "body": "Fix the **cause**, not the symptom. A tripped overload, a blown fuse, a failed sensor: ask **why**, and keep asking until you reach something you can fix for good (the **5 whys**).\n\nThe motor tripped. Why? It drew too much current. Why? The conveyor was hard to turn. Why? A roller bearing had seized. Why? Its grease point was missed. Fix the bearing *and* the lubrication.\n\nThen **prove** it: run it under the conditions that made it fail. And **record** it: symptom, cause, fix, parts. The next person, or you in a year, finds it in minutes."
+  },
+  {
+   "id": "root-q",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A conveyor motor's overload keeps tripping. Turning up the overload setting stops the trips. Was that right?",
+   "options": [
+    "No: the setting should match the motor's rated current. Find why it draws too much: a jam, a bearing, a lost phase",
+    "Yes: the trips have stopped",
+    "Yes, if it is turned up by less than 50%",
+    "Yes, if the motor feels cool"
+   ],
+   "answer": 0,
+   "why": "The overload was doing its job: warning that the motor is working too hard. Turning it up hides the cause and lets the motor burn out. Measure the current, then find what is loading it."
+  },
+  {
+   "id": "worked-split",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "Motor M1 will not start. The coil path is: +24 V → fuse -F2 → stop -S0 11–12 → start -S1 13–14 → overload -F1 95–96 → coil -K1 A1; A2 to 0 V. Find the fault. (The control circuit is 24 V DC, and nothing here is touched: measuring only, with a GS38 meter.)",
+   "steps": [
+    {
+     "ask": "Gather the evidence.",
+     "show": "No alarm; emergency stops reset; the overload's trip lamp (97–98) is off; K1 does not click when start is pressed."
+    },
+    {
+     "ask": "Choose the chain and its middle.",
+     "show": "F2, S0, S1, F1, then the coil. The middle is after S1: terminal -X1:4, easy to reach."
+    },
+    {
+     "ask": "Test the middle (start held in).",
+     "show": "0 V to -X1:4: 0 V. The fault is before it: F2, S0 or S1. F1 and the coil are not suspects yet."
+    },
+    {
+     "ask": "Split again.",
+     "show": "0 V to -X1:3, after S0: 24 V. So F2 and S0 are good: the fault is S1."
+    },
+    {
+     "ask": "Confirm it.",
+     "show": "Across S1 13–14 with start held in: 24 V. The contact is not closing."
+    },
+    {
+     "ask": "Fix one thing and prove it.",
+     "show": "Isolate, lock off and prove dead. Replace S1's contact block. Restore, then test: start, stop, and the seal-in holds."
+    },
+    {
+     "ask": "Record it.",
+     "show": "\"M1 would not start: S1 13–14 contact block not making. Block replaced; tested OK.\""
+    }
+   ],
+   "why": "Evidence ruled out the overload and the emergency stops; two half-split tests found the contact; one change fixed it; a test proved it. The slip is replacing the contactor first because 'K1 did not pull in'."
+  },
+  {
+   "id": "explain-split",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: the first measurement was taken after S1 (terminal -X1:4), in the middle of the coil's path, not at the +24 V end.",
+   "q": "Why measure in the middle of the path first, rather than starting at +24 V and working along? Say it in your own words.",
+   "model": "A test in the middle rules out half of the suspects whichever way it comes out: 0 V at -X1:4 cleared F1 and the coil in one go, leaving only F2, S0 and S1. Working from one end rules out only one part per test. On a short path the difference is small, but on a safety chain of 20 switches it is 5 tests against up to 19. It also pays to pick middle points you can reach easily, such as terminal strips.",
+   "points": [
+    "A test in the middle rules out half of what is left, either way",
+    "Working from one end rules out one part per test",
+    "The saving grows with the length of the chain",
+    "Choose middle points you can reach, such as terminals"
+   ]
+  },
+  {
+   "id": "faded-chain",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.3,
+   "q": "Eight guard switches, SW1 to SW8, are in series in a 24 V DC safety chain. The safety relay reports the chain open, but every door looks shut. Find the open switch, measuring from 0 V, with as few tests as you can.",
+   "steps": [
+    {
+     "ask": "Where first?",
+     "show": "Between SW4 and SW5: the middle."
+    },
+    {
+     "ask": "It reads 24 V. What does that tell you?",
+     "show": "SW1 to SW4 are closed: the fault is in SW5 to SW8."
+    },
+    {
+     "ask": "Next test, and suppose it reads 0 V.",
+     "show": "Between SW6 and SW7: 0 V, so the fault is SW5 or SW6."
+    },
+    {
+     "ask": "Last test, and suppose it reads 24 V.",
+     "show": "Between SW5 and SW6: 24 V, so SW5 is closed and SW6 is open."
+    },
+    {
+     "ask": "How many tests, and what next?",
+     "show": "Three, as $\\log_2 8 = 3$ says. Then look at SW6: a misaligned actuator, a damaged tongue, a failed contact."
+    }
+   ],
+   "why": "Never bridge out a safety switch to find the fault: measure. And a switch that looks shut but is open is often an actuator knocked out of line, so check the mechanics before the wiring."
+  },
+  {
+   "id": "problem-split",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.3,
+   "q": "A chain of {n} contacts has one open. With half-splitting, how many tests at most will find it?",
+   "vars": {
+    "n": {
+     "pick": [
+      5,
+      10,
+      12,
+      20,
+      50,
+      100
+     ]
+    }
+   },
+   "answer": "ROUNDUP(LOG10(n) / LOG10(2) - 0.000001, 0)",
+   "abs": 0.01,
+   "work": "$\\log_2 {{n}}$, rounded up, is {answer}.",
+   "why": "When n is not a power of 2, round up: 10 parts need 4 tests, because 3 halvings only cover 8.",
+   "hint": "Keep halving {n} (rounding up) until you reach 1, and count."
+  },
+  {
+   "id": "order-method",
+   "type": "order",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "Put the method in order.",
+   "items": [
+    "Gather evidence: symptoms, alarms, what changed",
+    "Check the simple, likely causes",
+    "Use the drawing to decide what could cause it",
+    "Test, half-splitting the suspect chain",
+    "Fix the cause, one change at a time",
+    "Prove it works under the conditions that made it fail",
+    "Record the symptom, cause and fix"
+   ],
+   "why": "Thinking (evidence, the obvious, the drawing) comes before testing, and testing before changing anything. The last two steps are the ones most often skipped."
+  },
+  {
+   "id": "intermittent",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "A conveyor stops once or twice a shift, with no pattern anyone has spotted. What helps most?",
+   "options": [
+    "Record it: trend or trace the PLC signals involved, so the next stop shows which one dropped first",
+    "Replace every sensor on the conveyor",
+    "Wait for it to get worse",
+    "Turn off the alarms that stop it"
+   ],
+   "answer": 0,
+   "why": "An intermittent fault is usually gone by the time you arrive. A trace catches the moment: the input that dropped first is the lead. Then look for heat, vibration or a loose terminal on that circuit."
+  },
+  {
+   "id": "spot-log",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A fault-finding log. One entry is the mistake. Which?",
+   "lines": [
+    "08:10  Operator: M3 stops at random, about once an hour",
+    "08:20  Alarm history: 'M3 overload' each time",
+    "08:40  Raised M3's overload setting from 5.2 A to 7 A",
+    "09:30  No trips since. Job closed."
+   ],
+   "wrong": 2,
+   "fix": "08:40  Clamp meter on M3: 6.1 A against its 5.2 A rating. Looking for what is loading it",
+   "why": "The overload was protecting a motor that is drawing too much. Raising the setting hid the symptom and left the cause (a jam, a bearing, a lost phase) to burn the motor out. Ask why it draws too much, and measure."
+  },
+  {
+   "id": "forcing",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "Is it all right to force a PLC output on to test whether a valve works?",
+   "options": [
+    "Only with authority, and with the machine made safe: a force bypasses every interlock in the program",
+    "Yes, forcing is always safe",
+    "Yes, as long as the PLC is in RUN",
+    "No: outputs cannot be forced"
+   ],
+   "answer": 0,
+   "why": "The program's interlocks stop a valve moving when it would crush or collide. A force ignores them. Make sure nothing can move dangerously, tell people, and remove the force when you are done."
+  },
+  {
+   "id": "why-evidence",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "Why gather evidence before testing anything?",
+   "options": [
+    "It narrows the search for free: the history and the symptoms rule out most of the machine before you pick up a meter",
+    "Because the law says so",
+    "So the operator is kept busy",
+    "It is quicker to test everything"
+   ],
+   "answer": 0,
+   "why": "Testing costs time and sometimes risk. Evidence costs a few questions, and often points straight at the fault: 'it started after the night shift changed the product'."
+  },
+  {
+   "id": "mix-rest",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A limit switch is drawn with a **normally open** contact. A cylinder is holding it in, and a meter shows its contact is **open**. Is that a fault?",
+   "options": [
+    "Yes: held in, an NO contact should be closed. Check the switch's position and actuator, then the contact",
+    "No: the drawing shows it open",
+    "No: limit switches are always open",
+    "Only if the machine is running"
+   ],
+   "answer": 0,
+   "why": "From the schematics lesson: drawings show devices at rest. Actuated, the NO contact closes. Open while actuated means the cam or actuator is not reaching it, or the contact has failed."
+  },
+  {
+   "id": "mix-isolate",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.5,
+   "q": "You have found a faulty contact block in a panel with a 400 V supply. What must you do before replacing it?",
+   "options": [
+    "Isolate, lock off and prove dead, then replace it",
+    "Nothing: the control circuit is only 24 V",
+    "Press the emergency stop",
+    "Switch off the 24 V supply only"
+   ],
+   "answer": 0,
+   "why": "From the safe isolation lesson: measuring and working are different things. Working inside a panel with 400 V in it needs the whole panel isolated, locked off and proved dead, whatever voltage the part itself runs on."
+  },
+  {
+   "id": "mix-meter",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.4,
+   "q": "You are finding where the voltage stops along a 24 V DC control path. How is the meter set and used?",
+   "options": [
+    "DC volts, one lead on 0 V, the other moved to each point",
+    "Resistance, with the circuit live",
+    "Current, in series with each contact",
+    "AC volts across each coil"
+   ],
+   "answer": 0,
+   "why": "Voltage to 0 V at each point shows where the supply gets to. Resistance measurements must be made dead; a meter on current across a supply is a short circuit."
+  },
+  {
+   "id": "check-breaker",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A breaker feeding a heater trips every morning. Fitting a bigger breaker stops it. Is the job finished?",
+   "options": [
+    "No: find why it trips, such as a failing element or a cable fault. The bigger breaker may no longer protect the cable",
+    "Yes: it no longer trips",
+    "Yes, if the heater works",
+    "Only if it trips again"
+   ],
+   "answer": 0,
+   "why": "The breaker was sized to protect the cable. A bigger one hides the fault and removes that protection, and a cable fault can then overheat unseen."
+  },
+  {
+   "id": "check-split",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.2,
+   "q": "How many half-split tests at most find one open contact among {n}?",
+   "vars": {
+    "n": {
+     "pick": [
+      16,
+      30,
+      64
+     ]
+    }
+   },
+   "answer": "ROUNDUP(LOG10(n) / LOG10(2) - 0.000001, 0)",
+   "abs": 0.01,
+   "work": "$\\log_2 {{n}}$, rounded up: {answer}.",
+   "why": "Each test halves the suspects."
+  },
+  {
+   "id": "check-one",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.6,
+   "q": "You swapped a relay, and the fault is still there. What next?",
+   "options": [
+    "Put the original relay back (unless it tested faulty) and test the next suspect",
+    "Leave the new relay in and swap the next part too",
+    "Swap the relay's base as well",
+    "Order a new PLC"
+   ],
+   "answer": 0,
+   "why": "One change at a time: a change that did not help is undone, so the machine is only ever one known change away from how you found it."
+  }
+ ]
+}

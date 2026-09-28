@@ -1,0 +1,689 @@
+{
+ "id": "mechanical.fixings.fasteners",
+ "title": "Fasteners: bolt grades, thread standards, torque and preload",
+ "tags": [
+  "fasteners",
+  "bolts",
+  "threads",
+  "torque",
+  "preload"
+ ],
+ "kind": "procedure",
+ "level": 4.8,
+ "minutes": 25,
+ "goals": [
+  "Read a bolt's property class (8.8, 10.9, A2-70) and work out its strengths",
+  "Name a thread (M10, M10 × 1.25, UNC, BSP) and pick the tapping drill for a metric coarse one",
+  "Explain preload, and why friction decides how much of the torque becomes clamp force",
+  "Work out a tightening torque from a target preload, $T = KFd$",
+  "Tighten a joint properly: the right torque for its condition, a star pattern, in stages"
+ ],
+ "summary": "**Property class** (ISO 898-1), stamped on the head. For class a.b: nominal tensile strength = a × 100 MPa; yield strength = that × b ÷ 10. **8.8**: 800 MPa, yield 640. **10.9**: 1000, yield 900. **12.9**: 1200, yield 1080. MPa is newtons per square millimetre. Use a nut of the matching class (8 with 8.8, 10 with 10.9). Stainless: **A2-70** (304 type, 700 MPa), **A4-80** (316 type, better against salt and chemicals, 800 MPa).\n\n**Threads.** **M10** is metric, 10 mm across, coarse pitch (1.5 mm) unless a fine one is written: M10 × 1.25. Inch threads: UNC and UNF (US kit), BSW (old British). Pipe: BSP, G parallel and R taper; NPT on US kit. Similar sizes can start and then jam: check with a thread gauge. **Tapping drill**, metric coarse: about diameter − pitch (M10: 8.5 mm).\n\n**Preload.** A tightened bolt is a stretched spring: its pull clamps the parts together, and friction between them carries the load. Too little: the joint moves, the bolt loosens or breaks in fatigue. Too much: it yields or strips. A common target is about 70% of the force that would yield it: $F = \\sigma A_s$, strength × stress area.\n\n**Torque.** Torque is force × lever length, $T = Fr$. About 90% of the tightening torque goes on friction (half under the head, most of the rest in the threads); only about 10% stretches the bolt. So $T = KFd$, with the **nut factor** K about 0.2 for plain dry steel and lower (about 0.15) oiled. Oil a bolt and use the dry torque: far more preload, maybe a yielded bolt. Use the figure for your condition (dry, oiled, threadlocker) from the manual.\n\n**Technique.** A calibrated torque wrench, used in the middle of its range; pull smoothly, stop at the click, never use it to undo. Tighten groups in a **star pattern, in stages** (about a third, two-thirds, full, then a check round). Replace nyloc nuts and tab washers rather than reuse them. Stainless on stainless can gall (cold-weld): use anti-seize, and its torque.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Understanding Metric Bolt and Screw Grades, and Head Markings",
+   "url": "https://wilsongarner.com/understanding-metric-bolt-and-screw-grades-head-markings/",
+   "by": "Wilson-Garner",
+   "minutes": 5
+  },
+  {
+   "when": "during",
+   "kind": "read",
+   "title": "Bolt Torque to Preload: Nut Factor K, Tightening Methods and Scatter",
+   "url": "https://mechcodex.com/learn/machine-design/bolt-torque-preload",
+   "by": "Mech Codex",
+   "minutes": 10
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "Metric Threads: Clearance Holes and Tapping Drill Sizes",
+   "url": "https://www.engineeringtoolbox.com/iso-metric-thread-drill-tap-size-d_2045.html",
+   "by": "The Engineering ToolBox",
+   "minutes": 3
+  },
+  {
+   "when": "after",
+   "kind": "reference",
+   "title": "Mechanical Properties of Metric Fasteners (ISO 898-1)",
+   "url": "https://crafter.fastenal.com/static-assets/pdfs/Mechanical_Properties_of_Metric_Fasteners.pdf",
+   "by": "Fastenal",
+   "minutes": 10
+  }
+ ],
+ "sources": [
+  "ISO 898-1: Mechanical properties of fasteners made of carbon steel and alloy steel. Part 1: Bolts, screws and studs",
+  "ISO 898-2: Mechanical properties of fasteners made of carbon steel and alloy steel. Part 2: Nuts",
+  "ISO 3506-1: Fasteners. Mechanical properties of corrosion-resistant stainless steel fasteners. Part 1: Bolts, screws and studs",
+  "ISO 261: ISO general purpose metric screw threads. General plan",
+  "VDI 2230 Part 1: Systematic calculation of highly stressed bolted joints"
+ ],
+ "formulas": [
+  {
+   "name": "Yield strength from the property class",
+   "tex": "R_e = 100a \\times \\frac{b}{10}",
+   "match": [
+    "\\frac{b}{10}"
+   ],
+   "says": "The class a.b gives the strengths: a × 100 is the nominal tensile strength in MPa, and b tenths of that is the yield strength.",
+   "symbols": [
+    [
+     "R_e",
+     "the yield strength: the stress at which the bolt starts to stretch for good (MPa)"
+    ],
+    [
+     "a",
+     "the first number of the class, such as 8 in 8.8"
+    ],
+    [
+     "b",
+     "the second number, such as the second 8 in 8.8"
+    ]
+   ],
+   "example": "Class 10.9: $100 \\times 10 = 1000$ MPa tensile; $1000 \\times \\frac{9}{10} = 900$ MPa yield."
+  },
+  {
+   "name": "Force from stress and area",
+   "tex": "F = \\sigma A_s",
+   "match": [
+    "\\sigma A_s"
+   ],
+   "says": "The force a bolt carries is the stress in it times the area carrying it. MPa × mm² gives newtons.",
+   "symbols": [
+    [
+     "F",
+     "the force (N)"
+    ],
+    [
+     "\\sigma",
+     "the stress, such as the yield strength (MPa, which is N/mm²)"
+    ],
+    [
+     "A_s",
+     "the stress area of the thread, from a table (mm²)"
+    ]
+   ],
+   "example": "M10 (58 mm²), class 8.8 (640 MPa): $640 \\times 58 = 37\\,120$ N, about 37 kN to yield it."
+  },
+  {
+   "name": "Torque on a wrench",
+   "tex": "T = Fr",
+   "match": [
+    "T = Fr"
+   ],
+   "says": "Torque is the force times the lever length it acts at.",
+   "symbols": [
+    [
+     "T",
+     "the torque (N·m)"
+    ],
+    [
+     "F",
+     "the force on the handle (N)"
+    ],
+    [
+     "r",
+     "the distance from the bolt's centre to where you pull (m)"
+    ]
+   ],
+   "example": "200 N pulled 0.25 m from the bolt: $200 \\times 0.25 = 50$ N·m."
+  },
+  {
+   "name": "Tightening torque from preload",
+   "tex": "T = KFd",
+   "match": [
+    "KFd"
+   ],
+   "says": "The torque to reach a preload is the nut factor times the preload times the bolt's diameter. The nut factor holds all the friction.",
+   "symbols": [
+    [
+     "T",
+     "the tightening torque (N·m)"
+    ],
+    [
+     "K",
+     "the nut factor: about 0.2 dry, about 0.15 oiled (no units)"
+    ],
+    [
+     "F",
+     "the preload (N)"
+    ],
+    [
+     "d",
+     "the bolt's nominal diameter (m: 10 mm is 0.010 m)"
+    ]
+   ],
+   "example": "M10, preload 25 kN, dry: $0.2 \\times 25\\,000 \\times 0.010 = 50$ N·m."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Identify five fasteners from the spares drawer, then feel preload with a torque wrench on a bolt in a vice-held test block (no machine involved).",
+   "check": [
+    "For each fastener: read the head marking and say its tensile and yield strength",
+    "Measure the diameter with calipers and the pitch with a thread gauge: metric coarse, fine, or inch?",
+    "Set the torque wrench to the value for the bolt and its condition, pull smoothly to the click, and stop",
+    "Wind the torque wrench back to its lowest setting before putting it away"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-oil",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A torque table gives 49 N·m for a **dry** M10 bolt. You oil the threads, then tighten it to 49 N·m. What happens to the clamping force?",
+   "options": [
+    "It is higher than intended, possibly enough to stretch the bolt for good: with less friction, more of the torque becomes stretch",
+    "It is the same: the torque is the same",
+    "It is lower: oil lets the bolt slip back",
+    "It is the same, but the bolt runs cooler"
+   ],
+   "answer": 0,
+   "why": "Most of the torque is spent on friction. Oil cuts the friction, so the same torque turns into much more stretch, and so more preload. Tighten to the torque for the condition the bolt is actually in."
+  },
+  {
+   "id": "grades",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Property classes",
+   "body": "Steel bolts carry a **property class** on the head (ISO 898-1), such as **8.8**. For a class a.b:\n\n- a × 100 is the nominal **tensile strength**, in MPa: where it breaks.\n- b tenths of that is the **yield strength**: where it starts to stretch for good.\n\n**8.8**: 800 MPa, yield 640. **10.9**: 1000, yield 900. **12.9**: 1200, yield 1080. (MPa is newtons per square millimetre.)\n\nFit a nut of the matching class: 8 with 8.8, 10 with 10.9. Stainless is marked differently: **A2-70** is 304-type steel, 700 MPa; **A4-80** is 316-type, better against salt and chemicals, 800 MPa."
+  },
+  {
+   "id": "grade-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "What is the nominal yield strength of a class {ya}.{yb} bolt, in MPa?",
+   "vars": {
+    "k": [
+     1,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "ya": "IF(k = 1, 4, IF(k = 2, 5, IF(k = 3, 8, IF(k = 4, 10, 12))))",
+    "yb": "IF(k = 1, 6, IF(k = 2, 8, IF(k = 3, 8, IF(k = 4, 9, 9))))",
+    "rm": "ya * 100"
+   },
+   "answer": "rm * yb / 10",
+   "unit": "MPa",
+   "tolerance": 0.001,
+   "work": "Tensile: {ya} × 100 = {rm} MPa. Yield: {rm} × {yb} ÷ 10 = {answer} MPa.",
+   "why": "The first number gives the tensile strength; the second, how much of it is yield.",
+   "hint": "First the tensile strength: the first number × 100."
+  },
+  {
+   "id": "threads",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Threads",
+   "body": "- **Metric** (ISO): **M10** is 10 mm across the thread, with the **coarse** pitch (1.5 mm between crests) unless another is written: **M10 × 1.25** is fine.\n- **Inch**: **UNC** and **UNF** on US kit; **BSW** on old British machines.\n- **Pipe**: **BSP**, either **G** (parallel, sealed by a washer or O-ring) or **R** (taper, sealed on the thread); **NPT** on US kit.\n\nSome look alike: a 3/8 UNC bolt will start in an M10 hole, then jam and strip it. Check with calipers and a **thread gauge**.\n\n**Tapping drill** for metric coarse: about diameter − pitch. M10: 10 − 1.5 = 8.5 mm."
+  },
+  {
+   "id": "tap-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "What tapping drill do you use for an M{d} coarse thread, pitch {p} mm?",
+   "vars": {
+    "k": [
+     1,
+     5,
+     1
+    ]
+   },
+   "let": {
+    "d": "IF(k = 1, 6, IF(k = 2, 8, IF(k = 3, 10, IF(k = 4, 12, 16))))",
+    "p": "IF(k = 1, 1, IF(k = 2, 1.25, IF(k = 3, 1.5, IF(k = 4, 1.75, 2))))"
+   },
+   "answer": "d - p",
+   "unit": "mm",
+   "tolerance": 0.02,
+   "work": "{d} − {p} = {answer} mm",
+   "why": "Diameter minus pitch leaves about three-quarters of a full thread: strong enough, and easy to tap. (The drill for M12 is usually 10.2 mm.)",
+   "hint": "Diameter minus pitch."
+  },
+  {
+   "id": "preload",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Preload: the bolt is a spring",
+   "body": "Tightening a bolt stretches it, a tiny amount, like a very stiff spring. Its pull clamps the parts together: the **preload**. Friction between the clamped faces then carries the load, and the bolt hardly notices it.\n\n- **Too little**: the joint moves, the bolt works loose or breaks in fatigue.\n- **Too much**: the bolt **yields** (stretches for good) or the thread strips.\n\nThe force a bolt takes is stress × area: $F = \\sigma A_s$, where $A_s$ is the thread's **stress area** from a table (M10: 58 mm²). A common target preload is about 70% of the force that would yield it.",
+   "more": "Picture a rubber band round a stack of papers. Stretch it more and it grips harder, and the papers cannot slide. Stretch it too far and it goes slack for good. A bolt is the same, only far stiffer: an M10 might stretch a few hundredths of a millimetre.\n\nWith numbers: an M10 class 8.8 bolt has a stress area of 58 mm² and a yield strength of 640 MPa, which is 640 N on every square millimetre. So $F = 640 \\times 58 = 37\\,120$ N, about 37 kN, starts to yield it. 70% of that, about 26 kN, is a sensible preload: roughly the weight of a small van, held by one bolt."
+  },
+  {
+   "id": "stress-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.9,
+   "q": "An M{d} bolt has a stress area of {sa} mm². Its yield strength is {y} MPa (N/mm²). What force starts to stretch it for good, in kN?",
+   "vars": {
+    "k": [
+     1,
+     4,
+     1
+    ],
+    "y": {
+     "pick": [
+      640,
+      900
+     ]
+    }
+   },
+   "let": {
+    "d": "IF(k = 1, 6, IF(k = 2, 8, IF(k = 3, 10, 12)))",
+    "sa": "IF(k = 1, 20.1, IF(k = 2, 36.6, IF(k = 3, 58, 84.3)))"
+   },
+   "answer": "y * sa / 1000",
+   "unit": "kN",
+   "tolerance": 0.01,
+   "work": "$F = \\sigma A_s = {{y}} \\times {{sa}} = {answer:1}$ kN (÷ 1000 for kN)",
+   "why": "MPa is newtons per mm², so MPa × mm² gives newtons. Divide by 1000 for kilonewtons.",
+   "hint": "Stress × area. Then newtons to kilonewtons."
+  },
+  {
+   "id": "torque",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Torque, friction and the nut factor",
+   "body": "**Torque** is force × lever length: $T = Fr$. 200 N on a handle 0.25 m long is 50 N·m.\n\nWe set a torque because preload cannot be seen. But only about **10%** of the torque stretches the bolt; about **90%** goes on friction, under the head and in the threads. So:\n\n$$T = KFd$$\n\nT the torque (N·m), F the preload (N), d the diameter (m), and **K the nut factor**, which holds all the friction: about **0.2** for plain dry steel, about **0.15** oiled.\n\nChange the friction and the same torque gives a different preload. Use the torque for the bolt's real condition: dry, oiled, plated or with threadlocker.",
+   "more": "Try it with numbers. An M10 bolt (d = 0.010 m) wants 25 kN of preload. Dry, K = 0.2: $T = 0.2 \\times 25\\,000 \\times 0.010 = 50$ N·m.\n\nNow oil it, so K falls to about 0.15, and still tighten to 50 N·m. The preload is $F = \\frac{T}{Kd} = \\frac{50}{0.15 \\times 0.010} \\approx 33\\,000$ N: a third more than planned, and close to the 37 kN that yields an 8.8 bolt. Nothing about the torque wrench changed; only the friction did."
+  },
+  {
+   "id": "torque-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "An M{d} bolt needs a preload of {f} kN. With a nut factor K = 0.2 (dry steel), what tightening torque is that, in N·m?",
+   "vars": {
+    "k": [
+     1,
+     4,
+     1
+    ]
+   },
+   "let": {
+    "d": "IF(k = 1, 8, IF(k = 2, 10, IF(k = 3, 12, 16)))",
+    "f": "IF(k = 1, 15, IF(k = 2, 25, IF(k = 3, 35, 65)))",
+    "fn": "f * 1000",
+    "dm": "d / 1000"
+   },
+   "answer": "0.2 * fn * dm",
+   "unit": "N·m",
+   "tolerance": 0.01,
+   "work": "$T = KFd = 0.2 \\times {{fn}} \\times {{dm}} = {answer:1}$ N·m",
+   "why": "Preload in newtons (× 1000) and diameter in metres (÷ 1000), or the answer is a million times out.",
+   "hint": "Convert kN to N and mm to m first."
+  },
+  {
+   "id": "technique",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Tightening properly",
+   "body": "- Use a **calibrated torque wrench**, in the middle of its range. Pull smoothly, square to the handle, and **stop at the click**. Never undo bolts with it.\n- Tighten a group (a flange, a cover, a coupling) in a **star pattern**, **in stages**: all to about a third, then two-thirds, then full, then one check round. Going round the circle pulls the joint over to one side.\n- **Nyloc nuts** and **tab washers** lose their grip once used: fit new ones.\n- **Stainless on stainless** can **gall**, cold-welding mid-thread: use anti-seize, tighten slowly, and use the torque for that condition.\n- After use, wind a click wrench back to its **lowest** setting (not below it)."
+  },
+  {
+   "id": "technique-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "How do you tighten the eight bolts on a pipe flange?",
+   "options": [
+    "A star (cross) pattern, in stages: all to about a third, then two-thirds, then full torque, then a check round",
+    "Each bolt to full torque in turn, going round the circle",
+    "Two opposite bolts to full torque, then the rest",
+    "All of them as tight as possible by hand, then one pass with the wrench"
+   ],
+   "answer": 0,
+   "why": "Stages and a star pattern pull the faces together evenly, so the gasket is squeezed flat. Full torque bolt by bolt round the circle tilts the flange: the last bolts tighten a joint that is already skewed, and it leaks."
+  },
+  {
+   "id": "worked-m12",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A motor's foot bolts are M12, class 8.8, fitted dry. There is no torque in the manual. Work out a tightening torque from a target preload.",
+   "steps": [
+    {
+     "ask": "Stress area.",
+     "show": "From a thread table: M12 coarse, $A_s = 84.3$ mm²."
+    },
+    {
+     "ask": "Yield strength.",
+     "show": "Class 8.8: $800 \\times \\frac{8}{10} = 640$ MPa."
+    },
+    {
+     "ask": "Force to yield it.",
+     "show": "$F = \\sigma A_s = 640 \\times 84.3 = 53\\,952$ N, about 54 kN."
+    },
+    {
+     "ask": "Target preload.",
+     "show": "About 70%: $0.7 \\times 53\\,952 \\approx 37\\,800$ N."
+    },
+    {
+     "ask": "Torque.",
+     "show": "$T = KFd = 0.2 \\times 37\\,800 \\times 0.012 \\approx 91$ N·m."
+    },
+    {
+     "ask": "Sanity check.",
+     "show": "Published tables give about 85 N·m for M12 8.8 with a light oil film: close. Use the maker's figure whenever there is one."
+    }
+   ],
+   "why": "Grade → yield → force → preload → torque. Two slips to avoid: using the full 12 mm diameter for the stress area (it is less, 84.3 mm², because the thread cuts into it), and forgetting the diameter is in metres."
+  },
+  {
+   "id": "explain-k",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: step 5 was $T = KFd = 0.2 \\times 37\\,800 \\times 0.012 \\approx 91$ N·m, with K = 0.2 for a dry bolt.",
+   "q": "Why does the answer depend so much on K? What would happen if the bolt were oiled but still tightened to 91 N·m? Say it in your own words.",
+   "model": "Only about a tenth of the torque stretches the bolt; the rest is spent overcoming friction under the head and in the threads. K holds that friction. If the bolt is oiled, K falls to about 0.15, so the same 91 N·m turns into much more stretch: $\\frac{91}{0.15 \\times 0.012} \\approx 50\\,600$ N, against the 37 800 N planned and close to the 54 kN that yields it. So a torque figure means nothing without the condition it is for: dry, oiled or with threadlocker.",
+   "points": [
+    "Most of the torque is spent on friction, not stretch",
+    "K stands for that friction",
+    "Oil lowers K, so the same torque gives more preload",
+    "The oiled bolt comes close to yielding",
+    "A torque must match the bolt's condition"
+   ]
+  },
+  {
+   "id": "faded-m10",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.2,
+   "q": "An M10 class 10.9 bolt (stress area 58 mm²) is fitted lightly oiled, K = 0.15. Work out a torque for 70% of its yield force.",
+   "steps": [
+    {
+     "ask": "Yield strength.",
+     "show": "$1000 \\times \\frac{9}{10} = 900$ MPa."
+    },
+    {
+     "ask": "Force to yield it.",
+     "show": "$900 \\times 58 = 52\\,200$ N."
+    },
+    {
+     "ask": "Target preload.",
+     "show": "$0.7 \\times 52\\,200 = 36\\,540$ N."
+    },
+    {
+     "ask": "Torque.",
+     "show": "$0.15 \\times 36\\,540 \\times 0.010 \\approx 55$ N·m."
+    }
+   ],
+   "why": "A stronger grade takes more preload, but the oil lowers the torque needed to reach it. Two changes pulling opposite ways: work it through rather than guess."
+  },
+  {
+   "id": "problem-torque",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.5,
+   "q": "An M{d} class {ya}.{yb} bolt (stress area {sa} mm²) is to be tightened to 70% of the force that yields it. The nut factor is {kf}. What torque is that, in N·m?",
+   "vars": {
+    "k": [
+     1,
+     4,
+     1
+    ],
+    "g": [
+     1,
+     2,
+     1
+    ],
+    "kf": {
+     "pick": [
+      0.15,
+      0.2
+     ]
+    }
+   },
+   "let": {
+    "d": "IF(k = 1, 8, IF(k = 2, 10, IF(k = 3, 12, 16)))",
+    "sa": "IF(k = 1, 36.6, IF(k = 2, 58, IF(k = 3, 84.3, 157)))",
+    "ya": "IF(g = 1, 8, 10)",
+    "yb": "IF(g = 1, 8, 9)",
+    "y": "ya * yb * 10",
+    "fy": "y * sa",
+    "fp": "0.7 * fy"
+   },
+   "answer": "kf * fp * d / 1000",
+   "unit": "N·m",
+   "tolerance": 0.02,
+   "work": "Yield {y} MPa. Force to yield: {y} × {sa} = {fy} N. 70% of it: {fp:0} N. Torque: {kf} × {fp:0} × {d} ÷ 1000 = {answer:1} N·m.",
+   "why": "The same chain as the worked example: grade, yield, force, preload, torque.",
+   "hint": "Yield strength first, then × stress area, × 0.7, then $T = KFd$ with d in metres."
+  },
+  {
+   "id": "wrench-force",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "You pull a torque wrench {r} mm from the bolt's centre. What force on the handle gives {t} N·m?",
+   "vars": {
+    "r": {
+     "pick": [
+      250,
+      300,
+      400,
+      500
+     ]
+    },
+    "t": {
+     "pick": [
+      25,
+      50,
+      85,
+      200
+     ]
+    }
+   },
+   "answer": "t / (r / 1000)",
+   "unit": "N",
+   "tolerance": 0.01,
+   "work": "$F = \\frac{ T }{ r } = \\frac{{{t}}}{{{r}} \\div 1000} = {answer:0}$ N",
+   "why": "From $T = Fr$: $F = \\frac{ T }{ r }$, with r in metres. A longer wrench needs less force for the same torque.",
+   "hint": "Rearrange $T = Fr$, and put the length in metres."
+  },
+  {
+   "id": "galling",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "A stainless steel bolt in a stainless nut locks solid halfway through tightening and will not move either way. What happened, and how do you avoid it?",
+   "options": [
+    "It galled: the threads cold-welded under pressure. Use anti-seize, tighten slowly, and use the torque for that condition",
+    "The torque wrench was set too low",
+    "Stainless threads are always one size smaller",
+    "The nut was the wrong hand"
+   ],
+   "answer": 0,
+   "why": "Stainless surfaces tear and weld together when rubbed hard under load, and heat from fast tightening makes it worse. Anti-seize changes K too, so use a torque made for it."
+  },
+  {
+   "id": "spot-units",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "One line of this working is wrong. Which?",
+   "lines": [
+    "Bolt: M10 class 10.9, stress area 58 mm²",
+    "Yield strength: $1000 \\times 0.9 = 900$ MPa",
+    "Force to yield: $900 \\times 58 = 52\\,200$ N",
+    "Preload at 70%: $0.7 \\times 52\\,200 = 36\\,540$ N",
+    "Torque: $0.2 \\times 36\\,540 \\times 10 = 73\\,080$ N·m"
+   ],
+   "wrong": 4,
+   "fix": "Torque: $0.2 \\times 36\\,540 \\times 0.010 = 73$ N·m (the diameter in metres)",
+   "why": "The diameter went in as 10 (mm) instead of 0.010 (m), making the torque a thousand times too big. A sanity check catches it: 73 000 N·m is a ship's propeller shaft, not an M10 bolt."
+  },
+  {
+   "id": "thread-jam",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "A replacement bolt starts in a tapped hole, then goes stiff after two turns. What is likely?",
+   "options": [
+    "The wrong thread: perhaps an inch bolt in a metric hole, or a fine pitch in a coarse one. Stop, and check with a thread gauge",
+    "It needs more torque to get past the stiff bit",
+    "The hole needs oil",
+    "Bolts are always stiff after two turns"
+   ],
+   "answer": 0,
+   "why": "Near-miss threads start, then bind as the pitch error builds up. Forcing it strips the hole, which is far harder to fix than the bolt."
+  },
+  {
+   "id": "nyloc",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "Should you reuse a nyloc nut?",
+   "options": [
+    "Generally no: its nylon insert grips less each time, so fit a new one",
+    "Yes, always",
+    "Yes, if you tighten it harder",
+    "Only on stainless bolts"
+   ],
+   "answer": 0,
+   "why": "The locking comes from the nylon being deformed by the thread. Once used, it has less grip, and more torque does not bring it back."
+  },
+  {
+   "id": "mix-pressure",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.6,
+   "q": "Bolts put a total clamp force of {f} kN on a gasket with an area of {a} mm². What pressure is on the gasket, in MPa (N/mm²)?",
+   "vars": {
+    "f": {
+     "pick": [
+      50,
+      100,
+      150,
+      200
+     ]
+    },
+    "a": {
+     "pick": [
+      2000,
+      5000,
+      8000
+     ]
+    }
+   },
+   "answer": "f * 1000 / a",
+   "unit": "MPa",
+   "tolerance": 0.01,
+   "work": "Pressure = force ÷ area = {f} × 1000 ÷ {a} = {answer:2} MPa",
+   "why": "Stress and pressure are the same idea: force ÷ area. Newtons over square millimetres gives MPa directly.",
+   "hint": "Force in newtons, divided by the area in mm²."
+  },
+  {
+   "id": "mix-which",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "You know the torque and the wrench length, and want the **force on your hand**. Which formula?",
+   "options": [
+    "$F = \\frac{ T }{ r }$: the torque divided by the lever length",
+    "$F = \\frac{ T }{ Kd }$",
+    "$F = \\sigma A_s$",
+    "$F = KTd$"
+   ],
+   "answer": 0,
+   "why": "Two different forces: $\\frac{ T }{ r }$ is the push on the handle; $\\frac{ T }{ Kd }$ is the bolt's preload. Same torque, very different forces: 50 N·m is 200 N on a 0.25 m handle, but about 25 000 N in an M10 bolt."
+  },
+  {
+   "id": "mix-preload",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.3,
+   "q": "An M{d} bolt is tightened to {t} N·m. The nut factor is {kf}. What preload does that give, in kN?",
+   "vars": {
+    "k": [
+     1,
+     3,
+     1
+    ],
+    "kf": {
+     "pick": [
+      0.15,
+      0.2
+     ]
+    }
+   },
+   "let": {
+    "d": "IF(k = 1, 8, IF(k = 2, 10, 12))",
+    "t": "IF(k = 1, 25, IF(k = 2, 49, 85))"
+   },
+   "answer": "t / (kf * d / 1000) / 1000",
+   "unit": "kN",
+   "tolerance": 0.01,
+   "work": "$F = \\frac{ T }{ Kd } = \\frac{{{t}}}{{{kf}} \\times {{d}} \\div 1000} = {answer:1}$ kN",
+   "why": "Rearrange $T = KFd$ for F. Try both nut factors: the same torque gives a third more preload oiled.",
+   "hint": "F = T ÷ (K × d), with d in metres."
+  },
+  {
+   "id": "check-dry",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.8,
+   "q": "A torque table for an **oiled** bolt says 40 N·m. You fit the bolt **dry** and tighten it to 40 N·m. What do you get?",
+   "options": [
+    "Less preload than intended: dry, more of the torque goes on friction",
+    "The intended preload",
+    "More preload than intended",
+    "A yielded bolt"
+   ],
+   "answer": 0,
+   "why": "The reverse of oiling a dry bolt. Dry friction is higher, so less of the 40 N·m becomes stretch, and the joint may work loose. Match the torque to the condition."
+  },
+  {
+   "id": "check-grade",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.5,
+   "q": "What is the nominal yield strength of a class {ya}.{yb} bolt, in MPa?",
+   "vars": {
+    "k": [
+     1,
+     3,
+     1
+    ]
+   },
+   "let": {
+    "ya": "IF(k = 1, 5, IF(k = 2, 10, 12))",
+    "yb": "IF(k = 1, 8, IF(k = 2, 9, 9))"
+   },
+   "answer": "ya * 100 * yb / 10",
+   "unit": "MPa",
+   "tolerance": 0.001,
+   "work": "{ya} × 100 × {yb} ÷ 10 = {answer} MPa",
+   "why": "Tensile from the first number, yield as the second number's tenths of it."
+  },
+  {
+   "id": "check-torque",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "An M{d} bolt needs {f} kN of preload, fitted oiled with K = 0.15. What torque, in N·m?",
+   "vars": {
+    "k": [
+     1,
+     3,
+     1
+    ]
+   },
+   "let": {
+    "d": "IF(k = 1, 8, IF(k = 2, 10, 12))",
+    "f": "IF(k = 1, 15, IF(k = 2, 25, 35))"
+   },
+   "answer": "0.15 * f * 1000 * d / 1000",
+   "unit": "N·m",
+   "tolerance": 0.01,
+   "work": "$T = KFd = 0.15 \\times {{f}} \\times 1000 \\times {{d}} \\div 1000 = {answer:1}$ N·m",
+   "why": "$T = KFd$, with F in newtons and d in metres."
+  }
+ ]
+}
