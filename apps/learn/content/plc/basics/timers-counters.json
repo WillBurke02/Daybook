@@ -12,7 +12,7 @@
   "Build a start-up warning (delay on) and a run-on (delay off) for a conveyor or fan",
   "Say what happens to an on-delay when IN drops early, and when a retentive timer is needed"
  ],
- "summary": "A timer is a **block**: you give it an input **IN** and a **preset time PT**; it gives an output **Q** and the **elapsed time ET**. Times are written `T#5s`, `T#500ms`, `T#1m30s`.\n\n- **TON (on-delay):** Q comes on once IN has been on for PT **without a break**. ET counts up while IN is on. IN off: Q off and ET back to 0 at once. A short blip of IN does nothing.\n- **TOF (off-delay):** Q comes on with IN at once, and **stays on for PT after IN goes off**. If IN comes back during that time, the timing starts again. A run-on.\n- **TP (pulse):** a rising IN gives a pulse exactly PT long, however long IN lasts.\n\nAllen-Bradley calls Q **.DN** (done) and ET **.ACC**. A timer is accurate to about one scan.\n\nA **retentive** on-delay (Siemens TONR, Allen-Bradley RTO) keeps its ET when IN drops, and adds up the on-time until it is reset. Use it for run hours, not for a delay.\n\nA counter counts **rising edges**, not scans: holding its input on counts once.\n\n- **CTU (count up):** each rising edge of **CU** adds 1 to the count **CV**. Q comes on when CV reaches the preset **PV**. **R** sets CV back to 0.\n- **CTD (count down):** **LD** loads CV with PV; each rising edge of **CD** takes 1 off. Q comes on when CV reaches 0.\n\nTwo patterns you will use every week:\n\n- **Start-up warning:** a horn sounds for a few seconds before a conveyor moves: a TON on the start request; horn while not done, conveyor once done.\n- **Run-on:** a fan keeps cooling after a drive stops: a TOF with the drive's run signal as IN.",
+ "summary": "A timer is a **block**: you give it an input **IN** and a **preset time PT**; it gives an output **Q** and the **elapsed time ET**. Times are written `T#5s`, `T#500ms`, `T#1m30s`.\n\n- **TON (on-delay):** Q comes on once IN has been on for PT **without a break**. ET counts up while IN is on. IN off: Q off and ET back to 0 at once. A short blip of IN does nothing.\n- **TOF (off-delay):** Q comes on with IN at once, and **stays on for PT after IN goes off**. If IN comes back during that time, the timing starts again. A run-on.\n- **TP (pulse):** a rising IN gives a pulse exactly PT long, however long IN lasts.\n\nAllen-Bradley calls Q **.DN** (done) and ET **.ACC**. A timer is accurate to about one scan.\n\nA **retentive** on-delay (Siemens TONR, Allen-Bradley RTO) keeps its ET when IN drops, and adds up the on-time until it is reset. Use it for on-time that must add up across stops, not for a delay. (A TIME value tops out at about 24.8 days, so long run-hours are usually counted in hours with a counter.)\n\nA counter counts **rising edges**, not scans: holding its input on counts once.\n\n- **CTU (count up):** each rising edge of **CU** adds 1 to the count **CV**. Q comes on when CV reaches the preset **PV**. **R** sets CV back to 0.\n- **CTD (count down):** **LD** loads CV with PV; each rising edge of **CD** takes 1 off. Q comes on when CV reaches 0.\n\nTwo patterns you will use every week:\n\n- **Start-up warning:** a horn sounds for a few seconds before a conveyor moves: a TON on the start request; horn while not done, conveyor once done.\n- **Run-on:** a fan keeps cooling after a drive stops: a TOF with the drive's run signal as IN.",
  "resources": [
   {"when": "before", "kind": "video", "title": "PLC Timer Programming for Beginners", "url": "https://www.youtube.com/watch?v=BHbOXDt5O3o", "by": "RealPars", "minutes": 8},
   {"when": "after", "kind": "read", "title": "TIA Portal – TON / TOF / TP Timers And Different Use Cases", "url": "https://liambee.me/siemens/tia-portal/ton-tof-tp-timers-and-different-use-cases/", "by": "Liam Bee", "minutes": 9},
@@ -43,7 +43,7 @@
  ],
  "bench": [
   {
-   "task": "On a trainer or a spare PLC (24 V DC inputs), make a **start-up warning**: holding a selector switch on sounds a buzzer or lights a lamp for 5 s, then turns on a second output for the conveyor.",
+   "task": "On a trainer or a spare PLC (24 V DC inputs), make a **start-up warning**: turning a selector switch on sounds a buzzer or lights a lamp for 5 s, then turns on a second output for the conveyor.",
    "check": [
     "Watch ET count up online in the programming software while the selector is on",
     "Switch off after 3 s and on again: the 5 s starts again from 0",
@@ -67,8 +67,8 @@
    "type": "concept",
    "stage": "learn",
    "title": "A timer is a block",
-   "body": "A timer is a **block** you call each scan. You give it:\n\n- **IN**: what starts it timing\n- **PT**: the preset time, written `T#5s`, `T#500ms`, `T#1m30s`\n\nIt gives back:\n\n- **Q**: its output, a bit\n- **ET**: the elapsed time so far\n\nIn Structured Text: `T1(IN := Start_Req, PT := T#5s);` then `T1.Q` is its output. Each timer is its own **instance**, T1, T2 and so on, with its own memory.\n\nAllen-Bradley names them differently: the preset is **.PRE**, the elapsed time **.ACC**, and Q is **.DN**, done.",
-   "more": "Think of a kitchen timer with a button you must keep pressed. IN is your finger on the button; PT is the time set on the dial; ET is how far round it has got; Q is the bell.\n\n`T#` means \"a time\". T#5s is 5 seconds; T#500ms is half a second; T#1m30s is ninety seconds. Writing `5` alone would not do: the PLC would not know whether you meant seconds or milliseconds.\n\nYou can have as many timers as you like, each with its own name. T1 timing does not affect T2."
+   "body": "A timer is a **block** you call each scan. You give it:\n\n- **IN**: what starts it timing\n- **PT**: the preset time, written `T#5s`, `T#500ms`, `T#1m30s`\n\nIt gives back:\n\n- **Q**: its output, a bit\n- **ET**: the elapsed time so far\n\nIn Structured Text: `T1(IN := Start_Req, PT := T#5s);` then `T1.Q` is its output. Each timer is its own **instance**, T1, T2 and so on, with its own memory. You choose its kind when you declare it: `VAR T1 : TON; END_VAR`.\n\nAllen-Bradley names them differently: the preset is **.PRE**, the elapsed time **.ACC**, and Q is **.DN**, done.",
+   "more": "Think of a kitchen timer with a button you must keep pressed. IN is your finger on the button; PT is the time set on the dial; ET is how far round it has got; Q is the bell.\n\n`T#` means \"a time\". T#5s is 5 seconds; T#500ms is half a second; T#1m30s is ninety seconds. Writing `5` alone would not do: the PLC would not know whether you meant seconds or milliseconds. (Allen-Bradley's .PRE is a plain number of milliseconds instead: 5000 for 5 s.)\n\nYou can have as many timers as you like, each with its own name. T1 timing does not affect T2."
   },
   {
    "id": "block-q",
@@ -86,8 +86,15 @@
    "stage": "learn",
    "title": "TON: the on-delay",
    "body": "An **on-delay** makes Q wait. Once IN has been on for PT **without a break**, Q comes on.\n\n- While IN is on, ET counts up from 0, and stops at PT.\n- When IN goes off, Q goes off and ET goes back to **0** at once.\n\nSo a short blip of IN does nothing: it has to last the whole PT. That makes a TON good for **filtering** a jittery signal (a level switch in a sloshing tank), and for **delays** (wait 5 s before starting).\n\nIn the picture, Go drives a TON with PT = T#3s. Switch Go on and watch ET.",
-   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "Go", "timer": {"name": "T1", "type": "TON", "pt": "T#3s"}, "out": "Lamp"}], "inputs": ["Go"], "outputs": ["Lamp"]}},
-   "more": "Draw it as a timeline, with time along the bottom.\n\nIN goes on at 2 s. ET starts counting: 0 at 2 s, 1 s at 3 s, 2 s at 4 s, 3 s at 5 s. At 5 s ET reaches PT = 3 s and Q comes on. Q stays on for as long as IN does.\n\nNow suppose IN had gone off at 4 s instead. ET was at 2 s; it drops straight back to 0 and Q never came on. When IN comes back, the count starts again from 0.\n\nThe rule: **Q on = IN has been on for at least PT, continuously**."
+   "widget": {
+    "name": "ladder",
+    "params": {
+     "rungs": [{"logic": "Go", "timer": {"name": "T1", "type": "TON", "pt": "T#3s"}, "out": "Lamp"}],
+     "inputs": ["Go"],
+     "outputs": ["Lamp"]
+    }
+   },
+   "more": "Draw it as a timeline, with time along the bottom.\n\nIN goes on at 2 s. ET starts counting: 0 at 2 s, 1 s at 3 s, 2 s at 4 s, 3 s at 5 s. At 5 s ET reaches PT = 3 s and Q comes on. Q stays on for as long as IN does.\n\nNow suppose IN had gone off at 4 s instead. ET was at 2 s; it drops straight back to 0 and Q never came on. When IN comes back, the count starts again from 0.\n\nThe rule: **Q on = IN has been on for at least PT, continuously**.\n\nA **retentive** on-delay (Siemens TONR, Allen-Bradley RTO) is different: when IN drops it keeps ET, and adds on from there next time. Only its reset (R; Allen-Bradley RES) clears it. Use it for time that must add up across stops, such as a filter to change after 48 hours of running."
   },
   {
    "id": "ton-q",
@@ -95,7 +102,14 @@
    "stage": "learn",
    "level": 4.6,
    "intro": "Go drives an on-delay, PT = T#3s. The lamp is its Q.",
-   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "Go", "timer": {"name": "T1", "type": "TON", "pt": "T#3s"}, "out": "Lamp"}], "inputs": ["Go"], "outputs": ["Lamp"]}},
+   "widget": {
+    "name": "ladder",
+    "params": {
+     "rungs": [{"logic": "Go", "timer": {"name": "T1", "type": "TON", "pt": "T#3s"}, "out": "Lamp"}],
+     "inputs": ["Go"],
+     "outputs": ["Lamp"]
+    }
+   },
    "predict": {
     "q": "You will switch Go on, then off again after about **2 seconds**, before the 3 s are up. What will the lamp do?",
     "options": ["Stay off", "Come on at 3 s anyway", "Come on for 1 s"],
@@ -105,7 +119,12 @@
    "ask": {
     "type": "mcq",
     "q": "Now leave Go on until the lamp lights, then switch Go off. What happens to the lamp and to ET?",
-    "options": ["The lamp goes out at once and ET goes back to 0", "The lamp stays on for another 3 s", "The lamp stays on until you press Reset", "ET stays at 3 s and the lamp stays on"],
+    "options": [
+     "The lamp goes out at once and ET goes back to 0",
+     "The lamp stays on for another 3 s",
+     "The lamp stays on until you press Reset",
+     "ET stays at 3 s and the lamp stays on"
+    ],
     "answer": 0,
     "why": "An on-delay only delays switching **on**. Switching off is immediate: IN off means Q off and ET = 0. Delaying the switch-off is a different timer, the TOF."
    }
@@ -124,7 +143,12 @@
    "stage": "learn",
    "level": 4.8,
    "q": "A drive's cooling fan must keep running for 2 minutes after the drive stops, and run all the time the drive runs. The drive's running signal is Drive_Run. Which timer, with which input?",
-   "options": ["A TOF with IN := Drive_Run, PT := T#2m", "A TON with IN := Drive_Run, PT := T#2m", "A TP with IN := Drive_Run, PT := T#2m", "A TON with IN := NOT Drive_Run, PT := T#2m"],
+   "options": [
+    "A TOF with IN := Drive_Run, PT := T#2m",
+    "A TON with IN := Drive_Run, PT := T#2m",
+    "A TP with IN := Drive_Run, PT := T#2m",
+    "A TON with IN := NOT Drive_Run, PT := T#2m"
+   ],
    "answer": 0,
    "why": "The fan must come on at once and go off late: that is an off-delay. A TON would start the fan 2 minutes **after** the drive started, which is backwards. A TP would give 2 minutes from the start, whatever the drive did."
   },
@@ -134,7 +158,15 @@
    "stage": "learn",
    "title": "Counters count edges",
    "body": "An **up-counter, CTU**, adds 1 to its count **CV** each time its input **CU** goes from 0 to 1: a **rising edge**. Holding CU on counts once, not once a scan.\n\nWhen CV reaches the preset **PV**, Q comes on. **R** (reset) puts CV back to 0.\n\nA **down-counter, CTD**, works the other way: **LD** (load) sets CV to PV, each rising edge of **CD** takes 1 off, and Q comes on at 0. Use it to count down what is left: 24 bottles still to go in the crate.\n\nIn the picture, press Part three times.",
-   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "Part", "counter": {"name": "C1", "type": "CTU", "pv": 3, "reset": "Reset"}, "out": "Full"}], "inputs": ["Part", "Reset"], "buttons": ["Part", "Reset"], "outputs": ["Full"]}},
+   "widget": {
+    "name": "ladder",
+    "params": {
+     "rungs": [{"logic": "Part", "counter": {"name": "C1", "type": "CTU", "pv": 3, "reset": "Reset"}, "out": "Full"}],
+     "inputs": ["Part", "Reset"],
+     "buttons": ["Part", "Reset"],
+     "outputs": ["Full"]
+    }
+   },
    "more": "Why edges? A box takes maybe half a second to pass a photo-eye. With a 5 ms scan that is about 100 scans with the input on. Counting scans would count one box as 100.\n\nSo the counter remembers what CU was last scan, and counts only when it was 0 and is now 1: the moment the box arrives.\n\nA crate holds 24 bottles: PV = 24. Each bottle passing the sensor adds 1. At CV = 24, Q comes on: swap the crate. A reset button, or the crate-changed signal, puts CV back to 0 for the next one."
   },
   {
@@ -143,7 +175,15 @@
    "stage": "learn",
    "level": 4.6,
    "intro": "An up-counter with PV = 3. Part and Reset are push-buttons.",
-   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "Part", "counter": {"name": "C1", "type": "CTU", "pv": 3, "reset": "Reset"}, "out": "Full"}], "inputs": ["Part", "Reset"], "buttons": ["Part", "Reset"], "outputs": ["Full"]}},
+   "widget": {
+    "name": "ladder",
+    "params": {
+     "rungs": [{"logic": "Part", "counter": {"name": "C1", "type": "CTU", "pv": 3, "reset": "Reset"}, "out": "Full"}],
+     "inputs": ["Part", "Reset"],
+     "buttons": ["Part", "Reset"],
+     "outputs": ["Full"]
+    }
+   },
    "predict": {
     "q": "If you press Part once and **hold it down** for several seconds, what will CV show?",
     "options": ["1", "Many: it counts every scan", "0 until you let go"],
@@ -153,7 +193,12 @@
    "ask": {
     "type": "mcq",
     "q": "Press Part until Full comes on, then twice more. What is CV, and is Full on?",
-    "options": ["CV = 5 and Full is on: the count carries on past PV, and Q is on while CV ≥ PV", "CV = 3 and Full is on: it stops at PV", "CV = 0 and Full is off: it wraps round", "CV = 5 and Full is off"],
+    "options": [
+     "CV = 5 and Full is on: the count carries on past PV, and Q is on while CV ≥ PV",
+     "CV = 3 and Full is on: it stops at PV",
+     "CV = 0 and Full is off: it wraps round",
+     "CV = 5 and Full is off"
+    ],
     "answer": 0,
     "why": "An IEC CTU keeps counting past PV (up to the limit of its number type), and Q means CV ≥ PV. Only R brings it back to 0. That is why a counter usually wants a reset once its batch is done."
    }
@@ -167,7 +212,10 @@
    "steps": [
     {"ask": "What should start the timing?", "show": "The Run switch: `T1(IN := Run, PT := T#5s);`. The 5 s start when Run goes on."},
     {"ask": "When should the horn sound?", "show": "While Run is on and the timer is not yet done: `Horn := Run AND NOT T1.Q;`"},
-    {"ask": "When should the conveyor move?", "show": "Once the timer is done: `Conveyor := T1.Q;`. T1.Q is only on while Run is on, so switching Run off stops it at once."},
+    {
+     "ask": "When should the conveyor move?",
+     "show": "Once the timer is done: `Conveyor := T1.Q;`. T1.Q is only on while Run is on, so switching Run off stops it at once. On a real machine the start request comes from a Start push-button with a seal-in: a switch left on would sound the horn and restart the conveyor by itself after a power cut."
+    },
     {"ask": "Check: Run is switched off after 3 s and on again.", "show": "IN went off, so ET went back to 0: the horn sounds for a full 5 s again. Good: a warning is never cut short."}
    ],
    "why": "One on-delay gives both: before it is done is the warning, after it is done is the run. Using `NOT T1.Q` for the horn means the two can never be on together."
@@ -179,7 +227,11 @@
    "context": "The start-up warning: `T1(IN := Run, PT := T#5s); Horn := Run AND NOT T1.Q; Conveyor := T1.Q;`",
    "q": "Why is Horn `Run AND NOT T1.Q`, and not just `NOT T1.Q`?",
    "model": "`NOT T1.Q` alone is 1 whenever the timer is not done, and that includes all the time the conveyor is switched off: the horn would sound day and night. ANDing it with Run limits it to the time between switching Run on and the timer finishing, which is exactly the warning period. As soon as T1.Q comes on, `NOT T1.Q` goes to 0 and the horn stops as the conveyor starts.",
-   "points": ["NOT T1.Q is also true while the conveyor is off", "Run limits the horn to after the switch is turned on", "The horn stops at the moment T1.Q starts the conveyor"]
+   "points": [
+    "NOT T1.Q is also true while the conveyor is off",
+    "Run limits the horn to after the switch is turned on",
+    "The horn stops at the moment T1.Q starts the conveyor"
+   ]
   },
   {
    "id": "faded-runon",
@@ -189,7 +241,7 @@
    "level": 4.8,
    "q": "A drive's cooling fan must run whenever the drive runs, and for 90 s after it stops. The drive's running signal is Drive_Run. Write it with one timer.",
    "steps": [
-    {"ask": "Which timer, and its call?", "show": "An off-delay: `T2(IN := Drive_Run, PT := T#90s);` (or T#1m30s)."},
+    {"ask": "Which timer, and its call?", "show": "An off-delay: `VAR T2 : TOF; END_VAR` and `T2(IN := Drive_Run, PT := T#90s);` (or T#1m30s)."},
     {"ask": "The fan.", "show": "`Fan := T2.Q;`: on with the drive, and for 90 s after."},
     {"ask": "The drive restarts 30 s after stopping. What does the fan do?", "show": "It never went off; IN is back on, so the off-delay starts again from 0 next time the drive stops."}
    ],
@@ -221,8 +273,109 @@
    "solution": ["Crate_Changed", "24"],
    "blank_size": 13,
    "tests": [
-    {"name": "Not full at 23", "steps": [{"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}, "expect": {"Crate_Full": false}}]},
-    {"name": "Full at 24, and a held sensor counts once", "steps": [{"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Bottle": true}, "scans": 10, "expect": {"Crate_Full": true, "C1.CV": 24}}]},
+    {
+     "name": "Not full at 23",
+     "steps": [
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}, "expect": {"Crate_Full": false}}
+     ]
+    },
+    {
+     "name": "Full at 24, and a held sensor counts once",
+     "steps": [
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}},
+      {"set": {"Bottle": false}},
+      {"set": {"Bottle": true}, "scans": 10, "expect": {"Crate_Full": true, "C1.CV": 24}}
+     ]
+    },
     {"name": "Crate_Changed starts again", "steps": [{"set": {"Bottle": true}}, {"set": {"Bottle": false}}, {"set": {"Crate_Changed": true}}, {"set": {"Crate_Changed": false}, "expect": {"C1.CV": 0, "Crate_Full": false}}]}
    ],
    "why": "PV is the count at which Q comes on; R puts CV back to 0. The sensor held on for ten scans still counted once: a counter counts rising edges."
@@ -270,7 +423,12 @@
    "stage": "practise",
    "level": 4.8,
    "q": "Why does a counter count rising edges rather than counting every scan its input is on?",
-   "options": ["A part stays in front of a sensor for many scans; counting scans would count one part many times", "Rising edges are faster to read", "The PLC cannot count scans", "So that it can count backwards"],
+   "options": [
+    "A part stays in front of a sensor for many scans; counting scans would count one part many times",
+    "Rising edges are faster to read",
+    "The PLC cannot count scans",
+    "So that it can count backwards"
+   ],
    "answer": 0,
    "why": "At a few milliseconds a scan, a box half a second in front of a photo-eye is on for about a hundred scans. The edge is the one moment each box arrives."
   },
@@ -281,11 +439,7 @@
    "level": 5.0,
    "mono": true,
    "q": "A cooling fan should run with the drive and for 60 s after it stops. Instead the fan only starts 60 s after the drive starts. Which line is wrong?",
-   "lines": [
-    "VAR T3 : TON; END_VAR",
-    "T3(IN := Drive_Run, PT := T#60s);",
-    "Fan := T3.Q;"
-   ],
+   "lines": ["VAR T3 : TON; END_VAR", "T3(IN := Drive_Run, PT := T#60s);", "Fan := T3.Q;"],
    "wrong": 0,
    "fix": "`VAR T3 : TOF; END_VAR`: an off-delay, not an on-delay.",
    "why": "The call and the output are fine. The timer is the wrong kind: a TON delays switching on, which is exactly the fault seen. A run-on is an off-delay."
@@ -297,10 +451,10 @@
    "level": 5.0,
    "q": "Match each job to the timer for it.",
    "pairs": [
-    ["A 3 s horn before a press closes", "TON: Q waits PT after IN comes on"],
+    ["A press that may close only after 3 s of warning horn", "TON: Q waits PT after IN comes on"],
     ["A fan that runs on for 2 minutes after the drive stops", "TOF: Q stays on PT after IN goes off"],
     ["Exactly 0.5 s of grease each time a button is pressed", "TP: one pulse PT long from each rising IN"],
-    ["Hours run by a pump, kept across stops, for its service interval", "A retentive on-delay (TONR, RTO), reset at service"]
+    ["A filter to change after 48 hours of running, over many starts and stops", "A retentive on-delay (TONR, RTO), reset at service"]
    ],
    "why": "Delay the start: TON. Delay the stop: TOF. A fixed pulse: TP. Add up time across many runs: retentive, because an ordinary TON forgets the moment IN goes off."
   },
@@ -310,7 +464,12 @@
    "stage": "mix",
    "level": 5.0,
    "q": "A counter on a photo-eye sometimes counts one box twice. The box is shiny and the beam flickers as it passes. What is the best fix?",
-   "options": ["Bridge the flicker: a short off-delay (a few tens of ms) on the sensor signal before the counter", "A short on-delay on the sensor signal before the counter", "Count every scan instead of edges", "Raise PV by one"],
+   "options": [
+    "Bridge the flicker: a short off-delay (a few tens of ms) on the sensor signal before the counter",
+    "A short on-delay on the sensor signal before the counter",
+    "Count every scan instead of edges",
+    "Raise PV by one"
+   ],
    "answer": 0,
    "why": "The flicker is a brief drop in the middle of the box, and its return is a second rising edge, which the counter rightly counts. An off-delay keeps its Q on through a gap shorter than PT, so the counter sees one pulse per box. An on-delay does not help: it drops out the moment the input drops, then gives a second edge when it comes back. Many sensors have an off-delay setting built in for exactly this. Changing PV only hides the fault."
   },
@@ -320,7 +479,12 @@
    "stage": "mix",
    "level": 5.2,
    "q": "A motor is started by a Start push-button with a seal-in, and should stop by itself 10 minutes later. Which is right?",
-   "options": ["A TON with IN := Motor, PT := T#10m, and NOT T1.Q in series in the motor's seal-in rung", "A TOF with IN := Start, PT := T#10m, driving the motor", "A TP with IN := Motor", "A counter counting scans up to 10 minutes"],
+   "options": [
+    "A TON with IN := Motor, PT := T#10m, and NOT T1.Q in series in the motor's seal-in rung",
+    "A TOF with IN := Start, PT := T#10m, driving the motor",
+    "A TP with IN := Motor",
+    "A counter counting scans up to 10 minutes"
+   ],
    "answer": 0,
    "why": "The motor's own bit times how long it has run; when T1.Q comes on, the NOT T1.Q contact breaks the seal-in and the motor stops. A TP started by the motor would also give 10 minutes, but it would not reset if the motor was stopped and restarted early. Counting scans makes the time depend on the scan time."
   },
