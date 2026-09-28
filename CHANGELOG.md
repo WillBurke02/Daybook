@@ -44,11 +44,29 @@
   set/reset), timers and counters (TON/TOF/TP, retentive timers, CTU/CTD), edge detection (R_TRIG,
   F_TRIG, P/N contacts, edge memory, the first scan). Pulse-echo gets "Explain it another way" and
   hints throughout.
+- **Curriculum batch 1**: eleven more subjects outlined (Electrical, Control and Instrumentation,
+  Machine Safety, Networks, Mechanical, Fluid Power, Materials, NDT, Software, Professional Practice,
+  Other Disciplines: 236 lessons in all), new lessons in the Maths, Electronics and Drives outlines,
+  and six starred lessons written: safe isolation (EAWR, GS38, prove-test-prove), proximity sensors
+  (inductive, capacitive, photoelectric, PNP and NPN), IP addressing and subnets, reading schematics
+  (IEC symbols, terminal numbers, cross-references), fault finding (evidence, half-split, one change
+  at a time) and fasteners (property classes, threads, torque and preload). Each has an explain card,
+  a spot-the-mistake card and a bench task.
+- **Calibration banks** reviewed (rounding that marked right answers wrong, tolerances, placeholders
+  inside maths, levels) and extended to the new outline lessons: 262 questions.
+- **Find my level** offers only subjects with something to ask; on **Courses** a subject with nothing
+  written yet starts closed.
 
-## 3.0 — in progress (not released)
+Still to check: the resource links in the six batch-1 lessons were found by web search but not
+opened (the build machine's network blocks those sites). Open each once and replace any dead one.
+
+## 3.0 — 28 September 2026
 
 Opens a 2.2 database and moves it on (Money migrations 002 and 003, Learn 002). All
-tests pass; the new screens have not had a browser check yet.
+tests pass. Checked in a browser at desktop, half-screen and phone widths: the savings
+and investments groups, reading a statement PDF, moving a contribution to another
+pension, time off in lieu, the lesson player, Formula help, dragging order cards, Find
+my level, Checkpoint and Test out.
 
 Done:
 - **Savings and investments**: savings count whether known by a statement or only by a
@@ -77,12 +95,9 @@ Done:
   started (with its length) or Not written yet, with a mark as well as the colour. Show all,
   written, to do, in progress or learned (remembered); each unit and subject counts them.
 
-Still to do (see CONTENT-BRIEF.md and LEARN-SPEC.md):
-- Lessons: PLC data types, ladder, timers and counters, edges (links in CONTENT-BRIEF.md);
-  the rest of Drives (tuning, feedforward, gearing, homing, inertia, braking, parameters).
-- Calibration banks (calibrate.json) for all five subjects: 3+ questions per outline lesson.
-- Pulse-echo: "Explain it another way" and hints.
-- Browser check at desktop, half-screen and phone widths; README; version 3.0.0.
+The PLC lessons (ladder, timers and counters, edges), the calibration banks and pulse-echo's
+extra help were finished alongside 4.0's first parts (above). The rest of Drives (tuning,
+feedforward, gearing, homing, inertia, braking, parameters) moves to the curriculum batches.
 
 ## 2.2 — 23 September 2026
 

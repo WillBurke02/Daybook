@@ -159,17 +159,27 @@ editing a file never loses progress; **card ids are forever**.
       "tolerance": 0.02, "work": "$d = {v} \\times {t} \\div 2000 = {answer}$ mm", "why": "There and back." } ] }
 ```
 
-Types: `concept`, `widget` (a simulation, then an `ask`), `mcq`, `numeric`,
-`steps`, `order`, `match`, `flash`, `code` (Structured Text with `___` blanks
-and tests). Text takes `**bold**`, `*italic*`, `` `code` ``, `- ` lists and
+Types: `concept`, `widget` (a simulation, then an `ask`, optionally a
+`predict` first), `mcq`, `numeric`, `steps`, `order`, `match`, `flash`, `code`
+(Structured Text with `___` blanks and tests), `explain` and `spot`. The full
+format, with the lesson stages, is in `CONTENT-BRIEF.md`. Text takes `**bold**`, `*italic*`, `` `code` ``, `- ` lists and
 maths as `$…$` or `$$…$$`. Formula names ignore case, so `T` and `t` are the
 same variable. `node tests/content.check.mjs` runs every numeric answer with
 random numbers and every code card's solution against its tests.
 
 Widgets (in `apps/learn/web/widgets/`): `ascan` (pulse-echo A-scan with gain
 and a gate), `impedance`, `pid`, `grapher`, `plc` (the scan cycle, in
-Structured Text). Written so far: pulse-echo, acoustic impedance, the scan
-cycle, PID, differentiation. The outline of all five subjects is in place.
+Structured Text), `ladder` (rungs with power flow), `circuit`, `motor`,
+`encoder`, `profile`, `timer`, `fraction`.
+
+Sixteen subjects are outlined (236 lessons). Written so far: Maths foundations,
+Ohm's and Kirchhoff's laws, pulse-echo and acoustic impedance, the PLC basics
+(scan cycle, data types, ladder, timers and counters, edges), the drives
+lessons (motors, V/f and vector, DC, servo, encoders, PID, motion profiles), and
+the first curriculum batch: safe isolation, proximity sensors, IP addressing,
+reading schematics, fault finding, fasteners. Maths, physics, electronics, PLCs
+and drives have calibration banks (`calibrate.json`) for Find my level; a
+subject with nothing to ask yet is not offered there.
 
 ## Making it yours
 
