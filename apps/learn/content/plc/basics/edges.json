@@ -1,0 +1,324 @@
+{
+ "id": "plc.basics.edges",
+ "title": "Edge detection",
+ "tags": ["plc", "edges", "one-shot", "iec61131"],
+ "kind": "procedure",
+ "level": 5.0,
+ "minutes": 20,
+ "goals": [
+  "Say what a rising and a falling edge are, and that an edge is true for exactly one scan",
+  "Work out how many times a plain contact acts while a button is held, and why an edge acts once",
+  "Toggle a bit with one push-button, and count events once each, with R_TRIG or a P contact",
+  "Give each edge its own memory, and say what an edge does on the first scan"
+ ],
+ "summary": "A signal's **rising edge** is the moment it goes from 0 to 1; its **falling edge** is the moment it goes from 1 to 0. An **edge detector** (a **one-shot**) is true for **exactly one scan** at that moment.\n\n- IEC: `R_TRIG` (rising) and `F_TRIG` (falling) blocks, with input **CLK** and output **Q**.\n- Siemens ladder: the **P** and **N** contacts, each with an **edge memory bit**.\n- Allen-Bradley: **ONS**, **OSR** and **OSF**.\n\n**Why:** code that acts on a plain contact acts **every scan** the contact is on. With a 5 ms scan, holding a button for half a second is about 100 scans: `IF Button THEN Count := Count + 1; END_IF;` adds about 100. On the rising edge it adds 1.\n\n- scans while held: $n = t_{hold} \\div t_{scan}$\n\nThe detector remembers the input from the last scan: rising edge = on now **and** off last scan. That memory must be **one per edge**. Two Siemens P contacts sharing one edge memory bit spoil each other.\n\n**Toggle** (push on, push off):\n\n```\nR1(CLK := Button);\nIF R1.Q THEN Light := NOT Light; END_IF;\n```\n\nWithout the edge, `NOT Light` runs every scan while the button is held, and the light ends up on or off by chance.\n\n**Counters** already count rising edges: no one-shot needed in front of CU.\n\n**First scan:** the memory starts at 0, so an input already on when the PLC starts counts as a rising edge on the first scan. Decide whether that is what you want.\n\nA pulse shorter than a scan can be missed altogether: use a high-speed counter or an interrupt input for fast signals.",
+ "resources": [
+  {"when": "before", "kind": "read", "title": "Understanding PLC Program Commands: One-Shots", "url": "https://control.com/technical-articles/understanding-plc-program-commands-one-shots/", "by": "Control.com", "minutes": 7},
+  {"when": "after", "kind": "read", "title": "Ladder Logic Tutorial - Part 2: Building Logic", "url": "https://www.plcacademy.com/ladder-logic-tutorial-part-2/", "by": "PLC Academy", "minutes": 20},
+  {"when": "after", "kind": "reference", "title": "Positive and negative edge instructions", "url": "https://docs.tia.siemens.cloud/r/simatic_s7_1200_manual_collection_enus_20/basic-instructions/bit-logic-operations/positive-and-negative-edge-instructions", "by": "Siemens", "minutes": 5}
+ ],
+ "sources": [
+  "IEC 61131-3: Programmable controllers. Part 3: Programming languages (R_TRIG, F_TRIG)",
+  "Siemens, SIMATIC S7-1200 Programmable controller, System Manual (P, N, P_TRIG, N_TRIG, R_TRIG, F_TRIG)",
+  "Rockwell Automation, Logix 5000 Controllers General Instructions Reference Manual (1756-RM003): ONS, OSR, OSF",
+  "W. Bolton, Programmable Logic Controllers, 6th edition (Newnes, 2015)"
+ ],
+ "formulas": [
+  {
+   "name": "Scans while a button is held",
+   "tex": "n = \\frac{t_{hold}}{t_{scan}}",
+   "match": ["\\frac{t_{hold}}{t_{scan}}"],
+   "says": "How many scans see a button while it is held: the time it is held divided by the scan time. Code on a plain contact acts that many times; on an edge, once.",
+   "symbols": [["n", "scans while it is held"], ["t_{hold}", "how long it is held (ms)"], ["t_{scan}", "the scan time (ms)"]],
+   "example": "Held 400 ms, 8 ms scan: $400 \\div 8 = 50$ scans."
+  }
+ ],
+ "bench": [
+  {
+   "task": "On a trainer or a spare PLC (24 V DC inputs), make one push-button toggle a lamp on and off, then count the presses.",
+   "check": [
+    "Try it first without an edge (`IF Button THEN Lamp := NOT Lamp;`): press a few times and see the lamp end up on or off by chance",
+    "Add R_TRIG (or a P contact) and see it toggle once per press",
+    "Watch the edge's Q in a watch table: it never seems to come on, because it lasts one scan",
+    "Stop and restart the PLC with the button held: does the lamp toggle on the first scan?"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-count-held",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A PLC with a 5 ms scan runs `IF Button THEN Count := Count + 1; END_IF;`. You press Button for half a second. How much does Count go up?",
+   "options": ["About 100", "1", "2: once on press, once on release", "500"],
+   "answer": 0,
+   "why": "The IF is checked every scan, and Button is on for about $500 \\div 5 = 100$ scans, so Count goes up about 100. To add one per press you need the **rising edge**: the one scan where Button has just gone from 0 to 1."
+  },
+  {
+   "id": "edge",
+   "type": "concept",
+   "stage": "learn",
+   "title": "An edge lasts one scan",
+   "body": "A **rising edge** is the moment a signal goes from 0 to 1. A **falling edge** is the moment it goes from 1 to 0.\n\nAn **edge detector**, or **one-shot**, is true for **exactly one scan** at that moment, however long the signal then stays.\n\nIt works by remembering last scan's value: rising edge = **on now and off last scan**.\n\nIn the picture the scan is slowed right down (0.3 s). Press and hold Button, and watch the P contact flash for one scan.",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "P(Button)", "out": "Pulse"}, {"logic": "Button", "out": "Held"}], "inputs": ["Button"], "buttons": ["Button"], "outputs": ["Pulse", "Held"], "scan_ms": 300}},
+   "more": "Think of a doorbell that rings once when the button goes down, not for as long as you hold it. The electronics notice the change, not the state.\n\nThe PLC does it with one bit of memory. Each scan it compares the input now with the input last scan:\n\n- off last scan, on now: rising edge, Q = 1\n- on last scan, on now: no edge, Q = 0\n- on last scan, off now: falling edge (for an F_TRIG or N contact)\n\nThen it stores the input for next time. So Q is 1 for the one scan where the change is seen."
+  },
+  {
+   "id": "edge-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A rising-edge detector watches a button that is pressed and held for 2 seconds. For how long is the detector's output on?",
+   "options": ["One scan, just after the press", "2 seconds", "Until the button is released", "One scan after the press and one after the release"],
+   "answer": 0,
+   "why": "A rising edge happens once, at the press, and the detector is true for that one scan. The release is a falling edge, which only a falling-edge detector sees."
+  },
+  {
+   "id": "why-edges",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Why a plain contact is not enough",
+   "body": "Code on a plain contact acts **every scan** the contact is on. A button held for a moment is on for many scans:\n\n$$n = \\frac{t_{hold}}{t_{scan}}$$\n\n$n$ is the number of scans, $t_{hold}$ how long it is held and $t_{scan}$ the scan time, both in ms. 400 ms at an 8 ms scan is 50 scans.\n\nSo to do something **once per press**, add 1, take a step in a sequence, send a message, act on the **edge**:\n\n```\nR1(CLK := Button);\nIF R1.Q THEN Count := Count + 1; END_IF;\n```",
+   "more": "Picture a letterbox that posts a letter every time it sees your hand. If it looks a hundred times while your hand is there, a hundred letters go. It needs to post one letter when your hand **arrives**.\n\nA scan is a few milliseconds. Even a quick jab at a button lasts 100 ms or so: 20 scans at 5 ms. Anything that must happen once per press, a count, a toggle, moving to the next step, goes on the edge. Anything that should happen for as long as the button is held, jogging a motor for example, goes on the plain contact."
+  },
+  {
+   "id": "why-edges-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A PLC scans every {ts} ms. An operator holds a button for {th} ms. The program adds 1 to a count every scan the button is on (no edge). How much does the count go up?",
+   "vars": {"ts": {"pick": [2, 4, 5, 8, 10]}, "th": {"pick": [200, 400, 600, 800, 1000]}},
+   "answer": "th / ts",
+   "tolerance": 0.001,
+   "hint": "How many scans fit into the time it is held?",
+   "work": "$n = \\frac{t_{hold}}{t_{scan}} = \\frac{{th}}{{ts}} = {answer}$",
+   "why": "Each scan that sees the button adds 1. With the rising edge it would add just 1."
+  },
+  {
+   "id": "falling",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Falling edges",
+   "body": "A **falling edge** detector (`F_TRIG`; Siemens **N**; Allen-Bradley **OSF**) is true for one scan when a signal goes from **1 to 0**.\n\nUse it for the end of something:\n\n- a part **leaving** a sensor (the box has passed: release the next one)\n- a button being **let go**\n- a motor that **has stopped** (start the run-on, log the stop time)\n\nRising for the start of an event, falling for the end of it.",
+   "more": "Watch a box go past a photo-eye. As its front edge breaks the beam, the input goes from 0 to 1: rising edge. As its back edge clears the beam, the input goes back to 0: falling edge.\n\nIf you want to count boxes, either will do. If you want to know when the box has **cleared** the sensor, so the next one can be released without touching it, you need the falling edge."
+  },
+  {
+   "id": "falling-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A pusher must fire once, just after each box has fully passed a photo-eye. Which edge of the photo-eye's input starts it?",
+   "options": ["The falling edge: the input goes from 1 to 0 as the box clears the beam", "The rising edge", "Neither: use the plain contact", "Both edges"],
+   "answer": 0,
+   "why": "The box clearing the beam is the end of the input's 1: a falling edge. The rising edge is the box arriving, before it has passed."
+  },
+  {
+   "id": "memory",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Each edge needs its own memory",
+   "body": "An edge detector remembers last scan's value of its input. That memory must belong to **one** edge only.\n\n- An `R_TRIG` block has it inside: **one instance per edge** (R1, R2, …). Calling R1 twice in a scan on two different signals spoils both.\n- A Siemens **P** or **N** contact names an **edge memory bit** under it. Two contacts sharing one memory bit spoil each other: one edge can hide the other.\n\nAnd on the **first scan**, the memory starts at 0. An input that is already on when the PLC starts looks like a rising edge.",
+   "more": "The memory is a note that says \"it was off last time\". If two different signals write their value to the same note, each finds the other's value there. Signal A is on, writes 1; signal B is off, writes 0; next scan A looks again, finds 0, and sees a \"rising edge\" that never happened. Or a real edge is missed.\n\nSo: one R_TRIG instance, or one edge memory bit, for each edge you detect, and never used anywhere else.\n\nThe first scan: after a restart the memory is 0. If a selector switch is already on, the first scan sees 0 then 1: a rising edge. Sometimes that is right; sometimes it would start something nobody asked for."
+  },
+  {
+   "id": "memory-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "A PLC restarts after a power cut. A selector switch, Auto_Sel, is already on. The program has `R1(CLK := Auto_Sel); IF R1.Q THEN Start_Sequence := TRUE; END_IF;`. What happens on the first scan?",
+   "options": ["R1.Q is 1 and the sequence starts, because R1's memory starts at 0", "Nothing: the switch has not moved", "R1.Q is 1 on every scan until the switch is turned off", "The PLC faults"],
+   "answer": 0,
+   "why": "The detector compares with its memory, which is 0 after a restart, so an input already on looks like it has just risen. If the sequence must not start by itself after a power cut, make the operator turn the selector off and on again, or block it on the first scan."
+  },
+  {
+   "id": "worked-toggle",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "One push-button, Light_PB, must switch a light on with one press and off with the next. Write it in Structured Text.",
+   "steps": [
+    {"ask": "What must happen once per press?", "show": "The light flips: `Light := NOT Light;`. That must run once per press, so on the rising edge."},
+    {"ask": "Declare and call the edge detector.", "show": "`VAR R1 : R_TRIG; END_VAR` and, every scan, `R1(CLK := Light_PB);`"},
+    {"ask": "Flip on the edge.", "show": "`IF R1.Q THEN Light := NOT Light; END_IF;`"},
+    {"ask": "Check: the button is held for a second.", "show": "R1.Q is 1 for one scan only, so the light flips once. Without R1, `NOT Light` would run on every scan while held, and the light would end up on or off by chance."}
+   ],
+   "why": "A toggle is the clearest case for an edge: the action undoes itself, so doing it on every scan gives a random result."
+  },
+  {
+   "id": "explain-toggle",
+   "type": "explain",
+   "stage": "example",
+   "context": "The toggle: `R1(CLK := Light_PB); IF R1.Q THEN Light := NOT Light; END_IF;`",
+   "q": "Why does `R1(CLK := Light_PB);` go on its own line, every scan, and not inside an IF?",
+   "model": "The detector has to see the button's value on every scan to know what it was last time. If it were only called inside an IF, say when the button is pressed, it would not see the button being 0 in between, so its memory would still say 1 at the next press and it would miss the edge. Calling it every scan, unconditionally, keeps its memory up to date.",
+   "points": ["The detector compares with last scan's value", "It must see the 0 between presses", "Called only sometimes, its memory goes stale and edges are missed"]
+  },
+  {
+   "id": "faded-count",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 5.0,
+   "q": "A counter variable Rejects (an INT) must go up by 1 each time the reject flap's sensor Flap_Open goes on. Write it without a CTU block.",
+   "steps": [
+    {"ask": "The declaration and the detector call.", "show": "`VAR R2 : R_TRIG; Rejects : INT := 0; END_VAR` and `R2(CLK := Flap_Open);`"},
+    {"ask": "The count.", "show": "`IF R2.Q THEN Rejects := Rejects + 1; END_IF;`"},
+    {"ask": "Would a CTU have needed an R_TRIG in front of it?", "show": "No: a CTU counts rising edges of CU itself. The R_TRIG is needed here because a plain `+ 1` would count scans."}
+   ],
+   "why": "Arithmetic in an IF runs every scan the IF is true. Put it behind an edge to make it run once per event."
+  },
+  {
+   "id": "problem-toggle",
+   "type": "code",
+   "stage": "example",
+   "level": 5.0,
+   "q": "Make Pump toggle once each time Pump_PB is pressed. Fill in the blanks.",
+   "code": "VAR R3 : R_TRIG; END_VAR\nR3(CLK := ___);\nIF R3.Q THEN Pump := ___; END_IF;",
+   "inputs": ["Pump_PB"],
+   "outputs": ["Pump"],
+   "solution": ["Pump_PB", "NOT Pump"],
+   "blank_size": 10,
+   "tests": [
+    {"name": "One press turns it on, even held", "steps": [{"set": {"Pump_PB": true}, "scans": 7, "expect": {"Pump": true}}, {"set": {"Pump_PB": false}, "expect": {"Pump": true}}]},
+    {"name": "The next press turns it off", "steps": [{"set": {"Pump_PB": true}, "scans": 3}, {"set": {"Pump_PB": false}}, {"set": {"Pump_PB": true}, "scans": 4, "expect": {"Pump": false}}]}
+   ],
+   "why": "R3 watches the button every scan; on its one-scan Q, Pump flips. Holding the button for 7 scans still flips it once."
+  },
+  {
+   "id": "code-falling",
+   "type": "code",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "Release_Next must be on for one scan each time a box **clears** the photo-eye Box_Seen. Fill in the block type.",
+   "code": "VAR F1 : ___; END_VAR\nF1(CLK := Box_Seen);\nRelease_Next := F1.Q;",
+   "inputs": ["Box_Seen"],
+   "outputs": ["Release_Next"],
+   "solution": ["F_TRIG"],
+   "blank_size": 8,
+   "tests": [
+    {"name": "Nothing as the box arrives or while it is there", "steps": [{"set": {"Box_Seen": true}, "expect": {"Release_Next": false}}, {"set": {"Box_Seen": true}, "scans": 5, "expect": {"Release_Next": false}}]},
+    {"name": "One scan as it clears", "steps": [{"set": {"Box_Seen": true}, "scans": 3}, {"set": {"Box_Seen": false}, "expect": {"Release_Next": true}}, {"set": {"Box_Seen": false}, "expect": {"Release_Next": false}}]}
+   ],
+   "why": "The box clearing the beam is the input going from 1 to 0: a falling edge, F_TRIG."
+  },
+  {
+   "id": "scans-held",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A jog button is held for {th} ms on a PLC whose scan time is {ts} ms. How many scans see it held?",
+   "vars": {"th": {"pick": [150, 300, 450, 600]}, "ts": {"pick": [3, 5, 6]}},
+   "answer": "th / ts",
+   "tolerance": 0.001,
+   "work": "$n = \\frac{t_{hold}}{t_{scan}} = \\frac{{th}}{{ts}} = {answer}$ scans.",
+   "why": "Jogging should last as long as the button is held, so it goes on the plain contact: all {answer} scans. Only something that must happen once per press goes on the edge."
+  },
+  {
+   "id": "spot-shared-bit",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.4,
+   "mono": true,
+   "q": "Siemens ladder, written out as text. Sometimes a part is not counted when Start is pressed at the same moment. Which rung has the mistake?",
+   "lines": [
+    "Rung 1: -|P|- Start_PB  (edge memory M10.0)  --(S)-- Run",
+    "Rung 2: -|P|- Stop_PB   (edge memory M10.1)  --(R)-- Run",
+    "Rung 3: -|P|- Part_Eye  (edge memory M10.0)  --(CTU)-- Parts"
+   ],
+   "wrong": 2,
+   "fix": "Rung 3: -|P|- Part_Eye  (edge memory M10.2)  --(CTU)-- Parts",
+   "why": "Rungs 1 and 3 share edge memory M10.0, so each overwrites the other's note of last scan's value, and edges get lost or invented. Every edge needs a memory bit used nowhere else."
+  },
+  {
+   "id": "toggle-widget",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.0,
+   "intro": "Two programs side by side: Light_A toggles on the **plain** button, Light_B on its **rising edge**. Tick Button on for a scan or two, then off, a few times, using **Scan once**.",
+   "widget": {"name": "plc", "params": {"src": "VAR R1 : R_TRIG; END_VAR\nIF Button THEN Light_A := NOT Light_A; END_IF;\nR1(CLK := Button);\nIF R1.Q THEN Light_B := NOT Light_B; END_IF;", "inputs": ["Button"], "outputs": ["Light_A", "Light_B"]}},
+   "predict": {
+    "q": "You will tick Button on and then scan **three times** before unticking it. What will Light_A and Light_B do?",
+    "options": ["Light_A flips three times; Light_B flips once", "Both flip once", "Both flip three times", "Light_A flips once; Light_B three times"],
+    "answer": 0,
+    "why": "Light_A's IF is true on every scan the button is on; Light_B's R1.Q is true only on the first."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "In a real PLC scanning every 5 ms, why does Light_A seem to end up on or off at random when you press the button?",
+    "options": ["It flips every scan the button is held, so where it stops depends on how many scans the press lasted", "The PLC cannot flip a bit", "NOT Light_A only works on outputs", "The button bounces"],
+    "answer": 0,
+    "why": "A press of about 150 ms is about 30 scans: an even count leaves the light as it was, an odd count flips it. The rising edge makes it one flip per press, whatever its length."
+   }
+  },
+  {
+   "id": "mix-ctu-edge",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "Someone puts an R_TRIG in front of a CTU's CU input \"so it counts once per part\". What difference does it make?",
+   "options": ["None in the count: a CTU already counts rising edges of CU", "It halves the count", "It doubles the count", "The CTU never counts, because the pulse is too short"],
+   "answer": 0,
+   "why": "CU sees the one-scan pulse rise once per part, just as it would have seen the sensor rise. The R_TRIG is harmless but unneeded. It is plain arithmetic, `Count := Count + 1`, that needs the edge."
+  },
+  {
+   "id": "mix-edge-or-plain",
+   "type": "match",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "Plain contact, rising edge or falling edge? Match each job.",
+   "pairs": [
+    ["Jog a motor for as long as a button is held", "Plain contact"],
+    ["Move a sequence on one step per press of Next", "Rising edge"],
+    ["Log the moment a motor stops", "Falling edge"],
+    ["Add one to a reject count as the flap opens", "Rising edge"]
+   ],
+   "why": "\"For as long as\" is a plain contact. \"Once, as it starts\" is a rising edge; \"once, as it ends\" is a falling edge."
+  },
+  {
+   "id": "mix-timer-edge",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "A horn must sound for 2 s each time a guard is opened, however long it stays open. Guard_Open is 1 while the guard is open. Which is right?",
+   "options": ["A TP with IN := Guard_Open, PT := T#2s", "A TON with IN := Guard_Open, PT := T#2s", "An R_TRIG on Guard_Open driving the horn directly", "A TOF with IN := Guard_Open, PT := T#2s"],
+   "answer": 0,
+   "why": "A pulse timer starts on the rising edge of IN and gives exactly PT, whatever IN does next: an edge and a time in one block. An R_TRIG alone gives one scan of horn, far too short to hear. A TON would sound only after 2 s, and for as long as the guard stayed open."
+  },
+  {
+   "id": "check-count-held",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A PLC with a 4 ms scan runs `R1(CLK := Button); IF R1.Q THEN Count := Count + 1; END_IF;`. Button is pressed and held for 1 second. How much does Count go up?",
+   "options": ["1", "250", "2", "0"],
+   "answer": 0,
+   "why": "R1.Q is 1 only on the scan where Button has just gone from 0 to 1, so Count goes up once. Without R1 it would be about $1000 \\div 4 = 250$."
+  },
+  {
+   "id": "check-first-scan",
+   "type": "mcq",
+   "stage": "check",
+   "level": 5.2,
+   "q": "Why can a rising-edge detector fire on the first scan after the PLC starts, when nothing has moved?",
+   "options": ["Its memory starts at 0, so an input that is already on looks as if it has just risen", "The PLC presses every input once on start-up", "Edge detectors always fire once on start-up, whatever the input", "The input filter lets through a pulse"],
+   "answer": 0,
+   "why": "The detector compares the input with its remembered value. After a restart that value is 0; if the input is already 1, that is a rising edge as far as it can tell. If the input is off it does nothing."
+  },
+  {
+   "id": "check-code",
+   "type": "code",
+   "stage": "check",
+   "level": 5.2,
+   "q": "Add 1 to Presses each time Button is pressed, however long it is held.",
+   "code": "VAR R4 : R_TRIG; Presses : INT := 0; END_VAR\nR4(CLK := ___);\nIF ___ THEN Presses := Presses + 1; END_IF;",
+   "inputs": ["Button"],
+   "outputs": [],
+   "solution": ["Button", "R4.Q"],
+   "blank_size": 8,
+   "tests": [
+    {"name": "Held for 20 scans counts 1", "steps": [{"set": {"Button": true}, "scans": 20, "expect": {"Presses": 1}}]},
+    {"name": "Three presses count 3", "steps": [{"set": {"Button": true}, "scans": 4}, {"set": {"Button": false}}, {"set": {"Button": true}, "scans": 4}, {"set": {"Button": false}}, {"set": {"Button": true}, "scans": 4, "expect": {"Presses": 3}}]}
+   ],
+   "why": "The detector sees Button every scan; its Q is 1 for one scan per press, and that is when the addition runs."
+  }
+ ]
+}

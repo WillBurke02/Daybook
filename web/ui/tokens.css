@@ -1240,3 +1240,23 @@ body.tooling .feedwrap { right: var(--dock-w); }
 .lend .bench { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; margin: 6px 0; background: var(--raised); }
 .lcard .pics { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
 .lcard .pics img { max-width: 100%; max-height: 320px; border-radius: 6px; border: 1px solid var(--rule-soft); background: #fff; }
+/* the ladder widget: rails, wires carrying power in colour, contacts that conduct highlighted */
+.plc.lad { align-items: flex-start; }
+.ladder { overflow-x: auto; }
+.ladsvg { width: 100%; min-width: 360px; max-width: 760px; display: block; font: 11px var(--mono); }
+.ladsvg .rail { stroke: var(--ink-2); stroke-width: 3; }
+.ladsvg .wire { stroke: var(--rule); stroke-width: 2; }
+.ladsvg .wire.on { stroke: #16a34a; stroke-width: 3; }
+.ladsvg .contact line { stroke: var(--ink-3); stroke-width: 2; }
+.ladsvg .contact.shut line { stroke: #16a34a; stroke-width: 3; }
+.ladsvg .coil path { fill: none; stroke: var(--ink-3); stroke-width: 2; }
+.ladsvg .coil.on path { stroke: #16a34a; stroke-width: 3; }
+.ladsvg .coil.on { filter: drop-shadow(0 0 3px #16a34a88); }
+.ladsvg text { fill: var(--ink-2); }
+.ladsvg .tag.true { fill: #15803d; font-weight: 700; }
+.ladsvg .edge { font-weight: 700; fill: var(--ink); }
+.ladsvg .note { fill: var(--ink-3); font-style: italic; }
+.ladsvg .fb { fill: var(--raised); stroke: var(--ink-3); stroke-width: 1.5; }
+.ladsvg .fb.done { stroke: #16a34a; stroke-width: 2.5; }
+.ladsvg .fbn { font-weight: 700; fill: var(--ink); }
+.pbutton.held { background: var(--accent); color: var(--accent-ink); }

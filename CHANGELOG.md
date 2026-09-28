@@ -36,6 +36,14 @@
 - **Trading 212 CSV** (apps/money/t212.py; Savings/Pension → Import a Trading 212 CSV): deposits and
   withdrawals recorded as money paid in and taken out, each once (by Trading 212's id); dividends,
   interest and trades counted and shown. Undo takes an import back.
+- **Ladder widget** (apps/learn/web/widgets/ladder.js): rungs written as Boolean logic, drawn as
+  contacts and coils with power flowing in colour, on the same PLC interpreter as the ST cards:
+  series, parallel branches, normally closed and edge contacts, set/reset coils, timers and
+  counters, push-buttons that are on only while held, and the program shown as ST.
+- **Lessons**: PLC ladder basics (contacts, coils, seal-in, why stops are wired normally closed,
+  set/reset), timers and counters (TON/TOF/TP, retentive timers, CTU/CTD), edge detection (R_TRIG,
+  F_TRIG, P/N contacts, edge memory, the first scan). Pulse-echo gets "Explain it another way" and
+  hints throughout.
 
 ## 3.0 — in progress (not released)
 

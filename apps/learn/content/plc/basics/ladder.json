@@ -1,0 +1,383 @@
+{
+ "id": "plc.basics.ladder",
+ "title": "Ladder basics: contacts, coils, seal-in",
+ "tags": ["plc", "ladder", "iec61131"],
+ "kind": "procedure",
+ "level": 4.5,
+ "minutes": 25,
+ "goals": [
+  "Read a rung: say when its coil comes on from its normally open and normally closed contacts",
+  "Build AND with contacts in series, OR with a branch in parallel, and NOT with a normally closed contact",
+  "Write a start/stop seal-in rung, and say why Stop wins",
+  "Choose the right contact for a stop button wired normally closed, and say why it is wired that way",
+  "Say how set and reset coils differ from a seal-in, and which wins when both are true"
+ ],
+ "summary": "A **rung** runs from the left **rail** (power) to the right rail. **Contacts** on the left are conditions; the **coil** on the right is what the rung writes. If there is a path of closed contacts, power reaches the coil and it writes 1; if not, it writes 0.\n\n- **Normally open** contact `[ A ]`: passes power when the bit A is **1**.\n- **Normally closed** contact `[/A ]`: passes power when A is **0**.\n- **Coil** `( Q )`: writes 1 when powered, 0 when not, every scan.\n\n**Series is AND** (every contact must pass). **Parallel is OR** (any branch will do). **NOT** is a normally closed contact.\n\n**The contact is not the button.** A contact looks at a bit in memory. A stop button is wired **normally closed**, so its input is 1 while nobody presses it and a broken wire stops the machine. In the program that stop is a normally **open** contact: it passes power while the input is 1.\n\n**Seal-in** (holding contact): a contact of the output itself, in parallel with Start.\n\n```\n|--+--[ Start ]--+--[ Stop_OK ]--( Motor )--|\n|  +--[ Motor ]--+\n```\n\nStart turns the motor on; the Motor contact holds it on when Start is let go; Stop breaks the path. **Stop wins**, because it is in series after the branch. After a power cut the rung starts at 0, so the motor does not restart by itself.\n\n**Set and reset coils** `(S)` and `(R)` hold a bit on until something resets it. Whether a set bit survives a power cut depends on the PLC and its retentive memory settings, so a motor is usually a seal-in, not a set coil. When set and reset are both true in a scan, the **later rung wins**.\n\nOne output, **one coil**: the same coil in two rungs is a double coil, and the last rung wins.\n\nAn **emergency stop** is never just a contact in the program: it goes through a safety relay or safety PLC.",
+ "resources": [
+  {"when": "before", "kind": "video", "title": "What Is Ladder Logic in PLC Programming?", "url": "https://www.youtube.com/watch?v=MK2-LD0q0kY", "by": "RealPars", "minutes": 7},
+  {"when": "after", "kind": "read", "title": "PLC Ladder Logic Programming Tutorial (Basics)", "url": "https://www.plcacademy.com/ladder-logic-tutorial/", "by": "PLC Academy", "minutes": 17},
+  {"when": "after", "kind": "read", "title": "PLC Latching vs Sealing Explained Simply", "url": "https://www.realpars.com/blog/sealing-and-latching-plc", "by": "RealPars", "minutes": 5, "note": "Seal-in against set/reset, and what happens after a power cut."}
+ ],
+ "sources": [
+  "IEC 61131-3: Programmable controllers. Part 3: Programming languages",
+  "BS EN 60204-1:2018 Safety of machinery. Electrical equipment of machines. General requirements",
+  "Rockwell Automation, Logix 5000 Controllers General Instructions Reference Manual (1756-RM003)",
+  "Siemens, SIMATIC S7-1200 Programmable controller, System Manual",
+  "W. Bolton, Programmable Logic Controllers, 6th edition (Newnes, 2015)"
+ ],
+ "bench": [
+  {
+   "task": "On a trainer or a spare PLC with a **24 V DC** input card, wire a stop push-button **normally closed** and a start push-button normally open, and write the seal-in rung for an output lamp.",
+   "check": [
+    "Start lights the lamp, and it stays lit when you let go",
+    "Stop puts it out, even while Start is held",
+    "With the supply off, take the stop button's wire off its input terminal; power up and press Start: the lamp must not stay lit",
+    "Put the wire back, then switch the PLC off and on with the lamp lit: it must come back off"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-no-hold",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A motor rung is `|--[ Start ]--[ Stop_OK ]--( Motor )--|`. Start is a push-button: on only while pressed. Stop_OK is 1 while nobody presses Stop. You press Start and let go. What does the motor do?",
+   "options": ["It runs until Stop is pressed", "It runs only while Start is held", "It never runs", "It runs for one scan"],
+   "answer": 1,
+   "why": "The coil writes 1 only while there is a path of closed contacts, and the path goes through Start. Let go of Start and the next scan writes 0. Nothing in this rung holds the motor on: that is what the **seal-in** in this lesson is for."
+  },
+  {
+   "id": "rung",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A rung",
+   "body": "Ladder is drawn like the relay panels it replaced. The left **rail** is power; the right rail is the return.\n\nEach **rung** has **contacts** on the left: conditions. At the right is a **coil**: what the rung writes.\n\nIf there is a path of **closed** contacts from the left rail to the coil, power flows and the coil writes **1**. If not, it writes **0**. Every scan, top rung to bottom.\n\nIn the picture, power is drawn in green. Switch A and B on and off and watch the path.",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "A AND B", "out": "Lamp"}], "inputs": ["A", "B"], "outputs": ["Lamp"]}},
+   "more": "Think of an old relay panel. A **contact** is a switch in the wire; the **coil** is the relay's winding at the end. Current reaches the coil only if every switch on the way is closed.\n\nA PLC does the same with bits instead of wires. Each contact looks at one bit in memory; the coil writes one bit. So `|--[ A ]--[ B ]--( Lamp )--|` says: if A is 1 and B is 1, write 1 to Lamp; otherwise write 0.\n\nIt is worked out afresh every scan, many times a second, so the lamp follows A and B as they change."
+  },
+  {
+   "id": "rung-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "The rung is `|--[ Guard_Shut ]--[ Run ]--( Motor )--|`. Guard_Shut is 1 and Run is 0. What does the coil write?",
+   "options": ["0: the path is broken at Run", "1: one contact is enough", "It keeps whatever it was last scan", "It depends which contact is first"],
+   "answer": 0,
+   "why": "Contacts in a line are **in series**: power has to pass every one. Run is 0, so its contact is open and the coil writes 0. A coil never keeps its old value: it is written every scan (only a set coil holds, as you will see)."
+  },
+  {
+   "id": "no-nc",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Normally open and normally closed contacts",
+   "body": "A contact looks at one **bit**.\n\n- **Normally open** `[ A ]`: passes power when A is **1**. (Allen-Bradley calls it XIC, examine if closed.)\n- **Normally closed** `[/A ]`: passes power when A is **0**. (XIO, examine if open.)\n\nSo a normally closed contact is **NOT**: `|--[/Fault ]--( Ready )--|` writes 1 to Ready while Fault is 0.\n\n\"Normally\" means when the bit is 0. It says nothing about how anything outside the PLC is wired.",
+   "more": "The names come from relays. A relay contact that is open while the coil is off is normally open; one that is closed while the coil is off is normally closed.\n\nIn a PLC the \"coil\" is the bit. `[ A ]` is closed when A is 1: like a normally open relay contact once the relay is energised. `[/A ]` is closed when A is 0, and opens when A becomes 1.\n\nA workshop example: a thermal overload trips and its input bit Overload goes to 1. `|--[/Overload ]--( Motor_OK )--|` passes power only while Overload is 0, so Motor_OK drops to 0 when it trips."
+  },
+  {
+   "id": "no-nc-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "`|--[/Level_High ]--( Pump )--|`. The tank fills and Level_High goes from 0 to 1. What happens to Pump?",
+   "options": ["It goes from 1 to 0", "It goes from 0 to 1", "It stays 1", "It stays 0"],
+   "answer": 0,
+   "why": "A normally closed contact passes power while its bit is **0**. With Level_High at 0 the pump runs; when it becomes 1 the contact opens and Pump is written 0. Reading `[/ ]` as \"passes when the bit is 1\" is the usual slip."
+  },
+  {
+   "id": "series-parallel",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Series is AND, parallel is OR",
+   "body": "Contacts one after another are in **series**: power must pass them all. That is **AND**.\n\nA **branch** puts contacts side by side, in **parallel**: power can take either path. That is **OR**.\n\n```\n|--+--[ A ]--+--[ C ]--( Lamp )--|\n|  +--[ B ]--+\n```\n\nThis is `Lamp := (A OR B) AND C;` in Structured Text. The branch is the brackets.",
+   "more": "Picture two routes to work. In **series**, the road goes over bridge A **and then** bridge C: both must be open. In **parallel**, there are two bridges side by side, A **or** B: either will do.\n\nSo in the rung above, the lamp lights if C is 1 and at least one of A and B is 1. A = 0, B = 1, C = 1: the lower branch passes, then C passes: Lamp is 1. A = 1, B = 1, C = 0: C blocks it: Lamp is 0."
+  },
+  {
+   "id": "series-parallel-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.5,
+   "intro": "The rung from the card before: `(A OR B) AND C`.",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "(A OR B) AND C", "out": "Lamp"}], "inputs": ["A", "B", "C"], "outputs": ["Lamp"], "st": true}},
+   "predict": {
+    "q": "Before you touch anything: with **B and C on** and A off, is the lamp lit?",
+    "options": ["Yes", "No"],
+    "answer": 0,
+    "why": "The lower branch (B) passes power round A, and C passes it on to the coil."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "Which of these lights the lamp?",
+    "options": ["A on, B on, C off", "A off, B off, C on", "A on, B off, C on", "A off, B on, C off"],
+    "answer": 2,
+    "why": "C is in series with the whole branch, so it must be on; then either A or B will do. With C off nothing passes, however many of A and B are on."
+   }
+  },
+  {
+   "id": "seal",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The seal-in",
+   "body": "A start button is only on while it is pressed. To keep a motor running, put a contact of the **motor's own bit** in parallel with Start:\n\n```\n|--+--[ Start ]--+--[ Stop_OK ]--( Motor )--|\n|  +--[ Motor ]--+\n```\n\nPress Start: Motor becomes 1. Next scan, the **Motor contact** passes power round Start, so Motor stays 1 when you let go. This is the **seal-in**, or holding contact.\n\nStop_OK is in series after the branch, so pressing Stop breaks the path whatever else is on: **Stop wins**.",
+   "more": "The trick is that the coil's own value, from the scan before, is one of the rung's conditions.\n\nScan 1: Start is pressed. The Start branch passes, Motor is written 1.\nScan 2: Start is let go. The Start branch is open, but the Motor branch is closed, because Motor is 1 from scan 1. Motor is written 1 again.\nIt carries on like that, holding itself in, scan after scan.\n\nPress Stop: Stop_OK goes to 0, the path breaks, Motor is written 0. Now the Motor contact is open too, so when Stop is let go nothing holds it: the motor stays off until Start is pressed again."
+  },
+  {
+   "id": "seal-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.6,
+   "intro": "Start and Stop are push-buttons: **hold** one down with the mouse or your finger. Here Stop's input is 1 while it is pressed, so the rung uses a normally closed contact for it. (A real stop is wired the other way round: two cards on.)",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "(Start OR Motor) AND NOT Stop", "out": "Motor"}], "inputs": ["Start", "Stop"], "buttons": ["Start", "Stop"], "outputs": ["Motor"]}},
+   "predict": {
+    "q": "You will hold Start down, then press Stop **while still holding Start**. What will the motor do?",
+    "options": ["Stop: Stop wins", "Keep running: Start wins", "Flicker on and off"],
+    "answer": 0,
+    "why": "Stop's contact is in series after the branch, so it breaks the path whatever the branch is doing."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "Press Start and let go, then press Stop and let go. Now what holds the motor off?",
+    "options": ["Nothing needs to: the Motor contact opened when Motor went to 0, so no path is left until Start is pressed", "The Stop contact, which stays open", "A set coil somewhere else", "The PLC remembers that Stop was pressed"],
+    "answer": 0,
+    "why": "Once Motor is written 0, its own contact in the branch is open, and Start is open too. There is no path, so the rung keeps writing 0. That is also why the motor stays off after a power cut: every bit starts at 0."
+   }
+  },
+  {
+   "id": "button-not-contact",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The contact is not the button",
+   "body": "Stop buttons are wired **normally closed**: current flows through them until someone presses. So the stop input is **1 while all is well** and 0 when pressed.\n\nWhy? If the wire breaks or the terminal works loose, the input goes to 0, exactly as if Stop were pressed. The machine stops. A normally open stop button with a broken wire would simply never stop anything.\n\nIn the program, that input is used with a normally **open** contact, `[ Stop_OK ]`: it passes power while the input is 1. The symbol follows the **bit**, not the button.",
+   "more": "Two different questions get muddled here.\n\n1. How is the button wired? A stop is **normally closed** (the contacts open when you press it), so a broken wire acts like a press. That is fail-safe.\n2. Which contact goes in the program? Ask: when do I want power to pass? While the stop input is 1, meaning not pressed. A contact that passes when its bit is 1 is **normally open**: `[ Stop_OK ]`.\n\nSo a normally closed button often ends up as a normally open contact. Naming the tag after what 1 means (Stop_OK, Guard_Shut) makes the rung read true.\n\nAn **emergency stop** is a different thing again: it must stop the machine through a safety relay or safety PLC, not only through a contact in the ordinary program."
+  },
+  {
+   "id": "button-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A stop button is wired normally closed to input Stop_OK. Which contact belongs in the motor's rung, so that the motor runs only while Stop is not pressed?",
+   "options": ["`[ Stop_OK ]`, normally open: it passes while the input is 1, which is while nobody presses Stop", "`[/Stop_OK ]`, normally closed, because the button is normally closed", "Either: they do the same", "Neither: a stop button must not go into a PLC input"],
+   "answer": 0,
+   "why": "The input is 1 while nobody presses Stop, and you want power to pass then, so the contact must pass on 1: normally open. Copying the button's type into the program (normally closed) gives a motor that only runs while Stop is **held down**. Ordinary stops do go into PLC inputs; only the emergency stop also needs a safety relay or safety PLC."
+  },
+  {
+   "id": "set-reset",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Set and reset coils",
+   "body": "A **set coil** `(S)` writes 1 when its rung is powered, and does **nothing** when it is not. A **reset coil** `(R)` writes 0 when powered. (Allen-Bradley: OTL and OTU, latch and unlatch.)\n\nSo a set bit **stays on** after the rung goes false, until a reset rung turns it off.\n\nIf both rungs are true in the same scan, the **later rung wins**: put the reset after the set and reset wins.\n\nAfter a power cut, whether a set bit is still on depends on the PLC and its retentive memory settings. A seal-in always comes back off, so a motor is usually a seal-in.",
+   "more": "A normal coil is written every scan: powered means 1, not powered means 0. A set coil only ever writes 1, and only when powered; the rest of the time it leaves the bit alone. That is why it latches.\n\nYou use set and reset for things that must be remembered, such as a fault that stays until someone acknowledges it, or a step in a sequence.\n\nFor a motor, the danger is restarting by itself. If the set bit is kept through a power cut and the machine powers up running, someone could be hurt. BS EN 60204-1 asks that a machine does not restart by itself when the supply comes back if that could be dangerous. A seal-in drops out with the power, so it is the safer habit."
+  },
+  {
+   "id": "set-reset-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.8,
+   "intro": "Rung 1 sets Fault when Trip is on; rung 2 resets it when Ack is on. Trip and Ack are push-buttons.",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "Trip", "out": "Fault", "coil": "set"}, {"logic": "Ack", "out": "Fault", "coil": "reset"}], "inputs": ["Trip", "Ack"], "buttons": ["Trip", "Ack"], "outputs": ["Fault"]}},
+   "ask": {
+    "type": "mcq",
+    "q": "Hold Trip **and** Ack down together. What is Fault, and why?",
+    "options": ["Off: the reset rung comes after the set rung, so its write is the last one each scan", "On: set always beats reset", "It flickers, one scan on, one off", "On, because Trip was pressed first"],
+    "answer": 0,
+    "why": "Each scan, rung 1 writes 1 and then rung 2 writes 0. Only the last value reaches the output, so reset wins. Swap the rungs and set would win. The order of the rungs decides it, not the order you pressed the buttons."
+   }
+  },
+  {
+   "id": "worked-pump",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A pump fills a tank. It starts from a Start push-button and runs until either the Stop button is pressed or the tank's high-level switch trips. Stop is wired normally closed (input Stop_OK, 1 until pressed). The level switch is also wired to be 1 while the level is OK (input Level_OK). Write the rung.",
+   "steps": [
+    {"ask": "What turns the pump on?", "show": "Start. It is only on while pressed, so it needs a seal-in: a Pump contact in parallel with Start."},
+    {"ask": "What must be true for it to keep running?", "show": "Stop not pressed **and** the level OK: Stop_OK = 1 and Level_OK = 1. Both in series, after the branch."},
+    {"ask": "Which kind of contact for Stop_OK and Level_OK?", "show": "Normally open: each should pass while its input is 1."},
+    {"ask": "The rung.", "show": "```\n|--+--[ Start ]--+--[ Stop_OK ]--[ Level_OK ]--( Pump )--|\n|  +--[ Pump ]---+\n```"},
+    {"ask": "Check it: the tank fills and Level_OK drops to 0. Then the level falls again. Does the pump restart?", "show": "No. When Level_OK went to 0 the path broke and Pump was written 0, so the seal-in contact opened. It needs Start again. Good: nothing restarts by itself."}
+   ],
+   "why": "Conditions that must all hold go in series after the branch; the thing that starts it and the seal-in go in parallel. Writing each stop condition as \"OK = 1\" means one kind of contact for all of them."
+  },
+  {
+   "id": "explain-pump",
+   "type": "explain",
+   "stage": "example",
+   "context": "The pump rung: `(Start OR Pump) AND Stop_OK AND Level_OK`, with the Stop_OK and Level_OK contacts in series **after** the parallel branch.",
+   "q": "Why do Stop_OK and Level_OK go after the branch, and not in the Start leg of it alone?",
+   "model": "The branch has two ways in: Start, and the Pump seal-in contact. If the stop conditions were only in the Start leg, then once the pump was sealed in, power would flow round them through the Pump contact, and neither Stop nor the high level could stop it. In series after the branch they sit in every path to the coil, so either of them breaks the rung whatever Start and the seal-in are doing.",
+   "points": ["The seal-in contact is a second path round Start", "A stop condition only in the Start leg is bypassed once the pump is sealed in", "In series after the branch, every path to the coil goes through them"]
+  },
+  {
+   "id": "faded-conveyor",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 4.6,
+   "q": "A conveyor runs from Start until Stop is pressed or its guard is opened. Stop_OK is 1 until Stop is pressed; Guard_Shut is 1 while the guard is shut. A green lamp shows it is running. Write the two rungs.",
+   "steps": [
+    {"ask": "The conveyor rung.", "show": "```\n|--+--[ Start ]------+--[ Stop_OK ]--[ Guard_Shut ]--( Conveyor )--|\n|  +--[ Conveyor ]---+\n```"},
+    {"ask": "The lamp rung: lit while the conveyor runs.", "show": "```\n|--[ Conveyor ]--( Green_Lamp )--|\n```\nA contact of the conveyor's bit: one coil per output, used as many times as you like as a contact."},
+    {"ask": "The guard is opened and shut again. Does the conveyor restart?", "show": "No: opening the guard broke the path and the seal-in dropped out. It needs Start again."}
+   ],
+   "why": "A coil is written in one rung only, but its bit can be read by contacts anywhere. A lamp that shows a state is just a contact of that state."
+  },
+  {
+   "id": "problem-fan",
+   "type": "mcq",
+   "stage": "example",
+   "level": 4.6,
+   "q": "A fan runs from Fan_Start until Fan_Stop is pressed. Fan_Stop_OK is 1 until Fan_Stop is pressed. Which rung is right?",
+   "options": [
+    "`(Fan_Start OR Fan) AND Fan_Stop_OK → ( Fan )`",
+    "`Fan_Start AND Fan_Stop_OK → ( Fan )`",
+    "`(Fan_Start AND Fan_Stop_OK) OR Fan → ( Fan )`",
+    "`(Fan_Start OR Fan) AND NOT Fan_Stop_OK → ( Fan )`"
+   ],
+   "answer": 0,
+   "why": "Start or the seal-in, then the stop condition in series after them. Without the Fan contact it only runs while Start is held. With the stop only in the Start leg, the seal-in bypasses it and the fan never stops. `NOT Fan_Stop_OK` would run it only while Stop is pressed."
+  },
+  {
+   "id": "code-seal-ok",
+   "type": "code",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "The same seal-in in Structured Text. Stop_OK is 1 until Stop is pressed. Fill in the blank.",
+   "code": "Motor := (Start OR Motor) AND ___;",
+   "inputs": ["Start", "Stop_OK"],
+   "outputs": ["Motor"],
+   "solution": ["Stop_OK"],
+   "blank_size": 14,
+   "tests": [
+    {"name": "Start runs it (Stop not pressed)", "steps": [{"set": {"Stop_OK": true, "Start": true}, "expect": {"Motor": true}}]},
+    {"name": "It holds when Start is let go", "steps": [{"set": {"Stop_OK": true, "Start": true}}, {"set": {"Start": false}, "scans": 3, "expect": {"Motor": true}}]},
+    {"name": "Pressing Stop (Stop_OK to 0) drops it", "steps": [{"set": {"Stop_OK": true, "Start": true}}, {"set": {"Start": false}}, {"set": {"Stop_OK": false}, "expect": {"Motor": false}}, {"set": {"Stop_OK": true}, "expect": {"Motor": false}}]},
+    {"name": "A broken stop wire (Stop_OK 0) stops Start working", "steps": [{"set": {"Stop_OK": false, "Start": true}, "expect": {"Motor": false}}]}
+   ],
+   "why": "Stop_OK is 1 while all is well, so it goes in as it is, with no NOT. The last test is the point of wiring Stop normally closed: a broken wire reads as a press."
+  },
+  {
+   "id": "match-symbols",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.0,
+   "q": "Match each symbol to what it does.",
+   "pairs": [
+    ["`[ A ]`", "Passes power while bit A is 1"],
+    ["`[/A ]`", "Passes power while bit A is 0"],
+    ["`( Q )`", "Writes 1 when powered and 0 when not, every scan"],
+    ["`(S)`", "Writes 1 when powered; leaves the bit alone otherwise"],
+    ["`(R)`", "Writes 0 when powered; leaves the bit alone otherwise"]
+   ],
+   "why": "Contacts read bits; coils write them. Only the plain coil writes every scan whatever happens; set and reset only write when powered, which is why they latch."
+  },
+  {
+   "id": "why-nc-stop",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "Why are stop buttons wired normally closed?",
+   "options": ["A broken wire or loose terminal then reads as a press, so the machine stops rather than losing its stop", "So the PLC program can use a normally closed contact", "It saves an input on the PLC", "Normally closed buttons last longer"],
+   "answer": 0,
+   "why": "With a normally closed stop, the healthy state is current flowing. Anything that interrupts it, a press, a cut cable, a loose screw, stops the machine. The program contact is chosen afterwards to match the bit; it is not the reason for the wiring."
+  },
+  {
+   "id": "stop-wins-widget",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.8,
+   "intro": "This time Stop is wired as it should be, normally closed: **tick Stop_OK on** to connect it, then use the Start push-button.",
+   "widget": {"name": "ladder", "params": {"rungs": [{"logic": "(Start OR Motor) AND Stop_OK", "out": "Motor"}, {"logic": "Motor", "out": "Run_Lamp"}], "inputs": ["Start", "Stop_OK"], "buttons": ["Start"], "outputs": ["Motor", "Run_Lamp"]}},
+   "ask": {
+    "type": "mcq",
+    "q": "With the motor running, untick Stop_OK: it is what a cut wire to the stop button does. Then tick it again. What happens?",
+    "options": ["The motor stops and stays stopped until Start is pressed again", "Nothing: the seal-in keeps it running", "The motor stops, then restarts when Stop_OK comes back", "Only the lamp goes out"],
+    "answer": 0,
+    "why": "Stop_OK going to 0 breaks the path in series with everything, so Motor is written 0 and its seal-in contact opens. When Stop_OK comes back, no path is left: the motor waits for Start. The lamp follows Motor, because its contact reads the same bit."
+   }
+  },
+  {
+   "id": "spot-seal",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.0,
+   "mono": true,
+   "q": "A pump's program, in Structured Text. The pump can be started but can never be stopped. Which line has the mistake?",
+   "lines": [
+    "(* Pump: start, seal-in, stop *)",
+    "Pump := (Start AND Stop_OK) OR Pump;",
+    "Pump_Lamp := Pump;",
+    "Hours_Run := Pump;"
+   ],
+   "wrong": 1,
+   "fix": "`Pump := (Start OR Pump) AND Stop_OK;`",
+   "why": "Stop_OK sits only in the Start leg, so once Pump is 1 the `OR Pump` keeps it 1 whatever Stop does. The stop condition has to be in series with the whole branch, which in ST means ANDed with the bracket."
+  },
+  {
+   "id": "mix-double-coil",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "Rung 5 is `|--[ Auto ]--( Valve )--|` and rung 12 is `|--[ Manual_Open ]--( Valve )--|`. In Auto with Manual_Open off, the valve never opens. Why?",
+   "options": ["Two coils write Valve; rung 12 comes later and writes 0 every scan, so it wins", "Auto and Manual_Open should be in series", "The valve needs a seal-in", "Rung 5 only runs every other scan"],
+   "answer": 0,
+   "why": "This is the **double coil** from the scan-cycle lesson: the last write in a scan is the one that reaches the output. Put both conditions in parallel in **one** rung: `|--+--[ Auto ]--+--( Valve )--|` with Manual_Open on the branch."
+  },
+  {
+   "id": "mix-which-contact",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "A guard switch is wired so that its input, Guard_Open, is **1 when the guard is open**. The machine may run only with the guard shut. Which contact goes in the run rung?",
+   "options": ["`[/Guard_Open ]`: it passes while the input is 0, which is while the guard is shut", "`[ Guard_Open ]`", "`(R) Guard_Open`", "It cannot be done in ladder"],
+   "answer": 0,
+   "why": "Ask when power should pass: while the guard is shut, when Guard_Open is 0. A contact that passes on 0 is normally closed. For Stop_OK it was the other way round, because that bit is 1 in the healthy state. (A real guard interlock also goes through a safety relay or safety PLC; this is the ordinary control side.)"
+  },
+  {
+   "id": "mix-set-restart",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A motor is started with a set coil and stopped with a reset coil, and the PLC keeps that bit through a power cut. The power fails with the motor running, and comes back. What happens?",
+   "options": ["The motor may start on its own as the PLC goes back to run, which can be dangerous", "It stays off: every bit starts at 0", "It waits for Start, like a seal-in", "The reset coil turns it off automatically"],
+   "answer": 0,
+   "why": "A retained set bit is still 1 when the PLC runs again, so the output comes back on with nobody pressing anything. A seal-in rung starts at 0 and waits for Start. That is why motors are usually sealed in, and why BS EN 60204-1 asks for no dangerous automatic restart."
+  },
+  {
+   "id": "check-seal-release",
+   "type": "mcq",
+   "stage": "check",
+   "q": "The rung is `|--+--[ Start ]--+--[ Stop_OK ]--( Motor )--|` with a Motor contact on the branch under Start. Stop_OK is 1. You press Start and let go. What does the motor do?",
+   "options": ["It keeps running until Stop is pressed", "It stops when Start is let go", "It runs for one scan", "It never starts"],
+   "answer": 0,
+   "why": "The Motor contact on the branch carries power round Start once Motor is 1. That is the seal-in: the output holds itself on until Stop_OK breaks the path."
+  },
+  {
+   "id": "check-nc",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.3,
+   "q": "`|--[ A ]--[/B ]--( Q )--|`. Which values make Q = 1?",
+   "options": ["A = 1, B = 0", "A = 1, B = 1", "A = 0, B = 0", "A = 0, B = 1"],
+   "answer": 0,
+   "why": "In series, both contacts must pass. `[ A ]` passes when A is 1; `[/B ]` passes when B is 0."
+  },
+  {
+   "id": "check-code",
+   "type": "code",
+   "stage": "check",
+   "level": 5.0,
+   "q": "Write the conveyor rung: Start or the seal-in, then Stop_OK and Guard_Shut (each 1 when all is well).",
+   "code": "Conveyor := (___ OR Conveyor) AND ___ AND ___;",
+   "inputs": ["Start", "Stop_OK", "Guard_Shut"],
+   "outputs": ["Conveyor"],
+   "solution": ["Start", "Stop_OK", "Guard_Shut"],
+   "blank_size": 11,
+   "tests": [
+    {"name": "Start runs it with Stop and guard OK", "steps": [{"set": {"Stop_OK": true, "Guard_Shut": true, "Start": true}, "expect": {"Conveyor": true}}]},
+    {"name": "It holds when Start is let go", "steps": [{"set": {"Stop_OK": true, "Guard_Shut": true, "Start": true}}, {"set": {"Start": false}, "scans": 2, "expect": {"Conveyor": true}}]},
+    {"name": "Opening the guard stops it, for good", "steps": [{"set": {"Stop_OK": true, "Guard_Shut": true, "Start": true}}, {"set": {"Start": false}}, {"set": {"Guard_Shut": false}, "expect": {"Conveyor": false}}, {"set": {"Guard_Shut": true}, "expect": {"Conveyor": false}}]},
+    {"name": "Stop stops it", "steps": [{"set": {"Stop_OK": true, "Guard_Shut": true, "Start": true}}, {"set": {"Start": false}}, {"set": {"Stop_OK": false}, "expect": {"Conveyor": false}}]}
+   ],
+   "why": "The two OK conditions go in series with the whole bracket; either one dropping to 0 breaks the seal-in, and it stays off until Start."
+  }
+ ]
+}

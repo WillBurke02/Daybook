@@ -222,7 +222,8 @@
    "type": "concept",
    "stage": "learn",
    "title": "One probe, there and back",
-   "body": "In **pulse-echo** testing one probe both sends and listens. It sends a short burst of ultrasound into the part; the sound travels until it meets a boundary (the back wall, or a flaw), and part of it reflects straight back to the same probe.\n\nThe flaw detector times the round trip. Knowing the speed of sound in the material, the distance to the reflector is\n\n$$d = \\frac{vt}{2}$$\n\nhalved because the sound went there **and back**."
+   "body": "In **pulse-echo** testing one probe both sends and listens. It sends a short burst of ultrasound into the part; the sound travels until it meets a boundary (the back wall, or a flaw), and part of it reflects straight back to the same probe.\n\nThe flaw detector times the round trip. Knowing the speed of sound in the material, the distance to the reflector is\n\n$$d = \\frac{vt}{2}$$\n\nhalved because the sound went there **and back**.",
+   "more": "Picture shouting at a cliff and timing the echo. Sound in air goes about 340 m/s. If the echo comes back after 2 s, the sound has travelled 680 m, but the cliff is only 340 m away: the sound went there **and back**.\n\nUltrasound in steel goes 5920 m/s. An echo at 10 µs (10 millionths of a second): $5920 \\times 0.00001 = 0.0592$ m, which is 59.2 mm there and back. Halve it: the back wall is 29.6 mm away.\n\nSo: velocity times time is the whole round trip; half of it is the depth."
   },
   {
    "id": "why-half",
@@ -237,7 +238,8 @@
     "Longitudinal waves travel at half speed in steel"
    ],
    "answer": 0,
-   "why": "The flaw detector measures the **round trip**. The one-way distance is half of $vt$."
+   "why": "The flaw detector measures the **round trip**. The one-way distance is half of $vt$.",
+   "hint": "What does the flaw detector actually time: the trip to the reflector, or something longer?"
   },
   {
    "id": "ascan-screen",
@@ -256,7 +258,8 @@
       "size"
      ]
     }
-   }
+   },
+   "more": "An A-scan is a graph of what the probe hears, against time. Hearing nothing is the flat line along the bottom (with a little noise, called grass). Each time sound comes back, a spike rises: the taller, the more sound came back.\n\nThe left end is the moment the pulse is sent, so the initial pulse is always there. Because the flaw detector knows the velocity, it marks the time axis as depth: a spike half-way across a screen set to show 50 mm of steel is a reflector 25 mm down.\n\nThe back-wall echo repeats because some of the sound bounces between the two faces again and again, each trip taking the same time."
   },
   {
    "id": "match-terms",
@@ -292,7 +295,8 @@
    "type": "concept",
    "stage": "learn",
    "title": "The dead zone",
-   "body": "While the crystal is still ringing from its own pulse it cannot hear an echo. The region just under the surface, hidden under the initial pulse, is the **dead zone**.\n\nTo see near the surface: use a **twin-crystal** (dual) probe, with one crystal to send and one to receive, or a probe with a **delay line**, which moves the initial pulse off the part. A higher frequency gives a shorter pulse and a thinner dead zone."
+   "body": "While the crystal is still ringing from its own pulse it cannot hear an echo. The region just under the surface, hidden under the initial pulse, is the **dead zone**.\n\nTo see near the surface: use a **twin-crystal** (dual) probe, with one crystal to send and one to receive, or a probe with a **delay line**, which moves the initial pulse off the part. A higher frequency gives a shorter pulse and a thinner dead zone.",
+   "more": "It is like trying to hear a whisper just after a bell has rung next to your ear: until the ringing dies away you hear nothing else.\n\nThe crystal rings for a short time after each pulse, and any echo that comes back meanwhile is buried in the initial pulse. If the ringing lasts 1 µs in steel, echoes from the first $5920 \\times 0.000001 \\div 2 \\approx 3$ mm are hidden.\n\nA twin-crystal probe listens with a crystal that did not ring. A delay line spends the ringing time inside a block of plastic before the sound reaches the part."
   },
   {
    "id": "near-surface",
@@ -306,7 +310,8 @@
     "Any probe with more gain"
    ],
    "answer": 0,
-   "why": "With one crystal doing both jobs, the first millimetres sit in the dead zone. Separate send and receive crystals, or a delay line, clear it. More gain only makes the initial pulse wider."
+   "why": "With one crystal doing both jobs, the first millimetres sit in the dead zone. Separate send and receive crystals, or a delay line, clear it. More gain only makes the initial pulse wider.",
+   "hint": "What stops a single-crystal probe hearing echoes from just under the surface?"
   },
   {
    "id": "worked-depth",
@@ -373,7 +378,8 @@
    "unit": "mm",
    "tolerance": 0.02,
    "work": "$d = \\tfrac{1}{2} \\times {v} \\text{ m/s} \\times {t} \\times 10^{-6} \\text{ s} = {answer}$ mm",
-   "why": "Pulse-echo: the sound goes there and back, so $d = \\tfrac{vt}{2}$. Keep the units straight: µs is $10^{-6}$ s, and the answer in metres times 1000 is millimetres."
+   "why": "Pulse-echo: the sound goes there and back, so $d = \\tfrac{vt}{2}$. Keep the units straight: µs is $10^{-6}$ s, and the answer in metres times 1000 is millimetres.",
+   "hint": "Change µs to seconds (× $10^{-6}$), multiply by the velocity, then halve: the time is there and back."
   },
   {
    "id": "flaw-depth-al",
@@ -396,7 +402,8 @@
    "unit": "mm",
    "tolerance": 0.02,
    "work": "$d = {v} \\times {t} \\times 10^{-6} \\div 2 = {answer}$ mm",
-   "why": "Same rule as the back wall: half the round-trip time, times the velocity."
+   "why": "Same rule as the back wall: half the round-trip time, times the velocity.",
+   "hint": "The same as a back wall: velocity times time, halved. m/s × µs gives micrometres, so divide by 1000 for mm."
   },
   {
    "id": "gate-read",
@@ -426,7 +433,8 @@
     "answer": "flaw",
     "unit": "mm",
     "tolerance": 0.04,
-    "why": "The gate reads the time of flight; the depth is $\\tfrac{vt}{2}$. Here the flaw sits at {flaw} mm."
+    "why": "The gate reads the time of flight; the depth is $\\tfrac{vt}{2}$. Here the flaw sits at {flaw} mm.",
+    "hint": "Slide the gate onto the first echo after the initial pulse, before the back wall. Its time is the round trip: $d = \\tfrac{vt}{2}$."
    }
   },
   {
@@ -455,7 +463,8 @@
      "+40 dB"
     ],
     "answer": 0,
-    "why": "Amplitude in dB is $20\\log_{10}(A_2/A_1)$. Doubling is $20\\log_{10} 2 \\approx 6$ dB; so +6 dB doubles an echo and −6 dB halves it."
+    "why": "Amplitude in dB is $20\\log_{10}(A_2/A_1)$. Doubling is $20\\log_{10} 2 \\approx 6$ dB; so +6 dB doubles an echo and −6 dB halves it.",
+    "hint": "40% to 80% is twice as high. Doubling an amplitude is $20\\log_{10} 2$ dB."
    }
   },
   {
@@ -480,7 +489,8 @@
    "unit": "dB",
    "abs": 0.3,
    "work": "$20\\log_{10}\\left(\\frac{{a}}{{b}}\\right) = {answer}$ dB",
-   "why": "Echo heights are amplitudes, so the dB difference is $20\\log_{10}$ of their ratio (not 10, which is for power)."
+   "why": "Echo heights are amplitudes, so the dB difference is $20\\log_{10}$ of their ratio (not 10, which is for power).",
+   "hint": "Echo heights are amplitudes: 20 times the log (base 10) of their ratio."
   },
   {
    "id": "velocity-cal",
@@ -507,7 +517,8 @@
    "unit": "m/s",
    "tolerance": 0.01,
    "work": "$v = \\frac{2d}{t} = \\frac{2 \\times {T} \\times 10^{-3}}{{tt} \\times 10^{-6}} = {answer}$ m/s",
-   "why": "Calibration runs the rule backwards: a known thickness and a measured time give the velocity to set on the flaw detector."
+   "why": "Calibration runs the rule backwards: a known thickness and a measured time give the velocity to set on the flaw detector.",
+   "hint": "Turn $d = \\tfrac{vt}{2}$ round: $v = \\tfrac{2d}{t}$. mm ÷ µs gives km/s, so × 1000 for m/s."
   },
   {
    "id": "why-same-material",
@@ -557,7 +568,8 @@
    "unit": "µs",
    "tolerance": 0.02,
    "work": "First echo at $t_1 = {t1}$ µs; the third at $3t_1 = {answer}$ µs.",
-   "why": "The repeats are evenly spaced: the n-th back-wall echo is at n times the first."
+   "why": "The repeats are evenly spaced: the n-th back-wall echo is at n times the first.",
+   "hint": "Each repeat is one more round trip through the plate."
   },
   {
    "id": "attenuation-repeats",
@@ -607,7 +619,8 @@
    "unit": "µs",
    "tolerance": 0.02,
    "work": "$t = \\frac{ d }{v} = \\frac{{d} \\times 10^{-3}}{5920} = {answer}$ µs",
-   "why": "No echo here: the sound crosses once, so $t = \\tfrac{ d }{v}$ with no factor of 2. Halve only when the same probe hears its own echo."
+   "why": "No echo here: the sound crosses once, so $t = \\tfrac{ d }{v}$ with no factor of 2. Halve only when the same probe hears its own echo.",
+   "hint": "Is there an echo here, or does the sound cross the plate just once?"
   },
   {
    "id": "wavelength-mix",
@@ -631,7 +644,8 @@
    "unit": "mm",
    "tolerance": 0.02,
    "work": "$\\lambda = \\frac{v}{f} = \\frac{5920}{{f} \\times 10^{6}} = {answer}$ mm",
-   "why": "Same velocity, different rule: $v = f\\lambda$ from the waves lesson. The wavelength sets the smallest flaw you can hope to find (about half a wavelength)."
+   "why": "Same velocity, different rule: $v = f\\lambda$ from the waves lesson. The wavelength sets the smallest flaw you can hope to find (about half a wavelength).",
+   "hint": "$\\lambda = \\tfrac{v}{f}$, with the frequency in hertz: 1 MHz is $10^{6}$ Hz."
   },
   {
    "id": "range-time",
@@ -650,7 +664,8 @@
    "unit": "µs",
    "tolerance": 0.02,
    "work": "$t = \\frac{2R}{v} = {answer}$ µs",
-   "why": "The range is a round-trip time. A screen showing 100 mm of steel is about 34 µs wide."
+   "why": "The range is a round-trip time. A screen showing 100 mm of steel is about 34 µs wide.",
+   "hint": "The screen shows the round trip down to that depth and back."
   },
   {
    "id": "no-backwall",
@@ -712,7 +727,8 @@
    "unit": "µs",
    "tolerance": 0.02,
    "work": "$t = \\frac{2d}{v} = \\frac{2 \\times {d} \\times 10^{-3}}{5920} = {answer}$ µs",
-   "why": "Turn the rule round: $t = \\tfrac{2d}{v}$. A handy figure: in steel, every millimetre of thickness adds about 0.34 µs to the round trip."
+   "why": "Turn the rule round: $t = \\tfrac{2d}{v}$. A handy figure: in steel, every millimetre of thickness adds about 0.34 µs to the round trip.",
+   "hint": "Turn $d = \\tfrac{vt}{2}$ round for the time: $t = \\tfrac{2d}{v}$."
   },
   {
    "id": "flash-formula",
