@@ -11,7 +11,7 @@ from datetime import date, timedelta
 
 from core import db as _db
 from core.api import Err, _select, _maybe_float
-from . import importer, matching, reminders, statement, tax, timesheet
+from . import importer, matching, reminders, statement, tax, timesheet, t212
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME, TITLE, ORDER = "money", "Money", 1
@@ -420,6 +420,17 @@ def route(db, method, p, query, body, ctx):
             return 200, statement.read(base64.b64decode(m.group(1)), accts)
         except ValueError as e:
             raise Err(422, f"Could not read it: {e}")
+
+    # Trading 212's history CSV: payments in and out, to look at first (plan) and then record
+    if p[:1] == ["t212"] and len(p) == 2 and p[1] in ("plan", "commit") and method == "POST":
+        acct = db.execute("SELECT id FROM account WHERE id = ? AND kind IN ('savings', 'investment', 'pension')",
+                          (body.get("account_id"),)).fetchone()
+        if not acct:
+            raise Err(400, "choose the savings, investment or pension account it is for")
+        try:
+            return 200, (t212.plan if p[1] == "plan" else t212.commit)(db, acct[0], body.get("text") or "")
+        except ValueError as e:
+            raise Err(422, str(e))
 
     if p[:1] == ["category"] and len(p) == 2 and method == "DELETE":
         return 200, delete_category(db, int(p[1]), g("move_to") or None)

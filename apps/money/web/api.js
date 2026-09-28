@@ -39,6 +39,7 @@ export const api = {
   safe:      () => get('safe'),
   receiptsFor: ids => get(`receipts/of${qs({ txn_ids: ids.join(',') })}`),
   readStatement: data => send('valuations/read', { data }),
+  t212: (step, account_id, text) => send(`t212/${step}`, { account_id, text }),
   receiptMatches: id => get(`receipts/${id}/matches`),
 
   bankHolidays: y => send(`bank_holidays/${y}`, {}),

@@ -49,7 +49,7 @@ data/learn.db    Learn: your progress and your own cards (the courses are files)
 Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data demo-data`.
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
-`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
+`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, `tests/test_packs.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
 learn, content and web.
 
 ## Money
@@ -87,6 +87,11 @@ type, leave it. **Undo** reverses the last change; Change history any earlier on
 - **Reminders.** Bills and anything that comes round. A bill tied to a payee
   ticks itself off when the payment goes out.
 - **Pension.** Payslip lines and payments in, valuations, the annual allowance.
+- **Savings, investments and pensions** take a value typed in or read off a
+  statement PDF. **Import a Trading 212 CSV** (History → Export in Trading 212)
+  records its deposits and withdrawals as money paid in and taken out, each
+  once, however often the file is imported; dividends and interest are shown,
+  not recorded (the valuations already count them).
 
 ## Log
 
@@ -123,6 +128,18 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   (`4.7k`, `220µ`, `2.5m`), degrees or radians, `ans`, and shows engineering
   notation; **Use this answer** puts the result in the card's box. Docked on the
   right; on a narrow window, a sheet from the bottom.
+
+- **Courses from elsewhere** (My cards): an Anki deck (`.apkg`), a Moodle XML or
+  GIFT quiz, or a Daybook course pack (`.zip`) becomes a subject of its own.
+  Multiple choice, numbers, matching, true or false, cloze and flash cards come
+  in, pictures too; anything else is counted and left out. Imports live in
+  `data/courses/`, so an update never touches them; importing the same file again
+  updates it and keeps your progress. Any course downloads as a pack from Courses.
+- **More ways in**: widget cards that ask you to predict before you can touch the
+  controls; "explain the step" cards (your words, then the model answer and its
+  key points); "spot the mistake" cards; bench tasks at the end of a lesson,
+  with a checklist and a line for today's Log; and **Listen**, which reads a
+  lesson's summary aloud.
 
 Keys: 1–4 answer or rate, Enter check, ↓ next, W whiteboard, C calculator.
 

@@ -36,6 +36,34 @@ function addValuation(accts, vals, ctx, kinds) {
   const found = el('div', { class: 'stack' });
   let pdf = null, paid = null;
   const pick = el('button', { class: 'btn plain sm', type: 'button', onclick: () => file.click() }, 'Read a statement PDF');
+  // Trading 212's history CSV: its deposits and withdrawals as money put in and taken out, each once
+  const csv = el('input', { type: 'file', accept: '.csv,text/csv', hidden: true });
+  const pickCsv = el('button', { class: 'btn plain sm', type: 'button', onclick: () => csv.click() }, 'Import a Trading 212 CSV');
+  csv.addEventListener('change', async () => {
+    const f = csv.files[0];
+    csv.value = '';
+    if (!f) return;
+    if (!acct.value) { flash('Choose the Trading 212 account first'); acct.focus(); return; }
+    const text = await f.text();
+    try {
+      const r = await api.t212('plan', +acct.value, text);
+      const inN = r.new.filter(x => x.amount > 0), outN = r.new.filter(x => x.amount < 0);
+      const add = el('button', { class: 'btn sm', type: 'button', disabled: !r.new.length, onclick: async () => {
+        try {
+          const done = await api.t212('commit', +acct.value, text);
+          flash(`Recorded ${done.added} payment${done.added === 1 ? '' : 's'}`, { label: 'Undo', fn: async () => { await api.undo(); ctx.changed('contribution'); ctx.refresh(); } });
+          ctx.changed('contribution'); ctx.refresh();
+        } catch (e) { flash(e.message); }
+      } }, r.new.length ? `Record ${r.new.length} payment${r.new.length === 1 ? '' : 's'}` : 'Nothing new to record');
+      found.replaceChildren(el('p', {}, `${f.name}: ${dateUK(r.first)} to ${dateUK(r.last)}. `,
+          el('strong', {}, `${inN.length} paid in (${money(inN.reduce((a, x) => a + x.amount, 0))}), ${outN.length} taken out (${money(-outN.reduce((a, x) => a + x.amount, 0))})`),
+          r.already ? ` not yet recorded; ${r.already} already are.` : ' not yet recorded.'),
+        el('p', { class: 'muted small' }, `Also in it, shown and not recorded (they are growth, which the valuations show): dividends ${money(r.dividends)}, `,
+          `interest ${money(r.interest)}; ${r.buys} buy${r.buys === 1 ? '' : 's'} and ${r.sells} sell${r.sells === 1 ? '' : 's'}.`,
+          r.foreign.length ? ` ${r.foreign.length} payment${r.foreign.length === 1 ? '' : 's'} not in pounds left out.` : ''),
+        el('div', { class: 'row' }, add));
+    } catch (e) { found.replaceChildren(el('p', { class: 'err' }, e.message)); }
+  });
   file.addEventListener('change', async () => {
     const f = file.files[0];
     file.value = '';
@@ -80,7 +108,7 @@ function addValuation(accts, vals, ctx, kinds) {
       ctx.changed('valuation'); ctx.changed('contribution'); ctx.refresh();
     } catch (e) { flash(e.message); }
   } }, 'Save');
-  return el('div', { class: 'addval stack' }, el('div', { class: 'row mid wrap' }, acct, date, value, note, save, pick, file), found);
+  return el('div', { class: 'addval stack' }, el('div', { class: 'row mid wrap' }, acct, date, value, note, save, pick, file, pickCsv, csv), found);
 }
 
 /** Savings, investments and pensions by group, each group and account opening and closing

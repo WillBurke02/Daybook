@@ -26,4 +26,8 @@ export const api = {
   testout:  lesson => get(`testout${qs({ lesson })}`),
   testoutDone: (lesson, right, asked) => send('testout/done', { lesson, right, asked }),
   comeback: () => get('comeback'),
+  importFile: (name, data) => send('import/file', { name, data }),
+  packs:      () => get('packs'),
+  removePack: id => send(`packs/${encodeURIComponent(id)}`, undefined, 'DELETE'),
+  packUrl:    id => `pack${qs({ subject: id })}`,
 };

@@ -913,6 +913,31 @@ with tempfile.TemporaryDirectory() as t4:
     assert close(d4.execute("SELECT toil_hours FROM leave_year WHERE year = ?", (y,)).fetchone()[0], 7)
     d4.close()
 print("ok — time off in lieu moves to the leave year")
+# === Trading 212's history CSV: payments in and out, each once ===================================
+T212 = """Action,Time,ISIN,Ticker,Name,Notes,ID,No. of shares,Price / share,Currency (Price / share),Exchange rate,Result,Currency (Result),Total,Currency (Total)
+Deposit,2026-01-05 09:00:01,,,,,dep-1,,,,,,,500.00,GBP
+Market buy,2026-01-05 10:12:00,IE00B3XXRP09,VUSA,Vanguard S&P 500,,EOF1,5.2,85.10,GBP,1.00,,,442.52,GBP
+Dividend (Dividend),2026-03-20 12:00:00,IE00B3XXRP09,VUSA,Vanguard S&P 500,,,5.2,0.21,USD,0.79,,,0.86,GBP
+Interest on cash,2026-03-31 23:00:00,,,,,int-1,,,,,,,0.14,GBP
+Withdrawal,2026-04-02 08:00:00,,,,,wd-1,,,,,,,-150.00,GBP
+Deposit,2026-04-10 08:00:00,,,,,dep-usd,,,,,,,100.00,USD
+Market sell,2026-05-01 14:00:00,IE00B3XXRP09,VUSA,Vanguard S&P 500,,EOF2,1,90.00,GBP,1.00,4.9,GBP,90.00,GBP
+"""
+acc = db.execute("INSERT INTO account (name, kind) VALUES ('T212 check ISA', 'investment')").lastrowid
+db.commit()
+plan = R("POST", "t212/plan", {"account_id": acc, "text": T212})
+assert [(x["date"], x["amount"]) for x in plan["new"]] == [("2026-01-05", 500.0), ("2026-04-02", -150.0)], plan["new"]
+assert plan["dividends"] == 0.86 and plan["interest"] == 0.14 and plan["buys"] == 1 and plan["sells"] == 1
+assert len(plan["foreign"]) == 1 and plan["first"] == "2026-01-05" and plan["last"] == "2026-05-01"
+assert R("POST", "t212/commit", {"account_id": acc, "text": T212})["added"] == 2
+assert R("POST", "t212/commit", {"account_id": acc, "text": T212})["added"] == 0, "the same file twice adds nothing"
+assert db.execute("SELECT SUM(amount) FROM contribution WHERE account_id = ?", (acc,)).fetchone()[0] == 350.0
+api.undo(db, ctx=ADMIN)
+assert db.execute("SELECT COUNT(*) FROM contribution WHERE account_id = ?", (acc,)).fetchone()[0] == 0, "undo takes the import back"
+expect(400, lambda: api.route(db, "POST", ["t212", "plan"], {}, {"account_id": 1, "text": T212}, ADMIN), "a current account")
+expect(422, lambda: api.route(db, "POST", ["t212", "plan"], {}, {"account_id": acc, "text": "Date,Amount\n1,2"}, ADMIN), "not a T212 file")
+print("ok — Trading 212 CSV: deposits and withdrawals once each, dividends and interest shown, other currencies left out")
+
 db.close()
 tmp.cleanup()
 print("\nok — all checks passed")

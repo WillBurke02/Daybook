@@ -8,17 +8,20 @@ files never loses it. Your own cards live only in learn.db.
 The browser checks the answers; this file schedules them (fsrs.py), keeps your
 level (level.py), chooses what comes next and keeps the record.
 """
+import base64
 import csv
 import io
 import json
 import os
 import random
 import re
+import sqlite3
+import zipfile
 from datetime import date, datetime, timedelta
 
 from core import db as _db
-from core.api import Err
-from . import fsrs, level as _level
+from core.api import Err, File
+from . import fsrs, level as _level, packs as _packs
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME, TITLE, ORDER = "learn", "Learn", 3
@@ -75,12 +78,14 @@ def _json(v):
     return json.dumps(v, ensure_ascii=False) if v else None
 
 
-def read_content(folder=CONTENT):
+def read_content(folder=CONTENT, only=None, sort_from=0):
     """Everything under content/: (subjects, units, lessons, cards) as rows. Raises ValueError on a broken file.
     A lesson file may also carry its level, kind, minutes, goals, summary, resources and sources;
     calibrate.json in a subject's folder holds its calibration questions, each naming its lesson."""
     subjects, units, lessons, cards = [], [], [], []
     for si, sname in enumerate(sorted(os.listdir(folder)) if os.path.isdir(folder) else []):
+        if only and sname != only:
+            continue
         sdir = os.path.join(folder, sname)
         outline = os.path.join(sdir, "subject.json")
         if not os.path.isfile(outline):
@@ -89,7 +94,7 @@ def read_content(folder=CONTENT):
             s = json.load(open(outline, encoding="utf-8"))
         except ValueError as e:
             raise ValueError(f"{outline}: {e}")
-        subjects.append({"id": s["id"], "title": s["title"], "sort": s.get("sort", si), "note": s.get("note")})
+        subjects.append({"id": s["id"], "title": s["title"], "sort": s.get("sort", si) + sort_from, "note": s.get("note")})
         for ui, u in enumerate(s.get("units", [])):
             units.append({"id": u["id"], "subject_id": s["id"], "title": u["title"], "sort": ui, "level": u.get("level")})
             for li, les in enumerate(u.get("lessons", [])):
@@ -145,6 +150,12 @@ def read_content(folder=CONTENT):
     return subjects, units, lessons, cards
 
 
+def _builtin():
+    """The subject ids of Learn's own courses: an imported one may not take them."""
+    return {json.load(open(os.path.join(CONTENT, d, "subject.json"), encoding="utf-8"))["id"]
+            for d in os.listdir(CONTENT) if os.path.isfile(os.path.join(CONTENT, d, "subject.json"))}
+
+
 def formulas(folder=CONTENT):
     """Formula help: every formula a lesson explains (its "formulas") and the maths notation
     they are written in (content/symbols.json). Read from the files each time: they are small."""
@@ -169,9 +180,32 @@ def formulas(folder=CONTENT):
     return out
 
 
+def packs_folder(db):
+    return _packs.folder_of(_db.db_file(db))
+
+
+def read_packs(db, taken):
+    """The courses imported into the data folder, each on its own: a broken one is left out, not the rest."""
+    out, folder = ([], [], [], []), packs_folder(db)
+    for k, name in enumerate(sorted(os.listdir(folder)) if os.path.isdir(folder) else []):
+        try:
+            got = read_content(folder, only=name, sort_from=100 + k)
+        except (ValueError, KeyError, OSError) as e:
+            print(f"learn: course pack {name} left out: {e}")
+            continue
+        if any(s["id"] in taken for s in got[0]):
+            print(f"learn: course pack {name} left out: its subject id is one of Learn's own")
+            continue
+        for a, b in zip(out, got):
+            a.extend(b)
+    return out
+
+
 def after_migrate(db):
     """Load the files: replace every row that came from a file, keep your own and all progress."""
     subjects, units, lessons, cards = read_content()
+    for a, b in zip((subjects, units, lessons, cards), read_packs(db, {s["id"] for s in subjects})):
+        a.extend(b)
     db.execute("BEGIN")
     for t in ("card", "lesson", "unit", "subject"):
         db.execute(f"DELETE FROM {t} WHERE source = 'file'")
@@ -876,6 +910,28 @@ def route(db, method, p, query, body, ctx):
         return 200, {"leeches": leeches, "reports": reports}
     if p == ["import"] and method == "POST":
         return 200, import_csv(db, body.get("text") or "")
+    if p == ["import", "file"] and method == "POST":           # an Anki deck, a Moodle or GIFT quiz, a course pack
+        try:
+            data = base64.b64decode((body.get("data") or "").split(",", 1)[-1])
+            got = _packs.import_file(packs_folder(db), body.get("name") or "", data, taken=_builtin())
+        except (ValueError, KeyError, zipfile.BadZipFile, sqlite3.Error) as e:
+            raise Err(400, str(e))
+        after_migrate(db)
+        return 200, got
+    if p == ["packs"] and method == "GET":
+        return 200, _packs.packs(packs_folder(db))
+    if p[:1] == ["packs"] and len(p) == 2 and method == "DELETE":
+        try:
+            _packs.remove_pack(packs_folder(db), p[1])
+        except ValueError as e:
+            raise Err(404, str(e))
+        after_migrate(db)
+        return 200, {"ok": True}
+    if p == ["pack"] and method == "GET":
+        try:
+            return 200, File(_packs.export_pack([CONTENT, packs_folder(db)], g("subject")), f"{g('subject')}.zip", "application/zip")
+        except ValueError as e:
+            raise Err(404, str(e))
     if p == ["sketch"] and method == "GET":                      # your working on a card, from last time
         r = db.execute("SELECT * FROM sketch WHERE card_id = ?", (g("card"),)).fetchone()
         return 200, dict(r) if r else None

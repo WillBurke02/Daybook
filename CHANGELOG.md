@@ -27,6 +27,15 @@
   at the lesson's end and on Notes. The card table loses its CHECK on type (migration 004): the files
   are checked as they load, so a new kind of card needs no migration. Ohm's and Kirchhoff's laws has
   one of each. Written up in CONTENT-BRIEF.md; checked by tests/content.check.mjs.
+- **Courses from elsewhere** (apps/learn/packs.py; My cards → Courses from elsewhere): Anki decks
+  (basic, reversed and cloze notes, pictures, MathJax), Moodle XML and GIFT quizzes (multiple
+  choice, true/false, numerical with tolerance or range, matching, short answer) and Daybook course
+  packs become subjects in data/courses/, loaded with the courses on every start; each says where it
+  came from and asks you to check its licence. Re-importing keeps progress; any subject downloads as a
+  pack. QTI, H5P and open-textbook readings are left for later. Checks: tests/test_packs.py.
+- **Trading 212 CSV** (apps/money/t212.py; Savings/Pension → Import a Trading 212 CSV): deposits and
+  withdrawals recorded as money paid in and taken out, each once (by Trading 212's id); dividends,
+  interest and trades counted and shown. Undo takes an import back.
 
 ## 3.0 — in progress (not released)
 

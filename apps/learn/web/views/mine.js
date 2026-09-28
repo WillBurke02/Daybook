@@ -116,6 +116,45 @@ const importPanel = { title: 'Import flash cards', w: 4, async render(body, ctx)
     } }, 'Import')));
 } };
 
+// Courses from elsewhere: an Anki deck, a Moodle or GIFT quiz, a course pack. Each becomes a subject in
+// the data folder, beside learn.db, so an update never touches it; it loads with the courses on every start.
+const packsPanel = { title: 'Courses from elsewhere', w: 8, async render(body, ctx) {
+  const list = el('div');
+  const file = el('input', { type: 'file', accept: '.apkg,.colpkg,.zip,.xml,.gift,.txt', 'aria-label': 'A deck, quiz or course pack' });
+  const said = el('p', { class: 'muted small' });
+  const draw = async () => {
+    const got = await api.packs();
+    list.replaceChildren(got.length ? table([
+      { k: 'title', label: 'Subject', render: r => el('a', { href: `#/courses?s=${encodeURIComponent(r.id)}` }, r.title) },
+      { k: 'note', label: 'Where it came from', render: r => el('span', { class: 'muted small' }, r.note || '') },
+      { k: '_x', label: '', sort: false, render: r => el('span', { class: 'row mid' },
+        el('a', { class: 'btn plain sm', href: '/learn/api/' + api.packUrl(r.id) }, 'Download'),
+        el('button', { class: 'btn danger sm', type: 'button', onclick: async () => {
+          if (!confirm(`Remove ${r.title}? Your progress on it is kept, and comes back if you import it again.`)) return;
+          try { await api.removePack(r.id); flash('Removed'); draw(); } catch (e) { flash(e.message); }
+        } }, 'Remove')) }], got) : el('p', { class: 'note' }, 'None imported yet.'));
+  };
+  file.addEventListener('change', async () => {
+    const f = file.files[0];
+    if (!f) return;
+    said.textContent = `Reading ${f.name}…`;
+    const data = await new Promise(r => { const x = new FileReader(); x.onload = () => r(x.result); x.readAsDataURL(f); });
+    try {
+      const r = await api.importFile(f.name, data);
+      said.textContent = `${r.title}: ${r.cards} card${r.cards === 1 ? '' : 's'} in ${r.lessons} lesson${r.lessons === 1 ? '' : 's'}`
+        + (r.skipped ? `; ${r.skipped} left out (a kind of question Learn cannot ask, or empty).` : '.');
+      ctx.changed('card'); ctx.changed('lesson'); draw();
+    } catch (e) { said.textContent = ''; flash(e.message); }
+    file.value = '';
+  });
+  body.append(el('p', { class: 'note' }, 'An Anki deck (.apkg), a Moodle XML quiz (.xml), a GIFT quiz (.gift) or a Daybook course pack (.zip). ',
+    'Multiple choice, numbers, matching, true or false and flash cards come in; anything else is counted and left out. ',
+    'Importing the same file again updates it and keeps your progress. Any subject, your own or a course, downloads as a pack ',
+    'from Courses, to share or keep. A pack is loaded on this computer only: import it on each one you use.'),
+    el('div', { class: 'row mid' }, file), said, list);
+  draw();
+} };
+
 const mistakesPanel = { title: 'From my mistakes', w: 8, deps: ['card'], async render(body, ctx) {
   const rows = await api.view('v_card', { source: 'mistake', order: 'due' });
   body.append(el('p', { class: 'note' }, 'A wrong answer becomes a flash card with the answer and the reason, due at once. Delete one once it has stuck.'),
@@ -127,5 +166,7 @@ const mistakesPanel = { title: 'From my mistakes', w: 8, deps: ['card'], async r
 } };
 
 export const page = { title: 'My cards',
-  layout: [{ use: 'learn.mycards', w: 8 }, { use: 'learn.mylessons', w: 4 }, { use: 'learn.import', w: 4 }, { use: 'learn.mistakes', w: 8 }],
-  panels: { 'learn.mycards': cardsPanel, 'learn.mylessons': lessonsPanel, 'learn.import': importPanel, 'learn.mistakes': mistakesPanel } };
+  layout: [{ use: 'learn.mycards', w: 8 }, { use: 'learn.mylessons', w: 4 }, { use: 'learn.import', w: 4 }, { use: 'learn.mistakes', w: 8 },
+           { use: 'learn.packs', w: 12 }],
+  panels: { 'learn.mycards': cardsPanel, 'learn.mylessons': lessonsPanel, 'learn.import': importPanel, 'learn.mistakes': mistakesPanel,
+            'learn.packs': packsPanel } };

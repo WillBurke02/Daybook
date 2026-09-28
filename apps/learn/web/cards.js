@@ -44,6 +44,9 @@ export function rich(text, values = {}) {
   return box;
 }
 
+/** Pictures that came with an imported card: kept in the card as data, never fetched from anywhere. */
+const pics = list => list?.length ? el('div', { class: 'pics' }, list.filter(src => /^data:image\//.test(src)).map(src => el('img', { src, alt: '' }))) : null;
+
 /** Element.append prints null as "null": this leaves the nulls out. */
 const add = (node, ...kids) => node.append(...kids.flat().filter(k => k != null && k !== false));
 /** A card's words for a list: the first line, maths and template numbers shown as … */
@@ -88,8 +91,8 @@ const TYPES = {
   },
 
   flash(c, face, done) {
-    add(face, el('div', { class: 'front' }, rich(c.front || '')));
-    const back = el('div', { class: 'back', hidden: true }, rich(c.back || ''));
+    add(face, el('div', { class: 'front' }, rich(c.front || ''), pics(c.img)));
+    const back = el('div', { class: 'back', hidden: true }, rich(c.back || ''), pics(c.back_img));
     let rates = null;
     const show = el('button', { class: 'btn', type: 'button', onclick: () => {
       back.hidden = false; show.remove(); rates = rateButtons(done); add(face, rates);
@@ -477,7 +480,7 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
   const box = el('article', { class: `lcard t-${c.type}`, data: { id: item.id } },
     el('div', { class: 'meta muted small' }, [item.subject, item.lesson].filter(Boolean).join(' · '),
       WHY[item.why] ? el('span', { class: 'chip' }, WHY[item.why]) : null,
-      JSON.stringify(c).includes('$') ? el('button', { class: 'link small fhelpbtn', type: 'button', title: 'What this formula means, letter by letter',
+      JSON.stringify(c).replace(/\\\\\$/g, '').includes('$') ? el('button', { class: 'link small fhelpbtn', type: 'button', title: 'What this formula means, letter by letter',
         onclick: () => formulaHelp(mathsOf(c, values), item.id.split('/')[0]) }, 'Formula help') : null,
       el('button', { class: 'link small', type: 'button', title: 'A whiteboard beside the card (W)', onclick: () => toggle('board') }, 'Whiteboard'),
       el('button', { class: 'link small', type: 'button', title: 'A calculator beside the card (C)', onclick: () => toggle('calc') }, 'Calculator'),
@@ -507,7 +510,10 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
   };
   if (!TYPES[c.type]) add(face, el('p', { class: 'err' }, `Learn does not know a ${c.type} card.`));
   else {
-    try { box.keys = TYPES[c.type](c, face, done, values) || null; }
+    try {
+      box.keys = TYPES[c.type](c, face, done, values) || null;
+      if (c.img?.length && c.type !== 'flash') face.querySelector('.rich')?.after(pics(c.img));
+    }
     catch (e) { add(face, el('p', { class: 'err' }, `This card could not be shown: ${e.message}`)); }
   }
   box.finished = () => finished;

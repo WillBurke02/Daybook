@@ -87,7 +87,8 @@ const coursesPanel = { title: 'Courses', w: 12, deps: ['card', 'lesson', 'skill'
         s.asks ? el('span', { class: 'small' }, ' ', bar(s.mastered / s.asks, `${pct(s.mastered, s.asks)}% solid`), ` ${pct(s.mastered, s.asks)}% solid`) : null,
         s.due ? el('span', { class: 'chip on' }, `${s.due} due`) : null,
         s.id !== 'mine' ? el('a', { class: 'btn plain sm cal', href: `#/calibrate?s=${encodeURIComponent(s.id)}` }, k?.placed ? 'Recalibrate' : 'Find my level') : null,
-        s.id !== 'mine' ? el('a', { class: 'btn plain sm', href: `#/notes?s=${encodeURIComponent(s.id)}` }, 'Notes') : null),
+        s.id !== 'mine' ? el('a', { class: 'btn plain sm', href: `#/notes?s=${encodeURIComponent(s.id)}` }, 'Notes') : null,
+        s.id !== 'mine' ? el('a', { class: 'btn plain sm', href: '/learn/api/' + api.packUrl(s.id), title: 'This course as a pack (.zip), to share or keep' }, 'Download') : null),
       shown.length ? shown : el('p', { class: 'muted small' }, 'None here.')));
   }
   if (!subjects.some(s => s.id !== 'mine')) body.append(el('p', { class: 'note' }, 'No courses found. They are the files in apps/learn/content.'));
