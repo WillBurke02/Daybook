@@ -1,0 +1,38 @@
+{
+ "id": "electrical",
+ "title": "Electrical",
+ "sort": 5,
+ "note": "Power and installation for control panels and machines, to UK practice: BS 7671 (the IET Wiring Regulations), BS EN 60204-1 and the Electricity at Work Regulations 1989. Check the current edition before relying on a figure.",
+ "units": [
+  {"id": "electrical.safety", "title": "Working safely", "lessons": [{"id": "electrical.safety.isolation", "title": "Safe isolation and lock-off: proving dead, GS38, the Electricity at Work Regulations", "level": 4.0, "kind": "procedure", "star": true}]},
+  {
+   "id": "electrical.supply",
+   "title": "Supplies",
+   "lessons": [
+    {"id": "electrical.supply.ac-power", "title": "AC power: kW, kVA and power factor", "level": 5.2, "kind": "procedure", "prereq": ["physics.elec.ac"]},
+    {"id": "electrical.supply.three-phase", "title": "Three-phase: star and delta, line and phase, 400/230 V", "level": 5.5, "kind": "procedure", "prereq": ["electrical.supply.ac-power"]},
+    {"id": "electrical.supply.transformers", "title": "Transformers and 24 V DC supplies: sizing and fusing", "level": 5.3, "kind": "procedure"},
+    {"id": "electrical.supply.harmonics", "title": "Harmonics and power quality (VFDs on the supply)", "level": 6.5, "kind": "concept", "prereq": ["electrical.supply.three-phase"]}
+   ]
+  },
+  {
+   "id": "electrical.protection",
+   "title": "Protection and cables",
+   "lessons": [
+    {"id": "electrical.protection.protective-devices", "title": "Protective devices: fuses, MCB curves, RCDs, discrimination", "level": 5.5, "kind": "concept"},
+    {"id": "electrical.protection.cables", "title": "Cables: current rating and volt drop (the BS 7671 method)", "level": 5.8, "kind": "procedure", "prereq": ["electrical.protection.protective-devices"]},
+    {"id": "electrical.protection.earthing", "title": "Earthing and bonding: TN-S, TN-C-S, TT, fault loop impedance", "level": 6.0, "kind": "concept"},
+    {"id": "electrical.protection.testing", "title": "Inspection and testing: insulation resistance, continuity, Zs", "level": 6.0, "kind": "procedure", "prereq": ["electrical.protection.earthing"]}
+   ]
+  },
+  {
+   "id": "electrical.machines",
+   "title": "Motors and panels",
+   "lessons": [
+    {"id": "electrical.machines.motor-circuits", "title": "Motor circuits: DOL, star-delta, soft starters, contactors and overloads", "level": 5.5, "kind": "concept", "prereq": ["electrical.supply.three-phase"]},
+    {"id": "electrical.machines.panels", "title": "Control panels: layout, BS EN 60204-1, wire colours, terminals", "level": 5.8, "kind": "facts"}
+   ]
+  },
+  {"id": "electrical.hazardous", "title": "Hazardous areas", "lessons": [{"id": "electrical.hazardous.atex", "title": "Hazardous areas: ATEX, DSEAR and zones", "level": 6.0, "kind": "facts"}]}
+ ]
+}

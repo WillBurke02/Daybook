@@ -1,0 +1,53 @@
+{
+ "id": "software",
+ "title": "Software",
+ "sort": 13,
+ "note": "The software you write around machines: C# and .NET for SCADA and test tools, Python for data, and the tools and habits that keep it working.",
+ "units": [
+  {
+   "id": "software.tools",
+   "title": "Tools",
+   "lessons": [
+    {"id": "software.tools.git", "title": "Git: commits, branches and merging", "level": 4.8, "kind": "procedure"},
+    {"id": "software.tools.linux", "title": "Linux basics: the shell and services", "level": 5.0, "kind": "procedure"},
+    {"id": "software.tools.python", "title": "Python for engineers: scripts, data and plots", "level": 5.0, "kind": "procedure"},
+    {"id": "software.tools.sql", "title": "SQL and SQLite", "level": 5.0, "kind": "procedure"},
+    {"id": "software.tools.ci", "title": "Continuous integration and releases", "level": 6.0, "kind": "concept", "prereq": ["software.tools.git"]}
+   ]
+  },
+  {
+   "id": "software.csharp",
+   "title": "C# and .NET",
+   "lessons": [
+    {"id": "software.csharp.essentials", "title": "C# essentials: types, collections, LINQ, generics", "level": 5.5, "kind": "procedure"},
+    {"id": "software.csharp.oo-design", "title": "Object-oriented design: classes, interfaces, composition", "level": 5.5, "kind": "concept", "prereq": ["software.csharp.essentials"]},
+    {"id": "software.csharp.async", "title": "async and await, threads and timers", "level": 6.0, "kind": "concept", "prereq": ["software.csharp.essentials"]},
+    {"id": "software.csharp.wpf", "title": "WPF and MVVM", "level": 6.0, "kind": "concept", "prereq": ["software.csharp.oo-design"]},
+    {"id": "software.csharp.hardware", "title": "Talking to hardware from code: serial ports, sockets, Modbus and OPC UA clients", "level": 6.0, "kind": "procedure", "prereq": ["software.csharp.async"]},
+    {"id": "software.csharp.logging", "title": "Logging, errors and configuration", "level": 5.5, "kind": "concept"},
+    {"id": "software.csharp.testing", "title": "Testing: unit tests, and simulators in place of the hardware", "level": 5.8, "kind": "procedure"},
+    {"id": "software.csharp.patterns", "title": "Design patterns that fit machines: state, observer, command", "level": 6.0, "kind": "concept", "prereq": ["software.csharp.oo-design"]},
+    {"id": "software.csharp.architecture", "title": "Clean architecture for machine software", "level": 6.5, "kind": "concept", "prereq": ["software.csharp.patterns"]}
+   ]
+  },
+  {
+   "id": "software.web",
+   "title": "Web and data",
+   "lessons": [
+    {"id": "software.web.http", "title": "HTTP, REST and JSON", "level": 5.0, "kind": "concept"},
+    {"id": "software.web.javascript", "title": "JavaScript and web pages for HMIs", "level": 5.0, "kind": "procedure", "prereq": ["software.web.http"]},
+    {"id": "software.web.historians", "title": "Historians and time-series data", "level": 5.5, "kind": "concept"},
+    {"id": "software.web.data-structures", "title": "Data structures and complexity", "level": 5.5, "kind": "concept"}
+   ]
+  },
+  {
+   "id": "software.systems",
+   "title": "Systems",
+   "lessons": [
+    {"id": "software.systems.security", "title": "Security basics: passwords, TLS, least privilege", "level": 5.5, "kind": "concept"},
+    {"id": "software.systems.real-time", "title": "Real-time systems: determinism and jitter", "level": 6.5, "kind": "concept"},
+    {"id": "software.systems.embedded-c", "title": "Embedded C on a microcontroller", "level": 6.5, "kind": "procedure", "prereq": ["electronics.digital.micro"]}
+   ]
+  }
+ ]
+}

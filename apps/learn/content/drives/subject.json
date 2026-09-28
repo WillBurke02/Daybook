@@ -36,6 +36,21 @@
      "title": "Servo motors and amplifiers",
      "level": 6.0,
      "kind": "concept"
+    },
+    {
+     "id": "drives.motors.steppers",
+     "title": "Stepper motors and their drives",
+     "level": 5.5,
+     "kind": "concept"
+    },
+    {
+     "id": "drives.motors.linear",
+     "title": "Linear motors and direct drives",
+     "prereq": [
+      "drives.motors.servo"
+     ],
+     "level": 6.5,
+     "kind": "concept"
     }
    ]
   },
@@ -111,6 +126,34 @@
      "title": "Inertia matching",
      "level": 6.5,
      "kind": "procedure"
+    },
+    {
+     "id": "drives.motion.sizing",
+     "title": "Servo sizing: torque, speed, RMS torque over a cycle",
+     "prereq": [
+      "drives.motion.inertia",
+      "drives.motion.profiles"
+     ],
+     "level": 6.5,
+     "kind": "procedure"
+    },
+    {
+     "id": "drives.motion.galil",
+     "title": "Motion controller programming (Galil DMC)",
+     "prereq": [
+      "drives.motion.homing"
+     ],
+     "level": 6.0,
+     "kind": "procedure"
+    },
+    {
+     "id": "drives.motion.line-shaft",
+     "title": "Electronic line shaft, camming and flying saw",
+     "prereq": [
+      "drives.motion.gearing"
+     ],
+     "level": 7.0,
+     "kind": "concept"
     }
    ]
   },

@@ -1,0 +1,29 @@
+{
+ "id": "materials",
+ "title": "Materials and Manufacturing",
+ "sort": 11,
+ "note": "What parts are made of, how they are made, and how quality is kept.",
+ "units": [
+  {
+   "id": "materials.materials",
+   "title": "Materials",
+   "lessons": [
+    {"id": "materials.materials.properties", "title": "Material properties: strength, hardness, toughness", "level": 4.8, "kind": "facts"},
+    {"id": "materials.materials.metals", "title": "Steels, aluminium and titanium alloys", "level": 5.3, "kind": "facts", "prereq": ["materials.materials.properties"]},
+    {"id": "materials.materials.heat-treatment", "title": "Heat treatment", "level": 5.5, "kind": "concept", "prereq": ["materials.materials.metals"]},
+    {"id": "materials.materials.composites", "title": "Composites: layups, CFRP, and their defects", "level": 5.8, "kind": "concept"},
+    {"id": "materials.materials.corrosion", "title": "Corrosion and protection", "level": 5.0, "kind": "concept"}
+   ]
+  },
+  {
+   "id": "materials.processes",
+   "title": "Processes",
+   "lessons": [
+    {"id": "materials.processes.welding", "title": "Welding processes and weld defects", "level": 5.5, "kind": "concept"},
+    {"id": "materials.processes.machining", "title": "Machining and CNC: turning, milling, G-code", "level": 5.0, "kind": "concept"},
+    {"id": "materials.processes.additive", "title": "Additive manufacturing", "level": 5.0, "kind": "concept"}
+   ]
+  },
+  {"id": "materials.quality", "title": "Quality", "lessons": [{"id": "materials.quality.quality", "title": "Quality: inspection, SPC, Cp and Cpk, ISO 9001", "level": 5.5, "kind": "procedure", "prereq": ["maths.stats.distributions"]}]}
+ ]
+}

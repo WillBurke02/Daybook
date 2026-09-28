@@ -1,0 +1,51 @@
+{
+ "id": "mechanical",
+ "title": "Mechanical",
+ "sort": 9,
+ "note": "The mechanics behind machines: fixings, drawings, machine elements, dynamics and strength. Figures such as torques and fits vary by maker and standard: use the datasheet.",
+ "units": [
+  {
+   "id": "mechanical.fixings",
+   "title": "Fixings and drawings",
+   "lessons": [
+    {"id": "mechanical.fixings.fasteners", "title": "Fasteners: bolt grades, thread standards, torque and preload", "level": 4.8, "kind": "procedure", "star": true},
+    {"id": "mechanical.fixings.drawings", "title": "Reading engineering drawings: projections, sections, title blocks", "level": 4.5, "kind": "procedure"},
+    {"id": "mechanical.fixings.tolerances", "title": "Tolerances and fits (ISO 286), surface finish", "level": 5.3, "kind": "procedure", "prereq": ["mechanical.fixings.drawings"]},
+    {"id": "mechanical.fixings.gdt", "title": "GD&T basics (ISO 1101)", "level": 6.0, "kind": "concept", "prereq": ["mechanical.fixings.tolerances"]},
+    {"id": "mechanical.fixings.cad", "title": "CAD: sketch, part, assembly, drawing", "level": 5.0, "kind": "procedure", "prereq": ["mechanical.fixings.drawings"]}
+   ]
+  },
+  {
+   "id": "mechanical.elements",
+   "title": "Machine elements",
+   "lessons": [
+    {"id": "mechanical.elements.friction", "title": "Friction", "level": 5.0, "kind": "concept", "prereq": ["maths.mech.forces"]},
+    {"id": "mechanical.elements.gears-belts", "title": "Gears, belts and chains: ratios, torque and efficiency", "level": 5.3, "kind": "procedure"},
+    {"id": "mechanical.elements.screws", "title": "Leadscrews and ball screws: pitch, thrust, backlash, critical speed", "level": 5.8, "kind": "procedure", "prereq": ["mechanical.elements.gears-belts"]},
+    {"id": "mechanical.elements.bearings", "title": "Bearings: types, fits and L10 life", "level": 5.8, "kind": "concept"},
+    {"id": "mechanical.elements.guides", "title": "Linear guides, couplings and alignment", "level": 5.5, "kind": "concept"}
+   ]
+  },
+  {
+   "id": "mechanical.dynamics",
+   "title": "Dynamics",
+   "lessons": [
+    {"id": "mechanical.dynamics.energy", "title": "Energy, work and power", "level": 5.0, "kind": "procedure", "prereq": ["physics.more.mechanics"]},
+    {"id": "mechanical.dynamics.rotation", "title": "Rotational dynamics: torque = Jα, the inertia of common shapes", "level": 5.8, "kind": "procedure", "prereq": ["mechanical.dynamics.energy"]},
+    {"id": "mechanical.dynamics.vibration", "title": "Vibration: natural frequency, resonance, balancing", "level": 6.5, "kind": "concept", "prereq": ["mechanical.dynamics.rotation"]},
+    {"id": "mechanical.dynamics.condition", "title": "Condition monitoring: vibration, thermal, current signatures", "level": 6.5, "kind": "concept", "prereq": ["mechanical.dynamics.vibration"]}
+   ]
+  },
+  {
+   "id": "mechanical.strength",
+   "title": "Strength and design",
+   "lessons": [
+    {"id": "mechanical.strength.stress", "title": "Stress, strain and Young's modulus", "level": 5.2, "kind": "procedure"},
+    {"id": "mechanical.strength.beams", "title": "Beams: bending and deflection", "level": 6.0, "kind": "procedure", "prereq": ["mechanical.strength.stress", "maths.mech.moments"]},
+    {"id": "mechanical.strength.torsion", "title": "Torsion, shafts and keys", "level": 6.0, "kind": "procedure", "prereq": ["mechanical.strength.stress"]},
+    {"id": "mechanical.strength.fatigue", "title": "Fatigue and factors of safety", "level": 6.3, "kind": "concept", "prereq": ["mechanical.strength.stress"]},
+    {"id": "mechanical.strength.dfma", "title": "Design for manufacture and assembly", "level": 6.0, "kind": "concept"}
+   ]
+  }
+ ]
+}

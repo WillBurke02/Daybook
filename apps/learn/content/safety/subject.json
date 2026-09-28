@@ -1,0 +1,33 @@
+{
+ "id": "safety",
+ "title": "Machine Safety",
+ "sort": 7,
+ "note": "UK machinery safety law and the harmonised standards used under it (ISO 12100, ISO 13849, ISO 14119, ISO 14120, ISO 13855, IEC 61800-5-2). The standards are summarised, not reproduced: read the real ones before you design.",
+ "units": [
+  {
+   "id": "safety.law",
+   "title": "Law and risk",
+   "lessons": [
+    {"id": "safety.law.law", "title": "The law: HSWA, PUWER, the Supply of Machinery (Safety) Regulations, UKCA and CE", "level": 5.0, "kind": "facts"},
+    {"id": "safety.law.risk", "title": "Risk assessment to ISO 12100: hazards and the order of risk reduction", "level": 5.5, "kind": "procedure", "prereq": ["safety.law.law"]},
+    {"id": "safety.law.rams", "title": "RAMS, permits to work and lock-out", "level": 4.8, "kind": "procedure", "prereq": ["electrical.safety.isolation"]}
+   ]
+  },
+  {
+   "id": "safety.safeguards",
+   "title": "Safeguards",
+   "lessons": [
+    {"id": "safety.safeguards.guards", "title": "Guards and interlocks: ISO 14119, ISO 14120, safety distances (ISO 13855)", "level": 6.0, "kind": "concept", "prereq": ["safety.law.risk"]},
+    {"id": "safety.safeguards.safety-plcs", "title": "Safety PLCs and drive safety functions: STO, SS1, SLS (IEC 61800-5-2)", "level": 6.5, "kind": "concept", "prereq": ["plc.safety.safety"]}
+   ]
+  },
+  {
+   "id": "safety.proof",
+   "title": "Proving it",
+   "lessons": [
+    {"id": "safety.proof.validation", "title": "Validating safety functions: ISO 13849-2 and SISTEMA", "level": 7.0, "kind": "procedure", "prereq": ["safety.safeguards.safety-plcs"]},
+    {"id": "safety.proof.technical-file", "title": "The technical file and Declaration of Conformity", "level": 6.0, "kind": "facts", "prereq": ["safety.law.law"]}
+   ]
+  }
+ ]
+}

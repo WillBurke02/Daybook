@@ -30,7 +30,7 @@ now = lambda: datetime.now().strftime("%Y-%m-%d %H:%M")
 subjects, units, lessons, cards = learn.read_content()
 assert one("SELECT COUNT(*) n FROM lesson WHERE source='file'")["n"] == len(lessons) >= 80
 assert one("SELECT COUNT(*) n FROM card WHERE source='file'")["n"] == len(cards) >= 90
-assert {s["id"] for s in subjects} == {"maths", "physics", "electronics", "plc", "drives"}
+assert {"maths", "physics", "electronics", "plc", "drives", "electrical", "practice"} <= {s["id"] for s in subjects}
 pe = "physics.ut.pulse-echo"
 assert one("SELECT data FROM card WHERE id=?", f"{pe}/thickness-from-time"), "a card's id is lesson/card"
 les = R("GET", "lesson", q={"id": [pe]})

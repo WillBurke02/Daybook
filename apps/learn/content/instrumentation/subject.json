@@ -1,0 +1,51 @@
+{
+ "id": "instrumentation",
+ "title": "Control and Instrumentation",
+ "sort": 6,
+ "note": "Field devices, process measurement and process control, with ISA symbols and UK practice.",
+ "units": [
+  {
+   "id": "instrumentation.sensors",
+   "title": "Sensors",
+   "lessons": [
+    {"id": "instrumentation.sensors.proximity", "title": "Proximity and position sensors: inductive, capacitive, photoelectric, NPN and PNP", "level": 4.8, "kind": "concept", "star": true},
+    {"id": "instrumentation.sensors.chain", "title": "The measurement chain: 2-, 3- and 4-wire transmitters, loop power", "level": 5.0, "kind": "concept", "prereq": ["electronics.signals.sensors"]},
+    {"id": "instrumentation.sensors.temperature", "title": "Temperature: RTDs, thermocouples, cold-junction compensation", "level": 5.3, "kind": "concept", "prereq": ["instrumentation.sensors.chain"]},
+    {"id": "instrumentation.sensors.pressure-level-flow", "title": "Pressure, level and flow measurement", "level": 5.5, "kind": "concept", "prereq": ["instrumentation.sensors.chain"]},
+    {"id": "instrumentation.sensors.load-cells", "title": "Load cells and strain gauges: bridges, excitation, calibration", "level": 5.8, "kind": "procedure", "prereq": ["physics.elec.dividers"]}
+   ]
+  },
+  {
+   "id": "instrumentation.process",
+   "title": "Process",
+   "lessons": [
+    {"id": "instrumentation.process.pid-diagrams", "title": "P&IDs and ISA symbols", "level": 5.0, "kind": "facts"},
+    {"id": "instrumentation.process.valves", "title": "Valves and actuators", "level": 5.5, "kind": "concept"},
+    {"id": "instrumentation.process.accuracy", "title": "Instrument accuracy, calibration and uncertainty", "level": 5.5, "kind": "procedure", "prereq": ["physics.measure.uncertainties"]},
+    {"id": "instrumentation.process.daq", "title": "Data acquisition: sampling, Nyquist and aliasing", "level": 6.0, "kind": "concept", "prereq": ["electronics.digital.adc-dac"]}
+   ]
+  },
+  {
+   "id": "instrumentation.loops",
+   "title": "Process loops",
+   "lessons": [
+    {"id": "instrumentation.loops.step-tests", "title": "Step tests: first order plus dead time", "level": 6.3, "kind": "procedure", "prereq": ["drives.control.pid"]},
+    {"id": "instrumentation.loops.tuning", "title": "Tuning process loops: Ziegler–Nichols and lambda", "level": 6.5, "kind": "procedure", "prereq": ["instrumentation.loops.step-tests"]},
+    {"id": "instrumentation.loops.strategies", "title": "Cascade, ratio and split-range control", "level": 6.3, "kind": "concept", "prereq": ["instrumentation.loops.tuning"]},
+    {"id": "instrumentation.loops.batch", "title": "Batch control and ISA-88", "level": 6.5, "kind": "concept"},
+    {"id": "instrumentation.loops.alarms", "title": "Alarm management (ISA-18.2)", "level": 6.0, "kind": "concept"}
+   ]
+  },
+  {
+   "id": "instrumentation.theory",
+   "title": "Control theory",
+   "lessons": [
+    {"id": "instrumentation.theory.block-diagrams", "title": "Block diagrams and transfer functions", "level": 6.8, "kind": "concept", "prereq": ["maths.eng.laplace"]},
+    {"id": "instrumentation.theory.second-order", "title": "Second-order response: damping, overshoot, settling", "level": 6.8, "kind": "concept", "prereq": ["instrumentation.theory.block-diagrams"]},
+    {"id": "instrumentation.theory.bode", "title": "Frequency response and Bode plots", "level": 7.0, "kind": "procedure", "prereq": ["instrumentation.theory.second-order"]},
+    {"id": "instrumentation.theory.stability", "title": "Stability, gain and phase margins", "level": 7.0, "kind": "concept", "prereq": ["instrumentation.theory.bode"]},
+    {"id": "instrumentation.theory.digital", "title": "Digital control: sample time and discretisation", "level": 7.0, "kind": "concept", "prereq": ["instrumentation.process.daq"]}
+   ]
+  }
+ ]
+}

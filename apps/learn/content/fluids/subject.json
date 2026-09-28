@@ -1,0 +1,41 @@
+{
+ "id": "fluids",
+ "title": "Fluid Power and Thermofluids",
+ "sort": 10,
+ "note": "Pneumatics and hydraulics as used on machines, the fluid flow and heat behind them, and cooling a panel.",
+ "units": [
+  {
+   "id": "fluids.pneumatics",
+   "title": "Pneumatics",
+   "lessons": [
+    {"id": "fluids.pneumatics.basics", "title": "Pneumatics: air supply, cylinders, 5/2 and 5/3 valves, ISO 1219 symbols", "level": 4.8, "kind": "concept"},
+    {"id": "fluids.pneumatics.circuits", "title": "Pneumatic circuits and sequencing from a PLC", "level": 5.3, "kind": "procedure", "prereq": ["fluids.pneumatics.basics", "plc.basics.ladder"]}
+   ]
+  },
+  {
+   "id": "fluids.hydraulics",
+   "title": "Hydraulics",
+   "lessons": [
+    {"id": "fluids.hydraulics.basics", "title": "Hydraulics: pressure, flow, pumps, F = pA", "level": 5.3, "kind": "procedure"},
+    {"id": "fluids.hydraulics.servo", "title": "Hydraulic servo and proportional valves", "level": 6.5, "kind": "concept", "prereq": ["fluids.hydraulics.basics"]}
+   ]
+  },
+  {
+   "id": "fluids.flow",
+   "title": "Fluid flow",
+   "lessons": [
+    {"id": "fluids.flow.bernoulli", "title": "Fluid flow: Bernoulli and pipe losses", "level": 5.8, "kind": "procedure"},
+    {"id": "fluids.flow.pumps-fans", "title": "Pumps and fans: curves and the affinity laws (why a VFD saves energy)", "level": 6.0, "kind": "procedure", "prereq": ["fluids.flow.bernoulli"]}
+   ]
+  },
+  {
+   "id": "fluids.heat",
+   "title": "Heat",
+   "lessons": [
+    {"id": "fluids.heat.transfer", "title": "Heat transfer: conduction, convection, radiation", "level": 5.5, "kind": "concept"},
+    {"id": "fluids.heat.thermodynamics", "title": "Thermodynamics: energy, the first law, efficiency", "level": 5.5, "kind": "concept"},
+    {"id": "fluids.heat.enclosures", "title": "Enclosure cooling: heat from drives, fans and panel coolers", "level": 5.5, "kind": "procedure", "prereq": ["fluids.heat.transfer"]}
+   ]
+  }
+ ]
+}

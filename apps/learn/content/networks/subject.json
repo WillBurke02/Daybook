@@ -1,0 +1,36 @@
+{
+ "id": "networks",
+ "title": "Networks and Industrial IT",
+ "sort": 8,
+ "note": "Ethernet and IP as used on the plant floor, industrial protocols, and the PCs and servers around the PLCs.",
+ "units": [
+  {
+   "id": "networks.ip",
+   "title": "Networks",
+   "lessons": [
+    {"id": "networks.ip.addressing", "title": "IP addresses, subnets and gateways", "level": 4.8, "kind": "procedure", "star": true},
+    {"id": "networks.ip.ethernet", "title": "Ethernet, switches and VLANs", "level": 5.5, "kind": "concept", "prereq": ["networks.ip.addressing"]},
+    {"id": "networks.ip.tcp-udp", "title": "TCP and UDP, ports and sockets", "level": 5.5, "kind": "concept", "prereq": ["networks.ip.addressing"]},
+    {"id": "networks.ip.wireshark", "title": "Network fault finding with Wireshark", "level": 6.0, "kind": "procedure", "prereq": ["networks.ip.tcp-udp"]}
+   ]
+  },
+  {
+   "id": "networks.fieldbus",
+   "title": "Industrial comms",
+   "lessons": [
+    {"id": "networks.fieldbus.serial", "title": "Serial fieldbuses: RS-485, Modbus RTU, PROFIBUS", "level": 5.5, "kind": "concept"},
+    {"id": "networks.fieldbus.opcua-mqtt", "title": "OPC UA and MQTT", "level": 6.0, "kind": "concept", "prereq": ["networks.ip.tcp-udp"]},
+    {"id": "networks.fieldbus.ethercat", "title": "EtherCAT and motion buses", "level": 6.5, "kind": "concept", "prereq": ["networks.ip.ethernet"]}
+   ]
+  },
+  {
+   "id": "networks.systems",
+   "title": "Systems",
+   "lessons": [
+    {"id": "networks.systems.pcs", "title": "Industrial PCs: Windows and Linux admin, backups", "level": 5.5, "kind": "procedure"},
+    {"id": "networks.systems.scada", "title": "SCADA architecture: tags, historians, redundancy", "level": 6.0, "kind": "concept"},
+    {"id": "networks.systems.security", "title": "Remote access and OT security (IEC 62443, firewalls, VPNs)", "level": 6.3, "kind": "concept", "prereq": ["networks.ip.ethernet"]}
+   ]
+  }
+ ]
+}
