@@ -1,0 +1,863 @@
+{
+ "id": "physics.elec.ac",
+ "title": "AC and RMS",
+ "tags": [
+  "electrical",
+  "ac",
+  "rms",
+  "mains",
+  "measurement"
+ ],
+ "kind": "procedure",
+ "level": 5.2,
+ "minutes": 25,
+ "goals": [
+  "Describe an AC supply by its peak, its frequency and its period, and find the voltage at a given moment",
+  "Change between peak, peak-to-peak and RMS values, and say which one a part must withstand",
+  "Work out the RMS current, the average power and the peak current of a resistive load such as a heater",
+  "Say when an average-responding meter can be trusted and when you need a true-RMS meter"
+ ],
+ "summary": "**DC** flows one way from a steady voltage. **AC** keeps reversing: the mains voltage is a **sine wave**, $v = V_0 \\sin(2\\pi f t)$. $V_0$ is the **peak**, $f$ the **frequency** in hertz (cycles a second), $t$ the time in seconds. The angle $2\\pi f t$ is in **radians** (one cycle is $2\\pi$).\n\n**Period** $T = \\frac{1}{f}$. UK mains: 50 Hz, so 20 ms a cycle and a zero crossing every 10 ms.\n\n**RMS** (root mean square): square the values, take the mean, take the root. The plain average of a sine over a cycle is zero, so RMS is what we quote. For a sine:\n\n$$V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} \\approx 0.707 \\times V_0 \\qquad V_0 = \\sqrt{2} \\times V_{\\text{rms}}$$\n\nThe RMS heats a resistor just as the same DC voltage would. **230 V mains is RMS**: it peaks at 325 V, and is 650 V peak-to-peak. Ratings and meter readings are RMS unless they say otherwise.\n\n**Withstand the peak**: a part with a DC rating across AC (a diode, a capacitor after a rectifier) sees the peak. The supply can run 10% high (253 V, peaking at 358 V), so such parts on mains are often 400 V or more. A 24 V AC secondary peaks at 34 V.\n\n**Power**: in a resistor the current follows the voltage. The power swings from zero to $V_0 I_0$ twice a cycle and averages half of that: $P_{\\text{ave}} = \\frac{1}{2} V_0 I_0 = V_{\\text{rms}} I_{\\text{rms}}$. With RMS values every DC formula works: $I_{\\text{rms}} = \\frac{V_{\\text{rms}}}{R}$, $P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R}$. Peak power is twice the average.\n\n**Meters**: an **average-responding** meter measures the flipped-up average (0.637 of the peak) and multiplies by 1.11: right for a clean sine only. A **true-RMS** meter is right for any shape. Use true-RMS on distorted waveforms: drive and switch-mode supply currents.\n\n**Why AC**: transformers step it up and down easily, and high voltage means low current, so the $I^2R$ loss in long lines is small.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "20.5 Alternating Current versus Direct Current",
+   "url": "https://openstax.org/books/college-physics-2e/pages/20-5-alternating-current-versus-direct-current",
+   "by": "OpenStax (Urone, Hinrichs), College Physics 2e",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "15.1 AC Sources",
+   "url": "https://openstax.org/books/university-physics-volume-2/pages/15-1-ac-sources",
+   "by": "OpenStax (Ling, Sanny, Moebs), University Physics Volume 2",
+   "minutes": 8,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, College Physics 2e (Urone, Hinrichs), section 20.5 Alternating Current versus Direct Current. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "Adapted from OpenStax, University Physics Volume 2 (Ling, Sanny, Moebs), section 15.1 AC Sources. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "The Electricity Safety, Quality and Continuity Regulations 2002 (SI 2002/2665), regulation 27: UK low-voltage supply 230 V +10% −6%, 50 Hz"
+ ],
+ "formulas": [
+  {
+   "name": "An AC voltage",
+   "tex": "v = V_0 \\sin(2\\pi f t)",
+   "match": [
+    "\\sin(2\\pi"
+   ],
+   "says": "The voltage at any moment is the peak times the sine of an angle that grows steadily with time, going once round ($2\\pi$ radians) every cycle.",
+   "symbols": [
+    [
+     "v",
+     "the voltage at that moment (V)"
+    ],
+    [
+     "V_0",
+     "the peak voltage (V)"
+    ],
+    [
+     "f",
+     "the frequency: cycles a second (hertz, Hz)"
+    ],
+    [
+     "t",
+     "the time since a zero crossing going up (seconds)"
+    ]
+   ],
+   "example": "UK mains, 2.5 ms after a zero crossing: $325 \\sin(2\\pi \\times 50 \\times 0.0025) = 325 \\times 0.707 = 230$ V."
+  },
+  {
+   "name": "Period and frequency",
+   "tex": "T = \\frac{1}{f}",
+   "match": [
+    "T=\\frac{1}{f}"
+   ],
+   "says": "The time for one cycle is one over the number of cycles a second.",
+   "symbols": [
+    [
+     "T",
+     "the period: the time for one cycle (seconds)"
+    ],
+    [
+     "f",
+     "the frequency (Hz)"
+    ]
+   ],
+   "example": "50 Hz: $T = \\frac{1}{50} = 0.02$ s, 20 ms."
+  },
+  {
+   "name": "RMS from peak",
+   "tex": "V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}}",
+   "match": [
+    "\\frac{V_0}{\\sqrt{2}}"
+   ],
+   "says": "For a sine wave, the RMS voltage is the peak divided by the square root of 2, about 0.707 of the peak.",
+   "symbols": [
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage: what a meter shows and a label gives (V)"
+    ],
+    [
+     "V_0",
+     "the peak voltage (V)"
+    ]
+   ],
+   "example": "a 10 V peak: $\\frac{10}{1.414} = 7.07$ V RMS."
+  },
+  {
+   "name": "Peak from RMS",
+   "tex": "V_0 = \\sqrt{2} \\times V_{\\text{rms}}",
+   "match": [
+    "V_0=\\sqrt{2}"
+   ],
+   "says": "For a sine wave, the peak is the RMS times the square root of 2, about 1.414 times.",
+   "symbols": [
+    [
+     "V_0",
+     "the peak voltage (V)"
+    ],
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage (V)"
+    ]
+   ],
+   "example": "230 V mains: $1.414 \\times 230 = 325$ V peak."
+  },
+  {
+   "name": "Peak current from RMS",
+   "tex": "I_0 = \\sqrt{2} \\times I_{\\text{rms}}",
+   "match": [
+    "I_0=\\sqrt{2}"
+   ],
+   "says": "The same rule for current: for a sine wave the peak current is 1.414 times the RMS current.",
+   "symbols": [
+    [
+     "I_0",
+     "the peak current (A)"
+    ],
+    [
+     "I_{\\text{rms}}",
+     "the RMS current: what a meter shows (A)"
+    ]
+   ],
+   "example": "8.7 A RMS: $1.414 \\times 8.7 = 12.3$ A peak."
+  },
+  {
+   "name": "Average AC power",
+   "tex": "P_{\\text{ave}} = V_{\\text{rms}} I_{\\text{rms}} = \\frac{1}{2} V_0 I_0",
+   "match": [
+    "V_{\\text{rms}}I_{\\text{rms}}"
+   ],
+   "says": "The average power is the RMS voltage times the RMS current, which is half the peak voltage times the peak current.",
+   "symbols": [
+    [
+     "P_{\\text{ave}}",
+     "the average power: what the rating gives (W)"
+    ],
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage (V)"
+    ],
+    [
+     "I_{\\text{rms}}",
+     "the RMS current (A)"
+    ],
+    [
+     "V_0",
+     "the peak voltage (V)"
+    ],
+    [
+     "I_0",
+     "the peak current (A)"
+    ]
+   ],
+   "example": "230 V and 8.7 A: $230 \\times 8.7 = 2000$ W."
+  },
+  {
+   "name": "RMS current from power",
+   "tex": "I_{\\text{rms}} = \\frac{P_{\\text{ave}}}{V_{\\text{rms}}}",
+   "match": [
+    "\\frac{P_{\\text{ave}}}{V_{\\text{rms}}}"
+   ],
+   "says": "The RMS current is the rated (average) power divided by the RMS voltage.",
+   "symbols": [
+    [
+     "I_{\\text{rms}}",
+     "the RMS current (A)"
+    ],
+    [
+     "P_{\\text{ave}}",
+     "the average power (W)"
+    ],
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage (V)"
+    ]
+   ],
+   "example": "a 2 kW heater on 230 V: $\\frac{2000}{230} = 8.70$ A."
+  },
+  {
+   "name": "Ohm's law with RMS values",
+   "tex": "I_{\\text{rms}} = \\frac{V_{\\text{rms}}}{R}",
+   "match": [
+    "\\frac{V_{\\text{rms}}}{R}"
+   ],
+   "says": "For a resistor on AC, Ohm's law works as it does on DC, as long as you use RMS values for both.",
+   "symbols": [
+    [
+     "I_{\\text{rms}}",
+     "the RMS current (A)"
+    ],
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage (V)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ]
+   ],
+   "example": "230 V across 26.45 Ω: $\\frac{230}{26.45} = 8.70$ A."
+  },
+  {
+   "name": "Average power in a resistor",
+   "tex": "P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R}",
+   "match": [
+    "\\frac{V_{\\text{rms}}^2}{R}"
+   ],
+   "says": "The average power is the RMS voltage squared, divided by the resistance: the DC formula with the RMS voltage in it.",
+   "symbols": [
+    [
+     "P_{\\text{ave}}",
+     "the average power (W)"
+    ],
+    [
+     "V_{\\text{rms}}",
+     "the RMS voltage (V)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ]
+   ],
+   "example": "230 V across 53 Ω: $\\frac{230^2}{53} = 998$ W."
+  },
+  {
+   "name": "Power lost in a line",
+   "tex": "P = I^2R",
+   "match": [
+    "I^2R"
+   ],
+   "says": "The heat lost in a cable or line is the current squared times its resistance. Halve the current and the loss falls to a quarter.",
+   "symbols": [
+    [
+     "P",
+     "the power turned into heat (W)"
+    ],
+    [
+     "I",
+     "the (RMS) current (A)"
+    ],
+    [
+     "R",
+     "the line's resistance (Ω)"
+    ]
+   ],
+   "example": "500 A through 1 Ω: $500^2 \\times 1 = 250\\,000$ W, 250 kW."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Compare peak, peak-to-peak and RMS with a **signal generator** set to a few volts (nothing near mains), an oscilloscope and a multimeter on its AC volts range.",
+   "check": [
+    "Set the generator to a 50 Hz sine. Connect its output to the scope and, in parallel, to the meter on V AC",
+    "Turn the amplitude until the scope shows a 5 V peak (10 V peak-to-peak). Read it off the scope, not the generator's display: many generators assume a 50 Ω load and show half the real voltage into a scope or meter",
+    "Work out the RMS, 5 ÷ 1.414 = 3.54 V, and compare it with the meter",
+    "Check the timing on the scope: 20 ms a cycle, zero crossings 10 ms apart",
+    "Switch to a square wave with the same 5 V peak. A true-RMS meter should read about 5 V; an average-responding one about 5.6 V. Which is yours?",
+    "Keep to the frequencies your meter's manual gives for AC readings"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-peak",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. UK mains is called 230 V. What is the highest voltage it actually reaches in each cycle?",
+   "options": [
+    "230 V",
+    "About 163 V",
+    "About 325 V",
+    "About 460 V"
+   ],
+   "answer": 2,
+   "why": "230 V is the **RMS** value, a kind of average. The voltage swings up and down in a sine wave, and its peaks are $\\sqrt{2}$ (about 1.414) times the RMS: $230 \\times 1.414 \\approx 325$ V, then down to −325 V. 163 V divides by 1.414 instead of multiplying. 460 V doubles it: the peak is more than the RMS, but less than twice it."
+  },
+  {
+   "id": "ac-dc",
+   "type": "concept",
+   "stage": "learn",
+   "title": "AC: a voltage that keeps reversing",
+   "body": "**Direct current** (DC) flows one way only, from a steady voltage: a battery, a 24 V DC supply.\n\n**Alternating current** (AC) keeps reversing. The mains voltage rises, falls through zero, goes negative and comes back, in a smooth **sine wave**:\n\n$$v = V_0 \\sin(2\\pi f t)$$\n\n$v$ is the voltage at the moment $t$ (seconds). $V_0$ is the **peak** voltage. $f$ is the **frequency**: cycles per second, in hertz (Hz). UK mains is 50 Hz.\n\nOne cycle takes the **period**, $T = \\frac{1}{f}$: 20 ms at 50 Hz. The voltage crosses zero twice a cycle, every 10 ms.\n\n$2\\pi f t$ is an angle in **radians**: one full cycle is $2\\pi$ radians (360°).",
+   "more": "Picture a point on the rim of a wheel turning 50 times a second, as a two-pole alternator in a power station does. Its height above the axle, plotted against time, is a sine wave: up to the top (the peak), down through the middle (zero), to the bottom (minus the peak), and back.\n\nWorked number, UK mains, $V_0 = 325$ V. 2.5 ms after a zero crossing going up: the angle is $2\\pi \\times 50 \\times 0.0025 = 0.785$ radians (45°, an eighth of a cycle). $\\sin 0.785 = 0.707$, so $v = 325 \\times 0.707 = 230$ V. At 5 ms, a quarter cycle, it reaches the peak, 325 V. At 10 ms it is back at zero.\n\nYou will also see it written $v = V_0 \\sin \\omega t$, where $\\omega = 2\\pi f$: 314 radians a second at 50 Hz."
+  },
+  {
+   "id": "zero-crossings",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "An AC supply runs at {hz} Hz. How long is it from one zero crossing to the next? Answer in ms.",
+   "vars": {
+    "hz": {
+     "pick": [
+      50,
+      60,
+      400,
+      1000
+     ]
+    }
+   },
+   "let": {
+    "per": "1000 / hz"
+   },
+   "answer": "1000 / hz / 2",
+   "unit": "ms",
+   "hint": "Find the period first. How many zero crossings are there in one cycle?",
+   "work": "$T = \\frac{1}{f} = \\frac{1}{{hz}}$ s $= {per}$ ms; half of that is {answer} ms",
+   "why": "There are two zero crossings each cycle, one going up and one going down, so they are half a period apart. At 50 Hz: a 20 ms period, crossings 10 ms apart. (400 Hz is used in aircraft: at the higher frequency, transformers and motors can be lighter.)"
+  },
+  {
+   "id": "peak-rms",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Peak and RMS",
+   "body": "Averaged over a whole cycle, a sine wave comes to **zero**: as much below the line as above. So the plain average is no use for AC.\n\nInstead we use the **RMS** (root mean square): **square** every value (the negatives turn positive), take the **mean** (the average), then the square **root**. For a sine wave it works out as\n\n$$V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} \\approx 0.707 \\times V_0$$\n\nand the other way, $V_0 = \\sqrt{2} \\times V_{\\text{rms}} \\approx 1.414 \\times V_{\\text{rms}}$.\n\nThe RMS is the DC voltage that would heat a resistor just as much. UK mains, **230 V, is the RMS**. Its peak is $230 \\times 1.414 \\approx 325$ V.",
+   "more": "Why square? Squaring makes every value positive. And the heat in a resistor goes with the voltage squared ($P = \\frac{V^2}{R}$), so the mean of the squares is exactly what sets the heating.\n\nWorked number with a simple wave: a voltage that sits at +10 V for a while, then at −10 V for the same time (a **square wave**). Squared: 100 all the time. Mean: 100. Root: 10 V. So its RMS is 10 V, and on a heater it does just what 10 V DC would.\n\nA sine wave spends most of its time below its peak, so its RMS is less than the peak: 0.707 of it, which is $\\frac{1}{\\sqrt{2}}$. A sine peaking at 10 V has an RMS of 7.07 V."
+  },
+  {
+   "id": "rms-widget",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.8,
+   "intro": "A signal generator's sine wave at 50 Hz. Across is the time in ms (two cycles, 0 to 40 ms); up is the voltage. The slider $a$ sets the peak in volts.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sin",
+     "a": 3,
+     "b": 0.314159,
+     "c": 0,
+     "d": 0,
+     "x": [
+      0,
+      40
+     ],
+     "y": [
+      -6,
+      6
+     ],
+     "fs": [
+      "sin"
+     ],
+     "ghost": false,
+     "controls": [
+      "a"
+     ]
+    }
+   },
+   "predict": {
+    "q": "Before you move it: if you make the peak bigger, what happens to the time between zero crossings?",
+    "options": [
+     "It gets longer",
+     "It stays the same",
+     "It gets shorter"
+    ],
+    "answer": 1,
+    "why": "The size of the wave (its peak) and how often it repeats (its frequency) are separate. At 50 Hz the zero crossings stay 10 ms apart however big the peak is: a bigger peak only makes the wave taller."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "Set any peak you like. What is the RMS voltage of this wave?",
+    "answer": "ABS(a) / SQRT(2)",
+    "unit": "V",
+    "abs": 0.02,
+    "hint": "Divide the peak by $\\sqrt{2}$, about 1.414.",
+    "why": "RMS = peak ÷ $\\sqrt{2}$ = {a} ÷ 1.414 = {answer} V. (If $a$ is negative the wave is only flipped over; its RMS is the same.) Multiplying by 1.414 goes the wrong way: the RMS of a sine is always **less** than its peak."
+   }
+  },
+  {
+   "id": "withstand",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What a part must withstand",
+   "body": "Meter readings and AC ratings are RMS. But a part wired across an AC supply sees the **peak**.\n\n- **Peak**: $V_0 = \\sqrt{2} \\times V_{\\text{rms}}$. 230 V mains peaks at 325 V.\n- **Peak-to-peak**: top to bottom, $2V_0$: 650 V for mains. A scope shows it as the trace's height.\n\nSo a part with a **DC** voltage rating, such as a diode or a capacitor after a rectifier, must be rated above the peak, not the RMS. (A part marked \"275 V AC\" is already rated in RMS.)\n\nThe supply varies too: in the UK it can be 10% high, 253 V, which peaks at about 358 V. So such parts on mains are often rated 400 V or more.",
+   "more": "Picture a spring pushed back and forth. What breaks it is the furthest it is ever pushed, not the average push. Insulation and a capacitor are the same: the peak is what can punch through.\n\nWorked number: a 24 V AC control transformer. Its peak is $24 \\times 1.414 = 33.9$ V. Rectify and smooth it, and the capacitor charges to nearly that peak, less about 1.4 V lost in the bridge rectifier's diodes: about 32.5 V DC, not 24 V. A 25 V capacitor there would be overstressed; a 50 V one is the usual choice.\n\nThree-phase: the 400 V between lines is RMS too, and peaks at $400 \\times 1.414 = 566$ V."
+  },
+  {
+   "id": "peak-from-rms",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A transformer's secondary winding is marked {vr} V AC. What is its peak voltage?",
+   "vars": {
+    "vr": {
+     "pick": [
+      9,
+      12,
+      18,
+      24,
+      48,
+      110
+     ]
+    }
+   },
+   "answer": "vr * SQRT(2)",
+   "unit": "V",
+   "work": "$V_0 = \\sqrt{2} \\times V_{\\text{rms}} = 1.414 \\times {vr} = {answer}$ V",
+   "why": "The marking is RMS, as AC ratings are. The peak is √2 (1.414) times bigger. Dividing by 1.414 gives a number smaller than the RMS, and a sine's peak is never smaller than its RMS."
+  },
+  {
+   "id": "ac-power",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Power, Ohm's law and RMS",
+   "body": "In a resistor the current follows the voltage at every moment ($i = \\frac{v}{R}$), so it is a sine wave too, peaking at $I_0 = \\frac{V_0}{R}$. Its RMS is $I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}}$.\n\nThe power, $vi$, swings between zero (at each zero crossing) and $V_0 I_0$ (at each peak), twice a cycle: 100 times a second on 50 Hz. Its **average** is half the peak:\n\n$$P_{\\text{ave}} = \\frac{1}{2} V_0 I_0 = V_{\\text{rms}} I_{\\text{rms}}$$\n\nSo with RMS values every DC formula works unchanged: $I_{\\text{rms}} = \\frac{V_{\\text{rms}}}{R}$ and $P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R}$. A 2 kW heater's 2 kW is the average.",
+   "more": "Why is the average $V_{\\text{rms}} I_{\\text{rms}}$? Because $\\frac{V_0}{\\sqrt{2}} \\times \\frac{I_0}{\\sqrt{2}} = \\frac{V_0 I_0}{2}$, since $\\sqrt{2} \\times \\sqrt{2} = 2$.\n\nWorked number: a 26.45 Ω heater element on 230 V. $I_{\\text{rms}} = \\frac{230}{26.45} = 8.70$ A, and $P = 230 \\times 8.70 = 2000$ W. On each peak: 325 V and 12.3 A, 4000 W for an instant. At each zero crossing: nothing. It averages 2000 W.\n\nA picture: pedalling a bike. The push on the pedals comes and goes twice each turn, but how far you go depends on the average push."
+  },
+  {
+   "id": "heater-power",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A heater element of {res} Ω runs on 230 V AC mains. What is its average power?",
+   "vars": {
+    "res": {
+     "pick": [
+      18,
+      26.45,
+      35,
+      53,
+      106
+     ]
+    }
+   },
+   "answer": "230^2 / res",
+   "unit": "W",
+   "work": "$P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R} = \\frac{230^2}{{res}} = {answer}$ W",
+   "why": "Use the RMS voltage, 230 V, and the DC formula works as it is. Using the peak, 325 V, gives twice the power: that is the power only for an instant at the top of each cycle."
+  },
+  {
+   "id": "meters",
+   "type": "concept",
+   "stage": "learn",
+   "title": "What your meter reads",
+   "body": "A multimeter on AC volts or amps shows the **RMS**. But there are two kinds.\n\n- An **average-responding** meter measures the average of the wave with its negative half flipped up (0.637 of the peak, for a sine) and multiplies by 1.11. For a clean sine that is exactly the RMS. For any other shape it is wrong.\n- A **true-RMS** meter works out the real RMS of whatever shape it sees.\n\nOn mains voltage, a near-clean sine, both agree. But on distorted waveforms, such as the current drawn by drives and switch-mode power supplies, an average-responding meter can be well out, often reading low. Use a true-RMS meter there. A scope shows the peak and peak-to-peak.",
+   "more": "Worked number: a sine with a 10 V peak. Flipped up, its average is $0.637 \\times 10 = 6.37$ V. The average-responding meter shows $6.37 \\times 1.11 = 7.07$ V, which is the true RMS, $\\frac{10}{\\sqrt{2}}$. Right.\n\nNow a square wave, +10 V then −10 V. Flipped up, it is 10 V all the time: average 10 V. The meter shows $10 \\times 1.11 = 11.1$ V. The true RMS is 10 V, so the meter reads 11% high. The 1.11 is right for a sine only.\n\nThe current drawn by electronic loads is the opposite case: short, tall pulses. Their average is small next to their RMS, so the average-responding meter reads low."
+  },
+  {
+   "id": "square-meter",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "A signal generator gives a **square wave** that switches between +5 V and −5 V. A true-RMS meter reads 5.0 V. What does an average-responding meter read?",
+   "options": [
+    "5.0 V",
+    "About 5.6 V",
+    "About 3.5 V",
+    "About 3.2 V"
+   ],
+   "answer": 1,
+   "hint": "Flip the negative half up: what is the average now? Then what does this kind of meter do to the average?",
+   "why": "Flipped up, the square wave is 5 V all the time, so its average is 5 V. The meter multiplies by 1.11, the factor for a sine, and shows about 5.6 V: 11% high. 3.5 V is 5 ÷ 1.414, the RMS of a *sine* with a 5 V peak, not of a square wave. 3.2 V is 0.637 × 5, a sine's flipped-up average."
+  },
+  {
+   "id": "worked-heater",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 2 kW (2000 W) heater runs on 230 V AC mains. Find the RMS current, the element's resistance, the peak voltage, the peak current and the peak power.",
+   "steps": [
+    {
+     "ask": "The RMS current.",
+     "show": "$I_{\\text{rms}} = \\frac{P_{\\text{ave}}}{V_{\\text{rms}}} = \\frac{2000}{230} = 8.70$ A"
+    },
+    {
+     "ask": "The resistance (Ohm's law, with RMS values).",
+     "show": "$R = \\frac{V_{\\text{rms}}}{I_{\\text{rms}}} = \\frac{230}{8.70} = 26.45$ Ω"
+    },
+    {
+     "ask": "The peak voltage.",
+     "show": "$V_0 = \\sqrt{2} \\times V_{\\text{rms}} = 1.414 \\times 230 = 325$ V"
+    },
+    {
+     "ask": "The peak current.",
+     "show": "$I_0 = \\sqrt{2} \\times I_{\\text{rms}} = 1.414 \\times 8.70 = 12.3$ A. Check: $\\frac{V_0}{R} = \\frac{325}{26.45} = 12.3$ A"
+    },
+    {
+     "ask": "The peak power.",
+     "show": "$P_0 = V_0 I_0 = 325 \\times 12.3 \\approx 4000$ W: twice the average"
+    }
+   ],
+   "why": "The power swings from zero up to 4000 W and back twice every cycle, 100 times a second, and averages 2000 W, the rating. The figures on the label are RMS or average; only the peaks are bigger. The usual slip is to use 325 V in $\\frac{P}{V}$, which mixes a peak with an average."
+  },
+  {
+   "id": "explain-peak-power",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: the peak voltage is 1.414 times the RMS (325 V), the peak current is 1.414 times the RMS (12.3 A), and the peak power came out at 4000 W: twice the 2000 W average.",
+   "q": "Why is the peak power **twice** the average, when the peak voltage and the peak current are each only about 1.4 times their RMS values? Say it in your own words.",
+   "model": "In a resistor the voltage and the current reach their peaks at the same instant. Power is voltage times current, so at that instant the two factors of 1.414 multiply: $1.414 \\times 1.414 = 2$. The peak power is therefore twice the RMS voltage times the RMS current, and that product is the average power. It fits the graph too: the power rises from zero to its peak and back twice each cycle, and that shape averages exactly half its peak.",
+   "points": [
+    "In a resistor the voltage and current peak at the same moment",
+    "Power is voltage times current, so the two factors of 1.414 multiply",
+    "1.414 × 1.414 = 2",
+    "The power swings between zero and its peak, so it averages half the peak"
+   ]
+  },
+  {
+   "id": "faded-immersion",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.0,
+   "q": "A 3 kW (3000 W) immersion heater runs on 230 V AC. Find its RMS current, its resistance, its peak current and its peak power.",
+   "steps": [
+    {
+     "ask": "The RMS current.",
+     "show": "$I_{\\text{rms}} = \\frac{3000}{230} = 13.04$ A"
+    },
+    {
+     "ask": "The resistance.",
+     "show": "$R = \\frac{230}{13.04} = 17.6$ Ω"
+    },
+    {
+     "ask": "The peak current.",
+     "show": "$I_0 = 1.414 \\times 13.04 = 18.4$ A"
+    },
+    {
+     "ask": "The peak power.",
+     "show": "Twice the average: $2 \\times 3000 = 6000$ W"
+    }
+   ],
+   "why": "The meter would show 13.0 A, and the cable and fuse are chosen for that RMS current. The current swings to 18.4 A at each peak, but it is the RMS that sets the heating in the cable."
+  },
+  {
+   "id": "peak-current-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.1,
+   "q": "A {pw} W heater runs on 230 V AC. What is the peak current through it?",
+   "vars": {
+    "pw": {
+     "pick": [
+      500,
+      1000,
+      1500,
+      2000,
+      2500,
+      3000
+     ]
+    }
+   },
+   "let": {
+    "irms": "pw / 230"
+   },
+   "answer": "SQRT(2) * pw / 230",
+   "unit": "A",
+   "hint": "The rating is the average power and 230 V is RMS: that gives the RMS current first.",
+   "work": "$I_{\\text{rms}} = \\frac{P_{\\text{ave}}}{V_{\\text{rms}}} = \\frac{{pw}}{230} = {irms}$ A; $I_0 = \\sqrt{2} \\times I_{\\text{rms}} = 1.414 \\times {irms} = {answer}$ A",
+   "why": "Power ÷ RMS voltage gives the RMS current, {irms} A. The peak is √2 times that. Dividing the power by 325 V mixes a peak with an average and gives a current that is too small."
+  },
+  {
+   "id": "rms-from-peak",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "On a scope, the sine wave from a low-voltage AC supply peaks at {vp} V. What would a true-RMS meter read?",
+   "vars": {
+    "vp": {
+     "pick": [
+      8.5,
+      12,
+      17,
+      34,
+      48
+     ]
+    }
+   },
+   "answer": "vp / SQRT(2)",
+   "unit": "V",
+   "work": "$V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} = \\frac{{vp}}{1.414} = {answer}$ V",
+   "why": "A meter shows the RMS, the peak ÷ $\\sqrt{2}$: always less than the peak. The same rule on three-phase: a 566 V peak between lines is the familiar 400 V RMS."
+  },
+  {
+   "id": "clamp-peak",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A clamp meter shows a heater cable carrying {amps} A AC. Taking the current as a clean sine wave, what is its peak?",
+   "vars": {
+    "amps": {
+     "pick": [
+      3,
+      6,
+      8.7,
+      10,
+      13,
+      16
+     ]
+    }
+   },
+   "answer": "amps * SQRT(2)",
+   "unit": "A",
+   "work": "$I_0 = \\sqrt{2} \\times I_{\\text{rms}} = 1.414 \\times {amps} = {answer}$ A",
+   "why": "The meter shows the RMS. The peak is √2 times bigger. That matters for things that respond to the peak, such as a semiconductor's current rating; the cable's heating goes with the RMS."
+  },
+  {
+   "id": "instant-voltage",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "UK mains: $v = 325 \\sin(2\\pi \\times 50 \\times t)$, with $t$ in seconds from a zero crossing going up. What is the voltage {tm} ms later?",
+   "vars": {
+    "tm": [
+     1,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "ts": "tm / 1000",
+    "ang": "2 * PI() * 50 * tm / 1000",
+    "sn": "SIN(2 * PI() * 50 * tm / 1000)"
+   },
+   "answer": "325 * SIN(2 * PI() * 50 * tm / 1000)",
+   "unit": "V",
+   "hint": "Turn ms into seconds first ({tm} ms is {ts} s). Set your calculator to **radians**.",
+   "work": "Angle: $2\\pi \\times 50 \\times {ts} = {ang}$ radians; $\\sin({ang}) = {sn}$; $v = 325 \\times {sn} = {answer}$ V",
+   "why": "The angle $2\\pi f t$ is in radians: one cycle is $2\\pi$. A calculator left in degrees reads {ang} as a tiny angle and gives almost nothing. Quick checks: at 5 ms, a quarter cycle, it is the peak, 325 V; at 2.5 ms, an eighth, it is $325 \\times 0.707 = 230$ V."
+  },
+  {
+   "id": "spot-rectifier",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "Someone is choosing the smoothing capacitor for a DC supply made from a 24 V AC transformer and a bridge rectifier. One line is wrong. Which?",
+   "lines": [
+    "The secondary is marked 24 V AC. Like all AC ratings, that is the RMS.",
+    "Peak: $V_0 = \\frac{24}{\\sqrt{2}} = 17.0$ V",
+    "The capacitor charges to about the peak, less about 1.4 V lost in the rectifier.",
+    "Allow about 10% more for the mains running high.",
+    "Choose a capacitor rated 50 V DC, comfortably above that."
+   ],
+   "wrong": 1,
+   "fix": "Peak: $V_0 = \\sqrt{2} \\times 24 = 33.9$ V",
+   "why": "The peak is the RMS **times** √2, not divided by it. The check: a sine's peak is always bigger than its RMS, and 17 V is less than 24 V. With the right peak the capacitor sees about 33.9 − 1.4 = 32.5 V, or about 36 V with the mains 10% high. A 25 V part, chosen from the wrong 17 V, would fail; the 50 V one is fine."
+  },
+  {
+   "id": "why-230",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Why is UK mains called 230 V when it peaks at about 325 V?",
+   "options": [
+    "230 V is its average over a whole cycle",
+    "The peak lasts only a moment, so it is ignored",
+    "230 V is the RMS: it heats like 230 V DC",
+    "230 V is its value at each zero crossing"
+   ],
+   "answer": 2,
+   "why": "230 V is the RMS: a heater on 230 V AC gives the same heat as on 230 V DC, so ratings, currents and meter readings all use it. The plain average over a cycle is zero, not 230 V. At a zero crossing the voltage is 0. And the peak is not ignored: parts across the supply must withstand it."
+  },
+  {
+   "id": "true-rms",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "You need the current a variable speed drive draws from the supply. Which meter gives a reading you can trust?",
+   "options": [
+    "A true-RMS meter",
+    "An average-responding meter",
+    "Any meter on AC amps",
+    "Any meter on DC amps"
+   ],
+   "answer": 0,
+   "why": "A drive draws its current in short, tall pulses, far from a sine. An average-responding meter scales by 1.11, which is right only for a sine, so here it can read well low. A true-RMS meter works out the real RMS whatever the shape. A DC range shows the plain average, which is about zero for AC."
+  },
+  {
+   "id": "mix-site-heater",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.4,
+   "q": "A heater made for a 110 V site supply is rated {pw} W. By mistake it is connected to 230 V. Taking its resistance as fixed, what power does it now take (until it burns out)?",
+   "vars": {
+    "pw": {
+     "pick": [
+      500,
+      1000,
+      1500,
+      2000
+     ]
+    }
+   },
+   "let": {
+    "rh": "110^2 / pw"
+   },
+   "answer": "230^2 / (110^2 / pw)",
+   "unit": "W",
+   "hint": "Find the element's resistance from its rating, $R = \\frac{V^2}{P}$, then the power at 230 V.",
+   "work": "$R = \\frac{110^2}{{pw}} = {rh}$ Ω; $P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R} = \\frac{230^2}{{rh}} = {answer}$ W",
+   "why": "The ratings are RMS, so the DC formulas work. Power goes with the voltage **squared**: about 2.1 times the voltage gives about 4.4 times the power. Scaling by 230 ÷ 110 alone forgets the square. (UK site supplies are 110 V, usually centre-tapped to earth, so only 55 V to earth.)"
+  },
+  {
+   "id": "mix-transmission",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.8,
+   "q": "A power line carries {mw} MW at {kv} kV (RMS). The line has a resistance of 1.0 Ω. What percentage of the power is lost as heat in the line?",
+   "vars": {
+    "mw": {
+     "pick": [
+      100,
+      200
+     ]
+    },
+    "kv": {
+     "pick": [
+      66,
+      132,
+      275,
+      400
+     ]
+    }
+   },
+   "let": {
+    "cur": "mw * 1000000 / (kv * 1000)",
+    "lossmw": "(mw * 1000000 / (kv * 1000))^2 / 1000000"
+   },
+   "answer": "(mw * 1000000 / (kv * 1000))^2 / (mw * 1000000) * 100",
+   "unit": "%",
+   "hint": "Current first, $I = \\frac{P}{V}$, in watts and volts. Then the loss, $P = I^2R$.",
+   "work": "$I = \\frac{P}{V} = \\frac{{mw} \\times 10^6}{{kv} \\times 10^3} = {cur}$ A; loss $= I^2R = {cur}^2 \\times 1.0$ W $= {lossmw}$ MW; ${lossmw} \\div {mw} \\times 100 = {answer}$ %",
+   "why": "Higher voltage means less current for the same power ($I = \\frac{P}{V}$), and the loss goes with the current **squared**. The same 100 MW at 25 kV would need 4000 A and lose 16%. That is why the grid runs at 132 to 400 kV, and why it is AC: a transformer steps AC up and down easily."
+  },
+  {
+   "id": "mix-which-value",
+   "type": "match",
+   "stage": "mix",
+   "level": 4.9,
+   "q": "Match each job to the value you need for it.",
+   "pairs": [
+    [
+     "The reverse voltage a rectifier diode on the supply must withstand",
+     "The peak"
+    ],
+    [
+     "The heat a heater element gives out",
+     "The RMS"
+    ],
+    [
+     "The height of the trace on a scope, top to bottom",
+     "The peak-to-peak"
+    ],
+    [
+     "The plain average of a sine wave over a whole cycle",
+     "Zero"
+    ]
+   ],
+   "why": "Parts with DC ratings feel the peak. Heating, ratings and meter readings use the RMS. A scope shows the whole swing, peak-to-peak, twice the peak. A plain average is zero, which is why RMS was invented."
+  },
+  {
+   "id": "mix-series-ac",
+   "type": "numeric",
+   "stage": "mix",
+   "q": "Two identical heater elements of {res} Ω are wired **in series** across 230 V AC mains. What is their total average power?",
+   "vars": {
+    "res": {
+     "pick": [
+      26.45,
+      35,
+      53,
+      70
+     ]
+    }
+   },
+   "let": {
+    "rs": "2 * res"
+   },
+   "answer": "230^2 / (2 * res)",
+   "unit": "W",
+   "hint": "Series first: add the resistances. Then use the RMS voltage in the DC power formula.",
+   "work": "$R_s = 2 \\times {res} = {rs}$ Ω; $P_{\\text{ave}} = \\frac{V_{\\text{rms}}^2}{R} = \\frac{230^2}{{rs}} = {answer}$ W",
+   "why": "In series the resistances add, and with the RMS voltage the DC formula works unchanged. Using one element's resistance gives twice the power; using the 325 V peak doubles it again."
+  },
+  {
+   "id": "check-site-peak",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.8,
+   "q": "A UK site supply is 110 V AC. What is its peak voltage?",
+   "options": [
+    "About 78 V",
+    "110 V",
+    "220 V",
+    "About 156 V"
+   ],
+   "answer": 3,
+   "why": "110 V is the RMS, so the peak is $110 \\times 1.414 \\approx 156$ V. 78 V divides by 1.414 instead of multiplying; 220 V is the doubling slip. (Peak-to-peak it swings about 311 V.)"
+  },
+  {
+   "id": "check-pp-rms",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.4,
+   "q": "A scope shows a sine wave {vpp} V peak-to-peak. What would a true-RMS meter read?",
+   "vars": {
+    "vpp": {
+     "pick": [
+      2,
+      5,
+      10,
+      16,
+      20
+     ]
+    }
+   },
+   "let": {
+    "vpk": "vpp / 2"
+   },
+   "answer": "vpp / 2 / SQRT(2)",
+   "unit": "V",
+   "hint": "Peak-to-peak is twice the peak. Find the peak first.",
+   "work": "$V_0 = \\frac{{vpp}}{2} = {vpk}$ V; $V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} = \\frac{{vpk}}{1.414} = {answer}$ V",
+   "why": "Halve the peak-to-peak to get the peak, then divide by √2. Dividing the peak-to-peak by √2 without halving gives twice the right answer."
+  },
+  {
+   "id": "check-irms",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.3,
+   "q": "A {pw} W kettle runs on 230 V AC mains. What current does a meter show?",
+   "vars": {
+    "pw": {
+     "pick": [
+      1800,
+      2200,
+      2500,
+      3000
+     ]
+    }
+   },
+   "answer": "pw / 230",
+   "unit": "A",
+   "work": "$I_{\\text{rms}} = \\frac{P_{\\text{ave}}}{V_{\\text{rms}}} = \\frac{{pw}}{230} = {answer}$ A",
+   "why": "The meter shows RMS, and the rating is the average power, so $I = \\frac{P}{V}$ with 230 V works as on DC. Dividing by the 325 V peak gives too small a current."
+  }
+ ]
+}
