@@ -1213,6 +1213,9 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--raised); background: var(--sw); box-shadow: 0 0 0 1px var(--rule);
           padding: 0; cursor: pointer; }
 .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.penw { width: 22px; height: 22px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
+.penw::after { content: ''; width: var(--pw); height: var(--pw); border-radius: 50%; background: var(--ink); }
+.penw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--c-learn, var(--accent)); }
 .wb-last { gap: 8px; padding: 6px 8px; border-radius: 6px; background: var(--c-learn-soft, var(--accent-soft)); }
 .calc-tape { flex: 1 1 auto; min-height: 1.8em; overflow: auto; margin: 0; padding: 0; list-style: none; font: 13px var(--mono); }
 .calc-tape li { padding: 3px 6px; cursor: pointer; border-radius: 4px; display: flex; justify-content: space-between; gap: 12px; }

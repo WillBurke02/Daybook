@@ -112,18 +112,19 @@ globalThis.addEventListener?.('resize', () => { for (const [name, w] of Object.e
 
 const COLOURS = ['--ink', '--s1', '--debit', '--s3'];
 const PAPERS = [['plain', 'Plain'], ['squared', 'Squared'], ['graph', 'Graph']];
-const W = 1000;                                   // the board is 1000 units across, whatever its size on screen
+const SIZES = [1.5, 3, 6, 12];                    // pen widths, in screen pixels
+// The board is measured in screen pixels: a bigger window shows more of it, never a zoomed copy.
 
 function board() {
   const canvas = el('canvas', { class: 'wb-canvas', 'aria-label': 'Whiteboard: draw with a pen, finger or mouse' });
   const g = canvas.getContext('2d');
   const question = el('div', { class: 'wb-q muted small' });
   const last = el('div', { class: 'wb-last row mid', hidden: true });
-  let strokes = [], undo = [], redo = [], colour = 0, tool = 'pen', paper = store('learn.paper') || 'squared';
+  let strokes = [], undo = [], redo = [], colour = 0, tool = 'pen', paper = store('learn.paper') || 'squared', size = +store('learn.pen') || 3;
   let card = null, dirty = false, timer = null, drawing = null;
   const mine = new Map();                        // this session's boards, by card: back to them without asking
 
-  const scale = () => canvas.width / W;
+  const scale = () => devicePixelRatio || 1;
   const ink = i => getComputedStyle(document.documentElement).getPropertyValue(COLOURS[i]).trim() || '#222';
   const paint = () => {
     const s = scale(), w = canvas.width, h = canvas.height;
@@ -162,7 +163,7 @@ function board() {
   };
   new ResizeObserver(fit).observe(canvas);
 
-  const at = e => { const r = canvas.getBoundingClientRect(), k = W / r.width;
+  const at = e => { const r = canvas.getBoundingClientRect(), k = 1;
     return [+((e.clientX - r.left) * k).toFixed(1), +((e.clientY - r.top) * k).toFixed(1), e.pointerType === 'pen' ? +e.pressure.toFixed(2) : 0.5]; };
   const change = next => { undo.push(strokes); redo = []; strokes = next; dirty = true; clearTimeout(timer); timer = setTimeout(save, 1500); paint(); };
   const hits = pt => strokes.filter(st => st.p.some(q => Math.hypot(q[0] - pt[0], q[1] - pt[1]) < 12 + st.w));
@@ -172,7 +173,7 @@ function board() {
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
     if (tool === 'erase') { const gone = hits(at(e)); if (gone.length) change(strokes.filter(st => !gone.includes(st))); drawing = { erase: true, c: 0, w: 0, p: [] }; return; }
-    drawing = { c: colour, w: e.pointerType === 'pen' ? 3 : 2.5, p: [at(e)] };
+    drawing = { c: colour, w: size, px: 1, p: [at(e)] };
     paint();
   });
   canvas.addEventListener('pointermove', e => {
@@ -198,7 +199,8 @@ function board() {
     mine.set(card, strokes);
     try { await api.send('sketch', { card_id: card, strokes, paper }); } catch (e) { flash(`The board was not kept: ${e.message}`); }
   }
-  const load = (list, p) => { strokes = list; undo = []; redo = []; if (p) paper = p; paper_.value = paper; paint(); };
+  const old = list => list.map(st => st.px ? st : { ...st, px: 1, w: st.w * 0.44, p: st.p.map(([x, y, q]) => [x * 0.44, y * 0.44, q]) });
+  const load = (list, p) => { strokes = old(list); undo = []; redo = []; if (p) paper = p; paper_.value = paper; paint(); };
 
   /** The card on screen changed: keep this board, then take up that card's. */
   async function follow() {
@@ -232,6 +234,12 @@ function board() {
       colours.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
       tool_.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', String(k === 0)));
     } })));
+  const sizes = el('span', { class: 'swatches', title: 'Pen width' }, SIZES.map(w => el('button', { class: 'penw', type: 'button', 'aria-label': `Pen width ${w}`,
+    'aria-pressed': String(w === size), style: `--pw: ${Math.max(3, w)}px`, onclick: e => {
+      size = w; store('learn.pen', String(w)); tool = 'pen';
+      sizes.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
+      tool_.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', String(k === 0)));
+    } })));
   const paper_ = el('select', { class: 'sm', 'aria-label': 'Paper', onchange: () => { paper = paper_.value; store('learn.paper', paper); dirty = true; paint(); save(); } },
     PAPERS.map(([v, label]) => el('option', { value: v }, label)));
   paper_.value = paper;
@@ -240,7 +248,7 @@ function board() {
   const box = el('div', { class: 'wb' },
     el('details', { class: 'wb-qbox', open: true }, el('summary', { class: 'muted small' }, 'The question'), question),
     last,
-    el('div', { class: 'row mid wb-tools' }, tool_, colours,
+    el('div', { class: 'row mid wb-tools' }, tool_, colours, sizes,
       el('button', { class: 'icon', type: 'button', title: 'Undo (Ctrl+Z)', 'aria-label': 'Undo', onclick: back }, '↶'),
       el('button', { class: 'icon', type: 'button', title: 'Redo', 'aria-label': 'Redo', onclick: fwd }, '↷'),
       el('button', { class: 'btn plain sm', type: 'button', onclick: () => strokes.length && change([]) }, 'Clear'), paper_),
@@ -288,7 +296,7 @@ function calculator() {
     show(ans);
     line.value = '';
   };
-  const line = field({ placeholder: 'e.g. 230 / 4.7k   2sin(30)   ans × 2', 'aria-label': 'A sum',
+  const line = field({ 'aria-label': 'A sum',
     title: 'ans is the last answer; k, m, µ, n, M after a number are prefixes' }, go);
   line.addEventListener('keydown', e => {
     if (e.key === 'ArrowUp' && back > 0) { e.preventDefault(); line.value = history[--back]; }
@@ -303,7 +311,7 @@ function calculator() {
   const read = el('div', { class: 'g-read num small muted' }, 'Drag to move · scroll to zoom · point at it to read values');
   const fns = GCOL.map((c, i) => {
     const r = { c, f: null };
-    r.input = field({ placeholder: ['e.g. x^2 - 4', 'e.g. 2x + 1', 'e.g. 10sin(x)'][i], 'aria-label': `y${i + 1}, a function of x` });
+    r.input = field({ 'aria-label': `y${i + 1}, a function of x` });
     r.input.addEventListener('input', () => { compileAll(); draw(); });
     return r;
   });
@@ -415,7 +423,7 @@ function calculator() {
     res.replaceChildren(el('div', { class: 'row wrap' }, r.roots.map(x => el('button', { class: 'chip num', type: 'button', title: 'Keep it as ans',
       onclick: () => { ans = x; show(x); flash(`ans = ${plain(x)}`); } }, `x = ${plain(x)}`))), graphIt);
   };
-  const eq = field({ placeholder: 'e.g. x^2 - 5 = 3x', 'aria-label': 'An equation in x' }, run);
+  const eq = field({ 'aria-label': 'An equation in x (e.g. x^2 - 5 = 3x)' }, run);
   const from = field({ value: '-100', 'aria-label': 'Look from x =', class: 'calc-in calc-num' }, run);
   const to = field({ value: '100', 'aria-label': 'Look to x =', class: 'calc-in calc-num' }, run);
   const solver = el('div', { class: 'calc-pane' }, eq,

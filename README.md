@@ -124,7 +124,8 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   the card. Each is its own window: drag it by its title bar, resize it from the
   corner, have both open at once; each comes back where you left it. The board
   takes a pen (with pressure), a finger or a mouse; pen, eraser, four colours,
-  plain, squared or graph paper, undo and redo. One board a card, kept: when the
+  four pen widths, plain, squared or graph paper (enlarging the window shows
+  more of it, it never zooms), undo and redo. One board a card, kept: when the
   card comes back it offers your working from last time. The calculator types or
   takes its keys (Shift for sin⁻¹ and the like): **Calc** for sums, with SI
   prefixes (`4.7k`, `220µ`), degrees or radians, `ans` and engineering notation,
