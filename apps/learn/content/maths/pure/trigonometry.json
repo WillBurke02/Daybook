@@ -1,0 +1,1057 @@
+{
+ "id": "maths.pure.trigonometry",
+ "title": "Trigonometry",
+ "tags": [
+  "trigonometry",
+  "angles",
+  "radians",
+  "triangles"
+ ],
+ "kind": "procedure",
+ "level": 5.0,
+ "minutes": 25,
+ "goals": [
+  "Convert angles between degrees and radians, and say what a radian is",
+  "Work out an arc length and a rim speed with s = rθ and v = rω",
+  "Name the sides of a right-angled triangle and use sin, cos and tan to find a missing side",
+  "Find an angle from two sides with the inverse functions, such as the slope of a conveyor or cable tray",
+  "Choose Pythagoras, SOH CAH TOA, the sine rule or the cosine rule for the triangle in front of you"
+ ],
+ "summary": "**Radians** are another way to measure angles. Bend the radius round the edge of a circle: the angle it covers is **1 radian**, about 57.3°. A full turn is $2\\pi$ rad.\n\n$$360^\\circ = 2\\pi \\text{ rad}$$\n\nDegrees to radians: multiply by $\\frac{\\pi}{180}$. Radians to degrees: multiply by $\\frac{180}{\\pi}$. PLC and spreadsheet SIN, COS and TAN take radians.\n\n**Arc length**: $s = r\\theta$, with $\\theta$ in radians.\n\n**Rim speed**: $\\omega = \\frac{2\\pi N}{60}$ rad/s for $N$ rpm, and $v = r\\omega$.\n\n**Right-angled triangles.** Name the sides from the angle $\\theta$: the **hypotenuse** (longest, opposite the right angle), the **opposite** (across from $\\theta$), the **adjacent** (next to $\\theta$).\n\n- $\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}$\n- $\\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}$\n- $\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}$\n\nSOH CAH TOA.\n\n**A missing side**: pick the ratio with the side you know and the side you want. Unknown on top: multiply ($\\text{opp} = \\text{hyp} \\times \\sin\\theta$). Unknown underneath: divide ($\\text{hyp} = \\frac{\\text{opp}}{\\sin\\theta}$). Check the hypotenuse is still the longest side.\n\n**An angle**: work out the ratio, then use the inverse: $\\theta = \\tan^{-1}\\frac{\\text{opp}}{\\text{adj}}$. The $^{-1}$ means \"the angle whose tan is\", not 1 divided by.\n\nCalculator in **DEG** mode for degrees. In RAD mode, $\\sin 25$ means 25 radians and gives $-0.132$: a negative length is the tell-tale.\n\n**Which tool?**\n\n- Right angle, two sides, want the third: Pythagoras.\n- Right angle, a side and an angle: sin, cos or tan.\n- Right angle, two sides, want an angle: an inverse.\n- No right angle, two sides and the angle between: the **cosine rule**, $c^2 = a^2 + b^2 - 2ab\\cos C$.\n- No right angle, a side and its opposite angle known: the **sine rule**, $\\frac{a}{\\sin A} = \\frac{b}{\\sin B}$.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "7.1 Angles",
+   "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/7-1-angles",
+   "by": "OpenStax (Abramson et al.)",
+   "minutes": 30,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "7.2 Right Triangle Trigonometry",
+   "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/7-2-right-triangle-trigonometry",
+   "by": "OpenStax (Abramson et al.)",
+   "minutes": 20,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, Algebra and Trigonometry 2e (Abramson et al.), sections 7.1 and 7.2, with two problems from 10.1 and 10.2. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "IEC 61131-3: Programmable controllers. Part 3: Programming languages"
+ ],
+ "formulas": [
+  {
+   "name": "Degrees to radians",
+   "tex": "\\theta_R = \\theta \\times \\frac{\\pi}{180}",
+   "match": [
+    "\\frac{\\pi}{180}"
+   ],
+   "says": "180° is $\\pi$ radians, so each degree is $\\frac{\\pi}{180}$ of a radian.",
+   "symbols": [
+    [
+     "\\theta_R",
+     "the angle in radians"
+    ],
+    [
+     "\\theta",
+     "the angle in degrees"
+    ]
+   ],
+   "example": "$90 \\times \\frac{\\pi}{180} = \\frac{\\pi}{2} \\approx 1.571$ rad."
+  },
+  {
+   "name": "Radians to degrees",
+   "tex": "\\theta = \\theta_R \\times \\frac{180}{\\pi}",
+   "match": [
+    "\\frac{180}{\\pi}"
+   ],
+   "says": "Each radian is $\\frac{180}{\\pi} \\approx 57.3$ degrees.",
+   "symbols": [
+    [
+     "\\theta",
+     "the angle in degrees"
+    ],
+    [
+     "\\theta_R",
+     "the angle in radians"
+    ]
+   ],
+   "example": "$3 \\times \\frac{180}{\\pi} \\approx 171.9^\\circ$."
+  },
+  {
+   "name": "Arc length",
+   "tex": "s = r\\theta",
+   "match": [
+    "s=r\\theta"
+   ],
+   "says": "The distance round the edge is the radius times the angle, with the angle in radians.",
+   "symbols": [
+    [
+     "s",
+     "the arc length, in the units of $r$"
+    ],
+    [
+     "r",
+     "the radius"
+    ],
+    [
+     "\\theta",
+     "the angle turned, in radians"
+    ]
+   ],
+   "example": "a 150 mm crank turned 2 rad: $s = 150 \\times 2 = 300$ mm."
+  },
+  {
+   "name": "Revs per minute to radians per second",
+   "tex": "\\omega = \\frac{2\\pi N}{60}",
+   "match": [
+    "\\frac{2\\pi",
+    "}{60}"
+   ],
+   "says": "Each rev is $2\\pi$ radians, and a minute is 60 seconds.",
+   "symbols": [
+    [
+     "\\omega",
+     "the angular speed, rad/s"
+    ],
+    [
+     "N",
+     "the speed in revs per minute (rpm)"
+    ]
+   ],
+   "example": "1450 rpm: $\\frac{2\\pi \\times 1450}{60} \\approx 151.8$ rad/s."
+  },
+  {
+   "name": "Speed at the rim",
+   "tex": "v = r\\omega",
+   "match": [
+    "v=r\\omega"
+   ],
+   "says": "A point on the rim moves at the radius times the angular speed, with $\\omega$ in rad/s.",
+   "symbols": [
+    [
+     "v",
+     "the speed of the rim (or belt), m/s"
+    ],
+    [
+     "r",
+     "the radius, m"
+    ],
+    [
+     "\\omega",
+     "the angular speed, rad/s"
+    ]
+   ],
+   "example": "a 0.1 m radius pulley at 151.8 rad/s: $v \\approx 15.2$ m/s."
+  },
+  {
+   "name": "Sine",
+   "tex": "\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}",
+   "match": [
+    "\\frac{\\text{opp}}{\\text{hyp}}"
+   ],
+   "says": "In a right-angled triangle, the side opposite the angle divided by the hypotenuse.",
+   "symbols": [
+    [
+     "\\theta",
+     "the angle"
+    ],
+    [
+     "\\text{opp}",
+     "the side opposite the angle"
+    ],
+    [
+     "\\text{hyp}",
+     "the hypotenuse: the longest side, opposite the right angle"
+    ]
+   ],
+   "example": "$\\sin 30^\\circ = 0.5$: a slope 30° up rises 0.5 m for each 1 m along it."
+  },
+  {
+   "name": "Cosine",
+   "tex": "\\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}",
+   "match": [
+    "\\frac{\\text{adj}}{\\text{hyp}}"
+   ],
+   "says": "The side next to the angle (not the hypotenuse) divided by the hypotenuse.",
+   "symbols": [
+    [
+     "\\theta",
+     "the angle"
+    ],
+    [
+     "\\text{adj}",
+     "the adjacent side: next to the angle"
+    ],
+    [
+     "\\text{hyp}",
+     "the hypotenuse"
+    ]
+   ],
+   "example": "a 2 m brace at 40° to the floor reaches $2 \\times \\cos 40^\\circ \\approx 1.53$ m along it."
+  },
+  {
+   "name": "Tangent",
+   "tex": "\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}",
+   "match": [
+    "\\frac{\\text{opp}}{\\text{adj}}"
+   ],
+   "says": "The opposite side divided by the adjacent side: the rise over the run, so the gradient of the slope.",
+   "symbols": [
+    [
+     "\\theta",
+     "the angle"
+    ],
+    [
+     "\\text{opp}",
+     "the opposite side (the rise)"
+    ],
+    [
+     "\\text{adj}",
+     "the adjacent side (the run)"
+    ]
+   ],
+   "example": "a rise of 1.2 m over a run of 4 m: $\\tan\\theta = 0.3$."
+  },
+  {
+   "name": "An angle from two sides",
+   "tex": "\\theta = \\tan^{-1}\\frac{\\text{opp}}{\\text{adj}}",
+   "match": [
+    "\\tan^{-1}"
+   ],
+   "says": "$\\tan^{-1}$ gives the angle whose tan is that number. $\\sin^{-1}$ and $\\cos^{-1}$ do the same for sin and cos. The $^{-1}$ does not mean 1 divided by.",
+   "symbols": [
+    [
+     "\\theta",
+     "the angle"
+    ],
+    [
+     "\\text{opp}",
+     "the opposite side"
+    ],
+    [
+     "\\text{adj}",
+     "the adjacent side"
+    ]
+   ],
+   "example": "$\\tan^{-1} 0.3 \\approx 16.7^\\circ$. In a spreadsheet: DEGREES(ATAN(0.3))."
+  },
+  {
+   "name": "Pythagoras",
+   "tex": "\\text{length} = \\sqrt{\\text{rise}^2 + \\text{run}^2}",
+   "match": [
+    "\\sqrt{\\text{rise}^2+\\text{run}^2}"
+   ],
+   "says": "In a right-angled triangle, the square on the hypotenuse is the sum of the squares on the other two sides.",
+   "symbols": [
+    [
+     "\\text{length}",
+     "the hypotenuse (the sloping side)"
+    ],
+    [
+     "\\text{rise}",
+     "the upright side"
+    ],
+    [
+     "\\text{run}",
+     "the level side"
+    ]
+   ],
+   "example": "rise 300 mm, run 400 mm: $\\sqrt{90000 + 160000} = 500$ mm."
+  },
+  {
+   "name": "The cosine rule",
+   "tex": "c^2 = a^2 + b^2 - 2ab\\cos C",
+   "match": [
+    "2ab\\cosC"
+   ],
+   "says": "For any triangle: the third side from two sides and the angle between them. With $C = 90^\\circ$, $\\cos C = 0$ and it is Pythagoras.",
+   "symbols": [
+    [
+     "a, b",
+     "the two sides you know"
+    ],
+    [
+     "C",
+     "the angle between them"
+    ],
+    [
+     "c",
+     "the side facing $C$"
+    ]
+   ],
+   "example": "4 m and 5 m at 60°: $c^2 = 16 + 25 - 40 \\times 0.5 = 21$, so $c \\approx 4.58$ m."
+  },
+  {
+   "name": "The sine rule",
+   "tex": "\\frac{a}{\\sin A} = \\frac{b}{\\sin B}",
+   "match": [
+    "\\frac{a}{\\sinA}"
+   ],
+   "says": "For any triangle: each side divided by the sine of the angle facing it gives the same number.",
+   "symbols": [
+    [
+     "a",
+     "a side"
+    ],
+    [
+     "A",
+     "the angle facing side $a$"
+    ],
+    [
+     "b",
+     "another side"
+    ],
+    [
+     "B",
+     "the angle facing side $b$"
+    ]
+   ],
+   "example": "$a = 300$ mm facing 60°, $B = 45^\\circ$: $b = \\frac{300 \\times \\sin 45^\\circ}{\\sin 60^\\circ} \\approx 245$ mm."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Measure a real slope and work out its angle two ways: a fixed ramp, a flight of steps or a cable tray you can reach from the floor. A conveyor only if it is stopped and isolated by the person in charge of it. No ladders, and nothing running.",
+   "check": [
+    "With a tape and a spirit level held level, measure the run (along the level) and the rise (straight up) over the same stretch",
+    "Work out the angle: θ = tan⁻¹(rise ÷ run), calculator in DEG mode",
+    "Measure the length along the slope for the same stretch, and check it against √(rise² + run²)",
+    "Work out the angle again from sin⁻¹(rise ÷ slope length): it should agree to a degree or so",
+    "If you have an inclinometer or a phone level app, compare its reading with yours"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-incline",
+   "type": "numeric",
+   "stage": "try",
+   "level": 4.6,
+   "q": "Have a go: a guess is fine. A conveyor belt is {L} m long and slopes up at {A}° to the floor. How much higher is its top end than its bottom end?",
+   "vars": {
+    "L": {
+     "pick": [
+      4,
+      5,
+      6,
+      8,
+      10
+     ]
+    },
+    "A": {
+     "pick": [
+      10,
+      15,
+      20,
+      25,
+      30
+     ]
+    }
+   },
+   "let": {
+    "s": "SIN(RADIANS(A))"
+   },
+   "answer": "L * SIN(RADIANS(A))",
+   "unit": "m",
+   "work": "The belt is the long sloping side; the height is the side opposite the angle. Height $= {L} \\times \\sin {A}^\\circ = {L} \\times {s} = {answer}$ m.",
+   "why": "Along the slope times the sine of the angle gives the height. Using cos instead gives the floor distance the belt covers, not the height. This lesson shows why sine is the one, and how to pick."
+  },
+  {
+   "id": "radians",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Degrees and radians",
+   "body": "A full turn is **360°**. Engineers and computers also use another unit: the **radian**.\n\nBend a piece of string as long as the radius round the edge of a circle. The angle it covers at the centre is **1 radian**, about 57.3°. The edge is $2\\pi$ radii long, so a full turn is $2\\pi$ radians:\n\n$$360^\\circ = 2\\pi \\text{ rad}$$\n\nand so $180^\\circ = \\pi$ rad.\n\nTo convert degrees to radians, multiply by $\\frac{\\pi}{180}$. To go back, multiply by $\\frac{180}{\\pi}$. So $90^\\circ = \\frac{\\pi}{2} \\approx 1.571$ rad.\n\nThe SIN, COS and TAN in a PLC or a spreadsheet take radians. Feed them degrees and the answer is wrong.",
+   "more": "Degrees are a choice someone made: 360 to a turn. Radians come from the circle itself: how many radii you have gone round the edge.\n\nPicture a crank 100 mm long. Turn it through 1 radian and its pin moves 100 mm round its arc. Turn it through 2 radians: 200 mm. A full turn is $2\\pi \\approx 6.28$ radii of travel.\n\nWorked examples:\n\n- $45^\\circ \\times \\frac{\\pi}{180} = \\frac{\\pi}{4} \\approx 0.785$ rad.\n- $3 \\text{ rad} \\times \\frac{180}{\\pi} \\approx 171.9^\\circ$: just short of a half turn, since $\\pi \\approx 3.14$ rad is 180°.\n\nAn angle written with no ° sign is usually in radians."
+  },
+  {
+   "id": "to-radians",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.3,
+   "q": "Convert {d}° to radians.",
+   "vars": {
+    "d": {
+     "pick": [
+      15,
+      30,
+      45,
+      60,
+      120,
+      135,
+      150,
+      210,
+      270
+     ]
+    }
+   },
+   "answer": "RADIANS(d)",
+   "unit": "rad",
+   "hint": "Multiply by $\\pi$, then divide by 180.",
+   "work": "${d} \\times \\frac{\\pi}{180} = {answer}$ rad.",
+   "why": "180° is $\\pi$ rad, so each degree is $\\frac{\\pi}{180}$ rad. Multiplying by $\\frac{180}{\\pi}$ instead goes the wrong way and gives a number far too big. A check: {d}° against 180° should be the same share as your answer against 3.14."
+  },
+  {
+   "id": "arc",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Arc length and speed at the rim",
+   "body": "With the angle $\\theta$ in radians, the distance round the edge is just the radius times the angle:\n\n$$s = r\\theta$$\n\nA 150 mm crank turned through 2 rad: its pin moves 300 mm along its arc.\n\nSpeed works the same way. **Angular speed** $\\omega$ (omega) is radians per second. A motor at $N$ rpm turns $2\\pi N$ radians a minute, so $\\omega = \\frac{2\\pi N}{60}$ rad/s. A point on the rim moves at\n\n$$v = r\\omega$$\n\nA pulley of radius 0.1 m at 1450 rpm: $\\omega = \\frac{2\\pi \\times 1450}{60} \\approx 151.8$ rad/s, so $v = 0.1 \\times 151.8 \\approx 15.2$ m/s.",
+   "more": "Why no $\\frac{\\pi}{180}$ in $s = r\\theta$? Because a radian was built from the radius. One radian of turn is one radius of travel round the edge; $\\theta$ radians is $\\theta$ radii. In degrees the formula would need an extra $\\frac{\\pi}{180}$.\n\nWorked example: a conveyor drum of radius 0.2 m turns a quarter turn, 90°.\n\n- In radians: $90 \\times \\frac{\\pi}{180} = 1.571$ rad.\n- Belt moved: $s = 0.2 \\times 1.571 \\approx 0.314$ m.\n\nCheck it another way: the whole edge is $2\\pi \\times 0.2 \\approx 1.257$ m, and a quarter of that is 0.314 m.\n\nFor speed, the belt moves with the drum's rim, so the belt speed is $v = r\\omega$ too. Radius, not diameter."
+  },
+  {
+   "id": "belt-speed",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A conveyor drum is {D} mm across and turns at {N} rpm. How fast does the belt move, in metres per second?",
+   "vars": {
+    "D": {
+     "pick": [
+      200,
+      250,
+      300,
+      400,
+      500
+     ]
+    },
+    "N": {
+     "pick": [
+      30,
+      45,
+      60,
+      90,
+      120,
+      150
+     ]
+    }
+   },
+   "let": {
+    "rmm": "D / 2",
+    "r": "D / 2000",
+    "w": "2 * PI() * N / 60"
+   },
+   "answer": "D / 2000 * 2 * PI() * N / 60",
+   "unit": "m/s",
+   "hint": "Halve the diameter for the radius, and put it in metres.",
+   "work": "Radius $= {D} \\div 2 = {rmm}$ mm $= {r}$ m. $\\omega = \\frac{2\\pi \\times {N}}{60} = {w}$ rad/s. $v = r\\omega = {r} \\times {w} = {answer}$ m/s.",
+   "why": "The belt moves with the drum's rim, so $v = r\\omega$ with $\\omega$ in rad/s. Using the diameter instead of the radius doubles the answer; leaving out the ÷ 60 gives metres per minute, 60 times too big."
+  },
+  {
+   "id": "sohcahtoa",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Sine, cosine and tangent",
+   "body": "In a right-angled triangle, name the sides from the angle $\\theta$ you are working with:\n\n- **hypotenuse**: the longest side, opposite the right angle\n- **opposite**: across the triangle from $\\theta$\n- **adjacent**: next to $\\theta$, and not the hypotenuse\n\nFor a given angle, the ratios of the sides are fixed, whatever the size of the triangle:\n\n- $\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}$\n- $\\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}$\n- $\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}$\n\nRemember **SOH CAH TOA**. A cable tray 1.0 m long, rising 0.6 m over a floor run of 0.8 m, has $\\sin\\theta = 0.6$, $\\cos\\theta = 0.8$ and $\\tan\\theta = 0.75$.",
+   "more": "Why are the ratios fixed? Take two ramps at the same angle, one twice the size of the other. Every side of the big one is twice as long, so each side divided by another comes out the same. The ratio depends only on the angle.\n\nSo a slope at 30° rises 0.5 m for every 1 m along it, whether the ramp is 2 m long or 20 m: $\\sin 30^\\circ = 0.5$.\n\nOpposite and adjacent depend on which angle you stand at. In the cable tray, from the angle at the floor the rise (0.6 m) is opposite. From the angle at the top, the same 0.6 m side is adjacent. The hypotenuse never changes.\n\n$\\tan\\theta$ is rise over run: the gradient of the slope."
+  },
+  {
+   "id": "which-ratio",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A cable tray rises 0.5 m over a floor run of 1.2 m; the tray itself is 1.3 m long. For the angle $\\theta$ it makes with the floor, what is $\\tan\\theta$?",
+   "options": [
+    "$\\frac{1.2}{0.5}$",
+    "$\\frac{0.5}{1.3}$",
+    "$\\frac{0.5}{1.2}$",
+    "$\\frac{1.2}{1.3}$"
+   ],
+   "answer": 2,
+   "why": "Tan is opposite over adjacent. From the floor angle, the rise (0.5 m) is opposite and the floor run (1.2 m) is adjacent, so $\\tan\\theta = \\frac{0.5}{1.2}$. $\\frac{0.5}{1.3}$ is $\\sin\\theta$ and $\\frac{1.2}{1.3}$ is $\\cos\\theta$. $\\frac{1.2}{0.5}$ is upside down."
+  },
+  {
+   "id": "missing-side",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Finding a missing side",
+   "body": "Know one side and one angle? Pick the ratio that holds the side you know and the side you want. Then rearrange.\n\nA chute at $30^\\circ$ must drop 0.7 m. The drop is opposite the angle.\n\n- Length along the chute (hyp): $\\sin 30^\\circ = \\frac{0.7}{\\text{hyp}}$, so $\\text{hyp} = \\frac{0.7}{\\sin 30^\\circ} = \\frac{0.7}{0.5} = 1.4$ m.\n- Floor it covers (adj): $\\tan 30^\\circ = \\frac{0.7}{\\text{adj}}$, so $\\text{adj} = \\frac{0.7}{\\tan 30^\\circ} \\approx 1.21$ m.\n\nIf the side you want is on top of the ratio, multiply: $\\text{opp} = \\text{hyp} \\times \\sin\\theta$. If it is underneath, divide.\n\nSet the calculator to **DEG** mode for degrees.",
+   "more": "Say it in words first: \"I know the hypotenuse, I want the opposite: that is sine.\" Then write the ratio with the numbers in, and get the unknown on its own.\n\nWorked example: a 2 m brace leans at 40° to the floor.\n\n- How far up the wall? Opposite, from the hypotenuse: $2 \\times \\sin 40^\\circ = 2 \\times 0.643 \\approx 1.29$ m.\n- How far out along the floor? Adjacent: $2 \\times \\cos 40^\\circ = 2 \\times 0.766 \\approx 1.53$ m.\n\nCheck with Pythagoras: $1.29^2 + 1.53^2 \\approx 1.66 + 2.34 = 4.0$, and $2^2 = 4$. It fits.\n\nA quick sense check: the hypotenuse is always the longest side. If your answer for it comes out shorter than another side, you multiplied where you should have divided."
+  },
+  {
+   "id": "crank-widget",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.8,
+   "intro": "A crank of length **a** turns about a shaft. The crank is the hypotenuse, and the height of its pin above the shaft centre is the side opposite the angle: $y = a\\sin x$, with the angle $x$ in radians. Plot that height for a whole turn, 0 to $2\\pi \\approx 6.28$ rad, and you get the **sine wave**.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sin",
+     "a": 2,
+     "controls": [
+      "a"
+     ],
+     "x": [
+      0,
+      6.3
+     ],
+     "y": [
+      -5,
+      5
+     ]
+    }
+   },
+   "predict": {
+    "q": "If you make the crank longer (a bigger **a**), what happens to the wave?",
+    "options": [
+     "It gets taller: the pin goes higher",
+     "It gets wider: a turn takes more angle",
+     "Nothing changes: the angles are the same"
+    ],
+    "answer": 0,
+    "why": "Every height is $a \\sin x$, so every height scales with $a$. A turn is still $2\\pi$ rad, whatever the crank's length, so the wave is no wider."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "For the crank you have set, how high is the pin above the shaft centre at $30^\\circ$ (about 0.524 rad)?",
+    "answer": "a * SIN(RADIANS(30))",
+    "abs": 0.02,
+    "hint": "Opposite = hypotenuse × sin of the angle, and $\\sin 30^\\circ = 0.5$.",
+    "why": "The height is opposite the angle and the crank is the hypotenuse, so height $= a \\sin 30^\\circ = {a} \\times 0.5 = {answer}$. You can read it off the graph at $x \\approx 0.52$. A negative $a$ just means the crank points the other way."
+   }
+  },
+  {
+   "id": "inverse",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Finding an angle: the inverse functions",
+   "body": "Know two sides and want the angle? Work out their ratio, then run the function backwards.\n\n$\\tan^{-1}$ (say \"inverse tan\"; on a calculator, SHIFT then tan) gives **the angle whose tan is** that number. $\\sin^{-1}$ and $\\cos^{-1}$ work the same way. The $^{-1}$ here does **not** mean 1 divided by.\n\nA conveyor rises 1.2 m over a floor run of 4 m. That is opposite and adjacent, so tan:\n\n$$\\tan\\theta = \\frac{1.2}{4} = 0.3$$\n\nso $\\theta = \\tan^{-1} 0.3 \\approx 16.7^\\circ$.\n\nIn a spreadsheet, or the answer box here, that is DEGREES(ATAN(0.3)).",
+   "more": "An inverse undoes, as ÷ 2 undoes × 2. Sine turns an angle into a ratio; inverse sine turns the ratio back into the angle.\n\n$\\sin 30^\\circ = 0.5$, so $\\sin^{-1} 0.5 = 30^\\circ$.\n\nPick the inverse the same way you pick the ratio: which two sides do you know?\n\n- Rise and run: $\\tan^{-1}$.\n- Rise and length along the slope: $\\sin^{-1}$.\n- Run and length along the slope: $\\cos^{-1}$.\n\nWorked example: a ramp 5 m long along its slope rises 0.5 m. Rise and slope length, so sine: $\\sin\\theta = \\frac{0.5}{5} = 0.1$, and $\\theta = \\sin^{-1} 0.1 \\approx 5.7^\\circ$.\n\nA spreadsheet's ASIN, ACOS and ATAN give radians: wrap them in DEGREES()."
+  },
+  {
+   "id": "tray-angle",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A cable tray rises {R} mm over a floor run of {L} mm. At what angle does it climb, in degrees?",
+   "vars": {
+    "R": {
+     "pick": [
+      150,
+      200,
+      250,
+      300,
+      400,
+      500
+     ]
+    },
+    "L": {
+     "pick": [
+      1000,
+      1200,
+      1500,
+      2000,
+      2500
+     ]
+    }
+   },
+   "let": {
+    "t": "R / L"
+   },
+   "answer": "DEGREES(ATAN(R / L))",
+   "unit": "°",
+   "hint": "The rise and the run are the opposite and the adjacent. Which ratio uses those two?",
+   "work": "$\\tan\\theta = \\frac{{R}}{{L}} = {t}$, so $\\theta = \\tan^{-1} {t} = {answer}^\\circ$.",
+   "why": "Rise and run are opposite and adjacent, so tan, and the inverse gives the angle. Using $\\sin^{-1}$ treats the run as if it were the sloping length; on a gentle slope the two are close, which hides the slip."
+  },
+  {
+   "id": "worked-conveyor",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A conveyor must lift boxes 1.5 m, at no more than $20^\\circ$ to the floor. How long must the belt be, and how much floor does it cover?",
+   "steps": [
+    {
+     "ask": "Sketch it and name the sides from the $20^\\circ$ angle.",
+     "show": "The lift, 1.5 m, is **opposite** the angle. The belt is the **hypotenuse**. The floor it covers is the **adjacent** side."
+    },
+    {
+     "ask": "Pick the ratio for the belt length.",
+     "show": "Opposite and hypotenuse: sine. $\\sin 20^\\circ = \\frac{1.5}{\\text{hyp}}$."
+    },
+    {
+     "ask": "Rearrange and work it out.",
+     "show": "$\\text{hyp} = \\frac{1.5}{\\sin 20^\\circ} = \\frac{1.5}{0.3420} \\approx 4.39$ m."
+    },
+    {
+     "ask": "Now the floor it covers.",
+     "show": "Opposite and adjacent: tangent. $\\text{adj} = \\frac{1.5}{\\tan 20^\\circ} = \\frac{1.5}{0.3640} \\approx 4.12$ m."
+    },
+    {
+     "ask": "Check.",
+     "show": "Pythagoras, with the unrounded run of 4.121 m: $\\sqrt{4.121^2 + 1.5^2} \\approx 4.39$ m. It agrees, and the belt is the longest side, as it must be."
+    }
+   ],
+   "why": "Name the sides from the angle, pick the ratio that holds the known side and the one you want, and rearrange. Both unknowns were underneath the ratio, so both steps divided. Pythagoras checks the pair."
+  },
+  {
+   "id": "explain-divide",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: $\\sin 20^\\circ = \\frac{1.5}{\\text{hyp}}$, and step 3 gave $\\text{hyp} = \\frac{1.5}{\\sin 20^\\circ} \\approx 4.39$ m.",
+   "q": "Why does step 3 **divide** 1.5 by $\\sin 20^\\circ$, when for the height of the conveyor at the start of the lesson you **multiplied** by the sine? Say it in your own words.",
+   "model": "It depends where the unknown sits in the ratio. In $\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}$, the belt length is the hypotenuse, on the bottom. To get it on its own, multiply both sides by hyp and divide both by $\\sin 20^\\circ$: hyp = opp ÷ sin. At the start, the unknown was the height, on top, so it came out as hyp × sin. A sense check catches the slip: $1.5 \\times 0.342 \\approx 0.51$ m would make the belt shorter than the lift, but the hypotenuse is always the longest side.",
+   "points": [
+    "The unknown, the belt length, is on the bottom of the ratio",
+    "Rearranging gets it on its own: hyp = opp ÷ sin",
+    "When the unknown is on top (a height), you multiply instead",
+    "Sense check: the hypotenuse must be the longest side"
+   ]
+  },
+  {
+   "id": "faded-tray",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.0,
+   "q": "A cable tray must climb 0.8 m at $30^\\circ$ to the floor. How long is the sloping tray, and how much floor run does it take?",
+   "steps": [
+    {
+     "ask": "Name the sides from the $30^\\circ$ angle.",
+     "show": "The climb, 0.8 m, is opposite. The tray is the hypotenuse. The floor run is adjacent."
+    },
+    {
+     "ask": "Pick the ratio for the tray length.",
+     "show": "Opposite and hypotenuse: sine. $\\sin 30^\\circ = \\frac{0.8}{\\text{hyp}}$."
+    },
+    {
+     "ask": "Rearrange and work it out.",
+     "show": "$\\text{hyp} = \\frac{0.8}{\\sin 30^\\circ} = \\frac{0.8}{0.5} = 1.6$ m."
+    },
+    {
+     "ask": "Now the floor run.",
+     "show": "Tangent: $\\text{adj} = \\frac{0.8}{\\tan 30^\\circ} = \\frac{0.8}{0.5774} \\approx 1.39$ m."
+    },
+    {
+     "ask": "Check.",
+     "show": "$\\sqrt{1.39^2 + 0.8^2} \\approx \\sqrt{1.93 + 0.64} \\approx 1.60$ m. It agrees."
+    }
+   ],
+   "why": "Same steps as the conveyor: name the sides, choose sine for the sloping length and tangent for the run, divide because the unknowns are underneath, and check with Pythagoras."
+  },
+  {
+   "id": "conveyor-length",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.0,
+   "q": "A conveyor must lift {H} m at {A}° to the floor. How long must the belt be?",
+   "vars": {
+    "H": {
+     "pick": [
+      0.8,
+      1.0,
+      1.2,
+      1.5,
+      2.0,
+      2.5
+     ]
+    },
+    "A": {
+     "pick": [
+      12,
+      15,
+      18,
+      20,
+      25,
+      30
+     ]
+    }
+   },
+   "let": {
+    "s": "SIN(RADIANS(A))"
+   },
+   "answer": "H / SIN(RADIANS(A))",
+   "unit": "m",
+   "hint": "The lift is opposite the angle; the belt is the hypotenuse. Is the unknown on top or underneath?",
+   "work": "$\\sin {A}^\\circ = \\frac{{H}}{\\text{belt}}$, so belt $= \\frac{{H}}{\\sin {A}^\\circ} = \\frac{{H}}{{s}} = {answer}$ m.",
+   "why": "Opposite and hypotenuse, so sine; the belt is underneath, so divide. Multiplying ({H} × {s}) gives an answer shorter than the lift itself, which cannot be: the hypotenuse is the longest side."
+  },
+  {
+   "id": "ramp-angle",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A loading ramp is {L} m long, measured along its slope, and rises {H} m. What angle does it make with the ground, in degrees?",
+   "vars": {
+    "L": {
+     "pick": [
+      3,
+      4,
+      5,
+      6,
+      8
+     ]
+    },
+    "H": {
+     "pick": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.8
+     ]
+    }
+   },
+   "let": {
+    "t": "H / L"
+   },
+   "answer": "DEGREES(ASIN(H / L))",
+   "unit": "°",
+   "hint": "You know the rise and the length along the slope. Which ratio uses those two?",
+   "work": "$\\sin\\theta = \\frac{{H}}{{L}} = {t}$, so $\\theta = \\sin^{-1} {t} = {answer}^\\circ$.",
+   "why": "The rise is opposite and the slope length is the hypotenuse, so sine, then $\\sin^{-1}$ for the angle. $\\tan^{-1}$ would need the level run, which you were not given."
+  },
+  {
+   "id": "crank-arc",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.9,
+   "q": "A crank of radius {r} mm turns through {A}°. How far does its pin travel along its arc?",
+   "vars": {
+    "r": {
+     "pick": [
+      50,
+      75,
+      100,
+      120,
+      150,
+      200
+     ]
+    },
+    "A": {
+     "pick": [
+      30,
+      45,
+      60,
+      90,
+      120,
+      135,
+      180,
+      270
+     ]
+    }
+   },
+   "let": {
+    "th": "RADIANS(A)"
+   },
+   "answer": "r * RADIANS(A)",
+   "unit": "mm",
+   "hint": "$s = r\\theta$ wants the angle in radians.",
+   "work": "$\\theta = {A} \\times \\frac{\\pi}{180} = {th}$ rad. $s = r\\theta = {r} \\times {th} = {answer}$ mm.",
+   "why": "Convert to radians first, then multiply by the radius. $s = r\\theta$ with {A} in degrees would give a distance more than 50 times too long, because a degree is only about $\\frac{1}{57}$ of a radian."
+  },
+  {
+   "id": "spot-rad-mode",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Someone worked out the belt length for a conveyor that lifts 1.2 m at 25°. Which line holds the first mistake?",
+   "lines": [
+    "The lift, 1.2 m, is opposite the $25^\\circ$ angle; I want the belt length (hyp)",
+    "$\\sin 25^\\circ = \\frac{1.2}{\\text{hyp}}$, so $\\text{hyp} = \\frac{1.2}{\\sin 25^\\circ}$",
+    "Calculator: $\\sin 25 = -0.1324$",
+    "$\\text{hyp} = \\frac{1.2}{-0.1324} \\approx -9.07$ m"
+   ],
+   "wrong": 2,
+   "fix": "In DEG mode: $\\sin 25^\\circ = 0.4226$, so $\\text{hyp} = \\frac{1.2}{0.4226} \\approx 2.84$ m",
+   "why": "The calculator was in RAD mode, so it worked out the sine of 25 **radians**, not 25°. Two checks catch it: the sine of any angle between 0° and 90° lies between 0 and 1, never negative; and a length cannot be negative. The last line only carried the slip on."
+  },
+  {
+   "id": "why-radians",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Why does $s = r\\theta$ need $\\theta$ in radians, not degrees?",
+   "options": [
+    "Degrees are less accurate than radians",
+    "A radian is the angle whose arc equals the radius",
+    "Radians are what most calculators use",
+    "The formula only works for small angles"
+   ],
+   "answer": 1,
+   "why": "One radian of turn carries you one radius round the edge, so $\\theta$ radians carries you $\\theta$ radii: $s = r\\theta$. In degrees you would need an extra $\\frac{\\pi}{180}$. Degrees are just as accurate; calculators do both (that is why the mode matters); and the formula holds for any angle, even more than a full turn."
+  },
+  {
+   "id": "order-missing-side",
+   "type": "order",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "Put the steps for finding a missing side of a right-angled triangle in order.",
+   "items": [
+    "Sketch the triangle and mark the angle you know",
+    "Name the sides from that angle: opposite, adjacent, hypotenuse",
+    "Pick the ratio that holds the side you know and the side you want",
+    "Write it as an equation and rearrange for the unknown",
+    "Work it out, with the calculator in DEG mode",
+    "Check: is the hypotenuse still the longest side?"
+   ],
+   "why": "Everything hangs on naming the sides from the right angle of view, so that comes before choosing sin, cos or tan. Rearrange before you reach for the calculator, and check the answer makes sense at the end."
+  },
+  {
+   "id": "silo-height",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "You stand {d} m from the foot of a silo on level ground. Looking up at its top, your line of sight is {A}° above level. Your eye is 1.6 m above the ground. How tall is the silo?",
+   "vars": {
+    "d": {
+     "pick": [
+      10,
+      15,
+      20,
+      25,
+      30
+     ]
+    },
+    "A": {
+     "pick": [
+      30,
+      35,
+      40,
+      45,
+      50,
+      55
+     ]
+    }
+   },
+   "let": {
+    "t": "TAN(RADIANS(A))",
+    "up": "d * TAN(RADIANS(A))"
+   },
+   "answer": "d * TAN(RADIANS(A)) + 1.6",
+   "unit": "m",
+   "hint": "The triangle starts at your eye, not the ground. Which ratio links the level distance and the height?",
+   "work": "Above your eye: $\\tan {A}^\\circ = \\frac{h}{{d}}$, so $h = {d} \\times {t} = {up}$ m. Add your eye height: ${up} + 1.6 = {answer}$ m.",
+   "why": "The level distance is adjacent and the height above your eye is opposite, so tan. The triangle's corner is at your eye, so the 1.6 m below it must be added back. Forgetting it is the usual slip; using sin would treat {d} m as the line of sight."
+  },
+  {
+   "id": "mix-which-tool",
+   "type": "match",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "Match each triangle problem to the tool that solves it.",
+   "pairs": [
+    [
+     "Right angle; two sides known; want the third side",
+     "Pythagoras"
+    ],
+    [
+     "Right angle; one side and one angle known; want a side",
+     "sin, cos or tan"
+    ],
+    [
+     "Right angle; two sides known; want an angle",
+     "An inverse: sin⁻¹, cos⁻¹ or tan⁻¹"
+    ],
+    [
+     "No right angle; two sides and the angle between them",
+     "The cosine rule"
+    ],
+    [
+     "No right angle; a side and the angle facing it, plus another angle",
+     "The sine rule"
+    ]
+   ],
+   "why": "SOH CAH TOA and Pythagoras only work with a right angle. Without one, the cosine rule handles two sides with the angle between them, and the sine rule needs a side and the angle facing it."
+  },
+  {
+   "id": "mix-pythagoras",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.4,
+   "q": "A cable tray rises {H} mm over a floor run of {L} mm. How long is the sloping tray?",
+   "vars": {
+    "H": {
+     "pick": [
+      300,
+      400,
+      500,
+      600,
+      900
+     ]
+    },
+    "L": {
+     "pick": [
+      1200,
+      1600,
+      2000,
+      2400
+     ]
+    }
+   },
+   "let": {
+    "h2": "H^2",
+    "l2": "L^2"
+   },
+   "answer": "SQRT(H^2 + L^2)",
+   "unit": "mm",
+   "hint": "Two sides of a right-angled triangle, and no angle given.",
+   "work": "$\\text{length} = \\sqrt{\\text{rise}^2 + \\text{run}^2} = \\sqrt{{h2} + {l2}} = {answer}$ mm.",
+   "why": "Two sides known and the third wanted, with a right angle: Pythagoras, no trig needed. Adding the two sides ({H} + {L}) is too long: the sloping side is a short cut across the corner."
+  },
+  {
+   "id": "mix-cosine-rule",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.8,
+   "q": "Two straight conveyor sections, {a} m and {b} m long, meet at a transfer point with {C}° between them. How far apart are their far ends? There is no right angle, so use the **cosine rule**: $c^2 = a^2 + b^2 - 2ab\\cos C$.",
+   "vars": {
+    "a": {
+     "pick": [
+      3,
+      4,
+      5,
+      6
+     ]
+    },
+    "b": {
+     "pick": [
+      4,
+      5,
+      7,
+      8
+     ]
+    },
+    "C": {
+     "pick": [
+      60,
+      75,
+      100,
+      120,
+      135
+     ]
+    }
+   },
+   "let": {
+    "csq": "a^2 + b^2 - 2 * a * b * COS(RADIANS(C))",
+    "co": "COS(RADIANS(C))"
+   },
+   "answer": "SQRT(a^2 + b^2 - 2 * a * b * COS(RADIANS(C)))",
+   "unit": "m",
+   "hint": "Work out the right-hand side, then take the square root. Over 90°, the cosine is negative, so the last term adds.",
+   "work": "$\\cos {C}^\\circ = {co}$. $c^2 = {a}^2 + {b}^2 - 2 \\times {a} \\times {b} \\times ({co}) = {csq}$, so $c = \\sqrt{{csq}} = {answer}$ m.",
+   "why": "Two sides and the angle between them, no right angle: the cosine rule. With $C = 90^\\circ$, $\\cos C = 0$ and it becomes Pythagoras; a wider angle pushes the ends further apart. Forgetting the square root at the end leaves $c^2$, not $c$."
+  },
+  {
+   "id": "mix-sine-rule",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.8,
+   "q": "A triangular bracket has no right angle. Its {sa} mm side faces a {angA}° angle. What is the length of the side facing its {angB}° angle? Use the **sine rule**: $\\frac{a}{\\sin A} = \\frac{b}{\\sin B}$.",
+   "vars": {
+    "sa": {
+     "pick": [
+      200,
+      250,
+      300,
+      400
+     ]
+    },
+    "angA": {
+     "pick": [
+      40,
+      50,
+      60,
+      70
+     ]
+    },
+    "angB": {
+     "pick": [
+      30,
+      45,
+      55,
+      65
+     ]
+    }
+   },
+   "let": {
+    "s1": "SIN(RADIANS(angA))",
+    "s2": "SIN(RADIANS(angB))"
+   },
+   "answer": "sa * SIN(RADIANS(angB)) / SIN(RADIANS(angA))",
+   "unit": "mm",
+   "hint": "Multiply both sides by $\\sin B$ to get $b$ on its own.",
+   "work": "$b = \\frac{a \\sin B}{\\sin A} = \\frac{{sa} \\times {s2}}{{s1}} = {answer}$ mm.",
+   "why": "A side and the angle facing it are known, plus another angle: the sine rule. Each side over the sine of its facing angle is the same number, so $b = a \\times \\frac{\\sin B}{\\sin A}$. Pairing a side with an angle that does not face it is the usual slip."
+  },
+  {
+   "id": "check-crank-height",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.7,
+   "q": "A crank {r} mm long stands at {A}° above level. How high is its pin above the centre of the shaft?",
+   "vars": {
+    "r": {
+     "pick": [
+      80,
+      100,
+      120,
+      150,
+      200
+     ]
+    },
+    "A": {
+     "pick": [
+      20,
+      35,
+      40,
+      50,
+      65,
+      70
+     ]
+    }
+   },
+   "let": {
+    "s": "SIN(RADIANS(A))"
+   },
+   "answer": "r * SIN(RADIANS(A))",
+   "unit": "mm",
+   "work": "The crank is the hypotenuse; the height is opposite the angle. Height $= {r} \\times \\sin {A}^\\circ = {r} \\times {s} = {answer}$ mm.",
+   "why": "Hypotenuse known, opposite wanted: sine, and the unknown is on top, so multiply. Using cos gives how far the pin is out to the side, not how high."
+  },
+  {
+   "id": "check-deg",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.4,
+   "q": "A PLC reports a crank angle of {th} rad. What is that in degrees?",
+   "vars": {
+    "th": {
+     "pick": [
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5,
+      4,
+      5
+     ]
+    }
+   },
+   "answer": "DEGREES(th)",
+   "unit": "°",
+   "work": "${th} \\times \\frac{180}{\\pi} = {answer}^\\circ$.",
+   "why": "$\\pi$ rad is 180°, so each radian is $\\frac{180}{\\pi} \\approx 57.3^\\circ$. Multiplying by $\\frac{\\pi}{180}$ instead gives a tiny number: the wrong way round."
+  },
+  {
+   "id": "check-ratio",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.7,
+   "q": "You know the length of a sloping brace (the hypotenuse) and its angle $\\theta$ to the floor. Which gives how far it reaches along the floor?",
+   "options": [
+    "$\\text{hyp} \\times \\sin\\theta$",
+    "$\\text{hyp} \\times \\cos\\theta$",
+    "$\\text{hyp} \\times \\tan\\theta$",
+    "$\\text{hyp} \\div \\cos\\theta$"
+   ],
+   "answer": 1,
+   "why": "Along the floor is the side next to the angle: adjacent. $\\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}$, and the unknown is on top, so $\\text{adj} = \\text{hyp} \\times \\cos\\theta$. $\\text{hyp} \\times \\sin\\theta$ is the height; $\\text{hyp} \\div \\cos\\theta$ is longer than the brace itself, which cannot be."
+  }
+ ]
+}

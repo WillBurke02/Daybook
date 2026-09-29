@@ -1,0 +1,862 @@
+{
+ "id": "physics.elec.resistance",
+ "title": "Resistance and resistivity",
+ "tags": [
+  "electrical",
+  "resistance",
+  "resistivity",
+  "cable",
+  "temperature"
+ ],
+ "kind": "procedure",
+ "level": 4.6,
+ "minutes": 25,
+ "goals": [
+  "Say what resistance is, work it out as volts per amp, and tell an ohmic part from a lamp filament",
+  "Say how length, cross-section and material set a conductor's resistance, and use $R = \\frac{\\rho L}{A}$ with mm² changed to m²",
+  "Work out the resistance and volt drop of a cable run, out and back, with 0.0172 Ω·mm²/m for copper",
+  "Use $R = R_0(1 + \\alpha \\Delta T)$ for a PT100 and for a motor winding's temperature rise"
+ ],
+ "summary": "**Resistance** ($R$, ohms, Ω) is how many volts it takes to push each amp through a part:\n\n$$R = \\frac{V}{I}$$\n\n**One ohm is one volt per amp.** It comes from the free electrons bumping into the metal's atoms, which is why current makes things warm.\n\n**Ohmic**: at a steady temperature the resistance stays the same, so current against voltage is a straight line through zero (copper, resistors). A **lamp filament** is not: hot metal has more resistance, so a 12 V headlamp is about 0.35 Ω cold and 4.8 Ω lit, and draws a big **inrush** at switch-on.\n\n**Shape and material**:\n\n$$R = \\frac{\\rho L}{A}$$\n\n- Twice the **length** $L$, twice the resistance.\n- Twice the **cross-sectional area** $A$, half the resistance. Twice the **diameter** is four times the area ($A = \\frac{\\pi d^2}{4}$), so a quarter of the resistance.\n- **Resistivity** $\\rho$ (rho, Ω·m) belongs to the material. At 20 °C: copper $1.72 \\times 10^{-8}$, aluminium $2.65 \\times 10^{-8}$, nichrome about $1.1 \\times 10^{-6}$; insulators $10^{9}$ and far more.\n- Units: $L$ in m and $A$ in m². 1 mm² = $10^{-6}$ m².\n\n**Cable shortcut**: copper is **0.0172 Ω·mm²/m**, so $R = \\frac{0.0172 \\times L}{A}$ with $L$ in metres and $A$ in mm². A cable to a load goes **out and back**: use twice the run length. Volt drop $= IR$.\n\n**Temperature**: metals rise as they warm (the atoms vibrate more):\n\n$$R = R_0(1 + \\alpha \\Delta T)$$\n\n$R_0$ the resistance at the start, $\\Delta T$ the rise in °C, $\\alpha$ the temperature coefficient. Copper about 0.0039 per °C (0.39% a degree). **PT100**: 100 Ω at 0 °C, $\\alpha = 0.00385$, 138.5 Ω at 100 °C. Turned round, $\\Delta T = \\frac{R/R_0 - 1}{\\alpha}$: the **resistance method** for a motor winding's temperature. NTC thermistors fall as they warm; constantan and manganin hardly change.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "20.3 Resistance and Resistivity",
+   "url": "https://openstax.org/books/college-physics-2e/pages/20-3-resistance-and-resistivity",
+   "by": "OpenStax, College Physics 2e",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "20.2 Ohm's Law: Resistance and Simple Circuits",
+   "url": "https://openstax.org/books/college-physics-2e/pages/20-2-ohms-law-resistance-and-simple-circuits",
+   "by": "OpenStax, College Physics 2e",
+   "minutes": 10,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "20.4 Electric Power and Energy",
+   "url": "https://openstax.org/books/college-physics-2e/pages/20-4-electric-power-and-energy",
+   "by": "OpenStax, College Physics 2e",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, College Physics 2e (Urone, Hinrichs), sections 20.2, 20.3 and 20.4. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "IEC 60751: Industrial platinum resistance thermometers and platinum temperature sensors",
+  "IEC 60034-1: Rotating electrical machines. Part 1: Rating and performance"
+ ],
+ "formulas": [
+  {
+   "name": "Resistance",
+   "tex": "R = \\frac{V}{I}",
+   "match": [
+    "R=\\frac{V}{I}"
+   ],
+   "says": "The resistance is the voltage across a part divided by the current through it: how many volts each amp needs.",
+   "symbols": [
+    [
+     "R",
+     "the resistance (ohms, Ω)"
+    ],
+    [
+     "V",
+     "the potential difference across it (V)"
+    ],
+    [
+     "I",
+     "the current through it (A)"
+    ]
+   ],
+   "example": "A headlamp draws 2.5 A from 12 V: $R = 12 \\div 2.5 = 4.8$ Ω."
+  },
+  {
+   "name": "Volt drop",
+   "tex": "V = IR",
+   "match": [
+    "V=IR"
+   ],
+   "says": "The voltage lost across a resistance, such as a cable, is the current times the resistance.",
+   "symbols": [
+    [
+     "V",
+     "the volt drop (V)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ]
+   ],
+   "example": "1.5 A through a 0.92 Ω cable loop: $1.5 \\times 0.92 \\approx 1.38$ V lost."
+  },
+  {
+   "name": "Resistance from resistivity",
+   "tex": "R = \\frac{\\rho L}{A}",
+   "match": [
+    "\\frac{\\rhoL}{A}"
+   ],
+   "says": "The resistance is the material's resistivity times the length, divided by the cross-sectional area. Longer means more; thicker means less.",
+   "symbols": [
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "\\rho",
+     "rho, the resistivity of the material (Ω·m)"
+    ],
+    [
+     "L",
+     "the length (m)"
+    ],
+    [
+     "A",
+     "the cross-sectional area (m²; 1 mm² = $10^{-6}$ m²)"
+    ]
+   ],
+   "example": "1 m of 1 mm² copper: $\\frac{1.72 \\times 10^{-8} \\times 1}{10^{-6}} = 0.0172$ Ω."
+  },
+  {
+   "name": "Copper cable resistance, in mm²",
+   "tex": "R = \\frac{0.0172 \\times L}{A}",
+   "match": [
+    "\\frac{0.0172"
+   ],
+   "says": "The same rule with copper's resistivity written as 0.0172 Ω·mm²/m, so you can put the cable size straight in, in mm².",
+   "symbols": [
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "L",
+     "the length of copper (m); twice the run for out and back"
+    ],
+    [
+     "A",
+     "the core size (mm²)"
+    ]
+   ],
+   "example": "30 m of 1.5 mm² twin, out and back: $\\frac{0.0172 \\times 60}{1.5} \\approx 0.69$ Ω."
+  },
+  {
+   "name": "Area of a round wire",
+   "tex": "A = \\frac{\\pi d^2}{4}",
+   "match": [
+    "\\frac{\\pid^2}{4}"
+   ],
+   "says": "The area of the cut end of a round wire: pi times the diameter squared, divided by 4.",
+   "symbols": [
+    [
+     "A",
+     "the cross-sectional area"
+    ],
+    [
+     "\\pi",
+     "pi, about 3.142"
+    ],
+    [
+     "d",
+     "the diameter, in the same units (mm gives mm²)"
+    ]
+   ],
+   "example": "0.4 mm wire: $\\frac{3.142 \\times 0.16}{4} \\approx 0.126$ mm²."
+  },
+  {
+   "name": "Resistance and temperature",
+   "tex": "R = R_0(1 + \\alpha \\Delta T)",
+   "match": [
+    "1+\\alpha\\DeltaT"
+   ],
+   "says": "A metal's resistance rises in a straight line with temperature: the start resistance, plus a fraction alpha of it for every degree of rise.",
+   "symbols": [
+    [
+     "R",
+     "the resistance when warm (Ω)"
+    ],
+    [
+     "R_0",
+     "the resistance at the start temperature (Ω)"
+    ],
+    [
+     "\\alpha",
+     "alpha, the temperature coefficient (per °C): copper about 0.0039, PT100 platinum 0.00385"
+    ],
+    [
+     "\\Delta T",
+     "the rise in temperature (°C)"
+    ]
+   ],
+   "example": "A PT100 at 100 °C: $100 \\times (1 + 0.00385 \\times 100) = 138.5$ Ω."
+  },
+  {
+   "name": "Power lost as heat",
+   "tex": "P = I^2R",
+   "match": [
+    "I^2R"
+   ],
+   "says": "The power turned into heat in a resistance is the current squared times the resistance.",
+   "symbols": [
+    [
+     "P",
+     "the power (watts, W)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ]
+   ],
+   "example": "5 A through a 0.5 Ω cable: $25 \\times 0.5 = 12.5$ W of heat in the cable."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Check the resistivity rule on a real cable: measure the resistance of the cores of an **unplugged, dead** extension lead or a coil of spare copper cable, and compare it with $R = \\frac{0.0172 \\times L}{A}$. The meter's own few volts are the only supply: nothing is connected to the mains.",
+   "check": [
+    "Make sure the lead is unplugged from the wall and nothing is plugged into it; for a fixed circuit, it must be isolated and proved dead by someone authorised",
+    "Read the core size (mm²) printed on the sheath, and the length on the label or by measuring",
+    "Set the multimeter to its lowest Ω range. Touch the probes together and note the reading: that is the leads' own resistance, to take off every reading (or use the meter's REL/zero button)",
+    "Measure one core end to end, then work out $R = \\frac{0.0172 \\times L}{A}$ for one core and compare",
+    "Expect the meter to read a little higher: stranded cores and a warm room both add a few per cent"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-loop",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.8,
+   "q": "Have a go: a guess is fine. A 24 V solenoid valve is 50 m from the panel, fed by 1.5 mm² copper twin cable (two cores). One metre of 1 mm² copper has a resistance of 0.0172 Ω. What is the resistance of the cable, counting both cores?",
+   "options": [
+    "About 0.57 Ω",
+    "About 1.15 Ω",
+    "About 0.011 Ω",
+    "About 0.000 001 Ω"
+   ],
+   "answer": 1,
+   "why": "The current goes out on one core and back on the other, so it passes through 100 m of copper. A thicker core has less resistance, so divide by the size: $\\frac{0.0172 \\times 100}{1.5} \\approx 1.15$ Ω. 0.57 Ω counts one core only. 0.011 Ω is one metre. 0.000 001 Ω comes from using 1.72 × 10⁻⁸ with 1.5 as if it were square metres, not mm²."
+  },
+  {
+   "id": "resistance",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Resistance: volts per amp",
+   "body": "Numbers first. A car headlamp draws 2.5 A from 12 V. Each amp needs $12 \\div 2.5 = 4.8$ volts of push.\n\nThat is its **resistance** ($R$, in ohms, Ω):\n\n$$R = \\frac{V}{I}$$\n\n$V$ is the potential difference across it (volts), $I$ the current through it (amps). **One ohm is one volt per amp.**\n\nWhere it comes from: as the free electrons drift, they bump into the vibrating atoms of the metal. Each bump hands energy to the atoms, which is why a part carrying current gets **warm**.\n\nOhm's law, $V = IR$, is the same fact turned round.",
+   "more": "Think of pushing a trolley over rough ground. The rougher the ground, the harder you must push to keep the same speed. The push is the voltage, the speed is the current, the roughness is the resistance.\n\nWorked number: you measure 24 V across a contactor coil and 0.15 A through it. $R = \\frac{24}{0.15} = 160$ Ω.\n\nResistances range enormously. A metre of heavy copper bar might be 0.00001 Ω. A person's dry skin, hand to foot, is roughly 100 000 Ω. The ceramic insulators on power lines are a million million ohms or more. The same rule, volts per amp, covers all of them."
+  },
+  {
+   "id": "resistance-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "You measure {volts} V across a contactor coil and {ma} mA through it. What is its resistance?",
+   "vars": {
+    "volts": {
+     "pick": [
+      12,
+      24
+     ]
+    },
+    "ma": {
+     "pick": [
+      50,
+      80,
+      100,
+      150,
+      200,
+      250
+     ]
+    }
+   },
+   "let": {
+    "amps": "ma / 1000"
+   },
+   "answer": "volts / (ma / 1000)",
+   "unit": "Ω",
+   "tolerance": 0.01,
+   "hint": "Change the mA to amps first.",
+   "work": "{ma} mA = {amps} A. $R = \\frac{V}{I} = \\frac{{volts}}{{amps}} = {answer}$ Ω",
+   "why": "Resistance is volts per amp, with the current in amps: {ma} mA is {amps} A. Dividing by {ma} as if it were amps gives a thousand times too little. Coil resistances of tens to hundreds of ohms are normal."
+  },
+  {
+   "id": "ohmic",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Ohmic, or not",
+   "body": "Double the voltage across a resistor or a copper wire, at a steady temperature, and the current doubles. The resistance stays the same. Such parts are **ohmic**: a graph of current against voltage is a **straight line** through zero.\n\nA lamp filament is not. As the current rises it gets hot, and hot metal has **more** resistance, so its graph bends over.\n\nA 12 V headlamp filament is about 0.35 Ω cold but 4.8 Ω when lit. At switch-on it draws many times its running current for a moment: the **inrush**. Heaters with metal elements do the same, less dramatically.",
+   "more": "Test for ohmic: work out $\\frac{V}{I}$ at several voltages. If it comes out the same every time, the part is ohmic.\n\nWorked number, from bench readings on a resistor: 2.5 V gives 0.69 A, and 5 V gives 1.38 A. $\\frac{2.5}{0.69} \\approx 3.6$ Ω and $\\frac{5}{1.38} \\approx 3.6$ Ω. Same each time: ohmic.\n\nThe headlamp: cold, $\\frac{12}{0.35} \\approx 34$ A would flow for an instant. Lit and hot, $\\frac{12}{4.8} = 2.5$ A. Its filament runs at about 2850 °C, so its resistance rises about fourteen times. That is why bulbs usually fail at switch-on, and why a lamp circuit's fuse must not be too fast."
+  },
+  {
+   "id": "ohmic-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "On the bench, a resistor gives these readings: 2.5 V and 0.69 A, 5.0 V and 1.38 A, 10 V and 2.76 A. What do you conclude?",
+   "options": [
+    "It is not ohmic: the current keeps rising",
+    "Its resistance rises with the voltage",
+    "It is ohmic, about 3.6 Ω at every voltage",
+    "It is ohmic, about 0.28 Ω at every voltage"
+   ],
+   "answer": 2,
+   "why": "$\\frac{V}{I}$ is $\\frac{2.5}{0.69} \\approx 3.6$ Ω, and the same for the other pairs: double the voltage, double the current. That is ohmic. A rising current does not mean non-ohmic; it is what Ohm's law predicts. 0.28 is $\\frac{I}{V}$, the division the wrong way up."
+  },
+  {
+   "id": "shape",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Longer and thinner: more resistance",
+   "body": "Resistance depends on the **shape** of a conductor.\n\n- **Length** $L$: twice as long, twice the resistance. The electrons have twice as far to bump their way through.\n- **Cross-sectional area** $A$ (the area of the cut end; the mm² printed on a cable): twice the area, half the resistance. There are twice as many paths side by side.\n\nCareful with **diameter**. The area of a round wire is\n\n$$A = \\frac{\\pi d^2}{4}$$\n\nwhere $d$ is the diameter. Double the diameter and the area goes up **four** times ($2^2 = 4$), so the resistance falls to a **quarter**.",
+   "more": "Think of water pipes. A pipe twice as long resists the flow twice as much. Two pipes side by side, the same as one pipe of twice the area, let twice as much through for the same pressure.\n\nWorked numbers: a length of 1.5 mm² core reads 0.6 Ω. The same length of 2.5 mm²: $0.6 \\times \\frac{1.5}{2.5} = 0.36$ Ω, less because it is thicker. Twice the length of the 1.5 mm²: $0.6 \\times 2 = 1.2$ Ω.\n\nDiameter: a 1 mm wire has area $\\frac{3.142 \\times 1^2}{4} \\approx 0.785$ mm². A 2 mm wire has $\\frac{3.142 \\times 4}{4} \\approx 3.14$ mm², four times as much. So a quarter of the resistance."
+  },
+  {
+   "id": "shape-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.9,
+   "q": "A copper wire has resistance $R$. A second wire of the same copper and the same length has **twice the diameter**. What is its resistance?",
+   "options": [
+    "$2R$",
+    "$\\frac{R}{2}$",
+    "$4R$",
+    "$\\frac{R}{4}$"
+   ],
+   "answer": 3,
+   "hint": "What happens to the area of the cut end when the diameter doubles?",
+   "why": "Area goes with the diameter squared: twice the diameter is $2^2 = 4$ times the area, and four times the area is a quarter of the resistance. $\\frac{R}{2}$ is the slip of treating diameter like area. $2R$ and $4R$ have it the wrong way round: thicker wire resists **less**."
+  },
+  {
+   "id": "resistivity",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Resistivity: the material",
+   "body": "For the same shape, the **material** matters too. Its **resistivity** ($\\rho$, the Greek letter rho, in ohm metres, Ω·m) says how well it conducts. Put it all together:\n\n$$R = \\frac{\\rho L}{A}$$\n\nThe resistance is the resistivity times the length, divided by the area, with $L$ in metres and $A$ in **square metres**.\n\nValues at 20 °C:\n\n- copper $1.72 \\times 10^{-8}$ Ω·m\n- aluminium $2.65 \\times 10^{-8}$, about 1.5 times copper\n- nichrome (heater wire) about $1.1 \\times 10^{-6}$, some 60 times copper\n- glass, rubber: $10^{9}$ Ω·m and far more (insulators)\n\nLow resistivity: a good conductor.",
+   "more": "Resistivity belongs to the **material**; resistance belongs to one **piece** of it. All copper has the same resistivity, but a long thin copper wire has more resistance than a short thick bar.\n\nWorked number: 1 m of 1 mm² copper. 1 mm² is $10^{-6}$ m² (a millimetre is a thousandth of a metre, and $\\frac{1}{1000} \\times \\frac{1}{1000}$ is a millionth). So $R = \\frac{1.72 \\times 10^{-8} \\times 1}{10^{-6}} = 0.0172$ Ω.\n\nThe same metre in nichrome: $\\frac{1.1 \\times 10^{-6} \\times 1}{10^{-6}} = 1.1$ Ω, which is why heater elements are made of it. The high resistance turns the current into heat where you want it, not in the supply cable."
+  },
+  {
+   "id": "resistivity-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.7,
+   "q": "A single copper core is {len} m long with a cross-section of {a} mm². Copper's resistivity is $1.72 \\times 10^{-8}$ Ω·m. What is its resistance?",
+   "vars": {
+    "len": [
+     10,
+     200,
+     10
+    ],
+    "a": {
+     "pick": [
+      1,
+      1.5,
+      2.5,
+      4,
+      6
+     ]
+    }
+   },
+   "answer": "1.72e-8 * len / (a * 1e-6)",
+   "unit": "Ω",
+   "tolerance": 0.01,
+   "hint": "Change mm² to m² first: 1 mm² is $10^{-6}$ m², a millionth of a square metre.",
+   "work": "$A = {a} \\times 10^{-6}$ m². $R = \\frac{\\rho L}{A} = \\frac{1.72 \\times 10^{-8} \\times {len}}{{a} \\times 10^{-6}} = {answer}$ Ω",
+   "why": "With $\\rho$ in Ω·m, the length must be in metres and the area in square metres. Putting {a} in as if it were m² gives an answer a million times too small. A sense check: tens of metres of ordinary cable core come to a fraction of an ohm."
+  },
+  {
+   "id": "cable-rule",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The cable shortcut: 0.0172",
+   "body": "Cable sizes come in mm², so change copper's resistivity once and for all. One metre of 1 mm² copper is 0.0172 Ω, so copper is **0.0172 Ω·mm²/m**, and\n\n$$R = \\frac{0.0172 \\times L}{A}$$\n\nwith $L$ in metres and $A$ in mm². No powers of ten.\n\n**Out and back.** A cable to a load has two cores. The current goes out on one and back on the other, so it passes through **twice** the run length of copper.\n\n30 m of 1.5 mm² twin: $\\frac{0.0172 \\times 60}{1.5} \\approx 0.69$ Ω.\n\nThe **volt drop** is then $V = IR$: the voltage lost in the cable before it reaches the load.",
+   "more": "Why 0.0172? Resistivity in Ω·m is ohms × m² ÷ m. A square metre is a million mm², so $1.72 \\times 10^{-8}$ Ω·m² per m is $1.72 \\times 10^{-8} \\times 10^{6} = 0.0172$ Ω·mm² per m. Same copper, handier units.\n\nWorked number: a 100 m run of 2.5 mm² twin to a 24 V valve. Copper length 200 m: $\\frac{0.0172 \\times 200}{2.5} \\approx 1.38$ Ω.\n\nReal cable tables give a little more. Stranded cores have slightly more resistance, and copper at a working 70 °C is about 20% higher than at 20 °C. For a quick check the shortcut is fine; for a design, use the manufacturer's figures."
+  },
+  {
+   "id": "cable-rule-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "What is the resistance of one metre of {a} mm² copper core, in milliohms (mΩ, thousandths of an ohm)?",
+   "vars": {
+    "a": {
+     "pick": [
+      0.5,
+      0.75,
+      1,
+      1.5,
+      2.5,
+      4,
+      6,
+      10
+     ]
+    }
+   },
+   "let": {
+    "ohms": "0.0172 / a"
+   },
+   "answer": "0.0172 / a * 1000",
+   "unit": "mΩ",
+   "tolerance": 0.01,
+   "work": "$R = \\frac{0.0172 \\times 1}{{a}} = {ohms}$ Ω $= {answer}$ mΩ",
+   "why": "One metre of 1 mm² copper is 0.0172 Ω; a thicker core divides that by its size. × 1000 turns ohms into milliohms. Multiplying by {a} is the slip: a thicker core must have **less** resistance, not more."
+  },
+  {
+   "id": "temperature",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Hotter metal, more resistance",
+   "body": "Heat a metal and its atoms vibrate harder, so the electrons bump into them more: the resistance **rises**. Over about 100 °C it rises in a straight line:\n\n$$R = R_0(1 + \\alpha \\Delta T)$$\n\n$R_0$ is the resistance at the start, $\\Delta T$ the rise in °C, and $\\alpha$ (alpha) the **temperature coefficient**: the fraction it rises per degree. Copper's is about 0.0039, or 0.39% a degree.\n\nA **PT100** uses this: platinum, 100 Ω at 0 °C, $\\alpha = 0.00385$. At 100 °C, $100 \\times (1 + 0.00385 \\times 100) = 138.5$ Ω.\n\nAn **NTC thermistor** does the opposite, falling as it warms. Constantan barely changes.",
+   "more": "Read the bracket as 'one, plus the extra'. The 1 keeps the resistance you started with; $\\alpha \\Delta T$ is the fraction added on. For copper warmed 50 °C: $0.0039 \\times 50 = 0.195$, so the resistance goes up by 19.5%.\n\nWorked number: a motor winding reads 2.40 Ω at 20 °C. Run hot to 90 °C, the rise is 70 °C: $R = 2.40 \\times (1 + 0.0039 \\times 70) = 2.40 \\times 1.273 \\approx 3.06$ Ω.\n\nTurn it round and a resistance meter becomes a thermometer. That is how a PT100 reads temperature, and how a motor's winding temperature rise is measured: the **resistance method**. The motor standard writes it with 235 + temperature; that is the same rule for copper."
+  },
+  {
+   "id": "pt100-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A PT100 sensor is 100 Ω at 0 °C, with $\\alpha = 0.00385$ per °C. Using the straight-line rule, what is its resistance at {tc} °C?",
+   "vars": {
+    "tc": [
+     5,
+     100,
+     5
+    ]
+   },
+   "let": {
+    "frac": "0.00385 * tc"
+   },
+   "answer": "100 * (1 + 0.00385 * tc)",
+   "unit": "Ω",
+   "tolerance": 0.002,
+   "hint": "The rise is {tc} °C from 0 °C. Work out $\\alpha \\Delta T$ first, add 1, then multiply by 100.",
+   "work": "$R = R_0(1 + \\alpha \\Delta T) = 100 \\times (1 + 0.00385 \\times {tc}) = 100 \\times (1 + {frac}) = {answer}$ Ω",
+   "why": "The bracket is 1 plus the fraction added on: {frac}. Leaving out the 1 gives only the extra ohms, a small number, not the resistance. A PT100 goes up about 0.385 Ω for every degree, so 138.5 Ω at 100 °C."
+  },
+  {
+   "id": "worked-drop",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 24 V DC solenoid valve draws 1.5 A. It is 40 m from the panel, fed by 1.5 mm² copper twin. What voltage reaches the valve?",
+   "steps": [
+    {
+     "ask": "The length of copper the current goes through (out and back).",
+     "show": "$L = 2 \\times 40 = 80$ m"
+    },
+    {
+     "ask": "The cable's resistance, from $R = \frac{0.0172 \times L}{A}$.",
+     "show": "$R = \\frac{0.0172 \\times 80}{1.5} \\approx 0.917$ Ω"
+    },
+    {
+     "ask": "The volt drop in the cable, from $V = IR$.",
+     "show": "$V = 1.5 \\times 0.917 \\approx 1.38$ V"
+    },
+    {
+     "ask": "The voltage at the valve.",
+     "show": "$24 - 1.38 \\approx 22.6$ V. The cable loses $\\frac{1.38}{24} \\approx 5.7\\%$ of the supply."
+    }
+   ],
+   "why": "Resistivity gives the cable's resistance, Ohm's law gives the volt drop, and what is left reaches the load. The slips are forgetting the return core (half the drop) and using mm² with the $10^{-8}$ value. Most 24 V coils are made to work down to about 10% below 24 V (check the datasheet), so 5.7% is fine; a longer or thinner run may not be."
+  },
+  {
+   "id": "explain-double",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: the valve is 40 m from the panel on 1.5 mm² twin. Step 1 was $L = 2 \\times 40 = 80$ m.",
+   "q": "Why does step 1 double the 40 m? Say it in your own words.",
+   "model": "Current only flows round a complete loop. It goes out to the valve on one core and comes back on the other, so it passes through 40 m of copper each way: 80 m in all. Each core has its own resistance and its own volt drop, so both count. Using 40 m would give only half the real drop, and the valve would get less voltage than you worked out.",
+   "points": [
+    "Current needs a complete loop, out and back",
+    "The two cores are in series with the valve, so their lengths add",
+    "Using one core gives only half the volt drop"
+   ]
+  },
+  {
+   "id": "faded-drop",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 4.8,
+   "q": "A 24 V contactor coil draws 0.5 A. It is 30 m from the panel on 0.75 mm² copper twin. What voltage reaches the coil?",
+   "steps": [
+    {
+     "ask": "The length of copper.",
+     "show": "$L = 2 \\times 30 = 60$ m"
+    },
+    {
+     "ask": "The cable's resistance.",
+     "show": "$R = \\frac{0.0172 \\times 60}{0.75} \\approx 1.38$ Ω"
+    },
+    {
+     "ask": "The volt drop.",
+     "show": "$V = IR = 0.5 \\times 1.38 \\approx 0.69$ V"
+    },
+    {
+     "ask": "The voltage at the coil.",
+     "show": "$24 - 0.69 \\approx 23.3$ V, a loss of under 3%."
+    }
+   ],
+   "why": "Thinner cable than the worked example, but a third of the current, so a smaller drop. The drop depends on the current as well as the cable."
+  },
+  {
+   "id": "drop-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 4.9,
+   "q": "A 24 V load draws {cur} A. It is {run} m from the panel on {a} mm² copper twin. What is the volt drop in the cable (both cores)?",
+   "vars": {
+    "cur": {
+     "pick": [
+      0.25,
+      0.5,
+      1,
+      1.5,
+      2
+     ]
+    },
+    "run": [
+     10,
+     60,
+     5
+    ],
+    "a": {
+     "pick": [
+      0.75,
+      1,
+      1.5,
+      2.5
+     ]
+    }
+   },
+   "let": {
+    "len": "2 * run",
+    "ohms": "0.0172 * 2 * run / a"
+   },
+   "answer": "cur * 0.0172 * 2 * run / a",
+   "unit": "V",
+   "tolerance": 0.02,
+   "hint": "Double the run for out and back, then $R = \\frac{0.0172 \\times L}{A}$, then $V = IR$.",
+   "work": "$L = 2 \\times {run} = {len}$ m. $R = \\frac{0.0172 \\times {len}}{{a}} = {ohms}$ Ω. $V = IR = {cur} \\times {ohms} = {answer}$ V",
+   "why": "Out and back is {len} m of copper; the resistivity rule gives {ohms} Ω; the drop is current × resistance. Using {run} m alone gives half the drop. The load gets 24 V minus the drop."
+  },
+  {
+   "id": "widget-cable",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.8,
+   "intro": "On a 24 V supply, R1 stands for a long run of thin cable (both cores together) and R2 for the load at the far end. Set them as you like.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 24,
+     "R1": 20,
+     "R2": 480,
+     "mode": "series",
+     "controls": [
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "predict": {
+    "q": "Before you touch anything: if the cable run gets longer, so R1 goes up, what happens to the voltage at the load?",
+    "options": [
+     "It goes up",
+     "It goes down",
+     "It stays at 24 V"
+    ],
+    "answer": 1,
+    "why": "A longer cable has more resistance, so it takes a bigger share of the 24 V, and less is left for the load. The current falls a little too."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What percentage of the 24 V is lost in the cable (R1)?",
+    "answer": "V1 / V * 100",
+    "unit": "%",
+    "tolerance": 0.02,
+    "hint": "Find the current from the total resistance, then the cable's drop $V_1 = IR_1$, then divide by 24 and × 100.",
+    "why": "The current is {I} A through both. The cable drops $V_1 = IR_1 = {V1}$ V, which is {answer}% of {V} V. The load gets what is left, {V2} V. Taking R1 as a share of R2 alone, not of the total, is the slip."
+   }
+  },
+  {
+   "id": "motor-rise",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "A motor winding reads {rc} Ω at 20 °C before a test run. Straight after the run it reads {rh:3} Ω. Copper's $\\alpha$ is 0.0039 per °C. What temperature did the winding reach?",
+   "vars": {
+    "rc": {
+     "pick": [
+      0.85,
+      1.2,
+      2.4,
+      3.1,
+      5.6
+     ]
+    },
+    "rise": [
+     30,
+     90,
+     5
+    ]
+   },
+   "let": {
+    "rh": "ROUND(rc * (1 + 0.0039 * rise), 3)",
+    "ratio": "ROUND(rc * (1 + 0.0039 * rise), 3) / rc - 1",
+    "dt": "(ROUND(rc * (1 + 0.0039 * rise), 3) / rc - 1) / 0.0039"
+   },
+   "answer": "20 + (ROUND(rc * (1 + 0.0039 * rise), 3) / rc - 1) / 0.0039",
+   "unit": "°C",
+   "tolerance": 0.01,
+   "hint": "Turn $R = R_0(1 + \\alpha \\Delta T)$ round: divide by $R_0$, take off 1, divide by $\\alpha$. That gives the rise; add it to 20 °C.",
+   "work": "$\\frac{R}{R_0} - 1 = \\frac{{rh:3}}{{rc}} - 1 = {ratio:4}$. $\\Delta T = \\frac{{ratio:4}}{0.0039} = {dt:1}$ °C. Temperature $= 20 + {dt:1} = {answer:1}$ °C",
+   "why": "Undo the formula step by step: divide by $R_0$ to get the bracket, take off the 1 to leave $\\alpha \\Delta T$, divide by $\\alpha$ for the rise. Stopping at the rise ({dt:1} °C) forgets the 20 °C it started at. This is the resistance method for a winding's temperature: the only way to measure the inside of a winding without a sensor in it."
+  },
+  {
+   "id": "heater-length",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "A 24 V enclosure heater needs an element of {rr} Ω. It is to be wound from nichrome wire {d} mm in diameter (resistivity about $1.1 \\times 10^{-6}$ Ω·m). What length of wire is needed?",
+   "vars": {
+    "rr": {
+     "pick": [
+      6,
+      8,
+      12,
+      16,
+      24
+     ]
+    },
+    "d": {
+     "pick": [
+      0.3,
+      0.4,
+      0.5
+     ]
+    }
+   },
+   "let": {
+    "amm": "PI() * d^2 / 4",
+    "am": "PI() * d^2 / 4 * 1e-6"
+   },
+   "answer": "rr * PI() * d^2 / 4 * 1e-6 / 1.1e-6",
+   "unit": "m",
+   "tolerance": 0.02,
+   "hint": "Area first, $A = \\frac{\\pi d^2}{4}$, in mm², then × $10^{-6}$ for m². Then turn $R = \\frac{\\rho L}{A}$ round for $L$.",
+   "work": "$A = \\frac{\\pi \\times {d}^2}{4} = {amm}$ mm², which is {amm} × 10⁻⁶ m². $L = \\frac{RA}{\\rho} = \\frac{{rr} \\times {amm} \\times 10^{-6}}{1.1 \\times 10^{-6}} = {answer}$ m",
+   "why": "Turn $R = \\frac{\\rho L}{A}$ round: multiply both sides by $A$, divide by $\\rho$, so $L = \\frac{RA}{\\rho}$. The area uses the diameter squared, and must be in m². Using the diameter as the area is the common slip. A metre or two of fine nichrome is typical for a small heater."
+  },
+  {
+   "id": "spot-cable",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.7,
+   "q": "Someone worked out the resistance of a 25 m run of 2.5 mm² copper twin, both cores. One line has a mistake in it. Which?",
+   "lines": [
+    "Out and back: $L = 2 \\times 25 = 50$ m",
+    "Copper: 0.0172 Ω for each metre of 1 mm²",
+    "$R = \\frac{0.0172 \\times 50}{2.5}$",
+    "$R = 0.0344$ Ω"
+   ],
+   "wrong": 3,
+   "fix": "$R = 0.344$ Ω",
+   "why": "$0.0172 \\times 50 = 0.86$, and $0.86 \\div 2.5 = 0.344$ Ω: a slip of the decimal point. A rough check catches it: 50 m of 1 mm² would be about 0.86 Ω, and 2.5 mm² is 2.5 times thicker, so a bit over a third of an ohm, not a few hundredths."
+  },
+  {
+   "id": "why-hot",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Why does a copper wire's resistance rise when it gets hot?",
+   "options": [
+    "It expands, so it gets longer and thinner",
+    "Its atoms vibrate more, so electrons collide more often",
+    "Heat uses up some of the free electrons",
+    "Hot copper holds more charge, which blocks the flow"
+   ],
+   "answer": 1,
+   "why": "Hotter atoms jiggle harder and get in the drifting electrons' way more often. Expansion is real but about a hundred times too small to matter. The free electrons are not used up. (In a semiconductor such as a thermistor, heat frees more charge carriers, so its resistance falls instead.)"
+  },
+  {
+   "id": "mix-inrush",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.4,
+   "q": "A 12 V headlamp filament measures {cold} Ω on a meter while cold. What current flows in the first instant after it is switched on?",
+   "vars": {
+    "cold": {
+     "pick": [
+      0.3,
+      0.35,
+      0.4,
+      0.5
+     ]
+    }
+   },
+   "answer": "12 / cold",
+   "unit": "A",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{V}{R} = \\frac{12}{{cold}} = {answer}$ A",
+   "why": "At switch-on the filament is still cold, so the cold resistance sets the current: {answer} A for an instant. As it heats to about 4.8 Ω the current settles near 2.5 A. Using the hot resistance misses the inrush; multiplying 12 × {cold} gives a voltage, not a current."
+  },
+  {
+   "id": "mix-cable-heat",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.4,
+   "q": "A 24 V motor draws {cur} A through a cable whose two cores add up to {len} m of {a} mm² copper. How much power is lost as heat in the cable?",
+   "vars": {
+    "cur": {
+     "pick": [
+      2,
+      4,
+      5,
+      8,
+      10
+     ]
+    },
+    "len": {
+     "pick": [
+      20,
+      40,
+      60,
+      100
+     ]
+    },
+    "a": {
+     "pick": [
+      1.5,
+      2.5,
+      4
+     ]
+    }
+   },
+   "let": {
+    "ohms": "0.0172 * len / a"
+   },
+   "answer": "cur^2 * 0.0172 * len / a",
+   "unit": "W",
+   "tolerance": 0.02,
+   "hint": "Resistance first, then $P = I^2R$.",
+   "work": "$R = \\frac{0.0172 \\times {len}}{{a}} = {ohms}$ Ω. $P = I^2R = {cur}^2 \\times {ohms} = {answer}$ W",
+   "why": "The resistivity rule gives the cable's resistance; the power turned to heat is current squared times resistance. The length already counts both cores, so do not double it again. Forgetting to square the current is the other slip: double the current and the cable heat goes up four times."
+  },
+  {
+   "id": "mix-charge",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.9,
+   "q": "A {rr} Ω heater element runs from 24 V for {mins} minutes. How much charge passes through it?",
+   "vars": {
+    "rr": {
+     "pick": [
+      6,
+      8,
+      12,
+      16,
+      24
+     ]
+    },
+    "mins": {
+     "pick": [
+      2,
+      5,
+      10
+     ]
+    }
+   },
+   "let": {
+    "amps": "24 / rr",
+    "secs": "mins * 60"
+   },
+   "answer": "24 / rr * mins * 60",
+   "unit": "C",
+   "tolerance": 0.01,
+   "hint": "Current first, from the resistance. Then charge is current × time, in seconds.",
+   "work": "$I = \\frac{24}{{rr}} = {amps}$ A. $t = {mins} \\times 60 = {secs}$ s. $Q = It = {amps} \\times {secs} = {answer}$ C",
+   "why": "Two rules in turn: Ohm's law for the current, then charge = current × time with the time in seconds. Leaving the time in minutes gives 60 times too little."
+  },
+  {
+   "id": "check-loop",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.7,
+   "q": "A sensor is {run} m from the panel on {a} mm² copper twin. What is the resistance of the cable, counting both cores?",
+   "vars": {
+    "run": [
+     10,
+     80,
+     5
+    ],
+    "a": {
+     "pick": [
+      0.75,
+      1,
+      1.5,
+      2.5
+     ]
+    }
+   },
+   "let": {
+    "len": "2 * run"
+   },
+   "answer": "0.0172 * 2 * run / a",
+   "unit": "Ω",
+   "tolerance": 0.02,
+   "work": "$L = 2 \\times {run} = {len}$ m. $R = \\frac{0.0172 \\times {len}}{{a}} = {answer}$ Ω",
+   "why": "Out and back is twice the run, and copper is 0.0172 Ω for each metre of 1 mm². Divide by the core size because thicker means less resistance. One core alone gives half the answer."
+  },
+  {
+   "id": "check-al",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.9,
+   "q": "A copper conductor and an aluminium one are the same length and have the same resistance. Which has the larger cross-section?",
+   "options": [
+    "The copper one",
+    "They are the same size",
+    "It depends on the current",
+    "The aluminium one"
+   ],
+   "answer": 3,
+   "why": "Aluminium's resistivity is about 1.5 times copper's, so for the same resistance over the same length it needs about 1.5 times the area. That is why aluminium cables are thicker than copper ones of the same rating. The current has nothing to do with the resistance."
+  },
+  {
+   "id": "check-pt100",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.2,
+   "q": "A PT100 (100 Ω at 0 °C, $\\alpha = 0.00385$ per °C) reads {ohms:2} Ω. Using the straight-line rule, what temperature is it at?",
+   "vars": {
+    "tc": [
+     5,
+     120,
+     5
+    ]
+   },
+   "let": {
+    "ohms": "ROUND(100 * (1 + 0.00385 * tc), 2)"
+   },
+   "answer": "(ROUND(100 * (1 + 0.00385 * tc), 2) / 100 - 1) / 0.00385",
+   "unit": "°C",
+   "tolerance": 0.02,
+   "hint": "Divide by 100, take off 1, then divide by 0.00385.",
+   "work": "$\\Delta T = \\frac{R / R_0 - 1}{\\alpha} = \\frac{{ohms:2} / 100 - 1}{0.00385} = {answer:1}$ °C above 0 °C",
+   "why": "Undo $R = R_0(1 + \\alpha \\Delta T)$ in reverse order: divide by $R_0$, take off 1, divide by $\\alpha$. A quick check: every 0.385 Ω above 100 Ω is one degree. (The real PT100 table, from IEC 60751, curves very slightly; the straight line is within a fraction of a degree here.)"
+  }
+ ]
+}
