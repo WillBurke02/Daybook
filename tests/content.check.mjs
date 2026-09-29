@@ -87,6 +87,10 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!(lv >= 1 && lv <= 9)) bad(at, 'a calibration card has a stage from 1 to 9');
     }
     cards++;
+    // a lone backslash in JSON turns \frac, \times, \rho into form feed, tab, return
+    let ctl = false;
+    JSON.stringify(c, (k, v) => (typeof v === 'string' && /[\x00-\x09\x0b-\x1f]/.test(v) && (ctl = true), v));
+    if (ctl) bad(at, 'a control character in the text: write TeX backslashes doubled (\\\\frac)');
     if (!c.id || !/^[a-z0-9-]+$/.test(c.id)) bad(at, 'card ids are lower case words and dashes');
     if (seen.has(c.id)) bad(at, 'card id used twice in the lesson');
     seen.add(c.id);

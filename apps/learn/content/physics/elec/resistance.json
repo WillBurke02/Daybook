@@ -419,7 +419,7 @@
    "type": "concept",
    "stage": "learn",
    "title": "Hotter metal, more resistance",
-   "body": "Heat a metal and its atoms vibrate harder, so the electrons bump into them more: the resistance **rises**. Over about 100 °C it rises in a straight line:\n\n$$R = R_0(1 + \\alpha \\Delta T)$$\n\n$R_0$ is the resistance at the start, $\\Delta T$ the rise in °C, and $\\alpha$ (alpha) the **temperature coefficient**: the fraction it rises per degree. Copper's is about 0.0039, or 0.39% a degree.\n\nA **PT100** uses this: platinum, 100 Ω at 0 °C, $\\alpha = 0.00385$. At 100 °C, $100 \\times (1 + 0.00385 \\times 100) = 138.5$ Ω.\n\nAn **NTC thermistor** does the opposite, falling as it warms. Constantan barely changes.",
+   "body": "Heat a metal and its atoms vibrate harder, so the electrons bump into them more: the resistance **rises**. Over a range of about 100 °C it rises in a straight line:\n\n$$R = R_0(1 + \\alpha \\Delta T)$$\n\n$R_0$ is the resistance at the start, $\\Delta T$ the rise in °C, and $\\alpha$ (alpha) the **temperature coefficient**: the fraction it rises per degree. Copper's is about 0.0039, or 0.39% a degree.\n\nA **PT100** uses this: platinum, 100 Ω at 0 °C, $\\alpha = 0.00385$. At 100 °C, $100 \\times (1 + 0.00385 \\times 100) = 138.5$ Ω.\n\nAn **NTC thermistor** does the opposite, falling as it warms. Constantan barely changes.",
    "more": "Read the bracket as 'one, plus the extra'. The 1 keeps the resistance you started with; $\\alpha \\Delta T$ is the fraction added on. For copper warmed 50 °C: $0.0039 \\times 50 = 0.195$, so the resistance goes up by 19.5%.\n\nWorked number: a motor winding reads 2.40 Ω at 20 °C. Run hot to 90 °C, the rise is 70 °C: $R = 2.40 \\times (1 + 0.0039 \\times 70) = 2.40 \\times 1.273 \\approx 3.06$ Ω.\n\nTurn it round and a resistance meter becomes a thermometer. That is how a PT100 reads temperature, and how a motor's winding temperature rise is measured: the **resistance method**. The motor standard writes it with 235 + temperature; that is the same rule for copper."
   },
   {
@@ -457,7 +457,7 @@
      "show": "$L = 2 \\times 40 = 80$ m"
     },
     {
-     "ask": "The cable's resistance, from $R = \frac{0.0172 \times L}{A}$.",
+     "ask": "The cable's resistance, from $R = \\frac{0.0172 \\times L}{A}$.",
      "show": "$R = \\frac{0.0172 \\times 80}{1.5} \\approx 0.917$ Ω"
     },
     {
