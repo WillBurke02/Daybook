@@ -381,3 +381,12 @@ numbered file in that app's `migrations/`. A new app is a folder in `apps/`
 with an `app.py`; Home and the top bar pick it up.
 
 Tax rates live in Money's database (Settings → Tax figures). Check them each April.
+
+## Credits
+
+Some Learn lessons are adapted from OpenStax textbooks (Prealgebra 2e, Algebra and
+Trigonometry 2e, College Physics 2e, University Physics Volume 2), © Rice University,
+licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Each such
+lesson names its section in its sources and links to it; the text has been rewritten,
+shortened and set in engineering examples for Daybook. Download them free at
+https://openstax.org.
