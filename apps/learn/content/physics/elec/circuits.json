@@ -1,0 +1,965 @@
+{
+ "id": "physics.elec.circuits",
+ "title": "Series and parallel",
+ "tags": [
+  "electrical",
+  "circuits",
+  "series",
+  "parallel",
+  "resistance"
+ ],
+ "kind": "procedure",
+ "level": 4.5,
+ "minutes": 25,
+ "goals": [
+  "Find the total resistance of resistors in series, in parallel, and of several identical ones",
+  "Work out the current, voltage and power in each part of a series or parallel circuit, and check that the powers add up",
+  "Reduce a mix of series and parallel, such as a cable feeding loads in parallel, to one resistance",
+  "Say which resistor gets hottest in series and in parallel, and why panel lamps are wired in parallel"
+ ],
+ "summary": "**Series**: one after another, **one path**. The same current flows through every part (charge cannot pile up or leak out). The voltage drops add up to the supply (energy is conserved): $V = V_1 + V_2 + V_3$. The resistances add:\n\n$$R_s = R_1 + R_2 + R_3 + \\dots$$\n\n**Parallel**: each part straight across the supply. Each has the **full supply voltage** and draws the current it would draw alone. The currents add up: $I = I_1 + I_2 + I_3$. The equivalent resistance:\n\n$$\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3} + \\dots$$\n\nAdd the one-overs, then **turn the answer over**. $R_p$ is always **less than the smallest** resistor. For two: $R_p = \\frac{R_1 R_2}{R_1 + R_2}$ (product over sum).\n\n**Short cuts**: $n$ identical resistors $R$ make $nR$ in series and $\\frac{R}{n}$ in parallel. If one is much bigger, in series the big one wins; in parallel the small one wins.\n\n**Power**: $P = VI = I^2R = \\frac{V^2}{R}$. The supply's power equals the powers in the resistors added up: a good check.\n\n- In series (same current) the **biggest** resistance gets hottest.\n- In parallel (same voltage) the **smallest** resistance gets hottest.\n- The same resistors give far more heat in parallel than in series. Two identical elements: parallel gives twice the heat of one, series half.\n\n**Mixed circuits**: reduce a group at a time (a plain series or parallel group becomes one resistor), redraw, repeat. A cable is in series with the loads it feeds: $R_{\\text{tot}} = R_1 + R_p$. The whole current flows through it, so it drops $IR_1$ and the loads get $V - IR_1$. That is why lights dim when a big motor starts.\n\n**Checks**: series total bigger than the biggest; parallel total smaller than the smallest; powers add up to $VI$ from the supply.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "21.1 Resistors in Series and Parallel",
+   "url": "https://openstax.org/books/college-physics-2e/pages/21-1-resistors-in-series-and-parallel",
+   "by": "OpenStax (Urone, Hinrichs), College Physics 2e",
+   "minutes": 20,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, College Physics 2e (Urone, Hinrichs), section 21.1 Resistors in Series and Parallel. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook."
+ ],
+ "formulas": [
+  {
+   "name": "Resistors in series",
+   "tex": "R_s = R_1 + R_2 + R_3 + \\dots",
+   "match": [
+    "R_s=R_1+R_2"
+   ],
+   "says": "In series the resistances simply add: the current has to get through every one of them.",
+   "symbols": [
+    [
+     "R_s",
+     "the total (equivalent) resistance in series (ohms, Ω)"
+    ],
+    [
+     "R_1, R_2, R_3",
+     "the separate resistances (Ω)"
+    ]
+   ],
+   "example": "1 Ω, 6 Ω and 13 Ω in series: $R_s = 1 + 6 + 13 = 20$ Ω."
+  },
+  {
+   "name": "Resistors in parallel",
+   "tex": "\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3} + \\dots",
+   "match": [
+    "\\frac{1}{R_p}"
+   ],
+   "says": "Add up one-over each resistance; that gives one-over the total, so turn it over at the end. The total is always less than the smallest resistor.",
+   "symbols": [
+    [
+     "R_p",
+     "the total (equivalent) resistance in parallel (Ω)"
+    ],
+    [
+     "R_1, R_2, R_3",
+     "the separate resistances (Ω)"
+    ]
+   ],
+   "example": "6 Ω and 13 Ω: $\\frac{1}{6} + \\frac{1}{13} = 0.2436$, and $1 \\div 0.2436 = 4.11$ Ω."
+  },
+  {
+   "name": "Two in parallel: product over sum",
+   "tex": "R_p = \\frac{R_1 R_2}{R_1 + R_2}",
+   "match": [
+    "\\frac{R_1R_2}{R_1+R_2}"
+   ],
+   "says": "For exactly two resistors in parallel: multiply them, add them, and divide the first by the second.",
+   "symbols": [
+    [
+     "R_p",
+     "the total in parallel (Ω)"
+    ],
+    [
+     "R_1, R_2",
+     "the two resistances (Ω)"
+    ]
+   ],
+   "example": "6 Ω and 2 Ω: $\\frac{6 \\times 2}{6 + 2} = \\frac{12}{8} = 1.5$ Ω."
+  },
+  {
+   "name": "Identical resistors in parallel",
+   "tex": "R_p = \\frac{R}{n}",
+   "match": [
+    "R_p=\\frac{R}{n}"
+   ],
+   "says": "n resistors that are all the same, in parallel, make one n-th of one of them. (In series they make n times one.)",
+   "symbols": [
+    [
+     "R_p",
+     "the total in parallel (Ω)"
+    ],
+    [
+     "R",
+     "the resistance of one of them (Ω)"
+    ],
+    [
+     "n",
+     "how many there are"
+    ]
+   ],
+   "example": "ten 275 Ω resistors in parallel: $\\frac{275}{10} = 27.5$ Ω; in series, 2750 Ω."
+  },
+  {
+   "name": "The drops add up to the supply (series)",
+   "tex": "V = V_1 + V_2 + V_3",
+   "match": [
+    "V=V_1+V_2"
+   ],
+   "says": "In series, the voltage drops across the parts add up to the supply voltage: the energy each bit of charge gets from the supply is all given up on the way round.",
+   "symbols": [
+    [
+     "V",
+     "the supply voltage (volts, V)"
+    ],
+    [
+     "V_1, V_2, V_3",
+     "the drop across each part (V)"
+    ]
+   ],
+   "example": "0.6 A through 1 Ω, 6 Ω and 13 Ω: $0.6 + 3.6 + 7.8 = 12$ V, the supply."
+  },
+  {
+   "name": "The currents add up (parallel)",
+   "tex": "I = I_1 + I_2 + I_3",
+   "match": [
+    "I=I_1+I_2"
+   ],
+   "says": "In parallel, the current from the supply is the branch currents added up: charge is not lost or made where the wires join.",
+   "symbols": [
+    [
+     "I",
+     "the current from the supply (amps, A)"
+    ],
+    [
+     "I_1, I_2, I_3",
+     "the current in each branch (A)"
+    ]
+   ],
+   "example": "12 A, 2 A and 0.92 A in three branches: the supply gives 14.92 A."
+  },
+  {
+   "name": "Power from current and resistance",
+   "tex": "P = I^2R",
+   "match": [
+    "I^2R"
+   ],
+   "says": "The power turned into heat is the current squared times the resistance. Handy in series, where the current is the same for each part.",
+   "symbols": [
+    [
+     "P",
+     "the power (watts, W)"
+    ],
+    [
+     "I",
+     "the current through it (A)"
+    ],
+    [
+     "R",
+     "its resistance (Ω)"
+    ]
+   ],
+   "example": "0.6 A through 13 Ω: $0.6^2 \\times 13 = 4.68$ W."
+  },
+  {
+   "name": "Power from voltage and resistance",
+   "tex": "P = \\frac{V^2}{R}",
+   "match": [
+    "\\frac{V^2}{R}"
+   ],
+   "says": "The power is the voltage across it, squared, divided by its resistance. Handy in parallel, where the voltage is the same for each part.",
+   "symbols": [
+    [
+     "P",
+     "the power (W)"
+    ],
+    [
+     "V",
+     "the voltage across it (V)"
+    ],
+    [
+     "R",
+     "its resistance (Ω)"
+    ]
+   ],
+   "example": "12 V across 6 Ω: $\\frac{144}{6} = 24$ W."
+  },
+  {
+   "name": "A cable in series with loads in parallel",
+   "tex": "R_{\\text{tot}} = R_1 + R_p",
+   "match": [
+    "R_{\\text{tot}}=R_1+R_p"
+   ],
+   "says": "The total resistance is the cable's resistance plus the equivalent resistance of the parallel group it feeds.",
+   "symbols": [
+    [
+     "R_{\\text{tot}}",
+     "the total resistance the supply sees (Ω)"
+    ],
+    [
+     "R_1",
+     "the cable's resistance, both cores together (Ω)"
+    ],
+    [
+     "R_p",
+     "the equivalent resistance of the loads in parallel (Ω)"
+    ]
+   ],
+   "example": "a 1 Ω cable feeding 6 Ω and 13 Ω in parallel: $1 + 4.11 = 5.11$ Ω."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Check the series and parallel rules with three resistors: **1 kΩ, 2.2 kΩ and 3.3 kΩ**, rated 0.25 W or more, on a DC bench supply set to **12 V or less** with its current limit at about 50 mA. The worst case, the 1 kΩ with the full 12 V across it, turns only 0.14 W into heat: well within its rating.",
+   "check": [
+    "Supply off. Measure each resistor on the ohms range, out of circuit",
+    "Wire all three in series. Supply still off: measure the total. Expect about 6.5 kΩ, the sum",
+    "Switch on at 12 V. Measure the drop across each resistor and add them: they should come to the supply voltage",
+    "Measure the current with the meter **in series** (mA range, lead in the mA socket): about 1.8 mA, the same wherever you break in",
+    "Supply off. Rewire the three in parallel and measure the total: about 0.57 kΩ, less than the 1 kΩ",
+    "At 12 V, measure each branch current and the supply current: about 12, 5.5 and 3.6 mA, adding up to about 21 mA",
+    "Put the meter lead back in the V socket before you measure a voltage again"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-two-elements",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A heater has two identical elements. With one switched on it gives out some heat. Now both are on, wired **in parallel** (side by side, each straight across the same supply). How much heat now, compared with one element?",
+   "options": [
+    "Half as much",
+    "The same",
+    "Twice as much",
+    "Four times as much"
+   ],
+   "answer": 2,
+   "why": "In parallel each element has the full supply voltage across it, so each works exactly as it would alone and gives out the same heat. Two of them give twice as much. Half is what you get **in series** (one after the other): the two share the voltage, and the current halves. Four times would need the voltage across each element to double, and it does not."
+  },
+  {
+   "id": "series",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Series: one path, the resistances add",
+   "body": "In **series** the parts are joined one after another, so the charge has **one path**. The same current flows through each: charge cannot pile up or leak out on the way.\n\nEach part takes a share of the supply voltage, its **voltage drop**: $V_1 = IR_1$, $V_2 = IR_2$, $V_3 = IR_3$. Energy is not lost or made, so the drops add up to the supply: $V = V_1 + V_2 + V_3$.\n\nPut $IR$ in for each drop and $V = I(R_1 + R_2 + R_3)$. So the string acts like one resistor, the **equivalent resistance**:\n\n$$R_s = R_1 + R_2 + R_3 + \\dots$$\n\nThe small $s$ means series. The dots mean \"and so on, for as many as there are\".",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 100,
+     "R2": 200,
+     "mode": "series",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "more": "Numbers first. A 12 V supply, and 1 Ω, 6 Ω and 13 Ω in series. The total is $1 + 6 + 13 = 20$ Ω, so the current is $\\frac{12}{20} = 0.6$ A, through all three.\n\nThe drops: $0.6 \\times 1 = 0.6$ V, $0.6 \\times 6 = 3.6$ V and $0.6 \\times 13 = 7.8$ V. Add them: 12 V, the supply. The biggest resistor takes the biggest share.\n\nA picture: you are holding a screwdriver on a live part. The current would go through the shaft, the handle, your body and your boots, one after another: in series. Rubber soles add a big resistance to the string, so the total goes up and the current (the shock) goes down."
+  },
+  {
+   "id": "series-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.3,
+   "intro": "Two resistors in series. First say what you expect, then set them as you like and work out the current.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 100,
+     "R2": 220,
+     "mode": "series",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "predict": {
+    "q": "Before you move anything: if you make $R_2$ **bigger**, what happens to the voltage across $R_1$?",
+    "options": [
+     "It goes up",
+     "It stays the same",
+     "It goes down"
+    ],
+    "answer": 2,
+    "why": "A bigger $R_2$ makes the total bigger, so less current flows round the one path. $R_1$ has not changed, so its drop, $V_1 = IR_1$, falls. $R_2$ now takes a bigger share of the same supply."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What current flows round the circuit? Answer in mA (milliamps: thousandths of an amp).",
+    "answer": "I * 1000",
+    "unit": "mA",
+    "tolerance": 0.02,
+    "hint": "One path: add the two resistances, then $I = \\frac{ V }{R_s}$.",
+    "why": "$R_s$ = {R1} + {R2} = {Rt} Ω, so $I = \\frac{{V}}{{Rt}}$ = {I} A, which is {answer} mA (× 1000 for mA). The same current flows through both. Dividing by one resistor alone forgets that the charge has to get through both of them."
+   }
+  },
+  {
+   "id": "parallel",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Parallel: side by side, the currents add",
+   "body": "In **parallel** each part is wired straight across the supply, like the indicator lamps on a panel. Each gets the **full supply voltage**, and each draws the current it would draw alone: $I_1 = \\frac{V}{R_1}$, and so on. Switch one off and the others carry on.\n\nCharge is not lost, so the branch currents add up in the supply wire: $I = I_1 + I_2 + I_3$.\n\nPut $\\frac{V}{R}$ in for each and you get the **equivalent resistance**:\n\n$$\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3} + \\dots$$\n\nAdd up one-over each resistance, then **turn the answer over** to get $R_p$. It is always **less than the smallest**: each extra path lets more current through.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 100,
+     "R2": 300,
+     "mode": "parallel",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "more": "The same three resistors as before, 1 Ω, 6 Ω and 13 Ω, now in parallel on 12 V.\n\nEach has the full 12 V: $\\frac{12}{1} = 12$ A, $\\frac{12}{6} = 2$ A and $\\frac{12}{13} = 0.92$ A. The supply gives the sum, 14.92 A.\n\nThe rule: $\\frac{1}{R_p} = 1 + 0.1667 + 0.0769 = 1.2436$, and turned over, $R_p = 1 \\div 1.2436 = 0.804$ Ω. Check: $\\frac{12}{0.804} = 14.9$ A. Right. In series the same three drew only 0.6 A.\n\nA picture: tills in a shop. Open another till (another path) and more people get through each minute, however slow that till is. More flow for the same push means less resistance.\n\nFor just two there is a quicker way, **product over sum**: $R_p = \\frac{R_1 R_2}{R_1 + R_2}$."
+  },
+  {
+   "id": "parallel-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.6,
+   "intro": "Two resistors in parallel. Set them as you like, then work out the power the battery supplies.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 100,
+     "R2": 300,
+     "mode": "parallel",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What total power does the battery supply? Work out the power in each resistor, then add them.",
+    "answer": "P",
+    "unit": "W",
+    "tolerance": 0.02,
+    "hint": "Each resistor has the full battery voltage across it, so each gives $P = \\frac{V^2}{R}$ with its own $R$.",
+    "why": "Each resistor has the full {V} V, so each turns $\\frac{V^2}{R}$ into heat, as it would alone. The battery supplies the sum, {P} W. It also equals $V \\times I$ = {V} × {I} = {P} W, as it must: the energy put in each second is the energy turned into heat. Halving the voltage for each, as if they were in series, is the slip."
+   }
+  },
+  {
+   "id": "identical",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Short cuts: many the same, or one much bigger",
+   "body": "**Identical resistors.** $n$ equal resistors, each $R$, make $nR$ in series. In parallel they make\n\n$$R_p = \\frac{R}{n}$$\n\nTen 275 Ω resistors: 2750 Ω in series, 27.5 Ω in parallel. Two equal ones in parallel make half of one.\n\n**One much bigger than the other.** In series the big one wins: 10 kΩ and 10 Ω in series is about 10 kΩ. In parallel the **small** one wins: 10 kΩ and 10 Ω in parallel is just under 10 Ω.\n\nThat is why a voltmeter, with its very high resistance, hardly changes a circuit when you put it across a part.",
+   "more": "Why one-$n$th? Each of the $n$ resistors has the full voltage and passes $\\frac{V}{R}$. All $n$ together pass $n$ times that. $n$ times the current for the same voltage means one $n$th of the resistance.\n\nWorked number: a panel has 6 identical 24 V lamps, each 480 Ω. In parallel they make $\\frac{480}{6} = 80$ Ω, and the supply gives $\\frac{24}{80} = 0.3$ A. Check another way: each lamp takes $\\frac{24}{480} = 0.05$ A, and $6 \\times 0.05 = 0.3$ A. Right.\n\nThe big-and-small case, worked: 10 kΩ and 10 Ω in parallel. $\\frac{1}{R_p} = 0.0001 + 0.1 = 0.1001$, so $R_p = 9.99$ Ω. The 10 kΩ path takes so little current that it barely counts."
+  },
+  {
+   "id": "identical-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "{cnt} identical {res} Ω resistors are wired in parallel. What is their total resistance?",
+   "vars": {
+    "cnt": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      10
+     ]
+    },
+    "res": {
+     "pick": [
+      100,
+      220,
+      275,
+      470,
+      1000
+     ]
+    }
+   },
+   "answer": "res / cnt",
+   "unit": "Ω",
+   "work": "$R_p = \\frac{R}{n} = \\frac{{res}}{{cnt}} = {answer}$ Ω",
+   "why": "Each resistor passes the same current, so {cnt} of them pass {cnt} times as much for the same voltage: one {cnt}th of the resistance. {cnt} × {res} would be the series total; in parallel the total must come out **less** than one resistor."
+  },
+  {
+   "id": "power",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Power: where the heat goes",
+   "body": "Each resistor turns electrical energy into heat. Its **power** (watts, W) is $P = VI$, or, with Ohm's law put in, $P = I^2R$ or $P = \\frac{V^2}{R}$.\n\nEnergy is conserved, so the power the supply gives out ($VI$, with the supply's voltage and current) equals the powers in the resistors added up. That is a good check on any answer.\n\nWhich resistor gets hottest depends on the wiring:\n\n- **In series** the current is the same, so use $P = I^2R$: the **biggest** resistance gets hottest.\n- **In parallel** the voltage is the same, so use $P = \\frac{V^2}{R}$: the **smallest** resistance gets hottest.\n\nThe same resistors give out far more heat in parallel than in series.",
+   "more": "Worked number: 1 Ω, 6 Ω and 13 Ω on 12 V.\n\nIn series, 0.6 A flows through all three. $P = I^2R$: $0.36$ W, $2.16$ W and $4.68$ W. Total 7.2 W. The supply: $12 \\times 0.6 = 7.2$ W. They agree. The 13 Ω, the biggest, is hottest.\n\nIn parallel, each has 12 V. $P = \\frac{V^2}{R}$: $\\frac{144}{1} = 144$ W, $\\frac{144}{6} = 24$ W and $\\frac{144}{13} = 11.1$ W. Total 179 W, and $12 \\times 14.92 = 179$ W. Now the 1 Ω, the smallest, is hottest.\n\nSame parts, 7.2 W against 179 W. Switching two heater elements between series and parallel is one way to give a heater a low and a high setting."
+  },
+  {
+   "id": "power-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A 500 W and a 1000 W heater element (both rated for 230 V) are wired **in series** across 230 V. Which one gets hotter?",
+   "options": [
+    "The 500 W element",
+    "The 1000 W element",
+    "Both the same"
+   ],
+   "answer": 0,
+   "hint": "Find each element's resistance from its rating: $R = \\frac{V^2}{P}$. Then: in series, what is the same for both?",
+   "why": "Rated at 230 V, the 500 W element has the bigger resistance: $R = \\frac{V^2}{P}$ gives about 106 Ω, against 53 Ω for the 1000 W one. In series the same current flows through both, and $P = I^2R$, so the bigger resistance gets more heat: about 222 W against 111 W. The 1000 W element is the hotter one only when each has the full 230 V, in parallel."
+  },
+  {
+   "id": "combination",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Series and parallel together",
+   "body": "Many real circuits mix the two. Reduce them **a group at a time**:\n\n- Find a group that is plainly series or plainly parallel.\n- Swap it for its one equivalent resistance.\n- Redraw, and repeat until one resistance is left.\n\nA common case: a cable feeding loads in parallel. The cable's resistance $R_1$ (both cores together) is in **series** with the parallel group:\n\n$$R_{\\text{tot}} = R_1 + R_p$$\n\nThe whole supply current flows through the cable, so the cable drops $IR_1$, and the loads get only what is left: $V - IR_1$.",
+   "more": "This is why the lights dim when a big motor starts or a welder strikes up.\n\nWorked number: 12 V through a 1 Ω cable to a 6 Ω lamp. Total $1 + 6 = 7$ Ω, current $\\frac{12}{7} = 1.71$ A. The cable drops $1.71 \\times 1 = 1.71$ V, so the lamp gets 10.3 V.\n\nNow a 2 Ω motor starts, in parallel with the lamp. The pair is $\\frac{6 \\times 2}{6 + 2} = 1.5$ Ω. Total $1 + 1.5 = 2.5$ Ω, current $\\frac{12}{2.5} = 4.8$ A. The cable now drops 4.8 V, and the lamp gets only 7.2 V. It dims.\n\nThe lamp did not change. The bigger current through the shared cable took more of the supply's voltage."
+  },
+  {
+   "id": "combination-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "$R_1$ = {ra} Ω is in series with a parallel pair: $R_2$ = {rb} Ω and $R_3$ = {rc} Ω. What is the total resistance?",
+   "vars": {
+    "ra": {
+     "pick": [
+      1,
+      2,
+      5,
+      10
+     ]
+    },
+    "rb": {
+     "pick": [
+      6,
+      10,
+      12,
+      22,
+      47
+     ]
+    },
+    "rc": {
+     "pick": [
+      13,
+      15,
+      33,
+      68,
+      100
+     ]
+    }
+   },
+   "let": {
+    "rp": "rb * rc / (rb + rc)"
+   },
+   "answer": "ra + rb * rc / (rb + rc)",
+   "unit": "Ω",
+   "hint": "Reduce the parallel pair first, then add $R_1$.",
+   "work": "$R_p = \\frac{{rb} \\times {rc}}{{rb} + {rc}} = {rp}$ Ω; $R_{\\text{tot}} = {ra} + {rp} = {answer}$ Ω",
+   "why": "The pair first: product over sum gives {rp} Ω, less than {rb} Ω as it must be. That one resistance is in series with $R_1$, so add: {answer} Ω. Adding all three is the slip: only $R_1$ is in series."
+  },
+  {
+   "id": "worked-cable",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 12 V supply feeds two loads in parallel at the end of a long cable: a 6.00 Ω lamp ($R_2$) and a 13.0 Ω heater element ($R_3$). The cable's two cores together have 1.00 Ω ($R_1$). What current flows in the lamp, and what power does it get?",
+   "steps": [
+    {
+     "ask": "Spot the groups.",
+     "show": "$R_2$ and $R_3$ are each across the same two points: parallel. The cable carries all the current: it is in series with that pair."
+    },
+    {
+     "ask": "Reduce the parallel pair.",
+     "show": "$\\frac{1}{R_p} = \\frac{1}{6} + \\frac{1}{13} = 0.1667 + 0.0769 = 0.2436$, so $R_p = 1 \\div 0.2436 = 4.11$ Ω"
+    },
+    {
+     "ask": "The total resistance (series: add).",
+     "show": "$R_{\\text{tot}} = R_1 + R_p = 1.00 + 4.11 = 5.11$ Ω"
+    },
+    {
+     "ask": "The supply current.",
+     "show": "$I = \\frac{V}{R_{\\text{tot}}} = \\frac{12}{5.11} = 2.35$ A"
+    },
+    {
+     "ask": "The voltage left for the loads.",
+     "show": "The cable drops $IR_1 = 2.35 \\times 1.00 = 2.35$ V, so $V_p = 12 - 2.35 = 9.65$ V"
+    },
+    {
+     "ask": "The lamp's current and power.",
+     "show": "$I_2 = \\frac{V_p}{R_2} = \\frac{9.65}{6} = 1.61$ A, and $P_2 = I_2^2 R_2 = 1.61^2 \\times 6 = 15.5$ W"
+    }
+   ],
+   "why": "Wired straight to the supply, the lamp would have the full 12 V: 2.00 A and 24.0 W. The cable's 2.35 V drop cuts that to 1.61 A and 15.5 W. The slip is to use 12 V for the lamp: once there is a resistance in series, the loads in parallel get only what it leaves."
+  },
+  {
+   "id": "explain-cable",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: 12 V feeds a 6 Ω lamp and a 13 Ω heater in parallel through a 1 Ω cable. The supply current is 2.35 A. Step 5 was: the cable drops $2.35 \\times 1.00 = 2.35$ V, so the loads get $12 - 2.35 = 9.65$ V.",
+   "q": "Why does step 5 use the **whole** 2.35 A for the cable, and why do the loads get 9.65 V and not the full 12 V? Say it in your own words.",
+   "model": "The cable is in series with the pair of loads: every bit of charge going to the lamp or the heater goes through the cable first. So the whole 2.35 A flows in it, and pushing that through 1 Ω uses 2.35 V (Ohm's law). Energy is conserved round the loop, so the drops add up to the supply's 12 V: whatever the cable uses is not there for the loads. That leaves 9.65 V, and because the lamp and the heater are in parallel, each has that same 9.65 V across it.",
+   "points": [
+    "The cable is in series with the loads, so the whole supply current flows through it",
+    "The cable's drop is that current times its resistance",
+    "The drops round the loop add up to the supply, so the loads get what is left",
+    "Both loads are in parallel, so each has the same 9.65 V"
+   ]
+  },
+  {
+   "id": "faded-cable",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 4.7,
+   "q": "A 24 V supply feeds two identical 12.0 Ω lamps in parallel through a cable of 0.50 Ω (both cores together). What current flows in each lamp?",
+   "steps": [
+    {
+     "ask": "Reduce the parallel pair.",
+     "show": "Two equal ones make half of one: $R_p = \\frac{12}{2} = 6.0$ Ω"
+    },
+    {
+     "ask": "The total resistance.",
+     "show": "$R_{\\text{tot}} = 0.50 + 6.0 = 6.5$ Ω"
+    },
+    {
+     "ask": "The supply current.",
+     "show": "$I = \\frac{24}{6.5} = 3.69$ A"
+    },
+    {
+     "ask": "The voltage across the lamps.",
+     "show": "The cable drops $3.69 \\times 0.50 = 1.85$ V, so $V_p = 24 - 1.85 = 22.2$ V"
+    },
+    {
+     "ask": "The current in each lamp.",
+     "show": "$\\frac{22.2}{12} = 1.85$ A each"
+    }
+   ],
+   "why": "Check: two lamps at 1.85 A make 3.69 A, the supply current, as they must (the currents add up). Two equal lamps share it equally."
+  },
+  {
+   "id": "cable-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.0,
+   "q": "A {V} V supply feeds two loads in parallel through a cable of {rc} Ω (both cores together): a lamp of {rb} Ω and a heater of {rd} Ω. What current flows in the lamp?",
+   "vars": {
+    "V": {
+     "pick": [
+      12,
+      24
+     ]
+    },
+    "rc": {
+     "pick": [
+      0.2,
+      0.5,
+      1
+     ]
+    },
+    "rb": {
+     "pick": [
+      6,
+      8,
+      12,
+      24
+     ]
+    },
+    "rd": {
+     "pick": [
+      4,
+      10,
+      15,
+      20
+     ]
+    }
+   },
+   "let": {
+    "rp": "rb * rd / (rb + rd)",
+    "rt": "rc + rb * rd / (rb + rd)",
+    "it": "V / rt",
+    "vc": "it * rc",
+    "vp": "V - it * rc"
+   },
+   "answer": "vp / rb",
+   "unit": "A",
+   "hint": "Reduce the pair, add the cable, find the supply current, then take the cable's drop off the supply.",
+   "work": "$R_p = \\frac{{rb} \\times {rd}}{{rb} + {rd}} = {rp}$ Ω; $R_{\\text{tot}} = {rc} + {rp} = {rt}$ Ω; $I = \\frac{{V}}{{rt}} = {it}$ A; the cable drops ${it} \\times {rc} = {vc}$ V, leaving ${vp}$ V; the lamp takes $\\frac{{vp}}{{rb}} = {answer}$ A",
+   "why": "The cable is in series with the pair, so it carries the whole {it} A and takes {vc} V of the supply. The lamp has what is left, {vp} V. Using the full {V} V for the lamp forgets the cable's drop."
+  },
+  {
+   "id": "heater-high",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.4,
+   "q": "A workshop fan heater has two identical elements of {res} Ω each. On its high setting both are **in parallel** across 230 V. What is the total power?",
+   "vars": {
+    "res": {
+     "pick": [
+      48,
+      53,
+      64,
+      70,
+      106
+     ]
+    }
+   },
+   "let": {
+    "pe": "230^2 / res",
+    "rs": "2 * res"
+   },
+   "answer": "2 * 230^2 / res",
+   "unit": "W",
+   "work": "Each element: $\\frac{V^2}{R} = \\frac{230^2}{{res}} = {pe}$ W. Both: $2 \\times {pe} = {answer}$ W",
+   "why": "In parallel each element has the full 230 V, so each gives what it would alone, and the powers add. Treating them as series ({rs} Ω in total) gives a quarter of this: that would be a low setting, not a high one."
+  },
+  {
+   "id": "extension-lead",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "Plugged into one extension lead on 230 V: a {a} W heater, a {b} W drill and a {c} W work lamp, all running. What current does the lead carry?",
+   "vars": {
+    "a": {
+     "pick": [
+      1000,
+      1500,
+      2000
+     ]
+    },
+    "b": {
+     "pick": [
+      300,
+      500,
+      750
+     ]
+    },
+    "c": {
+     "pick": [
+      60,
+      100,
+      150
+     ]
+    }
+   },
+   "answer": "(a + b + c) / 230",
+   "unit": "A",
+   "hint": "Everything plugged into the same lead is in parallel. Each draws $I = \\frac{P}{V}$.",
+   "work": "$I = \\frac{{a} + {b} + {c}}{230} = {answer}$ A",
+   "why": "Each appliance is across the full 230 V and draws $I = \\frac{P}{V}$; the lead carries the sum. Adding the powers first and dividing once gives the same answer. Here it stays under 13 A, the biggest fuse a UK plug takes. Add a 3 kW kettle and it would not."
+  },
+  {
+   "id": "series-string",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.8,
+   "q": "An old string of {k} identical lamps is wired **in series** across 230 V. What voltage is across each lamp?",
+   "vars": {
+    "k": {
+     "pick": [
+      10,
+      20,
+      23,
+      46
+     ]
+    }
+   },
+   "answer": "230 / k",
+   "unit": "V",
+   "work": "$\\frac{230}{{k}} = {answer}$ V",
+   "why": "In series the drops add up to the supply, and identical lamps share it equally. The catch with series: if one lamp fails open, the one path is broken and **all** of them go out. That is one reason panel lamps are wired in parallel."
+  },
+  {
+   "id": "spot-turn-over",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Someone worked out the total resistance of 6.0 Ω and 13 Ω **in parallel**. One line is wrong. Which?",
+   "lines": [
+    "Parallel: $\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2}$",
+    "$\\frac{1}{6.0} = 0.1667$ and $\\frac{1}{13} = 0.0769$",
+    "$\\frac{1}{R_p} = 0.1667 + 0.0769 = 0.2436$",
+    "$R_p = 0.2436$ Ω"
+   ],
+   "wrong": 3,
+   "fix": "$R_p = \\frac{1}{0.2436} = 4.11$ Ω",
+   "why": "The last step forgot to turn the answer over: 0.2436 is $\\frac{1}{R_p}$, not $R_p$. A sanity check catches it: a resistor bigger than 6 Ω, put in parallel with 6 Ω, cannot even halve it, so the answer must lie between 3 Ω and 6 Ω. 0.24 Ω is far too small."
+  },
+  {
+   "id": "why-panel",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "Why are the indicator lamps on a control panel wired **in parallel**, not in series?",
+   "options": [
+    "Parallel wiring raises the total resistance",
+    "In parallel the lamps share the current equally",
+    "Series wiring would need a bigger fuse",
+    "Each gets the full voltage and works on its own"
+   ],
+   "answer": 3,
+   "why": "In parallel every lamp is wired straight across the supply, so each has the full 24 V and draws its own current, as if it were alone. One lamp failing or being switched off does not touch the others. In series they would share the voltage (each too dim), and one failed lamp would break the only path and put them all out. Parallel **lowers** the total resistance; lamps share current equally only if they are identical; and series draws less current, not more."
+  },
+  {
+   "id": "mix-cable-resistivity",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "A 24 V solenoid is fed by a two-core copper cable {lng} m long; each core is {area} mm². Copper's resistivity is $1.72 \\times 10^{-8}$ Ω m. What is the resistance of the whole loop, out on one core and back on the other?",
+   "vars": {
+    "lng": {
+     "pick": [
+      10,
+      20,
+      30,
+      50
+     ]
+    },
+    "area": {
+     "pick": [
+      0.75,
+      1,
+      1.5,
+      2.5
+     ]
+    }
+   },
+   "let": {
+    "one": "0.0172 * lng / area"
+   },
+   "answer": "2 * 0.0172 * lng / area",
+   "unit": "Ω",
+   "hint": "One core: $R = \\frac{\\rho L}{A}$, with $A$ in m² (1 mm² is $10^{-6}$ m²). How are the two cores connected?",
+   "work": "One core: $R = \\frac{\\rho L}{A} = \\frac{1.72 \\times 10^{-8} \\times {lng}}{{area} \\times 10^{-6}} = {one}$ Ω. The two cores in series: $2 \\times {one} = {answer}$ Ω",
+   "why": "Resistivity gives each core's resistance. The current goes out on one core and back on the other, one after the other, so the two are **in series**: double it. Forgetting to change mm² into m² gives an answer a million times too small; forgetting the return core halves it."
+  },
+  {
+   "id": "mix-heat-factor",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "Two identical heater elements, the same supply. How does the heat with both **in parallel** compare with both **in series**?",
+   "options": [
+    "Twice as much",
+    "Four times as much",
+    "The same",
+    "Half as much"
+   ],
+   "answer": 1,
+   "hint": "Work out the total resistance each way, then use the power formula with the voltage in it.",
+   "why": "In series the total is $2R$, so $P = \\frac{V^2}{2R}$. In parallel it is $\\frac{R}{2}$, so $P = \\frac{2V^2}{R}$. That is four times as much. 'Twice' is the slip of comparing with one element alone: parallel is twice one element, and series is half of one."
+  },
+  {
+   "id": "mix-charge",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "A {V} V supply drives a current through $R_1$ = {ra} Ω and $R_2$ = {rb} Ω in series. How much charge flows through $R_2$ in one minute?",
+   "vars": {
+    "V": {
+     "pick": [
+      12,
+      24
+     ]
+    },
+    "ra": {
+     "pick": [
+      10,
+      20,
+      47
+     ]
+    },
+    "rb": {
+     "pick": [
+      22,
+      33,
+      100
+     ]
+    }
+   },
+   "let": {
+    "cur": "V / (ra + rb)"
+   },
+   "answer": "V / (ra + rb) * 60",
+   "unit": "C",
+   "hint": "Series first for the current, then charge is current times time, $Q = It$, with $t$ in seconds.",
+   "work": "$I = \\frac{{V}}{{ra} + {rb}} = {cur}$ A; $Q = It = {cur} \\times 60 = {answer}$ C",
+   "why": "In series one current, {cur} A, flows through both. Charge is current times time: $Q = It$, in coulombs (C) when $t$ is in seconds, so a minute is 60 s. Using $R_2$ alone for the current, or 1 for the minute, are the slips."
+  },
+  {
+   "id": "mix-lamp-dims",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.6,
+   "q": "A 230 V supply feeds a work lamp and a big motor in parallel through a cable of {rw} Ω (both cores together). The lamp is rated 60 W at 230 V. When the motor starts, the cable carries {itot} A in all. What power does the lamp get then? Take the lamp's resistance as fixed.",
+   "vars": {
+    "itot": {
+     "pick": [
+      10,
+      15,
+      20,
+      30
+     ]
+    },
+    "rw": {
+     "pick": [
+      0.2,
+      0.3,
+      0.4,
+      0.5
+     ]
+    }
+   },
+   "let": {
+    "rl": "230^2 / 60",
+    "drop": "itot * rw",
+    "vl": "230 - itot * rw"
+   },
+   "answer": "(230 - itot * rw)^2 / (230^2 / 60)",
+   "unit": "W",
+   "hint": "The cable is in series with the pair: take its drop, $IR$, off the 230 V. Then the lamp's resistance from its rating, $R = \\frac{V^2}{P}$.",
+   "work": "The cable drops ${itot} \\times {rw} = {drop}$ V, leaving {vl} V. The lamp: $R = \\frac{230^2}{60} = {rl}$ Ω, so $P = \\frac{V^2}{R} = \\frac{{vl}^2}{{rl}} = {answer}$ W",
+   "why": "The whole {itot} A flows through the cable, so it takes {drop} V and the lamp is left with {vl} V. Power goes with the voltage squared, so a small drop in voltage makes a bigger drop in power: the lamp dims. Using 230 V for the lamp gives the full 60 W, which is not what you see."
+  },
+  {
+   "id": "check-two-elements",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.4,
+   "q": "A heater's two identical elements are wired **in series** across the same supply. Compared with **one** element alone on that supply, the heat is:",
+   "options": [
+    "Twice as much",
+    "Half as much",
+    "A quarter as much",
+    "The same"
+   ],
+   "answer": 1,
+   "why": "In series the total resistance is $2R$, so the current halves, and $P = \\frac{V^2}{2R}$ is half of one element's $\\frac{V^2}{R}$. Each element now has only half the voltage, so each gives a quarter of its old heat, and two quarters make a half. 'A quarter' is one element's share, not the total; 'twice' is parallel."
+  },
+  {
+   "id": "check-three-parallel",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.7,
+   "q": "Three resistors in parallel: {ra} Ω, {rb} Ω and {rc} Ω. What is the total resistance?",
+   "vars": {
+    "ra": {
+     "pick": [
+      1,
+      2,
+      4.7
+     ]
+    },
+    "rb": {
+     "pick": [
+      6,
+      10,
+      22
+     ]
+    },
+    "rc": {
+     "pick": [
+      13,
+      47,
+      100
+     ]
+    }
+   },
+   "let": {
+    "inv": "1 / ra + 1 / rb + 1 / rc"
+   },
+   "answer": "1 / (1 / ra + 1 / rb + 1 / rc)",
+   "unit": "Ω",
+   "hint": "Add the one-overs, then turn the sum over.",
+   "work": "$\\frac{1}{R_p} = \\frac{1}{{ra}} + \\frac{1}{{rb}} + \\frac{1}{{rc}} = {inv}$, so $R_p = \\frac{1}{{inv}} = {answer}$ Ω",
+   "why": "Add one-over each, then turn the sum over. The answer is less than the smallest, {ra} Ω, as a parallel total always is. Stopping at {inv} forgets the last step; adding them is the series rule."
+  },
+  {
+   "id": "check-match",
+   "type": "match",
+   "stage": "check",
+   "level": 4.0,
+   "q": "Match each start to the end that makes it true.",
+   "pairs": [
+    [
+     "In series, the current",
+     "is the same through every part"
+    ],
+    [
+     "In series, the supply voltage",
+     "is shared out between the parts"
+    ],
+    [
+     "In series, the total resistance",
+     "is the sum of the resistances"
+    ],
+    [
+     "In parallel, the voltage",
+     "is the full supply voltage across every part"
+    ],
+    [
+     "In parallel, the supply current",
+     "is the branch currents added up"
+    ],
+    [
+     "In parallel, the total resistance",
+     "is less than the smallest resistor"
+    ]
+   ],
+   "why": "Series is one path: one current, shared voltage, resistances add. Parallel is each part across the supply: one voltage, shared current, and a total below the smallest."
+  },
+  {
+   "id": "check-combo",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.9,
+   "q": "A 24 V supply feeds $R_1$ = {ra} Ω in series with two identical {rb} Ω resistors in parallel. What current does the supply give?",
+   "vars": {
+    "ra": {
+     "pick": [
+      2,
+      4,
+      6,
+      10
+     ]
+    },
+    "rb": {
+     "pick": [
+      10,
+      12,
+      20,
+      24
+     ]
+    }
+   },
+   "let": {
+    "rp": "rb / 2",
+    "rt": "ra + rb / 2"
+   },
+   "answer": "24 / (ra + rb / 2)",
+   "unit": "A",
+   "hint": "Two equal resistors in parallel make half of one. Then add the series one.",
+   "work": "$R_p = \\frac{{rb}}{2} = {rp}$ Ω; $R_{\\text{tot}} = {ra} + {rp} = {rt}$ Ω; $I = \\frac{24}{{rt}} = {answer}$ A",
+   "why": "The pair first: two equal resistors in parallel make half of one, {rp} Ω. That is in series with $R_1$, so the total is {rt} Ω, and Ohm's law gives the current. Adding all three resistors treats the pair as series and gives too small a current."
+  }
+ ]
+}

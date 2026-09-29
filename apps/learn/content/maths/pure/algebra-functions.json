@@ -1,0 +1,830 @@
+{
+ "id": "maths.pure.algebra-functions",
+ "title": "Algebra and functions",
+ "tags": [
+  "algebra",
+  "functions",
+  "graphs",
+  "sensors"
+ ],
+ "kind": "procedure",
+ "level": 4.8,
+ "minutes": 25,
+ "goals": [
+  "Say whether a table, a list of pairs or a rule is a function: one output for each input",
+  "Use function notation: evaluate f(x) for a number, and solve f(x) = k for the input",
+  "Find the domain and range of a function, from its formula, its graph and what is physically possible",
+  "Write a linear function from a rate and a starting value, or from two readings, and find where it reaches zero",
+  "Write a 4 to 20 mA sensor's scaling as a function and use it both ways"
+ ],
+ "summary": "A **function** is a rule that gives exactly **one output** for each **input**. Two inputs may share an output (January and March both have 31 days); one input with two outputs is not allowed (30 days could be April, June, September or November). On a graph: if any vertical line crosses it twice, it is not a function.\n\n**Notation**: $f(x)$, said \"f of x\", is the output when the input is $x$. The brackets say what goes in; they do not mean multiply. For $f(x) = 2x - 5$: $f(4) = 3$, $f(-6) = -17$.\n\n**Evaluate**: input known, put it in. Always one answer.\n\n**Solve**: output known, set the rule equal to it and undo: $2x - 5 = 11$ gives $x = 8$. Can give more than one answer.\n\nPut a negative input in brackets: $(-3)^2 = 9$.\n\n**Domain**: the inputs allowed. Cut down by the maths (no dividing by zero, no square root of a negative) and by the job (no negative time; a 4 to 20 mA signal only runs from 4 to 20).\n\n- $\\frac{1}{x - 2}$: every number except 2.\n- $\\sqrt{x + 3}$: $x \\ge -3$.\n\n**Range**: the outputs you get. $x^2 \\ge 0$, so $x^2 + d \\ge d$.\n\n**Linear function**: $f(x) = mx + c$. $m$ is the **rate of change** (output units per input unit), $c$ the starting value $f(0)$. Positive $m$: increasing; negative: decreasing; zero: constant.\n\nFrom two readings: $m = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$, then $c = f(x_1) - mx_1$.\n\nWhere it reaches zero: solve $mx + c = 0$.\n\nWater pressure $d$ metres down: $P(d) = 0.0981d + 1.013$ bar (absolute).\n\n**A 4 to 20 mA sensor**, 0 to 10 bar: $P(I) = 0.625I - 2.5$. Domain $4 \\le I \\le 20$, range $0 \\le P \\le 10$. $P(10) = 3.75$ bar; the 8 bar alarm is at $P(I) = 8$, $I = 16.8$ mA.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "3.1 Functions and Function Notation",
+   "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/3-1-functions-and-function-notation",
+   "by": "OpenStax (Abramson et al.)",
+   "minutes": 30,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "3.2 Domain and Range",
+   "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/3-2-domain-and-range",
+   "by": "OpenStax (Abramson et al.)",
+   "minutes": 25,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "4.1 Linear Functions",
+   "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/4-1-linear-functions",
+   "by": "OpenStax (Abramson et al.)",
+   "minutes": 35,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, Algebra and Trigonometry 2e (Abramson et al.), sections 3.1, 3.2 and 4.1. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "IEC 60381-1: Analogue signals for process control systems. Part 1: Direct current signals"
+ ],
+ "formulas": [
+  {
+   "name": "A linear function",
+   "tex": "f(x) = mx + c",
+   "match": [
+    "f(x)=mx+c"
+   ],
+   "says": "The output is the rate times the input, plus the starting value. Its graph is a straight line.",
+   "symbols": [
+    [
+     "f(x)",
+     "the output when the input is $x$"
+    ],
+    [
+     "x",
+     "the input"
+    ],
+    [
+     "m",
+     "the rate of change (the gradient): output units per input unit"
+    ],
+    [
+     "c",
+     "the starting value: the output when $x = 0$"
+    ]
+   ],
+   "example": "a fitter paid £520 a week plus £80 a call-out: $W(n) = 80n + 520$. Four call-outs: $W(4) = 320 + 520 = 840$, so £840."
+  },
+  {
+   "name": "Rate of change from two readings",
+   "tex": "m = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}",
+   "match": [
+    "\\frac{f(x_2)-f(x_1)}{x_2-x_1}"
+   ],
+   "says": "How much the output changed, divided by how much the input changed: rise over run.",
+   "symbols": [
+    [
+     "m",
+     "the rate of change"
+    ],
+    [
+     "x_1, x_2",
+     "the two inputs"
+    ],
+    [
+     "f(x_1), f(x_2)",
+     "the outputs at those inputs"
+    ]
+   ],
+   "example": "3 call-outs pay £760, 5 pay £920: $m = \\frac{920 - 760}{5 - 3} = \\frac{160}{2} = 80$, so £80 a call-out."
+  },
+  {
+   "name": "Starting value from one reading",
+   "tex": "c = f(x_1) - mx_1",
+   "match": [
+    "c=f(x_1)-mx_1"
+   ],
+   "says": "Once you know the rate, take the rate's share off a known output to find the output at 0.",
+   "symbols": [
+    [
+     "c",
+     "the starting value"
+    ],
+    [
+     "f(x_1)",
+     "a known output"
+    ],
+    [
+     "m",
+     "the rate of change"
+    ],
+    [
+     "x_1",
+     "the input for that output"
+    ]
+   ],
+   "example": "rate 80, and 3 call-outs pay 760: $c = 760 - 80 \\times 3 = 520$."
+  },
+  {
+   "name": "Water pressure with depth",
+   "tex": "P(d) = 0.0981d + 1.013",
+   "match": [
+    "0.0981d"
+   ],
+   "says": "Each metre of water adds 0.0981 bar; the 1.013 bar is the air pressing on the surface. This is absolute pressure: a gauge reads 1.013 bar less.",
+   "symbols": [
+    [
+     "P(d)",
+     "the absolute pressure, bar"
+    ],
+    [
+     "d",
+     "the depth below the surface, metres"
+    ]
+   ],
+   "example": "2 m down: $P(2) = 0.196 + 1.013 \\approx 1.21$ bar."
+  },
+  {
+   "name": "A 4 to 20 mA signal as a function",
+   "tex": "P(I) = \\frac{\\text{span}}{16}(I - 4) + \\text{low}",
+   "match": [
+    "(I-4)"
+   ],
+   "says": "Take off the live zero of 4 mA, scale by the span over the 16 mA, and add the bottom of the range.",
+   "symbols": [
+    [
+     "P(I)",
+     "the reading (bar, °C, m³/h…) at current $I$"
+    ],
+    [
+     "I",
+     "the loop current, 4 to 20 mA"
+    ],
+    [
+     "\\text{span}",
+     "the top of the range take away the bottom"
+    ],
+    [
+     "\\text{low}",
+     "the bottom of the range"
+    ]
+   ],
+   "example": "0 to 10 bar at 12 mA: $\\frac{10}{16}(12 - 4) + 0 = 0.625 \\times 8 = 5$ bar."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Check a 4 to 20 mA scaling as a function, on the bench: a **loop calibrator** (or 4 to 20 mA simulator) driving a panel meter or a spare PLC analogue input on a **24 V DC** training rig. Not on a live process loop: it could trip the plant.",
+   "check": [
+    "Note the range the display is set to, for example 0 to 10 bar, and write its function P(I)",
+    "Write the domain (4 to 20 mA) and the range you expect",
+    "Source 4, 8, 12, 16 and 20 mA in turn; beside each, write P(I) worked out and what the display shows",
+    "Pick an alarm value, solve P(I) = alarm for the current, source that current and check the display",
+    "Switch the calibrator off before you disconnect it"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-notation",
+   "type": "numeric",
+   "stage": "try",
+   "level": 4.3,
+   "q": "Have a go: a guess is fine. A rule is written $f(x) = {m}x - {c}$. What is $f({p})$?",
+   "vars": {
+    "m": [
+     2,
+     6,
+     1
+    ],
+    "c": [
+     1,
+     9,
+     1
+    ],
+    "p": [
+     2,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "mp": "m * p"
+   },
+   "answer": "m * p - c",
+   "work": "$f({p})$ means: put {p} in place of $x$. $f({p}) = {m} \\times {p} - {c} = {mp} - {c} = {answer}$.",
+   "why": "The brackets in $f({p})$ are not a times sign: they say what goes into the rule. So multiply {p} by {m}, then take away {c}. Reading it as $f \\times {p}$ is the usual first guess, but $f$ is the name of the rule, not a number."
+  },
+  {
+   "id": "function",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A function: one output for each input",
+   "body": "A **function** is a rule that turns each **input** into exactly **one output**. Like a machine: put a number in, and the same single number comes out every time.\n\n- Bolt size → torque setting in the manual: a function.\n- Month → days in that month: a function. January and March both give 31, and that is fine.\n- Days in a month → the month: **not** a function. Put in 30 and you could get April, June, September or November.\n\nTwo inputs may share an output. What is not allowed is **one input with two outputs**.\n\nThe inputs you may use are the **domain**. The outputs you get are the **range**.",
+   "more": "Think of a parts list: each part number has one price. Price is a function of part number. Turn it round and it can fail: two parts may cost £4.50, so \"the part that costs £4.50\" has two answers.\n\nTo test a table or a list of (input, output) pairs, look for an input that appears twice with different outputs.\n\n- $(2, 1), (5, 3), (8, 6)$: each input once. A function.\n- $(-3, 5), (0, 1), (4, 5)$: two inputs share the output 5. Still a function.\n- $(1, 0), (5, 2), (5, 4)$: input 5 gives 2 and 4. **Not** a function.\n\nOn a graph, inputs go across and outputs go up. If any vertical line cuts the graph twice, one input has two outputs: not a function. That is the **vertical line test**."
+  },
+  {
+   "id": "is-function",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "Which of these is **not** a function (one output for each input)?",
+   "options": [
+    "Clock number → that person's hourly pay rate",
+    "Month (not a leap year) → days in that month",
+    "Days in a month → the month with that many days",
+    "Bolt size → its torque setting in the manual"
+   ],
+   "answer": 2,
+   "why": "Put in 31 and you get seven months, so one input has many outputs: not a function. The others give one output each. Month → days is a function even though several months share 31 days: sharing an output is allowed; one input with two outputs is not."
+  },
+  {
+   "id": "notation",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Function notation: f(x)",
+   "body": "We give a rule a name, often $f$, and write $f(x)$, said \"f of x\". It means **the output when the input is $x$**. The brackets say what goes in. They do **not** mean multiply.\n\nFor $f(x) = 2x - 5$:\n\n- $f(4) = 2 \\times 4 - 5 = 3$\n- $f(-6) = 2 \\times (-6) - 5 = -17$\n- $f(0) = -5$\n\nAny letters will do. The pressure in a water tank $d$ metres below the surface is\n\n$$P(d) = 0.0981d + 1.013$$\n\nin bar (absolute: the 1.013 is the air on the surface). $P(2)$ is the pressure 2 m down: $0.196 + 1.013 \\approx 1.21$ bar.",
+   "more": "Finding $f(4)$ is called **evaluating**: rub out every $x$ and write 4 in its place, then work it out. The letters inside the brackets can change; the rule does not.\n\nPut a negative input in brackets, or the signs go wrong. Take $g(p) = p^2 + 2p$:\n\n- $g(4) = 4^2 + 2 \\times 4 = 16 + 8 = 24$\n- $g(-3) = (-3)^2 + 2 \\times (-3) = 9 - 6 = 3$\n\nA minus number squared is positive: $(-3)^2 = 9$. A calculator given $-3^2$ without brackets squares the 3 first and gives $-9$.\n\nNames help you read a rule: $P(d)$ says \"pressure depends on depth\". $P(10)$ is then the pressure 10 m down: $0.981 + 1.013 \\approx 1.99$ bar, about twice the pressure at the surface."
+  },
+  {
+   "id": "eval-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "$g(x) = x^2 + {b}x$. What is $g({p})$?",
+   "vars": {
+    "b": [
+     1,
+     6,
+     1
+    ],
+    "p": {
+     "pick": [
+      -4,
+      -3,
+      -2,
+      2,
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   "let": {
+    "sq": "p^2",
+    "bp": "b * p"
+   },
+   "answer": "p^2 + b * p",
+   "hint": "Put {p} in brackets wherever there is an $x$.",
+   "work": "$g({p}) = ({p})^2 + {b} \\times ({p}) = {sq} + ({bp}) = {answer}$",
+   "why": "Put {p} in for every $x$, in brackets: $({p})^2 = {sq}$ and ${b} \\times ({p}) = {bp}$. Squaring a negative number gives a positive one. Typing $-3^2$ into a calculator without brackets gives $-9$: that is the slip to avoid."
+  },
+  {
+   "id": "solve",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Evaluate or solve?",
+   "body": "**Evaluate**: you know the input and want the output. Put the number in.\n\n**Solve**: you know the output and want the input. Set the rule equal to that output, then undo it step by step.\n\nFor $f(x) = 2x - 5$, when is $f(x) = 11$?\n\n$2x - 5 = 11$, so $2x = 16$, so $x = 8$. Check: $f(8) = 16 - 5 = 11$.\n\nEvaluating always gives one answer: that is what a function is. Solving can give more than one, because two inputs may share an output. In this table, $g(n) = 6$ at $n = 2$ **and** at $n = 4$:\n\n- $n$: 1, 2, 3, 4, 5\n- $g(n)$: 8, 6, 7, 6, 8",
+   "more": "A PLC does both. It **evaluates** when it turns a sensor current into a pressure. You **solve** when you ask \"what current will the PLC see at the alarm pressure?\".\n\nTo solve, undo the rule in reverse order. $2x - 5$ means \"double, then take 5\". So undo the take 5 first (add 5), then undo the double (halve).\n\nWorked example with the tank: at what depth is the pressure 1.5 bar?\n\n$0.0981d + 1.013 = 1.5$\n\nTake 1.013 from both sides: $0.0981d = 0.487$.\n\nDivide both sides by 0.0981: $d \\approx 4.96$ m.\n\nAlways check by evaluating: $P(4.96) = 0.487 + 1.013 = 1.5$ bar."
+  },
+  {
+   "id": "solve-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "$h(x) = {m}x - {c}$. For what value of $x$ is $h(x) = {k}$?",
+   "vars": {
+    "m": {
+     "pick": [
+      2,
+      3,
+      4,
+      5
+     ]
+    },
+    "c": [
+     1,
+     9,
+     1
+    ],
+    "x0": [
+     1,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "k": "m * x0 - c",
+    "kc": "m * x0"
+   },
+   "answer": "(k + c) / m",
+   "hint": "You know the output. Set the rule equal to it and undo: the take-away first.",
+   "work": "${m}x - {c} = {k}$. Add {c} to both sides: ${m}x = {kc}$. Divide both sides by {m}: $x = {answer}$.",
+   "why": "Solving runs the rule backwards: undo the take-away first (add {c}), then undo the times (divide by {m}). Working out $h({k})$ answers a different question: the output for an input of {k}. Check: ${m} \\times {answer} - {c} = {k}$."
+  },
+  {
+   "id": "domain",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Domain: the inputs you may use",
+   "body": "The **domain** is every input a function can take. Two things cut it down.\n\n**The maths.** You cannot divide by zero, and a negative number has no real square root. So $\\frac{1}{x - 2}$ takes every number except 2, and $\\sqrt{x + 3}$ needs $x + 3 \\ge 0$, that is $x \\ge -3$.\n\n**The job.** Times and lengths cannot be negative. A 4 to 20 mA transmitter only sends 4 to 20 mA, so its function only means something for $4 \\le I \\le 20$.\n\nThe graph shows $y = \\sqrt{x + c}$. Move **c** and watch where the curve starts.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sqrt",
+     "c": 3,
+     "controls": [
+      "c"
+     ],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -2,
+      6
+     ]
+    }
+   },
+   "more": "Think of the domain as the settings a dial is allowed to take. The rule may be written for any number, but some settings make no sense or break the sum.\n\nTo find it from a formula, look for two trouble spots:\n\n- **A bottom line** (a fraction): find what makes the bottom 0 and leave it out. $f(x) = \\frac{x + 1}{2 - x}$: the bottom is 0 when $x = 2$, so the domain is every number except 2.\n- **A square root**: what is inside must be 0 or more. $f(x) = \\sqrt{7 - x}$: $7 - x \\ge 0$, so $x \\le 7$.\n\nNo fraction and no root, as in $x^2 - 1$? Then any number will do, unless the job says otherwise."
+  },
+  {
+   "id": "domain-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.6,
+   "intro": "Set any curve you like with the **c** slider. The graph is $y = \\sqrt{x + c}$; its equation shows above it.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sqrt",
+     "c": 2,
+     "controls": [
+      "c"
+     ],
+     "x": [
+      -10,
+      10
+     ],
+     "y": [
+      -2,
+      6
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "For the curve you have set, what is the smallest $x$ it has a value for? That is where its domain starts.",
+    "answer": "-c",
+    "abs": 0.05,
+    "hint": "Inside the square root must not be negative: $x + c \\ge 0$.",
+    "why": "The square root needs $x + ({c}) \\ge 0$, so $x \\ge {answer}$: that is where the curve starts. Left of it, the inside would be negative, and a negative number has no real square root. Taking $x \\ge {c}$ is the sign slip: moving $c$ to the other side changes its sign."
+   }
+  },
+  {
+   "id": "range",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Range: the outputs you get",
+   "body": "The **range** is every output the function can give. On a graph, read it up the $y$-axis, from the bottom to the top.\n\n- $f(x) = x^2$: a square is never negative, so the range is $f(x) \\ge 0$.\n- $f(x) = x^2 + d$ lifts every output by $d$, so its range is $f(x) \\ge d$.\n- $f(x) = \\frac{1}{x}$: 1 divided by anything is never 0, so 0 is not in the range.\n- A 0 to 10 bar transmitter on 4 to 20 mA: domain $4 \\le I \\le 20$ mA, range $0 \\le P \\le 10$ bar.\n\nThe domain runs along the $x$-axis; the range runs up the $y$-axis.",
+   "more": "Picture shining a torch at the graph from the side. The shadow it casts on the $y$-axis is the range. Shine it from below, and the shadow on the $x$-axis is the domain.\n\nFor a straight line on a limited domain, the range runs between the outputs at the two ends.\n\nWorked example: $f(x) = 2x + 1$ for $0 \\le x \\le 5$.\n\n- $f(0) = 1$\n- $f(5) = 11$\n\nSo the range is $1 \\le f(x) \\le 11$.\n\nThe same idea gives a sensor's range: put the lowest and highest currents, 4 and 20 mA, into its function."
+  },
+  {
+   "id": "range-q",
+   "type": "widget",
+   "stage": "learn",
+   "level": 4.5,
+   "intro": "The graph is $y = x^2$ moved up or down by **d**. Set **d** to anything you like.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "x2",
+     "d": -2,
+     "controls": [
+      "d"
+     ],
+     "x": [
+      -5,
+      5
+     ],
+     "y": [
+      -6,
+      10
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "For your curve, what is the lowest value $y$ ever takes? That is where the range starts.",
+    "answer": "d",
+    "abs": 0.05,
+    "hint": "What is the smallest $x^2$ can be, and where?",
+    "why": "$x^2$ is never below 0, and it is 0 at $x = 0$. Adding {d} shifts every output by {d}, so the lowest output is {answer} and the range is $y \\ge {answer}$. Answering 0 forgets the shift."
+   }
+  },
+  {
+   "id": "linear",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Linear functions: a steady rate",
+   "body": "A **linear function** changes by the same amount for each step of the input. Its graph is a straight line:\n\n$$f(x) = mx + c$$\n\n$m$ is the **rate of change** (the gradient): the change in output for each 1 of input. $c$ is the **starting value**, $f(0)$.\n\nIn $P(d) = 0.0981d + 1.013$, the rate is 0.0981 bar per metre down, and the start is 1.013 bar at the surface.\n\n$m$ positive: the function **increases**. Negative: it **decreases**. Zero: it is **constant**, a flat line.\n\nFrom two readings: $m = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$, then $c = f(x_1) - mx_1$.",
+   "more": "Any \"fixed amount, plus so much for each\" is linear. A fitter is paid a fixed sum each week plus the same amount per call-out.\n\nA week with 3 call-outs pays £760; a week with 5 pays £920.\n\n- Rate: $m = \\frac{920 - 760}{5 - 3} = \\frac{160}{2} = 80$: £80 a call-out.\n- Start: $c = 760 - 80 \\times 3 = 520$: £520 fixed.\n\nSo $W(n) = 80n + 520$. Check with the other week: $80 \\times 5 + 520 = 920$.\n\nThe rate always carries units: output units per input unit. Here, pounds per call-out. Read it as a sentence (\"£80 for each call-out\") to be sure you divided the right way up."
+  },
+  {
+   "id": "linear-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A fitter's weekly pay is a fixed amount plus a set sum for each call-out. A week with {n1} call-outs pays £{p1}; a week with {n2} call-outs pays £{p2}. What is the fixed amount, in pounds?",
+   "vars": {
+    "base": {
+     "pick": [
+      400,
+      450,
+      500,
+      520,
+      550,
+      600
+     ]
+    },
+    "rate": {
+     "pick": [
+      40,
+      50,
+      60,
+      75,
+      80
+     ]
+    },
+    "n1": [
+     2,
+     4,
+     1
+    ],
+    "dn": [
+     1,
+     4,
+     1
+    ]
+   },
+   "let": {
+    "n2": "n1 + dn",
+    "p1": "base + rate * n1",
+    "p2": "base + rate * (n1 + dn)",
+    "rr": "(p2 - p1) / dn",
+    "share": "(p2 - p1) / dn * n1"
+   },
+   "answer": "p1 - (p2 - p1) / (n2 - n1) * n1",
+   "hint": "Find the rate per call-out first, from the two weeks.",
+   "work": "Rate $= \\frac{{p2} - {p1}}{{n2} - {n1}} = {rr}$ pounds a call-out. Fixed amount $= {p1} - {rr} \\times {n1} = {p1} - {share} = {answer}$.",
+   "why": "The pay is linear: $W(n) = mn + c$. The difference between the two weeks is all call-outs, so it gives the rate $m$. Then take the call-outs' share off one week's pay to leave the fixed part $c$. Check with the other week: ${rr} \\times {n2} + {answer} = {p2}$."
+  },
+  {
+   "id": "worked-sensor",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 0 to 10 bar pressure transmitter sends 4 to 20 mA. Write the pressure as a function $P(I)$ of the current, give its domain and range, find the pressure at 10 mA, and the current at the 8 bar alarm.",
+   "steps": [
+    {
+     "ask": "Find the rate of change.",
+     "show": "The 10 bar span is spread over the 16 mA from 4 to 20: $m = \\frac{10}{16} = 0.625$ bar per mA."
+    },
+    {
+     "ask": "Find the starting value $c$, and write the function.",
+     "show": "At 4 mA the pressure is 0: $0 = 0.625 \\times 4 + c$, so $c = -2.5$. So $P(I) = 0.625I - 2.5$."
+    },
+    {
+     "ask": "Give the domain and the range.",
+     "show": "It only sends 4 to 20 mA: domain $4 \\le I \\le 20$. The outputs run from $P(4) = 0$ to $P(20) = 10$: range $0 \\le P \\le 10$ bar."
+    },
+    {
+     "ask": "Evaluate $P(10)$: the pressure at 10 mA.",
+     "show": "$P(10) = 0.625 \\times 10 - 2.5 = 6.25 - 2.5 = 3.75$ bar."
+    },
+    {
+     "ask": "Solve $P(I) = 8$: the current at the 8 bar alarm.",
+     "show": "$0.625I - 2.5 = 8$. Add 2.5: $0.625I = 10.5$. Divide by 0.625: $I = 16.8$ mA. Check: $0.625 \\times 16.8 - 2.5 = 8$."
+    }
+   ],
+   "why": "Build the function from the rate and the start, fence it in with its domain, then use it both ways: evaluate for a pressure, solve for a current. Both answers lie inside the domain and range, as they must."
+  },
+  {
+   "id": "explain-solve",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: $P(I) = 0.625I - 2.5$. Step 4 worked out $P(10)$. Step 5 solved $P(I) = 8$ and got 16.8 mA.",
+   "q": "Why does step 5 **solve** $P(I) = 8$, instead of working out $P(8)$? Say it in your own words.",
+   "model": "$P(8)$ would put 8 mA in and give a pressure: $0.625 \\times 8 - 2.5 = 2.5$ bar. But the 8 in the question is a pressure, an output, and we want the current that gives it. So we set the output equal to 8 and run the rule backwards: add 2.5, then divide by 0.625. Evaluating goes from input to output; solving goes from output to input. A sense check: 8 bar is near the top of the 0 to 10 bar range, so the current should be near the top of 4 to 20 mA, and 16.8 mA is.",
+   "points": [
+    "The 8 is a pressure: an output, not an input",
+    "P(8) would treat 8 as a current and give a pressure (2.5 bar)",
+    "Solving runs the rule backwards: add 2.5, then divide by 0.625",
+    "Check the answer lies inside the domain, 4 to 20 mA"
+   ]
+  },
+  {
+   "id": "faded-sensor",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 5.0,
+   "q": "A temperature transmitter covers −20 °C to 100 °C on 4 to 20 mA. Write $T(I)$, give its domain and range, find $T(12)$, and the current at 70 °C.",
+   "steps": [
+    {
+     "ask": "Find the rate of change.",
+     "show": "The span is $100 - (-20) = 120$ °C over 16 mA: $m = \\frac{120}{16} = 7.5$ °C per mA."
+    },
+    {
+     "ask": "Find the starting value and write the function.",
+     "show": "At 4 mA it reads −20 °C: $-20 = 7.5 \\times 4 + c = 30 + c$, so $c = -50$. $T(I) = 7.5I - 50$."
+    },
+    {
+     "ask": "Give the domain and the range.",
+     "show": "Domain $4 \\le I \\le 20$ mA. Range $-20 \\le T \\le 100$ °C."
+    },
+    {
+     "ask": "Evaluate $T(12)$.",
+     "show": "$T(12) = 7.5 \\times 12 - 50 = 90 - 50 = 40$ °C."
+    },
+    {
+     "ask": "Solve $T(I) = 70$.",
+     "show": "$7.5I - 50 = 70$, so $7.5I = 120$, so $I = 16$ mA. Check: $7.5 \\times 16 - 50 = 70$."
+    }
+   ],
+   "why": "Rate from the span over 16 mA; the starting value from the bottom of the range at 4 mA; then evaluate or solve. The range starts at −20 °C, not 0: forgetting that is the usual slip."
+  },
+  {
+   "id": "flow-trip",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.0,
+   "q": "A flow meter reads 0 to {S} m³/h on 4 to 20 mA. The PLC must stop a pump when the flow reaches {q} m³/h. What current is that?",
+   "vars": {
+    "S": {
+     "pick": [
+      20,
+      40,
+      50,
+      80,
+      100
+     ]
+    },
+    "k": [
+     1,
+     7,
+     1
+    ]
+   },
+   "let": {
+    "q": "S * k / 8",
+    "g": "S / 16",
+    "d4": "(S * k / 8) / (S / 16)"
+   },
+   "answer": "4 + 16 * q / S",
+   "unit": "mA",
+   "hint": "Write the function $Q(I)$ first, then set it equal to {q} and solve.",
+   "work": "Each mA is worth ${S} \\div 16 = {g}$ m³/h, from 4 mA up: $Q(I) = {g}(I - 4)$. Solve ${g}(I - 4) = {q}$: $I - 4 = {q} \\div {g} = {d4}$, so $I = {answer}$ mA.",
+   "why": "You know the output (a flow) and want the input (a current), so you solve. Undo the scaling by dividing by {g}, then undo the live zero by adding 4. Forgetting the 4 gives {d4} mA: too low by the whole live zero."
+  },
+  {
+   "id": "empty-tank",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "A tank drains at a steady rate. It holds $V(t) = {v0} - {r}t$ litres, $t$ minutes after the valve opens. After how many minutes is it empty?",
+   "vars": {
+    "v0": {
+     "pick": [
+      300,
+      400,
+      450,
+      600,
+      750,
+      900
+     ]
+    },
+    "r": {
+     "pick": [
+      5,
+      6,
+      8,
+      10,
+      12,
+      15,
+      20
+     ]
+    }
+   },
+   "answer": "v0 / r",
+   "unit": "minutes",
+   "hint": "Empty means $V(t) = 0$. Solve for $t$.",
+   "work": "$0 = {v0} - {r}t$, so ${r}t = {v0}$, and $t = {v0} \\div {r} = {answer}$ minutes.",
+   "why": "Where a linear function reaches zero, set it equal to 0 and solve. Here the rate is $-{r}$ litres a minute (decreasing) and the start is {v0} litres. The answer also fixes the domain: the rule only means something for $0 \\le t \\le {answer}$, since a tank cannot hold a negative amount."
+  },
+  {
+   "id": "domain-fraction",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "What is the domain of $f(x) = \\frac{x + 1}{2 - x}$?",
+   "options": [
+    "Every number except $x = -1$",
+    "Every number except $x = -2$",
+    "Every number except $x = 2$",
+    "Only the numbers above $x = 2$"
+   ],
+   "answer": 2,
+   "why": "Only the bottom matters: it is 0 when $2 - x = 0$, at $x = 2$, and dividing by zero has no answer. At $x = -1$ the top is 0, which is fine: $\\frac{0}{3} = 0$. $x = -2$ comes from a sign slip, and numbers either side of 2 both work."
+  },
+  {
+   "id": "spot-eval",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Someone worked out $f(-2)$ for $f(x) = x^2 - 3x + 2$. Which line holds the first mistake?",
+   "lines": [
+    "Put $-2$ in brackets for every $x$: $f(-2) = (-2)^2 - 3 \\times (-2) + 2$",
+    "$(-2)^2 = 4$",
+    "$-3 \\times (-2) = -6$",
+    "$f(-2) = 4 - 6 + 2 = 0$"
+   ],
+   "wrong": 2,
+   "fix": "$-3 \\times (-2) = 6$",
+   "why": "A minus times a minus is a plus: $-3 \\times (-2) = 6$, so $f(-2) = 4 + 6 + 2 = 12$. The last line only carried the slip on. A quick check: for a negative $x$, $-3x$ is positive, so every term here adds up; 0 is far too small."
+  },
+  {
+   "id": "why-one-or-two",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "For $f(x) = x^2$, evaluating $f(3)$ gives one answer, 9. But solving $f(x) = 9$ gives two: 3 and $-3$. Why?",
+   "options": [
+    "Squaring a number is not really a function at all",
+    "Solving an equation only ever gives an estimate",
+    "A minus number is never allowed as an input",
+    "Each input has one output, but two inputs can share one"
+   ],
+   "answer": 3,
+   "why": "A function promises one output per input, so evaluating gives one answer. It makes no promise the other way: 3 and $-3$ both square to 9. Squaring is a function (each number has one square), and $-3$ is a perfectly good input; the domain of $x^2$ is every number."
+  },
+  {
+   "id": "depth-from-pressure",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "The absolute pressure in a water tank, $d$ metres below the surface, is $P(d) = 0.0981d + 1.013$ bar. A sensor at the bottom reads {p} bar. How deep is the water?",
+   "vars": {
+    "p": [
+     1.2,
+     1.5,
+     0.05
+    ]
+   },
+   "let": {
+    "dp": "p - 1.013"
+   },
+   "answer": "(p - 1.013) / 0.0981",
+   "unit": "m",
+   "hint": "You know the output, the pressure. Undo the rule: the adding first.",
+   "work": "$0.0981d + 1.013 = {p}$. Take 1.013 from both sides: $0.0981d = {dp}$. Divide by 0.0981: $d = {answer}$ m.",
+   "why": "This is solving, not evaluating: the pressure is the output. Undo the + 1.013 first, then the × 0.0981. Working out $P({p})$ would treat {p} as a depth. Check: $0.0981 \\times {answer} + 1.013 = {p}$."
+  },
+  {
+   "id": "mix-sqrt-or-fraction",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "Which value of $x$ is **not allowed** in $g(x) = \\frac{5}{x - 3}$, but **is** allowed in $h(x) = \\sqrt{x - 3}$?",
+   "options": [
+    "$x = 2$",
+    "$x = 3$",
+    "$x = 0$",
+    "$x = -3$"
+   ],
+   "answer": 1,
+   "why": "At $x = 3$, $g$ divides by zero: not allowed. But $h(3) = \\sqrt{0} = 0$: fine. At $x = 2$ it is the other way round: $g(2) = -5$ is fine, but $h(2) = \\sqrt{-1}$ is not a real number. $x = 0$ and $x = -3$ behave like 2. A fraction rules out one point; a square root rules out a whole stretch."
+  },
+  {
+   "id": "mix-not-linear",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.6,
+   "q": "Which of these is **not** a linear function?",
+   "options": [
+    "$P(d) = 0.0981d + 1.013$, pressure against depth",
+    "$W(n) = 80n + 520$, pay against call-outs",
+    "$T(I) = 7.5I - 50$, temperature against current",
+    "$A(r) = \\pi r^2$, area against radius"
+   ],
+   "answer": 3,
+   "why": "A linear function has a steady rate: the input appears only to the power 1, multiplied by a number. In $\\pi r^2$ the radius is squared, so doubling it makes the area four times bigger, not a fixed amount more. The other three are all 'so much for each, plus a starting value': straight lines."
+  },
+  {
+   "id": "mix-two-readings",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.3,
+   "q": "A linear function has $f({x1}) = {y1}$ and $f({x2}) = {y2}$. What is $f(0)$?",
+   "vars": {
+    "x1": [
+     1,
+     4,
+     1
+    ],
+    "dx": [
+     1,
+     4,
+     1
+    ],
+    "m0": {
+     "pick": [
+      -3,
+      -2,
+      2,
+      3,
+      4
+     ]
+    },
+    "c0": [
+     -6,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "x2": "x1 + dx",
+    "y1": "m0 * x1 + c0",
+    "y2": "m0 * (x1 + dx) + c0",
+    "rise": "m0 * dx",
+    "mm": "(y2 - y1) / dx",
+    "mx": "(y2 - y1) / dx * x1"
+   },
+   "answer": "y1 - (y2 - y1) / (x2 - x1) * x1",
+   "abs": 0.01,
+   "hint": "$f(0)$ is the starting value $c$. Find the rate first.",
+   "work": "Rate $m = \\frac{\\text{change in output}}{\\text{change in input}} = \\frac{{rise}}{{dx}} = {mm}$. Then $c = f({x1}) - m \\times {x1} = {y1} - ({mx}) = {answer}$.",
+   "why": "$f(0)$ is the value where the line crosses the $y$-axis: the starting value $c$ in $f(x) = mx + c$. Find the rate from the two readings, then take the rate's share off one of them. Check with the other: ${mm} \\times {x2} + ({answer}) = {y2}$."
+  },
+  {
+   "id": "check-notation",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.0,
+   "q": "$f(x) = 3x^2 - 2x + 1$. What is $f({p})$?",
+   "vars": {
+    "p": {
+     "pick": [
+      -3,
+      -2,
+      -1,
+      2,
+      3,
+      4
+     ]
+    }
+   },
+   "let": {
+    "t1": "3 * p^2",
+    "t2": "2 * p"
+   },
+   "answer": "3 * p^2 - 2 * p + 1",
+   "work": "$f({p}) = 3 \\times ({p})^2 - 2 \\times ({p}) + 1 = {t1} - ({t2}) + 1 = {answer}$",
+   "why": "Put {p} in brackets for every $x$. Square first, then multiply by 3; then take away $2 \\times ({p}) = {t2}$; then add 1. When the input is negative, taking away a negative adds. Reading $f({p})$ as $f \\times {p}$ is the slip this notation invites: the brackets say what goes in."
+  },
+  {
+   "id": "check-function",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.3,
+   "q": "Each list gives (input, output) pairs. Which one is **not** a function?",
+   "options": [
+    "$(2, 1), (5, 3), (8, 6)$",
+    "$(-3, 5), (0, 1), (4, 5)$",
+    "$(1, 0), (5, 2), (5, 4)$",
+    "$(1, 10), (2, 100), (3, 1000)$"
+   ],
+   "answer": 2,
+   "why": "Input 5 appears twice, with outputs 2 and 4: one input, two outputs. In $(-3, 5), (0, 1), (4, 5)$ the output 5 appears twice, but from two different inputs, and that is allowed."
+  },
+  {
+   "id": "check-domain",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.6,
+   "q": "A level transmitter covers 0 to 5 m on 4 to 20 mA: $L(I) = 0.3125I - 1.25$. What is the sensible domain of this function?",
+   "options": [
+    "$0 \\le I \\le 5$",
+    "$-1.25 \\le I \\le 5$",
+    "$0 \\le I \\le 20$",
+    "$4 \\le I \\le 20$"
+   ],
+   "answer": 3,
+   "why": "The domain is the inputs, and the input is the current, which only runs from 4 to 20 mA. $0 \\le L \\le 5$ m is the range: the outputs. $-1.25$ is the starting value in the formula, $L(0)$, but 0 mA is outside what the transmitter sends (0 mA means a fault, such as a broken wire)."
+  }
+ ]
+}

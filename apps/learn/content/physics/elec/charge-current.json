@@ -1,0 +1,730 @@
+{
+ "id": "physics.elec.charge-current",
+ "title": "Charge, current and potential difference",
+ "tags": [
+  "electrical",
+  "charge",
+  "current",
+  "voltage",
+  "battery"
+ ],
+ "kind": "procedure",
+ "level": 4.2,
+ "minutes": 20,
+ "goals": [
+  "Say what charge, current and potential difference are, and their units: the coulomb, the amp and the volt",
+  "Work out a current, a charge or a time with $I = \\frac{Q}{t}$ and $Q = It$",
+  "Turn a battery's amp-hours into coulombs, and work out how long it will run a load",
+  "Work out the energy a charge carries through a potential difference with $W = QV$",
+  "Say which way the electrons move in a wire, and why a lamp lights at once though they drift slowly"
+ ],
+ "summary": "**Charge** ($Q$) is measured in **coulombs** (C). In a metal it is carried by free **electrons**, each $-1.60 \\times 10^{-19}$ C, so 1 C is about $6.24 \\times 10^{18}$ electrons. A wire carrying current stays **neutral**: an electron leaves for each one that enters.\n\n**Current** ($I$, amps) is the charge passing a point each second:\n\n$$I = \\frac{Q}{t}$$\n\n**One amp is one coulomb per second.** Turned round: $Q = It$ and $t = \\frac{Q}{I}$, with $t$ in seconds.\n\n**Amp-hours**: a battery's capacity is a **charge**. 1 Ah = 1 A for 3600 s = **3600 C**. How long it lasts: Ah ÷ A gives hours; mAh ÷ 1000 gives Ah. Real batteries give less than the sum says.\n\n**Direction**: diagrams show **conventional current**, from + round to −. Electrons are negative and move the other way, from − round to +. Use conventional current for circuit work.\n\n**Speed**: electrons **drift** slowly, well under a millimetre a second. A lamp still lights at once, because the wire is already full of free electrons: push one end and they all move together.\n\n**Potential difference** (p.d., **voltage**, $V$) is the energy each coulomb gains or gives up between two points:\n\n$$V = \\frac{W}{Q}$$\n\n**One volt is one joule per coulomb.** Turned round: $W = QV$. 24 V means each coulomb gives 24 J to the circuit.\n\nA voltage is always **between two points**; the 0 V rail is the zero you choose.\n\n**Voltage is not energy.** Two 12 V batteries can hold very different energy: the bigger one moves more coulombs. Battery energy in joules is $Q \\times V$ with $Q$ in coulombs; volts × Ah gives watt-hours (Wh).\n\n**Watch the units**: mA ÷ 1000 = A; hours × 3600 = seconds (not × 60).",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "20.1 Current",
+   "url": "https://openstax.org/books/college-physics-2e/pages/20-1-current",
+   "by": "OpenStax, College Physics 2e",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "19.1 Electric Potential Energy: Potential Difference",
+   "url": "https://openstax.org/books/college-physics-2e/pages/19-1-electric-potential-energy-potential-difference",
+   "by": "OpenStax, College Physics 2e",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, College Physics 2e (Urone, Hinrichs), sections 20.1 and 19.1. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "BIPM, The International System of Units (SI Brochure), 9th edition (2019)"
+ ],
+ "formulas": [
+  {
+   "name": "Current",
+   "tex": "I = \\frac{Q}{t}",
+   "match": [
+    "\\frac{Q}{t}"
+   ],
+   "says": "The current is the charge that passes, divided by the time it takes. One coulomb every second is one amp.",
+   "symbols": [
+    [
+     "I",
+     "the current (amps, A)"
+    ],
+    [
+     "Q",
+     "the charge that passes (coulombs, C)"
+    ],
+    [
+     "t",
+     "the time (seconds, s)"
+    ]
+   ],
+   "example": "A starter motor moves 720 C in 4 s: $I = 720 \\div 4 = 180$ A."
+  },
+  {
+   "name": "Charge from current and time",
+   "tex": "Q = It",
+   "match": [
+    "Q=It"
+   ],
+   "says": "The charge that passes is the current times the time, with the time in seconds. With amps and hours instead you get amp-hours.",
+   "symbols": [
+    [
+     "Q",
+     "the charge (C)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "t",
+     "the time (s)"
+    ]
+   ],
+   "example": "0.5 A for 60 s: $0.5 \\times 60 = 30$ C. 1 A for an hour: $1 \\times 3600 = 3600$ C, which is 1 Ah."
+  },
+  {
+   "name": "Time from charge and current",
+   "tex": "t = \\frac{Q}{I}",
+   "match": [
+    "t=\\frac{Q}{I}"
+   ],
+   "says": "How long a charge lasts at a given current: the charge divided by the current. Ah divided by amps gives hours.",
+   "symbols": [
+    [
+     "t",
+     "the time (s, or hours if Q is in Ah)"
+    ],
+    [
+     "Q",
+     "the charge (C, or Ah)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ]
+   ],
+   "example": "A 7 Ah battery at 0.5 A: $7 \\div 0.5 = 14$ hours."
+  },
+  {
+   "name": "Potential difference",
+   "tex": "V = \\frac{W}{Q}",
+   "match": [
+    "\\frac{W}{Q}"
+   ],
+   "says": "The potential difference (voltage) between two points is the energy each coulomb gains or gives up between them. One volt is one joule per coulomb.",
+   "symbols": [
+    [
+     "V",
+     "the potential difference (volts, V)"
+    ],
+    [
+     "W",
+     "the energy (joules, J)"
+    ],
+    [
+     "Q",
+     "the charge (C)"
+    ]
+   ],
+   "example": "10 C gives a heater 240 J: $V = 240 \\div 10 = 24$ V."
+  },
+  {
+   "name": "Energy from charge and voltage",
+   "tex": "W = QV",
+   "match": [
+    "W=QV"
+   ],
+   "says": "The energy a charge hands over is the charge times the voltage it goes through.",
+   "symbols": [
+    [
+     "W",
+     "the energy (J)"
+    ],
+    [
+     "Q",
+     "the charge (C)"
+    ],
+    [
+     "V",
+     "the potential difference (V)"
+    ]
+   ],
+   "example": "50 C through a 24 V heater: $50 \\times 24 = 1200$ J."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Measure the current a **24 V DC relay coil** draws, and work out the charge it passes in an hour. Use a 24 V DC bench supply with its current limit set to 0.5 A (or a fused 24 V DC panel supply). Nothing on this circuit is above 24 V DC.",
+   "check": [
+    "Supply off. Put the multimeter **in series** with the coil: set it to DC mA (or the A range if the coil is rated over 400 mA), red lead in the mA socket",
+    "Switch on and read the current; note it in amps (mA ÷ 1000)",
+    "Work out the charge in one hour: $Q = It$ with $t = 3600$ s, and in Ah (amps × 1 hour)",
+    "Swap the meter leads round and read again: the minus sign shows the current now enters the meter by the other lead",
+    "Supply off, and move the red lead back to the V socket before you measure a voltage"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-ah",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.0,
+   "q": "Have a go: a guess is fine. A 24 V backup battery is rated **7 Ah** (amp-hours). How much electric charge can it move round a circuit, in coulombs (C, the unit of charge)?",
+   "options": [
+    "7 C",
+    "168 C",
+    "25 200 C",
+    "420 C"
+   ],
+   "answer": 2,
+   "why": "An amp is one coulomb every second, and an hour is 3600 seconds. So 1 Ah is 3600 C, and 7 Ah is $7 \\times 3600 = 25\\,200$ C. 420 C counts minutes (× 60), not seconds. 168 multiplies by the 24 V, which says nothing about how much charge there is. 7 C reads Ah as if it were coulombs."
+  },
+  {
+   "id": "charge",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Charge: what flows",
+   "body": "Atoms hold tiny particles with electric **charge**. **Electrons** carry negative charge; the protons at the middle of each atom carry positive charge.\n\nCharge ($Q$) is measured in **coulombs** (C). One electron carries only $1.60 \\times 10^{-19}$ C, so one coulomb is about $6.24 \\times 10^{18}$ electrons: over six billion billion.\n\nIn a metal such as copper, some electrons are **free**: not tied to one atom, able to drift through the wire. That makes copper a **conductor**. In an insulator (PVC, rubber) nearly all the electrons are held tight.\n\nA wire carrying current is still **neutral**. For every electron that enters one end, one leaves the other.",
+   "more": "Picture a copper core as a hose already packed full of marbles. The marbles are the free electrons. They were there before you switched on, and the copper's atoms carry exactly as much positive charge as the electrons carry negative, so the whole thing is neutral.\n\nSwitching on does not pour extra marbles in. It pushes the ones already there along. Push one in at one end and one drops out of the other.\n\nWorked number: $10^{-19}$ means divide by 1 followed by 19 zeros, so one electron's charge is tiny. That is why we count in coulombs. A current of 2 A moves 2 C each second, which is $2 \\times 6.24 \\times 10^{18} \\approx 1.25 \\times 10^{19}$ electrons every second."
+  },
+  {
+   "id": "charge-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 3.7,
+   "q": "A cable core carries 2 A to a motor. Taken as a whole, is the core electrically charged?",
+   "options": [
+    "Yes, negatively: it is full of electrons",
+    "Yes, positively: electrons have left it",
+    "No: as many electrons leave as enter",
+    "Only while the motor is starting up"
+   ],
+   "answer": 2,
+   "why": "The free electrons were in the copper all along, balanced by the positive charge of its atoms. Current moves them along; it adds none. Each electron that enters one end pushes one out of the other, so the core stays neutral. 'Full of electrons, so negative' forgets the equal positive charge in the atoms."
+  },
+  {
+   "id": "current",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Current: charge per second",
+   "body": "Numbers first. A truck's starter motor moves 720 C of charge in 4 s. That is $720 \\div 4 = 180$ C every second.\n\n**Current** ($I$, in amps, A) is the charge that passes a point each second:\n\n$$I = \\frac{Q}{t}$$\n\n$Q$ is the charge in coulombs, $t$ the time in seconds. **One amp is one coulomb per second.** The starter draws 180 A.\n\nTurn it round: multiply both sides by $t$ to get $Q = It$. The charge is the current times the time. A 0.5 A solenoid on for 60 s passes $0.5 \\times 60 = 30$ C.\n\nBooks often write $I = \\frac{\\Delta Q}{\\Delta t}$. $\\Delta$ means 'the change in': the same idea.",
+   "more": "Picture the turnstile at a football ground. The charge is the number of people who go through. The current is how many go through each second. Count 720 people in 4 seconds and the rate is 180 a second.\n\nA small current can still move a lot of charge if you wait long enough. A pocket calculator draws 0.3 mA, which is 0.0003 A. For 1 C to pass, $t = \\frac{Q}{I} = \\frac{1}{0.0003} \\approx 3333$ s: just under an hour. The starter motor moves 180 C in a single second.\n\nWatch the units. Current in amps and time in **seconds** give coulombs. mA must be divided by 1000 first; minutes must be multiplied by 60."
+  },
+  {
+   "id": "current-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.8,
+   "q": "A truck's starter motor moves {coul} C of charge in {secs} s while it cranks the engine. What current does it draw?",
+   "vars": {
+    "coul": {
+     "pick": [
+      360,
+      480,
+      600,
+      720,
+      900
+     ]
+    },
+    "secs": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      6
+     ]
+    }
+   },
+   "answer": "coul / secs",
+   "unit": "A",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{Q}{ t } = \\frac{{coul}}{{secs}} = {answer}$ A",
+   "why": "Current is charge per second, so divide the charge by the time. Multiplying ({coul} × {secs}) gives a huge number in the wrong units. Starter currents of a hundred amps or more are normal: that is why the battery cables are so thick."
+  },
+  {
+   "id": "amp-hours",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Amp-hours: the charge in a battery",
+   "body": "A battery's **capacity** is printed in **amp-hours** (Ah). It is a **charge**: not a current, and not an energy.\n\n1 Ah is 1 A flowing for 1 hour. An hour is 3600 s, so by $Q = It$:\n\n$$1 \\text{ Ah} = 1 \\times 3600 = 3600 \\text{ C}$$\n\nA 7 Ah battery can move $7 \\times 3600 = 25\\,200$ C.\n\nIt also tells you how long it lasts: $t = \\frac{Q}{I}$. Keep the charge in Ah and the current in amps, and the answer comes out in hours. 7 Ah at 0.5 A lasts $7 \\div 0.5 = 14$ hours.\n\nSmall cells use **mAh**: 2000 mAh is 2 Ah.",
+   "more": "Think of the battery as a fuel tank. Amp-hours is how much is in the tank. Amps is how fast you draw it off. Hours is how long the tank lasts: the amount divided by the rate.\n\nWorked number: a 24 V UPS battery of 12 Ah backs up a PLC panel that draws 1.5 A. It lasts $12 \\div 1.5 = 8$ hours, in theory.\n\nIn practice you get less. Capacity falls in the cold, at high currents and as the battery ages, and a lead-acid battery should not be run flat. Use the sum as the most you could get, not a promise."
+  },
+  {
+   "id": "amp-hours-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "A 24 V backup battery rated {cap} Ah keeps a PLC panel running in a power cut. The panel draws {amps} A. In theory, how many hours will it last?",
+   "vars": {
+    "cap": {
+     "pick": [
+      7,
+      12,
+      17,
+      24,
+      38
+     ]
+    },
+    "amps": {
+     "pick": [
+      0.5,
+      0.8,
+      1.2,
+      1.5,
+      2
+     ]
+    }
+   },
+   "answer": "cap / amps",
+   "unit": "hours",
+   "tolerance": 0.01,
+   "hint": "Ah is amps × hours. What do you divide by to leave hours?",
+   "work": "$t = \\frac{Q}{I} = \\frac{{cap}}{{amps}} = {answer}$ hours",
+   "why": "Ah is amps × hours, so dividing by amps leaves hours: no need for coulombs here. Multiplying ({cap} × {amps}) gives a number with no useful meaning. The 24 V does not come into it: it tells you the energy per coulomb, not how many coulombs there are."
+  },
+  {
+   "id": "direction",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Which way, and how fast",
+   "body": "Circuit diagrams show **conventional current**: out of the **+** terminal, round the circuit, back into **−**. That was chosen in the 1700s, before anyone knew about electrons.\n\nIn a metal wire the moving charges are **electrons**, which are negative. So they really move the other way: out of **−**, round to **+**. For circuit work it makes no difference; use conventional current.\n\nThe electrons **drift** slowly. In a 2.5 mm² copper core carrying 20 A it is well under a millimetre a second. Yet a lamp lights the instant you switch on. The wire is already full of free electrons, so a push at one end moves them all at once. The push travels at nearly the speed of light.",
+   "more": "Fill a drinking straw with dried peas. Push one pea in at one end and, straight away, a different pea pops out of the other. No single pea went the whole way; the push did. Electrons do not bump like peas (they push each other apart electrically), but the idea is the same.\n\nWorked number: at about 0.6 mm a second, one electron would take about $10 \\div 0.0006 \\approx 16\\,700$ s, over four and a half hours, to drift along a 10 m cable. The lamp at the end lights in a tiny fraction of a second.\n\nDirection check: a meter with its leads swapped shows a minus sign. The current has not changed; it is just going into the meter by the other lead."
+  },
+  {
+   "id": "direction-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.0,
+   "q": "In the wire from the **+** terminal of a 24 V supply to a lamp, which way do the electrons in the copper move?",
+   "options": [
+    "Away from the + terminal, towards the lamp",
+    "Towards the + terminal, away from the lamp",
+    "They stay still: only the energy moves",
+    "Both ways at once, in equal numbers"
+   ],
+   "answer": 1,
+   "why": "Conventional current goes out of + towards the lamp. Electrons are negative, so they move the opposite way: from the lamp back towards +. 'Away from +' is the conventional current, right for diagrams but not for the electrons. They do not stay still: they drift, slowly."
+  },
+  {
+   "id": "pd",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Potential difference: energy per coulomb",
+   "body": "The supply gives each coulomb of charge some **energy**, which the load takes as heat, light or movement.\n\nThe **potential difference** (p.d., or **voltage**, $V$) between two points is the energy each coulomb gains or gives up between them:\n\n$$V = \\frac{W}{Q}$$\n\n$W$ is the energy in joules (J), $Q$ the charge in coulombs. **One volt is one joule per coulomb.** So 24 V means each coulomb gives 24 J to the circuit.\n\nTurn it round: $W = QV$. 50 C through a 24 V heater gives it $50 \\times 24 = 1200$ J.\n\nA voltage is always **between two points**. '24 V' in a panel means 24 V above the 0 V rail, which you choose as zero.",
+   "more": "Think of height. The supply is a pump that lifts each coulomb up 24 'volts of height'. Going round through the load, it falls back down and hands over its 24 J on the way. Height is measured from somewhere you choose (the floor, sea level); voltage is measured from the point you call 0 V.\n\nVoltage is not the total energy. A 12 V motorbike battery that can move 5000 C holds $5000 \\times 12 = 60\\,000$ J. A 12 V truck battery that can move 60 000 C holds $60\\,000 \\times 12 = 720\\,000$ J. Same volts, twelve times the energy: the bigger battery moves more coulombs, each carrying the same 12 J."
+  },
+  {
+   "id": "pd-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.2,
+   "q": "{coul} C of charge passes through a heater element, and the element gives out {w} J of heat. What is the potential difference across it?",
+   "vars": {
+    "coul": {
+     "pick": [
+      5,
+      10,
+      20,
+      25,
+      50
+     ]
+    },
+    "volts": {
+     "pick": [
+      12,
+      24,
+      48
+     ]
+    }
+   },
+   "let": {
+    "w": "coul * volts"
+   },
+   "answer": "w / coul",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$V = \\frac{W}{Q} = \\frac{{w}}{{coul}} = {answer}$ V",
+   "why": "A volt is a joule per coulomb, so divide the energy by the charge. {w} × {coul} would have units of joule-coulombs, which is nothing useful. Check: {coul} C × {answer} V = {w} J."
+  },
+  {
+   "id": "worked-battery",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 24 V, 7 Ah backup battery feeds a PLC rack that draws 0.8 A. How much charge can it move, how long will it last, and how much energy does it hold?",
+   "steps": [
+    {
+     "ask": "Change the capacity to coulombs (1 Ah = 3600 C).",
+     "show": "$Q = 7 \\times 3600 = 25\\,200$ C"
+    },
+    {
+     "ask": "The time, from $t = \frac{Q}{I}$.",
+     "show": "$t = \\frac{25\\,200}{0.8} = 31\\,500$ s"
+    },
+    {
+     "ask": "Change it to hours.",
+     "show": "$31\\,500 \\div 3600 = 8.75$ hours. Check the short way, Ah ÷ A: $7 \\div 0.8 = 8.75$. Right."
+    },
+    {
+     "ask": "The energy it holds, from $W = QV$.",
+     "show": "$W = 25\\,200 \\times 24 = 604\\,800$ J, about 605 kJ (kilojoules, thousands of joules). That is also $24 \\times 7 = 168$ watt-hours."
+    }
+   ],
+   "why": "Amp-hours are a charge, so they turn into coulombs; the time is the charge divided by the current; the energy is the charge times the voltage. The slips are × 60 instead of × 3600, and forgetting the voltage when you want the energy. In practice the battery gives less than 8.75 hours."
+  },
+  {
+   "id": "explain-3600",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: a 7 Ah battery. Step 1 was $Q = 7 \\times 3600 = 25\\,200$ C.",
+   "q": "Why does step 1 multiply by 3600, and not by 60? Say it in your own words.",
+   "model": "An amp is one coulomb every second. 1 Ah means 1 A for a whole hour, and an hour is 60 × 60 = 3600 seconds, so 1 Ah moves 3600 C. 7 Ah is 7 × 3600 = 25 200 C. Multiplying by 60 would count the minutes in an hour, not the seconds, and give 60 times too little charge.",
+   "points": [
+    "An amp is one coulomb per second",
+    "An hour is 60 × 60 = 3600 seconds",
+    "So one amp-hour is 3600 coulombs",
+    "× 60 counts minutes and comes out 60 times too small"
+   ]
+  },
+  {
+   "id": "faded-battery",
+   "type": "steps",
+   "stage": "example",
+   "given": 2,
+   "level": 4.3,
+   "q": "A 12 V, 2.2 Ah battery runs a warning beacon that draws 0.15 A. How long does it last, and how much energy does it hold?",
+   "steps": [
+    {
+     "ask": "The capacity in coulombs.",
+     "show": "$Q = 2.2 \\times 3600 = 7920$ C"
+    },
+    {
+     "ask": "The time in seconds.",
+     "show": "$t = \\frac{7920}{0.15} = 52\\,800$ s"
+    },
+    {
+     "ask": "The time in hours.",
+     "show": "$52\\,800 \\div 3600 \\approx 14.7$ hours. Check: $2.2 \\div 0.15 \\approx 14.7$. Right."
+    },
+    {
+     "ask": "The energy it holds.",
+     "show": "$W = QV = 7920 \\times 12 = 95\\,040$ J, about 95 kJ."
+    }
+   ],
+   "why": "The same chain: Ah to coulombs, divide by the current for the time, multiply by the voltage for the energy. Half the voltage of the worked example and less charge, so far less energy."
+  },
+  {
+   "id": "runtime-ma",
+   "type": "numeric",
+   "stage": "example",
+   "level": 4.4,
+   "q": "A battery rated {cap} Ah runs a load that draws {ma} mA. In theory, how many hours will it last?",
+   "vars": {
+    "cap": {
+     "pick": [
+      1.2,
+      2.2,
+      7,
+      12
+     ]
+    },
+    "ma": {
+     "pick": [
+      150,
+      200,
+      250,
+      400,
+      500
+     ]
+    }
+   },
+   "let": {
+    "amps": "ma / 1000"
+   },
+   "answer": "cap / (ma / 1000)",
+   "unit": "hours",
+   "tolerance": 0.01,
+   "hint": "Change the mA to amps first, then Ah ÷ A gives hours.",
+   "work": "{ma} mA = {amps} A. $t = \\frac{{cap}}{{amps}} = {answer}$ hours",
+   "why": "Ah ÷ A gives hours, but only with the current in amps: {ma} mA is {amps} A. Dividing by {ma} as if it were amps gives an answer a thousand times too small."
+  },
+  {
+   "id": "electrons",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.9,
+   "q": "A 24 V PLC input draws {ma} mA when it is on. How many electrons pass through it each second? One electron carries $1.60 \\times 10^{-19}$ C.",
+   "vars": {
+    "ma": {
+     "pick": [
+      2.5,
+      4,
+      5,
+      6,
+      8,
+      10
+     ]
+    }
+   },
+   "let": {
+    "coul": "ma / 1000"
+   },
+   "answer": "ma / 1000 / 1.6e-19",
+   "tolerance": 0.02,
+   "unit": "electrons",
+   "hint": "The current tells you the coulombs each second. How many electrons make one coulomb's worth? Type standard form like 1.6e-19.",
+   "work": "{ma} mA is {coul} C every second. Electrons each second: {coul} ÷ 1.6e-19 = {answer}",
+   "why": "An amp is a coulomb per second, so {ma} mA is {coul} C each second. Each electron carries $1.60 \\times 10^{-19}$ C, so divide the charge by that. Multiplying instead gives an impossibly small number. So many electrons move that you never notice them one by one."
+  },
+  {
+   "id": "widget-charge",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.4,
+   "intro": "A battery drives a current through two resistors. Set the battery and the resistors as you like; the picture shows the current.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 100,
+     "R2": 200,
+     "mode": "series",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "predict": {
+    "q": "Before you touch anything: if you double the battery voltage, what happens to the charge that flows each minute?",
+    "options": [
+     "It doubles",
+     "It halves",
+     "It stays the same",
+     "It goes up four times"
+    ],
+    "answer": 0,
+    "why": "Twice the push through the same resistors drives twice the current, and the charge each minute is the current times 60 s. So it doubles too."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "How much charge flows through the battery in **one minute**? Read the current from the picture (it may show mA).",
+    "answer": "I * 60",
+    "unit": "C",
+    "tolerance": 0.02,
+    "hint": "$Q = It$, with the current in amps and $t$ = 60 s.",
+    "why": "The battery current is {I} A. $Q = It = {I} \\times 60 = {answer}$ C. If the picture shows mA, divide by 1000 first: using the mA figure as amps gives a thousand times too much."
+   }
+  },
+  {
+   "id": "spot-runtime",
+   "type": "spot",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Someone worked out how long a 12 V, 1.2 Ah battery will run a 200 mA load. One line has a mistake in it. Which?",
+   "lines": [
+    "Charge: $Q = 1.2 \\times 3600 = 4320$ C",
+    "Current: 200 mA = 0.2 A",
+    "Time: $t = \\frac{Q}{I} = \\frac{4320}{0.2} = 21\\,600$ s",
+    "In hours: $21\\,600 \\div 60 = 360$ hours"
+   ],
+   "wrong": 3,
+   "fix": "In hours: $21\\,600 \\div 3600 = 6$ hours",
+   "why": "Seconds to hours is ÷ 3600, not ÷ 60: dividing by 60 gives minutes. The short way catches it at once: Ah ÷ A is $1.2 \\div 0.2 = 6$ hours. And 360 hours, two weeks, from a small 1.2 Ah battery should look wrong."
+  },
+  {
+   "id": "why-instant",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.3,
+   "q": "Electrons drift along a wire at well under a millimetre a second. Why does a lamp at the end of a 10 m cable light the instant you switch on?",
+   "options": [
+    "The electrons speed up to near light speed at switch-on",
+    "The wire is already full of free electrons, and they all move at once",
+    "The lamp stores charge and lets it out when switched on",
+    "Current flows from the lamp end first, back to the supply"
+   ],
+   "answer": 1,
+   "why": "The copper is packed with free electrons before you switch on. The push reaches all of them almost at once (the signal travels at nearly the speed of light), so current flows everywhere in the loop at the same moment, while each electron only creeps along. They do not speed up: the drift stays slow. A lamp stores no charge."
+  },
+  {
+   "id": "match-units",
+   "type": "match",
+   "stage": "practise",
+   "level": 3.8,
+   "q": "Match each unit to what it means.",
+   "pairs": [
+    [
+     "coulomb (C)",
+     "the unit of charge"
+    ],
+    [
+     "amp (A)",
+     "one coulomb per second"
+    ],
+    [
+     "volt (V)",
+     "one joule per coulomb"
+    ],
+    [
+     "amp-hour (Ah)",
+     "3600 coulombs"
+    ],
+    [
+     "joule (J)",
+     "the unit of energy"
+    ]
+   ],
+   "why": "Charge is counted in coulombs; current is coulombs per second (amps); voltage is joules per coulomb (volts); an amp-hour is one amp for 3600 s, so 3600 C."
+  },
+  {
+   "id": "mix-which",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.0,
+   "q": "A 24 V supply moves 50 C of charge through a motor. What does $24 \\times 50$ work out?",
+   "options": [
+    "The current in the motor, in amps",
+    "The energy given to the motor, in joules",
+    "How long it ran for, in seconds",
+    "The charge it used, in amp-hours"
+   ],
+   "answer": 1,
+   "why": "Charge times voltage is energy: $W = QV = 50 \\times 24 = 1200$ J, because each coulomb gives up 24 J. The current needs a time ($I = \\frac{Q}{t}$), and so does anything in hours. No time is given, so neither can be found."
+  },
+  {
+   "id": "mix-watts",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.9,
+   "q": "A 24 V solenoid coil is rated {watts} W: it turns {watts} J of energy into heat and pull every second. How many coulombs pass through it each second (which is its current in amps)?",
+   "vars": {
+    "watts": {
+     "pick": [
+      6,
+      8,
+      12,
+      18,
+      24,
+      36
+     ]
+    }
+   },
+   "answer": "watts / 24",
+   "unit": "A",
+   "tolerance": 0.01,
+   "hint": "Each coulomb hands over 24 J. How many coulombs make {watts} J?",
+   "work": "$Q = \\frac{W}{V} = \\frac{{watts}}{24} = {answer}$ C each second, so {answer} A",
+   "why": "Each coulomb gives up 24 J, so {watts} J a second needs {watts} ÷ 24 = {answer} C a second, which is {answer} A. Multiplying (24 × {watts}) gives joule-volts, which means nothing. This is the rule power = voltage × current, which a later lesson uses a lot."
+  },
+  {
+   "id": "mix-shift",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.8,
+   "q": "A 24 V control circuit draws {amps} A for a {hrs}-hour shift. How much charge does it use, in amp-hours?",
+   "vars": {
+    "amps": {
+     "pick": [
+      0.25,
+      0.5,
+      0.75,
+      1.2,
+      2
+     ]
+    },
+    "hrs": {
+     "pick": [
+      8,
+      10,
+      12
+     ]
+    }
+   },
+   "answer": "amps * hrs",
+   "unit": "Ah",
+   "tolerance": 0.01,
+   "work": "$Q = It = {amps} \\times {hrs} = {answer}$ Ah",
+   "why": "Charge is current × time. With amps and hours the answer is in amp-hours, no 3600 needed. Dividing ({amps} ÷ {hrs}) is the slip: that is how you would find a current, not a charge. The 24 V is not needed for charge, only for energy."
+  },
+  {
+   "id": "check-mah",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.4,
+   "q": "A handheld meter's battery is rated {mah} mAh. How much charge is that, in coulombs?",
+   "vars": {
+    "mah": {
+     "pick": [
+      500,
+      800,
+      1200,
+      2000,
+      2500
+     ]
+    }
+   },
+   "let": {
+    "ah": "mah / 1000"
+   },
+   "answer": "mah / 1000 * 3600",
+   "unit": "C",
+   "tolerance": 0.01,
+   "hint": "mAh ÷ 1000 gives Ah; each Ah is 3600 C.",
+   "work": "{mah} mAh = {ah} Ah. $Q = {ah} \\times 3600 = {answer}$ C",
+   "why": "One amp-hour is 1 A for 3600 s, which is 3600 C. So change mAh to Ah (÷ 1000), then × 3600. × 60 would count minutes, not seconds."
+  },
+  {
+   "id": "check-batteries",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.3,
+   "q": "A small 12 V motorbike battery and a big 12 V truck battery are both fully charged. Which is true?",
+   "options": [
+    "Both hold the same energy, as both are 12 V",
+    "The truck battery holds more: it can move more charge",
+    "The motorbike battery gives more joules per coulomb",
+    "The truck battery gives more joules per coulomb"
+   ],
+   "answer": 1,
+   "why": "Both give 12 J to each coulomb: that is what 12 V means. But the truck battery can move far more coulombs, so it holds far more energy ($W = QV$). 'Same voltage, same energy' is the common slip: voltage is energy **per coulomb**, not the total."
+  },
+  {
+   "id": "check-charge-energy",
+   "type": "numeric",
+   "stage": "check",
+   "level": 4.6,
+   "q": "How much charge must flow through a 24 V heater element for it to give out {kj} kJ of heat? (1 kJ = 1000 J.)",
+   "vars": {
+    "kj": {
+     "pick": [
+      6,
+      12,
+      36,
+      60,
+      120
+     ]
+    }
+   },
+   "let": {
+    "joules": "kj * 1000"
+   },
+   "answer": "kj * 1000 / 24",
+   "unit": "C",
+   "tolerance": 0.01,
+   "work": "$Q = \\frac{W}{V} = \\frac{{joules}}{24} = {answer}$ C",
+   "why": "Each coulomb gives up 24 J, so the number of coulombs is the energy divided by 24: turn $W = QV$ round by dividing by $V$. Forgetting to change kJ to J gives a thousand times too little."
+  }
+ ]
+}
