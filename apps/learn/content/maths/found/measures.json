@@ -1,0 +1,788 @@
+{
+ "id": "maths.found.measures",
+ "title": "Measures and units: length, area, volume, mass, time",
+ "tags": [
+  "maths",
+  "measures",
+  "units",
+  "metric",
+  "area",
+  "volume",
+  "time"
+ ],
+ "kind": "procedure",
+ "level": 2.2,
+ "minutes": 25,
+ "goals": [
+  "Change between mm, cm, m and km, g and kg, ml and litres, by multiplying or dividing by 10, 100 or 1000",
+  "Change hours to minutes and back, remembering that time goes in 60s, not 100s",
+  "Put mixed units into one unit before adding or taking away",
+  "Work out the perimeter and area of a rectangle and the volume of a box, and turn cm³ into litres",
+  "Turn old inches, feet, miles and pints into metric"
+ ],
+ "summary": "**Metric prefixes**: **kilo** (k) is a thousand, **centi** (c) a hundredth, **milli** (m) a thousandth.\n\n- Length: 1 km = 1000 m, 1 m = 100 cm = 1000 mm, 1 cm = 10 mm. Drawings are in mm.\n- Mass: 1 kg = 1000 g, 1 tonne = 1000 kg.\n- Volume: 1 litre = 1000 ml.\n\n**Converting**: multiply by a factor worth 1, like $\\frac{1000\\text{ mm}}{1\\text{ m}}$. **Big unit to small** (m to mm): more of them, so **multiply**. **Small to big** (g to kg): fewer, so **divide**. 1.25 m = 1250 mm; 3200 g = 3.2 kg.\n\n**Mixed units**: put everything in one unit before you add or take away. 1.5 m − 1440 mm: 1500 − 1440 = 60 mm.\n\n**Time goes in 60s**: 1 min = 60 s, 1 h = 60 min, 1 day = 24 h. Hours to minutes: × 60. 2.5 h = 2 h 30 min, not 2 h 50 min; 0.75 h = 45 min.\n\n**Perimeter** is the distance round a shape (a length). **Area** is the surface it covers, in squares (m², cm², mm²). For a rectangle, length $L$ and width $W$ in the same unit:\n\n$$A = L \\times W \\qquad P = 2L + 2W$$\n\nArea units: 1 m² = 100 × 100 = **10 000 cm²** = 1 000 000 mm². 1 cm² = 100 mm².\n\n**Volume** is the space inside, in cubes. For a box: $V = L \\times W \\times H$.\n\n- 1 litre = 1000 cm³ (a 10 cm cube); 1 ml = 1 cm³\n- 1 m³ = 1000 litres\n- 1 litre of water is about 1 kg\n\n**Old units still about**: 1 inch = **25.4 mm** exactly; 1 foot = 12 inches = 304.8 mm; 1 mile ≈ 1.61 km; 1 UK pint ≈ 568 ml (a US pint is 473 ml); 1 kg ≈ 2.2 lb. Feet and inches: all into inches first, then × 25.4.\n\n**Sense check** every answer: mm numbers are big, m numbers small; a smaller unit always needs more of them.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Systems of Measurement (Prealgebra 2e, section 7.5)",
+   "url": "https://openstax.org/books/prealgebra-2e/pages/7-5-systems-of-measurement",
+   "by": "OpenStax (Marecek, Anthony-Smith, Honeycutt Mathis)",
+   "minutes": 25,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Use Properties of Rectangles, Triangles, and Trapezoids (Prealgebra 2e, section 9.4)",
+   "url": "https://openstax.org/books/prealgebra-2e/pages/9-4-use-properties-of-rectangles-triangles-and-trapezoids",
+   "by": "OpenStax (Marecek, Anthony-Smith, Honeycutt Mathis)",
+   "minutes": 25,
+   "note": "OpenStax, CC BY 4.0: the section this lesson's area and perimeter part is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, Prealgebra 2e (Marecek, Anthony-Smith, Honeycutt Mathis), section 7.5 Systems of Measurement. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "Adapted from OpenStax, Prealgebra 2e (Marecek, Anthony-Smith, Honeycutt Mathis), section 9.4 Use Properties of Rectangles, Triangles, and Trapezoids (linear, square and cubic measure; rectangles). © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "BIPM, The International System of Units (SI Brochure), 9th edition (2019)",
+  "Weights and Measures Act 1985, Schedule 1 (UK definitions of the imperial units)"
+ ],
+ "formulas": [
+  {
+   "name": "Area of a rectangle",
+   "tex": "A = L \\times W",
+   "match": [
+    "A=L\\timesW"
+   ],
+   "says": "The area is the length times the width. It counts how many unit squares cover the shape.",
+   "symbols": [
+    [
+     "A",
+     "the area (m², cm² or mm²)"
+    ],
+    [
+     "L",
+     "the length"
+    ],
+    [
+     "W",
+     "the width, in the same unit as the length"
+    ]
+   ],
+   "example": "a plate 3 m by 2 m: $A = 3 \\times 2 = 6$ m²."
+  },
+  {
+   "name": "Perimeter of a rectangle",
+   "tex": "P = 2L + 2W",
+   "match": [
+    "P=2L+2W"
+   ],
+   "says": "The distance all the way round: two lengths and two widths added up.",
+   "symbols": [
+    [
+     "P",
+     "the perimeter (a length: m, cm or mm)"
+    ],
+    [
+     "L",
+     "the length"
+    ],
+    [
+     "W",
+     "the width, in the same unit"
+    ]
+   ],
+   "example": "a guard panel 1.2 m by 0.8 m: $P = 2.4 + 1.6 = 4$ m of edge trim."
+  },
+  {
+   "name": "Volume of a box (cuboid)",
+   "tex": "V = L \\times W \\times H",
+   "match": [
+    "V=L\\timesW\\timesH"
+   ],
+   "says": "The space inside a box shape is its length times its width times its height. It counts how many unit cubes fill it.",
+   "symbols": [
+    [
+     "V",
+     "the volume (m³, cm³ or mm³; 1000 cm³ is a litre)"
+    ],
+    [
+     "L",
+     "the length"
+    ],
+    [
+     "W",
+     "the width"
+    ],
+    [
+     "H",
+     "the height, all three in the same unit"
+    ]
+   ],
+   "example": "a tank 50 cm by 40 cm by 30 cm: $V = 50 \\times 40 \\times 30 = 60\\,000$ cm³, which is 60 litres."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Measure a rectangular tub or parts tray on the bench, work out how many litres it holds, then check it with water from a measuring jug. Cold water only, on a bench with no electrics or machines nearby; mop up any spill.",
+   "check": [
+    "Measure the inside length, width and depth with a steel rule, in mm",
+    "Turn each into cm (÷ 10)",
+    "Work out $V = L \\times W \\times H$ in cm³, then ÷ 1000 for litres",
+    "Fill it with a measuring jug, counting the litres, and compare with your answer",
+    "Work out what the water weighs (about 1 kg a litre) before you try to lift it"
+   ]
+  },
+  {
+   "task": "Measure a bench top or a sheet of board with a tape. Work out its perimeter in metres and its area in m².",
+   "check": [
+    "Measure the length and width in mm",
+    "Turn both into metres (÷ 1000)",
+    "Perimeter: $2L + 2W$",
+    "Area: $L \\times W$, in m²",
+    "Sense check: a bench top is usually between 1 and 3 m²"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-mm",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A steel plate is 1.25 m long. How long is it in millimetres (mm)?",
+   "options": [
+    "125 mm",
+    "1250 mm",
+    "12.5 mm",
+    "12 500 mm"
+   ],
+   "answer": 1,
+   "why": "There are 1000 mm in a metre, so multiply by 1000: $1.25 \\times 1000 = 1250$ mm. 125 is × 100, which gives centimetres (125 cm), not mm. 12.5 and 12 500 move the decimal point the wrong number of places."
+  },
+  {
+   "id": "units",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Metric units and their prefixes",
+   "body": "Metric units are built from a few base units. A **prefix** in front says how many.\n\n- **kilo** (k) means a thousand: 1 km = 1000 m, 1 kg = 1000 g.\n- **centi** (c) means a hundredth: 100 cm = 1 m.\n- **milli** (m) means a thousandth: 1000 mm = 1 m, 1000 ml = 1 litre.\n\nThe base units:\n\n- **length** in metres (m)\n- **mass** (how heavy) in grams (g) and kilograms (kg); a **tonne** (t) is 1000 kg\n- **volume** (how much a container holds) in litres (L)\n\nOn engineering drawings lengths are in **mm**. And 1 cm = 10 mm.",
+   "more": "Think of money. A penny is a hundredth of a pound, just as a centimetre is a hundredth of a metre. So 100 pence make £1, and 100 cm make 1 m.\n\nMilli goes one step further: a thousandth. A metre rule has 1000 little mm marks on it, 10 in every cm.\n\nWorked numbers:\n\n- a 2.4 m length of box section is 240 cm, or 2400 mm\n- a 25 kg bag of cement is 25 000 g\n- a 1 tonne lifting sling is rated for 1000 kg\n- a 5 litre can of cutting oil holds 5000 ml\n\nThe same three prefixes turn up everywhere: kilo-watts, milli-amps, milli-seconds. Learn them once."
+  },
+  {
+   "id": "units-q",
+   "type": "match",
+   "stage": "learn",
+   "level": 1.6,
+   "q": "Match each amount to the same amount in a smaller unit.",
+   "pairs": [
+    [
+     "1 km",
+     "1000 m"
+    ],
+    [
+     "1 m",
+     "100 cm"
+    ],
+    [
+     "1 cm",
+     "10 mm"
+    ],
+    [
+     "1 kg",
+     "1000 g"
+    ],
+    [
+     "1 litre",
+     "1000 ml"
+    ]
+   ],
+   "why": "Kilo is a thousand, centi a hundredth, milli a thousandth. The one that trips people is 1 cm = 10 mm: a centimetre is only ten millimetres, not a hundred."
+  },
+  {
+   "id": "convert",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Changing units: multiply or divide",
+   "body": "To change units, multiply by a **conversion factor**: a fraction worth exactly 1, such as $\\frac{1000\\text{ mm}}{1\\text{ m}}$. The amount stays the same; only the unit changes.\n\nThe quick rule:\n\n- **Big unit to small unit** (m to mm): you need **more** of them, so **multiply**. 2.5 m = $2.5 \\times 1000$ = 2500 mm.\n- **Small unit to big unit** (g to kg): you need **fewer**, so **divide**. 3200 g = $3200 \\div 1000$ = 3.2 kg.\n\n× 1000 moves the decimal point 3 places right; ÷ 1000 moves it 3 places left. For 100, two places; for 10, one.\n\n**Mixed units**: before you add or take away, put both amounts in the **same unit**.",
+   "more": "Why a fraction worth 1? 1000 mm and 1 m are the same length, so $\\frac{1000\\text{ mm}}{1\\text{ m}}$ is 1. Multiplying by 1 never changes an amount.\n\nPick the fraction that has the unit you are getting rid of on the **bottom**, so it cancels:\n\n$$3200\\text{ g} \\times \\frac{1\\text{ kg}}{1000\\text{ g}} = \\frac{3200}{1000}\\text{ kg} = 3.2\\text{ kg}$$\n\nThe g on top and the g on the bottom cancel, and kg is left.\n\nSense check: a kilogram is big, so there should be fewer of them. 3.2 is fewer than 3200. Right.\n\nMixed units: a 1.6 m bar with 85 cm cut off. 85 cm is 0.85 m, and $1.60 - 0.85 = 0.75$ m left. Taking 85 from 1.6 would be nonsense."
+  },
+  {
+   "id": "convert-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A box of fixings is marked {g} g. What does it weigh in kg?",
+   "vars": {
+    "g": {
+     "pick": [
+      850,
+      2400,
+      3200,
+      4500,
+      12500
+     ]
+    }
+   },
+   "let": {
+    "wrong": "g * 1000"
+   },
+   "answer": "g / 1000",
+   "unit": "kg",
+   "abs": 0.001,
+   "work": "${{g}} \\div 1000 = {{answer}}$ kg",
+   "why": "Grams to kilograms is small unit to big unit: fewer of them, so **divide** by 1000. Multiplying gives {wrong}, which is far more kilograms than a box of fixings could weigh."
+  },
+  {
+   "id": "time",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Time goes in 60s, not 100s",
+   "body": "1 minute = 60 seconds, 1 hour = 60 minutes, 1 day = 24 hours, 1 week = 7 days.\n\nSo a decimal of an hour is **not** a number of minutes:\n\n- 0.5 h is half of 60: 30 min\n- 0.25 h = 15 min, and 0.75 h = 45 min\n- 2.5 h is 2 h 30 min, **not** 2 h 50 min\n\nHours to minutes: **× 60**. Minutes to hours: **÷ 60**.\n\nAdding times: add the minutes, then turn every 60 minutes into an hour. Jobs of 45, 10, 8, 65, 20 and 35 min make 183 min. That is 3 lots of 60 (180) with 3 left over: **3 h 3 min**.",
+   "more": "Picture a clock face. Half way round is 30 minutes, not 50. A quarter of the way round is 15 minutes. That is why 2.5 hours is two and a half hours: 2 h 30 min.\n\nWorked number: a test rig runs for 1.75 h. $1.75 \\times 60 = 105$ min, which is 1 h 45 min.\n\nBig jumps work the same way, one step at a time. How many minutes in 9 weeks?\n\n$$9 \\times 7 \\times 24 \\times 60 = 90\\,720\\text{ min}$$\n\nweeks to days (× 7), days to hours (× 24), hours to minutes (× 60).\n\nA pump that runs day and night for 2 weeks clocks up $2 \\times 7 \\times 24 = 336$ hours: useful for service intervals."
+  },
+  {
+   "id": "time-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 2.4,
+   "q": "A soak test runs for {h} hours. How many minutes is that?",
+   "vars": {
+    "h": {
+     "pick": [
+      1.25,
+      1.5,
+      2.75,
+      3.5,
+      7.5
+     ]
+    }
+   },
+   "let": {
+    "wrong": "h * 100"
+   },
+   "answer": "h * 60",
+   "unit": "min",
+   "abs": 0.5,
+   "hint": "One hour is 60 minutes, not 100.",
+   "work": "${{h}} \\times 60 = {{answer}}$ min",
+   "why": "Hours to minutes: × 60. {h} h is {answer} min. Treating the hour as 100 minutes gives {wrong}, the most common slip with time."
+  },
+  {
+   "id": "area",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Perimeter and area of a rectangle",
+   "body": "**Perimeter** is the distance **round** a shape: the length of edge trim or fencing. It is a length, in m or mm.\n\n**Area** is the **surface** a shape covers: the sheet steel, the paint, the floor. It is counted in **squares**. A square metre (m²) is a square 1 m each way.\n\nA plate 3 m by 2 m holds 3 rows of 2 one-metre squares: 6 m².\n\nFor a **rectangle** (four square corners), length $L$ and width $W$:\n\n$$A = L \\times W \\qquad P = 2L + 2W$$\n\nThe perimeter is two lengths plus two widths. Put $L$ and $W$ in the same unit first.",
+   "more": "Picture an ant walking round the edge of a 1 cm square tile. It walks 4 cm: that is the perimeter. The tile covers 1 cm²: that is the area. Different questions, different units.\n\nWorked number: a guard panel 1.2 m by 0.8 m.\n\n- Area: $1.2 \\times 0.8 = 0.96$ m² of mesh\n- Perimeter: $2 \\times 1.2 + 2 \\times 0.8 = 2.4 + 1.6 = 4$ m of edge trim\n\nCareful with area units. A square metre is 100 cm each way, so it holds 100 rows of 100 cm² squares:\n\n$$1\\text{ m}^2 = 100 \\times 100 = 10\\,000\\text{ cm}^2$$\n\nnot 100. In mm, $1000 \\times 1000 = 1\\,000\\,000$ mm². And 1 cm² = 100 mm²."
+  },
+  {
+   "id": "area-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A workshop bay floor is {L} m long and {W} m wide. It is to be painted. What is its area?",
+   "vars": {
+    "L": {
+     "pick": [
+      4,
+      5,
+      6.5,
+      8,
+      12
+     ]
+    },
+    "W": {
+     "pick": [
+      3,
+      3.5,
+      4,
+      6
+     ]
+    }
+   },
+   "let": {
+    "per": "2 * L + 2 * W"
+   },
+   "answer": "L * W",
+   "unit": "m²",
+   "work": "$A = L \\times W = {{L}} \\times {{W}} = {{answer}}$ m²",
+   "why": "Paint covers a surface, so you want the **area**: length times width, {answer} m². Two lengths plus two widths ({per} m) is the perimeter: the distance round the edge, which is what you would need for a painted border line, not the floor."
+  },
+  {
+   "id": "volume",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Volume and litres",
+   "body": "**Volume** is the space inside: how much a tank or a box holds. It is counted in **cubes**. A cube 1 cm each way is 1 cubic centimetre (cm³).\n\nFor a box shape (a **cuboid**):\n\n$$V = L \\times W \\times H$$\n\nlength times width times height, all in the same unit.\n\nLiquids use **litres**. A litre fills a cube 10 cm each way: $10 \\times 10 \\times 10 = 1000$ cm³. So:\n\n- 1 litre = 1000 cm³, and 1 ml = 1 cm³\n- 1 m³ = 1000 litres\n- 1 litre of water has a mass of about 1 kg",
+   "more": "Picture a cube 3 cm each way, cut into 1 cm cubes. There are 3 layers, each 3 by 3: $3 \\times 3 \\times 3 = 27$ little cubes. So its volume is 27 cm³. Length times width times height counts the cubes for you.\n\nWorked number: a coolant tank is 50 cm long, 40 cm wide and 30 cm deep inside.\n\n$$V = 50 \\times 40 \\times 30 = 60\\,000\\text{ cm}^3$$\n\nA litre is 1000 cm³, so $60\\,000 \\div 1000 = 60$ litres. Full of water it holds about 60 kg: too heavy for one person to lift.\n\nWhy is 1 m³ a thousand litres? A metre is ten 10 cm lengths, so a cubic metre holds $10 \\times 10 \\times 10 = 1000$ litre cubes."
+  },
+  {
+   "id": "volume-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 2.6,
+   "q": "A coolant tank measures {L} cm long, {W} cm wide and {H} cm deep inside. How many litres does it hold when full?",
+   "vars": {
+    "L": {
+     "pick": [
+      40,
+      50,
+      60,
+      80
+     ]
+    },
+    "W": {
+     "pick": [
+      25,
+      30,
+      40
+     ]
+    },
+    "H": {
+     "pick": [
+      20,
+      30,
+      35
+     ]
+    }
+   },
+   "let": {
+    "cc": "L * W * H"
+   },
+   "answer": "L * W * H / 1000",
+   "unit": "litres",
+   "hint": "Work out the volume in cm³ first. How many cm³ make a litre?",
+   "work": "$V = {{L}} \\times {{W}} \\times {{H}} = {{cc}}$ cm³, and ${{cc}} \\div 1000 = {{answer}}$ litres",
+   "why": "Length × width × height gives {cc} cm³. A litre is 1000 cm³, so divide by 1000: {answer} litres. Leaving it at {cc} would be the answer in cm³ (or ml), not litres."
+  },
+  {
+   "id": "imperial",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Old units you still meet",
+   "body": "The UK went metric, but older **imperial** units are still about:\n\n- **Inches** and **feet** on old drawings, imperial bolts and tools: 1 inch (in or \") = **25.4 mm** exactly; 1 foot (ft) = 12 inches = 304.8 mm.\n- **Miles** on road signs: 1 mile ≈ 1.61 km.\n- **Pints** of milk: 1 UK pint ≈ 568 ml. An American pint is smaller: 473 ml.\n- **Pounds** (lb): 1 kg ≈ 2.2 lb.\n\nThey work the same way: multiply by the factor. 3 inches is $3 \\times 25.4 = 76.2$ mm.\n\nFor feet and inches, turn it all into inches first: 2 ft 6 in is 30 in, and $30 \\times 25.4 = 762$ mm.",
+   "more": "An inch is about the width of a thumb, roughly 2.5 cm. That is a good sense check: the mm answer is always about 25 times the inches.\n\nThe fraction method works here too. 4 inches to mm:\n\n$$4\\text{ in} \\times \\frac{25.4\\text{ mm}}{1\\text{ in}} = 101.6\\text{ mm}$$\n\nGoing back, divide: 50 mm is $50 \\div 25.4 \\approx 1.97$ inches, just under 2.\n\nFeet and inches are mixed units, like hours and minutes. 5 ft 4 in is $5 \\times 12 + 4 = 64$ inches, not 54: a foot is 12 inches, not 10.\n\nMiles: a site 20 miles away is about $20 \\times 1.61 \\approx 32$ km."
+  },
+  {
+   "id": "imperial-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 2.5,
+   "q": "An old drawing gives a hole spacing of {i} inches. What is that in mm?",
+   "vars": {
+    "i": {
+     "pick": [
+      0.5,
+      1.25,
+      2,
+      3.5,
+      4.75
+     ]
+    }
+   },
+   "answer": "i * 25.4",
+   "unit": "mm",
+   "tolerance": 0.005,
+   "work": "${{i}} \\times 25.4 = {{answer}}$ mm",
+   "why": "One inch is exactly 25.4 mm, so multiply: {answer} mm. Sense check: about 25 times the number of inches. Using 2.54 gives the answer in cm, ten times too small for mm."
+  },
+  {
+   "id": "worked-bar",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "You need 6 brackets cut from flat bar, each 240 mm long. You have a 1.5 m length of bar. Ignoring the saw cuts, how much is left over?",
+   "steps": [
+    {
+     "ask": "Put everything in one unit: mm, the unit on the drawing.",
+     "show": "$1.5 \\times 1000 = 1500$ mm"
+    },
+    {
+     "ask": "Work out how much you cut.",
+     "show": "$6 \\times 240 = 1440$ mm"
+    },
+    {
+     "ask": "Take it away.",
+     "show": "$1500 - 1440 = 60$ mm left"
+    },
+    {
+     "ask": "Give it in metres, if asked.",
+     "show": "$60 \\div 1000 = 0.06$ m"
+    },
+    {
+     "ask": "Sense check.",
+     "show": "1440 mm is just under 1.5 m, so a short offcut of 60 mm makes sense."
+    }
+   ],
+   "why": "One unit first, then the sums, then change back if the question wants another unit. Trying $1.5 - 1440$ mixes metres and millimetres and gives nonsense."
+  },
+  {
+   "id": "explain-bar",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: 6 brackets of 240 mm (1440 mm in all) from a 1.5 m bar. Step 1 turned the 1.5 m into 1500 mm.",
+   "q": "Why must the 1.5 m be turned into 1500 mm before you take away 1440 mm? Say it in your own words.",
+   "model": "You can only take away amounts in the same unit, just as you cannot take pounds from pence without changing one of them. 1.5 m and 1440 mm are both lengths, but the numbers count different-sized steps. Put into mm, the bar is 1500 mm, and 1500 − 1440 = 60 mm is left. Taking 1440 from 1.5 would give a negative length, which cannot be right: the bar plainly holds all six brackets.",
+   "points": [
+    "You can only add or take away amounts in the same unit",
+    "1.5 m is 1500 mm (big unit to small: × 1000)",
+    "Doing it without converting gives a result that fails a sense check"
+   ]
+  },
+  {
+   "id": "faded-bar",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "8 spacers, each 175 mm long, are cut from a 2 m bar. Ignoring the saw cuts, how much is left, in m?",
+   "steps": [
+    {
+     "ask": "Put everything in mm.",
+     "show": "$2 \\times 1000 = 2000$ mm"
+    },
+    {
+     "ask": "Work out how much you cut.",
+     "show": "$8 \\times 175 = 1400$ mm"
+    },
+    {
+     "ask": "Take it away.",
+     "show": "$2000 - 1400 = 600$ mm"
+    },
+    {
+     "ask": "Give it in metres.",
+     "show": "$600 \\div 1000 = 0.6$ m"
+    }
+   ],
+   "why": "Same method: one unit, the sums, then back to metres. 600 mm is 0.6 m (÷ 1000: small unit to big unit)."
+  },
+  {
+   "id": "bar-problem",
+   "type": "numeric",
+   "stage": "example",
+   "q": "You cut {n} pieces, each {p} mm long, from a {L} m bar. Ignoring the saw cuts, how many mm are left?",
+   "vars": {
+    "n": {
+     "pick": [
+      4,
+      5,
+      6
+     ]
+    },
+    "p": {
+     "pick": [
+      150,
+      180,
+      220,
+      250
+     ]
+    },
+    "L": {
+     "pick": [
+      2,
+      2.5,
+      3
+     ]
+    }
+   },
+   "let": {
+    "lmm": "L * 1000",
+    "cut": "n * p"
+   },
+   "answer": "L * 1000 - n * p",
+   "unit": "mm",
+   "hint": "Turn the bar into mm first.",
+   "work": "Bar: ${{L}} \\times 1000 = {{lmm}}$ mm. Cut: ${{n}} \\times {{p}} = {{cut}}$ mm. Left: ${{lmm}} - {{cut}} = {{answer}}$ mm",
+   "why": "Everything into mm first: the bar is {lmm} mm. The pieces use {cut} mm, leaving {answer} mm. Forgetting to convert the {L} m makes the subtraction meaningless."
+  },
+  {
+   "id": "perimeter-q",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 2.8,
+   "q": "A mesh guard panel is {L} m long and {W} cm high. What length of edge trim goes all the way round it, in metres?",
+   "vars": {
+    "L": {
+     "pick": [
+      1.2,
+      1.5,
+      2
+     ]
+    },
+    "W": {
+     "pick": [
+      60,
+      75,
+      80,
+      90
+     ]
+    }
+   },
+   "let": {
+    "wm": "W / 100"
+   },
+   "answer": "2 * L + 2 * W / 100",
+   "unit": "m",
+   "hint": "Put the height into metres first. How many cm in a metre?",
+   "work": "{W} cm = {wm} m. $P = 2L + 2W = 2 \\times {{L}} + 2 \\times {{wm}} = {{answer}}$ m",
+   "why": "All the way round is the **perimeter**: two lengths and two widths. First make the units match: {W} cm is {wm} m (÷ 100). Adding {L} and {W} as they stand mixes metres and centimetres; multiplying them gives an area, not a length."
+  },
+  {
+   "id": "plate-cm2",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.2,
+   "q": "A cover plate is {L} mm by {W} mm. What is its area in cm²?",
+   "vars": {
+    "L": {
+     "pick": [
+      120,
+      150,
+      200,
+      250
+     ]
+    },
+    "W": {
+     "pick": [
+      80,
+      100,
+      140
+     ]
+    }
+   },
+   "let": {
+    "lc": "L / 10",
+    "wc": "W / 10",
+    "mm2": "L * W"
+   },
+   "answer": "L / 10 * W / 10",
+   "unit": "cm²",
+   "hint": "Turn each side into cm before you multiply. 10 mm make 1 cm.",
+   "work": "{L} mm = {lc} cm and {W} mm = {wc} cm. $A = {{lc}} \\times {{wc}} = {{answer}}$ cm²",
+   "why": "Change the lengths first (÷ 10 each), then multiply: {answer} cm². Or work in mm² ({mm2} mm²) and divide by **100**, because 1 cm² is 10 mm by 10 mm. Dividing the mm² by 10 is the usual slip: it treats area units like lengths."
+  },
+  {
+   "id": "spot-time",
+   "type": "spot",
+   "stage": "practise",
+   "level": 2.8,
+   "q": "Someone added up two job times for a timesheet. One line has a mistake in it. Which?",
+   "lines": [
+    "Job A took 1 h 45 min; job B took 2 h 30 min.",
+    "Add the hours: 1 + 2 = 3 h",
+    "Add the minutes: 45 + 30 = 75 min",
+    "75 min is 0.75 h, so the total is 3.75 h"
+   ],
+   "wrong": 3,
+   "fix": "75 min is 1 h 15 min, so the total is 4 h 15 min (4.25 h)",
+   "why": "Minutes are not hundredths of an hour. 75 min is more than an hour: 60 min make 1 h, with 15 min over, and 15 min is 0.25 h. The check: any number of minutes over 60 must add at least one whole hour, so the total must be more than 4 h."
+  },
+  {
+   "id": "why-area",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.0,
+   "q": "Why is 1 m² equal to 10 000 cm², and not 100 cm²?",
+   "options": [
+    "Area units always go up in steps of ten",
+    "A square metre is 100 cm by 100 cm",
+    "Only 100 cm² fit along one edge",
+    "A square has four sides of 25 cm"
+   ],
+   "answer": 1,
+   "why": "A square metre is 100 cm long **and** 100 cm wide, so it holds 100 rows of 100 one-centimetre squares: $100 \\times 100 = 10\\,000$ cm². Converting 100 is right for a length, but an area has two lengths multiplied, so the factor is used twice. The same goes for mm: 1 cm² = $10 \\times 10 = 100$ mm²."
+  },
+  {
+   "id": "mix-kind",
+   "type": "match",
+   "stage": "mix",
+   "level": 2.0,
+   "q": "Which measure does each job need?",
+   "pairs": [
+    [
+     "the edge trim round a guard panel",
+     "perimeter (a length, m)"
+    ],
+    [
+     "the paint to cover a floor",
+     "area (m²)"
+    ],
+    [
+     "the oil a gearbox holds",
+     "volume (litres)"
+    ],
+    [
+     "how heavy a box of bolts is",
+     "mass (kg)"
+    ]
+   ],
+   "why": "Round the edge is a length; covering a surface is an area, in squares; filling a space is a volume, in cubes or litres; how heavy is a mass. Mixing up perimeter and area is the common slip."
+  },
+  {
+   "id": "mix-shift",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 2.3,
+   "q": "A machine ran for {h} h {m} min on one job. How many minutes is that in all?",
+   "vars": {
+    "h": {
+     "pick": [
+      1,
+      2,
+      3,
+      7
+     ]
+    },
+    "m": {
+     "pick": [
+      15,
+      20,
+      45,
+      50
+     ]
+    }
+   },
+   "let": {
+    "hm": "h * 60",
+    "wrong": "h * 100 + m"
+   },
+   "answer": "h * 60 + m",
+   "unit": "min",
+   "work": "${{h}} \\times 60 = {{hm}}$ min, and ${{hm}} + {{m}} = {{answer}}$ min",
+   "why": "Hours to minutes is × 60, then add the minutes left over: {answer} min. Writing it as {wrong} treats an hour as 100 minutes. This is a mixed unit, like feet and inches: turn the big unit into the small one, then add."
+  },
+  {
+   "id": "mix-tank-mass",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.2,
+   "q": "A water tank measures {L} m by {W} m by {H} m inside. Full of water, about what mass of water does it hold, in kg?",
+   "vars": {
+    "L": {
+     "pick": [
+      0.5,
+      1,
+      1.2
+     ]
+    },
+    "W": {
+     "pick": [
+      0.5,
+      0.8,
+      1
+     ]
+    },
+    "H": {
+     "pick": [
+      0.5,
+      0.6,
+      1
+     ]
+    }
+   },
+   "let": {
+    "m3": "L * W * H"
+   },
+   "answer": "L * W * H * 1000",
+   "unit": "kg",
+   "hint": "Volume in m³, then litres (1 m³ is 1000 litres), then about 1 kg for each litre.",
+   "work": "$V = {{L}} \\times {{W}} \\times {{H}} = {{m3}}$ m³ $= {{answer}}$ litres, so about {answer} kg",
+   "why": "Three steps: volume in m³ ({m3}), × 1000 for litres, and each litre of water is about 1 kg: {answer} kg. Stopping at {m3} is the volume in m³, not a mass. Worth knowing before anyone tries to move a full tank."
+  },
+  {
+   "id": "mix-ft-in",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.0,
+   "q": "An old drawing of a machine base gives a length of {ft} ft {i} in. What is that in mm?",
+   "vars": {
+    "ft": {
+     "pick": [
+      1,
+      2,
+      3
+     ]
+    },
+    "i": {
+     "pick": [
+      3,
+      6,
+      9,
+      10
+     ]
+    }
+   },
+   "let": {
+    "tot": "ft * 12 + i"
+   },
+   "answer": "(ft * 12 + i) * 25.4",
+   "unit": "mm",
+   "tolerance": 0.005,
+   "hint": "Turn it all into inches first. How many inches in a foot?",
+   "work": "${{ft}} \\times 12 + {{i}} = {{tot}}$ in, and ${{tot}} \\times 25.4 = {{answer}}$ mm",
+   "why": "Feet and inches are mixed units: {ft} ft is {ft} × 12 inches, plus {i}, makes {tot} inches. Then × 25.4 for mm: {answer} mm. Treating a foot as 10 inches is the slip, the same one as treating an hour as 100 minutes."
+  },
+  {
+   "id": "check-mm",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A cut list says {mm} mm. What is that in metres?",
+   "vars": {
+    "mm": {
+     "pick": [
+      75,
+      450,
+      1250,
+      2380,
+      3005
+     ]
+    }
+   },
+   "answer": "mm / 1000",
+   "unit": "m",
+   "tolerance": 0.005,
+   "work": "${{mm}} \\div 1000 = {{answer}}$ m",
+   "why": "Small unit to big unit: fewer of them, so divide by 1000 (the decimal point moves 3 places left). {mm} mm is {answer} m."
+  },
+  {
+   "id": "check-area",
+   "type": "numeric",
+   "stage": "check",
+   "level": 2.8,
+   "q": "A steel sheet is {L} m long and {W} cm wide. What is its area in m²?",
+   "vars": {
+    "L": {
+     "pick": [
+      2,
+      2.5,
+      3
+     ]
+    },
+    "W": {
+     "pick": [
+      50,
+      120,
+      150
+     ]
+    }
+   },
+   "let": {
+    "wm": "W / 100"
+   },
+   "answer": "L * W / 100",
+   "unit": "m²",
+   "work": "{W} cm = {wm} m. $A = L \\times W = {{L}} \\times {{wm}} = {{answer}}$ m²",
+   "why": "Same units first: {W} cm is {wm} m. Then length × width: {answer} m². Multiplying {L} by {W} as they stand mixes units and gives a number 100 times too big."
+  },
+  {
+   "id": "check-time",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A job took 1.75 hours. How long is that in hours and minutes?",
+   "options": [
+    "1 h 75 min",
+    "2 h 15 min",
+    "1 h 7.5 min",
+    "1 h 45 min"
+   ],
+   "answer": 3,
+   "why": "0.75 of an hour is $0.75 \\times 60 = 45$ min, so 1 h 45 min. 1 h 75 min reads the decimal as minutes, and 2 h 15 min is what you get if you then turn those 75 minutes into an hour and a quarter."
+  }
+ ]
+}

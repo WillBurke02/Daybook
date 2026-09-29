@@ -1,0 +1,905 @@
+{
+ "id": "maths.found.shapes",
+ "title": "Angles, shapes and Pythagoras",
+ "tags": [
+  "maths",
+  "geometry",
+  "angles",
+  "triangles",
+  "area",
+  "pythagoras"
+ ],
+ "kind": "procedure",
+ "level": 3.3,
+ "minutes": 25,
+ "goals": [
+  "Find a missing angle on a straight line, in a right angle and in a triangle",
+  "Work out the area of a triangle and of a trapezium",
+  "Use Pythagoras to find the long side of a right-angled triangle, and a shorter side",
+  "Check a frame is square by working out its diagonal"
+ ],
+ "summary": "An **angle** is an amount of turn, in **degrees** (°). A full turn is **360°**, a straight line **180°**, a square corner (a **right angle**) **90°**.\n\n- Angles on a straight line add up to **180°** (**supplementary**).\n- Two angles that make a right angle add up to **90°** (**complementary**). A 40° angle: supplement 140°, complement 50°.\n\n**Triangles**: the three angles add up to **180°**: $A + B + C = 180^\\circ$. Know two, take them from 180. In a **right-angled** triangle the other two add up to 90°. **Isosceles**: two equal sides and two equal base angles. **Equilateral**: three equal sides, every angle 60°. The **perimeter** is the three sides added.\n\n**Area of a triangle**: half a rectangle, $A = \\frac{1}{2}bh$. The height $h$ is at **right angles** to the base $b$, not the sloping side.\n\n**Trapezium** (US: trapezoid): four sides, two of them parallel. $A = \\frac{1}{2}(a + b)h$: the average of the parallel sides times the height between them. It must come out between the small and the big rectangle.\n\n**Pythagoras** (right-angled triangles only): the **hypotenuse** $c$ is the longest side, opposite the right angle.\n\n$$a^2 + b^2 = c^2$$\n\n- Want the hypotenuse? Square, **add**, square root: $c = \\sqrt{a^2 + b^2}$. 3, 4 → 5.\n- Want a shorter side? Square, **take away**, square root: $a = \\sqrt{c^2 - b^2}$. A 5 m ladder 1.4 m out reaches 4.8 m up.\n\nAsk first: which side is the hypotenuse? Then add or take away.\n\n**Sense checks**: the hypotenuse is longer than either other side but shorter than the two added together. Don't forget the square root at the end.\n\n**Square frames**: if a frame's corners are right angles, both diagonals equal $\\sqrt{L^2 + W^2}$. Measure both: equal diagonals mean it is square. The **3-4-5** rule marks out a right angle: 300 mm one way, 400 mm the other, 500 mm across.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Use Properties of Angles, Triangles, and the Pythagorean Theorem (Prealgebra 2e, section 9.3)",
+   "url": "https://openstax.org/books/prealgebra-2e/pages/9-3-use-properties-of-angles-triangles-and-the-pythagorean-theorem",
+   "by": "OpenStax (Marecek, Anthony-Smith, Honeycutt Mathis)",
+   "minutes": 30,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Use Properties of Rectangles, Triangles, and Trapezoids (Prealgebra 2e, section 9.4)",
+   "url": "https://openstax.org/books/prealgebra-2e/pages/9-4-use-properties-of-rectangles-triangles-and-trapezoids",
+   "by": "OpenStax (Marecek, Anthony-Smith, Honeycutt Mathis)",
+   "minutes": 25,
+   "note": "OpenStax, CC BY 4.0: the section this lesson's triangle and trapezium areas are adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, Prealgebra 2e (Marecek, Anthony-Smith, Honeycutt Mathis), section 9.3 Use Properties of Angles, Triangles, and the Pythagorean Theorem. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "Adapted from OpenStax, Prealgebra 2e (Marecek, Anthony-Smith, Honeycutt Mathis), section 9.4 Use Properties of Rectangles, Triangles, and Trapezoids (triangles and trapezoids). © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten and shortened for Daybook.",
+  "Department for Education, Mathematics: GCSE subject content and assessment objectives (2013)"
+ ],
+ "formulas": [
+  {
+   "name": "Angles on a straight line",
+   "tex": "a + b = 180^\\circ",
+   "match": [
+    "a+b=180^\\circ"
+   ],
+   "says": "Two angles side by side on a straight line add up to 180°, half a turn. Take the one you know from 180 to get the other.",
+   "symbols": [
+    [
+     "a",
+     "one angle (degrees)"
+    ],
+    [
+     "b",
+     "the angle next to it on the same straight line (degrees)"
+    ]
+   ],
+   "example": "a strip bent up 35° from flat leaves $180 - 35 = 145°$ inside the bend."
+  },
+  {
+   "name": "Angles in a triangle",
+   "tex": "A + B + C = 180^\\circ",
+   "match": [
+    "A+B+C=180^\\circ"
+   ],
+   "says": "The three angles of any triangle add up to 180°. Know two and you can find the third.",
+   "symbols": [
+    [
+     "A",
+     "the first angle (degrees)"
+    ],
+    [
+     "B",
+     "the second angle"
+    ],
+    [
+     "C",
+     "the third angle"
+    ]
+   ],
+   "example": "angles of 55° and 82° leave $180 - 55 - 82 = 43°$."
+  },
+  {
+   "name": "Area of a triangle",
+   "tex": "A = \\frac{1}{2}bh",
+   "match": [
+    "\\frac{1}{2}bh"
+   ],
+   "says": "A triangle is half a rectangle: half the base times the height. The height is measured at right angles to the base.",
+   "symbols": [
+    [
+     "A",
+     "the area (mm², cm² or m²)"
+    ],
+    [
+     "b",
+     "the base: the side you measure the height from"
+    ],
+    [
+     "h",
+     "the height, at 90° to the base, in the same unit"
+    ]
+   ],
+   "example": "a gusset with base 200 mm and height 150 mm: $\\frac{1}{2} \\times 200 \\times 150 = 15\\,000$ mm²."
+  },
+  {
+   "name": "Area of a trapezium",
+   "tex": "A = \\frac{1}{2}(a + b)h",
+   "match": [
+    "\\frac{1}{2}(a+b)h"
+   ],
+   "says": "Add the two parallel sides, halve (their average), and multiply by the height between them.",
+   "symbols": [
+    [
+     "A",
+     "the area"
+    ],
+    [
+     "a",
+     "one of the parallel sides"
+    ],
+    [
+     "b",
+     "the other parallel side"
+    ],
+    [
+     "h",
+     "the height: the distance between the parallel sides, at 90° to them"
+    ]
+   ],
+   "example": "parallel sides 0.8 m and 1.2 m, 0.5 m apart: $\\frac{1}{2}(0.8 + 1.2) \\times 0.5 = 0.5$ m²."
+  },
+  {
+   "name": "Pythagoras' theorem",
+   "tex": "a^2 + b^2 = c^2",
+   "match": [
+    "a^2+b^2=c^2"
+   ],
+   "says": "In a right-angled triangle, the square of the longest side (the hypotenuse) equals the squares of the other two sides added together.",
+   "symbols": [
+    [
+     "a",
+     "one of the two shorter sides"
+    ],
+    [
+     "b",
+     "the other shorter side"
+    ],
+    [
+     "c",
+     "the hypotenuse: the longest side, opposite the right angle"
+    ]
+   ],
+   "example": "$3^2 + 4^2 = 9 + 16 = 25 = 5^2$."
+  },
+  {
+   "name": "The hypotenuse",
+   "tex": "c = \\sqrt{a^2 + b^2}",
+   "match": [
+    "\\sqrt{a^2+b^2}"
+   ],
+   "says": "To find the long side: square the two shorter sides, add them, then take the square root.",
+   "symbols": [
+    [
+     "c",
+     "the hypotenuse (the longest side)"
+    ],
+    [
+     "a",
+     "one shorter side"
+    ],
+    [
+     "b",
+     "the other shorter side, in the same unit"
+    ]
+   ],
+   "example": "a frame 1200 mm by 900 mm: $\\sqrt{1\\,440\\,000 + 810\\,000} = \\sqrt{2\\,250\\,000} = 1500$ mm corner to corner."
+  },
+  {
+   "name": "A shorter side",
+   "tex": "a = \\sqrt{c^2 - b^2}",
+   "match": [
+    "\\sqrt{c^2-b^2}"
+   ],
+   "says": "To find a shorter side: square the hypotenuse, take away the square of the side you know, then take the square root.",
+   "symbols": [
+    [
+     "a",
+     "the shorter side you want"
+    ],
+    [
+     "c",
+     "the hypotenuse"
+    ],
+    [
+     "b",
+     "the shorter side you know"
+    ]
+   ],
+   "example": "a 5 m ladder with its foot 1.4 m from the wall: $\\sqrt{25 - 1.96} = \\sqrt{23.04} = 4.8$ m up the wall."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Mark out a right angle with the **3-4-5** rule and use it to check a corner, then check a frame is square by its diagonals. Use a tape, a square and a pencil on a bench top, a sheet or a frame that is not in use: nothing powered, no ladders.",
+   "check": [
+    "From a corner, mark 300 mm along one edge and 400 mm along the other",
+    "Measure straight across between the two marks: 500 mm means the corner is a right angle, because $300^2 + 400^2 = 500^2$",
+    "On a rectangular frame, measure the length and width and work out the diagonal: $\\sqrt{L^2 + W^2}$",
+    "Measure both diagonals. Equal, and matching your answer, means the frame is square",
+    "If they differ, the frame is out of square: the longer diagonal runs between the two corners that are less than 90°"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-diagonal",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Have a go: a guess is fine. A rectangular frame is 3 m wide and 4 m high. How long is a brace fixed corner to corner across it?",
+   "options": [
+    "7 m",
+    "3.5 m",
+    "5 m",
+    "12 m"
+   ],
+   "answer": 2,
+   "why": "The brace is the long side of a right-angled triangle, so Pythagoras: $3^2 + 4^2 = 9 + 16 = 25$, and $\\sqrt{25} = 5$ m. 7 m adds the sides, but the brace is a short cut across the corner, so it must be shorter than going round. 12 is the area (m²), not a length. 3.5 m is the average, shorter than the 4 m side, which the diagonal can't be."
+  },
+  {
+   "id": "angles",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Angles: 90, 180 and 360",
+   "body": "An **angle** is the amount of turn between two lines that meet at a point (the **vertex**). It is measured in **degrees** (°).\n\n- A full turn is **360°**.\n- A straight line is half a turn: **180°**. 'Doing a 180' means turning to face the other way.\n- A square corner is a quarter turn: a **right angle**, **90°**, marked with a small square.\n\nAngles side by side on a straight line add up to **180°**; they are called **supplementary**. Two angles that together make a right angle add up to **90°**; they are **complementary**.\n\nSo a 40° angle has a supplement of $180 - 40 = 140°$ and a complement of $90 - 40 = 50°$.",
+   "more": "A memory hook: **c**omplementary comes before **s**upplementary in the alphabet, as 90 comes before 180.\n\nWorked number: a flat bar bent up by 35°. Before the bend the bar was a straight line, 180°. Now the two legs meet at\n\n$$180 - 35 = 145°$$\n\ninside the bend. The bend angle and the inside angle are supplementary.\n\nAnother: a brace leaves a post at 28° off the vertical. The post meets the floor at 90°, so the brace is at $90 - 28 = 62°$ to the floor. Those two are complementary.\n\nRound a single point the angles add up to a full turn, 360°."
+  },
+  {
+   "id": "angles-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 2.6,
+   "q": "A flat strip is bent up by {a}° from flat. What is the angle inside the bend, between the two legs?",
+   "vars": {
+    "a": {
+     "pick": [
+      20,
+      30,
+      35,
+      45,
+      60,
+      75
+     ]
+    }
+   },
+   "let": {
+    "wrong": "90 - a"
+   },
+   "answer": "180 - a",
+   "unit": "°",
+   "hint": "Before the bend, the strip was a straight line. How many degrees is that?",
+   "work": "$180 - {{a}} = {{answer}}°$",
+   "why": "The strip started as a straight line, 180°. The bend and the inside angle sit side by side on that line, so they add up to 180°: {answer}°. Taking it from 90 ({wrong}°) uses the right angle, which only applies when the two angles make a square corner."
+  },
+  {
+   "id": "triangle-angles",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The angles in a triangle add up to 180°",
+   "body": "A **triangle** has three sides and three angles. However you draw it, the three angles **add up to 180°**:\n\n$$A + B + C = 180^\\circ$$\n\nwhere $A$, $B$ and $C$ are the three angles. Tear the corners off a paper triangle and they sit together on a straight line.\n\nKnow two angles? Take them from 180°: 55° and 82° leave $180 - 55 - 82 = 43°$.\n\nSome triangles have names:\n\n- **Right-angled**: one angle is 90°, so the other two add up to 90°.\n- **Isosceles**: two equal sides, and the two angles at the base are equal.\n- **Equilateral**: three equal sides, and every angle is 60°.",
+   "more": "Why 180? Draw a line through the top corner, parallel to the bottom side. The three angles at that top corner (the triangle's own angle and the two either side of it) make a straight line, 180°, and the two outer ones match the triangle's two bottom angles. So the triangle's three angles make 180° too.\n\nWorked number: a roof bracket is a right-angled triangle, and one angle is 28°. The three add to 180, the right angle takes 90, so the last is $180 - 90 - 28 = 62°$.\n\nA triangle can never have two right angles: 90 + 90 is already 180, with nothing left for the third corner.\n\nAn equilateral triangle shares 180° equally: $180 \\div 3 = 60°$ each."
+  },
+  {
+   "id": "triangle-angles-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.0,
+   "q": "Two angles of a triangular gusset plate are {a}° and {b}°. What is the third angle?",
+   "vars": {
+    "a": {
+     "pick": [
+      26,
+      31,
+      47,
+      55,
+      61
+     ]
+    },
+    "b": {
+     "pick": [
+      49,
+      72,
+      84,
+      98
+     ]
+    }
+   },
+   "let": {
+    "two": "a + b"
+   },
+   "answer": "180 - a - b",
+   "unit": "°",
+   "work": "$180 - {{a}} - {{b}} = {{answer}}°$",
+   "why": "The three angles of a triangle add up to 180°. The two you know make {two}°, so the third is {answer}°. Using 360° (a full turn) is the slip: that is for the four angles of a four-sided shape, or all the way round a point."
+  },
+  {
+   "id": "triangle-area",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Area of a triangle: half a rectangle",
+   "body": "Cut a rectangle from corner to corner and you get two equal triangles. So a triangle is **half a rectangle**:\n\n$$A = \\frac{1}{2}bh$$\n\nThe area is half the **base** $b$ times the **height** $h$. ($bh$ means $b \\times h$.)\n\nThe height is measured **at right angles** (90°) to the base, from the base up to the opposite corner. It is **not** the sloping side.\n\nA triangular gusset plate with a base of 200 mm and a height of 150 mm:\n\n$$\\frac{1}{2} \\times 200 \\times 150 = 15\\,000\\text{ mm}^2$$\n\nThe **perimeter** of a triangle is its three sides added up.",
+   "more": "Picture a rectangle 11 cm wide and 8 cm high: 88 cm². Draw its diagonal. Each half is a triangle with base 11 and height 8, and each has half the area: 44 cm². That is $\\frac{1}{2} \\times 11 \\times 8 = 44$.\n\nWhy the height and not the sloping side? Push the top corner of a triangle sideways, keeping it the same height above the base. The sloping sides get longer, but it covers the same area, like a stack of cards pushed over. So the area depends on the base and the straight-up height only.\n\nTurned round: a triangle of 90 m² with a base of 15 m has a height of $90 \\times 2 \\div 15 = 12$ m."
+  },
+  {
+   "id": "triangle-area-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A triangular gusset plate has a base of {base} mm and a height of {ht} mm. What is its area?",
+   "vars": {
+    "base": {
+     "pick": [
+      120,
+      150,
+      200,
+      250,
+      300
+     ]
+    },
+    "ht": {
+     "pick": [
+      80,
+      100,
+      150,
+      180
+     ]
+    }
+   },
+   "let": {
+    "full": "base * ht"
+   },
+   "answer": "base * ht / 2",
+   "unit": "mm²",
+   "work": "$A = \\frac{1}{2}bh = \\frac{1}{2} \\times {{base}} \\times {{ht}} = {{answer}}$ mm²",
+   "why": "Half the base times the height: {answer} mm². Forgetting the half gives {full} mm², the area of the whole rectangle round it: twice too much steel."
+  },
+  {
+   "id": "trapezium",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Area of a trapezium",
+   "body": "A **trapezium** has four sides, two of them **parallel** (the same distance apart all along, like rails). In America it is a trapezoid. Think of a hopper side or a chute.\n\n$$A = \\frac{1}{2}(a + b)h$$\n\nAdd the two parallel sides $a$ and $b$, halve (that is their average), and multiply by the height $h$: the distance between them, at right angles.\n\nA panel with parallel sides of 0.8 m and 1.2 m, 0.5 m apart:\n\n$$\\frac{1}{2}(0.8 + 1.2) \\times 0.5 = 1 \\times 0.5 = 0.5\\text{ m}^2$$\n\nCheck: it must be between the small rectangle ($0.8 \\times 0.5 = 0.4$) and the big one ($1.2 \\times 0.5 = 0.6$).",
+   "more": "Why the average? Cut the trapezium corner to corner into two triangles. Both have the same height $h$. One has base $a$, the other base $b$. Their areas are $\\frac{1}{2}ah$ and $\\frac{1}{2}bh$, and together that is $\\frac{1}{2}(a + b)h$.\n\nWorked number: parallel sides of 14 cm and 11 cm, 6 cm apart.\n\n$$\\frac{1}{2}(14 + 11) \\times 6 = 12.5 \\times 6 = 75\\text{ cm}^2$$\n\nSense check: a rectangle 11 by 6 is 66 cm², and one 14 by 6 is 84 cm². 75 is between them. Right.\n\nThe usual slip is using a sloping side as the height. The height is always straight across between the parallel sides."
+  },
+  {
+   "id": "trapezium-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.4,
+   "q": "A hopper side panel is a trapezium. Its parallel edges are {top} m and {bot} m long, and they are {ht} m apart. What is its area?",
+   "vars": {
+    "top": {
+     "pick": [
+      0.6,
+      0.8,
+      1.1
+     ]
+    },
+    "bot": {
+     "pick": [
+      1.2,
+      1.5,
+      1.8
+     ]
+    },
+    "ht": {
+     "pick": [
+      0.4,
+      0.5,
+      0.75,
+      0.9
+     ]
+    }
+   },
+   "let": {
+    "avg": "(top + bot) / 2",
+    "lo": "top * ht",
+    "hi": "bot * ht"
+   },
+   "answer": "(top + bot) / 2 * ht",
+   "unit": "m²",
+   "hint": "Average the two parallel edges, then multiply by the distance between them.",
+   "work": "$\\frac{1}{2}({{top}} + {{bot}}) = {{avg}}$, and ${{avg}} \\times {{ht}} = {{answer}}$ m²",
+   "why": "Average of the parallel edges ({avg} m) times the height: {answer} m². Check: between {lo} m² (the small rectangle) and {hi} m² (the big one). Forgetting the half doubles it, and lands above the big rectangle."
+  },
+  {
+   "id": "pythagoras",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Pythagoras: the long side",
+   "body": "In a **right-angled triangle**, the longest side is opposite the right angle. It is the **hypotenuse**, $c$. Call the two shorter sides $a$ and $b$.\n\nNumbers first: sides of 3 and 4 give a hypotenuse of 5. And $3^2 + 4^2 = 9 + 16 = 25 = 5^2$. ($3^2$, 'three squared', is $3 \\times 3$.)\n\nThat is **Pythagoras' theorem**:\n\n$$a^2 + b^2 = c^2$$\n\nTo find the hypotenuse, square the two sides, add, then take the **square root**: the number that times itself gives it ($\\sqrt{25} = 5$).\n\n$$c = \\sqrt{a^2 + b^2}$$\n\nIt works for right-angled triangles only.",
+   "more": "Draw a square on each side of a 3-4-5 triangle and count the tiles. The square on the 3 side holds 9, the one on the 4 side holds 16, and the square on the hypotenuse holds 25. The two small squares exactly fill the big one: $9 + 16 = 25$.\n\nWorked number: sides of 6 m and 8 m.\n\n- Square them: 36 and 64\n- Add: 100\n- Square root: $\\sqrt{100} = 10$ m\n\nSense check every time: the hypotenuse is **longer** than either side (10 is more than 8) but **shorter** than the two added (10 is less than 14), because a straight line is the short way across.\n\nOn a calculator, the √ key does the last step."
+  },
+  {
+   "id": "pythagoras-q",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A rectangular frame is {wa} m by {wb} m. How long is a diagonal brace from corner to corner?",
+   "vars": {
+    "wa": {
+     "pick": [
+      0.6,
+      0.9,
+      1.2,
+      1.5,
+      2
+     ]
+    },
+    "wb": {
+     "pick": [
+      0.8,
+      1.2,
+      1.6,
+      2,
+      2.5
+     ]
+    }
+   },
+   "let": {
+    "sa": "wa^2",
+    "sb": "wb^2",
+    "sq": "wa^2 + wb^2",
+    "wrong": "wa + wb"
+   },
+   "answer": "SQRT(wa^2 + wb^2)",
+   "unit": "m",
+   "tolerance": 0.01,
+   "hint": "Square each side, add, then square root. The answer box takes SQRT(...).",
+   "work": "${{wa}}^2 + {{wb}}^2 = {{sa}} + {{sb}} = {{sq}}$, and $\\sqrt{{sq}} = {{answer}}$ m",
+   "why": "The brace is the hypotenuse of a right-angled triangle, so square, add, square root: {answer} m. Adding the sides ({wrong} m) is too long: the brace is a short cut across the corner. Forgetting the square root leaves {sq}, which is $c^2$, not $c$."
+  },
+  {
+   "id": "pyth-leg",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Pythagoras: a shorter side",
+   "body": "Sometimes you know the hypotenuse and want a shorter side. Take away instead of adding:\n\n$$a = \\sqrt{c^2 - b^2}$$\n\nSquare the hypotenuse, take away the square of the side you know, then square root.\n\nA 5 m ladder with its foot 1.4 m from a wall:\n\n- $5^2 = 25$ and $1.4^2 = 1.96$\n- $25 - 1.96 = 23.04$\n- $\\sqrt{23.04} = 4.8$ m up the wall\n\nSo always ask first: **which side is the hypotenuse?** It is opposite the right angle, and it is the longest. Want it? Add. Have it? Take away.",
+   "more": "Picture the ladder: wall, floor and ladder make a right-angled triangle, with the square corner where the wall meets the floor. The ladder is opposite that corner, so the ladder is the hypotenuse. You know it, so you take away.\n\nWorked number: a 13 ft ladder with its foot 5 ft from the wall. $13^2 - 5^2 = 169 - 25 = 144$, and $\\sqrt{144} = 12$ ft up the wall.\n\nSense check: a shorter side must come out **less** than the hypotenuse. If you added by mistake ($\\sqrt{169 + 25} \\approx 13.9$ ft), the wall height would be longer than the ladder: impossible.\n\nFor safety, a ladder is usually set 1 out for every 4 up, about 75°."
+  },
+  {
+   "id": "pyth-leg-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 3.6,
+   "q": "A {lad} m ladder stands with its foot {foot} m out from a wall. How high up the wall does it reach?",
+   "vars": {
+    "lad": {
+     "pick": [
+      3,
+      4,
+      5,
+      6
+     ]
+    },
+    "foot": {
+     "pick": [
+      0.75,
+      1,
+      1.25,
+      1.5
+     ]
+    }
+   },
+   "let": {
+    "sl": "lad^2",
+    "sf": "foot^2",
+    "diff": "lad^2 - foot^2",
+    "wrong": "SQRT(lad^2 + foot^2)"
+   },
+   "answer": "SQRT(lad^2 - foot^2)",
+   "unit": "m",
+   "tolerance": 0.01,
+   "hint": "Which side is the hypotenuse: the ladder, the wall or the floor?",
+   "work": "${{lad}}^2 - {{foot}}^2 = {{sl}} - {{sf}} = {{diff}}$, and $\\sqrt{{diff}} = {{answer}}$ m",
+   "why": "The ladder is opposite the right angle at the foot of the wall, so it is the hypotenuse. You have it, so take away: {answer} m. Adding would give {wrong} m, longer than the ladder itself: impossible."
+  },
+  {
+   "id": "worked-square",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "To check a welded frame is square, you measure its diagonals. The frame is 1200 mm by 900 mm. How long should each diagonal be if every corner is a right angle?",
+   "steps": [
+    {
+     "ask": "Find the right-angled triangle and its hypotenuse.",
+     "show": "The diagonal cuts the frame into two right-angled triangles. It is opposite the square corner, so it is the hypotenuse $c$. The sides are $a = 1200$ and $b = 900$."
+    },
+    {
+     "ask": "Square the two sides.",
+     "show": "$1200^2 = 1\\,440\\,000$ and $900^2 = 810\\,000$"
+    },
+    {
+     "ask": "Add them.",
+     "show": "$c^2 = 1\\,440\\,000 + 810\\,000 = 2\\,250\\,000$"
+    },
+    {
+     "ask": "Take the square root.",
+     "show": "$c = \\sqrt{2\\,250\\,000} = 1500$ mm"
+    },
+    {
+     "ask": "Sense check.",
+     "show": "1500 is longer than 1200 but less than $1200 + 900 = 2100$. If both diagonals measure 1500 mm, the frame is square."
+    }
+   ],
+   "why": "Square, add, square root, because the diagonal is the hypotenuse. This is a 3-4-5 triangle scaled up by 300: $3 \\times 300 = 900$, $4 \\times 300 = 1200$, $5 \\times 300 = 1500$."
+  },
+  {
+   "id": "explain-square",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: a frame 1200 mm by 900 mm. Step 3 gave $c^2 = 2\\,250\\,000$, and step 4 took the square root to get 1500 mm.",
+   "q": "Why does step 4 take a square root, instead of stopping at 2 250 000? Say it in your own words.",
+   "model": "Step 3 found $c^2$: the diagonal multiplied by itself, which is really an area (in mm²), not a length. To get the diagonal you undo the squaring, and the square root does that: 1500 × 1500 = 2 250 000. Stopping early would claim a diagonal of 2 250 000 mm, over 2 km across a frame just over a metre wide. The sense check catches it: the diagonal must be longer than 1200 mm but less than 2100 mm.",
+   "points": [
+    "Step 3 gives the diagonal squared ($c^2$), not the diagonal",
+    "The square root undoes the squaring",
+    "Without it the answer fails the sense check: far longer than the two sides together"
+   ]
+  },
+  {
+   "id": "faded-conveyor",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A sloping conveyor is 6.5 m long and lifts parts 2.5 m. How far does it run across the floor?",
+   "steps": [
+    {
+     "ask": "Which side is the hypotenuse?",
+     "show": "The conveyor itself, 6.5 m: it is opposite the right angle where the floor meets the upright. You have it, so take away."
+    },
+    {
+     "ask": "Square both.",
+     "show": "$6.5^2 = 42.25$ and $2.5^2 = 6.25$"
+    },
+    {
+     "ask": "Take away.",
+     "show": "$42.25 - 6.25 = 36$"
+    },
+    {
+     "ask": "Square root.",
+     "show": "$\\sqrt{36} = 6$ m"
+    }
+   ],
+   "why": "The hypotenuse was known, so take away. Check: 6 m is less than the 6.5 m conveyor. This is a 5-12-13 triangle halved: 2.5, 6 and 6.5."
+  },
+  {
+   "id": "frame-problem",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A welded frame is {fl} mm by {fw} mm. What should each diagonal measure if the frame is square?",
+   "vars": {
+    "fl": {
+     "pick": [
+      600,
+      800,
+      1000,
+      1200,
+      1500
+     ]
+    },
+    "fw": {
+     "pick": [
+      400,
+      500,
+      600,
+      750,
+      900
+     ]
+    }
+   },
+   "let": {
+    "sq": "fl^2 + fw^2"
+   },
+   "answer": "SQRT(fl^2 + fw^2)",
+   "unit": "mm",
+   "tolerance": 0.005,
+   "hint": "The diagonal is the hypotenuse: square, add, square root.",
+   "work": "${{fl}}^2 + {{fw}}^2 = {{sq}}$, and $\\sqrt{{sq}} = {{answer}}$ mm",
+   "why": "Square both sides, add, square root: {answer} mm. Check: longer than {fl} mm, shorter than {fl} + {fw} mm."
+  },
+  {
+   "id": "isosceles-q",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 3.4,
+   "q": "A triangular guard is **isosceles**: two sides are the same length. Its base is {b0} mm, and it takes {P} mm of edge strip to go all the way round. How long is each of the two equal sides?",
+   "vars": {
+    "s0": {
+     "pick": [
+      250,
+      300,
+      400
+     ]
+    },
+    "b0": {
+     "pick": [
+      200,
+      300,
+      350
+     ]
+    }
+   },
+   "let": {
+    "P": "2 * s0 + b0",
+    "two": "2 * s0"
+   },
+   "answer": "(P - b0) / 2",
+   "unit": "mm",
+   "hint": "Take the base off the total. What is left is shared by two equal sides.",
+   "work": "${{P}} - {{b0}} = {{two}}$ mm for the two sides, and ${{two}} \\div 2 = {{answer}}$ mm each",
+   "why": "The perimeter is the three sides added. Take off the base ({b0} mm) and {two} mm is left for the two equal sides: {answer} mm each. Dividing the whole {P} by 3 would treat it as equilateral, with all three sides equal."
+  },
+  {
+   "id": "bracket-45",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.2,
+   "q": "A corner brace {c0} mm long is fixed across a square corner so that both ends are the same distance from the corner. How far from the corner is each end fixed?",
+   "vars": {
+    "c0": {
+     "pick": [
+      250,
+      300,
+      400,
+      450,
+      600
+     ]
+    }
+   },
+   "let": {
+    "sq": "c0^2",
+    "half": "c0^2 / 2"
+   },
+   "answer": "SQRT(c0^2 / 2)",
+   "unit": "mm",
+   "tolerance": 0.01,
+   "hint": "Both shorter sides are the same, say $x$. So $x^2 + x^2 = c^2$: two lots of $x^2$.",
+   "work": "$x^2 + x^2 = {{c0}}^2$, so $2x^2 = {{sq}}$, $x^2 = {{half}}$, and $x = \\sqrt{{half}} = {{answer}}$ mm",
+   "why": "The brace is the hypotenuse and the two equal distances are the shorter sides. Two equal squares add to {sq}, so each is {half}, and the square root gives {answer} mm. Halving the brace ({c0} ÷ 2) is too short: that forgets the brace cuts across the corner."
+  },
+  {
+   "id": "spot-pyth",
+   "type": "spot",
+   "stage": "practise",
+   "level": 3.4,
+   "q": "Someone worked out the diagonal of a panel 600 mm by 800 mm. One line has a mistake in it. Which?",
+   "lines": [
+    "The diagonal is the hypotenuse $c$; the sides are 600 and 800 mm.",
+    "$c^2 = 600^2 + 800^2$",
+    "$c^2 = 360\\,000 + 640\\,000 = 1\\,000\\,000$",
+    "$c = 1\\,000\\,000 \\div 2 = 500\\,000$ mm"
+   ],
+   "wrong": 3,
+   "fix": "$c = \\sqrt{1\\,000\\,000} = 1000$ mm",
+   "why": "The last step undoes the squaring, so it is a **square root**, not halving. A sense check catches it: the diagonal must be longer than 800 mm and shorter than $600 + 800 = 1400$ mm. 500 000 mm (half a kilometre) is neither. 1000 mm is."
+  },
+  {
+   "id": "why-half",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 3.0,
+   "q": "Why is the area of a triangle **half** of base × height?",
+   "options": [
+    "Its angles add to 180°, half of 360°",
+    "Its height is half its sloping side",
+    "It is half a rectangle of that base and height",
+    "It has three sides where a square has four"
+   ],
+   "answer": 2,
+   "why": "Cut a rectangle corner to corner and you get two equal triangles, each with the rectangle's base and height. So each triangle is half of $b \\times h$. The 180° angle sum is true, but it is about angles, not area; and the height is not tied to the sloping side at all."
+  },
+  {
+   "id": "mix-which",
+   "type": "match",
+   "stage": "mix",
+   "level": 3.0,
+   "q": "Which rule answers each question?",
+   "pairs": [
+    [
+     "the third angle of a triangle",
+     "take the two you know from 180°"
+    ],
+    [
+     "a brace across a rectangular frame",
+     "square, add, square root"
+    ],
+    [
+     "how high a ladder reaches",
+     "square, take away, square root"
+    ],
+    [
+     "the steel in a triangular gusset",
+     "half the base times the height"
+    ]
+   ],
+   "why": "Angles in a triangle make 180°. A diagonal brace is the hypotenuse, so you add the squares. A ladder is the hypotenuse too, but you already have it, so you take away to find the wall height. A gusset's steel is an area: half base times height."
+  },
+  {
+   "id": "mix-stay",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.8,
+   "q": "A stay wire {c0} m long runs from the top of a mast down to a ground anchor {d} m from the foot of the mast. How tall is the mast?",
+   "vars": {
+    "c0": {
+     "pick": [
+      8,
+      10,
+      12,
+      15
+     ]
+    },
+    "d": {
+     "pick": [
+      3,
+      4,
+      5,
+      6
+     ]
+    }
+   },
+   "let": {
+    "diff": "c0^2 - d^2",
+    "wrong": "SQRT(c0^2 + d^2)"
+   },
+   "answer": "SQRT(c0^2 - d^2)",
+   "unit": "m",
+   "tolerance": 0.01,
+   "hint": "Is the wire, the mast or the ground the longest side?",
+   "work": "${{c0}}^2 - {{d}}^2 = {{diff}}$, and $\\sqrt{{diff}} = {{answer}}$ m",
+   "why": "The wire is opposite the right angle at the foot of the mast: it is the hypotenuse, and you have it. So take away: {answer} m. Adding gives {wrong} m, a mast taller than the wire that reaches its top."
+  },
+  {
+   "id": "mix-cable",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 3.6,
+   "q": "A cable tray runs straight from a point on the floor {x} m out from a wall to a point {y} m up the wall. How long is it?",
+   "vars": {
+    "x": {
+     "pick": [
+      1.5,
+      2,
+      2.4,
+      3
+     ]
+    },
+    "y": {
+     "pick": [
+      1.8,
+      2.5,
+      3.2,
+      4
+     ]
+    }
+   },
+   "let": {
+    "sq": "x^2 + y^2"
+   },
+   "answer": "SQRT(x^2 + y^2)",
+   "unit": "m",
+   "tolerance": 0.01,
+   "work": "${{x}}^2 + {{y}}^2 = {{sq}}$, and $\\sqrt{{sq}} = {{answer}}$ m",
+   "why": "This time the tray is the unknown, and it is opposite the right angle where wall meets floor, so it is the hypotenuse: square, **add**, square root. {answer} m. Compare the stay wire: there you had the hypotenuse and took away."
+  },
+  {
+   "id": "mix-gusset-cm",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.0,
+   "q": "A triangular gusset has a base of {base} mm and a height of {ht} mm. What is its area in cm²?",
+   "vars": {
+    "base": {
+     "pick": [
+      120,
+      160,
+      200,
+      240
+     ]
+    },
+    "ht": {
+     "pick": [
+      90,
+      100,
+      150
+     ]
+    }
+   },
+   "let": {
+    "mm2": "base * ht / 2"
+   },
+   "answer": "base * ht / 2 / 100",
+   "unit": "cm²",
+   "hint": "Work it out in mm² first. How many mm² make 1 cm²?",
+   "work": "$\\frac{1}{2} \\times {{base}} \\times {{ht}} = {{mm2}}$ mm², and ${{mm2}} \\div 100 = {{answer}}$ cm²",
+   "why": "Half base times height gives {mm2} mm². 1 cm² is 10 mm by 10 mm, which is 100 mm², so divide by 100: {answer} cm². Dividing by 10 treats an area like a length."
+  },
+  {
+   "id": "check-diagonal",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A rectangular gate frame is {gl} m wide and {gh} m high. How long is a diagonal brace across it?",
+   "vars": {
+    "gl": {
+     "pick": [
+      1.5,
+      2.4,
+      3
+     ]
+    },
+    "gh": {
+     "pick": [
+      0.8,
+      1,
+      1.2,
+      1.8
+     ]
+    }
+   },
+   "let": {
+    "sq": "gl^2 + gh^2"
+   },
+   "answer": "SQRT(gl^2 + gh^2)",
+   "unit": "m",
+   "tolerance": 0.01,
+   "work": "${{gl}}^2 + {{gh}}^2 = {{sq}}$, and $\\sqrt{{sq}} = {{answer}}$ m",
+   "why": "The brace is the hypotenuse: square, add, square root: {answer} m. Longer than {gl} m, shorter than {gl} + {gh} m. Right."
+  },
+  {
+   "id": "check-third",
+   "type": "numeric",
+   "stage": "check",
+   "level": 2.8,
+   "q": "A right-angled triangle has one angle of {a}° as well as its right angle. What is its third angle?",
+   "vars": {
+    "a": {
+     "pick": [
+      22.5,
+      28,
+      33,
+      51,
+      56
+     ]
+    }
+   },
+   "answer": "90 - a",
+   "unit": "°",
+   "work": "$180 - 90 - {{a}} = {{answer}}°$",
+   "why": "The three angles make 180°, and the right angle takes 90°, so the other two share 90°: {answer}°. Taking {a} from 180 forgets the right angle is one of the three."
+  },
+  {
+   "id": "check-trap",
+   "type": "numeric",
+   "stage": "check",
+   "level": 3.4,
+   "q": "A chute side is a trapezium with parallel edges of {top} cm and {bot} cm, {ht} cm apart. What is its area?",
+   "vars": {
+    "top": {
+     "pick": [
+      20,
+      30,
+      40
+     ]
+    },
+    "bot": {
+     "pick": [
+      50,
+      60,
+      70
+     ]
+    },
+    "ht": {
+     "pick": [
+      25,
+      40,
+      45
+     ]
+    }
+   },
+   "let": {
+    "avg": "(top + bot) / 2"
+   },
+   "answer": "(top + bot) / 2 * ht",
+   "unit": "cm²",
+   "work": "$\\frac{1}{2}({{top}} + {{bot}}) = {{avg}}$, and ${{avg}} \\times {{ht}} = {{answer}}$ cm²",
+   "why": "The average of the parallel edges ({avg} cm) times the height between them: {answer} cm²."
+  }
+ ]
+}
