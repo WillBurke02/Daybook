@@ -1,0 +1,949 @@
+{
+ "id": "electrical.supply.ac-power",
+ "title": "AC power: kW, kVA and power factor",
+ "tags": [
+  "electrical",
+  "AC",
+  "power factor",
+  "kVA",
+  "reactive power",
+  "power factor correction"
+ ],
+ "kind": "procedure",
+ "level": 5.2,
+ "minutes": 25,
+ "goals": [
+  "Say why current and voltage get out of step in a motor, and what the phase angle and power factor are",
+  "Work out apparent power (kVA), real power (kW) and reactive power (kvar) for a single-phase load, and draw the power triangle",
+  "Explain why transformers and supplies are rated in kVA, and why a lightly loaded motor has a poor power factor",
+  "Size power-factor correction capacitors in kvar, and work out how much the supply current falls"
+ ],
+ "summary": "In a **heater** the current and the voltage rise and fall together: **in phase**. In a coil, such as a **motor winding**, the current peaks later: it **lags**. In a capacitor it peaks earlier: it **leads**. The gap is the **phase angle** $\\phi$.\n\n**Three kinds of power** (single-phase, rms readings):\n\n- **Apparent power** $S = VI$, in VA or **kVA**: what the cables and transformer carry.\n- **Real power** $P = VI\\cos\\phi$, in W or **kW**: what does work. Billed in kWh.\n- **Reactive power** $Q$, in var or **kvar**: lent to a magnetic field and handed back. No work, but its current still flows.\n\n**Power factor** $\\text{pf} = \\frac{P}{S} = \\cos\\phi$. A heater is 1. A motor at full load is about 0.8 to 0.9.\n\n**The power triangle**: $P$ along the bottom, $Q$ up the side, $S$ the sloping side. $S^2 = P^2 + Q^2$, so $Q = \\sqrt{S^2 - P^2}$. Add $P$s together and $Q$s together, never kVA straight.\n\n**Current from power**: $I = \\frac{P}{V\\cos\\phi}$. A lower power factor means more current for the same kW.\n\n**Why kVA ratings.** A transformer or generator heats with its current and voltage, whatever the power factor, so it is rated in kVA. A 10 kVA transformer at pf 0.7 gives only 7 kW.\n\n**Induction motors** need a **magnetising current** to build their field. It is reactive and hardly changes with load, so a **lightly loaded or oversized motor** has a poor power factor (0.2 to 0.4 at no load).\n\n**Correction.** A capacitor draws a *leading* current that cancels some of the motor's lagging one, so the supply carries less current for the same kW. Capacitor size: $Q_c = P(\\tan\\phi_1 - \\tan\\phi_2)$. Its reactance is $X_C = \\frac{1}{2\\pi f C}$. Capacitors hold charge (discharge resistors); never over-correct a motor.\n\n**The bill.** UK half-hourly metered sites pay for kvarh above 33% of their kWh (an average pf below 0.95), and for capacity in kVA.\n\n**Peak and rms**: 230 V is the rms value; the peak is $\\sqrt{2} \\times 230 \\approx 325$ V. Three-phase adds a $\\sqrt{3}$: its own lesson.",
+ "resources": [
+  {
+   "when": "during",
+   "kind": "read",
+   "title": "University Physics Volume 2, 15.4: Power in an AC Circuit",
+   "url": "https://openstax.org/books/university-physics-volume-2/pages/15-4-power-in-an-ac-circuit",
+   "by": "OpenStax (Ling, Sanny, Moebs)",
+   "minutes": 15,
+   "note": "OpenStax, CC BY 4.0: the section this lesson is adapted from"
+  }
+ ],
+ "sources": [
+  "Adapted from OpenStax, University Physics Volume 2 (Ling, Sanny, Moebs), sections 15.2 and 15.4. © Rice University. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Rewritten, shortened and extended for Daybook.",
+  "OpenStax, College Physics 2e (Urone, Hinrichs), section 20.4: Electric Power and Energy. © Rice University. CC BY 4.0.",
+  "Hughes Electrical and Electronic Technology, 10th edition (Pearson): AC power, power factor and its correction",
+  "BEAMA: Guide to Power Factor Correction",
+  "National Grid Electricity Distribution: DUoS charging for LV and HV metered connections (excess reactive power above 33% of kWh)"
+ ],
+ "formulas": [
+  {
+   "name": "Apparent power",
+   "tex": "S = VI",
+   "match": [
+    "S=VI"
+   ],
+   "says": "The volts times the amps, whatever the phase. It is what the cables, fuses and transformer have to carry.",
+   "symbols": [
+    [
+     "S",
+     "the apparent power (volt-amps, VA; ÷ 1000 for kVA)"
+    ],
+    [
+     "V",
+     "the rms voltage (volts, V)"
+    ],
+    [
+     "I",
+     "the rms current (amps, A)"
+    ]
+   ],
+   "example": "230 V and 10 A: $S = 230 \\times 10 = 2300$ VA, which is 2.3 kVA."
+  },
+  {
+   "name": "Real power, single-phase",
+   "tex": "P = VI\\cos\\phi",
+   "match": [
+    "VI\\cos\\phi"
+   ],
+   "says": "The power that does work is the volts times the amps times the power factor. In phase ($\\cos\\phi = 1$) it is all of it; a quarter cycle out ($\\cos\\phi = 0$) it is none.",
+   "symbols": [
+    [
+     "P",
+     "the real power (watts, W; ÷ 1000 for kW)"
+    ],
+    [
+     "V",
+     "the rms voltage (V)"
+    ],
+    [
+     "I",
+     "the rms current (A)"
+    ],
+    [
+     "\\phi",
+     "the phase angle between the current and the voltage"
+    ],
+    [
+     "\\cos\\phi",
+     "the power factor, from 0 to 1"
+    ]
+   ],
+   "example": "A motor on 230 V drawing 10 A at pf 0.8: $P = 230 \\times 10 \\times 0.8 = 1840$ W."
+  },
+  {
+   "name": "Power factor",
+   "tex": "\\text{pf} = \\frac{P}{S} = \\cos\\phi",
+   "match": [
+    "\\frac{P}{S}"
+   ],
+   "says": "The share of the apparent power that does real work. For clean sine waves it is the cosine of the phase angle.",
+   "symbols": [
+    [
+     "\\text{pf}",
+     "the power factor (no unit)"
+    ],
+    [
+     "P",
+     "real power (kW)"
+    ],
+    [
+     "S",
+     "apparent power (kVA)"
+    ],
+    [
+     "\\phi",
+     "the phase angle"
+    ]
+   ],
+   "example": "A meter reads 1.9 kW and 2.76 kVA: $\\text{pf} = 1.9 \\div 2.76 \\approx 0.69$."
+  },
+  {
+   "name": "The power triangle",
+   "tex": "S^2 = P^2 + Q^2",
+   "match": [
+    "P^2+Q^2"
+   ],
+   "says": "Real and reactive power are at right angles, so they add like the sides of a right-angled triangle (Pythagoras), not like ordinary numbers.",
+   "symbols": [
+    [
+     "S",
+     "apparent power (kVA), the sloping side"
+    ],
+    [
+     "P",
+     "real power (kW), along the bottom"
+    ],
+    [
+     "Q",
+     "reactive power (kvar), up the side"
+    ]
+   ],
+   "example": "4 kW and 3 kvar: $S = \\sqrt{16 + 9} = 5$ kVA, not 7."
+  },
+  {
+   "name": "Reactive power from the triangle",
+   "tex": "Q = \\sqrt{S^2 - P^2}",
+   "match": [
+    "S^2-P^2"
+   ],
+   "says": "Pythagoras turned round: the reactive power is the square root of kVA squared take away kW squared.",
+   "symbols": [
+    [
+     "Q",
+     "reactive power (var or kvar)"
+    ],
+    [
+     "S",
+     "apparent power (VA or kVA)"
+    ],
+    [
+     "P",
+     "real power (W or kW)"
+    ]
+   ],
+   "example": "10 kVA at 8 kW: $Q = \\sqrt{100 - 64} = 6$ kvar."
+  },
+  {
+   "name": "Current from the power",
+   "tex": "I = \\frac{P}{V\\cos\\phi}",
+   "match": [
+    "\\frac{P}{V\\cos\\phi}"
+   ],
+   "says": "Real power turned round for the current. The lower the power factor, the more current the same kW needs.",
+   "symbols": [
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "P",
+     "the real power (W)"
+    ],
+    [
+     "V",
+     "the voltage (V)"
+    ],
+    [
+     "\\cos\\phi",
+     "the power factor"
+    ]
+   ],
+   "example": "1500 W on 230 V at pf 0.75: $I = 1500 \\div (230 \\times 0.75) \\approx 8.7$ A."
+  },
+  {
+   "name": "Correction capacitor size",
+   "tex": "Q_c = P(\\tan\\phi_1 - \\tan\\phi_2)",
+   "match": [
+    "\\tan\\phi_1-\\tan\\phi_2"
+   ],
+   "says": "In the power triangle $\\tan\\phi = \\frac{Q}{P}$, so $P\\tan\\phi$ is the kvar. The capacitors supply the difference between the kvar now and the kvar you want.",
+   "symbols": [
+    [
+     "Q_c",
+     "the capacitor's reactive power (kvar)"
+    ],
+    [
+     "P",
+     "the real power (kW); it does not change"
+    ],
+    [
+     "\\phi_1",
+     "the phase angle now"
+    ],
+    [
+     "\\phi_2",
+     "the phase angle you want"
+    ],
+    [
+     "\\tan",
+     "tangent: here, the kvar for each kW"
+    ]
+   ],
+   "example": "50 kW at pf 0.8 to pf 0.95: $\\tan\\phi_1 = 0.75$, $\\tan\\phi_2 \\approx 0.33$, so $Q_c = 50 \\times 0.42 \\approx 21$ kvar."
+  },
+  {
+   "name": "Capacitor reactance",
+   "tex": "X_C = \\frac{1}{2\\pi f C}",
+   "match": [
+    "\\frac{1}{2\\pifC}"
+   ],
+   "says": "How hard a capacitor makes it for AC to flow, in ohms. A bigger capacitor, or a higher frequency, lets more current through.",
+   "symbols": [
+    [
+     "X_C",
+     "the capacitive reactance (ohms, Ω)"
+    ],
+    [
+     "f",
+     "the supply frequency (Hz; 50 in the UK)"
+    ],
+    [
+     "C",
+     "the capacitance (farads, F; 1 µF is 0.000001 F)"
+    ]
+   ],
+   "example": "20 µF at 50 Hz: $X_C = 1 \\div (2\\pi \\times 50 \\times 0.00002) \\approx 159$ Ω."
+  },
+  {
+   "name": "A capacitor's reactive power",
+   "tex": "Q_C = \\frac{V^2}{X_C}",
+   "match": [
+    "\\frac{V^2}{X_C}"
+   ],
+   "says": "Like $P = \\frac{V^2}{R}$ for a resistor, but the answer is var, lent and returned, not watts.",
+   "symbols": [
+    [
+     "Q_C",
+     "reactive power (var)"
+    ],
+    [
+     "V",
+     "the voltage across it (V)"
+    ],
+    [
+     "X_C",
+     "its reactance (Ω)"
+    ]
+   ],
+   "example": "230 V across 159 Ω: $52900 \\div 159 \\approx 332$ var."
+  },
+  {
+   "name": "Peak from rms",
+   "tex": "V_{\\text{pk}} = \\sqrt{2} \\times V",
+   "match": [
+    "V_{\\text{pk}}"
+   ],
+   "says": "A meter shows the rms value, the one that heats like the same DC. The wave's peak is about 1.41 times higher.",
+   "symbols": [
+    [
+     "V_{\\text{pk}}",
+     "the peak voltage (V)"
+    ],
+    [
+     "V",
+     "the rms voltage a meter shows (V)"
+    ]
+   ],
+   "example": "230 V mains: $\\sqrt{2} \\times 230 \\approx 325$ V at the peaks."
+  },
+  {
+   "name": "Real power, three-phase (next lesson)",
+   "tex": "P = \\sqrt{3} V_L I_L \\cos\\phi",
+   "match": [
+    "\\sqrt{3}V_L"
+   ],
+   "says": "For a balanced three-phase load, with line voltage and line current: the same idea as single-phase, times $\\sqrt{3}$ (about 1.73).",
+   "symbols": [
+    [
+     "P",
+     "real power (W)"
+    ],
+    [
+     "V_L",
+     "the line voltage, between two lines (400 V in the UK)"
+    ],
+    [
+     "I_L",
+     "the current in each line (A)"
+    ],
+    [
+     "\\cos\\phi",
+     "the power factor"
+    ]
+   ],
+   "example": "400 V, 10 A, pf 0.85: $1.73 \\times 400 \\times 10 \\times 0.85 \\approx 5.9$ kW."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Plug a load into a plug-in power meter (the kind that reads W, VA and PF) at a normal 13 A socket. Nothing is opened and nothing live is touched: the meter does the measuring. Try a kettle or heater, then something with a motor (a fan, a drill on no load, a small compressor), then a phone charger.",
+   "check": [
+    "Use a meter marked for 230 V, 13 A, and a load within its rating (a kettle of 3 kW draws about 13 A: check the meter's limit)",
+    "For each load write down V, A, W, VA and PF",
+    "Check VA is roughly V × A, and PF is roughly W ÷ VA",
+    "Work out the kvar: $Q = \\sqrt{S^2 - P^2}$",
+    "The heater should read a PF near 1; the motor lower; note which is worst, and whether the motor's PF rises when it works harder",
+    "A charger may read a poor PF with little phase shift: that is a distorted current, not a lagging one (the harmonics lesson)"
+   ]
+  },
+  {
+   "task": "On paper, from a motor's nameplate (look at one on an isolated machine or in its manual; open nothing): work out its input kVA and kvar at full load.",
+   "check": [
+    "Note the rated output kW, voltage, full-load current, cos φ and efficiency (η or IE class)",
+    "Input kW = output kW ÷ efficiency (the nameplate kW is the shaft power)",
+    "Input kVA: for single-phase $S = VI$; for a three-phase motor $\\sqrt{3} \\times$ line voltage × current",
+    "Check: input kW ÷ kVA should come close to the nameplate cos φ",
+    "Work out the kvar a capacitor would need to reach pf 0.95, and compare it with the motor maker's guidance"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-heater-motor",
+   "type": "mcq",
+   "stage": "try",
+   "level": 4.8,
+   "q": "On a 230 V supply, a **heater** and an **induction motor** each draw 10 A. Which one turns more electrical energy into useful work (more kW)?",
+   "options": [
+    "The heater",
+    "The motor",
+    "Neither: both are 2.3 kW",
+    "You need the frequency to tell"
+   ],
+   "answer": 0,
+   "why": "Volts × amps is 2300 for both, but that is the **apparent** power (VA). In the heater the current keeps in step with the voltage, so all 2.3 kW does work. In the motor part of the current only builds the magnetic field and is handed back each half cycle, so the real power is less, typically 2300 × 0.8 ≈ 1.8 kW. \"Both 2.3 kW\" is true for DC, not for AC with a motor."
+  },
+  {
+   "id": "phase",
+   "type": "concept",
+   "stage": "learn",
+   "title": "In step and out of step",
+   "body": "Mains voltage swings up and down 50 times a second. The current follows, but not always at once.\n\n- In a **heater** (a plain resistance) the current peaks with the voltage: **in phase**.\n- In a **coil**, such as a motor winding, the current peaks later: it **lags**. The coil's magnetic field resists the change.\n- In a **capacitor** it peaks earlier: it **leads**.\n\nThe gap is the **phase angle**, $\\phi$ (phi), in degrees or radians. A whole cycle is 360°, or $2\\pi$ radians. A pure coil lags by a quarter cycle: 90°, or $\\frac{\\pi}{2}$ radians. A real motor, part coil and part work, lags by less, often 30° to 40°.",
+   "more": "Picture pushing a child on a swing. Push when the swing moves away from you and every push adds energy: that is in phase, like a heater. Push a quarter of a swing late and half the time you help, half the time you hold it back: overall you put in nothing. That is a pure coil. A motor is in between: most of the push helps. The voltage is the push; the current is the swing moving. On a scope, 50 Hz is 20 ms a cycle. A quarter cycle late is 5 ms. A motor lagging by 37° peaks about 2 ms after the voltage (37 ÷ 360 × 20 ms)."
+  },
+  {
+   "id": "phase-widget",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "The faint curve is the supply **voltage**, $\\sin x$. The bold one is a load's **current**. The slider $c$ shifts the current along; $x$ is in radians, and one cycle is $2\\pi \\approx 6.28$.",
+   "widget": {
+    "name": "grapher",
+    "params": {
+     "f": "sin",
+     "a": 1,
+     "b": 1,
+     "c": 0,
+     "d": 0,
+     "x": [
+      0,
+      12.6
+     ],
+     "y": [
+      -1.5,
+      1.5
+     ],
+     "fs": [
+      "sin"
+     ],
+     "controls": [
+      "c"
+     ]
+    }
+   },
+   "predict": {
+    "q": "A motor's current **lags** its voltage. Will its peaks come before or after the voltage's peaks?",
+    "options": [
+     "Before them (to the left)",
+     "After them (to the right)",
+     "At the same moment"
+    ],
+    "answer": 1,
+    "why": "Lagging means late: each current peak comes after the voltage peak. With a negative $c$ the curve moves right, later in time."
+   },
+   "level": 5.0,
+   "ask": {
+    "type": "numeric",
+    "q": "Slide $c$ to a negative value between −1.5 and −0.2, so the current lags. The power factor is the cosine of that lag angle, in radians. What is it for your setting? (The box takes `COS(0.6)`.)",
+    "answer": "COS(c)",
+    "tolerance": 0.02,
+    "hint": "The lag angle is $c$ without its minus sign. Cosine of a negative angle is the same as of the positive one.",
+    "why": "Your lag is {c} radians, and $\\cos({c}) = {answer}$. At 0 the curves sit on top of each other and the power factor is 1. At about −1.57 (a quarter cycle) it is 0. Using degrees mode on a calculator gives nearly 1 for any small number: here the angle is in radians."
+   }
+  },
+  {
+   "id": "pf",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Power factor: the share that works",
+   "body": "Power at any instant is volts times amps. In a heater both are positive together, or negative together, so the power is always going in.\n\nWhen the current lags, there are moments when one is positive and the other negative. Then energy flows **back** to the supply. Averaged over a cycle:\n\n$$P = VI\\cos\\phi$$\n\n$P$ is the **real power** in watts, $V$ and $I$ the meter readings (rms), and $\\cos\\phi$ is the **power factor**. It runs from 1 (in phase: a heater) down to 0 (a pure coil or capacitor: all lent, all returned). A motor at full load is about 0.8 to 0.9.",
+   "more": "Think of a pallet truck pulled by a rope. Pull straight along and all your effort moves it. Pull at an angle and part of your effort just pulls sideways: it tires you but moves nothing. The power factor is the share of the pull that goes the right way. With numbers: a motor on 230 V draws 8 A with a power factor of 0.8. Volts times amps is 230 × 8 = 1840. Only 0.8 of that is real work: 1840 × 0.8 = 1472 W. The other part flows in and back out of the motor's magnetic field every 10 ms. Where does 'rms' come in? A meter's AC reading is the rms value: the steady DC that would heat a resistor just as much. The source's formula with peak values has a ½ in it; rms values take care of that."
+  },
+  {
+   "id": "pf-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A pump motor on 230 V draws {i} A with a power factor of {pfa}. What real power does it take, in kW?",
+   "vars": {
+    "i": [
+     4,
+     16,
+     1
+    ],
+    "pfa": {
+     "pick": [
+      0.7,
+      0.75,
+      0.8,
+      0.85
+     ]
+    }
+   },
+   "let": {
+    "va": "230 * i"
+   },
+   "answer": "230 * i * pfa / 1000",
+   "unit": "kW",
+   "hint": "Volts times amps first, then times the power factor, then ÷ 1000 for kW.",
+   "work": "$P = VI\\cos\\phi = 230 \\times {i} \\times {pfa} = {va} \\times {pfa}$ W, which is {answer} kW",
+   "why": "$P = VI\\cos\\phi$: {va} VA of current and voltage, of which the share {pfa} does work, so {answer} kW. Stopping at 230 × {i} gives the apparent power, {va} VA: too high, because part of the current only magnetises the motor."
+  },
+  {
+   "id": "triangle",
+   "type": "concept",
+   "stage": "learn",
+   "title": "kVA, kW and kvar: the power triangle",
+   "body": "Three powers, three units:\n\n- **Apparent power** $S = VI$, in VA or **kVA**: volts times amps. What the cables and transformer must carry.\n- **Real power** $P$, in W or **kW**: what does work. The meter bills it in kWh.\n- **Reactive power** $Q$, in var or **kvar** (volt-amps reactive): lent to fields and handed back. No work, but its current still flows.\n\nThey make a right-angled triangle: $P$ along the bottom, $Q$ up the side, $S$ the sloping side. The angle between $P$ and $S$ is $\\phi$. So by Pythagoras\n\n$$S^2 = P^2 + Q^2$$\n\nand $\\text{pf} = \\frac{P}{S} = \\cos\\phi$.",
+   "more": "A glass of beer: the whole glass is what you pay the bar for (kVA); the beer is the real power (kW); the head of foam is the reactive power (kvar). The glass has to hold both. With numbers: a machine takes 4 kW and 3 kvar. The kVA is not 4 + 3 = 7. They are at right angles, so $S = \\sqrt{4^2 + 3^2} = \\sqrt{25} = 5$ kVA, and the power factor is $\\frac{4}{5} = 0.8$. The 3-4-5 triangle is a handy one to remember: it is a power factor of 0.8, very typical of a motor."
+  },
+  {
+   "id": "triangle-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "A panel's meter reads {s} kVA and {p} kW. How much reactive power is it drawing, in kvar?",
+   "vars": {
+    "s": {
+     "pick": [
+      5,
+      10,
+      15,
+      25,
+      40
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.6,
+      0.7,
+      0.8,
+      0.9
+     ]
+    }
+   },
+   "let": {
+    "p": "s * pfa"
+   },
+   "answer": "SQRT(s^2 - p^2)",
+   "unit": "kvar",
+   "hint": "Pythagoras: kVA is the longest side. Square both, subtract, square root.",
+   "work": "$Q = \\sqrt{S^2 - P^2} = \\sqrt{{s}^2 - {p}^2} = {answer}$ kvar",
+   "why": "The kVA is the sloping side of the power triangle, so $Q = \\sqrt{S^2 - P^2} = {answer}$ kvar. Just subtracting ({s} − {p}) is the slip: kW and kvar are at right angles, so they combine by Pythagoras, not by plain adding and taking away."
+  },
+  {
+   "id": "rating",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Why supply kit is rated in kVA",
+   "body": "A transformer, a generator or a UPS gets hot from two things:\n\n- its **current**, heating the copper windings, and\n- its **voltage**, magnetising the iron core.\n\nNeither cares about the power factor. Reactive current heats the copper just like working current. The maker cannot know what you will connect, so the nameplate gives **kVA**: volts times amps, the only safe limit.\n\nA 10 kVA, 230 V transformer can carry $\\frac{10000}{230} \\approx 43$ A. With a heater load that is 10 kW. With motors at pf 0.7 it is still 43 A, but only 7 kW. Cables, fuses and switchgear are sized on current too, for the same reason.",
+   "more": "A van's payload is in kilograms, not in the value of the goods. Fill it with pallets that are half packing and it is just as full, and just as heavy on the springs, as with solid goods. The transformer's current is its payload; the kW is the goods. Numbers: a 5 kVA site transformer on 230 V. Full current: 5000 ÷ 230 ≈ 21.7 A. Load it with 4 kW of heaters (pf 1): 17.4 A, fine. Load it with 4 kW of motors at pf 0.7: 4000 ÷ (230 × 0.7) ≈ 24.8 A. It is overloaded, though the kW is the same."
+  },
+  {
+   "id": "rating-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "Why is a transformer's nameplate rated in kVA rather than kW?",
+   "options": [
+    "Its heating depends on current and voltage, not power factor",
+    "Transformers only ever supply reactive power",
+    "kW is only used for DC equipment",
+    "kVA is the bigger number, so it sells better"
+   ],
+   "answer": 0,
+   "why": "Copper losses depend on the current and core losses on the voltage, so the limit is volts × amps, whatever the load's power factor. The maker doesn't know your power factor, so kVA is the honest rating. A transformer supplies real power too; and kW is used for AC all the time (a motor's shaft output, a heater)."
+  },
+  {
+   "id": "motors",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Induction motors lag, especially when idle",
+   "body": "An induction motor needs a **magnetising current** to build its rotating magnetic field. That current is reactive: it lags the voltage by nearly a quarter cycle and does no work.\n\nThe magnetising current hardly changes with load. At full load it is a small part of the total, and the power factor is about **0.8 to 0.9**. At light load the working current shrinks but the magnetising current stays, so the power factor falls: **0.2 to 0.4 with no load**.\n\nSo a motor that is **oversized** for its job, or a conveyor that runs empty for hours, drags the site's power factor down. Transformers, welding sets and old fluorescent chokes lag too.",
+   "more": "A lorry's engine idling at the lights still burns fuel just to keep running, with nothing moving. The magnetising current is the idle: it is there whether the motor is loaded or not. Numbers: a motor's magnetising current is 4 A. At full load it also draws 8 A of working current in phase: the total is about $\\sqrt{8^2 + 4^2} \\approx 8.9$ A, pf ≈ 8 ÷ 8.9 ≈ 0.9. Running empty, the working current is perhaps 1 A: total $\\sqrt{1 + 16} \\approx 4.1$ A, pf ≈ 1 ÷ 4.1 ≈ 0.24. The same motor, far worse."
+  },
+  {
+   "id": "motors-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "Which of these has the **worst** power factor?",
+   "options": [
+    "A 3 kW immersion heater",
+    "A conveyor motor at full load",
+    "The same conveyor motor running empty",
+    "A 2 kW fan heater"
+   ],
+   "answer": 2,
+   "why": "An empty motor still draws almost all its magnetising current, but hardly any working current, so nearly all it draws is reactive: pf around 0.2 to 0.4. At full load the same motor is about 0.85. Heaters are plain resistance, pf 1."
+  },
+  {
+   "id": "correction",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Power-factor correction capacitors",
+   "body": "A capacitor's current **leads**; a motor's magnetising current **lags**. Put them in parallel and they cancel: the capacitor supplies the kvar the motor needs, locally. The supply then carries mostly real power, with **less current** for the **same kW**.\n\nHow many kvar? In the triangle, the kvar per kW is $\\tan\\phi$. To go from angle $\\phi_1$ to $\\phi_2$:\n\n$$Q_c = P(\\tan\\phi_1 - \\tan\\phi_2)$$\n\nWhy bother? UK sites on half-hourly meters pay for **reactive units** (kvarh) above 33% of their kWh: an average pf below **0.95**. They also pay for **capacity in kVA**. Less current means cooler cables and spare transformer capacity.",
+   "more": "Two people carry a long plank; one keeps pushing it sideways and the other has to push back. Put a helper in the middle to take the sideways shove and the carriers only do the forward work. The capacitor is that helper. Numbers: 50 kW at pf 0.8. $\\phi_1$ = 36.9°, $\\tan\\phi_1 = 0.75$: the load draws 37.5 kvar. Target pf 0.95: $\\phi_2$ = 18.2°, $\\tan\\phi_2 = 0.33$: 16.4 kvar allowed. The capacitors supply the difference, about 21 kvar. Safety: capacitors hold charge after switch-off, so they have discharge resistors: wait and prove dead. And never over-correct a motor's own capacitor past its no-load kvar: when it is switched off it can keep generating."
+  },
+  {
+   "id": "correction-q",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A workshop's loads take {p} kW at a power factor of {pfa}. How many kvar of capacitors raise it to 0.95? (The box takes `TAN(ACOS(0.8))`: angles in radians.)",
+   "vars": {
+    "p": {
+     "pick": [
+      20,
+      30,
+      50,
+      80,
+      120
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.7,
+      0.75,
+      0.8,
+      0.85
+     ]
+    }
+   },
+   "let": {
+    "t1": "TAN(ACOS(pfa))",
+    "t2": "TAN(ACOS(0.95))"
+   },
+   "answer": "p * (TAN(ACOS(pfa)) - TAN(ACOS(0.95)))",
+   "unit": "kvar",
+   "hint": "Find each angle from its power factor (inverse cos), then its tangent: the kvar per kW.",
+   "work": "$\\tan\\phi_1 = {t1:3}$, $\\tan\\phi_2 = {t2:3}$; $Q_c = P(\\tan\\phi_1 - \\tan\\phi_2) = {p} \\times ({t1:3} - {t2:3}) = {answer}$ kvar",
+   "why": "Now the load draws {p} × {t1:3} kvar; at 0.95 it would draw only {p} × {t2:3}. The capacitors make up the difference: {answer} kvar. The kW does not change. Using $P \\times (0.95 - {pfa})$ mixes power factors with kvar per kW: the triangle works in tangents."
+  },
+  {
+   "id": "worked-compressor",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A plug-in meter on a small 230 V compressor reads **12 A** and **1.9 kW**. Find the apparent power, the power factor, the reactive power, and the current if its power factor were corrected to 1.",
+   "steps": [
+    {
+     "ask": "The apparent power: volts times amps.",
+     "show": "$S = VI = 230 \\times 12 = 2760$ VA, which is 2.76 kVA"
+    },
+    {
+     "ask": "The power factor: real over apparent.",
+     "show": "$\\text{pf} = \\frac{P}{S} = \\frac{1900}{2760} \\approx 0.69$"
+    },
+    {
+     "ask": "The phase angle, if you want it.",
+     "show": "$\\phi = \\cos^{-1} 0.69 \\approx 46.5^\\circ$: the current lags by about an eighth of a cycle."
+    },
+    {
+     "ask": "The reactive power, by Pythagoras.",
+     "show": "$Q = \\sqrt{S^2 - P^2} = \\sqrt{2760^2 - 1900^2} \\approx 2000$ var, or 2.0 kvar"
+    },
+    {
+     "ask": "The current at power factor 1: the same kW, all real.",
+     "show": "$I = \\frac{P}{V\\cos\\phi} = \\frac{1900}{230 \\times 1} \\approx 8.3$ A, down from 12 A. About 2.0 kvar of capacitance would do it."
+    }
+   ],
+   "why": "Always volts × amps first (the kVA), then divide the kW by it for the power factor. The slip is taking 230 × 12 as the power: that is 2.76 kVA, but only 1.9 kW does work."
+  },
+  {
+   "id": "explain-compressor",
+   "type": "explain",
+   "stage": "example",
+   "context": "From the worked example: the compressor takes 1.9 kW. At pf 0.69 it draws 12 A; corrected to pf 1 it would draw only 8.3 A.",
+   "q": "Why does the current fall from 12 A to about 8.3 A, when the compressor still takes the same 1.9 kW? Say it in your own words.",
+   "model": "The 12 A is made of two parts at right angles: a working part, in step with the voltage, and a magnetising part that lags and flows back and forth to the motor's field. Only the working part carries the 1.9 kW. A capacitor, fitted near the motor, supplies the magnetising part itself, so the supply no longer has to. The supply then carries only the working part: 1900 ÷ 230 ≈ 8.3 A. The motor sees the same current as before; the cables back to the board carry less.",
+   "points": [
+    "The current has a working part and a reactive (magnetising) part",
+    "Only the working part carries the kW",
+    "The capacitor supplies the reactive part locally",
+    "So the supply current is only the working part: P ÷ V",
+    "The motor itself is unchanged: the cable from the supply is what benefits"
+   ]
+  },
+  {
+   "id": "faded-pump",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "level": 5.2,
+   "q": "A 230 V pump motor draws **8 A** and **1.4 kW**. Find the kVA, the power factor, the kvar, and the current at power factor 1.",
+   "steps": [
+    {
+     "ask": "The apparent power.",
+     "show": "$S = 230 \\times 8 = 1840$ VA, 1.84 kVA"
+    },
+    {
+     "ask": "The power factor.",
+     "show": "$\\text{pf} = \\frac{1400}{1840} \\approx 0.76$"
+    },
+    {
+     "ask": "The reactive power.",
+     "show": "$Q = \\sqrt{1840^2 - 1400^2} \\approx 1190$ var, about 1.2 kvar"
+    },
+    {
+     "ask": "The current at power factor 1.",
+     "show": "$I = \\frac{1400}{230} \\approx 6.1$ A"
+    }
+   ],
+   "why": "Same order every time: kVA, then pf, then kvar by Pythagoras. The corrected current is the kW over the volts: here it falls by about 2 A."
+  },
+  {
+   "id": "pf-problem",
+   "type": "numeric",
+   "stage": "example",
+   "level": 5.0,
+   "q": "A power meter on a 230 V bench grinder reads {i} A and {w} W. What is its power factor?",
+   "vars": {
+    "i": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85
+     ]
+    }
+   },
+   "let": {
+    "w": "ROUND(230 * i * pfa, 0)",
+    "va": "230 * i"
+   },
+   "answer": "w / (230 * i)",
+   "tolerance": 0.01,
+   "hint": "Volts × amps for the VA first; then real over apparent.",
+   "work": "$S = 230 \\times {i} = {va}$ VA; $\\text{pf} = \\frac{P}{S} = \\frac{{w}}{{va}} = {answer}$",
+   "why": "The power factor is watts over volt-amps: {w} ÷ {va} = {answer}. The answer must be between 0 and 1: dividing the other way up gives more than 1, a sure sign of the slip."
+  },
+  {
+   "id": "current-from-kw",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A power meter shows a 230 V machine taking {p} kW at a power factor of {pfa}. What current does it draw?",
+   "vars": {
+    "p": {
+     "pick": [
+      0.75,
+      1.1,
+      1.5,
+      2.2
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.7,
+      0.75,
+      0.8,
+      0.85
+     ]
+    }
+   },
+   "answer": "p * 1000 / (230 * pfa)",
+   "unit": "A",
+   "hint": "Turn kW into W, then $I = \\frac{P}{V\\cos\\phi}$.",
+   "work": "$I = \\frac{P}{V\\cos\\phi} = \\frac{{p} \\times 1000}{230 \\times {pfa}} = {answer}$ A",
+   "why": "$P = VI\\cos\\phi$ turned round: divide by both $V$ and $\\cos\\phi$. Leaving out the power factor gives too little current, and a fuse or cable sized on it could be too small. Multiplying by the power factor instead makes it smaller still."
+  },
+  {
+   "id": "spot-triangle",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "Someone worked out the power for a 230 V motor from a meter reading of 20 A at pf 0.75. One line is wrong. Which?",
+   "lines": [
+    "$S = VI = 230 \\times 20 = 4600$ VA",
+    "$P = S\\cos\\phi = 4600 \\times 0.75 = 3450$ W",
+    "$Q = S - P = 4600 - 3450 = 1150$ var",
+    "So the supply carries 4.6 kVA to deliver 3.45 kW"
+   ],
+   "wrong": 2,
+   "fix": "$Q = \\sqrt{S^2 - P^2} = \\sqrt{4600^2 - 3450^2} \\approx 3040$ var",
+   "why": "kW and kvar are at right angles, so $S$ is the hypotenuse: $Q = \\sqrt{S^2 - P^2}$. A check catches it: $\\sqrt{3450^2 + 1150^2} \\approx 3640$, not 4600. Also $\\tan\\phi = \\frac{Q}{P}$ at pf 0.75 is about 0.88, so $Q \\approx 0.88 \\times 3450 \\approx 3040$ var."
+  },
+  {
+   "id": "cap-kvar",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.2,
+   "q": "A {C} µF power-factor capacitor sits across a 230 V, 50 Hz supply. Its reactance is $X_C = \\frac{1}{2\\pi f C}$. How much reactive power does it supply, in var?",
+   "vars": {
+    "C": {
+     "pick": [
+      10,
+      20,
+      30,
+      40,
+      50
+     ]
+    }
+   },
+   "let": {
+    "xc": "1 / (2 * PI() * 50 * C / 1000000)"
+   },
+   "answer": "230^2 / xc",
+   "unit": "var",
+   "hint": "µF to F: divide by a million. Find $X_C$, then $Q_C = \\frac{V^2}{X_C}$.",
+   "work": "$X_C = \\frac{1}{2\\pi \\times 50 \\times {C} \\times 10^{-6}} = {xc:1}$ Ω; $Q_C = \\frac{V^2}{X_C} = \\frac{230^2}{{xc:1}} = {answer}$ var",
+   "why": "The capacitor passes $\\frac{230}{{xc:1}}$ A, all of it leading by a quarter cycle, so it is all reactive: $\\frac{V^2}{X_C} = {answer}$ var, and no watts. Forgetting to turn µF into farads gives an answer a million times out."
+  },
+  {
+   "id": "why-charge",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.2,
+   "q": "Reactive power does no work. Why does a UK supplier still charge a site with a poor power factor for it?",
+   "options": [
+    "Its current still heats the network's cables and transformers",
+    "Reactive power turns the kWh meter faster",
+    "Reactive power is lost as heat in the motors",
+    "It makes the supply voltage rise too high"
+   ],
+   "answer": 0,
+   "why": "The kvar are lent and handed back, but the current that carries them flows in the network's cables and transformers, heating them and using up their capacity. So half-hourly metered sites pay for kvarh above 33% of their kWh. It does not turn the kWh meter, and it is not burnt in the motor (that would be real power). A lagging load pulls the voltage down, if anything."
+  },
+  {
+   "id": "units-match",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Match each quantity to its unit.",
+   "pairs": [
+    [
+     "Real power",
+     "kW"
+    ],
+    [
+     "Apparent power",
+     "kVA"
+    ],
+    [
+     "Reactive power",
+     "kvar"
+    ],
+    [
+     "Power factor",
+     "no unit, 0 to 1"
+    ],
+    [
+     "Energy on the bill",
+     "kWh"
+    ]
+   ],
+   "why": "Real power is what works (kW); apparent is volts × amps (kVA); reactive is the lent part (kvar). The power factor is a ratio, kW ÷ kVA, so it has no unit. The bill counts energy: kW × hours."
+  },
+  {
+   "id": "mix-peak",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.6,
+   "q": "A true-rms meter reads {v} V AC. What is the **peak** voltage of the wave?",
+   "vars": {
+    "v": {
+     "pick": [
+      24,
+      110,
+      230
+     ]
+    }
+   },
+   "answer": "v * SQRT(2)",
+   "unit": "V",
+   "work": "$V_{\\text{pk}} = \\sqrt{2} \\times V = 1.414 \\times {v} = {answer}$ V",
+   "why": "Meters show rms, the DC-equivalent value used in all the power formulas. The peak is $\\sqrt{2}$ times higher: {answer} V. This is why insulation and capacitors for {v} V AC are rated well above {v} V. Don't use the peak in $P = VI\\cos\\phi$: that formula wants the rms readings."
+  },
+  {
+   "id": "mix-three-phase",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.5,
+   "q": "A **three-phase** 400 V motor draws 10 A in each line at pf 0.85. Someone writes $P = VI\\cos\\phi = 400 \\times 10 \\times 0.85 = 3.4$ kW. What have they missed?",
+   "options": [
+    "A factor of $\\sqrt{3}$: it is about 5.9 kW",
+    "A factor of 3: it is about 10.2 kW",
+    "The 400 V should be 230 V: 2.0 kW",
+    "Nothing: 3.4 kW is right"
+   ],
+   "answer": 0,
+   "why": "For a balanced three-phase load, $P = \\sqrt{3} V_L I_L \\cos\\phi \\approx 1.73 \\times 400 \\times 10 \\times 0.85 \\approx 5.9$ kW. Times 3 would be right only with the phase voltage, 230 V: $3 \\times 230 \\times 10 \\times 0.85 \\approx 5.9$ kW, the same answer. Times 3 with 400 V counts too much. Three-phase has its own lesson next."
+  },
+  {
+   "id": "mix-add-loads",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.2,
+   "q": "One 230 V circuit feeds a {h} kW heater (pf 1) and a motor taking {m} kW at pf {pfa}. What is the total apparent power, in kVA?",
+   "vars": {
+    "h": {
+     "pick": [
+      1,
+      2,
+      3
+     ]
+    },
+    "m": {
+     "pick": [
+      1.5,
+      2,
+      3
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.7,
+      0.75,
+      0.8
+     ]
+    }
+   },
+   "let": {
+    "q": "m * TAN(ACOS(pfa))",
+    "pt": "h + m"
+   },
+   "answer": "SQRT((h + m)^2 + (m * TAN(ACOS(pfa)))^2)",
+   "unit": "kVA",
+   "hint": "Add the kW together and the kvar together, then Pythagoras. The heater has no kvar.",
+   "work": "kW: ${h} + {m} = {pt}$; kvar: ${m} \\times \\tan\\phi = {q:2}$; $S = \\sqrt{{pt}^2 + {q:2}^2} = {answer}$ kVA",
+   "why": "kW add to kW and kvar to kvar; then the triangle gives the kVA: {answer}. Adding the heater's {h} kVA to the motor's kVA straight gives too much, because the two currents are not in step. With both at the same power factor it would work; with different ones, it doesn't."
+  },
+  {
+   "id": "check-current",
+   "type": "mcq",
+   "stage": "check",
+   "level": 4.8,
+   "q": "On 230 V, a fan heater's meter reads **2 kW**. A motor's reads **2 kW at pf 0.7**. Which draws more current?",
+   "options": [
+    "The heater",
+    "The motor",
+    "Both the same",
+    "You need the kVA rating"
+   ],
+   "answer": 1,
+   "why": "Same real power, but $I = \\frac{P}{V\\cos\\phi}$. Heater: 2000 ÷ 230 ≈ 8.7 A. Motor: 2000 ÷ (230 × 0.7) ≈ 12.4 A. The motor carries extra, reactive current to magnetise itself. \"The same\" would be true only for the same kVA."
+  },
+  {
+   "id": "check-correction",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.8,
+   "q": "A 230 V motor takes {p} kW at pf {pfa}. Capacitors correct it to pf 1. By how many amps does the supply current fall?",
+   "vars": {
+    "p": {
+     "pick": [
+      1.1,
+      1.5,
+      2.2,
+      3
+     ]
+    },
+    "pfa": {
+     "pick": [
+      0.7,
+      0.75,
+      0.8
+     ]
+    }
+   },
+   "let": {
+    "ia": "p * 1000 / (230 * pfa)",
+    "ib": "p * 1000 / 230"
+   },
+   "answer": "p * 1000 / (230 * pfa) - p * 1000 / 230",
+   "unit": "A",
+   "hint": "Work out the current before and after, then take one from the other.",
+   "work": "Before: $\\frac{{p} \\times 1000}{230 \\times {pfa}} = {ia:2}$ A. After: $\\frac{{p} \\times 1000}{230} = {ib:2}$ A. It falls by {answer} A.",
+   "why": "The kW stays the same; only the reactive part of the current goes. $I = \\frac{P}{V\\cos\\phi}$ at each power factor, and the difference is {answer} A. Multiplying the current by the change in power factor misses that current depends on 1 ÷ pf."
+  },
+  {
+   "id": "check-order",
+   "type": "order",
+   "stage": "check",
+   "level": 5.4,
+   "q": "Put the steps for sizing power-factor correction for a single-phase load in order.",
+   "items": [
+    "Read the kW and the kVA (or the pf) from a meter or the bill",
+    "Work out the power factor: kW ÷ kVA",
+    "Find $\\tan\\phi_1$ now and $\\tan\\phi_2$ at the target, 0.95",
+    "Work out $Q_c = P(\\tan\\phi_1 - \\tan\\phi_2)$",
+    "Choose the next standard capacitor size, without over-correcting"
+   ],
+   "why": "Measure first, then the power factor, then the angles, then the kvar: each step needs the one before. The last step is judgement: a standard size, and no more than the load needs, since a leading power factor is as unwanted as a lagging one."
+  }
+ ]
+}
