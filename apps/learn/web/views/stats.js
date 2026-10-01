@@ -84,8 +84,18 @@ const timePanel = { title: 'Study timer', w: 4, deps: ['study'], async render(bo
     { empty: 'No timed sessions yet. The timer is on Today.' }));
 } };
 
+// ---- achievements: earned first; the rest say how, so they double as suggestions ----
+const badgesPanel = { title: 'Achievements', w: 12, deps: ['card', 'lesson'], async render(body) {
+  const { badges, rank, xp } = await api.game();
+  const got = badges.filter(b => b.at).length;
+  body.append(el('p', { class: 'muted small' }, `${got} of ${badges.length} earned · ${xp} XP, rank ${rank}`),
+    el('ul', { class: 'badges' }, [...badges].sort((a, b) => !!b.at - !!a.at || (a.at < b.at ? -1 : 1)).map(b =>
+      el('li', { class: b.at ? 'got' : 'todo' }, el('span', { 'aria-hidden': 'true' }, b.at ? '★' : '☆'),
+        el('strong', {}, b.title), el('span', { class: 'muted small' }, b.at ? `${b.how} · ${b.at.slice(0, 10)}` : b.how)))));
+} };
+
 export const page = { title: 'Stats',
-  layout: [{ use: 'learn.levels' }, { use: 'learn.heat' }, { use: 'learn.accuracy', w: 6 }, { use: 'learn.mastery', w: 6 },
+  layout: [{ use: 'learn.levels' }, { use: 'learn.badges' }, { use: 'learn.heat' }, { use: 'learn.accuracy', w: 6 }, { use: 'learn.mastery', w: 6 },
            { use: 'learn.hardest', w: 8 }, { use: 'learn.time', w: 4 }, { use: 'learn.confidence', w: 6 }, { use: 'learn.rework', w: 6 }],
-  panels: { 'learn.heat': heatPanel, 'learn.accuracy': accuracyPanel, 'learn.mastery': masteryPanel, 'learn.hardest': hardestPanel,
+  panels: { 'learn.badges': badgesPanel, 'learn.heat': heatPanel, 'learn.accuracy': accuracyPanel, 'learn.mastery': masteryPanel, 'learn.hardest': hardestPanel,
             'learn.time': timePanel, ...levelPanels } };

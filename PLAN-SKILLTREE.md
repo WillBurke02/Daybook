@@ -115,8 +115,7 @@ About twenty, all derived, each with a plain "how" line. Earned ones are stored
 First card · 100 / 1000 cards · 3, 7, 30-day streak · ten right in a row ·
 first lesson learned · 10 lessons · a unit cleared (every written lesson
 learned) · a subject cleared · a lesson mastered (★) · tier 5 / tier 7 lesson
-learned · placed in a subject · three subjects started · goal reached ·
-a struggling card fixed.
+learned · placed in a subject · three subjects started · goal reached.
 
 Shown as a grid on a small **Achievements** section of the Stats page, earned
 first, unearned greyed with their how-line (so they double as suggestions).
@@ -130,14 +129,14 @@ headline. Quests give no XP of their own: they only point at what already earns 
 
 ## Build order (this branch)
 
-1. `gamify.py` + migration `005_skilltree.sql` (`badge` table) + `v_xp` view:
-   XP, rank, badges, route, unlocks. Pure functions over the DB, one self-check.
+1. `gamify.py` + migration `005_skilltree.sql` (`badge` table): XP, rank, badges, route,
+   unlocks, worked out from the answer log with plain queries (no view needed).
 2. API: `GET tree`, `GET roadmap`, `POST goal`, `GET badges`; `answer` and
    `lesson/place` return XP gained, new badges, newly unlocked lessons.
 3. UI: Tree page (SVG edges + node buttons + panel), goal banner on Tree and
    Today, XP/rank chip, finish-screen unlocks, toasts, Achievements.
 4. Checks: `tests/test_skilltree.py` (rank maths, route order, unlocks, badges
-   awarded once), the web check for the tree layout, content check untouched.
+   awarded once, no XP for placement), `tests/tree.check.mjs` (the layout).
 5. README, CHANGELOG, in-app help.
 
 ## Not doing (and when to)

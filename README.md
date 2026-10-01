@@ -49,8 +49,8 @@ data/learn.db    Learn: your progress and your own cards (the courses are files)
 Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data demo-data`.
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
-`tests/test_suite.py`, `tests/test_sync.py`, `tests/test_update.py`, `tests/test_packs.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
-learn, content and web.
+`tests/test_suite.py`, `tests/test_skilltree.py`, `tests/test_sync.py`, `tests/test_update.py`, `tests/test_packs.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
+learn, content, tree and web.
 
 ## Money
 
@@ -110,6 +110,17 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   on, then practice with new numbers, taking turns between subjects by weight.
   After every 20 cards it sums up and offers to stop; the ring is the daily goal
   (20 cards, or minutes, in Today → Feed settings).
+- **Skill tree.** Each subject as a map: columns are the stages (easy to hard,
+  left to right), rows are units, lines are prerequisites. Every lesson shows
+  where it stands (★ solid, ✓ learned, ◐ in progress, ○ ready, ◌ needs
+  something first, · not written yet). Pick one to see what it needs and what it
+  opens. **Make this my goal** and the tree becomes a route to it: the steps
+  numbered, the rest dimmed, the next step on Today. Nothing locks.
+  **XP and rank** come from answers (+10 right, +2 for trying, +50 for a lesson
+  learned; placement tests earn none); **badges** (Stats → Achievements) and three
+  small daily targets sit on Today. Finishing a lesson says what it opened.
+  The plan and what it leaves out: PLAN-SKILLTREE.md. Ideas for more interactive
+  lessons: LESSON-INTERACTIVITY.md.
 - **Courses.** Subject, unit, lesson. A lesson is a run of cards; Continue
   takes you back to where you were. Prerequisites show but never lock.
 - **Review** is only what is due. **Practice** is endless numeric questions

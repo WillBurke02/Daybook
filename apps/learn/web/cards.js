@@ -12,6 +12,7 @@ import { draw, compute, fill, read, right, fmt } from './template.js';
 import { compile, machine, scan, test } from './st.js';
 import { formulaHelp, mathsOf } from './formulas.js';
 import { toggle } from './tools.js';
+import { celebrate } from './game.js';
 
 // ---- text: paragraphs, - lists, **bold**, *italic*, `code`, $maths$ ------------------------
 
@@ -503,7 +504,8 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
       const rec = await api.answer({ card_id: item.id, mode, correct: asks ? out.correct : null, rating: out.selfRated ? out.rating : null,
                                      confidence, ms: Math.min(Date.now() - started, 600000),
                                      mistake: out.correct === false && c.type !== 'flash' ? out.mistake : null });
-      when.textContent = [rec.next, rec.struggle ? 'It is on your Coming back list until you get it right on three separate days.' : null,
+      celebrate(rec.game);
+      when.textContent = [rec.game?.gain ? `+${rec.game.gain} XP.` : null, rec.next, rec.struggle ? 'It is on your Coming back list until you get it right on three separate days.' : null,
         rec.retest ? 'You were sure, so it comes round again in a moment.' : null].filter(Boolean).join(' ');
       onDone?.({ ...out, today: rec.today, retest: rec.retest, repair: rec.repair || [], level: rec.level });
     } catch (e) { flash(e.message); onDone?.({ ...out }); }

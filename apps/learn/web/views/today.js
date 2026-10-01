@@ -6,6 +6,7 @@ import { today as todayISO } from '../core/format.js';
 import { loadMeta, setting } from '../core/state.js';
 import { ring } from '../ui/ring.js';
 import { stageChip } from './levels.js';
+import { mark, rankBar, roadmapBar } from '../game.js';
 
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 export const minutes = m => m >= 60 ? `${Math.floor(m / 60)} h ${Math.round(m % 60)} min` : `${Math.round(m)} min`;
@@ -38,6 +39,19 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study'], 
       el('span', { class: 'eyebrow' }, 'Continue'), el('strong', {}, l.title),
       el('span', { class: 'muted small' }, `${l.subject} · card ${Math.min((l.pos || 0) + 1, l.cards)} of ${l.cards}`),
       el('span', { class: 'mbar' }, el('i', { style: `width:${Math.round(100 * Math.min(1, (l.pos || 0) / (l.cards || 1)))}%` }))) : null));
+} };
+
+// ---- the road: rank, the goal's route (or a way to set one), and three small targets for today ----
+const roadPanel = { title: 'Your road', w: 12, deps: ['card', 'lesson', 'skill', 'setting'], async render(body, ctx) {
+  const { game, next } = await api.plan();
+  const rm = game.roadmap;
+  const fresh = next.find(n => n.opened == null) || next[0];
+  body.append(el('div', { class: 'row mid' }, rankBar(game), el('span', { class: 'spacer' }), el('a', { class: 'btn plain sm', href: '#/tree' }, 'Skill tree')),
+    rm ? roadmapBar(rm, { clear: async () => { try { await api.setGoal(null); ctx.refresh(); } catch (e) { flash(e.message); } } })
+      : el('p', { class: 'note' }, 'Pick something to be able to do: open the ', el('a', { href: '#/tree' }, 'skill tree'), ', choose a lesson and “Make this my goal”.',
+          fresh ? [' Or carry on with ', el('a', { href: `#/lesson?id=${encodeURIComponent(fresh.id)}` }, fresh.title), '.'] : null),
+    el('ul', { class: 'quests' }, game.quests.map(q => el('li', { class: q.done ? 'done' : '' }, el('span', { 'aria-hidden': 'true' }, q.done ? '✓' : '○'),
+      el('a', { href: q.href }, q.text), el('span', { class: 'muted small' }, q.done ? 'done' : q.detail)))));
 } };
 
 // ---- the subjects: your level in each, how much is solid, and the next lesson ---------------
@@ -144,5 +158,5 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
 } };
 
 export const page = { title: 'Today', quick: false,
-  layout: [{ use: 'learn.today' }, { use: 'learn.subjects', w: 8 }, { use: 'learn.timer', w: 4 }, { use: 'learn.settings', w: 12 }],
-  panels: { 'learn.today': todayPanel, 'learn.subjects': subjectsPanel, 'learn.timer': timerPanel, 'learn.settings': settingsPanel } };
+  layout: [{ use: 'learn.today' }, { use: 'learn.road' }, { use: 'learn.subjects', w: 8 }, { use: 'learn.timer', w: 4 }, { use: 'learn.settings', w: 12 }],
+  panels: { 'learn.today': todayPanel, 'learn.road': roadPanel, 'learn.subjects': subjectsPanel, 'learn.timer': timerPanel, 'learn.settings': settingsPanel } };

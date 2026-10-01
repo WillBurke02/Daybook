@@ -2,6 +2,23 @@
 
 ## 4.0 — in progress (not released)
 
+- **Skill tree** (branch SkillTree; PLAN-SKILLTREE.md): Learn → Skill tree draws each subject as a
+  map, stages across and units down, prerequisite lines between lessons, each lesson marked
+  solid / learned / in progress / ready / needs more first / not written. A lesson's panel shows
+  what it needs and opens. A **goal** (any lesson) turns the tree into a numbered route; Today
+  shows it with the next step and three daily targets. **XP and rank** worked out from the
+  answers (apps/learn/gamify.py: +10 right, +2 wrong, +50 a lesson learned, none for
+  placement), **badges** kept once earned (migration 005, `badge`), finishing a lesson lists
+  what it unlocked. Never locks. Checks: tests/test_skilltree.py, tests/tree.check.mjs.
+- **Calibration banks reviewed**: one wrong question fixed, ~20 marking and feedback fixes, ~17
+  level misfits, and the right option is no longer the longest in two thirds of questions (now
+  about a third); the check also flags a giveaway in banks (right option the longest, >1.2× the
+  mean wrong one and >8 characters past the longest wrong one).
+- **Nine more lessons from OpenStax (CC BY 4.0)**: AC power, measures, shapes, algebra and
+  functions, trigonometry, charge and current, resistance, series and parallel circuits,
+  alternating current. The content check now fails a card with a control character (a lone
+  backslash in TeX).
+
 - **Sync between computers** (core/sync.py): each computer keeps its own databases and
   works offline. Changes are captured by triggers and written to encrypted files of each
   computer's own, in a folder they all reach (OneDrive, Google Drive, USB, a NAS) or a
