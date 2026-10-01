@@ -21,7 +21,7 @@ from datetime import date, datetime, timedelta
 
 from core import db as _db
 from core.api import Err, File
-from . import fsrs, level as _level, packs as _packs
+from . import fsrs, gamify as _game, level as _level, packs as _packs
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME, TITLE, ORDER = "learn", "Learn", 3
@@ -528,7 +528,13 @@ def answer(db, body):
     if new_state:
         show = "Back in ten minutes" if not new_state["days"] else \
             f"Next in {new_state['days']} day{'s' if new_state['days'] != 1 else ''}"
+    gain = 0 if correct is None or mode in _game.NOT_COUNTED else _game.RIGHT if correct else _game.TRIED
+    after = _game.rank(_game.xp(db))
+    rank_up = _game.rank(after["xp"] - gain)["rank"] < after["rank"]
+    new_badges = _game.award(db, streak(db)) if gain else []
+    db.commit()
     return {"ok": True, "mistake": made, "today": today_counts(db), "next": show,
+            "game": {"gain": gain, **after, "rank_up": rank_up, "badges": new_badges},
             "retest": bool(correct is False and conf == 2), "repair": repair, "level": lvl,
             "struggle": bool(card["asks"] and rating == "again" and (db.execute(
                 "SELECT struggle FROM card_state WHERE card_id = ?", (cid,)).fetchone() or [0])[0])}   # none after a calibration
@@ -707,6 +713,8 @@ def testout(db, lesson_id, n=4):
 def testout_done(db, lesson_id, right, asked):
     """All right: the lesson is learned, and its cards start as reviews a week or so out."""
     passed = bool(asked) and right >= asked
+    was = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (lesson_id,)).fetchone()
+    game = None
     if passed:
         now = datetime.now()
         db.execute("INSERT INTO lesson_state (lesson_id, pos, learned) VALUES (?, 0, ?) ON CONFLICT(lesson_id) DO UPDATE "
@@ -720,8 +728,10 @@ def testout_done(db, lesson_id, right, asked):
                        "difficulty=excluded.difficulty, phase=excluded.phase, last_review=excluded.last_review",
                        (r[0], _due_text(ns["due"], ns["days"]), ns["days"], ns["stability"], ns["difficulty"], "review",
                         _now(), _now()))
+    if passed and not (was and was[0]):
+        game = _game.after_learn(db, lesson_id, streak(db))
     db.commit()
-    return {"passed": passed}
+    return {"passed": passed, "game": game}
 
 
 def comeback(db, days=7):
@@ -767,7 +777,13 @@ def plan(db):
             nxt.append({k: f[0][k] for k in ("id", "title", "subject", "subject_id", "level", "minutes", "pos", "cards", "opened")})
     lv = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute("SELECT * FROM v_skill WHERE kind = 'subject'")]
     return {**t, "struggles": struggles, "struggles_due": struggles_due, "comeback": week, "comeback_today": is_day,
-            "next": nxt, "levels": lv}
+            "next": nxt, "levels": lv, "game": game(db, t["due"], struggles_due)}
+
+
+def game(db, due=0, struggles_due=0):
+    """XP and rank, the goal's route, and today's quests."""
+    rm = _game.roadmap(db)
+    return {**_game.rank(_game.xp(db)), "roadmap": rm, "quests": _game.quests(db, due, struggles_due, rm)}
 
 
 def import_csv(db, text):
@@ -852,9 +868,11 @@ def route(db, method, p, query, body, ctx):
                    "ON CONFLICT(lesson_id) DO UPDATE SET pos = excluded.pos, seen = excluded.seen, "
                    "finished = COALESCE(lesson_state.finished, excluded.finished)",
                    (lid, int(body.get("pos") or 0), _now(), _now() if body.get("finished") else None))
+        was = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (lid,)).fetchone()
         learned = lesson_finished(db, lid) if body.get("finished") else None
+        won = _game.after_learn(db, lid, streak(db)) if learned and not (was and was[0]) else None
         db.commit()
-        return 200, {"ok": True, "learned": learned}
+        return 200, {"ok": True, "learned": learned, "game": won}
     if p == ["lesson", "notes"] and method == "POST":
         db.execute("INSERT INTO lesson_state (lesson_id, pos, notes) VALUES (?, 0, ?) "
                    "ON CONFLICT(lesson_id) DO UPDATE SET notes = excluded.notes", (body.get("lesson_id"), body.get("notes") or None))
@@ -882,6 +900,18 @@ def route(db, method, p, query, body, ctx):
         return 200, today_counts(db)
     if p == ["plan"] and method == "GET":
         return 200, plan(db)
+    if p == ["tree"] and method == "GET":
+        return 200, _game.tree(db, g("subject"))
+    if p == ["game"] and method == "GET":
+        t = today_counts(db)
+        return 200, {**game(db, t["due"], db.execute("SELECT COUNT(*) FROM v_struggle WHERE due <= ?", (_now(),)).fetchone()[0]),
+                     "badges": _game.badges(db)}
+    if p == ["goal"] and method == "POST":
+        lid = body.get("lesson_id")
+        if lid and not db.execute("SELECT 1 FROM lesson WHERE id = ?", (lid,)).fetchone():
+            raise Err(404, "no such lesson")
+        _game.set_goal(db, lid)
+        return 200, {"roadmap": _game.roadmap(db)}
     if p == ["levels"] and method == "GET":
         return 200, levels(db)
     if p == ["calibrate", "start"] and method == "POST":
