@@ -107,6 +107,8 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!q.why) bad(at, 'an mcq gives its reason (why)');
       const right = String(q.options?.[q.answer] ?? '').length, wrong = Math.max(...(q.options || []).filter((_, i) => i !== q.answer).map(o => String(o).length));
       if (right > 1.5 * wrong && right - wrong > 12) bad(at, 'the right option gives itself away by being much the longest: trim it, and put the reason in why');
+      const others = (q.options || []).filter((_, i) => i !== q.answer).map(o => String(o).length), meanWrong = others.reduce((a, b) => a + b, 0) / (others.length || 1);
+      if (isBank && right > wrong && right > 1.2 * meanWrong && right - wrong > 8) bad(at, 'a calibration question: the right option is the longest by a margin (over 1.2x the wrong ones and 8+ characters past the longest): lengthen the wrong options or trim the right one');
     }
     if (q.type === 'numeric') {
       numeric++;
