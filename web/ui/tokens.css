@@ -1302,7 +1302,10 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .road-steps { display: flex; flex-wrap: wrap; gap: 4px 14px; list-style: none; margin: 0; padding: 0; font-size: 13px; counter-reset: step; }
 .road-steps li { counter-increment: step; }
 .road-steps li::before { content: counter(step) "."; margin-right: 4px; color: var(--ink-3); }
-.tscroll { overflow: auto; border: 1px solid var(--rule-soft); border-radius: 10px; margin: 8px 0; max-height: 70vh; background: var(--panel); }
+.tlayout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 12px; align-items: start; margin: 8px 0; }
+.tlayout .tpanel { position: sticky; top: 8px; }
+.tscroll { overflow: auto; border: 1px solid var(--rule-soft); border-radius: 10px; max-height: calc(100vh - 230px); min-height: 320px; background: var(--panel); }
+@media (max-width: 900px) { .tlayout { grid-template-columns: 1fr; } .tlayout .tpanel { order: -1; position: static; } .tscroll { max-height: 55vh; min-height: 240px; } }
 .tcanvas { position: relative; min-width: 100%; }
 .tree-sub { gap: 6px 18px; flex-wrap: wrap; }
 .tlane { position: absolute; left: 0; right: 0; background: color-mix(in srgb, var(--ink) 3%, transparent); border-top: 1px solid var(--rule-soft); }

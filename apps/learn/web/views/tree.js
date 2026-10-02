@@ -76,7 +76,7 @@ const treePanel = { title: 'Skill tree', w: 12, deps: ['card', 'lesson', 'skill'
   const panel = el('div', { class: 'tpanel', 'aria-live': 'polite' });
   const scroll = el('div', { class: 'tscroll' }, canvas);
   const reveal = id => scroll.scrollTo({ left: Math.max(0, L.nodes[id].x - 60), top: Math.max(0, L.nodes[id].y - 60) });   // the map only, never the page
-  body.append(scroll, panel);
+  body.append(el('div', { class: 'tlayout' }, scroll, panel));
 
   function select(id) {
     sel = id;
@@ -95,11 +95,9 @@ const treePanel = { title: 'Skill tree', w: 12, deps: ['card', 'lesson', 'skill'
     const full = l.state === 'unwritten';
     panel.replaceChildren(el('div', { class: 'tcard' },
       el('div', { class: 'row mid' }, el('h3', {}, l.title), l.level != null ? stageChip({ level: l.level }) : null),
-      el('div', { class: 'row mid small muted' }, mark(l.state), MARK[l.state][1],
-        full ? null : `${l.cards} cards`, l.minutes ? `about ${l.minutes} min` : null,
-        l.asks && l.state !== 'unwritten' ? `${pct(l.mastered, l.asks)}% solid` : null,
-        l.due ? `${l.due} due` : null, l.struggles ? `${l.struggles} coming back` : null,
-        l.step ? `step ${l.step} of your route` : null, l.goal ? 'your goal' : null),
+      el('div', { class: 'small muted' }, mark(l.state), [MARK[l.state][1], full ? null : `${l.cards} cards`, l.minutes ? `about ${l.minutes} min` : null,
+        l.asks && !full ? `${pct(l.mastered, l.asks)}% solid` : null, l.due ? `${l.due} due` : null,
+        l.struggles ? `${l.struggles} coming back` : null, l.step ? `step ${l.step} of your route` : null, l.goal ? 'your goal' : null].filter(Boolean).join(' · ')),
       refs('Needs', l.needs), refs('Opens', l.unlocks),
       l.state === 'needs' ? el('p', { class: 'small muted' }, 'It still opens: those lessons are a hint, not a gate. Not sure you need them? ',
         el('a', { href: lessonHref(l.id, '&testout=1') }, 'Test out of this one'), '.') : null,
