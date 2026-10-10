@@ -218,7 +218,8 @@ export const panels = {
   'pay.expected': { title: 'Expected', w: 3, deps: ['payslip', 'shift'], async render(body, ctx) {
     const date = await which(ctx);
     const actual = date ? (await api.payslip(date)).totals : null;
-    const month = actual?.worked_month || ctx.period.month;
+    // the hours the slip pays for: a saved slip says; a new one is for the month before its pay date
+    const month = actual?.worked_month || (!date && (await api.payslipTemplate()).payslip?.worked_month) || ctx.period.month;
     const e = await api.estMonth(month);
     ctx.setTitle(`Expected · ${monthOnly(month)} hours`);
     // three columns, so it fits beside the payslip: the difference sits under the payslip's figure

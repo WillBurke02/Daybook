@@ -38,6 +38,24 @@ assert les["lesson"]["title"] == "Pulse-echo and time of flight" and les["prereq
 assert [c["id"].split("/")[1] for c in les["cards"][:2]] == ["echo-between", "idea"], "cards in file order"
 assert les["cards"][1]["card"]["type"] == "concept" and les["cards"][0]["state"] is None
 
+# === one broken lesson file is left out and named; the rest loads ====================
+bad = os.path.join(tmp.name, "content", "s")
+os.makedirs(bad)
+json.dump({"id": "s", "title": "S", "units": [{"id": "s.u", "title": "U", "lessons": [
+    {"id": "s.u.ok", "title": "Fine"}, {"id": "s.u.bad", "title": "Broken"}]}]}, open(os.path.join(bad, "subject.json"), "w"))
+json.dump({"id": "s.u.ok", "cards": [{"id": "a", "type": "flash", "front": "1", "back": "2"}]}, open(os.path.join(bad, "ok.json"), "w"))
+json.dump({"id": "s.u.bad", "title": "Renamed", "cards": [{"id": "a", "type": "flash", "front": "1", "back": "2"},
+                                                          {"id": "b", "type": "nonsense"}]}, open(os.path.join(bad, "bad.json"), "w"))
+try:
+    learn.read_content(os.path.dirname(bad))
+    raise AssertionError("strict reading stops on the broken file")
+except ValueError as e:
+    assert "bad.json" in str(e)
+left = []
+_s, _u, _l, _c = learn.read_content(os.path.dirname(bad), skipped=left)
+assert [c["id"] for c in _c] == ["s.u.ok/a"] and len(left) == 1 and "bad.json" in left[0], (_c, left)
+assert {x["id"]: x["title"] for x in _l}["s.u.bad"] == "Broken", "a broken file changes nothing, not even its title"
+
 # === the feed: new cards in course order, subjects taking turns ======================
 rng = random.Random(3)
 f = learn.feed(db, 6, subjects=["physics"], rng=rng)

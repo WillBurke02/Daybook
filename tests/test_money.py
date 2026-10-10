@@ -224,7 +224,7 @@ assert any(g["days"] == 31 and g["gap_from"] == "2026-05-01" for g in gaps), gap
 CSV_SIGNED = ("Date,Description,Amount\n"
               "10/07/2026,TESCO STORES,-120.00\n"
               "25/07/2026,TS247 SALARY,2000.00\n")
-plan = importer.plan_one(db, CSV_SIGNED, "barclays-jul.csv", account_id=1)
+plan = importer.plan_one(db, CSV_SIGNED, "barclays-jul.csv")   # no account: already in Current, and would be skipped
 assert plan["count"] == 2 and plan["money_out"] == 1 and plan["money_in"] == 1
 assert close(plan["out_total"], 120) and close(plan["in_total"], 2000)
 assert plan["period_start"] == "2026-07-10" and plan["period_end"] == "2026-07-25"
@@ -342,7 +342,7 @@ assert close(one("SELECT ot_pay FROM v_day_paid WHERE date='2026-09-21'")["ot_pa
 b = tax.breakdown(db, 60000, 2026)
 assert close(b["taxable"], 44430) and close(b["tax"], 10232)
 assert close(b["ni"], 3210.60) and close(b["er_ni"], 8250)
-assert close(b["student_loan"], 2837) and close(b["net"], 40720.40)
+assert close(b["student_loan"], 2755) and close(b["net"], 40802.40)   # Plan 2 over £29,385, whole pounds
 sac = tax.breakdown(db, 60000, 2026, pension_relief="sacrifice")
 assert close(sac["net"] - b["net"], 330.00)          # sacrifice dodges NI too
 hi = tax.breakdown(db, 120000, 2026, pension_pct="0", student_loan_plan="none")
@@ -381,17 +381,28 @@ timesheet.commit_hours(db, p2)
 oct5 = one("SELECT * FROM v_day WHERE date='2026-10-05'")
 assert oct5["shifts"] == 2 and close(oct5["hours"], 11.5) and close(oct5["ot_hours"], 3.0)
 
-# === hours out: the sheet HR gets ============================================
-# the same columns as the spreadsheet HR already receives; a split day is two rows
+# === hours out: the sheet HR gets, in the body of an email ====================
+# Date, Start, Finish, Overtime; weeks from Monday, each with its overtime; a split
+# day is two rows with the day's overtime on the last; the month's at the foot
 tbl = timesheet.hr_table(db, "2026-10")
-assert tbl[0] == ["Date", "Started", "Finished", "Hours", "Notes"], tbl[0]
-day5 = [r for r in tbl if r and r[0] == "05/10/2026"]
-assert [(r[1], r[2], r[3]) for r in day5] == [("08:00", "17:00", "09:00"), ("19:00", "21:30", "02:30")], day5
-totals = {r[0]: r[3] for r in tbl if r and r[0].startswith(("Total", "Overtime"))}
-assert totals == {"Total hours": "34:00", "Overtime x1.5": "04:00", "Overtime x2": "05:00"}, totals
-tsv = timesheet.hr_tsv(db, "2026-10")
-assert tsv.splitlines()[0] == "Date\tStarted\tFinished\tHours\tNotes"
-assert timesheet.hr_csv(db, "2026-10").startswith("Date,Started,")
+assert tbl[0] == ["Date", "Start", "Finish", "Overtime"], tbl[0]
+assert tbl[1] == ["Week 2 · 5 to 11 October", "", "", "9:00"], tbl[1]          # 1 Oct is a Thursday: week 1 is 1 to 4
+day5 = [r for r in tbl if r[0] == "05/10/2026"]
+assert [r[1:] for r in day5] == [["08:00", "17:00", ""], ["19:00", "21:30", "3:00"]], day5
+assert tbl[-1] == ["October overtime", "", "", "9:00"], tbl[-1]
+assert timesheet.hr_tsv(db, "2026-10").splitlines()[0] == "Date\tStart\tFinish\tOvertime"
+assert timesheet.hr_csv(db, "2026-10").startswith("\ufeffDate,Start,")
+html = timesheet.hr_html(db, "2026-10")
+assert html.count("<tr>") == len(tbl) and "#dbeafe" in html and "<style" not in html, "inline styles, a week in colour"
+eml = timesheet.hr_eml(db, "2026-10", "hr@example.com").decode()
+assert "X-Unsent: 1" in eml and "Subject: Hours for October 2026" in eml and "To: hr@example.com" in eml
+hr = lambda m: api.route(db, "GET", ["hours", "hr", m], {}, None, api.Ctx(False, DB, tmp.name, app=money))[1]
+assert hr("2026-10")["html"] == html
+try:
+    hr("2026-13")
+    raise AssertionError("a month that is not one")
+except api.Err as e:
+    assert e.code == 400
 
 # === hours at any granularity ================================================
 grains = {r["grain"] for r in db.execute("SELECT DISTINCT grain FROM v_hours_period")}
@@ -938,6 +949,64 @@ expect(400, lambda: api.route(db, "POST", ["t212", "plan"], {}, {"account_id": 1
 expect(422, lambda: api.route(db, "POST", ["t212", "plan"], {}, {"account_id": acc, "text": "Date,Amount\n1,2"}, ADMIN), "not a T212 file")
 print("ok — Trading 212 CSV: deposits and withdrawals once each, dividends and interest shown, other currencies left out")
 
+# === his banks: Nationwide, Santander (.txt), QIF; overlaps add nothing twice; balances read ===
+db.close()
+db = _db.open_db(os.path.join(tmp.name, "banks.db"), money, quiet=True)          # its own: September here touches nothing above
+one = lambda sql, *a: db.execute(sql, a).fetchone()
+nw = db.execute("INSERT INTO account (name, kind) VALUES ('Nationwide check', 'current')").lastrowid
+# Nationwide today: preamble, then Date, Transaction type, Description, Paid out, Paid in, Balance; £ often
+# arrives as U+FFFD (the file is Windows-1252, read as UTF-8)
+NW = ('"Account Name:","FlexAccount ****12345"\n"Account Balance:","�1,154.66"\n"Available Balance: ","�1,154.66"\n\n'
+      '"Date","Transaction type","Description","Paid out","Paid in","Balance"\n'
+      '"01 Sep 2026","Visa purchase","TESCO STORES 1234","�12.34","","�987.66"\n'
+      '"02 Sep 2026","Bank credit","ACME LTD SALARY","","�2,000.00","�2,987.66"\n'
+      '"02 Sep 2026","Direct debit","OCTOPUS ENERGY","�85.00","","�2,902.66"\n')
+pn = importer.plan_one(db, NW, "nationwide.csv", account_id=nw)
+assert [r["description"] for r in pn["rows"]] == ["TESCO STORES 1234", "ACME LTD SALARY", "OCTOPUS ENERGY"], pn["rows"]
+assert [r["amount"] for r in pn["rows"]] == [-12.34, 2000.0, -85.0] and pn["period_start"] == "2026-09-01"
+assert (pn["opening_balance"], pn["closing_balance"]) == (1000.0, 2902.66) and pn["reconciles"], pn
+importer.commit(db, pn)
+# a second export that overlaps the first (2 to 3 Sep): only the new row goes in
+NW2 = NW.split('"01 Sep')[0] + ('"02 Sep 2026","Bank credit","ACME LTD SALARY","","�2,000.00","�2,987.66"\n'
+                                 '"02 Sep 2026","Direct debit","OCTOPUS ENERGY","�85.00","","�2,902.66"\n'
+                                 '"03 Sep 2026","Visa purchase","GREGGS","�3.10","","�2,899.56"\n')
+p2 = importer.plan_one(db, NW2, "nationwide-2.csv", account_id=nw)
+assert p2["already"] == 2 and [r["description"] for r in p2["rows"]] == ["GREGGS"], p2
+assert p2["reconciles"], "the file's balances still check out with two rows already in"
+importer.commit(db, p2)
+assert one("SELECT COUNT(*) n FROM txn WHERE account_id=?", nw)["n"] == 4
+# two identical coffees on one day are two, not a duplicate of each other
+CAFE = "Date,Description,Amount\n05/09/2026,COSTA,-3.20\n05/09/2026,COSTA,-3.20\n"
+importer.commit(db, importer.plan_one(db, CAFE, "cafe-1.csv", account_id=nw))
+again = importer.plan_one(db, CAFE + "06/09/2026,COSTA,-3.20\n", "cafe-2.csv", account_id=nw)
+assert again["already"] == 2 and again["count"] == 1
+# the older Nationwide layout: Transactions, Credit amount, Debit amount
+OLD = ('"Date","Transactions","Credit amount","Debit amount","Balance"\n'
+       '"10 Sep 2026","Payment to J SMITH","","50.00","950.00"\n"11 Sep 2026","Transfer from SAVER","200.00","","1150.00"\n')
+po = importer.plan_one(db, OLD, "nationwide-old.csv")
+assert po["mapping"]["style"] == "inout" and [(r["description"], r["amount"]) for r in po["rows"]] == \
+    [("Payment to J SMITH", -50.0), ("Transfer from SAVER", 200.0)], po["rows"]
+# Santander's statement .txt, newest first, no-break spaces after the colons (and the same read as U+FFFD)
+SAN = ("From: 01/09/2026 to 30/09/2026\n\nAccount: XXXX XXXX XXXX 1234\n\n"
+       "Date:\xa015/09/2026\nDescription:\xa0CARD PAYMENT TO TESCO STORES 1234,12.34 GBP, RATE 1.00/GBP ON 13-09-2026\n"
+       "Amount:\xa0-12.34 GBP\nBalance:\xa01234.56 GBP\n\n"
+       "Date:\xa010/09/2026\nDescription:\xa0BANK GIRO CREDIT REF ACME LTD\nAmount:\xa02000.00 GBP\nBalance:\xa01246.90 GBP\n")
+for text in (SAN, SAN.replace("\xa0", "�")):
+    ps = importer.plan_one(db, text, "santander.txt")
+    assert [(r["date"], r["amount"]) for r in ps["rows"]] == [("2026-09-10", 2000.0), ("2026-09-15", -12.34)], ps["rows"]
+    assert ps["rows"][1]["description"].startswith("CARD PAYMENT TO TESCO STORES 1234")
+    assert (ps["opening_balance"], ps["closing_balance"]) == (-753.1, 1234.56) and ps["reconciles"], ps
+# QIF, which most banks offer too
+Q = "!Type:Bank\nD01/09/2026\nT-12.34\nPTESCO STORES\n^\nD02/09'26\nU2,000.00\nPACME LTD\nMSalary\n^\n"
+pq = importer.plan_one(db, Q, "statement.qif")
+assert [(r["date"], r["description"], r["amount"]) for r in pq["rows"]] == \
+    [("2026-09-01", "TESCO STORES", -12.34), ("2026-09-02", "ACME LTD", 2000.0)], pq["rows"]
+# Barclays still reads as it did: the payee is its Memo
+BAR = "Number,Date,Account,Amount,Subcategory,Memo\n,03/09/2026,20-00-00 12345678,-9.99,Debit,NETFLIX.COM\n"
+assert importer.plan_one(db, BAR, "barclays.csv")["rows"][0]["description"] == "NETFLIX.COM"
+print("ok — Nationwide, Santander .txt, QIF, overlaps skipped, balances from the file")
+
 db.close()
 tmp.cleanup()
+
 print("\nok — all checks passed")

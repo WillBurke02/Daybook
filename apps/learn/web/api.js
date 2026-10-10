@@ -16,7 +16,6 @@ export const api = {
   plan:     () => get('plan'),
   levels:   () => get('levels'),
   tree:     subject => get(`tree${qs({ subject })}`),
-  game:     () => get('game'),
   setGoal:  lesson_id => send('goal', { lesson_id }),
   notes:    (lesson_id, notes) => send('lesson/notes', { lesson_id, notes }),
   subjectNotes: subject => get(`notes${qs({ subject })}`),

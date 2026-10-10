@@ -28,6 +28,7 @@ export const api = {
   hoursPlan:    (b) => send('hours/plan', b),
   hoursCommit:  (b) => send('hours/commit', b),
   hrSheet:      (m) => get(`hours/hr/${m}`),
+  hrEmail:      (m) => `/money/api/hours/hr/${m}/eml`,       // an address to download, not a call
 
   payslip:         (d) => get(`payslip/${d}`),
   payslipTemplate: ()  => get('payslip/template'),

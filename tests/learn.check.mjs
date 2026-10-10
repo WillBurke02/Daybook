@@ -30,6 +30,12 @@ const st = await load('apps/learn/web/st.js');
   assert.equal(tpl.read('29.6'), 29.6); assert.equal(tpl.read('1,480'), 1480); assert.equal(tpl.read('5.92e3'), 5920);
   assert.equal(tpl.read('5920*10/2000'), 29.6); assert.equal(tpl.read('−4'), -4); assert.ok(isNaN(tpl.read('about 30')));
   assert.ok(isNaN(tpl.read('')));
+  // SI prefixes and units: 4.7k, 4.7 kΩ on a kΩ card, milli only where the unit makes it plain
+  const near = (a, b) => assert.ok(Math.abs(a - b) <= Math.abs(b) * 1e-12, `${a} vs ${b}`);
+  near(tpl.read('4.7k'), 4700); near(tpl.read('4.7k', 'Ω'), 4700); near(tpl.read('4.7k', 'kΩ'), 4.7); near(tpl.read('4700 Ω', 'kΩ'), 4.7);
+  near(tpl.read('4.7 kΩ', 'kΩ'), 4.7); near(tpl.read('470µF', 'F'), 470e-6); near(tpl.read('470u', 'µF'), 470); near(tpl.read('5m', 'A'), 0.005);
+  near(tpl.read('5m', 'mA'), 5); near(tpl.read('10m', 'm'), 10); near(tpl.read('10mm', 'm'), 0.01); near(tpl.read('10 min', 'min'), 10);
+  near(tpl.read('2.2M'), 2.2e6); assert.ok(isNaN(tpl.read('10m'))); assert.ok(isNaN(tpl.read('10m', 'min'))); near(tpl.read('3', 'kV'), 3);
   // within 2% by default, or the card's own tolerance, relative or absolute
   assert.ok(tpl.right(30, 29.6) && !tpl.right(30.3, 29.6));
   assert.ok(tpl.right(31, 29.6, { tolerance: 0.05 }) && tpl.right(29.9, 29.6, { abs: 0.5 }) && !tpl.right(30.2, 29.6, { abs: 0.5 }));

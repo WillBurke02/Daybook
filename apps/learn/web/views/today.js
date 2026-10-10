@@ -6,7 +6,7 @@ import { today as todayISO } from '../core/format.js';
 import { loadMeta, setting } from '../core/state.js';
 import { ring } from '../ui/ring.js';
 import { stageChip } from './levels.js';
-import { mark, rankBar, roadmapBar } from '../game.js';
+import { roadmapBar } from '../road.js';
 
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 export const minutes = m => m >= 60 ? `${Math.floor(m / 60)} h ${Math.round(m % 60)} min` : `${Math.round(m)} min`;
@@ -23,6 +23,11 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study'], 
   const l = going[0];
   body.classList.add('flush');
   ctx.setTitle('');
+  let broken = [];
+  try { broken = JSON.parse(setting('content_errors', '') || '[]'); } catch { /* none */ }
+  if (broken.length) body.append(el('details', { class: 'note warn' },
+    el('summary', {}, `${broken.length} lesson file${broken.length === 1 ? '' : 's'} could not be read and ${broken.length === 1 ? 'is' : 'are'} left out; the rest of Learn works.`),
+    el('ul', { class: 'small' }, broken.map(b => el('li', {}, b)))));
   body.append(el('div', { class: 'lhero' },
     ring(Math.round(t.done), Math.round(t.goal), 132),
     el('div', { class: 'lhero-main' },
@@ -41,17 +46,17 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study'], 
       el('span', { class: 'mbar' }, el('i', { style: `width:${Math.round(100 * Math.min(1, (l.pos || 0) / (l.cards || 1)))}%` }))) : null));
 } };
 
-// ---- the road: rank, the goal's route (or a way to set one), and three small targets for today ----
+// ---- the road: the goal's route (or a way to set one), and the week in things that count ----
 const roadPanel = { title: 'Your road', w: 12, deps: ['card', 'lesson', 'skill', 'setting'], async render(body, ctx) {
-  const { game, next } = await api.plan();
-  const rm = game.roadmap;
+  const { roadmap: rm, week: wk, next } = await api.plan();
   const fresh = next.find(n => n.opened == null) || next[0];
-  body.append(el('div', { class: 'row mid' }, rankBar(game), el('span', { class: 'spacer' }), el('a', { class: 'btn plain sm', href: '#/tree' }, 'Skill tree')),
+  body.append(el('div', { class: 'row mid' },
+    el('span', { class: 'muted' }, `This week: ${minutes(wk.minutes)} on ${wk.days} day${wk.days === 1 ? '' : 's'}, `
+      + `${wk.learned} lesson${wk.learned === 1 ? '' : 's'} learned`),
+    el('span', { class: 'spacer' }), el('a', { class: 'btn plain sm', href: '#/tree' }, 'Skill tree')),
     rm ? roadmapBar(rm, { clear: async () => { try { await api.setGoal(null); ctx.refresh(); } catch (e) { flash(e.message); } } })
       : el('p', { class: 'note' }, 'Pick something to be able to do: open the ', el('a', { href: '#/tree' }, 'skill tree'), ', choose a lesson and “Make this my goal”.',
-          fresh ? [' Or carry on with ', el('a', { href: `#/lesson?id=${encodeURIComponent(fresh.id)}` }, fresh.title), '.'] : null),
-    el('ul', { class: 'quests' }, game.quests.map(q => el('li', { class: q.done ? 'done' : '' }, el('span', { 'aria-hidden': 'true' }, q.done ? '✓' : '○'),
-      el('a', { href: q.href }, q.text), el('span', { class: 'muted small' }, q.done ? 'done' : q.detail)))));
+          fresh ? [' Or carry on with ', el('a', { href: `#/lesson?id=${encodeURIComponent(fresh.id)}` }, fresh.title), '.'] : null));
 } };
 
 // ---- the subjects: your level in each, how much is solid, and the next lesson ---------------

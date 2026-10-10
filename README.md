@@ -61,7 +61,11 @@ type, leave it. **Undo** reverses the last change; Change history any earlier on
 - **Hours.** Type shifts into the timesheet (`0730` is `07:30`); a split day is
   two rows. The new row shows your usual start and finish from the last 30 days
   in grey; leave them and they are what is added. Overtime per day by rule
-  (Settings → Overtime rules). **Send to HR** copies the month for Excel.
+  (Settings → Overtime rules). **Send to HR**: the month as a table of date,
+  start, finish and overtime, each week in its own colour, for the body of an
+  email: **Copy as table** (pastes into Outlook or Gmail with its colours, or
+  Excel as columns) or **Open as Outlook draft**; its month is the last full one
+  unless you pick another.
   Imports Clockify and spreadsheets. Each day links to that day in Log.
 - **Pay.** Payslips as lines in groups, each line counted as Basic, Overtime,
   Tax, NI, Pension… A new payslip is marked **New** until saved, starts from the
@@ -74,7 +78,10 @@ type, leave it. **Undo** reverses the last change; Change history any earlier on
   as annual leave, time off in lieu or other. Step through the years in the
   page header; bank holidays for England and Wales are worked out for any year
   (2000 on, with the one-off days), and can be changed.
-- **Accounts and spending.** Import statements; type the balances from them.
+- **Accounts and spending.** Import statements: CSV from any bank (Barclays and
+  Nationwide read as they come), Santander's .txt, QIF. The balances come from
+  the file's balance column when it has one (or type them); rows already in the
+  account are skipped, so overlapping exports add nothing twice.
   Payee rules sort spending into categories. Transfers are linked by hand. A
   sort code is written 20-45-77 however typed, and names its bank (from the
   first digits; type over the provider if it is wrong).
@@ -116,9 +123,10 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   something first, · not written yet). Pick one to see what it needs and what it
   opens. **Make this my goal** and the tree becomes a route to it: the steps
   numbered, the rest dimmed, the next step on Today. Nothing locks.
-  **XP and rank** come from answers (+10 right, +2 for trying, +50 for a lesson
-  learned; placement tests earn none); **badges** (Stats → Achievements) and three
-  small daily targets sit on Today. Finishing a lesson says what it opened.
+  No points, ranks or badges: Today counts what matters (minutes, days and
+  lessons learned this week). A lesson is learned when its check questions are
+  right, wherever you answer them (the feed and Review count too); it then says
+  what it opened.
   The plan and what it leaves out: PLAN-SKILLTREE.md. Ideas for more interactive
   lessons: LESSON-INTERACTIVITY.md.
 - **Courses.** Subject, unit, lesson. A lesson is a run of cards; Continue
@@ -131,9 +139,11 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
 - **My cards**: write your own (a flash card, or any type as JSON), file them in
   your own lessons or any course lesson, and import a CSV of `front,back,topic`.
   A wrong answer becomes a flash card of its own, due at once.
-- **Whiteboard and calculator** beside any card: **W** and **C**, or the links on
-  the card. Each is its own window: drag it by its title bar, resize it from the
-  corner, have both open at once; each comes back where you left it. The board
+- **Whiteboard and calculator** beside any card: **Alt+W** and **Alt+C** (they
+  work while typing an answer; W and C too when not), or the links on the card.
+  On a wide screen they dock in a column at the right and the page makes room,
+  so the card is never covered; drag one by its title bar and it floats where
+  you leave it, until **Dock**. Ctrl+Z after drawing undoes the drawing. The board
   takes a pen (with pressure), a finger or a mouse; pen, eraser, four colours,
   four pen widths, plain, squared or graph paper (enlarging the window shows
   more of it, it never zooms), undo and redo. One board a card, kept: when the
@@ -157,7 +167,8 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   with a checklist and a line for today's Log; and **Listen**, which reads a
   lesson's summary aloud.
 
-Keys: 1–4 answer or rate, Enter check, ↓ next, W whiteboard, C calculator.
+Keys: 1–4 answer or rate, Enter check, ↓ next, Alt+W whiteboard, Alt+C calculator.
+Answers take SI prefixes: 4.7k, 470µ, 5m on an amps card.
 
 ### Writing content
 

@@ -1,12 +1,13 @@
-// The tools beside a card: a whiteboard and a calculator, each in its own floating window.
-// Drag a window by its title bar, resize it from the corner; both can be open at once, and
-// each comes back where you left it. W opens or closes the whiteboard, C the calculator;
-// the card's own links do the same.
+// The tools beside a card: a whiteboard and a calculator. On a wide screen they dock in a column
+// at the right and the page makes room, so they never cover the card; drag one by its title bar
+// (or resize it) and it floats where you leave it, until "Dock" puts it back. Alt+W opens or
+// closes the whiteboard and Alt+C the calculator, even while typing an answer (W and C too, when
+// not typing); the card's own links do the same. Ctrl+Z after drawing undoes the drawing.
 //
 // The board is one per card, kept in learn.db (sketch), so when the card comes back it
 // offers "your working last time". The calculator is Daybook's formula engine (calc.js),
 // and "Use this answer" puts its result in the card's box.
-// ponytail: no popped-out browser windows; the floating ones cover it until one is missed.
+// ponytail: no popped-out browser windows; the dock covers it until one is missed.
 import { api } from './api.js';
 import { el, flash } from './core/dom.js';
 import { dateUK } from './core/format.js';
@@ -15,7 +16,8 @@ import { calc, compile, eng, plain, solve, step } from './calc.js';
 const current = () => document.querySelector('.lcard.current') || [...document.querySelectorAll('.lcard')].at(-1) || null;
 const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch { return null; } };
 
-const TOOLS = { board: ['Whiteboard', 'W', { w: 460, h: 600, min: [280, 260] }], calc: ['Calculator', 'C', { w: 400, h: 660, min: [300, 360] }] };
+const TOOLS = { board: ['Whiteboard', 'Alt+W', { min: [280, 260] }], calc: ['Calculator', 'Alt+C', { min: [300, 360] }] };
+const WIDE = 1000, BELOW = 70;                   // the dock needs this much screen; it starts below the shell's top bar
 const wins = {};
 let top = 70, watch = null;
 
@@ -28,7 +30,7 @@ export function toggle(name) {
 function open(name) {
   const w = wins[name] || (wins[name] = make(name));
   w.win.hidden = false;
-  place(w.win, name);
+  dock();
   front(w.win);
   w.tool.shown?.();
   if (name === 'board') {
@@ -42,6 +44,7 @@ function close(name) {
   if (!w || w.win.hidden) return;
   if (name === 'board') { w.tool.save(); clearInterval(watch); }
   w.win.hidden = true;
+  dock();
 }
 
 function make(name) {
@@ -49,6 +52,7 @@ function make(name) {
   const tool = name === 'board' ? board() : calculator();
   const bar = el('header', { class: 'tw-bar row mid', title: 'Drag to move' },
     el('strong', {}, title), el('kbd', {}, key), el('span', { class: 'spacer' }),
+    el('button', { class: 'btn plain sm tw-dock', type: 'button', title: 'Back in the column at the right', onclick: () => { store(`learn.tool.${name}`, ''); dock(); } }, 'Dock'),
     el('button', { class: 'icon', type: 'button', 'aria-label': `Close the ${title.toLowerCase()}`, title: 'Close (Esc)', onclick: () => close(name) }, '×'));
   const grip = el('span', { class: 'tw-grip', title: 'Drag to resize', 'aria-hidden': 'true' });
   const win = el('section', { class: `toolwin tw-${name}`, hidden: true, role: 'dialog', 'aria-label': title }, bar, tool.box, grip);
@@ -64,15 +68,25 @@ function make(name) {
 const front = win => { win.style.zIndex = ++top; };
 const saved = name => { try { return JSON.parse(store(`learn.tool.${name}`) || 'null'); } catch { return null; } };
 
-/** Where a window goes: where it was left, else the whiteboard at the right and the calculator beside it; always on screen. */
+/** Lay out the open tools: the docked ones stack in a column at the right and the page narrows to
+ *  leave room (body.docked); a floating one stays where it was left. Narrow screens have no dock. */
+function dock() {
+  const open = Object.entries(wins).filter(([, w]) => !w.win.hidden);
+  const docked = innerWidth >= WIDE ? open.filter(([n]) => !saved(n)) : [];
+  const width = Math.min(440, Math.round(innerWidth * 0.36)), gap = 8;
+  const h = Math.floor((innerHeight - BELOW - gap * (docked.length + 1)) / (docked.length || 1));
+  docked.forEach(([, w], i) => Object.assign(w.win.style, { left: `${innerWidth - width - gap}px`, top: `${BELOW + i * (h + gap)}px`,
+    width: `${width}px`, height: `${h}px` }));
+  for (const [n, w] of open) { w.win.classList.toggle('docked', docked.some(([m]) => m === n)); if (!docked.some(([m]) => m === n)) place(w.win, n); }
+  document.body.classList.toggle('docked', docked.length > 0);
+  document.body.style.setProperty('--dock', `${width + gap * 2}px`);
+}
+
+/** Where a floating window goes: where it was left, else (a narrow screen) along the bottom; always on screen. */
 function place(win, name, at = saved(name)) {
   const [, , d] = TOOLS[name], vw = innerWidth, vh = innerHeight;
   let { x, y, w, h } = at || {};
-  if (!at && vw >= 1000) {                        // a wide screen: one above the other, right of the card
-    const bh = Math.round(Math.min(600, (vh - 90) * 0.45));
-    w = Math.min(d.w, vw - 24); x = vw - w - 12;
-    if (name === 'board') { y = 70; h = bh; } else { y = 70 + bh + 10; h = Math.max(d.min[1], vh - y - 12); }
-  } else if (!at) {                               // half a screen or a phone: along the bottom, the card in view above
+  if (!at) {                                      // half a screen or a phone: along the bottom, the card in view above
     const pair = vw >= 600;
     w = pair ? Math.floor(vw / 2) - 18 : vw - 24; h = Math.round(vh * 0.48);
     x = pair && name === 'board' ? vw - w - 12 : 12; y = vh - h - (pair ? 12 : 66);   // a phone's tab bar is along the bottom
@@ -96,8 +110,8 @@ function follow(handle, win, name, to) {
     const up = () => {
       handle.removeEventListener('pointermove', move);
       const b = win.getBoundingClientRect();
-      place(win, name, { x: b.left, y: b.top, w: b.width, h: b.height });
       store(`learn.tool.${name}`, JSON.stringify({ x: Math.round(b.left), y: Math.round(b.top), w: Math.round(b.width), h: Math.round(b.height) }));
+      dock();                                     // moved or resized: it floats now, and the others close up
     };
     handle.addEventListener('pointermove', move);
     handle.addEventListener('pointerup', up, { once: true });
@@ -105,8 +119,7 @@ function follow(handle, win, name, to) {
   });
 }
 
-globalThis.addEventListener?.('resize', () => { for (const [name, w] of Object.entries(wins)) if (!w.win.hidden) {
-  const b = w.win.getBoundingClientRect(); place(w.win, name, { x: b.left, y: b.top, w: b.width, h: b.height }); } });
+globalThis.addEventListener?.('resize', dock);
 
 // ---- the whiteboard ---------------------------------------------------------------------------
 
@@ -116,7 +129,7 @@ const SIZES = [1.5, 3, 6, 12];                    // pen widths, in screen pixel
 // The board is measured in screen pixels: a bigger window shows more of it, never a zoomed copy.
 
 function board() {
-  const canvas = el('canvas', { class: 'wb-canvas', 'aria-label': 'Whiteboard: draw with a pen, finger or mouse' });
+  const canvas = el('canvas', { class: 'wb-canvas', tabindex: '-1', 'aria-label': 'Whiteboard: draw with a pen, finger or mouse' });
   const g = canvas.getContext('2d');
   const question = el('div', { class: 'wb-q muted small' });
   const last = el('div', { class: 'wb-last row mid', hidden: true });
@@ -171,6 +184,7 @@ function board() {
   canvas.addEventListener('pointerdown', e => {
     if (e.button > 0) return;
     e.preventDefault();
+    canvas.focus({ preventScroll: true });         // out of the answer box, so Ctrl+Z means the drawing
     canvas.setPointerCapture(e.pointerId);
     if (tool === 'erase') { const gone = hits(at(e)); if (gone.length) change(strokes.filter(st => !gone.includes(st))); drawing = { erase: true, c: 0, w: 0, p: [] }; return; }
     drawing = { c: colour, w: size, px: 1, p: [at(e)] };
@@ -250,11 +264,17 @@ function board() {
     last,
     el('div', { class: 'row mid wb-tools' }, tool_, colours, sizes,
       el('button', { class: 'icon', type: 'button', title: 'Undo (Ctrl+Z)', 'aria-label': 'Undo', onclick: back }, '↶'),
-      el('button', { class: 'icon', type: 'button', title: 'Redo', 'aria-label': 'Redo', onclick: fwd }, '↷'),
+      el('button', { class: 'icon', type: 'button', title: 'Redo (Ctrl+Y)', 'aria-label': 'Redo', onclick: fwd }, '↷'),
       el('button', { class: 'btn plain sm', type: 'button', onclick: () => strokes.length && change([]) }, 'Clear'), paper_),
     canvas);
-  box.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); e.stopPropagation(); e.shiftKey ? fwd() : back(); }
+  // Ctrl+Z (Ctrl+Y or Ctrl+Shift+Z again) undoes the drawing, not Daybook's last saved change, while the board
+  // was the last thing touched; preventDefault is how the shell's own Ctrl+Z knows to stand aside
+  let here = false;
+  document.addEventListener('pointerdown', e => { here = !!box.contains(e.target); }, true);
+  document.addEventListener('keydown', e => {
+    if (!here || box.closest('.toolwin')?.hidden || !(e.ctrlKey || e.metaKey) || e.target.closest?.('input, textarea, [contenteditable]')) return;
+    const k = e.key.toLowerCase();
+    if (k === 'z' || k === 'y') { e.preventDefault(); k === 'y' || e.shiftKey ? fwd() : back(); }
   });
   return { box, follow, save, shown: () => { requestAnimationFrame(fit); follow(); } };
 }

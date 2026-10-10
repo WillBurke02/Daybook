@@ -28,7 +28,7 @@ asks its questions*.
 2. **One idea, one thing to do.** If it takes a paragraph to say what to do, split it.
 3. **The check is deterministic and written down.** Every interactive card has
    an answer a machine can verify (a value, a state, a sequence, a test case),
-   so it can be marked, scheduled by FSRS, and counted in XP like any other card.
+   so it can be marked and scheduled by FSRS like any other card.
 4. **Wrong is informative.** A wrong action produces a specific consequence or
    hint ("the lamp stays off: the seal-in contact is wired to the wrong side"),
    not just a red cross.
@@ -112,7 +112,7 @@ the circuit widget's symbols.
 ### 6. Hint ladder instead of a hint  ·  effort: low
 
 Three levels per hard card: a nudge, a bigger nudge, then the worked first step.
-Using hints doesn't lose XP (it is not a test) but it records `hints_used`, and
+Using hints costs nothing (it is not a test) but it records `hints_used`, and
 FSRS treats a hinted correct answer as "hard". The data already allows a
 `hint`; add `hints: [..]` and a counter.
 
@@ -137,13 +137,13 @@ only a runner is new. Optional, never on a clock the learner can't switch off.
    the intended solution; fail the build if it can't pass).
 3. **Render it** in `apps/learn/web/cards.js` as a `frame()` card, reporting
    `{correct, rating}` through the same `onDone` the other cards use, so marking,
-   FSRS, XP and the skill estimate need no changes.
+   FSRS and the skill estimate need no changes.
 4. **Give the browser check one example** in `tests/web.check.mjs` or the
    learn check: mount it, perform the correct action, expect `correct`.
 5. **Write one lesson card** per case before writing twenty; keep the first
    example in the CONTENT-BRIEF as the model to copy.
 
-Everything that touches scheduling, XP and the level estimate stays the same
+Everything that touches scheduling and the level estimate stays the same
 because the card reports a normal answer. That is why each idea above is
 phrased as "what it checks".
 
@@ -151,7 +151,7 @@ phrased as "what it checks".
 
 - **Animations without a question.** If nothing is asked, it is a diagram.
 - **Timers on first attempts.** Speed is for fluency rounds on cards already known.
-- **Rewarding clicks.** XP and badges follow answers and lessons passed, not interaction counts.
+- **Rewarding clicks.** Nothing counts interactions; only answers and lessons passed show.
 - **A generic simulator.** Each widget does one job (the existing ones do); a
   "build any circuit" sandbox is a product, not a lesson card.
 - **Drag-only.** Anything draggable also works by tap-then-tap and by keyboard.

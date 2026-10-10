@@ -12,7 +12,7 @@ import { draw, compute, fill, read, right, fmt } from './template.js';
 import { compile, machine, scan, test } from './st.js';
 import { formulaHelp, mathsOf } from './formulas.js';
 import { toggle } from './tools.js';
-import { celebrate } from './game.js';
+import { learnedNote } from './road.js';
 
 // ---- text: paragraphs, - lists, **bold**, *italic*, `code`, $maths$ ------------------------
 
@@ -134,8 +134,8 @@ const TYPES = {
     add(face, el('div', { class: 'row mid' }, input, c.unit ? el('span', { class: 'unit' }, rich(c.unit)) : null, check),
       c.hint ? el('details', { class: 'hint' }, el('summary', {}, 'Hint'), rich(c.hint, values)) : null);
     const go = () => {
-      const given = read(input.value);
-      if (!isFinite(given)) { flash('Type a number (5920, 1.18e-3 and 5920*10/2000 all work)'); input.focus(); return; }
+      const given = read(input.value, c.unit);
+      if (!isFinite(given)) { flash('Type a number (5920, 1.18e-3, 4.7k and 5920*10/2000 all work)'); input.focus(); return; }
       const v = values.answer, correct = right(given, v, c);
       input.disabled = check.disabled = true;
       input.classList.add(correct ? 'right' : 'wrong');
@@ -299,12 +299,16 @@ const TYPES = {
       guess.keys = e => { const n = '12345'.indexOf(e.key); if (n >= 0 && n < p.options.length) { choose(n); return true; } };
       add(face, guess);
     }
+    // hide: the widget's readings (what it works out) stay hidden until you have answered, where they would give it away
+    if (c.hide) { w.classList.add('hiding'); add(face, el('p', { class: 'muted small' }, 'Its readings show once you have answered.')); }
     add(face, w);
     mountWidget(w, c.widget, r => Object.assign(seen, r));
     // then a question about it: an mcq, or a numeric whose answer may use what the widget reports (its names
     // are the report's keys). The values are read when you check, so they are the widget's as you left it.
     add(face, ask);
-    const told = !p ? done : out => {
+    const told = out => {
+      w.classList.remove('hiding');
+      if (!p) return done(out);
       const mine = p.options[predicted];
       const note = p.answer == null ? `You predicted: ${mine}.` : predicted === p.answer ? `Your prediction was right: ${mine}.`
         : `You predicted: ${mine}. What happens: ${p.options[p.answer]}.`;
@@ -504,8 +508,8 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
       const rec = await api.answer({ card_id: item.id, mode, correct: asks ? out.correct : null, rating: out.selfRated ? out.rating : null,
                                      confidence, ms: Math.min(Date.now() - started, 600000),
                                      mistake: out.correct === false && c.type !== 'flash' ? out.mistake : null });
-      celebrate(rec.game);
-      when.textContent = [rec.game?.gain ? `+${rec.game.gain} XP.` : null, rec.next, rec.struggle ? 'It is on your Coming back list until you get it right on three separate days.' : null,
+      learnedNote(rec.learned);
+      when.textContent = [rec.next, rec.struggle ? 'It is on your Coming back list until you get it right on three separate days.' : null,
         rec.retest ? 'You were sure, so it comes round again in a moment.' : null].filter(Boolean).join(' ');
       onDone?.({ ...out, today: rec.today, retest: rec.retest, repair: rec.repair || [], level: rec.level });
     } catch (e) { flash(e.message); onDone?.({ ...out }); }

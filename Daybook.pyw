@@ -227,6 +227,8 @@ def main():
     except OSError as e:
         return say(f"Daybook could not start on port {PORT}: {e}.\n"
                    "Another program is using it. Set DAYBOOK_PORT to a different number.")
+    except Exception as e:                   # anything else: say what, rather than vanish without a window
+        return say(f"Daybook could not start: {e!r}")
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     sync.start()
     print(f"{time.strftime('%Y-%m-%d %H:%M')} serving {suite.SUITE.data} at {URL}")

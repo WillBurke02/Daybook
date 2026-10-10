@@ -26,9 +26,9 @@ export function mount(box, p, report) {
   const pic = el('div', { class: 'wscreen' }), read = el('div', { class: 'wread num small' });
   const resistor = (x, y, vertical, label, sub) => vertical
     ? s('g', {}, s('rect', { class: 'res', x: x - 9, y: y - 26, width: 18, height: 52, rx: 2 }),
-        s('text', { x: x + 16, y: y - 4 }, label), s('text', { x: x + 16, y: y + 12, class: 'sub' }, sub))
+        s('text', { x: x + 16, y: y - 4 }, label), s('text', { x: x + 16, y: y + 12, class: 'sub calc' }, sub))
     : s('g', {}, s('rect', { class: 'res', x: x - 26, y: y - 9, width: 52, height: 18, rx: 2 }),
-        s('text', { x, y: y - 16, 'text-anchor': 'middle' }, label), s('text', { x, y: y + 30, 'text-anchor': 'middle', class: 'sub' }, sub));
+        s('text', { x, y: y - 16, 'text-anchor': 'middle' }, label), s('text', { x, y: y + 30, 'text-anchor': 'middle', class: 'sub calc' }, sub));
   const draw = () => {
     const r = solve(st);
     const W = 480, H = 230, L = 60, R = 420, T = 40, B = 190;
@@ -44,7 +44,7 @@ export function mount(box, p, report) {
     pic.replaceChildren(s('svg', { viewBox: `0 0 ${W} ${H}`, class: 'wplot wcircuit', role: 'img',
         'aria-label': `${st.mode} circuit: ${st.V} volts, ${st.R1} and ${st.R2} ohms` },
       wire(`M${L} ${T} V100 M${L} 120 V${B}`), battery, ...parts,
-      s('text', { x: L + 8, y: T - 12 }, `I = ${amps(r.I)} →`)));
+      s('text', { x: L + 8, y: T - 12, class: 'calc' }, `I = ${amps(r.I)} →`)));
     put(read, el('strong', {}, `Total resistance ${sig(r.Rt)} Ω, current ${amps(r.I)}`),
       st.mode === 'series' ? el('span', {}, `${sig(r.V1)} V + ${sig(r.V2)} V = ${sig(r.V1 + r.V2)} V`)
         : el('span', {}, `${amps(r.I1)} + ${amps(r.I2)} = ${amps(r.I1 + r.I2)}`),

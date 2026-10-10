@@ -20,19 +20,20 @@ teaching machinery.
 ## Principles
 
 1. **A map, not a score.** Every number on screen answers "what do I do next?"
-2. **Rewards follow learning, not clicking.** XP and badges come from answers
-   and from lessons *passed* (the check), never from opening things. Nothing is
-   awarded for time-on-page, and nothing is lost (no streak penalties beyond the
-   existing streak count, no leaderboards, no hearts).
+2. **No points.** XP, rank, badges and daily quests were built and then taken
+   out (Phase 0 of the review): they counted clicks, not learning, so they meant
+   nothing. What is shown instead is real: lessons learned, cards solid, minutes
+   and days studied. No leaderboards, no hearts, no streak penalties.
 3. **Never lock.** Prerequisites show as *needs X* but the lesson still opens.
    People who already know a topic (and this is a working electrician's tool)
    must be able to jump in or test out. Locked-looking is a hint, not a gate.
 4. **Honest mastery.** A node is "mastered" only when the cards are solid
    (FSRS stability ≥ 21 days, or right on three days), which is what Learn
    already calls solid. "Learned" (passed the check) is the lighter state.
-5. **Derived over stored.** XP, rank and most badges are computed from the
-   answer log, so they can never drift from the real record; only *which badges
-   you have been shown* and *your goal* are stored.
+5. **Derived over stored.** Every state is computed from the answer log and
+   lesson state, so it can never drift from the real record; only *your goal* is
+   stored. A lesson is learned when its check cards are right, wherever they were
+   answered (the feed and Review count, not only the lesson player).
 
 ## 1. The tree
 
@@ -63,7 +64,7 @@ A page, **Tree**, first in the Study group. One tree per subject (tabs).
   actions: **Start / Continue**, **Test out** (when your level says so),
   **Make this my goal**.
 - **Subject header**: your estimated level and its stage name (existing),
-  tiers cleared, XP in this subject, *Find my level* if not placed.
+  tiers cleared, *Find my level* if not placed.
 
 ## 2. The roadmap (the clear purpose)
 
@@ -82,61 +83,31 @@ skipped for the count (they cannot be done), so the route never dead-ends.
 One goal at a time; setting another replaces it. Reaching the goal clears it,
 shows a "Goal reached" moment and offers the lessons it unlocks as the next goal.
 
-## 3. XP and rank
-
-Derived from the answer log, no new bookkeeping.
-
-- **Answer a card**: right +10, wrong +2 (trying counts, and the cards a wrong
-  answer creates come back anyway). Reading a concept card: 0.
-- **Learn a lesson** (first pass of its check): +50. Test-out and calibration
-  answers earn 0, so placement tests can't be farmed.
-- **Rank** `n` needs `50·n·(n−1)` XP in total (rank 2 at 100, 5 at 1000, 10
-  at 4500): quick early, slower later. Shown as "Rank 4 · 612 / 1000 XP".
-- XP is also kept per subject, shown on its tree header.
-
-Rank is deliberately a different word from *level* and *stage*, which stay what
-they are: an estimate of what you can do. XP says how much you have done.
-
-## 4. Unlocks and moments
+## 3. Unlocks and moments
 
 The moments are where the game feel lives; they are small and skippable.
 
 - **Lesson learned** → the finish screen lists **what this unlocked** (lessons
-  whose prerequisites are now all learned) with Start buttons, plus any XP, rank
-  and badges earned.
-- **Rank up / badge / goal reached** → one toast, then it lives on the
-  Achievements page. No sounds, no confetti loops.
+  whose prerequisites are now all learned) with Start buttons. Learned from the
+  feed or Review, a one-line flash says the same.
+- **Goal reached** → said once; the goal clears. No sounds, no confetti.
 
-## 5. Badges
+## 4. This week, not a score
 
-About twenty, all derived, each with a plain "how" line. Earned ones are stored
-(`badge` table) so each is announced exactly once and keeps its date.
-
-First card · 100 / 1000 cards · 3, 7, 30-day streak · ten right in a row ·
-first lesson learned · 10 lessons · a unit cleared (every written lesson
-learned) · a subject cleared · a lesson mastered (★) · tier 5 / tier 7 lesson
-learned · placed in a subject · three subjects started · goal reached.
-
-Shown as a grid on a small **Achievements** section of the Stats page, earned
-first, unearned greyed with their how-line (so they double as suggestions).
-
-## 6. Daily quests (light)
-
-Three small, always-achievable targets on Today, picked from what is true that
-day, not random: *Clear what's due*, *Learn a lesson* (the goal's next step),
-*Fix a struggling card*. Each ticks live; the existing goal ring stays the
-headline. Quests give no XP of their own: they only point at what already earns it.
+Today's road panel: minutes studied, days studied and lessons learned in the
+last seven days, then the goal's route (or how to set one).
 
 ## Build order (this branch)
 
-1. `gamify.py` + migration `005_skilltree.sql` (`badge` table): XP, rank, badges, route,
-   unlocks, worked out from the answer log with plain queries (no view needed).
-2. API: `GET tree`, `GET roadmap`, `POST goal`, `GET badges`; `answer` and
-   `lesson/place` return XP gained, new badges, newly unlocked lessons.
+1. `skilltree.py`: states, route, unlocks, the week, worked out from the answer
+   log with plain queries (no view needed). (Migration 005 made a `badge` table;
+   006 drops it.)
+2. API: `GET tree`, `GET roadmap`, `POST goal`; `answer` and `lesson/place`
+   return the lesson just learned and what it opened.
 3. UI: Tree page (SVG edges + node buttons + panel), goal banner on Tree and
-   Today, XP/rank chip, finish-screen unlocks, toasts, Achievements.
-4. Checks: `tests/test_skilltree.py` (rank maths, route order, unlocks, badges
-   awarded once, no XP for placement), `tests/tree.check.mjs` (the layout).
+   Today, the week on Today, finish-screen unlocks.
+4. Checks: `tests/test_skilltree.py` (route order, unlocks, feed answers count,
+   no points), `tests/tree.check.mjs` (the layout).
 5. README, CHANGELOG, in-app help.
 
 ## Not doing (and when to)
@@ -151,5 +122,3 @@ headline. Quests give no XP of their own: they only point at what already earns 
   unit and prerequisites, so new lessons appear in the right place with no
   editing. If a subject needs a better shape, fix its `level`/`prereq`.
 - **Pan and zoom.** Trees are ≤ ~40 nodes; native scrolling is enough.
-- **Server-side badge rules in data files.** Rules are code (twenty lines).
-  Move them to JSON when course authors, not us, want to define them.

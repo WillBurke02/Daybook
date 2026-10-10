@@ -3,12 +3,17 @@
 In:  Clockify exports and plain spreadsheets, so a backlog can be loaded rather
      than retyped. Re-importing the same Clockify entry updates it instead of
      duplicating, because its id comes with it.
-Out: the monthly sheet HR gets, as tab-separated text that pastes straight into
-     Excel or an email, and the same thing as a CSV file.
+Out: the monthly sheet HR gets in the body of an email: a coloured table (HTML
+     with inline styles), the same as tab-separated text, a CSV file, and an
+     unsent .eml that Outlook opens as a draft.
 """
 import csv
+import email.policy
 import io
 import re
+from datetime import date, timedelta
+from email.message import EmailMessage
+from html import escape
 
 from core import db as _db
 from .importer import norm_date, parse_csv
@@ -182,39 +187,101 @@ def commit_hours(db, plan, replace_range=False):
 
 
 # --- out to HR ---------------------------------------------------------------
-# The same columns as the spreadsheet HR already gets: one row per shift, hours
-# as hh:mm, a split day as two rows. Totals underneath.
+# The month as HR asked for it, in the body of an email: Date, Start, Finish and
+# Overtime, one row per shift (a split day is two rows, the day's overtime on the
+# last), in weeks from Monday, each with its overtime, and the month's at the foot.
 
-HR_COLUMNS = ["Date", "Started", "Finished", "Hours", "Notes"]
+HR_COLUMNS = ["Date", "Start", "Finish", "Overtime"]
+MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+          "August", "September", "October", "November", "December"]
+# Each week a colour, in turn: (its rows, its header row, the edge down its left).
+WEEK_COLOURS = [("#dbeafe", "#bfdbfe", "#3b82f6"), ("#dcfce7", "#bbf7d0", "#22c55e"),
+                ("#ffedd5", "#fed7aa", "#f97316"), ("#fce7f3", "#fbcfe8", "#ec4899"),
+                ("#ede9fe", "#ddd6fe", "#8b5cf6")]
 
 
-def hhmm(hours):
+def hm(hours):
+    """Overtime as written on the sheet: 2:30, blank for none."""
     m = int(round((hours or 0) * 60))
-    return f"{m // 60:02d}:{m % 60:02d}"
+    return f"{'-' if m < 0 else ''}{abs(m) // 60}:{abs(m) % 60:02d}" if m else ""
+
+
+def hr_weeks(db, month):
+    """The month's shifts in weeks from Monday, numbered from the week the 1st is in:
+    [{"label", "ot", "rows"}] and the month's overtime. Overtime is v_day's."""
+    y, m = int(month[:4]), int(month[5:7])
+    first, last = date(y, m, 1), date(y + m // 12, m % 12 + 1, 1) - timedelta(days=1)
+    ot = {r["date"]: r["ot_hours"] or 0 for r in db.execute("SELECT date, ot_hours FROM v_day WHERE month = ?", (month,))}
+    shifts = db.execute("SELECT date, start, end FROM v_shift WHERE month = ? ORDER BY date, start", (month,)).fetchall()
+    weeks = {}
+    for i, s in enumerate(shifts):
+        d = date.fromisoformat(s["date"])
+        n = (d.day + first.weekday() - 1) // 7 + 1
+        mon = d - timedelta(days=d.weekday())
+        frm, to = max(mon, first), min(mon + timedelta(days=6), last)
+        w = weeks.setdefault(n, {"label": f"Week {n} · {frm.day}" + (f" to {to.day}" if to > frm else "")
+                                          + f" {MONTHS[m - 1]}", "ot": 0, "rows": []})
+        day_end = i + 1 == len(shifts) or shifts[i + 1]["date"] != s["date"]
+        w["rows"].append([d.strftime("%d/%m/%Y"), s["start"], s["end"], hm(ot.get(s["date"])) if day_end else ""])
+        w["ot"] += ot.get(s["date"], 0) if day_end else 0
+    return [weeks[n] for n in sorted(weeks)], sum(ot.values())
 
 
 def hr_table(db, month):
+    weeks, total = hr_weeks(db, month)
     out = [HR_COLUMNS]
-    for r in db.execute("SELECT date, start, end, hours, note, project FROM v_shift "
-                        "WHERE month = ? ORDER BY date, start", (month,)):
-        y, mo, d = r["date"].split("-")
-        out.append([f"{d}/{mo}/{y}", r["start"], r["end"], hhmm(r["hours"]),
-                    r["note"] or r["project"] or ""])
-    m = db.execute("SELECT * FROM v_month_hours WHERE month = ?", (month,)).fetchone()
-    get = lambda k: (m[k] if m else 0) or 0
-    out += [[],
-            ["Total hours", "", "", hhmm(get("hours")), ""],
-            ["Overtime x1.5", "", "", hhmm(get("ot15_hours")), ""],
-            ["Overtime x2", "", "", hhmm(get("ot2_hours")), ""]]
-    return out
+    for w in weeks:
+        out += [[w["label"], "", "", hm(w["ot"])]] + w["rows"]
+    return out + [[f"{MONTHS[int(month[5:7]) - 1]} overtime", "", "", hm(total) or "0:00"]]
 
 
 def hr_tsv(db, month):
-    """Tab-separated: pastes into Excel as columns, and into an email as a block."""
+    """Tab-separated: the plain-text half of Copy as table, and pastes into Excel as columns."""
     return "\n".join("\t".join(str(c) for c in row) for row in hr_table(db, month))
 
 
 def hr_csv(db, month):
     buf = io.StringIO()
+    buf.write("\ufeff")                     # so Excel reads the · in the week rows as UTF-8
     csv.writer(buf).writerows(hr_table(db, month))
     return buf.getvalue()
+
+
+def hr_html(db, month):
+    """The table for the body of an email. Inline styles only (Outlook drops <style>),
+    with bgcolor beside them for older Outlooks; each week its own colour."""
+    weeks, total = hr_weeks(db, month)
+    font = "font-family:Calibri,Arial,sans-serif;font-size:11pt;"
+
+    def td(text, bg, edge=None, right=False, bold=False, span=1):
+        style = (f"{font}color:#1f2937;background-color:{bg};border:1px solid #d1d5db;padding:4px 12px;"
+                 f"white-space:nowrap;text-align:{'right' if right else 'left'};"
+                 + (f"border-left:6px solid {edge};" if edge else "") + ("font-weight:bold;" if bold else ""))
+        return (f'<td bgcolor="{bg}"' + (f' colspan="{span}"' if span > 1 else "")
+                + f' style="{style}">{escape(text) or "&nbsp;"}</td>')
+
+    head = "".join(f'<th bgcolor="#374151" style="{font}color:#ffffff;background-color:#374151;border:1px solid #374151;'
+                   f'padding:6px 12px;font-weight:bold;text-align:{"right" if c == "Overtime" else "left"}">{c}</th>'
+                   for c in HR_COLUMNS)
+    rows = []
+    for i, w in enumerate(weeks):
+        soft, strong, edge = WEEK_COLOURS[i % len(WEEK_COLOURS)]
+        rows.append(td(w["label"], strong, edge, bold=True, span=3) + td(hm(w["ot"]), strong, right=True, bold=True))
+        rows += [td(r[0], soft, edge) + td(r[1], soft) + td(r[2], soft) + td(r[3], soft, right=True, bold=True)
+                 for r in w["rows"]]
+    rows.append(td(f"{MONTHS[int(month[5:7]) - 1]} overtime", "#e5e7eb", "#6b7280", bold=True, span=3)
+                + td(hm(total) or "0:00", "#e5e7eb", right=True, bold=True))
+    return ('<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border:1px solid #d1d5db">'
+            f"<thead><tr>{head}</tr></thead><tbody>" + "".join(f"<tr>{r}</tr>" for r in rows) + "</tbody></table>")
+
+
+def hr_eml(db, month, to=None):
+    """An unsent email (X-Unsent: 1), so Outlook opens the file as a draft to send."""
+    msg = EmailMessage(policy=email.policy.SMTP)
+    if to:
+        msg["To"] = to
+    msg["Subject"] = f"Hours for {MONTHS[int(month[5:7]) - 1]} {month[:4]}"
+    msg["X-Unsent"] = "1"
+    msg.set_content(f"<html><body><p>&nbsp;</p>{hr_html(db, month)}<p>&nbsp;</p></body></html>",
+                    subtype="html", charset="utf-8")
+    return msg.as_bytes()

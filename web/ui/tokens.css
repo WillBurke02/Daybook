@@ -268,6 +268,8 @@ h3 { font: 600 13px/1.3 var(--sans); margin: 0 0 6px; }
 .err { color: var(--debit); }
 .deb { color: var(--debit); } .cre { color: var(--credit); }
 .note { color: var(--ink-3); font-size: 12.5px; margin: 6px 0 0; }
+.hr-sheet { margin-top: 10px; } .hr-sheet table { width: auto; }
+.note.warn { color: var(--ink-2); border-left: 3px solid var(--flag); padding: 4px 10px; }
 
 /* ---- figures ---- */
 .tiles { display: grid; gap: 6px 24px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
@@ -946,6 +948,7 @@ svg.wplot { width: 100%; height: auto; display: block; background: var(--raised)
 .wread { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0; color: var(--ink-2); }
 .wread strong { color: var(--ink); }
 .wread .warn { color: var(--debit); }
+.widget.hiding .wread, .widget.hiding .calc { visibility: hidden; }   /* a widget card's readings, until answered */
 .wread.weq { justify-content: center; font-size: 18px; color: var(--ink); min-height: 1.6em; }
 .wkey i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 4px; }
 .wkey .k-pv { background: var(--accent); } .wkey .k-out { background: var(--s3); }
@@ -1198,6 +1201,8 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .toolwin { position: fixed; z-index: 70; display: flex; flex-direction: column; background: var(--raised); border: 1px solid var(--rule);
            border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.22); overflow: clip; container-type: size; }
 .toolwin[hidden] { display: none; }
+.toolwin.docked .tw-grip, .toolwin.docked .tw-dock { display: none; }   /* docked: drag the bar to float it */
+body.docked main { margin-right: var(--dock); }                         /* the page makes room: the tools never cover the card */
 .tw-bar { padding: 6px 8px 6px 12px; gap: 6px; border-bottom: 1px solid var(--rule-soft); cursor: move; touch-action: none; user-select: none;
           background: var(--panel-2); }
 .tw-bar kbd { font: 10px var(--mono); opacity: .7; }
@@ -1291,9 +1296,7 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .ladsvg .fbn { font-weight: 700; fill: var(--ink); }
 .pbutton.held { background: var(--accent); color: var(--accent-ink); }
 
-/* ---- skill tree, rank, road, badges ---- */
-.rankbar { display: inline-flex; align-items: center; gap: 10px; }
-.rankbar .mbar { width: 120px; }
+/* ---- skill tree and road ---- */
 .gmark { display: inline-block; width: 1.2em; text-align: center; font-weight: 700; }
 .tree-head { flex-wrap: wrap; margin-bottom: 6px; }
 .tkey { display: inline-flex; flex-wrap: wrap; gap: 4px 12px; margin-left: auto; }
@@ -1337,14 +1340,6 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .tkey .st-mastered .gmark, .tkey .st-learned .gmark, .tstate .st-learned, .tstate .st-mastered { color: var(--credit); }
 .tpanel .tcard { display: grid; gap: 8px; padding: 14px 16px; border: 1px solid var(--rule-soft); border-radius: 10px; background: var(--raised); }
 .tpanel h3 { margin: 0; font: 700 18px var(--sans); }
-.quests { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 20px; }
-.quests li { display: flex; gap: 6px; align-items: baseline; }
-.quests li.done a { color: var(--ink-3); text-decoration: line-through; }
 .unlocked { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
 .unlocked h4 { margin: 0 0 4px; }
-.badges { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-.badges li { display: grid; grid-template-columns: auto 1fr; gap: 0 8px; padding: 8px 10px; border: 1px solid var(--rule-soft); border-radius: 8px; }
-.badges li > span:first-child { grid-row: span 2; font-size: 20px; }
-.badges li.todo { opacity: .6; }
-.badges li.got { border-color: var(--flag); }
 @media (forced-colors: active) { .tnode { border: 2px solid CanvasText; } .tnode[aria-pressed=true] { outline-color: Highlight; } }

@@ -57,7 +57,7 @@ export const panels = {
     const accts = await accountsOf();
     const acct = select([{ v: '', label: 'Choose the account' }, ...accts.map(a => ({ v: a.id, label: a.name }))],
       ctx.filters.account || '');
-    const files = el('input', { type: 'file', accept: '.csv,text/csv,.txt', multiple: true });
+    const files = el('input', { type: 'file', accept: '.csv,text/csv,.txt,.qif', multiple: true });
     const out = el('div');
     let loaded = [], opts = { flip: false, make_current: true, date_style: null, mapping: null, opening: '', closing: '' };
     const plan = async () => {
@@ -99,8 +99,8 @@ export const panels = {
           el('label', { class: 'f' }, 'Dates are', select([{ v: 'dmy', label: 'day/month' }, { v: 'mdy', label: 'month/day' }, { v: 'iso', label: 'year-month-day' }],
             p.date_style, { class: 'sm', onchange: e => { opts.date_style = e.target.value; plan(); } }))),
         el('div', { class: 'row' },
-          el('label', { class: 'f' }, 'Opening balance', num('opening', 'from the statement')),
-          el('label', { class: 'f' }, 'Closing balance', num('closing', 'from the statement')),
+          el('label', { class: 'f' }, 'Opening balance', num('opening', p.opening_balance != null && !opts.opening ? `${p.opening_balance} from the file` : 'from the statement')),
+          el('label', { class: 'f' }, 'Closing balance', num('closing', p.closing_balance != null && !opts.closing ? `${p.closing_balance} from the file` : 'from the statement')),
           el('label', { class: 'c' }, el('input', { type: 'checkbox', checked: opts.flip, onchange: e => { opts.flip = e.target.checked; plan(); } }), 'Flip signs'),
           el('label', { class: 'c' }, el('input', { type: 'checkbox', checked: opts.make_current, onchange: e => { opts.make_current = e.target.checked; } }), 'Latest statement')),
         el('div', { class: 'row mid' },
@@ -108,6 +108,7 @@ export const panels = {
           el('span', { class: 'num cre' }, `${p.money_in} in ${money(p.in_total)}`),
           el('span', { class: 'muted num' }, `${p.period_start || ''} → ${p.period_end || ''}`),
           p.skipped ? el('span', { class: 'muted' }, `${p.skipped} skipped`) : null,
+          p.already ? el('span', { class: 'muted' }, `${p.already} already imported, skipped`) : null,
           p.discrepancy == null ? null : p.reconciles ? el('span', { class: 'chip ok' }, 'balances')
             : el('span', { class: 'chip bad' }, `out by ${money(Math.abs(p.discrepancy))}`)),
         table([{ k: 'date', fmt: dateUK }, { k: 'description' }, { k: 'amount', n: true, render: r => signed(r.amount) },

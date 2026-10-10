@@ -23,8 +23,9 @@ export default {
   setup: ['mine'],
   quick: [{ label: 'Start the feed', href: '#/feed' }],
   sqlHint: 'SELECT subject, COUNT(*) FROM v_card GROUP BY subject',
-  keymap: { w: () => toggle('board'), c: () => toggle('calc') },
-  keys: [['W', 'Whiteboard beside the card'], ['C', 'Calculator beside the card'], ['1–4', 'Answer, or rate a card'], ['Enter', 'Check'], ['↓ or Space', 'The next card in the feed'],
+  keymap: { w: () => toggle('board'), c: () => toggle('calc'), 'Alt+w': () => toggle('board'), 'Alt+c': () => toggle('calc') },
+  keys: [['Alt+W or W', 'Whiteboard beside the card (Alt+W works while typing)'], ['Alt+C or C', 'Calculator beside the card'],
+         ['Ctrl+Z', 'Undo on the whiteboard, after drawing'], ['1–4', 'Answer, or rate a card'], ['Enter', 'Check'], ['↓ or Space', 'The next card in the feed'],
          ['← →', 'Too easy (a card answered before) / save for later, in the feed']],
   file: shell => [
     { label: 'Start the feed', fn: () => shell.go('feed') },

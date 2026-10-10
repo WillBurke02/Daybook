@@ -10,7 +10,7 @@ import re
 from datetime import date, timedelta
 
 from core import db as _db
-from core.api import Err, _select, _maybe_float
+from core.api import Err, File, _select, _maybe_float
 from . import importer, matching, reminders, statement, tax, timesheet, t212
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -539,9 +539,16 @@ def route(db, method, p, query, body, ctx):
         f = (body.get("files") or [{}])[0]
         plan = timesheet.plan_hours(f.get("text", ""), f.get("name", "hours.csv"))
         return 200, timesheet.commit_hours(db, plan, bool(body.get("replace")))
-    if p[:2] == ["hours", "hr"] and len(p) == 3:
+    if p[:2] == ["hours", "hr"] and len(p) in (3, 4) and method == "GET":
         month = p[2]
-        return 200, {"month": month, "table": timesheet.hr_table(db, month),
+        if not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", month):
+            raise Err(400, "a month, like 2026-09")
+        if p[3:] == ["eml"]:             # an unsent email: Outlook opens it as a draft
+            to = re.sub(r"\s+", " ", _db.settings(db).get("hr_email") or "").strip()
+            return 200, File(timesheet.hr_eml(db, month, to), f"hours-{month}.eml", "message/rfc822")
+        if len(p) == 4:
+            return None
+        return 200, {"month": month, "table": timesheet.hr_table(db, month), "html": timesheet.hr_html(db, month),
                      "tsv": timesheet.hr_tsv(db, month), "csv": timesheet.hr_csv(db, month)}
 
     # --- payslips and pay

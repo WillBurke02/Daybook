@@ -146,6 +146,7 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!c.fix || !c.why) bad(at, 'spot: the line put right (fix) and why it was wrong (why)');
       if (c.mono && c.lines?.some(l => l.includes('$'))) bad(at, 'spot: mono lines are shown as they are: no maths');
     }
+    if (c.hide && !(c.type === 'widget' && c.ask)) bad(at, 'hide goes on a widget card that asks: its readings show once answered');
     if (c.predict) {
       const p = c.predict;
       if (c.type !== 'widget') bad(at, 'predict goes on a widget card: the guess unlocks its controls');

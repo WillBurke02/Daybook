@@ -34,7 +34,7 @@ export function mount(box, p, report) {
     P.layer.append(s('path', { class: 'trace', d: path(pts, P.X, P.Y) }),
       s('line', { class: 'sp', x1: P.X(0), x2: P.X(top), y1: P.Y(st.load / 100), y2: P.Y(st.load / 100) }),
       s('line', { class: 'band', x1: P.X(r.ns), x2: P.X(r.ns), y1: P.Y(0), y2: P.Y(3) }),
-      s('text', { x: P.X(r.ns) - 4, y: P.Y(2.85), 'text-anchor': 'end' }, `ns ${sig(r.ns, 4)}`),
+      s('text', { x: P.X(r.ns) - 4, y: P.Y(2.85), 'text-anchor': 'end', class: 'calc' }, `ns ${sig(r.ns, 4)}`),
       r.stalled ? null : s('circle', { class: 'op', cx: P.X(r.n), cy: P.Y(st.load / 100), r: 5 }));
     pic.replaceChildren(P.svg);
     put(read, r.stalled ? el('strong', { class: 'warn' }, 'Stalled: the load needs more torque than the motor can give (past breakdown).')

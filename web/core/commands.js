@@ -190,7 +190,12 @@ export function install(a) {
     popup(contextItems(e), e.clientX, e.clientY);
   });
   addEventListener('keydown', e => {
-    if (e.defaultPrevented || e.altKey || e.metaKey) return;
+    if (e.defaultPrevented || e.metaKey) return;
+    if (e.altKey) {                                // an app's Alt keys work while typing too ('Alt+w' in its keymap); AltGr is Ctrl+Alt
+      const k = !e.ctrlKey && e.code?.startsWith('Key') && app.app.keymap?.[`Alt+${e.code.slice(3).toLowerCase()}`];
+      if (k) { e.preventDefault(); closeMenus(); k(); }
+      return;
+    }
     if (e.ctrlKey) { if (e.key === 'z' && !typing(e.target)) { e.preventDefault(); undo(); } return; }
     if (typing(e.target) || document.querySelector('dialog[open]')) return;
     const k = { ...(app.app.period ? { '[': () => setPeriod(state.grain, step(-1)), ']': () => setPeriod(state.grain, step(1)),

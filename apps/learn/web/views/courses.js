@@ -10,7 +10,7 @@ import { state } from '../core/state.js';
 import { frame, rich, listenButton } from '../cards.js';
 import { formulaHelp, loadFormulas, mathsOf } from '../formulas.js';
 import { stageChip, levelText } from './levels.js';
-import { celebrate } from '../game.js';
+import { learnedNote } from '../road.js';
 
 const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
 export const lessonHref = (id, extra = '') => `#/lesson?id=${encodeURIComponent(id)}${extra}`;
@@ -213,9 +213,8 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   const finish = async () => {
     card = null;
     pos = seq.length;
-    let learned = null, game = null;
-    try { ({ learned, game } = await api.place(id, seq.length, true)); } catch (e) { flash(e.message); }
-    celebrate(game);
+    let learned = null, opened = null;
+    try { ({ learned, opened } = await api.place(id, seq.length, true)); } catch (e) { flash(e.message); }
     const nextLesson = (await api.view('v_lesson', { unit_id: lesson.unit_id, order: 'sort' })).find(l => l.sort > lesson.sort);
     const hasCheck = seq.some(c => c.stage === 'check');
     stage.replaceChildren(el('div', { class: 'lcard lend' },
@@ -224,10 +223,9 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
         hasCheck && learned ? 'Its check questions come back in about a day, a week and three weeks; right each time and it is solid.'
           : hasCheck ? 'The check questions you missed come back first, and the lesson counts as learned once you get them all right.'
           : 'The cards you answered come back in Review when they are due.'),
-      game?.unlocked?.length ? el('div', { class: 'unlocked' }, el('h4', {}, game.goal_reached ? 'Goal reached. This opens:' : 'This opened:'),
-        el('ul', {}, game.unlocked.map(u => el('li', {}, el('a', { href: lessonHref(u.id) }, u.title))))) : game?.goal_reached ? el('p', {}, el('strong', {}, 'Goal reached.'),
+      opened?.unlocked?.length ? el('div', { class: 'unlocked' }, el('h4', {}, opened.goal_reached ? 'Goal reached. This opens:' : 'This opened:'),
+        el('ul', {}, opened.unlocked.map(u => el('li', {}, el('a', { href: lessonHref(u.id) }, u.title))))) : opened?.goal_reached ? el('p', {}, el('strong', {}, 'Goal reached.'),
         ' ', el('a', { href: '#/tree' }, 'Pick the next one in the skill tree.')) : null,
-      game ? el('p', { class: 'small muted' }, `+${game.xp} XP for learning it.`) : null,
       lesson.summary ? [el('div', { class: 'row mid' }, el('h4', {}, 'Summary'), listenButton(lesson.summary)),
         el('div', { class: 'lsummary' }, rich(lesson.summary))] : null,
       fbtn(),
@@ -317,7 +315,7 @@ async function testOut(body, ctx, lesson) {
   const step = async () => {
     if (i >= items.length) {
       const r = await api.testoutDone(lesson.id, right, asked);
-      celebrate(r.game);
+      learnedNote(r.learned);
       stage.replaceChildren(el('div', { class: 'lcard' },
         el('h3', {}, r.passed ? 'Tested out: learned.' : `${right} of ${asked} right: worth doing the lesson.`),
         el('p', {}, r.passed ? 'Its cards come back as reviews in a week or so, so it stays solid.' : 'The lesson will fill the gaps, and it is quicker than it looks.'),

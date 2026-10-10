@@ -2,14 +2,38 @@
 
 ## 4.0 — in progress (not released)
 
+- **Phase 0 of the review** (the plan doc "Daybook review and plan"):
+  - **XP, rank, badges and daily quests are gone**: they counted clicks, not learning.
+    Today shows the week in minutes, days studied and lessons learned; the `badge` table
+    goes (Learn migration 006); apps/learn/gamify.py is now skilltree.py.
+  - **A lesson is learned wherever its check is passed**: the feed and Review count, not
+    only the lesson player; a flash says so and what it opened.
+  - **One broken lesson file no longer stops Daybook**: it is left out and named on Today;
+    the rest loads. The desktop window says why if anything else stops it starting.
+  - **Answers take SI prefixes** (4.7k, 470µ, 4.7 kΩ on a kΩ card; a bare m is milli only
+    where the unit makes that plain).
+  - **Whiteboard and calculator dock beside the card** and the page makes room, so they
+    never cover it (1024×768 too); drag one out to float it, Dock puts it back. Alt+W and
+    Alt+C work while typing an answer. Ctrl+Z after drawing undoes the drawing, not
+    Daybook's last saved change.
+  - **Widget readings that would give the answer away stay hidden until you answer**
+    (`"hide": true` on a widget card; 12 circuit and motor cards).
+  - **Send to HR as a real table**: date, start, finish, overtime; weeks from Monday, each
+    its own colour, with its overtime; the month's at the foot. Copy as table (HTML for
+    Outlook and Gmail, tab-separated text for Excel), Open as Outlook draft (.eml), CSV.
+    Its own month picker, defaulting to the last full month.
+  - **Imports for his banks**: Nationwide (the payee is no longer "Visa purchase"; old
+    layout too), Santander's statement .txt, QIF. Overlapping exports skip rows already in
+    the account; opening and closing balances come from the balance column.
+  - **Expected pay on a new payslip** compares with the hours it pays for (the month before
+    its pay date), not the page's month.
+  - **Plan 2 student loan threshold for 2026/27 is £29,385** (Money migration 004).
 - **Skill tree** (branch SkillTree; PLAN-SKILLTREE.md): Learn → Skill tree draws each subject as a
   map, stages across and units down, prerequisite lines between lessons, each lesson marked
   solid / learned / in progress / ready / needs more first / not written. A lesson's panel shows
   what it needs and opens. A **goal** (any lesson) turns the tree into a numbered route; Today
-  shows it with the next step and three daily targets. **XP and rank** worked out from the
-  answers (apps/learn/gamify.py: +10 right, +2 wrong, +50 a lesson learned, none for
-  placement), **badges** kept once earned (migration 005, `badge`), finishing a lesson lists
-  what it unlocked. Never locks. Checks: tests/test_skilltree.py, tests/tree.check.mjs.
+  shows it with the next step. Finishing a lesson lists what it unlocked. Never locks.
+  (XP, rank, badges and daily targets came with it and went in Phase 0, above.) Checks: tests/test_skilltree.py, tests/tree.check.mjs.
 - **Calibration banks reviewed**: one wrong question fixed, ~20 marking and feedback fixes, ~17
   level misfits, and the right option is no longer the longest in two thirds of questions (now
   about a third); the check also flags a giveaway in banks (right option the longest, >1.2× the

@@ -6,7 +6,7 @@ import { el, flash, seg, readVal, writeVal } from '../core/dom.js';
 import { layout, edge, NW, NH, HEAD } from '../treelayout.js';
 import { lessonHref } from './courses.js';
 import { stageChip, stageOf } from './levels.js';
-import { MARK, mark, meter, rankBar, roadmapBar } from '../game.js';
+import { MARK, mark, meter, roadmapBar } from '../road.js';
 
 const SVG = 'http://www.w3.org/2000/svg';
 const svg = (tag, attrs = {}) => { const e = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
@@ -14,7 +14,7 @@ const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
 const DONE = new Set(['learned', 'mastered']);
 
 const treePanel = { title: 'Skill tree', w: 12, deps: ['card', 'lesson', 'skill', 'setting'], async render(body, ctx) {
-  const [subjects, lv, game] = await Promise.all([api.view('v_subject', { order: 'sort' }), api.levels(), api.game()]);
+  const [subjects, lv] = await Promise.all([api.view('v_subject', { order: 'sort' }), api.levels()]);
   ctx.setTitle('');
   const list = subjects.filter(s => s.id !== 'mine' && s.written > 0);
   if (!list.length) { body.append(el('p', { class: 'note' }, 'No courses are written yet.')); return; }
@@ -23,21 +23,19 @@ const treePanel = { title: 'Skill tree', w: 12, deps: ['card', 'lesson', 'skill'
   const data = await api.tree(sid);
   const lessons = data.lessons, byId = Object.fromEntries(lessons.map(l => [l.id, l]));
   const skill = lv.skills.find(k => k.scope === sid);
-  const rm = game.roadmap;
+  const rm = data.roadmap;
   let sel = [ctx.params.l, rm?.next?.id, lessons.find(l => l.state === 'going')?.id, lessons.find(l => l.state === 'ready')?.id, lessons[0]?.id]
     .find(id => byId[id]);
 
   const setGoal = async id => { try { await api.setGoal(id); ctx.refresh(); } catch (e) { flash(e.message); } };
   const pick = s => byId[s.id] ? () => select(s.id) : null;
 
-  // ---- the header: subjects, rank, your level here ----
+  // ---- the header: subjects, your level here ----
   body.append(el('div', { class: 'row mid tree-head' },
-    seg(list.map(s => ({ v: s.id, label: s.title })), sid, v => { writeVal('learn:tree', v); ctx.go('tree', { s: v }); }),
-    el('span', { class: 'spacer' }), rankBar(game)));
+    seg(list.map(s => ({ v: s.id, label: s.title })), sid, v => { writeVal('learn:tree', v); ctx.go('tree', { s: v }); })));
   body.append(el('div', { class: 'row mid small muted tree-sub' },
     skill?.placed || skill?.n ? ['Your level here: ', stageChip({ level: skill.level, low: skill.low, high: skill.high })]
       : el('a', { href: `#/calibrate?s=${encodeURIComponent(sid)}` }, 'Find my level here (about 10 min)'),
-    el('span', {}, `${data.xp.xp} XP in this subject`),
     el('span', { class: 'tkey' }, ['mastered', 'learned', 'going', 'ready', 'needs', 'unwritten'].map(k =>
       el('span', { class: `st-${k}` }, mark(k), MARK[k][1])))));
   body.append(rm ? roadmapBar(rm, { pick, clear: () => setGoal(null) })

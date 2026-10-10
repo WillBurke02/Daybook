@@ -2,7 +2,7 @@ import { api } from '../api.js';
 import { el, flash, tiles, tile, table, download } from '../core/dom.js';
 import { hrs, hhmm, money, today, dow, dateUK, span, addMonths, monthOnly, dayShort, lastDay,
          mondayOf, addDays, usualTimes } from '../core/format.js';
-import { extraCols, setting } from '../core/state.js';
+import { extraCols, setting, settingsForm } from '../core/state.js';
 import { calendar, key, leaveDates } from '../ui/calendar.js';
 import { grid } from '../ui/grid.js';
 import { state } from '../core/state.js';
@@ -136,21 +136,43 @@ export const panels = {
     body.append(el('div', { class: 'periods' }, cards));
   } },
 
-  'hours.hr': { title: 'Send to HR', w: 6, deps: ['shift'], async render(body, ctx) {
-    const month = ctx.period.month;
-    const sheet = await api.hrSheet(month);
-    ctx.setTitle(`Send to HR · ${monthOnly(month)}`);
-    const [head, ...rest] = sheet.table;
-    ctx.aside.append(
-      el('button', { class: 'btn sm', onclick: async () => {
-        try { await navigator.clipboard.writeText(sheet.tsv); flash('Copied. Paste into Excel or the email.'); }
-        catch { flash('Copy blocked by the browser: use Download instead'); }
-      } }, 'Copy for HR'),
-      el('button', { class: 'btn plain sm', onclick: () => download(`hours-${month}.csv`, sheet.csv) }, 'Download CSV'));
-    body.append(el('div', { class: 'scroll mid' }, el('table', {},
-      el('thead', {}, el('tr', {}, head.map(h => el('th', {}, h)))),
-      el('tbody', {}, rest.map(r => el('tr', {}, r.length ? r.map(c => el('td', { class: /^\d\d:\d\d$/.test(c) ? 'n' : null }, c))
-        : el('td', { colspan: head.length }, ' ')))))));
+  // The month for HR, as it goes in the body of an email: Date, Start, Finish, Overtime, each week its own colour.
+  // Its own month (the last full one unless you pick), not the page's: it is sent after the month ends.
+  'hours.hr': { title: 'Send to HR', w: 6, deps: ['shift', 'setting'], async render(body, ctx) {
+    const pick = el('input', { type: 'month', value: addMonths(today().slice(0, 7), -1), 'aria-label': 'Month for HR' });
+    const out = el('div');
+    const show = async () => {
+      const month = pick.value;
+      if (!month) return;
+      const sheet = await api.hrSheet(month);
+      const preview = el('div', { class: 'scroll hr-sheet' });
+      preview.innerHTML = sheet.html;                    // built by the server, every value escaped there
+      // Copy as table: HTML (Outlook keeps the colours) with tab-separated text beside it (Excel, plain mail)
+      const copy = async () => {
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([sheet.html], { type: 'text/html' }),
+                                                               'text/plain': new Blob([sheet.tsv], { type: 'text/plain' }) })]);
+        } catch {                                         // no clipboard API (Daybook over plain http): copy the table on screen
+          const r = document.createRange(); r.selectNode(preview.firstElementChild);
+          getSelection().removeAllRanges(); getSelection().addRange(r);
+          const ok = document.execCommand('copy'); getSelection().removeAllRanges();
+          if (!ok) return flash('The browser blocked copying: use the email draft or the CSV');
+        }
+        flash('Copied. Paste it into the email to HR.');
+      };
+      out.replaceChildren(
+        el('div', { class: 'row mid' },
+          el('button', { class: 'btn sm', type: 'button', onclick: copy }, 'Copy as table'),
+          el('a', { class: 'btn plain sm', href: api.hrEmail(month), download: `hours-${month}.eml`,
+            title: 'An unsent email with the table in it: Outlook opens it as a draft to send' }, 'Open as Outlook draft'),
+          el('button', { class: 'btn plain sm', type: 'button', onclick: () => download(`hours-${month}.csv`, sheet.csv) }, 'CSV')),
+        sheet.table.length > 2 ? preview : el('p', { class: 'muted' }, `No shifts in ${monthOnly(month)}.`));
+    };
+    pick.addEventListener('change', show);
+    ctx.aside.append(pick);
+    body.append(out, el('details', { class: 'small' }, el('summary', {}, 'HR’s email address (for the draft)'),
+      settingsForm([['hr_email', 'To', 'text']], ctx)));
+    await show();
   } },
 
   'hours.import': { title: 'Import hours', w: 6, render(body, ctx) {
@@ -196,12 +218,12 @@ export const layout = [
   { use: 'hours.tiles' },
   { use: 'hours.calendar', w: 5 },
   { use: 'hours.timesheet', w: 7 },
+  { use: 'hours.hr', w: 6 },
+  { use: 'hours.import', w: 6 },
   { use: 'hours.periods' },
   { type: 'chart', id: 'hours-week', title: 'Hours worked', w: 6, source: 'v_day', date: 'date', x: 'date',
     y: ['normal_hours', 'ot_hours'], names: { normal_hours: 'Normal', ot_hours: 'Overtime' },
     chart: 'stacked', grain: 'week', window: '12m', fmt: 'hours' },
   { type: 'chart', id: 'hours-ot', title: 'Overtime by rate', w: 6, source: 'v_day', date: 'date', x: 'date',
     y: ['ot_hours'], split: 'ot_mult', names: { 1.5: '×1.5', 2: '×2' }, chart: 'bar', grain: 'month', window: '12m', fmt: 'hours' },
-  { use: 'hours.hr', w: 6 },
-  { use: 'hours.import', w: 6 },
 ];

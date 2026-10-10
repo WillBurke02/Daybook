@@ -21,7 +21,7 @@ from datetime import date, datetime, timedelta
 
 from core import db as _db
 from core.api import Err, File
-from . import fsrs, gamify as _game, level as _level, packs as _packs
+from . import fsrs, level as _level, packs as _packs, skilltree as _tree
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME, TITLE, ORDER = "learn", "Learn", 3
@@ -78,11 +78,20 @@ def _json(v):
     return json.dumps(v, ensure_ascii=False) if v else None
 
 
-def read_content(folder=CONTENT, only=None, sort_from=0):
-    """Everything under content/: (subjects, units, lessons, cards) as rows. Raises ValueError on a broken file.
+def read_content(folder=CONTENT, only=None, sort_from=0, skipped=None):
+    """Everything under content/: (subjects, units, lessons, cards) as rows. Raises ValueError on a broken file,
+    unless `skipped` is a list: then a broken file is left out and named there, and the rest loads.
     A lesson file may also carry its level, kind, minutes, goals, summary, resources and sources;
     calibrate.json in a subject's folder holds its calibration questions, each naming its lesson."""
     subjects, units, lessons, cards = [], [], [], []
+    broken = (ValueError, KeyError, TypeError, AttributeError, OSError)
+
+    def leave_out(path, e):
+        if skipped is None:
+            raise e if isinstance(e, ValueError) else ValueError(f"{path}: {e!r}")
+        msg = str(e)
+        skipped.append(msg if path in msg else f"{path}: {msg}")
+
     for si, sname in enumerate(sorted(os.listdir(folder)) if os.path.isdir(folder) else []):
         if only and sname != only:
             continue
@@ -90,19 +99,26 @@ def read_content(folder=CONTENT, only=None, sort_from=0):
         outline = os.path.join(sdir, "subject.json")
         if not os.path.isfile(outline):
             continue
+        n_units, n_lessons = len(units), len(lessons)
         try:
-            s = json.load(open(outline, encoding="utf-8"))
-        except ValueError as e:
-            raise ValueError(f"{outline}: {e}")
-        subjects.append({"id": s["id"], "title": s["title"], "sort": s.get("sort", si) + sort_from, "note": s.get("note")})
-        for ui, u in enumerate(s.get("units", [])):
-            units.append({"id": u["id"], "subject_id": s["id"], "title": u["title"], "sort": ui, "level": u.get("level")})
-            for li, les in enumerate(u.get("lessons", [])):
-                lessons.append({"id": les["id"], "unit_id": u["id"], "title": les["title"], "sort": li,
-                                "star": int(bool(les.get("star"))), "prereq": json.dumps(les.get("prereq") or []),
-                                "tags": " ".join(les.get("tags") or []), "note": les.get("note"),
-                                "level": les.get("level", u.get("level")), "kind": les.get("kind"), "minutes": les.get("minutes"),
-                                "goals": None, "summary": None, "resources": None, "sources": None, "bench": None})
+            try:
+                s = json.load(open(outline, encoding="utf-8"))
+            except ValueError as e:
+                raise ValueError(f"{outline}: {e}")
+            subject = {"id": s["id"], "title": s["title"], "sort": s.get("sort", si) + sort_from, "note": s.get("note")}
+            for ui, u in enumerate(s.get("units", [])):
+                units.append({"id": u["id"], "subject_id": s["id"], "title": u["title"], "sort": ui, "level": u.get("level")})
+                for li, les in enumerate(u.get("lessons", [])):
+                    lessons.append({"id": les["id"], "unit_id": u["id"], "title": les["title"], "sort": li,
+                                    "star": int(bool(les.get("star"))), "prereq": json.dumps(les.get("prereq") or []),
+                                    "tags": " ".join(les.get("tags") or []), "note": les.get("note"),
+                                    "level": les.get("level", u.get("level")), "kind": les.get("kind"), "minutes": les.get("minutes"),
+                                    "goals": None, "summary": None, "resources": None, "sources": None, "bench": None})
+        except broken as e:                                # a broken outline: the whole subject is left out
+            del units[n_units:], lessons[n_lessons:]
+            leave_out(outline, e)
+            continue
+        subjects.append(subject)
         by_id = {x["id"]: x for x in lessons}
 
         def add_card(c, lesson_id, sort, path, stage=None):
@@ -116,37 +132,45 @@ def read_content(folder=CONTENT, only=None, sort_from=0):
             cards.append({"id": f"{lesson_id}/{c['id']}", "lesson_id": lesson_id, "sort": sort, "type": c["type"],
                           "text": front(c), "data": json.dumps(c, ensure_ascii=False), "level": c.get("level"), "stage": st})
 
+        def one_file(path, f):
+            try:
+                les = json.load(open(path, encoding="utf-8"))
+            except ValueError as e:
+                raise ValueError(f"{path}: {e}")
+            if f == "calibrate.json":                      # the calibration bank: questions across the whole outline
+                for ci, c in enumerate(les.get("cards", [])):
+                    if c.get("lesson") not in by_id:
+                        raise ValueError(f"{path}: card {c.get('id')!r} names lesson {c.get('lesson')!r}, not in the outline")
+                    add_card(c, c["lesson"], 2000 + ci, path, "calibrate")
+                return
+            row = by_id.get(les.get("id"))
+            if not row:
+                raise ValueError(f"{path}: lesson {les.get('id')!r} is not in {s['id']}'s subject.json")
+            if les.get("kind") and les["kind"] not in KINDS:
+                raise ValueError(f"{path}: kind {les['kind']!r}; the kinds are {', '.join(KINDS)}")
+            for ci, c in enumerate(les.get("cards", [])):
+                add_card(c, les["id"], ci, path)
+            # the outline row changes only once the whole file has read cleanly
+            for k in ("title", "note", "level", "kind", "minutes", "summary"):
+                if les.get(k) is not None:
+                    row[k] = les[k]
+            for k in ("goals", "resources", "sources", "bench"):
+                row[k] = _json(les.get(k))
+            if "prereq" in les:
+                row["prereq"] = json.dumps(les["prereq"])
+            if "tags" in les:
+                row["tags"] = " ".join(les["tags"])
+
         for root, _dirs, files in os.walk(sdir):
             for f in sorted(files):
                 if not f.endswith(".json") or f == "subject.json":
                     continue
-                path = os.path.join(root, f)
+                path, n = os.path.join(root, f), len(cards)
                 try:
-                    les = json.load(open(path, encoding="utf-8"))
-                except ValueError as e:
-                    raise ValueError(f"{path}: {e}")
-                if f == "calibrate.json":                  # the calibration bank: questions across the whole outline
-                    for ci, c in enumerate(les.get("cards", [])):
-                        if c.get("lesson") not in by_id:
-                            raise ValueError(f"{path}: card {c.get('id')!r} names lesson {c.get('lesson')!r}, not in the outline")
-                        add_card(c, c["lesson"], 2000 + ci, path, "calibrate")
-                    continue
-                row = by_id.get(les.get("id"))
-                if not row:
-                    raise ValueError(f"{path}: lesson {les.get('id')!r} is not in {s['id']}'s subject.json")
-                for k in ("title", "note", "level", "kind", "minutes", "summary"):
-                    if les.get(k) is not None:
-                        row[k] = les[k]
-                if les.get("kind") and les["kind"] not in KINDS:
-                    raise ValueError(f"{path}: kind {les['kind']!r}; the kinds are {', '.join(KINDS)}")
-                for k in ("goals", "resources", "sources", "bench"):
-                    row[k] = _json(les.get(k))
-                if "prereq" in les:
-                    row["prereq"] = json.dumps(les["prereq"])
-                if "tags" in les:
-                    row["tags"] = " ".join(les["tags"])
-                for ci, c in enumerate(les.get("cards", [])):
-                    add_card(c, les["id"], ci, path)
+                    one_file(path, f)
+                except broken as e:                        # one bad lesson file: that lesson has no cards, the rest load
+                    del cards[n:]
+                    leave_out(path, e)
     return subjects, units, lessons, cards
 
 
@@ -203,12 +227,18 @@ def read_packs(db, taken):
 
 def after_migrate(db):
     """Load the files: replace every row that came from a file, keep your own and all progress."""
-    subjects, units, lessons, cards = read_content()
+    skipped = []
+    subjects, units, lessons, cards = read_content(skipped=skipped)
+    for e in skipped:
+        print(f"learn: left out {e}")
     for a, b in zip((subjects, units, lessons, cards), read_packs(db, {s["id"] for s in subjects})):
         a.extend(b)
     db.execute("BEGIN")
     for t in ("card", "lesson", "unit", "subject"):
         db.execute(f"DELETE FROM {t} WHERE source = 'file'")
+    db.execute("DELETE FROM setting WHERE key = 'content_errors'")      # Today names the files left out
+    if skipped:
+        db.execute("INSERT INTO setting (key, value) VALUES ('content_errors', ?)", (json.dumps(skipped),))
     for t, rows in (("subject", subjects), ("unit", units), ("lesson", lessons), ("card", cards)):
         for r in rows:
             cols = list(r)
@@ -528,13 +558,12 @@ def answer(db, body):
     if new_state:
         show = "Back in ten minutes" if not new_state["days"] else \
             f"Next in {new_state['days']} day{'s' if new_state['days'] != 1 else ''}"
-    gain = 0 if correct is None or mode in _game.NOT_COUNTED else _game.RIGHT if correct else _game.TRIED
-    after = _game.rank(_game.xp(db))
-    rank_up = _game.rank(after["xp"] - gain)["rank"] < after["rank"]
-    new_badges = _game.award(db, streak(db)) if gain else []
+    # a lesson learned wherever its final check is passed: the feed and Review count, not only the player
+    learned = None
+    if correct and card["stage"] == "check" and mode not in NO_SCHEDULE:
+        learned = learn_if_checked(db, card["lesson_id"])
     db.commit()
-    return {"ok": True, "mistake": made, "today": today_counts(db), "next": show,
-            "game": {"gain": gain, **after, "rank_up": rank_up, "badges": new_badges},
+    return {"ok": True, "mistake": made, "today": today_counts(db), "next": show, "learned": learned,
             "retest": bool(correct is False and conf == 2), "repair": repair, "level": lvl,
             "struggle": bool(card["asks"] and rating == "again" and (db.execute(
                 "SELECT struggle FROM card_state WHERE card_id = ?", (cid,)).fetchone() or [0])[0])}   # none after a calibration
@@ -714,7 +743,7 @@ def testout_done(db, lesson_id, right, asked):
     """All right: the lesson is learned, and its cards start as reviews a week or so out."""
     passed = bool(asked) and right >= asked
     was = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (lesson_id,)).fetchone()
-    game = None
+    won = None
     if passed:
         now = datetime.now()
         db.execute("INSERT INTO lesson_state (lesson_id, pos, learned) VALUES (?, 0, ?) ON CONFLICT(lesson_id) DO UPDATE "
@@ -729,9 +758,9 @@ def testout_done(db, lesson_id, right, asked):
                        (r[0], _due_text(ns["due"], ns["days"]), ns["days"], ns["stability"], ns["difficulty"], "review",
                         _now(), _now()))
     if passed and not (was and was[0]):
-        game = _game.after_learn(db, lesson_id, streak(db))
+        won = _tree.after_learn(db, lesson_id)
     db.commit()
-    return {"passed": passed, "game": game}
+    return {"passed": passed, "learned": won}
 
 
 def comeback(db, days=7):
@@ -745,19 +774,42 @@ def comeback(db, days=7):
     return [_card(r, "comeback") for r in db.execute(CARD_SQL + f"WHERE c.id IN ({','.join('?' * len(ids))})", ids)]
 
 
-def lesson_finished(db, lesson_id):
-    """The lesson's end: learned if every check card was right the last time it was asked today
-    (a lesson without check cards: when you reach the end)."""
+def checks_passed(db, lesson_id):
+    """Every final-check card right the last time it was answered, on any day and in any mode
+    but placement (a lesson with no check cards has nothing to pass: None)."""
     checks = [r[0] for r in db.execute("SELECT id FROM card WHERE lesson_id = ? AND stage = 'check'", (lesson_id,))]
-    ok = True
+    if not checks:
+        return None
     for cid in checks:
-        last = db.execute("SELECT correct FROM answer WHERE card_id = ? AND day = ? ORDER BY id DESC LIMIT 1",
-                          (cid, date.today().isoformat())).fetchone()
-        ok = ok and bool(last and last[0])
-    if ok:
-        db.execute("UPDATE lesson_state SET learned = COALESCE(learned, ?), placed = NULL WHERE lesson_id = ?",
-                   (date.today().isoformat(), lesson_id))
-    return ok
+        last = db.execute("SELECT correct FROM answer WHERE card_id = ? AND mode NOT IN ('calibrate', 'testout') "
+                          "ORDER BY id DESC LIMIT 1", (cid,)).fetchone()
+        if not (last and last[0]):
+            return False
+    return True
+
+
+def mark_learned(db, lesson_id):
+    """Learned today, unless it already was: what that opened (None if it was already learned)."""
+    was = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (lesson_id,)).fetchone()
+    if was and was[0]:
+        return None
+    db.execute("INSERT INTO lesson_state (lesson_id, pos, learned) VALUES (?, 0, ?) ON CONFLICT(lesson_id) DO UPDATE "
+               "SET learned = excluded.learned, placed = NULL", (lesson_id, date.today().isoformat()))
+    return _tree.after_learn(db, lesson_id)
+
+
+def learn_if_checked(db, lesson_id):
+    return mark_learned(db, lesson_id) if checks_passed(db, lesson_id) else None
+
+
+def lesson_finished(db, lesson_id):
+    """The lesson's end: (learned now, what that opened). Learned once every check card has been
+    answered right the last time it was asked; a lesson without check cards, on reaching the end."""
+    ok = checks_passed(db, lesson_id)
+    if ok is False:
+        return False, None
+    # learned by its last check card a moment ago, the end screen still lists what it opened
+    return True, mark_learned(db, lesson_id) or {"lesson": lesson_id, "unlocked": _tree.unlocked(db, lesson_id), "goal_reached": False}
 
 
 def plan(db):
@@ -777,13 +829,7 @@ def plan(db):
             nxt.append({k: f[0][k] for k in ("id", "title", "subject", "subject_id", "level", "minutes", "pos", "cards", "opened")})
     lv = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute("SELECT * FROM v_skill WHERE kind = 'subject'")]
     return {**t, "struggles": struggles, "struggles_due": struggles_due, "comeback": week, "comeback_today": is_day,
-            "next": nxt, "levels": lv, "game": game(db, t["due"], struggles_due)}
-
-
-def game(db, due=0, struggles_due=0):
-    """XP and rank, the goal's route, and today's quests."""
-    rm = _game.roadmap(db)
-    return {**_game.rank(_game.xp(db)), "roadmap": rm, "quests": _game.quests(db, due, struggles_due, rm)}
+            "next": nxt, "levels": lv, "roadmap": _tree.roadmap(db), "week": _tree.week(db)}
 
 
 def import_csv(db, text):
@@ -868,11 +914,9 @@ def route(db, method, p, query, body, ctx):
                    "ON CONFLICT(lesson_id) DO UPDATE SET pos = excluded.pos, seen = excluded.seen, "
                    "finished = COALESCE(lesson_state.finished, excluded.finished)",
                    (lid, int(body.get("pos") or 0), _now(), _now() if body.get("finished") else None))
-        was = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (lid,)).fetchone()
-        learned = lesson_finished(db, lid) if body.get("finished") else None
-        won = _game.after_learn(db, lid, streak(db)) if learned and not (was and was[0]) else None
+        learned, won = lesson_finished(db, lid) if body.get("finished") else (None, None)
         db.commit()
-        return 200, {"ok": True, "learned": learned, "game": won}
+        return 200, {"ok": True, "learned": learned, "opened": won}
     if p == ["lesson", "notes"] and method == "POST":
         db.execute("INSERT INTO lesson_state (lesson_id, pos, notes) VALUES (?, 0, ?) "
                    "ON CONFLICT(lesson_id) DO UPDATE SET notes = excluded.notes", (body.get("lesson_id"), body.get("notes") or None))
@@ -901,17 +945,13 @@ def route(db, method, p, query, body, ctx):
     if p == ["plan"] and method == "GET":
         return 200, plan(db)
     if p == ["tree"] and method == "GET":
-        return 200, _game.tree(db, g("subject"))
-    if p == ["game"] and method == "GET":
-        t = today_counts(db)
-        return 200, {**game(db, t["due"], db.execute("SELECT COUNT(*) FROM v_struggle WHERE due <= ?", (_now(),)).fetchone()[0]),
-                     "badges": _game.badges(db)}
+        return 200, _tree.tree(db, g("subject"))
     if p == ["goal"] and method == "POST":
         lid = body.get("lesson_id")
         if lid and not db.execute("SELECT 1 FROM lesson WHERE id = ?", (lid,)).fetchone():
             raise Err(404, "no such lesson")
-        _game.set_goal(db, lid)
-        return 200, {"roadmap": _game.roadmap(db)}
+        _tree.set_goal(db, lid)
+        return 200, {"roadmap": _tree.roadmap(db)}
     if p == ["levels"] and method == "GET":
         return 200, levels(db)
     if p == ["calibrate", "start"] and method == "POST":
