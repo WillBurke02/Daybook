@@ -1,0 +1,664 @@
+{
+ "id": "physics.elec.dividers",
+ "title": "Potential dividers",
+ "tags": [
+  "potential divider",
+  "voltage divider",
+  "potentiometer",
+  "loading",
+  "Wheatstone bridge",
+  "sensors",
+  "level shifting"
+ ],
+ "kind": "procedure",
+ "level": 4.8,
+ "minutes": 22,
+ "goals": [
+  "Work out the output of a potential divider from its resistors",
+  "Choose a resistor to get a wanted output voltage, and round it sensibly",
+  "Say what a load does to a divider's output, and how big it must be",
+  "Use a potentiometer as an adjustable divider, such as a drive's speed pot",
+  "Say how a Wheatstone bridge uses two dividers to measure a small change"
+ ],
+ "summary": "Two resistors in series across a supply share its voltage in proportion to their resistances. The voltage across the bottom one, $R_2$:\n\n$V_{out} = V_{in}\\frac{R_2}{R_1 + R_2}$\n\nEqual resistors give half; a bigger $R_2$ gives more.\n\nTo design one, pick $R_1$ and work out $R_2 = R_1\\frac{V_{out}}{V_{in} - V_{out}}$, then round to a standard value and check the output again.\n\nA **potentiometer** is a divider with a sliding contact (the **wiper**): ends across the supply, the wiper gives anything from 0 to the full voltage. A drive's speed pot is a 10 kΩ pot across the drive's 10 V reference.\n\n**Loading**: anything connected across the output is in **parallel** with $R_2$ and lowers its effective resistance, so the output drops. Keep the load at least about **10 times** $R_2$, or buffer the output (an op-amp), or use smaller resistors (which waste more current).\n\nDividers also turn a **sensor's resistance** into a voltage (a thermistor or LDR as one of the resistors), and drop a **24 V** signal to **3.3 V** or 5 V for a microcontroller input.\n\nA **Wheatstone bridge** is two dividers side by side, with the meter between their outputs. When the ratios match it reads zero (balanced); a tiny change in one resistor (a strain gauge) makes a small voltage between them. Load cells work this way.",
+ "resources": [
+  {
+   "when": "before",
+   "kind": "read",
+   "title": "Voltage Dividers",
+   "url": "https://learn.sparkfun.com/tutorials/voltage-dividers",
+   "by": "SparkFun",
+   "minutes": 10
+  },
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "College Physics 2e, 21.1 Resistors in Series and Parallel (the original)",
+   "url": "media/openstax/college-physics-2e/21.1.html",
+   "by": "OpenStax, as published",
+   "minutes": 20
+  }
+ ],
+ "sources": [
+  "OCR A Level Physics A (H556) specification, 4.3: Electrical circuits (potential dividers)",
+  "Hughes Electrical and Electronic Technology, 10th edition (Pearson): series circuits and the potential divider",
+  "Horowitz, P. and Hill, W.: The Art of Electronics, 3rd edition (Cambridge University Press), 1.2: voltage dividers and loading"
+ ],
+ "formulas": [
+  {
+   "name": "Potential divider",
+   "tex": "V_{out} = V_{in}\\frac{R_2}{R_1 + R_2}",
+   "match": [
+    "\\frac{R_2}{R_1 + R_2}"
+   ],
+   "says": "The bottom resistor's share of the total resistance is its share of the voltage.",
+   "symbols": [
+    [
+     "V_{out}",
+     "the output, across R₂ (V)"
+    ],
+    [
+     "V_{in}",
+     "the supply across both (V)"
+    ],
+    [
+     "R_1",
+     "the top resistor (Ω)"
+    ],
+    [
+     "R_2",
+     "the bottom resistor (Ω)"
+    ]
+   ],
+   "example": "12 V, 10 kΩ over 2.2 kΩ: $12 \\times \\frac{2.2}{12.2} = 2.16$ V."
+  },
+  {
+   "name": "Choosing the bottom resistor",
+   "tex": "R_2 = R_1\\frac{V_{out}}{V_{in} - V_{out}}",
+   "match": [
+    "\\frac{V_{out}}{V_{in} - V_{out}}"
+   ],
+   "says": "The same current flows through both, so their resistances are in the ratio of their voltages.",
+   "symbols": [
+    [
+     "R_2",
+     "the bottom resistor (Ω)"
+    ],
+    [
+     "R_1",
+     "the top resistor (Ω)"
+    ],
+    [
+     "V_{out}",
+     "the output wanted (V)"
+    ],
+    [
+     "V_{in}",
+     "the supply (V)"
+    ]
+   ],
+   "example": "24 V down to 5 V with 10 kΩ on top: $10 \\times \\frac{5}{19} = 2.63$ kΩ."
+  },
+  {
+   "name": "A load in parallel",
+   "tex": "R_p = \\frac{R_2 R_L}{R_2 + R_L}",
+   "match": [
+    "\\frac{R_2 R_L}{R_2 + R_L}"
+   ],
+   "says": "A load across the output combines with R₂ like any two parallel resistors: product over sum.",
+   "symbols": [
+    [
+     "R_p",
+     "R₂ and the load together (Ω)"
+    ],
+    [
+     "R_2",
+     "the bottom resistor (Ω)"
+    ],
+    [
+     "R_L",
+     "the load's resistance (Ω)"
+    ]
+   ],
+   "example": "10 kΩ with a 10 kΩ load: 5 kΩ."
+  }
+ ],
+ "bench": [
+  {
+   "task": "Build a divider on a breadboard from a 12 V DC supply with a 10 kΩ and a 4.7 kΩ resistor, and see loading for yourself. Low voltage only.",
+   "check": [
+    "Work out the output first: $12 \\times \\frac{4.7}{14.7}$",
+    "Measure it with your multimeter (its own resistance is about 10 MΩ, so it barely loads it)",
+    "Put a 4.7 kΩ 'load' across the output and measure again",
+    "Work out the new output with the parallel rule and compare"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-half",
+   "type": "mcq",
+   "stage": "try",
+   "q": "Two 10 kΩ resistors are in series across 12 V. What voltage is at the point between them, measured from 0 V?",
+   "options": [
+    "6 V",
+    "12 V",
+    "3 V",
+    "0 V"
+   ],
+   "answer": 0,
+   "why": "The same current flows through both, and they are equal, so each takes half the supply: 6 V. That is a potential divider."
+  },
+  {
+   "id": "divide",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Two resistors share the voltage",
+   "body": "In series, the **same current** flows through both resistors, so each takes a share of the voltage in proportion to its resistance. The output is taken across the bottom one, $R_2$:\n\n$$V_{out} = V_{in}\\frac{R_2}{R_1 + R_2}$$\n\n$\\frac{R_2}{R_1 + R_2}$ is $R_2$'s share of the total. Change either resistor and watch the voltages.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 300,
+     "R2": 100,
+     "mode": "series",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "more": "Think of two people sharing a bill in proportion to what they ate: the one who ate three times as much pays three-quarters.\n\nNumbers: 12 V across 300 Ω and 100 Ω. Total 400 Ω, so the current is $12 \\div 400 = 0.03$ A. Across the 100 Ω: $0.03 \\times 100 = 3$ V. Across the 300 Ω: 9 V. They add up to the 12 V supply.\n\nThe formula does it in one line: $12 \\times \\frac{100}{400} = 3$ V.\n\nIt only depends on the ratio: 3 kΩ and 1 kΩ give the same 3 V (with a tenth of the current)."
+  },
+  {
+   "id": "divide-widget",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "Set the battery and the two resistors to whatever you like. The voltages across them are hidden.",
+   "widget": {
+    "name": "circuit",
+    "params": {
+     "V": 12,
+     "R1": 470,
+     "R2": 220,
+     "mode": "series",
+     "controls": [
+      "V",
+      "R1",
+      "R2"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What is the voltage across R2 with your settings?",
+    "answer": "V2",
+    "unit": "V",
+    "tolerance": 0.02,
+    "why": "$V_2 = V\\frac{R_2}{R_1 + R_2}$: here {V2} V.",
+    "hint": "R2's share of the total resistance, times the battery voltage."
+   },
+   "hide": true
+  },
+  {
+   "id": "design",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Designing a divider",
+   "body": "To get a wanted output, choose $R_1$ (often 10 kΩ), then\n\n$$R_2 = R_1\\frac{V_{out}}{V_{in} - V_{out}}$$\n\nResistors come in **standard values** (the E12 series: 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2, times 10s). Pick the nearest, then **work the output again** to check it is still within what you need, especially if it must not go over a limit.",
+   "more": "The current through both is the same, so the voltages are in the same ratio as the resistances: $\\frac{V_{out}}{V_{in} - V_{out}} = \\frac{R_2}{R_1}$.\n\nNumbers: 24 V down to 5 V for an input that must not see more than 5 V. With $R_1$ = 10 kΩ: $R_2 = 10 \\times \\frac{5}{19} = 2.63$ kΩ.\n\nNearest standard values: 2.7 kΩ gives $24 \\times \\frac{2.7}{12.7} = 5.10$ V: over the limit! 2.2 kΩ gives $24 \\times \\frac{2.2}{12.2} = 4.33$ V: safe. When there is a maximum, round the way that keeps you under it.\n\nAnd allow for the supply: a '24 V' supply is often 24–28 V. At 28 V the 2.2 kΩ divider gives 5.05 V."
+  },
+  {
+   "id": "design-r2",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "From {vin} V you want {vo} V, with R1 = {r1} kΩ at the top. What value of R2 (at the bottom), in kΩ?",
+   "vars": {
+    "vin": {
+     "pick": [
+      12,
+      24,
+      30
+     ]
+    },
+    "vo": {
+     "pick": [
+      2,
+      3.3,
+      5,
+      6
+     ]
+    },
+    "r1": {
+     "pick": [
+      1,
+      4.7,
+      10,
+      22
+     ]
+    }
+   },
+   "answer": "r1 * vo / (vin - vo)",
+   "unit": "kΩ",
+   "tolerance": 0.01,
+   "work": "$R_2 = {r1} \\times \\frac{{vo}}{{vin} - {vo}} = {answer}$ kΩ",
+   "why": "The same current flows through both, so the resistances are in the ratio of their voltages: R2 takes {vo} V and R1 the rest.",
+   "hint": "R2 : R1 = Vout : (Vin − Vout)."
+  },
+  {
+   "id": "pot",
+   "type": "concept",
+   "stage": "learn",
+   "title": "The potentiometer: an adjustable divider",
+   "body": "A **potentiometer** (pot) is one resistor with a sliding contact, the **wiper**. Its two ends go across the supply; the wiper splits it into $R_1$ above and $R_2$ below, so it gives anything from **0** to the **full** supply.\n\nA drive's **speed pot**: a 10 kΩ pot with its ends on the drive's 10 V reference and 0 V, and its wiper to the analogue input: 0–10 V for 0–full speed.",
+   "more": "Turning the knob moves the wiper along the track: the top part gets shorter and the bottom part longer by the same amount, so the total stays 10 kΩ while the share at the wiper changes.\n\nWiring it right matters: ends to +10 V and 0 V, wiper to the input. Swap an end with the wiper and turning it fully one way shorts the 10 V reference to 0 V through the pot's end.\n\nIf the speed works backwards (full anticlockwise is full speed), swap the two end wires, not the wiper."
+  },
+  {
+   "id": "pot-wire",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.5,
+   "q": "A 10 kΩ speed pot is fitted to a drive. Where does its wiper (middle terminal) go?",
+   "options": [
+    "To the drive's analogue input",
+    "To the drive's +10 V reference",
+    "To 0 V",
+    "To earth"
+   ],
+   "answer": 0,
+   "why": "The two ends go across the 10 V reference and 0 V; the wiper picks off a share of it for the analogue input. The wiper is the output of the divider."
+  },
+  {
+   "id": "loading",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Loading: what you connect changes it",
+   "body": "Anything connected across the output (a meter, an input, a load) is in **parallel** with $R_2$. Two resistors in parallel make a smaller one:\n\n$$R_p = \\frac{R_2 R_L}{R_2 + R_L}$$\n\nSo the bottom of the divider gets smaller, and the output **drops**.\n\nRule of thumb: keep the load at least about **10 times** $R_2$ (the output then drops by under 10%). Otherwise use smaller divider resistors (more current wasted) or a **buffer** (an op-amp that copies the voltage without loading it).",
+   "more": "Numbers: two 10 kΩ resistors divide 12 V to 6 V. Connect a 10 kΩ load: 10 kΩ ∥ 10 kΩ = 5 kΩ. Now $12 \\times \\frac{5}{10 + 5} = 4$ V, not 6.\n\nWith a 100 kΩ load (10 times R2): 10 ∥ 100 = 9.09 kΩ; $12 \\times \\frac{9.09}{19.09} = 5.71$ V: 5% low.\n\nA multimeter is about 10 MΩ, so it barely loads a 10 kΩ divider. An old analogue meter at 20 kΩ/V on its 10 V range is 200 kΩ, and a PLC input can be just a few kΩ: those load a divider badly. That is why a divider is not a power supply."
+  },
+  {
+   "id": "load-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "Two {r} kΩ resistors divide {vin} V. A {rl} kΩ load is connected across the bottom one. What is the output now?",
+   "vars": {
+    "r": {
+     "pick": [
+      1,
+      4.7,
+      10
+     ]
+    },
+    "vin": {
+     "pick": [
+      10,
+      12,
+      24
+     ]
+    },
+    "rl": {
+     "pick": [
+      4.7,
+      10,
+      22,
+      47,
+      100
+     ]
+    }
+   },
+   "let": {
+    "rp": "r * rl / (r + rl)"
+   },
+   "answer": "vin * rp / (r + rp)",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$R_p = \\frac{{r} \\times {rl}}{{r} + {rl}} = {rp:2}$ kΩ; $V_{out} = {vin} \\times \\frac{{rp:2}}{{r} + {rp:2}} = {answer}$ V",
+   "why": "The load in parallel with R2 makes the bottom smaller, so its share of the voltage falls.",
+   "hint": "Parallel R2 and the load first; then the divider rule."
+  },
+  {
+   "id": "sensors",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Dividers that measure, and dividers that protect",
+   "body": "- **Sensor in a divider**: make one resistor a **thermistor** (resistance changes with temperature) or an **LDR** (with light). The output voltage then follows the temperature or light.\n- **Level shifting**: drop a 24 V signal to **3.3 V** or 5 V for a microcontroller: the divider protects the input.\n- **Bridge**: two dividers side by side, the meter between their outputs: a **Wheatstone bridge**. Balanced (zero volts) when the ratios match; a tiny change in one arm gives a small voltage. Strain gauges and load cells use it.",
+   "more": "A thermistor that falls in resistance as it warms (an NTC), placed as R2, makes the output fall as it warms; place it as R1 and the output rises. Either way the PLC or microcontroller reads a voltage.\n\nWhy a bridge? A strain gauge changes resistance by a tiny fraction: 350 Ω might become 350.35 Ω. In a single divider that is a few millivolts on top of several volts: hard to see. In a bridge, the big steady part cancels between the two dividers, leaving only the small change, which an amplifier can then multiply up.\n\nA level-shift divider on a fast signal (a communications line) may also need a small capacitor, but for a slow switch input a plain divider is fine."
+  },
+  {
+   "id": "bridge-q",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "A Wheatstone bridge reads 0 V between its two midpoints. What does that tell you?",
+   "options": [
+    "The two dividers have the same ratio",
+    "All four resistors are equal",
+    "The supply has failed",
+    "The meter is loading it"
+   ],
+   "answer": 0,
+   "why": "Balanced means both midpoints sit at the same voltage, which happens when $\\frac{R_1}{R_2} = \\frac{R_3}{R_4}$. The resistors need not all be equal, only in matching ratios."
+  },
+  {
+   "id": "worked-shift",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 24 V sensor signal must go to a 3.3 V microcontroller input that must not see more than 3.3 V. Design a divider with R1 = 10 kΩ.",
+   "steps": [
+    {
+     "ask": "The exact R2.",
+     "show": "$10 \\times \\frac{3.3}{24 - 3.3} = 1.59$ kΩ"
+    },
+    {
+     "ask": "Nearest standard values either side.",
+     "show": "1.5 kΩ and 1.8 kΩ"
+    },
+    {
+     "ask": "Check each at 24 V.",
+     "show": "1.5 kΩ: $24 \\times \\frac{1.5}{11.5} = 3.13$ V; 1.8 kΩ: $24 \\times \\frac{1.8}{11.8} = 3.66$ V (too high)"
+    },
+    {
+     "ask": "Choose, and check at the supply's top (say 28 V).",
+     "show": "1.5 kΩ: $28 \\times \\frac{1.5}{11.5} = 3.65$ V: still too high at 28 V, so use 1.2 kΩ (3.0 V at 28 V, 2.6 V at 24 V, still a clear logic 1)"
+    }
+   ],
+   "why": "Work it exactly, round towards safe, then check the worst case: the highest the supply can go. The low end must still read as a 1."
+  },
+  {
+   "id": "explain-worst",
+   "type": "explain",
+   "stage": "example",
+   "q": "Why does step 4 check the output at 28 V, when the supply is called 24 V?",
+   "context": "1.5 kΩ was fine at 24 V but gave 3.65 V at 28 V.",
+   "model": "The divider passes on a fixed fraction of whatever it is fed, so if the supply rises, so does the output. Industrial 24 V supplies are often set high (to 26–28 V) to allow for cable drop, so the input must survive the highest voltage it could really see. Designing only for the nominal 24 V would leave the microcontroller over its limit on a real machine.",
+   "points": [
+    "The output is a fixed fraction of the input",
+    "24 V supplies often sit at 26–28 V",
+    "Design for the worst case, not the label",
+    "Still check the low end reads as a 1"
+   ]
+  },
+  {
+   "id": "faded-pot",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A 10 kΩ speed pot across a 10 V reference has its wiper set so that 3.5 kΩ is between the wiper and 0 V. What voltage goes to the drive, and what speed (0–10 V = 0–1500 rpm)?",
+   "steps": [
+    {
+     "ask": "The divider output.",
+     "show": "$10 \\times \\frac{3.5}{10} = 3.5$ V"
+    },
+    {
+     "ask": "The speed.",
+     "show": "$\\frac{3.5}{10} \\times 1500 = 525$ rpm"
+    }
+   ],
+   "why": "The pot's two parts always add up to 10 kΩ, so the output is simply the wiper's share of the track."
+  },
+  {
+   "id": "vout-calc",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A potential divider has {vin} V across R1 = {r1} kΩ and R2 = {r2} kΩ in series. What is the voltage across R2?",
+   "vars": {
+    "vin": {
+     "pick": [
+      5,
+      10,
+      12,
+      24
+     ]
+    },
+    "r1": {
+     "pick": [
+      1,
+      2.2,
+      4.7,
+      10,
+      22
+     ]
+    },
+    "r2": {
+     "pick": [
+      1,
+      3.3,
+      4.7,
+      10
+     ]
+    }
+   },
+   "answer": "vin * r2 / (r1 + r2)",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$V_{out} = {vin} \\times \\frac{{r2}}{{r1} + {r2}} = {answer}$ V",
+   "why": "R2's share of the total resistance is its share of the voltage.",
+   "hint": "$V_{in}\\frac{R_2}{R_1 + R_2}$."
+  },
+  {
+   "id": "spot-top",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Working out a divider's output: 12 V, R1 = 8.2 kΩ (top), R2 = 3.3 kΩ (bottom). One line is wrong. Which?",
+   "lines": [
+    "Total: 8.2 + 3.3 = 11.5 kΩ",
+    "Output across R2: $12 \\times \\frac{8.2}{11.5}$",
+    "= 8.56 V"
+   ],
+   "wrong": 1,
+   "fix": "Output across R2: $12 \\times \\frac{3.3}{11.5} = 3.44$ V",
+   "why": "The output is across the bottom resistor, so R2 goes on top of the fraction. Check: the smaller resistor takes the smaller share, and R2 is the smaller one, so the answer must be under half of 12 V."
+  },
+  {
+   "id": "waste",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A divider of {r1} kΩ and {r2} kΩ sits across {vin} V all the time. How much current does it waste, in mA?",
+   "vars": {
+    "r1": {
+     "pick": [
+      1,
+      10,
+      100
+     ]
+    },
+    "r2": {
+     "pick": [
+      1,
+      4.7,
+      10
+     ]
+    },
+    "vin": {
+     "pick": [
+      12,
+      24
+     ]
+    }
+   },
+   "answer": "vin / (r1 + r2)",
+   "unit": "mA",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{{vin}}{{r1} + {r2}} = {answer}$ mA",
+   "why": "V over kΩ gives mA. Smaller resistors load less badly but waste more current; on batteries, that matters.",
+   "hint": "Ohm's law on the whole string: V ÷ total kΩ."
+  },
+  {
+   "id": "load-rule",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A divider's bottom resistor is 10 kΩ. Which load would change its output by less than about 10%?",
+   "options": [
+    "A 220 kΩ input",
+    "A 10 kΩ input",
+    "A 4.7 kΩ input",
+    "A 1 kΩ input"
+   ],
+   "answer": 0,
+   "why": "A load at least about 10 times R2 changes the output only a little. 220 kΩ is 22 times; 10 kΩ would pull the output down a lot (it halves R2's effective value)."
+  },
+  {
+   "id": "pot-backwards",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "A speed pot works backwards: anticlockwise gives full speed. What is the fix?",
+   "options": [
+    "Swap the two end wires",
+    "Swap the wiper with one end",
+    "Fit a pot of a higher value",
+    "Reverse the motor's phases"
+   ],
+   "answer": 0,
+   "why": "Swapping the ends turns the divider upside down, so the wiper's share runs the other way. Moving the wiper wire risks shorting the reference; reversing the motor changes its direction, not the pot's sense."
+  },
+  {
+   "id": "mix-series-par",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A {r1} kΩ and a {r2} kΩ resistor are both connected directly across {vin} V (in parallel). What is the voltage across the {r2} kΩ one?",
+   "vars": {
+    "r1": {
+     "pick": [
+      1,
+      4.7,
+      10
+     ]
+    },
+    "r2": {
+     "pick": [
+      2.2,
+      3.3,
+      22
+     ]
+    },
+    "vin": {
+     "pick": [
+      5,
+      12,
+      24
+     ]
+    }
+   },
+   "answer": "vin",
+   "unit": "V",
+   "tolerance": 0.001,
+   "work": "In parallel, each has the full {vin} V across it.",
+   "why": "Only resistors in series divide the voltage. In parallel, each sees the whole supply; it is the current that divides.",
+   "hint": "Series or parallel?"
+  },
+  {
+   "id": "mix-current-same",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 4.6,
+   "q": "In a potential divider, which is the same for both resistors?",
+   "options": [
+    "The current through them",
+    "The voltage across them",
+    "The power in them",
+    "Their resistance"
+   ],
+   "answer": 0,
+   "why": "In series one current flows through both; that is why the voltages split in the ratio of the resistances."
+  },
+  {
+   "id": "mix-ohm",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 4.8,
+   "q": "{vin} V across a {r1} kΩ and a {r2} kΩ resistor in series. What is the voltage across the {r1} kΩ (top) resistor?",
+   "vars": {
+    "vin": {
+     "pick": [
+      9,
+      12,
+      24
+     ]
+    },
+    "r1": {
+     "pick": [
+      2.2,
+      4.7,
+      10
+     ]
+    },
+    "r2": {
+     "pick": [
+      1,
+      2.2,
+      6.8
+     ]
+    }
+   },
+   "answer": "vin * r1 / (r1 + r2)",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "${vin} \\times \\frac{{r1}}{{r1} + {r2}} = {answer}$ V",
+   "why": "The same rule with the top resistor's share: each resistor's voltage is its share of the total resistance times the supply.",
+   "hint": "Which resistor's share is asked for?"
+  },
+  {
+   "id": "check-try",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A 3 kΩ (top) and a 1 kΩ (bottom) resistor divide 20 V. The output across the bottom one is…",
+   "options": [
+    "5 V",
+    "15 V",
+    "6.7 V",
+    "10 V"
+   ],
+   "answer": 0,
+   "why": "The bottom resistor is a quarter of the total, so it takes a quarter of 20 V."
+  },
+  {
+   "id": "check-design",
+   "type": "numeric",
+   "stage": "check",
+   "q": "{vin} V to {vo} V, R1 = 10 kΩ. R2 in kΩ?",
+   "vars": {
+    "vin": {
+     "pick": [
+      12,
+      24
+     ]
+    },
+    "vo": {
+     "pick": [
+      3,
+      4,
+      6
+     ]
+    }
+   },
+   "answer": "10 * vo / (vin - vo)",
+   "unit": "kΩ",
+   "tolerance": 0.01,
+   "work": "$10 \\times \\frac{{vo}}{{vin} - {vo}} = {answer}$ kΩ",
+   "why": "Resistances in the ratio of their voltages."
+  },
+  {
+   "id": "check-load",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A load across a divider's output makes the output…",
+   "options": [
+    "drop",
+    "rise",
+    "stay the same",
+    "reverse"
+   ],
+   "answer": 0,
+   "why": "The load is in parallel with the bottom resistor, making the bottom smaller, so its share of the voltage falls."
+  }
+ ]
+}

@@ -1,7 +1,16 @@
 {
  "id": "electronics.signals.sensors",
  "title": "Sensors and signals: 4–20 mA, 0–10 V, PT100, thermocouples, encoders",
- "tags": ["4-20 mA", "0-10 V", "PT100", "RTD", "thermocouple", "encoder", "scaling", "instrumentation"],
+ "tags": [
+  "4-20 mA",
+  "0-10 V",
+  "PT100",
+  "RTD",
+  "thermocouple",
+  "encoder",
+  "scaling",
+  "instrumentation"
+ ],
  "kind": "procedure",
  "level": 5.5,
  "minutes": 25,
@@ -14,7 +23,15 @@
  ],
  "summary": "A sensor turns something physical into an electrical signal a PLC can read.\n\n**4–20 mA** is the standard for process signals. The same current flows all round the loop, so long cables and connectors do not change the reading. 4 mA is the bottom of the range (the **live zero**) and 20 mA the top, a span of 16 mA. 0 mA means a broken wire or no power, not zero. Below about 3.6 mA or above 21 mA, many transmitters are signalling a fault (NAMUR NE 43).\n\nScaling: $x = x_{lo} + \\frac{I - 4}{16}(x_{hi} - x_{lo})$. Back again: $I = 4 + 16 \\times$ the fraction of the range.\n\nA **250 Ω** resistor turns 4–20 mA into 1–5 V ($V = IR$).\n\n**0–10 V** is simple and common on drives and short runs, but volts are lost along long cables and pick up noise. Scaling: fraction = V ÷ 10.\n\n**PT100**: a platinum resistance, 100 Ω at 0 °C, rising about 0.385 Ω per °C: $R = 100(1 + 0.00385T)$. With **2 wires**, the leads' resistance adds to the reading (1 Ω is about 2.6 °C). **3-wire** cancels equal leads; **4-wire** cancels them fully.\n\n**Thermocouple**: two different metals joined at the hot end make a few millivolts that depend on the difference between the hot junction and the cold (reference) end. The instrument measures the cold end's temperature and adds it back: **cold-junction compensation**. Use cable of the same type all the way; a run of copper in the middle makes a new junction and an error.\n\n**Incremental encoder**: channels A and B, a quarter of a cycle apart (which leads gives the direction), Z once a turn. Pulse rate: $f = \\frac{Pn}{60}$ (P pulses a turn, n rpm). Counting every edge of A and B gives 4 counts a pulse.",
  "resources": [
-  {"when": "after", "kind": "read", "title": "Lessons In Industrial Instrumentation (free textbook: analog signals, 4–20 mA, RTDs and thermocouples)", "url": "https://ibiblio.org/kuphaldt/socratic/sinst/doc/liii.html", "by": "Tony R. Kuphaldt", "minutes": 30, "note": "Its chapters on analog electronic instrumentation and temperature go deeper; free under a Creative Commons licence."}
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "Lessons In Industrial Instrumentation (free textbook: analog signals, 4–20 mA, RTDs and thermocouples)",
+   "url": "https://ibiblio.org/kuphaldt/socratic/sinst/doc/liii.html",
+   "by": "Tony R. Kuphaldt",
+   "minutes": 30,
+   "note": "Its chapters on analog electronic instrumentation and temperature go deeper; free under a Creative Commons licence."
+  }
  ],
  "sources": [
   "IEC 60381-1: Analogue signals for process control systems. Part 1: Direct current signals",
@@ -24,69 +41,755 @@
   "Kuphaldt, T. R.: Lessons In Industrial Instrumentation (open textbook)"
  ],
  "formulas": [
-  {"name": "Scaling a 4–20 mA signal", "tex": "x = x_{lo} + \\frac{I - 4}{16}(x_{hi} - x_{lo})", "match": ["\\frac{I - 4}{16}"],
+  {
+   "name": "Scaling a 4–20 mA signal",
+   "tex": "x = x_{lo} + \\frac{I - 4}{16}(x_{hi} - x_{lo})",
+   "match": [
+    "\\frac{I - 4}{16}"
+   ],
    "says": "Take off the 4 mA live zero, divide by the 16 mA span to get the fraction of the range, then turn that fraction into the units of the range.",
-   "symbols": [["x", "the value the signal stands for (bar, °C, m)"], ["x_{lo}", "the bottom of the range, at 4 mA"], ["x_{hi}", "the top of the range, at 20 mA"], ["I", "the loop current (mA)"]],
-   "example": "0–10 bar at 12 mA: $\\frac{12 - 4}{16} = 0.5$, so 5 bar."},
-  {"name": "PT100 resistance", "tex": "R = 100(1 + 0.00385T)", "match": ["0.00385"],
+   "symbols": [
+    [
+     "x",
+     "the value the signal stands for (bar, °C, m)"
+    ],
+    [
+     "x_{lo}",
+     "the bottom of the range, at 4 mA"
+    ],
+    [
+     "x_{hi}",
+     "the top of the range, at 20 mA"
+    ],
+    [
+     "I",
+     "the loop current (mA)"
+    ]
+   ],
+   "example": "0–10 bar at 12 mA: $\\frac{12 - 4}{16} = 0.5$, so 5 bar."
+  },
+  {
+   "name": "PT100 resistance",
+   "tex": "R = 100(1 + 0.00385T)",
+   "match": [
+    "0.00385"
+   ],
    "says": "A PT100 is 100 Ω at 0 °C and rises by 0.385 % of that for every degree.",
-   "symbols": [["R", "the resistance (Ω)"], ["T", "the temperature (°C)"]],
-   "example": "At 50 °C: $100 \\times (1 + 0.00385 \\times 50) = 119.25$ Ω."},
-  {"name": "Encoder pulse rate", "tex": "f = \\frac{Pn}{60}", "match": ["\\frac{Pn}{60}"],
+   "symbols": [
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "T",
+     "the temperature (°C)"
+    ]
+   ],
+   "example": "At 50 °C: $100 \\times (1 + 0.00385 \\times 50) = 119.25$ Ω."
+  },
+  {
+   "name": "Encoder pulse rate",
+   "tex": "f = \\frac{Pn}{60}",
+   "match": [
+    "\\frac{Pn}{60}"
+   ],
    "says": "Each turn gives P pulses; n turns a minute is n ÷ 60 turns a second.",
-   "symbols": [["f", "pulses a second (Hz)"], ["P", "pulses per revolution (PPR)"], ["n", "the speed (rpm)"]],
-   "example": "1000 PPR at 1500 rpm: $\\frac{1000 \\times 1500}{60} = 25\\,000$ Hz."},
-  {"name": "Ohm's law", "tex": "V = IR", "match": ["V = IR"],
+   "symbols": [
+    [
+     "f",
+     "pulses a second (Hz)"
+    ],
+    [
+     "P",
+     "pulses per revolution (PPR)"
+    ],
+    [
+     "n",
+     "the speed (rpm)"
+    ]
+   ],
+   "example": "1000 PPR at 1500 rpm: $\\frac{1000 \\times 1500}{60} = 25\\,000$ Hz."
+  },
+  {
+   "name": "Ohm's law",
+   "tex": "V = IR",
+   "match": [
+    "V = IR"
+   ],
    "says": "The voltage across a resistor is the current through it times its resistance.",
-   "symbols": [["V", "the voltage (V)"], ["I", "the current (A)"], ["R", "the resistance (Ω)"]],
-   "example": "20 mA through 250 Ω: $0.020 \\times 250 = 5$ V."}
+   "symbols": [
+    [
+     "V",
+     "the voltage (V)"
+    ],
+    [
+     "I",
+     "the current (A)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ]
+   ],
+   "example": "20 mA through 250 Ω: $0.020 \\times 250 = 5$ V."
+  }
  ],
  "bench": [
-  {"task": "Simulate a 4–20 mA loop on the bench at 24 V DC: a 24 V supply, a 1 kΩ potentiometer in series with a 470 Ω fixed resistor (so the current cannot go above about 51 mA), and your multimeter on its mA range in series. Low voltage only.", "check": ["Wire supply +, the 470 Ω, the pot, the meter (mA socket), back to supply −", "Set the pot for 4.0 mA, then 12.0 mA, then 20.0 mA, and write each down", "For each, work out what a 0–10 bar transmitter would be saying (0, 5 and 10 bar)", "Unplug one wire: the meter reads 0 mA. That is what a broken loop looks like to the PLC"]},
-  {"task": "Measure a spare PT100 with a multimeter on its 200 Ω range, at room temperature and then held in your hand. Unpowered sensor only.", "check": ["Short the meter leads first and note their resistance; take it off your readings", "Room temperature (about 20 °C) should read about 107.7 Ω", "Hold it for a minute: the reading rises by about 0.385 Ω per degree", "Work out the temperature from $T = \\frac{R/100 - 1}{0.00385}$"]}
+  {
+   "task": "Simulate a 4–20 mA loop on the bench at 24 V DC: a 24 V supply, a 1 kΩ potentiometer in series with a 470 Ω fixed resistor (so the current cannot go above about 51 mA), and your multimeter on its mA range in series. Low voltage only.",
+   "check": [
+    "Wire supply +, the 470 Ω, the pot, the meter (mA socket), back to supply −",
+    "Set the pot for 4.0 mA, then 12.0 mA, then 20.0 mA, and write each down",
+    "For each, work out what a 0–10 bar transmitter would be saying (0, 5 and 10 bar)",
+    "Unplug one wire: the meter reads 0 mA. That is what a broken loop looks like to the PLC"
+   ]
+  },
+  {
+   "task": "Measure a spare PT100 with a multimeter on its 200 Ω range, at room temperature and then held in your hand. Unpowered sensor only.",
+   "check": [
+    "Short the meter leads first and note their resistance; take it off your readings",
+    "Room temperature (about 20 °C) should read about 107.7 Ω",
+    "Hold it for a minute: the reading rises by about 0.385 Ω per degree",
+    "Work out the temperature from $T = \\frac{R/100 - 1}{0.00385}$"
+   ]
+  }
  ],
  "cards": [
-  {"id": "try-twelve", "type": "mcq", "stage": "try", "q": "A pressure transmitter is ranged 0–10 bar on a 4–20 mA loop. The PLC sees 12 mA. What is the pressure?", "options": ["5 bar", "6 bar", "6.7 bar", "8 bar"], "answer": 0, "why": "12 mA is half-way between 4 and 20 mA: $\\frac{12 - 4}{16} = 0.5$, so half the range, 5 bar. 6 bar comes from $12 \\div 20$, forgetting that the range starts at 4 mA, not 0."},
-
-  {"id": "loop", "type": "concept", "stage": "learn", "title": "Why a current, and why 4 mA", "body": "A **4–20 mA loop** is one circuit: a 24 V supply, the transmitter in the field, and the PLC's input, all in series. The transmitter sets the current to match what it measures.\n\nIn a series circuit **the same current flows everywhere**, so a long cable, a terminal or a barrier does not change it. A voltage signal would lose volts along the way.\n\nThe bottom of the range is **4 mA, not 0**: a **live zero**. Real 0 mA can then only mean a fault: a broken wire, a blown fuse, no power.", "more": "Think of a hosepipe with a flow meter at each end. However long the hose, what goes in comes out: the flow is the same at both ends. A voltage is more like the pressure, which drops along the hose.\n\nSo the transmitter pushes, say, 12 mA round the loop, and the PLC 200 m away sees 12 mA too.\n\nWhy start at 4? If 0 mA meant \"zero bar\", a cut cable would look exactly like an empty tank, and nobody would know. With 4 mA as zero, 0 mA is impossible in normal running, so it shouts \"fault\". The 4 mA also powers a **2-wire transmitter**: it runs on the loop current itself, with no separate supply."},
-  {"id": "zero-ma", "type": "mcq", "stage": "learn", "level": 4.8, "q": "A 0–100 °C transmitter's loop reads 0.0 mA. What does that tell you?", "options": ["The loop is open or unpowered", "The process is at 0 °C", "The process is below 0 °C", "The transmitter is at full scale"], "answer": 0, "why": "0 °C would be 4 mA, the live zero. 0 mA cannot happen in normal running: look for a broken wire, a loose terminal, a blown fuse or no 24 V."},
-
-  {"id": "scaling", "type": "concept", "stage": "learn", "title": "Scaling: from milliamps to the value", "body": "Three moves:\n\n- take off the live zero: $I - 4$\n- divide by the span, 16 mA: that is the **fraction** of the range\n- turn the fraction into the units of the range\n\n$$x = x_{lo} + \\frac{I - 4}{16}(x_{hi} - x_{lo})$$\n\n$x_{lo}$ is the value at 4 mA, $x_{hi}$ the value at 20 mA.", "more": "Numbers first. A level transmitter is ranged 0–4 m and sends 8 mA.\n\n8 − 4 = 4 mA above the bottom. The whole range is 16 mA, so that is $4 \\div 16 = 0.25$, a quarter of the way up. A quarter of 4 m is 1 m.\n\nIf the range does not start at 0, add the bottom back on: a −20 to 80 °C transmitter (span 100 °C) at 8 mA is a quarter of the way up the span: $-20 + 0.25 \\times 100 = 5$ °C.\n\nThe PLC does exactly this in its scaling block (SCALE, NORM_X and SCALE_X, or a CPT instruction), only in its raw counts instead of milliamps."},
-  {"id": "scale-first", "type": "numeric", "stage": "learn", "q": "A level transmitter is ranged 0–{hi} m. The loop reads {ma} mA. What is the level?", "vars": {"hi": {"pick": [2, 4, 5, 8, 10]}, "ma": [4.8, 19.2, 0.4]}, "answer": "(ma - 4) / 16 * hi", "unit": "m", "tolerance": 0.01, "work": "$\\frac{{ma} - 4}{16} \\times {hi} = {answer}$ m", "why": "Take off the 4 mA, divide by 16 for the fraction of the range, times the range. Dividing by 20 instead, or not taking off the 4, are the two usual slips.", "hint": "Fraction of the range = (mA − 4) ÷ 16."},
-
-  {"id": "volts", "type": "concept", "stage": "learn", "title": "0–10 V, and turning current into volts", "body": "**0–10 V** signals are common on drives, valves and short runs in a panel. They are simple: fraction of the range = V ÷ 10. But a voltage drops along a long cable and picks up noise, and 0 V looks the same as a broken wire. Some kit uses **2–10 V** for a live zero.\n\nMany inputs read volts, so a 4–20 mA signal is often passed through a **250 Ω** resistor: by $V = IR$, 4 mA gives 1 V and 20 mA gives 5 V.", "more": "A 0–10 V speed reference to a drive in the same panel is fine: a metre or two of cable loses nothing worth noticing.\n\nOver 100 m, the input's tiny current still flows through the cable's resistance, and the earth at the far end may sit a volt or so away from the earth at the panel. Both shift the reading. Current does not care, which is why process signals across a site are 4–20 mA.\n\nThe 250 Ω trick: $0.004 \\text{ A} \\times 250 \\text{ Ω} = 1$ V and $0.020 \\times 250 = 5$ V. So a 1–5 V input with a 250 Ω resistor across it reads a 4–20 mA loop."},
-  {"id": "shunt", "type": "numeric", "stage": "learn", "level": 5.0, "q": "A 4–20 mA loop passes through a 250 Ω resistor at the PLC input. The loop current is {ma} mA. What voltage is across the resistor?", "vars": {"ma": [4, 20, 0.5]}, "answer": "ma / 1000 * 250", "unit": "V", "tolerance": 0.01, "work": "$V = IR = {ma} \\times 10^{-3} \\times 250 = {answer}$ V", "why": "Ohm's law, with the current in amps: mA ÷ 1000. A handy check: 4 mA is 1 V and 20 mA is 5 V.", "hint": "$V = IR$, with I in amps (mA ÷ 1000)."},
-  {"id": "long-run", "type": "mcq", "stage": "learn", "level": 5.0, "q": "A flow transmitter is 300 m from the PLC. Why choose a 4–20 mA output over 0–10 V?", "options": ["Cable resistance and noise do not change a loop current", "A current signal is faster to update than a voltage", "0–10 V cannot be wired over more than 10 m at all", "4–20 mA cable is thinner and so cheaper to run"], "answer": 0, "why": "The same current flows all round the loop, whatever the cable's resistance, and a current loop shrugs off most induced noise. A voltage loses volts along the way. 0–10 V is not banned on long runs; it is just less trustworthy there."},
-
-  {"id": "pt100", "type": "concept", "stage": "learn", "title": "PT100: a resistance that tells the temperature", "body": "A **PT100** is a platinum resistance thermometer (an **RTD**): **100 Ω at 0 °C**, rising about **0.385 Ω per °C**.\n\n$$R = 100(1 + 0.00385T)$$\n\n$R$ is the resistance in ohms, $T$ the temperature in °C. At 100 °C it is 138.5 Ω.\n\nThe catch is the **leads**: with **2 wires**, their resistance adds to the reading. **3-wire** connection measures one lead and takes it off (fine if the leads match); **4-wire** cancels them completely.", "more": "The formula says: start at 100 Ω, and add 0.385 Ω for every degree above 0 °C. At 20 °C: $100 + 20 \\times 0.385 = 107.7$ Ω.\n\nBackwards, from a reading: take off the 100, divide by 0.385. A meter reads 115.4 Ω: $(115.4 - 100) \\div 0.385 = 40$ °C.\n\nNow the leads. 0.385 Ω is one degree, so 1 Ω of lead is about $1 \\div 0.385 \\approx 2.6$ °C. A 2-wire PT100 on 50 m of thin cable can have 2 Ω or more in its leads: the reading is 5 °C or more too high, every time. That is why panels use 3- or 4-wire connections or a head-mounted transmitter."},
-  {"id": "pt100-temp", "type": "numeric", "stage": "learn", "q": "A PT100 reads {r} Ω. What is the temperature?", "vars": {"r": [103.85, 157.75, 0.385]}, "answer": "(r / 100 - 1) / 0.00385", "unit": "°C", "tolerance": 0.01, "work": "$T = \\frac{{r} \\div 100 - 1}{0.00385} = {answer}$ °C", "why": "Run $R = 100(1 + 0.00385T)$ backwards: divide by 100, take off 1, divide by 0.00385. In short: (R − 100) ÷ 0.385.", "hint": "Take off the 100 Ω, then divide by 0.385 Ω per degree."},
-
-  {"id": "thermocouple", "type": "concept", "stage": "learn", "title": "Thermocouples and the cold junction", "body": "Join two **different metals** at one end and heat it: a few **millivolts** appear at the other end. A **type K** gives about 41 µV per °C.\n\nThe voltage depends on the **difference** between the hot junction and the **cold junction**, where the thermocouple metals meet the instrument's copper. So the instrument measures its own terminals' temperature and adds it back: **cold-junction compensation** (CJC).\n\nRun **thermocouple or compensating cable of the same type** all the way. A stretch of copper in between makes a new cold junction in the wrong place.", "more": "A thermocouple is like measuring a height with a tape from a shelf, not from the floor: you get the difference, and you must know how high the shelf is.\n\nSay the furnace is at 400 °C and the terminals in the panel at 25 °C. A type K makes roughly what it would for 375 °C of difference. The instrument measures 25 °C at its terminals with a small sensor and adds it on: 400 °C.\n\nIf the thermocouple wires stop at a junction box and copper goes on to the panel, the real cold junction is now in the junction box. If that box is in the sun at 40 °C while the panel is at 25 °C, the reading is out by about 15 °C. Wired the wrong way round, the reading moves the wrong way as it heats."},
-  {"id": "tc-copper", "type": "mcq", "stage": "learn", "level": 5.6, "q": "A type K thermocouple's leads were extended with ordinary copper cable from a junction box near a hot oven. The reading is wrong. Why?", "options": ["The real cold junction is now in the hot box", "Copper cable has too much resistance for millivolts", "Type K only works with cable under 5 m long", "Copper picks up mains hum that cancels the signal"], "answer": 0, "why": "Where the type K wires meet copper is the cold junction. The instrument compensates for its own terminals' temperature, not the junction box's, so the box's extra heat is an error. Use type K extension or compensating cable all the way to the instrument."},
-
-  {"id": "encoder", "type": "concept", "stage": "learn", "title": "Encoders: pulses for position and speed", "body": "An **incremental encoder** sends square-wave pulses as its shaft turns: **P pulses per revolution** (PPR) on channel **A**, and the same on **B**, a quarter of a cycle later. Which one leads tells the **direction**. **Z** gives one pulse a turn, for homing.\n\nThe pulse rate a counter must keep up with:\n\n$$f = \\frac{Pn}{60}$$\n\nwhere $n$ is the speed in rpm. Counting every rising and falling edge of A and B gives **4 counts per pulse** (×4 decoding).\n\nChange the PPR and the speed and watch the frequency.", "widget": {"name": "encoder", "params": {"ppr": 100, "rpm": 600, "controls": ["ppr", "rpm", "dir"]}}, "more": "Picture a wheel with 100 slots and a light shining through. Each slot that passes is one pulse. At 600 rpm the wheel turns 10 times a second, so 100 × 10 = 1000 pulses a second, 1 kHz.\n\nA PLC's ordinary inputs only manage a few hundred pulses a second; anything faster needs a **high-speed counter** input, and the datasheet gives its maximum frequency.\n\nB lags A by a quarter of a cycle turning one way, and leads it turning the other. The counter watches which comes first to count up or down."},
-  {"id": "encoder-freq", "type": "widget", "stage": "learn", "intro": "Set the encoder to the speed and PPR you like.", "widget": {"name": "encoder", "params": {"ppr": 500, "rpm": 300, "controls": ["ppr", "rpm"]}}, "ask": {"type": "numeric", "q": "With your settings, how many pulses a second come from channel A?", "answer": "freq", "unit": "Hz", "tolerance": 0.01, "why": "$f = \\frac{Pn}{60}$: pulses a turn times turns a second. Here {freq} Hz.", "hint": "rpm ÷ 60 is turns a second; times the PPR."}},
-
-  {"id": "worked-scale", "type": "steps", "stage": "example", "worked": true, "q": "A temperature transmitter is ranged −20 to 180 °C. The loop reads 9.6 mA. What is the temperature?", "steps": [{"ask": "Take off the live zero.", "show": "$9.6 - 4 = 5.6$ mA above the bottom of the range."}, {"ask": "What fraction of the range is that?", "show": "$5.6 \\div 16 = 0.35$"}, {"ask": "How wide is the range?", "show": "$180 - (-20) = 200$ °C"}, {"ask": "Turn the fraction into degrees, and add the bottom back.", "show": "$-20 + 0.35 \\times 200 = -20 + 70 = 50$ °C"}], "why": "Live zero off, divide by 16, times the span, add the bottom. Forgetting the −20 gives 70 °C, which is the most common slip with a range that does not start at 0."},
-  {"id": "explain-span", "type": "explain", "stage": "example", "q": "Why does step 2 divide by 16 and not by 20?", "context": "−20 to 180 °C transmitter at 9.6 mA: (9.6 − 4) ÷ 16 = 0.35 of the range.", "model": "Because the range runs from 4 mA to 20 mA, it is 16 mA wide, not 20. Once 4 mA has been taken off, the reading is measured from the bottom of the range, so it must be compared with the width of the range, 16 mA, to give the fraction. Dividing by 20 would only be right if the range started at 0 mA.", "points": ["The span is 20 − 4 = 16 mA", "The 4 mA was already taken off", "Fraction = distance from the bottom ÷ the width", "÷ 20 would treat 0 mA as the bottom"]},
-  {"id": "faded-reverse", "type": "steps", "stage": "example", "given": 1, "q": "A flow transmitter is ranged 0–250 m³/h. What current should it send at 150 m³/h?", "steps": [{"ask": "What fraction of the range is 150 m³/h?", "show": "$150 \\div 250 = 0.6$"}, {"ask": "How many mA is that fraction of the 16 mA span?", "show": "$0.6 \\times 16 = 9.6$ mA"}, {"ask": "Add the live zero back on.", "show": "$4 + 9.6 = 13.6$ mA"}], "why": "Backwards is the same three moves reversed: fraction, times 16, add 4. Handy when you inject a current with a loop calibrator and check the PLC shows the right value."},
-  {"id": "reverse", "type": "numeric", "stage": "example", "q": "A pressure transmitter is ranged 0–{hi} bar. What current should it send at {p} bar?", "vars": {"hi": {"pick": [10, 16, 25, 40]}, "fr": [0.1, 0.9, 0.05]}, "let": {"p": "ROUND(fr * hi, 1)"}, "answer": "4 + 16 * p / hi", "unit": "mA", "tolerance": 0.01, "work": "$I = 4 + 16 \\times \\frac{{p}}{{hi}} = {answer}$ mA", "why": "Fraction of the range, times the 16 mA span, plus the 4 mA live zero.", "hint": "Fraction = {p} ÷ {hi}; then 4 + 16 × fraction."},
-
-  {"id": "offset-range", "type": "numeric", "stage": "practise", "level": 5.9, "q": "A temperature transmitter is ranged {lo} to {hi} °C. The loop reads {ma} mA. What is the temperature?", "vars": {"lo": {"pick": [-50, -20, 0, 20]}, "w": {"pick": [100, 150, 200, 300]}, "ma": [5.6, 18.4, 0.8]}, "let": {"hi": "lo + w"}, "answer": "lo + (ma - 4) / 16 * w", "unit": "°C", "abs": 0.3, "work": "$({lo}) + \\frac{{ma} - 4}{16} \\times {w} = {answer}$ °C", "why": "Fraction of the range times the span ({w} °C), then add the bottom of the range back on.", "hint": "The span is {hi} − ({lo}). Do not forget to add the bottom of the range back."},
-  {"id": "fault-levels", "type": "mcq", "stage": "practise", "level": 5.8, "q": "A transmitter that follows NAMUR NE 43 sends 21.5 mA. What is it most likely saying?", "options": ["It has found a fault in itself", "The process is a little over full scale", "The loop has a short circuit to earth", "The PLC input card has failed"], "answer": 0, "why": "NE 43 keeps measurements between about 3.8 and 20.5 mA, and uses below 3.6 mA or above 21 mA to signal a failure. A small over-range would sit just above 20 mA, not past 21. Set the PLC to alarm outside 3.6 to 21 mA."},
-  {"id": "lead-error", "type": "numeric", "stage": "practise", "level": 6.0, "q": "A 2-wire PT100 has {l} m of cable. Each core has a resistance of {rc} Ω per metre. By how many degrees does the reading come out too high?", "vars": {"l": [10, 80, 10], "rc": {"pick": [0.018, 0.025, 0.036]}}, "let": {"rl": "2 * l * rc"}, "answer": "rl / 0.385", "unit": "°C", "tolerance": 0.02, "work": "Both cores: $2 \\times {l} \\times {rc} = {rl:2}$ Ω; $\\div 0.385 = {answer}$ °C", "why": "With 2 wires, the current goes out along one core and back along the other, so both cores' resistance adds to the PT100's. 0.385 Ω is one degree.", "hint": "The current goes through both cores. Total lead resistance ÷ 0.385 Ω per °C."},
-  {"id": "pt100-r", "type": "numeric", "stage": "practise", "level": 5.0, "q": "What should a healthy PT100 read at {t} °C?", "vars": {"t": [10, 250, 5]}, "answer": "100 * (1 + 0.00385 * t)", "unit": "Ω", "tolerance": 0.005, "work": "$R = 100(1 + 0.00385 \\times {t}) = {answer}$ Ω", "why": "100 Ω at 0 °C plus 0.385 Ω a degree. Over a wide range, a transmitter uses the fuller Callendar–Van Dusen equation, but this is within a degree or two up to about 200 °C.", "hint": "100 Ω plus 0.385 Ω for each degree."},
-  {"id": "spot-scale", "type": "spot", "stage": "practise", "level": 5.6, "q": "A 0–6 m level transmitter reads 10 mA. One line of this working is wrong. Which?", "lines": ["Live zero off: 10 − 4 = 6 mA", "Fraction of the range: 6 ÷ 20 = 0.3", "Level: 0.3 × 6 m = 1.8 m", "So the tank is 1.8 m full"], "wrong": 1, "fix": "Fraction of the range: 6 ÷ 16 = 0.375, so the level is 0.375 × 6 = 2.25 m", "why": "The span of a 4–20 mA signal is 16 mA. Check: 10 mA is a bit over a third of the way from 4 to 20, so the answer must be a bit over 2 m, not 1.8 m."},
-  {"id": "encoder-counts", "type": "numeric", "stage": "practise", "level": 6.0, "q": "A {ppr} PPR encoder is read with ×4 decoding. It is on a leadscrew that moves the table {pitch} mm per turn. How far does the table move per count?", "vars": {"ppr": {"pick": [500, 1000, 1024, 2500]}, "pitch": {"pick": [5, 10, 20]}}, "answer": "pitch / (4 * ppr) * 1000", "unit": "µm", "tolerance": 0.01, "work": "$\\frac{{pitch} \\text{ mm}}{4 \\times {ppr}} = {answer}$ µm", "why": "×4 decoding gives 4 counts per pulse, so 4 × {ppr} counts a turn, and one turn moves the table {pitch} mm. × 1000 for micrometres.", "hint": "Counts a turn = 4 × PPR. Distance per count = pitch ÷ counts a turn."},
-  {"id": "tc-reverse", "type": "mcq", "stage": "practise", "q": "As an oven heats up, its thermocouple reading goes down. What is the most likely cause?", "options": ["The thermocouple is wired the wrong way round", "The cold-junction compensation is switched off", "The thermocouple has burnt out", "The cable is too long"], "answer": 0, "why": "Reversed polarity makes the instrument subtract the hot junction's voltage, so the reading moves the wrong way. A burnt-out thermocouple is an open circuit: most instruments then go to an upscale or downscale alarm, not a smooth wrong trend."},
-
-  {"id": "mix-volts", "type": "numeric", "stage": "mix", "level": 5.0, "q": "A drive's speed is shown on a 0–10 V output, ranged 0–{n} rpm. The meter reads {v} V. What speed is that?", "vars": {"n": {"pick": [1500, 3000, 1800]}, "v": [1, 9.5, 0.5]}, "answer": "v / 10 * n", "unit": "rpm", "tolerance": 0.01, "work": "$\\frac{{v}}{10} \\times {n} = {answer}$ rpm", "why": "A 0–10 V signal has no live zero: the fraction is just V ÷ 10. Taking off a 'zero' here would be the 4–20 mA rule in the wrong place.", "hint": "Is there a live zero on 0–10 V?"},
-  {"id": "mix-shunt-reading", "type": "numeric", "stage": "mix", "level": 6.0, "q": "A 0–{hi} bar transmitter's loop passes through a 250 Ω resistor, and the PLC reads {v} V across it. What is the pressure?", "vars": {"hi": {"pick": [10, 16, 25]}, "v": [1.2, 4.8, 0.2]}, "let": {"ma": "v / 250 * 1000"}, "answer": "(ma - 4) / 16 * hi", "unit": "bar", "tolerance": 0.01, "work": "$I = \\frac{{v}}{250} = {ma:2}$ mA; $\\frac{{ma:2} - 4}{16} \\times {hi} = {answer}$ bar", "why": "Two rules in a row: Ohm's law turns the volts back into the loop current, then the 4–20 mA scaling. Or directly: 1–5 V is a 4 V span, so (V − 1) ÷ 4 is the fraction.", "hint": "Current first: I = V ÷ R. Then scale the mA."},
-  {"id": "mix-which", "type": "mcq", "stage": "mix", "level": 5.5, "q": "Which reading is a fault, not a value?", "options": ["0 mA on a 4–20 mA loop", "0 V on a 0–10 V output", "4 mA on a 4–20 mA loop", "100 Ω from a PT100"], "answer": 0, "why": "0 mA is below the live zero, so it cannot be a measurement. 0 V on a 0–10 V signal could be a real zero (that is its weakness), 4 mA is the bottom of the range, and 100 Ω is a PT100 at 0 °C."},
-
-  {"id": "check-try", "type": "mcq", "stage": "check", "q": "A level transmitter ranged 0–8 m sends 16 mA. What is the level?", "options": ["6 m", "6.4 m", "4 m", "7.2 m"], "answer": 0, "why": "$\\frac{16 - 4}{16} = 0.75$ of the range; 0.75 × 8 = 6 m. 6.4 m comes from 16 ÷ 20 × 8, forgetting the live zero."},
-  {"id": "check-scale", "type": "numeric", "stage": "check", "q": "A flow transmitter is ranged 0–{hi} L/min. The loop reads {ma} mA. What is the flow?", "vars": {"hi": {"pick": [50, 100, 200, 400]}, "ma": [6, 18, 0.5]}, "answer": "(ma - 4) / 16 * hi", "unit": "L/min", "tolerance": 0.01, "work": "$\\frac{{ma} - 4}{16} \\times {hi} = {answer}$ L/min", "why": "Live zero off, ÷ 16, × the range."},
-  {"id": "check-wiring", "type": "match", "stage": "check", "q": "Match each sensor to what you must get right when wiring it.", "pairs": [["PT100 on a long run", "3- or 4-wire, so the leads are not read as temperature"], ["Thermocouple", "Cable of the same type all the way, and the right polarity"], ["4–20 mA transmitter", "One loop in series, with 24 V to power it"], ["Incremental encoder", "A high-speed counter input fast enough for its pulses"]], "why": "Each signal has its own way of going wrong: lead resistance, a stray cold junction, a broken loop, missed pulses."},
-  {"id": "check-encoder", "type": "numeric", "stage": "check", "level": 5.2, "q": "An encoder gives {ppr} pulses a turn at {n} rpm. How many pulses a second is that?", "vars": {"ppr": {"pick": [100, 360, 1000, 2048]}, "n": {"pick": [300, 750, 1500, 3000]}}, "answer": "ppr * n / 60", "unit": "Hz", "tolerance": 0.01, "work": "$f = \\frac{{ppr} \\times {n}}{60} = {answer}$ Hz", "why": "Pulses a turn times turns a second (rpm ÷ 60)."}
+  {
+   "id": "try-twelve",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A pressure transmitter is ranged 0–10 bar on a 4–20 mA loop. The PLC sees 12 mA. What is the pressure?",
+   "options": [
+    "5 bar",
+    "6 bar",
+    "6.7 bar",
+    "8 bar"
+   ],
+   "answer": 0,
+   "why": "12 mA is half-way between 4 and 20 mA: $\\frac{12 - 4}{16} = 0.5$, so half the range, 5 bar. 6 bar comes from $12 \\div 20$, forgetting that the range starts at 4 mA, not 0."
+  },
+  {
+   "id": "loop",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Why a current, and why 4 mA",
+   "body": "A **4–20 mA loop** is one circuit: a 24 V supply, the transmitter in the field, and the PLC's input, all in series. The transmitter sets the current to match what it measures.\n\nIn a series circuit **the same current flows everywhere**, so a long cable, a terminal or a barrier does not change it. A voltage signal would lose volts along the way.\n\nThe bottom of the range is **4 mA, not 0**: a **live zero**. Real 0 mA can then only mean a fault: a broken wire, a blown fuse, no power.",
+   "more": "Think of a hosepipe with a flow meter at each end. However long the hose, what goes in comes out: the flow is the same at both ends. A voltage is more like the pressure, which drops along the hose.\n\nSo the transmitter pushes, say, 12 mA round the loop, and the PLC 200 m away sees 12 mA too.\n\nWhy start at 4? If 0 mA meant \"zero bar\", a cut cable would look exactly like an empty tank, and nobody would know. With 4 mA as zero, 0 mA is impossible in normal running, so it shouts \"fault\". The 4 mA also powers a **2-wire transmitter**: it runs on the loop current itself, with no separate supply."
+  },
+  {
+   "id": "zero-ma",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A 0–100 °C transmitter's loop reads 0.0 mA. What does that tell you?",
+   "options": [
+    "The loop is open or unpowered",
+    "The process is at 0 °C",
+    "The process is below 0 °C",
+    "The transmitter is at full scale"
+   ],
+   "answer": 0,
+   "why": "0 °C would be 4 mA, the live zero. 0 mA cannot happen in normal running: look for a broken wire, a loose terminal, a blown fuse or no 24 V."
+  },
+  {
+   "id": "scaling",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Scaling: from milliamps to the value",
+   "body": "Three moves:\n\n- take off the live zero: $I - 4$\n- divide by the span, 16 mA: that is the **fraction** of the range\n- turn the fraction into the units of the range\n\n$$x = x_{lo} + \\frac{I - 4}{16}(x_{hi} - x_{lo})$$\n\n$x_{lo}$ is the value at 4 mA, $x_{hi}$ the value at 20 mA.",
+   "more": "Numbers first. A level transmitter is ranged 0–4 m and sends 8 mA.\n\n8 − 4 = 4 mA above the bottom. The whole range is 16 mA, so that is $4 \\div 16 = 0.25$, a quarter of the way up. A quarter of 4 m is 1 m.\n\nIf the range does not start at 0, add the bottom back on: a −20 to 80 °C transmitter (span 100 °C) at 8 mA is a quarter of the way up the span: $-20 + 0.25 \\times 100 = 5$ °C.\n\nThe PLC does exactly this in its scaling block (SCALE, NORM_X and SCALE_X, or a CPT instruction), only in its raw counts instead of milliamps."
+  },
+  {
+   "id": "scale-first",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A level transmitter is ranged 0–{hi} m. The loop reads {ma} mA. What is the level?",
+   "vars": {
+    "hi": {
+     "pick": [
+      2,
+      4,
+      5,
+      8,
+      10
+     ]
+    },
+    "ma": [
+     4.8,
+     19.2,
+     0.4
+    ]
+   },
+   "answer": "(ma - 4) / 16 * hi",
+   "unit": "m",
+   "tolerance": 0.01,
+   "work": "$\\frac{{ma} - 4}{16} \\times {hi} = {answer}$ m",
+   "why": "Take off the 4 mA, divide by 16 for the fraction of the range, times the range. Dividing by 20 instead, or not taking off the 4, are the two usual slips.",
+   "hint": "Fraction of the range = (mA − 4) ÷ 16."
+  },
+  {
+   "id": "volts",
+   "type": "concept",
+   "stage": "learn",
+   "title": "0–10 V, and turning current into volts",
+   "body": "**0–10 V** signals are common on drives, valves and short runs in a panel. They are simple: fraction of the range = V ÷ 10. But a voltage drops along a long cable and picks up noise, and 0 V looks the same as a broken wire. Some kit uses **2–10 V** for a live zero.\n\nMany inputs read volts, so a 4–20 mA signal is often passed through a **250 Ω** resistor: by $V = IR$, 4 mA gives 1 V and 20 mA gives 5 V.",
+   "more": "A 0–10 V speed reference to a drive in the same panel is fine: a metre or two of cable loses nothing worth noticing.\n\nOver 100 m, the input's tiny current still flows through the cable's resistance, and the earth at the far end may sit a volt or so away from the earth at the panel. Both shift the reading. Current does not care, which is why process signals across a site are 4–20 mA.\n\nThe 250 Ω trick: $0.004 \\text{ A} \\times 250 \\text{ Ω} = 1$ V and $0.020 \\times 250 = 5$ V. So a 1–5 V input with a 250 Ω resistor across it reads a 4–20 mA loop."
+  },
+  {
+   "id": "shunt",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A 4–20 mA loop passes through a 250 Ω resistor at the PLC input. The loop current is {ma} mA. What voltage is across the resistor?",
+   "vars": {
+    "ma": [
+     4,
+     20,
+     0.5
+    ]
+   },
+   "answer": "ma / 1000 * 250",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$V = IR = {ma} \\times 10^{-3} \\times 250 = {answer}$ V",
+   "why": "Ohm's law, with the current in amps: mA ÷ 1000. A handy check: 4 mA is 1 V and 20 mA is 5 V.",
+   "hint": "$V = IR$, with I in amps (mA ÷ 1000)."
+  },
+  {
+   "id": "long-run",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A flow transmitter is 300 m from the PLC. Why choose a 4–20 mA output over 0–10 V?",
+   "options": [
+    "Cable resistance and noise do not change a loop current",
+    "A current signal is faster to update than a voltage",
+    "0–10 V cannot be wired over more than 10 m at all",
+    "4–20 mA cable is thinner and so cheaper to run"
+   ],
+   "answer": 0,
+   "why": "The same current flows all round the loop, whatever the cable's resistance, and a current loop shrugs off most induced noise. A voltage loses volts along the way. 0–10 V is not banned on long runs; it is just less trustworthy there."
+  },
+  {
+   "id": "pt100",
+   "type": "concept",
+   "stage": "learn",
+   "title": "PT100: a resistance that tells the temperature",
+   "body": "A **PT100** is a platinum resistance thermometer (an **RTD**): **100 Ω at 0 °C**, rising about **0.385 Ω per °C**.\n\n$$R = 100(1 + 0.00385T)$$\n\n$R$ is the resistance in ohms, $T$ the temperature in °C. At 100 °C it is 138.5 Ω.\n\nThe catch is the **leads**: with **2 wires**, their resistance adds to the reading. **3-wire** connection measures one lead and takes it off (fine if the leads match); **4-wire** cancels them completely.",
+   "more": "The formula says: start at 100 Ω, and add 0.385 Ω for every degree above 0 °C. At 20 °C: $100 + 20 \\times 0.385 = 107.7$ Ω.\n\nBackwards, from a reading: take off the 100, divide by 0.385. A meter reads 115.4 Ω: $(115.4 - 100) \\div 0.385 = 40$ °C.\n\nNow the leads. 0.385 Ω is one degree, so 1 Ω of lead is about $1 \\div 0.385 \\approx 2.6$ °C. A 2-wire PT100 on 50 m of thin cable can have 2 Ω or more in its leads: the reading is 5 °C or more too high, every time. That is why panels use 3- or 4-wire connections or a head-mounted transmitter."
+  },
+  {
+   "id": "pt100-temp",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A PT100 reads {r} Ω. What is the temperature?",
+   "vars": {
+    "r": [
+     103.85,
+     157.75,
+     0.385
+    ]
+   },
+   "answer": "(r / 100 - 1) / 0.00385",
+   "unit": "°C",
+   "tolerance": 0.01,
+   "work": "$T = \\frac{{r} \\div 100 - 1}{0.00385} = {answer}$ °C",
+   "why": "Run $R = 100(1 + 0.00385T)$ backwards: divide by 100, take off 1, divide by 0.00385. In short: (R − 100) ÷ 0.385.",
+   "hint": "Take off the 100 Ω, then divide by 0.385 Ω per degree."
+  },
+  {
+   "id": "thermocouple",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Thermocouples and the cold junction",
+   "body": "Join two **different metals** at one end and heat it: a few **millivolts** appear at the other end. A **type K** gives about 41 µV per °C.\n\nThe voltage depends on the **difference** between the hot junction and the **cold junction**, where the thermocouple metals meet the instrument's copper. So the instrument measures its own terminals' temperature and adds it back: **cold-junction compensation** (CJC).\n\nRun **thermocouple or compensating cable of the same type** all the way. A stretch of copper in between makes a new cold junction in the wrong place.",
+   "more": "A thermocouple is like measuring a height with a tape from a shelf, not from the floor: you get the difference, and you must know how high the shelf is.\n\nSay the furnace is at 400 °C and the terminals in the panel at 25 °C. A type K makes roughly what it would for 375 °C of difference. The instrument measures 25 °C at its terminals with a small sensor and adds it on: 400 °C.\n\nIf the thermocouple wires stop at a junction box and copper goes on to the panel, the real cold junction is now in the junction box. If that box is in the sun at 40 °C while the panel is at 25 °C, the reading is out by about 15 °C. Wired the wrong way round, the reading moves the wrong way as it heats."
+  },
+  {
+   "id": "tc-copper",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A type K thermocouple's leads were extended with ordinary copper cable from a junction box near a hot oven. The reading is wrong. Why?",
+   "options": [
+    "The real cold junction is now in the hot box",
+    "Copper cable has too much resistance for millivolts",
+    "Type K only works with cable under 5 m long",
+    "Copper picks up mains hum that cancels the signal"
+   ],
+   "answer": 0,
+   "why": "Where the type K wires meet copper is the cold junction. The instrument compensates for its own terminals' temperature, not the junction box's, so the box's extra heat is an error. Use type K extension or compensating cable all the way to the instrument."
+  },
+  {
+   "id": "encoder",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Encoders: pulses for position and speed",
+   "body": "An **incremental encoder** sends square-wave pulses as its shaft turns: **P pulses per revolution** (PPR) on channel **A**, and the same on **B**, a quarter of a cycle later. Which one leads tells the **direction**. **Z** gives one pulse a turn, for homing.\n\nThe pulse rate a counter must keep up with:\n\n$$f = \\frac{Pn}{60}$$\n\nwhere $n$ is the speed in rpm. Counting every rising and falling edge of A and B gives **4 counts per pulse** (×4 decoding).\n\nChange the PPR and the speed and watch the frequency.",
+   "widget": {
+    "name": "encoder",
+    "params": {
+     "ppr": 100,
+     "rpm": 600,
+     "controls": [
+      "ppr",
+      "rpm",
+      "dir"
+     ]
+    }
+   },
+   "more": "Picture a wheel with 100 slots and a light shining through. Each slot that passes is one pulse. At 600 rpm the wheel turns 10 times a second, so 100 × 10 = 1000 pulses a second, 1 kHz.\n\nA PLC's ordinary inputs only manage a few hundred pulses a second; anything faster needs a **high-speed counter** input, and the datasheet gives its maximum frequency.\n\nB lags A by a quarter of a cycle turning one way, and leads it turning the other. The counter watches which comes first to count up or down."
+  },
+  {
+   "id": "encoder-freq",
+   "type": "widget",
+   "stage": "learn",
+   "intro": "Set the encoder to the speed and PPR you like.",
+   "widget": {
+    "name": "encoder",
+    "params": {
+     "ppr": 500,
+     "rpm": 300,
+     "controls": [
+      "ppr",
+      "rpm"
+     ]
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "With your settings, how many pulses a second come from channel A?",
+    "answer": "freq",
+    "unit": "Hz",
+    "tolerance": 0.01,
+    "why": "$f = \\frac{Pn}{60}$: pulses a turn times turns a second. Here {freq} Hz.",
+    "hint": "rpm ÷ 60 is turns a second; times the PPR."
+   },
+   "hide": true
+  },
+  {
+   "id": "worked-scale",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A temperature transmitter is ranged −20 to 180 °C. The loop reads 9.6 mA. What is the temperature?",
+   "steps": [
+    {
+     "ask": "Take off the live zero.",
+     "show": "$9.6 - 4 = 5.6$ mA above the bottom of the range."
+    },
+    {
+     "ask": "What fraction of the range is that?",
+     "show": "$5.6 \\div 16 = 0.35$"
+    },
+    {
+     "ask": "How wide is the range?",
+     "show": "$180 - (-20) = 200$ °C"
+    },
+    {
+     "ask": "Turn the fraction into degrees, and add the bottom back.",
+     "show": "$-20 + 0.35 \\times 200 = -20 + 70 = 50$ °C"
+    }
+   ],
+   "why": "Live zero off, divide by 16, times the span, add the bottom. Forgetting the −20 gives 70 °C, which is the most common slip with a range that does not start at 0."
+  },
+  {
+   "id": "explain-span",
+   "type": "explain",
+   "stage": "example",
+   "q": "Why does step 2 divide by 16 and not by 20?",
+   "context": "−20 to 180 °C transmitter at 9.6 mA: (9.6 − 4) ÷ 16 = 0.35 of the range.",
+   "model": "Because the range runs from 4 mA to 20 mA, it is 16 mA wide, not 20. Once 4 mA has been taken off, the reading is measured from the bottom of the range, so it must be compared with the width of the range, 16 mA, to give the fraction. Dividing by 20 would only be right if the range started at 0 mA.",
+   "points": [
+    "The span is 20 − 4 = 16 mA",
+    "The 4 mA was already taken off",
+    "Fraction = distance from the bottom ÷ the width",
+    "÷ 20 would treat 0 mA as the bottom"
+   ]
+  },
+  {
+   "id": "faded-reverse",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A flow transmitter is ranged 0–250 m³/h. What current should it send at 150 m³/h?",
+   "steps": [
+    {
+     "ask": "What fraction of the range is 150 m³/h?",
+     "show": "$150 \\div 250 = 0.6$"
+    },
+    {
+     "ask": "How many mA is that fraction of the 16 mA span?",
+     "show": "$0.6 \\times 16 = 9.6$ mA"
+    },
+    {
+     "ask": "Add the live zero back on.",
+     "show": "$4 + 9.6 = 13.6$ mA"
+    }
+   ],
+   "why": "Backwards is the same three moves reversed: fraction, times 16, add 4. Handy when you inject a current with a loop calibrator and check the PLC shows the right value."
+  },
+  {
+   "id": "reverse",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A pressure transmitter is ranged 0–{hi} bar. What current should it send at {p} bar?",
+   "vars": {
+    "hi": {
+     "pick": [
+      10,
+      16,
+      25,
+      40
+     ]
+    },
+    "fr": [
+     0.1,
+     0.9,
+     0.05
+    ]
+   },
+   "let": {
+    "p": "ROUND(fr * hi, 1)"
+   },
+   "answer": "4 + 16 * p / hi",
+   "unit": "mA",
+   "tolerance": 0.01,
+   "work": "$I = 4 + 16 \\times \\frac{{p}}{{hi}} = {answer}$ mA",
+   "why": "Fraction of the range, times the 16 mA span, plus the 4 mA live zero.",
+   "hint": "Fraction = {p} ÷ {hi}; then 4 + 16 × fraction."
+  },
+  {
+   "id": "offset-range",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.9,
+   "q": "A temperature transmitter is ranged {lo} to {hi} °C. The loop reads {ma} mA. What is the temperature?",
+   "vars": {
+    "lo": {
+     "pick": [
+      -50,
+      -20,
+      0,
+      20
+     ]
+    },
+    "w": {
+     "pick": [
+      100,
+      150,
+      200,
+      300
+     ]
+    },
+    "ma": [
+     5.6,
+     18.4,
+     0.8
+    ]
+   },
+   "let": {
+    "hi": "lo + w"
+   },
+   "answer": "lo + (ma - 4) / 16 * w",
+   "unit": "°C",
+   "abs": 0.3,
+   "work": "$({lo}) + \\frac{{ma} - 4}{16} \\times {w} = {answer}$ °C",
+   "why": "Fraction of the range times the span ({w} °C), then add the bottom of the range back on.",
+   "hint": "The span is {hi} − ({lo}). Do not forget to add the bottom of the range back."
+  },
+  {
+   "id": "fault-levels",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.8,
+   "q": "A transmitter that follows NAMUR NE 43 sends 21.5 mA. What is it most likely saying?",
+   "options": [
+    "It has found a fault in itself",
+    "The process is a little over full scale",
+    "The loop has a short circuit to earth",
+    "The PLC input card has failed"
+   ],
+   "answer": 0,
+   "why": "NE 43 keeps measurements between about 3.8 and 20.5 mA, and uses below 3.6 mA or above 21 mA to signal a failure. A small over-range would sit just above 20 mA, not past 21. Set the PLC to alarm outside 3.6 to 21 mA."
+  },
+  {
+   "id": "lead-error",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A 2-wire PT100 has {l} m of cable. Each core has a resistance of {rc} Ω per metre. By how many degrees does the reading come out too high?",
+   "vars": {
+    "l": [
+     10,
+     80,
+     10
+    ],
+    "rc": {
+     "pick": [
+      0.018,
+      0.025,
+      0.036
+     ]
+    }
+   },
+   "let": {
+    "rl": "2 * l * rc"
+   },
+   "answer": "rl / 0.385",
+   "unit": "°C",
+   "tolerance": 0.02,
+   "work": "Both cores: $2 \\times {l} \\times {rc} = {rl:2}$ Ω; $\\div 0.385 = {answer}$ °C",
+   "why": "With 2 wires, the current goes out along one core and back along the other, so both cores' resistance adds to the PT100's. 0.385 Ω is one degree.",
+   "hint": "The current goes through both cores. Total lead resistance ÷ 0.385 Ω per °C."
+  },
+  {
+   "id": "pt100-r",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "What should a healthy PT100 read at {t} °C?",
+   "vars": {
+    "t": [
+     10,
+     250,
+     5
+    ]
+   },
+   "answer": "100 * (1 + 0.00385 * t)",
+   "unit": "Ω",
+   "tolerance": 0.005,
+   "work": "$R = 100(1 + 0.00385 \\times {t}) = {answer}$ Ω",
+   "why": "100 Ω at 0 °C plus 0.385 Ω a degree. Over a wide range, a transmitter uses the fuller Callendar–Van Dusen equation, but this is within a degree or two up to about 200 °C.",
+   "hint": "100 Ω plus 0.385 Ω for each degree."
+  },
+  {
+   "id": "spot-scale",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.6,
+   "q": "A 0–6 m level transmitter reads 10 mA. One line of this working is wrong. Which?",
+   "lines": [
+    "Live zero off: 10 − 4 = 6 mA",
+    "Fraction of the range: 6 ÷ 20 = 0.3",
+    "Level: 0.3 × 6 m = 1.8 m",
+    "So the tank is 1.8 m full"
+   ],
+   "wrong": 1,
+   "fix": "Fraction of the range: 6 ÷ 16 = 0.375, so the level is 0.375 × 6 = 2.25 m",
+   "why": "The span of a 4–20 mA signal is 16 mA. Check: 10 mA is a bit over a third of the way from 4 to 20, so the answer must be a bit over 2 m, not 1.8 m."
+  },
+  {
+   "id": "encoder-counts",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A {ppr} PPR encoder is read with ×4 decoding. It is on a leadscrew that moves the table {pitch} mm per turn. How far does the table move per count?",
+   "vars": {
+    "ppr": {
+     "pick": [
+      500,
+      1000,
+      1024,
+      2500
+     ]
+    },
+    "pitch": {
+     "pick": [
+      5,
+      10,
+      20
+     ]
+    }
+   },
+   "answer": "pitch / (4 * ppr) * 1000",
+   "unit": "µm",
+   "tolerance": 0.01,
+   "work": "$\\frac{{pitch} \\text{ mm}}{4 \\times {ppr}} = {answer}$ µm",
+   "why": "×4 decoding gives 4 counts per pulse, so 4 × {ppr} counts a turn, and one turn moves the table {pitch} mm. × 1000 for micrometres.",
+   "hint": "Counts a turn = 4 × PPR. Distance per count = pitch ÷ counts a turn."
+  },
+  {
+   "id": "tc-reverse",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "As an oven heats up, its thermocouple reading goes down. What is the most likely cause?",
+   "options": [
+    "The thermocouple is wired the wrong way round",
+    "The cold-junction compensation is switched off",
+    "The thermocouple has burnt out",
+    "The cable is too long"
+   ],
+   "answer": 0,
+   "why": "Reversed polarity makes the instrument subtract the hot junction's voltage, so the reading moves the wrong way. A burnt-out thermocouple is an open circuit: most instruments then go to an upscale or downscale alarm, not a smooth wrong trend."
+  },
+  {
+   "id": "mix-volts",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A drive's speed is shown on a 0–10 V output, ranged 0–{n} rpm. The meter reads {v} V. What speed is that?",
+   "vars": {
+    "n": {
+     "pick": [
+      1500,
+      3000,
+      1800
+     ]
+    },
+    "v": [
+     1,
+     9.5,
+     0.5
+    ]
+   },
+   "answer": "v / 10 * n",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "work": "$\\frac{{v}}{10} \\times {n} = {answer}$ rpm",
+   "why": "A 0–10 V signal has no live zero: the fraction is just V ÷ 10. Taking off a 'zero' here would be the 4–20 mA rule in the wrong place.",
+   "hint": "Is there a live zero on 0–10 V?"
+  },
+  {
+   "id": "mix-shunt-reading",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 6.0,
+   "q": "A 0–{hi} bar transmitter's loop passes through a 250 Ω resistor, and the PLC reads {v} V across it. What is the pressure?",
+   "vars": {
+    "hi": {
+     "pick": [
+      10,
+      16,
+      25
+     ]
+    },
+    "v": [
+     1.2,
+     4.8,
+     0.2
+    ]
+   },
+   "let": {
+    "ma": "v / 250 * 1000"
+   },
+   "answer": "(ma - 4) / 16 * hi",
+   "unit": "bar",
+   "tolerance": 0.01,
+   "work": "$I = \\frac{{v}}{250} = {ma:2}$ mA; $\\frac{{ma:2} - 4}{16} \\times {hi} = {answer}$ bar",
+   "why": "Two rules in a row: Ohm's law turns the volts back into the loop current, then the 4–20 mA scaling. Or directly: 1–5 V is a 4 V span, so (V − 1) ÷ 4 is the fraction.",
+   "hint": "Current first: I = V ÷ R. Then scale the mA."
+  },
+  {
+   "id": "mix-which",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.5,
+   "q": "Which reading is a fault, not a value?",
+   "options": [
+    "0 mA on a 4–20 mA loop",
+    "0 V on a 0–10 V output",
+    "4 mA on a 4–20 mA loop",
+    "100 Ω from a PT100"
+   ],
+   "answer": 0,
+   "why": "0 mA is below the live zero, so it cannot be a measurement. 0 V on a 0–10 V signal could be a real zero (that is its weakness), 4 mA is the bottom of the range, and 100 Ω is a PT100 at 0 °C."
+  },
+  {
+   "id": "check-try",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A level transmitter ranged 0–8 m sends 16 mA. What is the level?",
+   "options": [
+    "6 m",
+    "6.4 m",
+    "4 m",
+    "7.2 m"
+   ],
+   "answer": 0,
+   "why": "$\\frac{16 - 4}{16} = 0.75$ of the range; 0.75 × 8 = 6 m. 6.4 m comes from 16 ÷ 20 × 8, forgetting the live zero."
+  },
+  {
+   "id": "check-scale",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A flow transmitter is ranged 0–{hi} L/min. The loop reads {ma} mA. What is the flow?",
+   "vars": {
+    "hi": {
+     "pick": [
+      50,
+      100,
+      200,
+      400
+     ]
+    },
+    "ma": [
+     6,
+     18,
+     0.5
+    ]
+   },
+   "answer": "(ma - 4) / 16 * hi",
+   "unit": "L/min",
+   "tolerance": 0.01,
+   "work": "$\\frac{{ma} - 4}{16} \\times {hi} = {answer}$ L/min",
+   "why": "Live zero off, ÷ 16, × the range."
+  },
+  {
+   "id": "check-wiring",
+   "type": "match",
+   "stage": "check",
+   "q": "Match each sensor to what you must get right when wiring it.",
+   "pairs": [
+    [
+     "PT100 on a long run",
+     "3- or 4-wire, so the leads are not read as temperature"
+    ],
+    [
+     "Thermocouple",
+     "Cable of the same type all the way, and the right polarity"
+    ],
+    [
+     "4–20 mA transmitter",
+     "One loop in series, with 24 V to power it"
+    ],
+    [
+     "Incremental encoder",
+     "A high-speed counter input fast enough for its pulses"
+    ]
+   ],
+   "why": "Each signal has its own way of going wrong: lead resistance, a stray cold junction, a broken loop, missed pulses."
+  },
+  {
+   "id": "check-encoder",
+   "type": "numeric",
+   "stage": "check",
+   "level": 5.2,
+   "q": "An encoder gives {ppr} pulses a turn at {n} rpm. How many pulses a second is that?",
+   "vars": {
+    "ppr": {
+     "pick": [
+      100,
+      360,
+      1000,
+      2048
+     ]
+    },
+    "n": {
+     "pick": [
+      300,
+      750,
+      1500,
+      3000
+     ]
+    }
+   },
+   "answer": "ppr * n / 60",
+   "unit": "Hz",
+   "tolerance": 0.01,
+   "work": "$f = \\frac{{ppr} \\times {n}}{60} = {answer}$ Hz",
+   "why": "Pulses a turn times turns a second (rpm ÷ 60)."
+  }
  ]
 }
