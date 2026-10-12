@@ -1,0 +1,574 @@
+{
+ "id": "software.tools.python",
+ "title": "Python for engineers: scripts, data and plots",
+ "tags": [
+  "Python",
+  "scripts",
+  "lists",
+  "loops",
+  "functions",
+  "CSV",
+  "matplotlib",
+  "data"
+ ],
+ "kind": "procedure",
+ "level": 5.0,
+ "minutes": 25,
+ "goals": [
+  "Write and run a short Python script that works out an answer and prints it with units",
+  "Use lists, indexes and slices, and predict what a loop gives",
+  "Read a CSV log of readings and work out the average and the maximum",
+  "Plot readings against time and save the picture",
+  "Read a Python error message and find the line at fault"
+ ],
+ "summary": "Python is a free language that reads almost like English: good for sums you repeat, logs from a PLC or a data logger, and quick plots.\n\nRun a script with `python3 myscript.py`, or type lines at the `>>>` prompt to try them.\n\n- **Variables**: `v = 230`, `name = \"pump 2\"`. `/` divides (7 / 2 is 3.5); `//` divides and drops the remainder (3); `%` is the remainder (1); `**` is a power.\n- **f-strings** print values with units: `f\"{i:.2f} A\"` shows 2 decimal places.\n- **Lists**: `x = [10, 20, 30]`. Indexes start at **0**: `x[0]` is 10, `x[-1]` the last. A **slice** `x[1:3]` takes indexes 1 and 2 (the end is left out). `len(x)`, `sum(x)`, `max(x)`, `min(x)`.\n- **Loops**: `for t in temps:` runs the indented lines once per item. `range(5)` is 0, 1, 2, 3, 4. **Indentation** is part of the language.\n- **if**: `if t > 80:` (`==` compares; `=` assigns).\n- **Functions**: `def power(v, i): return v * i`.\n- **CSV files**: `csv.DictReader` gives each row as a dictionary of **strings**; use `float()` before doing sums.\n- **Plots**: `import matplotlib.pyplot as plt`, then `plt.plot(times, temps)`, labels, `plt.savefig(\"temps.png\")`.\n- **Errors**: read the **last line** of the traceback for what went wrong, and the line number just above it for where.",
+ "resources": [
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "The Python Tutorial",
+   "url": "https://docs.python.org/3/tutorial/",
+   "by": "Python Software Foundation",
+   "minutes": 60,
+   "note": "Chapter 3 (An Informal Introduction) and chapter 4 (control flow) cover this lesson and more."
+  }
+ ],
+ "sources": [
+  "The Python Tutorial, docs.python.org (Python Software Foundation)",
+  "The Python Standard Library: csv, statistics (Python Software Foundation)",
+  "Matplotlib documentation: pyplot tutorial"
+ ],
+ "formulas": [],
+ "bench": [
+  {
+   "task": "On the Pi (or any computer with Python 3), write a script that reads a small CSV of times and temperatures you type in by hand, prints the average and the highest, and saves a plot.",
+   "check": [
+    "Make readings.csv with a header line: time,temp, then five rows",
+    "Read it with csv.DictReader, turning each temp into a float",
+    "Print the average and the max with f-strings and units",
+    "Install matplotlib if needed (on the Pi: sudo apt install python3-matplotlib), plot, and savefig",
+    "Open the picture and check it matches your numbers"
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "try-index",
+   "type": "mcq",
+   "stage": "try",
+   "q": "In Python, `x = [3, 5, 7]`. What does `print(x[1])` show?",
+   "options": [
+    "5",
+    "3",
+    "7",
+    "An error: there is no item 1"
+   ],
+   "answer": 0,
+   "why": "Python counts from 0: `x[0]` is 3, `x[1]` is 5, `x[2]` is 7. Starting from 1 is the usual slip for anyone used to counting things on a bench (or to some PLC arrays)."
+  },
+  {
+   "id": "basics",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A first script",
+   "body": "A Python **script** is a text file ending `.py`, run with `python3 power.py`:\n\n```\nv = 230\ni = 4.35\np = v * i\nprint(f\"Power: {p:.0f} W\")\n```\n\nEach line runs in turn. `=` puts a value in a **variable**. `*` multiplies, `/` divides, `**` is a power. The **f-string** puts values into text: `{p:.0f}` shows p with no decimal places. This prints `Power: 1000 W`.",
+   "more": "Think of variables as labelled trays: `v = 230` puts 230 in the tray labelled v. Later lines can use it, and `v = 240` would replace it.\n\nThe f before the quotes tells Python to fill in anything in curly brackets. After the colon you say how: `.2f` is 2 decimal places, `.0f` none, `,` adds thousands separators.\n\nTwo kinds of division catch people out: `7 / 2` is 3.5, but `7 // 2` is 3 (it drops the remainder) and `7 % 2` is 1 (the remainder). Handy for turning seconds into minutes and seconds.\n\nTo experiment, type `python3` on its own and try lines at the `>>>` prompt."
+  },
+  {
+   "id": "fstring",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "`i = 2.3456`. What does `print(f\"{i:.2f} A\")` show?",
+   "options": [
+    "2.35 A",
+    "2.34 A",
+    "2.3456 A",
+    "i A"
+   ],
+   "answer": 0,
+   "why": "`.2f` rounds to 2 decimal places: 2.3456 becomes 2.35. Without the f in front, Python would print the braces as they are."
+  },
+  {
+   "id": "lists",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Lists, indexes and slices",
+   "body": "A **list** holds many values: `temps = [21.5, 22.0, 23.4, 25.1]`.\n\n- Indexes start at **0**: `temps[0]` is 21.5; `temps[-1]` is the last, 25.1.\n- A **slice** `temps[1:3]` gives items 1 and 2: the end index is **left out**.\n- `len(temps)` counts them (4); `sum`, `max`, `min` do what they say.\n- `temps.append(26.0)` adds one to the end.\n\nAverage: `sum(temps) / len(temps)`.",
+   "more": "Picture a row of pigeon holes numbered from 0. `temps[2]` is whatever is in hole 2, the third one along.\n\nA slice is a range of holes, start included, end not: `[1:3]` is holes 1 and 2. That odd-looking rule means `x[0:3]` and `x[3:6]` join up with no gap and no overlap, and `len(x[a:b])` is just `b − a`.\n\nNegative indexes count from the end: `-1` is the last, `-2` the one before. Very useful for the latest reading in a log.\n\nAsk for `temps[4]` in a 4-item list and you get an IndexError: the holes go 0 to 3."
+  },
+  {
+   "id": "slice-sum",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "`x = [{a}, {b}, {c}, {d}, {e}]`. What is `sum(x[1:4])`?",
+   "vars": {
+    "a": [
+     1,
+     9,
+     1
+    ],
+    "b": [
+     10,
+     30,
+     5
+    ],
+    "c": [
+     5,
+     25,
+     5
+    ],
+    "d": [
+     2,
+     20,
+     2
+    ],
+    "e": [
+     1,
+     9,
+     1
+    ]
+   },
+   "answer": "b + c + d",
+   "abs": 0.01,
+   "work": "`x[1:4]` is indexes 1, 2, 3: {b} + {c} + {d} = {answer}",
+   "why": "Indexes start at 0, and a slice leaves out its end: [1:4] is the 2nd, 3rd and 4th items.",
+   "hint": "Which indexes does 1:4 include? Not 4."
+  },
+  {
+   "id": "loops",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Loops and decisions",
+   "body": "A **for** loop runs the indented lines once for each item:\n\n```\nfor t in temps:\n    if t > 24:\n        print(f\"High: {t} °C\")\n```\n\n`range(5)` gives 0, 1, 2, 3, 4 (five numbers, starting at 0). `range(2, 10, 3)` gives 2, 5, 8.\n\nThe **indentation** (4 spaces) is part of the language: it says which lines belong to the loop or the `if`. `==` compares; a single `=` assigns.",
+   "more": "A PLC scans its whole program over and over; a Python loop goes round once per item and then carries on past it.\n\n`range` works like a slice: start included, end left out, optional step. So `range(1, 4)` is 1, 2, 3.\n\nA common pattern adds things up as it goes:\n\n```\ntotal = 0\nfor i in range(4):\n    total = total + i\n```\n\ngoes round with i = 0, 1, 2, 3 and leaves total at 6.\n\nIf an `if` or loop line is not indented under the line above it, Python stops with an IndentationError before running anything."
+  },
+  {
+   "id": "loop-total",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "What is `total` after this runs?\n\n```\ntotal = 0\nfor i in range({n}):\n    total = total + i\n```",
+   "vars": {
+    "n": [
+     3,
+     12,
+     1
+    ]
+   },
+   "answer": "n * (n - 1) / 2",
+   "abs": 0.01,
+   "work": "range({n}) is 0 to {n} − 1; their sum is {answer}",
+   "why": "range(n) starts at 0 and stops before n. Adding 1 to n, or starting at 1, are the slips.",
+   "hint": "Write out the numbers range gives, then add them."
+  },
+  {
+   "id": "functions",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Functions: a sum you use again",
+   "body": "A **function** packages a calculation with a name:\n\n```\ndef cable_drop(mv_per_a_m, amps, metres):\n    return mv_per_a_m * amps * metres / 1000\n```\n\n`def` starts it; the names in brackets are its **inputs**; `return` hands back the answer. Use it: `cable_drop(18, 20, 25)` gives 9.0 (volts).\n\nWrite a function once, test it on a case you know, then trust it on the rest.",
+   "more": "It is like a formula card in a pocket book: you write the rule once with letters, then fill in numbers each time.\n\nThe function above is the mV/A/m volt-drop sum from the wiring regulations' tables: 18 mV/A/m × 20 A × 25 m = 9000 mV = 9.0 V.\n\nGive functions and inputs clear names. `cable_drop(18, 20, 25)` reads as what it does; `f(a, b, c)` does not. And check it with a case you have worked by hand before using it on a list of 200 cables."
+  },
+  {
+   "id": "func-call",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "```\ndef power(v, i):\n    return v * i\n```\n\nWhat does `power({vv}, {ii})` return?",
+   "vars": {
+    "vv": {
+     "pick": [
+      12,
+      24,
+      110,
+      230
+     ]
+    },
+    "ii": {
+     "pick": [
+      0.5,
+      1.5,
+      2,
+      4
+     ]
+    }
+   },
+   "answer": "vv * ii",
+   "abs": 0.01,
+   "work": "{vv} × {ii} = {answer}",
+   "why": "The first value goes into v and the second into i, in order; the function returns v times i.",
+   "hint": "Match the values to the inputs in order."
+  },
+  {
+   "id": "csv",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Reading a CSV log",
+   "body": "Loggers and PLCs export **CSV** files: one reading a line, values split by commas, a header line first. Python's `csv` module reads them:\n\n```\nimport csv\ntemps = []\nwith open(\"log.csv\", newline=\"\") as f:\n    for row in csv.DictReader(f):\n        temps.append(float(row[\"temp\"]))\n```\n\n`DictReader` gives each row as a **dictionary**: look a value up by its column name. Every value arrives as **text**, so `float()` turns it into a number before any sums.",
+   "more": "A CSV file is a spreadsheet saved as plain text:\n\n```\ntime,temp\n08:00,21.5\n08:10,22.0\n```\n\n`DictReader` uses the first line as names, so `row[\"temp\"]` is that row's temp column, as the text \"21.5\".\n\nWithout `float()`, adding text to text joins it: \"21.5\" + \"22.0\" is \"21.522.0\". And `max` of text compares like a dictionary, letter by letter, so \"9.5\" beats \"10.2\". Turn readings into numbers as soon as you read them.\n\n`with open(...)` closes the file again when the block ends, even if something fails."
+  },
+  {
+   "id": "why-float",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "A script reads temperatures with csv.DictReader and does `max(temps)` without float(). The log has 9.5 and 10.2. What does it say is the highest?",
+   "options": [
+    "9.5",
+    "10.2",
+    "It raises an error",
+    "19.7"
+   ],
+   "answer": 0,
+   "why": "Without float() the readings are text, and text compares character by character: '9' comes after '1', so '9.5' is 'bigger' than '10.2'. Turn each value into a number with float() as it is read."
+  },
+  {
+   "id": "plots",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Plotting readings",
+   "body": "**matplotlib** draws graphs:\n\n```\nimport matplotlib.pyplot as plt\nplt.plot(times, temps)\nplt.xlabel(\"Time (min)\")\nplt.ylabel(\"Temperature (°C)\")\nplt.savefig(\"temps.png\")\n```\n\n`plot(x, y)` takes two lists of the same length. Label both axes with their units. `savefig` writes a picture file (`show()` opens a window instead, if there is a screen).\n\nInstall it once: `pip install matplotlib`, or on a Raspberry Pi `sudo apt install python3-matplotlib`.",
+   "more": "A plot shows in a second what a column of 500 numbers hides: a slow drift, a spike every hour, a step when a pump started.\n\nThe two lists must line up: `times[5]` goes with `temps[5]`. If one is longer, matplotlib stops with a ValueError about shapes.\n\nOn a Pi with no screen (over SSH), `show()` has nowhere to draw: use `savefig` and copy the PNG over, or open it from Daybook's Log as a photo."
+  },
+  {
+   "id": "plot-order",
+   "type": "order",
+   "stage": "learn",
+   "q": "Put the steps of a plotting script in order.",
+   "items": [
+    "import matplotlib.pyplot as plt",
+    "Read the readings into two lists, times and temps",
+    "plt.plot(times, temps)",
+    "Label the axes with their units",
+    "plt.savefig(\"temps.png\")"
+   ],
+   "why": "Import before use, data before plotting, labels before saving (savefig writes the picture as it stands at that moment)."
+  },
+  {
+   "id": "worked-log",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "log.csv has a header `time,temp` and one reading a line. Write a script that prints the average and the highest temperature.",
+   "steps": [
+    {
+     "ask": "Bring in the csv module and start an empty list.",
+     "show": "`import csv` then `temps = []`"
+    },
+    {
+     "ask": "Open the file and read each row, as a number.",
+     "show": "`with open(\"log.csv\", newline=\"\") as f:` then, indented, `for row in csv.DictReader(f):` and, indented again, `temps.append(float(row[\"temp\"]))`"
+    },
+    {
+     "ask": "Work out the average and the highest.",
+     "show": "`avg = sum(temps) / len(temps)` and `top = max(temps)`"
+    },
+    {
+     "ask": "Print them with units.",
+     "show": "`print(f\"Average {avg:.1f} °C, highest {top:.1f} °C\")`"
+    }
+   ],
+   "why": "Read, convert to numbers, work out, print with units. The same four moves cover most small data jobs."
+  },
+  {
+   "id": "explain-float",
+   "type": "explain",
+   "stage": "example",
+   "q": "Why does step 2 wrap the reading in float() as it reads it?",
+   "context": "temps.append(float(row[\"temp\"]))",
+   "model": "Everything csv reads is text, even if it looks like a number. sum() of text fails, and max() of text compares character by character, so 9.5 would beat 10.2. Turning each value into a number as it comes in means every later line works on numbers, and a bad value (a blank or a typo) fails right there, on the line that read it, which makes the fault easy to find.",
+   "points": [
+    "csv gives text, not numbers",
+    "sum of text fails",
+    "max of text compares letters",
+    "Convert once, at the point of reading",
+    "Bad values fail where they are read"
+   ]
+  },
+  {
+   "id": "faded-alarm",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "With temps already read in, print how many readings were over 80 °C.",
+   "steps": [
+    {
+     "ask": "Start a count at zero.",
+     "show": "`count = 0`"
+    },
+    {
+     "ask": "Go through the readings, adding one for each over 80.",
+     "show": "`for t in temps:` then, indented, `if t > 80:` and, indented again, `count = count + 1`"
+    },
+    {
+     "ask": "Print the result.",
+     "show": "`print(f\"{count} readings over 80 °C\")`"
+    }
+   ],
+   "why": "A counter that starts at zero and goes up inside an if: the same pattern counts trips, rejects or alarms. (In one line: `sum(1 for t in temps if t > 80)`.)"
+  },
+  {
+   "id": "avg-predict",
+   "type": "numeric",
+   "stage": "example",
+   "q": "`temps = [{a}, {b}, {c}, {d}]`. What does `print(sum(temps) / len(temps))` show?",
+   "vars": {
+    "a": [
+     18,
+     24,
+     1
+    ],
+    "b": [
+     18,
+     24,
+     1
+    ],
+    "c": [
+     18,
+     24,
+     1
+    ],
+    "d": [
+     18,
+     24,
+     1
+    ]
+   },
+   "answer": "(a + b + c + d) / 4",
+   "abs": 0.01,
+   "work": "({a} + {b} + {c} + {d}) ÷ 4 = {answer}",
+   "why": "sum adds them; len counts them (4); `/` gives the average with its decimals.",
+   "hint": "Add the four, divide by how many there are."
+  },
+  {
+   "id": "spot-range",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.4,
+   "mono": true,
+   "q": "This should add up every reading in the list. One line is wrong. Which?",
+   "lines": [
+    "readings = [12.1, 12.4, 11.9, 12.6]",
+    "total = 0",
+    "for k in range(1, len(readings)):",
+    "    total = total + readings[k]",
+    "print(total)"
+   ],
+   "wrong": 2,
+   "fix": "for k in range(len(readings)):",
+   "why": "range(1, len(readings)) starts at index 1, so the first reading (index 0) is never added. Simpler still: `for r in readings:` or `sum(readings)`. Check with a list you can add in your head."
+  },
+  {
+   "id": "intdiv",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A process took {s} seconds. In Python, what is `{s} // 60`?",
+   "vars": {
+    "s": [
+     61,
+     599,
+     7
+    ]
+   },
+   "answer": "ROUNDDOWN(s / 60, 0)",
+   "abs": 0.01,
+   "work": "{s} ÷ 60 with the remainder dropped: {answer}",
+   "why": "`//` divides and drops the remainder: whole minutes. `{s} % 60` would give the seconds left over.",
+   "hint": "How many whole minutes are in {s} seconds?"
+  },
+  {
+   "id": "range-step",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.6,
+   "q": "What is `sum(range({a}, {b}, {st}))`?",
+   "vars": {
+    "a": {
+     "pick": [
+      0,
+      1,
+      2
+     ]
+    },
+    "b": {
+     "pick": [
+      10,
+      12,
+      15
+     ]
+    },
+    "st": {
+     "pick": [
+      2,
+      3
+     ]
+    }
+   },
+   "answer": "nn * a + st * nn * (nn - 1) / 2",
+   "abs": 0.01,
+   "work": "range({a}, {b}, {st}) starts at {a}, goes up in {st}s and stops before {b}; their sum is {answer}",
+   "why": "Start included, end left out, step as given. Write the numbers out and add them.",
+   "hint": "List them: start at {a}, add {st} each time, stop before reaching {b}.",
+   "let": {
+    "nn": "ROUNDUP((b - a) / st, 0)"
+   }
+  },
+  {
+   "id": "traceback",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "A script stops with a long error. Where do you look first?",
+   "options": [
+    "The last line, then the line number just above it",
+    "The first line of the error message",
+    "The middle, where most of the detail is",
+    "Nowhere: run the script again until it works"
+   ],
+   "answer": 0,
+   "why": "Python's traceback ends with the error type and message (such as `ValueError: could not convert string to float: ''`), and the line just above shows the file and line where it happened. That usually points straight at the fault: here, a blank cell in the CSV."
+  },
+  {
+   "id": "eq-assign",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Which line tests whether `mode` is equal to 3?",
+   "options": [
+    "`if mode == 3:`",
+    "`if mode = 3:`",
+    "`if mode := 3:`",
+    "`if mode is equal 3:`"
+   ],
+   "answer": 0,
+   "why": "`==` compares; `=` assigns and is an error inside an if. (`:=` exists but assigns as it tests, which is not what you want here. And it is Structured Text's assignment, so beware when switching between the two.)"
+  },
+  {
+   "id": "mix-st",
+   "type": "match",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "Match each Python line with what the same thing looks like in PLC Structured Text.",
+   "pairs": [
+    [
+     "total = total + x",
+     "total := total + x;"
+    ],
+    [
+     "if t > 80:",
+     "IF t > 80 THEN"
+    ],
+    [
+     "x == 3",
+     "x = 3"
+    ],
+    [
+     "# a comment",
+     "(* a comment *)"
+    ]
+   ],
+   "why": "The ideas are the same; the punctuation is not. In ST, `=` compares and `:=` assigns; in Python `==` compares and `=` assigns."
+  },
+  {
+   "id": "mix-index",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "A list holds one reading a minute, starting at minute 0. Which index holds the reading from minute {m}?",
+   "vars": {
+    "m": [
+     1,
+     59,
+     1
+    ]
+   },
+   "answer": "m",
+   "abs": 0.01,
+   "work": "Index = minute = {answer}",
+   "why": "Starting at minute 0 and index 0 lines them up: minute m is index m. If the list started at minute 1, it would be index m − 1. Always check what index 0 means.",
+   "hint": "What does index 0 hold?"
+  },
+  {
+   "id": "mix-last",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "How do you get the newest reading from a list that grows with append()?",
+   "options": [
+    "`readings[-1]`",
+    "`readings[0]`",
+    "`readings[len(readings)]`",
+    "`readings[1]`"
+   ],
+   "answer": 0,
+   "why": "append adds to the end, and -1 is the last item. `readings[len(readings)]` is one past the end: an IndexError."
+  },
+  {
+   "id": "check-try",
+   "type": "mcq",
+   "stage": "check",
+   "q": "`v = [230, 231, 229, 232]`. What does `print(v[2])` show?",
+   "options": [
+    "229",
+    "231",
+    "232",
+    "230"
+   ],
+   "answer": 0,
+   "why": "Indexes start at 0: v[0] 230, v[1] 231, v[2] 229."
+  },
+  {
+   "id": "check-slice",
+   "type": "numeric",
+   "stage": "check",
+   "q": "`x = [5, 10, 15, 20, 25, 30]`. What is `sum(x[{s}:{e}])`?",
+   "vars": {
+    "s": {
+     "pick": [
+      0,
+      1,
+      2
+     ]
+    },
+    "e": {
+     "pick": [
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   "answer": "(5 * (s + 1) + 5 * e) * (e - s) / 2",
+   "abs": 0.01,
+   "work": "Indexes {s} to {e} − 1: their values add to {answer}",
+   "why": "A slice includes its start and leaves out its end."
+  },
+  {
+   "id": "check-float",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Why use float() on values read with csv.DictReader?",
+   "options": [
+    "Every value arrives as text",
+    "It rounds them to 2 places",
+    "It makes the file load faster",
+    "It removes the header line"
+   ],
+   "answer": 0,
+   "why": "csv gives strings; float() turns them into numbers so sums, averages and comparisons work."
+  },
+  {
+   "id": "check-order",
+   "type": "order",
+   "stage": "check",
+   "q": "Put the steps of reading and summarising a log in order.",
+   "items": [
+    "Open the file",
+    "Read each row and turn the value into a number",
+    "Work out the average and the highest",
+    "Print them with units"
+   ]
+  }
+ ]
+}
