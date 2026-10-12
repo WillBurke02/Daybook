@@ -27,6 +27,11 @@
     defects), Software (Python for engineers; Linux and services), Fluids (pneumatics;
     hydraulics; pumps, fans and the affinity laws) and Instrumentation (P&IDs and ISA
     symbols). Written for Daybook, so no source text is reworded; each names its sources.
+  - **Sixteen more**: Maths (proof, kinematics, forces and Newton's laws, complex numbers and
+    phasors), Physics (potential dividers, capacitors, refraction and Snell's law, attenuation
+    and decibels), Electronics (transistors as switches, digital logic, PWM, ADC and DAC) and
+    Drives (braking and regeneration, parameter sets and fault finding, inertia matching,
+    homing and limits). Track 4 (A-level pure) now has every stop written.
   - **Learning record** (CPD) by day, as CSV.
   - **The workbench**: calculator and whiteboard as tabs in one docked panel (a sheet on a
     phone), 36 px labelled tools, the card's numbers as buttons, sums kept with the card, units

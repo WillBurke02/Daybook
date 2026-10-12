@@ -59,14 +59,16 @@ assert {x["id"]: x["title"] for x in _l}["s.u.bad"] == "Broken", "a broken file 
 # === the feed: new cards from one lesson at a time, in its order =====================
 rng = random.Random(3)
 f = learn.feed(db, 6, subjects=["physics"], rng=rng)
-assert [c["id"] for c in f[:2]] == [f"{pe}/echo-between", f"{pe}/idea"], "the first physics lesson with cards, from the top"
+first = learn.frontier(db, "physics")[0]["id"]                     # whichever physics lesson is written first in course order
+top2 = [r["id"] for r in db.execute("SELECT id FROM card WHERE lesson_id = ? AND stage <> 'calibrate' ORDER BY sort LIMIT 2", (first,))]
+assert [c["id"] for c in f[:2]] == top2, ("the first physics lesson with cards, from the top", f[:2], top2)
 assert all(c["why"] == "new" for c in f)
 mixed = learn.feed(db, 40, rng=rng)
 with_cards = {c["lesson_id"].split(".")[0] for c in cards if c["stage"] != "calibrate"}   # bank questions only place you
 assert len({c["lesson_id"] for c in mixed if c["why"] == "new"}) == 1, "new cards from one lesson, not ten subjects at once"
 assert len({c["id"] for c in mixed}) == len(mixed), "no card twice in one batch"
-ex = learn.feed(db, 3, exclude=[f"{pe}/echo-between"], subjects=["physics"], rng=rng)
-assert ex[0]["id"] == f"{pe}/idea", "the ones already on screen are left out"
+ex = learn.feed(db, 3, exclude=[top2[0]], subjects=["physics"], rng=rng)
+assert ex[0]["id"] == top2[1], "the ones already on screen are left out"
 db.execute("UPDATE setting SET value=? WHERE key='subjects_on'", (json.dumps(["plc"]),))
 assert {c["subject_id"] for c in learn.feed(db, 10, rng=rng)} == {"plc"}, "only the subjects that are on"
 db.execute("UPDATE setting SET value='' WHERE key='subjects_on'")
@@ -114,7 +116,8 @@ except api.Err:
 # === practice: numeric cards only, from the lessons picked ===========================
 p = learn.practice(db, [pe], 12, rng=rng)
 assert len(p) == 12 and all(c["type"] == "numeric" and c["lesson_id"] == pe for c in p)
-assert learn.practice(db, [], 5) == [] and learn.practice(db, ["maths.pure.proof"], 5) == []
+no_numeric = db.execute("SELECT id FROM lesson WHERE id NOT IN (SELECT lesson_id FROM card WHERE type = 'numeric') LIMIT 1").fetchone()["id"]
+assert learn.practice(db, [], 5) == [] and learn.practice(db, [no_numeric], 5) == []
 
 # === saved for later: a toggle =======================================================
 R("POST", "save", {"card_id": card})

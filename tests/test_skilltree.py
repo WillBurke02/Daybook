@@ -41,7 +41,7 @@ db.execute("DELETE FROM lesson_state WHERE lesson_id = ?", (AC,))
 ts = {t["id"]: t for t in R("GET", "tracks")["tracks"]}
 assert set(ts) == {"vfd-conveyor", "plc-faults", "servo-axis", "a-level-pure", "instrument-loop", "control-panel"}
 vfd = ts["vfd-conveyor"]
-assert (vfd["total"], vfd["written"], vfd["unwritten"]) == (12, 8, 4), vfd
+assert vfd["total"] == 12 and vfd["written"] + vfd["unwritten"] == 12 and vfd["unwritten"] > 0, vfd   # counts follow the content
 assert vfd["stops"][0]["can"] == "Isolate and prove dead" and vfd["left"] is None and vfd["left_written"] > 0, \
     "blocked: no time estimate while lessons are unwritten"
 assert vfd["next"]["written"] and vfd["next"]["state"] in ("ready", "going")

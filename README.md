@@ -213,7 +213,10 @@ imported from OpenStax; and a second batch: sensors and signals (4–20 mA, PT10
 thermocouples, encoders), diodes and rectifiers, test gear, gears and belts, stress
 and strain, the six NDT methods, immersion UT, material properties, welding,
 Python, Linux, pneumatics, hydraulics, pumps and fans (the affinity laws), and
-P&IDs. 60 of the 236 are written. Every subject has a calibration
+P&IDs; and a third batch: proof, kinematics, forces, complex numbers and phasors,
+potential dividers, capacitors, refraction, attenuation and decibels, transistors,
+digital logic, PWM, ADC and DAC, braking, drive parameters and fault finding,
+inertia matching, and homing and limits. 76 of the 236 are written. Every subject has a calibration
 bank (`calibrate.json`, 643 questions, 3 or more per outline lesson) for Find
 my level; bank questions place you and never count as a lesson's cards.
 
