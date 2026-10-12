@@ -1,0 +1,2444 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10.2 Non-right Triangles: Law of Cosines · Algebra and Trigonometry 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Algebra and Trigonometry 2e, Abramson et al., section 10.2 Non-right Triangles: Law of Cosines. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/algebra-and-trigonometry-2e/pages/10-2-non-right-triangles-law-of-cosines</p>
+<h1>10.2 Non-right Triangles: Law of Cosines</h1>
+
+
+  <p>Suppose a boat leaves port, travels 10 miles, turns 20 degrees, and travels another 8 miles as shown in . How far from port is the boat?</p>
+  <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_001.jpg" alt="A triangle whose vertices are the boat, the port, and the turning point of the boat. The side between the port and the turning point is 10 mi, and the side between the turning point and the boat is 8 miles. The side between the port and the turning point is extended in a straight dotted line. The angle between the dotted line and the 8 mile side is 20 degrees."></figure><p>Unfortunately, while the Law of Sines enables us to address many non-right triangle cases, it does not help us with triangles where the known angle is between two known sides, a <strong>SAS (side-angle-side) triangle</strong>, or when all three sides are known, but no angles are known, a <strong>SSS (side-side-side) triangle</strong>. In this section, we will investigate another tool for solving oblique triangles described by these last two cases.</p><div class="section">
+    <h3>Using the Law of Cosines to Solve Oblique Triangles</h3>
+    <p>The tool we need to solve the problem of the boat’s distance from the port is the <strong>Law of Cosines</strong>, which defines the relationship among angle measurements and side lengths in oblique triangles. Three formulas make up the Law of Cosines. At first glance, the formulas may appear complicated because they include many variables. However, once the pattern is understood, the Law of Cosines is easier to work with than most formulas at this mathematical level.</p>
+    <p>Understanding how the Law of Cosines is derived will be helpful in using the formulas. The derivation begins with the <strong>Generalized Pythagorean Theorem</strong>, which is an extension of the <strong>Pythagorean Theorem</strong> to non-right triangles. Here is how it works: An arbitrary non-right triangle <math>
+      <mrow>
+        <mi>A</mi><mi>B</mi><mi>C</mi></mrow>
+    </math> is placed in the coordinate plane with vertex <math>
+      <mrow>
+        <mi>A</mi></mrow>
+    </math> at the origin, side <math>
+      <mrow>
+        <mi>c</mi></mrow>
+    </math> drawn along the <em>x</em>-axis, and vertex <math>
+      <mrow>
+        <mi>C</mi></mrow>
+    </math> located at some point <math>
+      <mrow>
+        <mrow><mo>(</mo>
+          <mrow>
+            <mi>x</mi><mo>,</mo><mi>y</mi></mrow>
+          <mo>)</mo></mrow></mrow>
+    </math> in the plane, as illustrated in . Generally, triangles exist anywhere in the plane, but for this explanation we will place the triangle as noted.</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_002.jpg" alt="A triangle A B C plotted in quadrant 1 of the x,y plane. Angle A is theta degrees with opposite side a, angles B and C, with opposite sides b and c respectively, are unknown. Vertex A is located at the origin (0,0), vertex B is located at some point (x-c, 0) along the x-axis, and point C is located at some point in quadrant 1 at the point (b times the cos of theta, b times the sin of theta). "></figure><p>We can drop a perpendicular from <math>
+      <mrow>
+        <mi>C</mi></mrow>
+    </math> to the <em>x-</em>axis (this is the altitude or height). Recalling the basic <strong>trigonometric identities</strong>, we know that</p>
+    <div class="eq"> <math display="block">
+      <mrow>
+        <mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+          <mrow>
+            <mi>x</mi><mtext>(adjacent)</mtext></mrow>
+          <mrow>
+            <mi>b</mi><mtext>(hypotenuse)</mtext></mrow>
+        </mfrac>
+        <mtext> and </mtext><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+          <mrow>
+            <mi>y</mi><mtext>(opposite)</mtext></mrow>
+          <mrow>
+            <mi>b</mi><mtext>(hypotenuse)</mtext></mrow>
+        </mfrac>
+      </mrow>
+    </math>
+    </div><p>In terms of <math>
+ <mrow><mi>θ</mi><mo>,</mo><mspace width="0.5em"></mspace><mi>x</mi><mo>=</mo><mi>b</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mi>b</mi><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>.</mo>
+ </mrow>
+</math> 
+ The <math>
+      <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow>
+    </math> point located at <math>
+      <mrow>
+        <mi>C</mi></mrow>
+    </math> has coordinates <math>
+        <mrow><mo>(</mo>
+            <mi>b</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>,</mo></mrow></math>
+          <math><mrow><mi>b</mi><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+          <mrow><mo>)</mo></mrow><mo>.</mo></mrow>
+    </math> Using the side <math>
+      <mrow>
+        <mrow><mo>(</mo>
+          <mrow>
+            <mi>x</mi><mo>−</mo><mi>c</mi></mrow>
+          <mo>)</mo></mrow></mrow>
+    </math> as one leg of a right triangle and <math>
+      <mrow>
+        <mi>y</mi></mrow>
+    </math> as the second leg, we can find the length of hypotenuse <math>
+      <mrow>
+        <mi>a</mi></mrow>
+    </math> using the Pythagorean Theorem. Thus,</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mi>c</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>       </mtext><mo>=</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>b</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>−</mo><mi>c</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>b</mi><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Substitute </mtext><mo stretchy="false">(</mo><mi>b</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo stretchy="false">)</mo><mtext> for</mtext><mspace width="0.3em"></mspace><mi>x</mi><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mtext>and </mtext><mo stretchy="false">(</mo><mi>b</mi><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo stretchy="false">)</mo><mspace width="0.3em"></mspace><mtext>for </mtext><mi>y</mi><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>       </mtext><mo>=</mo><mrow><mo>(</mo>
+       <mrow>
+        <msup>
+         <mi>b</mi>
+         <mn>2</mn>
+        </msup>
+        <msup>
+         <mrow>
+          <mi>cos</mi>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mi>θ</mi><mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>+</mo><msup>
+         <mi>c</mi>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      <mo>)</mo></mrow><mo>+</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>θ</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Expand the perfect square</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>       </mtext><mo>=</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mi>cos</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>θ</mi><mo>+</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>θ</mi><mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Group terms noting that </mtext><msup>
+       <mrow>
+        <mi>cos</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>θ</mi><mo>+</mo><msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>θ</mi><mo>=</mo><mn>1.</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>       </mtext><mo>=</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mrow><mo>(</mo>
+       <mrow>
+        <msup>
+         <mrow>
+          <mi>cos</mi>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mi>θ</mi><mo>+</mo><msup>
+         <mrow>
+          <mi>sin</mi>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mi>θ</mi>
+       </mrow>
+      <mo>)</mo></mrow><mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Factor out </mtext><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The formula derived is one of the three equations of the Law of Cosines. The other equations are found in a similar fashion.</p>
+    <p>Keep in mind that it is always helpful to sketch the triangle when solving for angles or sides. In a real-world scenario, try to draw a diagram of the situation. As more information emerges, the diagram may have to be altered. Make those alterations to the diagram and, in the end, the problem will be easier to solve.</p>
+
+    <div class="note"><h4>Law of Cosines</h4>
+
+      <p>The <strong>Law of Cosines</strong> states that the square of any side of a triangle is equal to the sum of the squares of the other two sides minus twice the product of the other two sides and the cosine of the included angle. For triangles labeled as in , with angles <math>
+        <mrow>
+          <mi>α</mi><mo>,</mo><mi>β</mi><mo>,</mo></mrow>
+      </math>  and <math>
+        <mrow>
+          <mi>γ</mi><mo>,</mo></mrow>
+      </math>  and opposite corresponding sides <math>
+        <mrow>
+          <mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo></mrow>
+      </math>  and <math>
+        <mrow>
+          <mi>c</mi><mo>,</mo></mrow>
+      </math> respectively, the Law of Cosines is given as three equations.</p>
+      <div class="eq"> <math display="block">
+        <mtable columnalign="left">
+          <mtr>
+            <mtd>
+              <msup>
+                <mi>a</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>=</mo><msup>
+                <mi>b</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>+</mo><msup>
+                <mi>c</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+            </mtd>
+          </mtr>
+          <mtr>
+            <mtd>
+              <msup>
+                <mi>b</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>=</mo><msup>
+                <mi>a</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>+</mo><msup>
+                <mi>c</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo><mn>2</mn><mi>a</mi><mi>c</mi><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mi>cos</mi><mspace width="0.3em"></mspace><mi>β</mi>
+            </mtd>
+          </mtr>
+          <mtr>
+            <mtd>
+              <msup>
+                <mi>c</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>=</mo><msup>
+                <mi>a</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>+</mo><msup>
+                <mi>b</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>−</mo><mn>2</mn><mi>a</mi><mi>b</mi><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mi>cos</mi><mspace width="0.3em"></mspace><mi>γ</mi>
+            </mtd>
+          </mtr>
+        </mtable>
+
+      </math>
+      </div><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_003n.jpg" alt="A triangle with standard labels: angles alpha, beta, and gamma with opposite sides a, b, and c respectively."></figure><p>To solve for a missing side measurement, the corresponding opposite angle measure is needed.</p>
+      <p>When solving for an angle, the corresponding opposite side measure is needed. We can use another version of the Law of Cosines to solve for an angle.</p>
+      <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mtable columnalign="left">
+           <mtr columnalign="left">
+            <mtd columnalign="left">
+             <mrow></mrow>
+            </mtd>
+           </mtr>
+           <mtr columnalign="left">
+            <mtd columnalign="left">
+             <mrow>
+              <mi>cos</mi><mspace width="0.5em"></mspace><mi>α</mi><mo>=</mo><mfrac>
+               <mrow>
+                <msup>
+                 <mi>b</mi>
+                 <mn>2</mn>
+                </msup>
+                <mo>+</mo><msup>
+                 <mi>c</mi>
+                 <mn>2</mn>
+                </msup>
+                <mo>−</mo><msup>
+                 <mi>a</mi>
+                 <mn>2</mn>
+                </msup>
+
+               </mrow>
+               <mrow>
+                <mn>2</mn><mi>b</mi><mi>c</mi>
+               </mrow>
+              </mfrac>
+
+             </mrow>
+            </mtd>
+           </mtr>
+
+          </mtable>
+         </mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mi>cos</mi><mspace width="0.5em"></mspace><mi>β</mi><mo>=</mo><mfrac>
+           <mrow>
+            <msup>
+             <mi>a</mi>
+             <mn>2</mn>
+            </msup>
+            <mo>+</mo><msup>
+             <mi>c</mi>
+             <mn>2</mn>
+            </msup>
+            <mo>−</mo><msup>
+             <mi>b</mi>
+             <mn>2</mn>
+            </msup>
+
+           </mrow>
+           <mrow>
+            <mn>2</mn><mi>a</mi><mi>c</mi>
+           </mrow>
+          </mfrac>
+
+         </mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mi>cos</mi><mspace width="0.5em"></mspace><mi>γ</mi><mo>=</mo><mfrac>
+           <mrow>
+            <msup>
+             <mi>a</mi>
+             <mn>2</mn>
+            </msup>
+            <mo>+</mo><msup>
+             <mi>b</mi>
+             <mn>2</mn>
+            </msup>
+            <mo>−</mo><msup>
+             <mi>c</mi>
+             <mn>2</mn>
+            </msup>
+
+           </mrow>
+           <mrow>
+            <mn>2</mn><mi>a</mi><mi>b</mi>
+           </mrow>
+          </mfrac>
+
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div><div class="note how-to-notitle">
+    <p><strong>Given two sides and the angle between them (SAS), find the measures of the remaining side and angles of a triangle.</strong></p>
+    <ol><li>Sketch the triangle. Identify the measures of the known sides and angles. Use variables to represent the measures of the unknown sides and angles.</li><li>Apply the Law of Cosines to find the length of the unknown side or angle.</li><li>Apply the <strong>Law of Sines</strong> or Cosines to find the measure of a second angle.</li><li>Compute the measure of the remaining angle.</li></ol>
+    </div><div class="example"><div class="exercise"><div class="problem">
+          <h6>Finding the Unknown Side and Angles of a SAS Triangle </h6>
+          <p>Find the unknown side and angles of the triangle in .</p>
+
+          <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_004.jpg" alt="A triangle with standard labels. Side a = 10, side c = 12, and angle beta = 30 degrees."></figure></div>
+        <div class="solution">
+          <p>First, make note of what is given: two sides and the angle between them. This arrangement is classified as SAS and supplies the data needed to apply the Law of Cosines. </p>
+
+          <p>Each one of the three laws of cosines begins with the square of an unknown side opposite a known angle. For this example, the first side to solve for is side <math>
+            <mrow>
+              <mi>b</mi><mo>,</mo></mrow>
+          </math> as we know the measurement of the opposite angle <math>
+            <mrow>
+              <mi>β</mi><mo>.</mo></mrow>
+          </math>
+          </p>
+          <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>a</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>β</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>12</mn><mo stretchy="false">)</mo><mi>cos</mi><mo stretchy="false">(</mo><msup>
+       <mrow>
+        <mn>30</mn>
+       </mrow>
+       <mo>∘</mo>
+      </msup>
+      <mo stretchy="false">)</mo><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Substitute the measurements for the known quantities</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>100</mn><mo>+</mo><mn>144</mn><mo>−</mo><mn>240</mn><mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mrow>
+          <msqrt>
+           <mn>3</mn>
+          </msqrt>
+
+         </mrow>
+         <mn>2</mn>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Evaluate the cosine and begin to simplify</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>244</mn><mo>−</mo><mn>120</mn><msqrt>
+       <mn>3</mn>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>b</mi><mo>=</mo><msqrt>
+       <mrow>
+        <mn>244</mn><mo>−</mo><mn>120</mn><msqrt>
+         <mn>3</mn>
+        </msqrt>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Use the square root property</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>b</mi><mo>≈</mo><mn>6.013</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Because we are solving for a length, we use only the positive square root. Now that we know the length <math>
+            <mrow>
+              <mi>b</mi><mo>,</mo></mrow>
+          </math> we can use the Law of Sines to fill in the remaining angles of the triangle. Solving for angle <math>
+            <mrow>
+              <mi>α</mi><mo>,</mo></mrow>
+          </math> we have</p>
+          <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mi>sin</mi><mspace width="0.3em"></mspace><mi>α</mi>
+       </mrow>
+       <mi>a</mi>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mi>sin</mi><mspace width="0.3em"></mspace><mi>β</mi>
+       </mrow>
+       <mi>b</mi>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mi>sin</mi><mspace width="0.3em"></mspace><mi>α</mi>
+       </mrow>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mi>sin</mi><mo stretchy="false">(</mo><mn>30°</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>6.013</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>sin</mi><mspace width="0.3em"></mspace><mi>α</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mn>10</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>30°</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>6.013</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Multiply both sides of the equation by 10</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>α</mi><mo>=</mo><msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mrow>
+        <mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mrow>
+          <mn>10</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>30°</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mrow>
+          <mn>6.013</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Find the inverse sine of </mtext><mfrac>
+       <mrow>
+        <mn>10</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>30°</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>6.013</mn>
+       </mrow>
+      </mfrac>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>α</mi><mo>≈</mo><mn>56.3°</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The other possibility for <math>
+            <mrow>
+              <mi>α</mi></mrow>
+          </math> would be <math>
+            <mrow>
+              <mi>α</mi><mo>=</mo><mn>180°</mn><mo>–</mo><mn>56.3°</mn><mo>≈</mo><mn>123.7°.</mn></mrow>
+          </math> In the original diagram, <math>
+            <mrow>
+              <mi>α</mi></mrow>
+          </math> is adjacent to the longest side, so <math>
+            <mrow>
+              <mi>α</mi></mrow>
+          </math> is an acute angle and, therefore, <math>
+            <mrow>
+              <mn>123.7°</mn></mrow>
+          </math> does not make sense. Notice that if we choose to apply the <strong>Law of Cosines</strong>, we arrive at a unique answer. We do not have to consider the other possibilities, as cosine is unique for angles between <math>
+            <mrow>
+
+                <mn>0°</mn>
+              </mrow>
+          </math> and <math>
+            <mrow>
+
+                <mrow>
+                  <mn>180°.</mn></mrow>
+</mrow>
+          </math> Proceeding with <math>
+            <mrow>
+              <mi>α</mi><mo>≈</mo><mn>56.3°</mn><mo>,</mo></mrow>
+          </math> we can then find the third angle of the triangle.</p><div class="eq"> <math>
+            <mrow>
+              <mi>γ</mi><mo>=</mo><mn>180°</mn><mo>−</mo><mn>30°</mn><mo>−</mo><mn>56.3°</mn><mo>≈</mo><mn>93.7°</mn></mrow>
+          </math>
+          </div><p>The complete set of angles and sides is</p>
+          <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>α</mi><mo>≈</mo><mn>56.3°</mn><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mi>a</mi><mo>=</mo><mn>10</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>β</mi><mo>=</mo><mn>30°</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mi>b</mi><mo>≈</mo><mn>6.013</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>γ</mi><mo>≈</mo><mn>93.7°</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mi>c</mi><mo>=</mo><mn>12</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div>
+        </div></div><div class="note precalculus try">
+      
+      <div class="exercise">
+        <div class="problem"><p>Find the missing side and angles of the given triangle: <math>
+ <mrow>
+  <mi>α</mi><mo>=</mo><mn>30°</mn><mo>,</mo></mrow></math> <math><mrow><mi>b</mi><mo>=</mo><mn>12</mn><mo>,</mo></mrow></math> <math><mrow><mi>c</mi><mo>=</mo><mn>24.</mn>
+ </mrow>
+</math>
+        </p></div>
+        <div class="solution"><p> <math>
+ <mrow>
+  <mi>a</mi><mo>≈</mo><mn>14.9</mn><mo>,</mo></mrow></math> <math><mrow><mi>β</mi><mo>≈</mo><mn>23.8°</mn><mo>,</mo></mrow></math> <math><mrow><mi>γ</mi><mo>≈</mo><mn>126.2°</mn><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="exercise"><div class="problem">
+          <h6>Solving for an Angle of a SSS Triangle </h6>
+          <p>Find the angle <math>
+            <mrow>
+              <mi>α</mi></mrow>
+          </math> for the given triangle if side <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>20</mn><mo>,</mo></mrow>
+          </math> side <math>
+            <mrow>
+              <mi>b</mi><mo>=</mo><mn>25</mn><mo>,</mo></mrow>
+          </math> and side <math>
+            <mrow>
+              <mi>c</mi><mo>=</mo><mn>18.</mn></mrow>
+          </math>
+          </p>
+        </div>
+        <div class="solution">
+          <p>For this example, we have no angles. We can solve for any angle using the Law of Cosines. To solve for angle <math>
+            <mrow>
+              <mi>α</mi><mo>,</mo></mrow>
+          </math> we have</p>
+
+
+        <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>              </mtext><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mn>−2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>             </mtext><msup>
+       <mrow>
+        <mn>20</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mrow>
+        <mn>25</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mrow>
+        <mn>18</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mn>−2</mn><mo stretchy="false">(</mo><mn>25</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>18</mn><mo stretchy="false">)</mo><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Substitute the appropriate measurements</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>             </mtext><mn>400</mn><mo>=</mo><mn>625</mn><mo>+</mo><mn>324</mn><mo>−</mo><mn>900</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Simplify in each step</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>             </mtext><mn>400</mn><mo>=</mo><mn>949</mn><mo>−</mo><mn>900</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>          </mtext><mn>−549</mn><mo>=</mo><mn>−900</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Isolate cos </mtext><mi>α</mi><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>          </mtext><mfrac>
+       <mrow>
+        <mn>−549</mn>
+       </mrow>
+       <mrow>
+        <mn>−900</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>           </mtext><mn>0.61</mn><mo>≈</mo><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mi>cos</mi>
+       </mrow>
+       <mrow>
+        <mn>−1</mn>
+       </mrow>
+      </msup>
+      <mo stretchy="false">(</mo><mn>0.61</mn><mo stretchy="false">)</mo><mo>≈</mo><mi>α</mi>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Find the inverse cosine</mtext><mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                 </mtext><mi>α</mi><mo>≈</mo><mn>52.4°</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>See .</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_005.jpg" alt="A triangle with standard labels. Side b =25, side a = 20, side c = 18, and angle alpha = 52.4 degrees."></figure></div>
+        <p>
+          <h5>Analysis </h5>
+          <p>Because the inverse cosine can return any angle between 0 and 180 degrees, there will not be any ambiguous cases using this method. </p>
+          </p>
+          </div></div>
+
+    <div class="note precalculus try">
+      
+      <div class="exercise">
+        <div class="problem"><p>Given <math>
+          <mrow>
+            <mi>a</mi><mo>=</mo><mn>5</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>7</mn><mo>,</mo></mrow>
+        </math> and <math>
+          <mrow>
+            <mi>c</mi><mo>=</mo><mn>10</mn><mo>,</mo></mrow>
+        </math> find the missing angles. </p></div>
+        <div class="solution"><p> <math>
+ <mrow>
+  <mi>α</mi><mo>≈</mo><mn>27.7°</mn><mo>,</mo></mrow></math> <math><mrow><mi>β</mi><mo>≈</mo><mn>40.5°</mn><mo>,</mo></mrow></math> <math><mrow><mi>γ</mi><mo>≈</mo><mn>111.8°</mn>
+ </mrow>
+</math>
+        </p></div>
+      </div>
+    </div>
+    </div>
+
+  <div class="section">
+    <h3>Solving Applied Problems Using the Law of Cosines</h3>
+    <p>Just as the Law of Sines provided the appropriate equations to solve a number of applications, the Law of Cosines is applicable to situations in which the given data fits the cosine models. We may see these in the fields of navigation, surveying, astronomy, and geometry, just to name a few.</p>
+
+    <div class="example">
+      <div class="exercise"><div class="problem">
+          <h6>Using the Law of Cosines to Solve a Communication Problem</h6>
+          <p>On many cell phones with GPS, an approximate location can be given before the GPS signal is received. This is accomplished through a process called triangulation, which works by using the distances from two known points. Suppose there are two cell phone towers within range of a cell phone. The two towers are located 6000 feet apart along a straight highway, running east to west, and the cell phone is north of the highway. Based on the signal delay, it can be determined that the signal is 5,050 feet from the first tower and 2,420 feet from the second tower. Determine the position of the cell phone north and east of the first tower, and determine how far it is from the highway.</p></div>
+        <div class="solution">
+          <p>For simplicity, we start by drawing a diagram similar to  and labeling our given information.</p>
+
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_006.jpg" alt="A triangle formed between the two cell phone towers located on am east to west highway and the cellphone between and north of them. The side between the two towers is 6000 feet, the side between the left tower and the phone is 5050 feet, and the side between the right tower and the phone is 2420 feet. The angle between the 5050 and 6000 feet sides is labeled theta."></figure><p>Using the Law of Cosines, we can solve for the angle <math>
+            <mrow>
+              <mi>θ</mi><mo>.</mo></mrow>
+          </math> Remember that the Law of Cosines uses the square of one side to find the cosine of the opposite angle. For this example, let <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>2,420</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>5,050</mn><mo>,</mo></mrow>
+          </math> and <math>
+            <mrow>
+              <mi>c</mi><mo>=</mo><mn>6,000.</mn></mrow>
+          </math> Thus, <math>
+            <mrow>
+              <mi>θ</mi></mrow>
+          </math> corresponds to the opposite side <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>2,420.</mn></mrow>
+          </math> </p>
+        <div class="eq"> <math display="block">
+<mtable><mtr><mtd><msup><mi>a</mi><mn>2</mn></msup></mtd><mtd><mo>=</mo></mtd><mtd><msup><mi>b</mi><mn>2</mn></msup><mo>+</mo><msup><mi>c</mi><mn>2</mn></msup><mo>-</mo><mn>2</mn><mi>b</mi><mi>c</mi><mo> </mo><mi>cos</mi><mi>θ</mi></mtd></mtr><mtr><mtd><msup><mrow><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo><mn>420</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd><mtd><mo>=</mo></mtd><mtd><msup><mrow><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>2</mn><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo><mo> </mo><mi>cos</mi><mi>θ</mi></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msup><mrow><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo><mn>420</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd><mtd><mo>-</mo></mtd><mtd><msup><mrow><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><msup><mrow><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd></mtr></mtable></mtd><mtd><mo>=</mo></mtd><mtd><mo>-</mo><mn>2</mn><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo><mo> </mo><mi>cos</mi><mi>θ</mi></mtd></mtr><mtr><mtd><mfrac><mtable><mtr><mtd><msup><mrow><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo><mn>420</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd><mtd><mo>-</mo></mtd><mtd><msup><mrow><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><msup><mrow><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mtd></mtr></mtable><mrow><mo>-</mo><mn>2</mn><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>050</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>6</mn><mo>,</mo><mn>000</mn><mo stretchy="false">)</mo></mrow></mfrac></mtd><mtd><mo>=</mo></mtd><mtd><mi>cos</mi><mi>θ</mi></mtd></mtr><mtr><mtd><mi>cos</mi><mi>θ</mi></mtd><mtd><mo>≈</mo></mtd><mtd><mn>0</mn><mo>.</mo><mn>9183</mn></mtd></mtr><mtr><mtd><mi>θ</mi></mtd><mtd><mo>≈</mo></mtd><mtd><msup><mi>cos</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo stretchy="false">(</mo><mn>0</mn><mo>.</mo><mn>9183</mn><mo stretchy="false">)</mo></mtd></mtr><mtr><mtd><mi>θ</mi></mtd><mtd><mo>≈</mo></mtd><mtd><mn>23</mn><mo>.</mo><mn>3</mn><mo>°</mo></mtd></mtr></mtable></math>
+</div><p>To answer the questions about the phone’s position north and east of the tower, and the distance to the highway, drop a perpendicular from the position of the cell phone, as in . This forms two right triangles, although we only need the right triangle that includes the first tower for this problem.</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_007.jpg" alt="The triangle between the phone, the left tower, and a point between the phone and the highway between the towers. The side between the phone and the highway is perpendicular to the highway and is y feet. The highway side is x feet. The angle at the tower, previously labeled theta, is 23.3 degrees."></figure><p>Using the angle <math>
+            <mrow>
+              <mi>θ</mi><mo>=</mo>
+                <mrow>
+                  <mn>23.3°</mn></mrow>
+              </mrow>
+          </math> and the basic trigonometric identities, we can find the solutions. Thus</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mspace width="0.5em"></mspace><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mspace width="0.3em"></mspace><mi>cos</mi><mo stretchy="false">(</mo><mn>23.3°</mn><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+           <mi>x</mi>
+           <mrow>
+            <mn>5,050</mn>
+           </mrow>
+          </mfrac>
+
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                   </mtext><mi>x</mi><mo>=</mo><mn>5,050</mn><mi>cos</mi><mo stretchy="false">(</mo><mn>23.3°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                   </mtext><mi>x</mi><mo>≈</mo><mn>4,638.15</mn><mspace width="0.3em"></mspace><mtext>feet</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext>  </mtext><mi>sin</mi><mo stretchy="false">(</mo><mn>23.3°</mn><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+       <mi>y</mi>
+       <mrow>
+        <mn>5,050</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                   </mtext><mi>y</mi><mo>=</mo><mn>5,050</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>23.3°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                   </mtext><mi>y</mi><mo>≈</mo><mn>1,997.5</mn><mspace width="0.3em"></mspace><mtext>feet</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The cell phone is approximately 4,638 feet east and 1998 feet north of the first tower, and 1998 feet from the highway.</p></div>
+        </div></div>
+
+    <div class="example">
+      <div class="exercise"><div class="problem">
+          <h6>Calculating Distance Traveled Using a SAS Triangle </h6>
+          <p>Returning to our problem at the beginning of this section, suppose a boat leaves port, travels 10 miles, turns 20 degrees, and travels another 8 miles. How far from port is the boat? The diagram is repeated here in .</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_009.jpg" alt="A triangle whose vertices are the boat, the port, and the turning point of the boat. The side between the port and the turning point is 10 mi, and the side between the turning point and the boat is 8 miles. The side between the port and the turning point is extended in a straight dotted line. The angle between the dotted line and the 8 mile side is 20 degrees."></figure></div>
+        <div class="solution">
+          <p>The boat turned 20 degrees, so the obtuse angle of the non-right triangle is the supplemental angle, <math>
+ <mrow>
+  <mn>180°</mn><mo>−</mo><mn>20°</mn><mo>=</mo><mn>160°</mn><mo>.</mo>
+ </mrow>
+</math> With this, we can utilize the Law of Cosines to find the missing side of the obtuse triangle—the distance of the boat to the port.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mn>8</mn>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mo stretchy="false">(</mo><mn>8</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mi>cos</mi><mo stretchy="false">(</mo><mn>160°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>314.35</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>=</mo><msqrt>
+       <mrow>
+        <mn>314.35</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>≈</mo><mn>17.7</mn><mspace width="0.3em"></mspace><mtext>miles</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The boat is about 17.7 miles from port.</p></div>
+        </div></div>
+  </div>
+
+  <div class="section">
+    <h3>Using Heron’s Formula to Find the Area of a Triangle</h3>
+    <p>We already learned how to find the area of an oblique triangle when we know two sides and an angle. We also know the formula to find the area of a triangle using the base and the height. When we know the three sides, however, we can use <strong>Heron’s formula</strong> instead of finding the height. <strong>Heron of Alexandria</strong> was a geometer who lived during the first century A.D. He discovered a formula for finding the area of oblique triangles when three sides are known.</p><div class="note">
+
+      <h4>Heron’s Formula</h4>
+      <p>Heron’s formula finds the area of oblique triangles in which sides <math>
+ <mrow>
+  <mi>a</mi><mo>,</mo><mi>b</mi><mtext>,</mtext>
+ </mrow>
+</math> and <math>
+        <mrow>
+          <mi>c</mi></mrow>
+      </math> are known.</p><div class="eq"> <math display="block">
+        <mrow>
+          <mtext>Area</mtext><mo>=</mo><msqrt>
+            <mrow>
+              <mi>s</mi><mrow><mo>(</mo>
+                <mrow>
+                  <mi>s</mi><mo>−</mo><mi>a</mi></mrow>
+                <mo>)</mo></mrow><mrow><mo>(</mo>
+                  <mrow>
+                    <mi>s</mi><mo>−</mo><mi>b</mi></mrow>
+                  <mo>)</mo></mrow><mrow><mo>(</mo>
+                    <mrow>
+                      <mi>s</mi><mo>−</mo><mi>c</mi></mrow>
+                    <mo>)</mo></mrow></mrow>
+          </msqrt>
+        </mrow>
+      </math>
+      </div>
+      <p>where <math>
+        <mrow>
+          <mi>s</mi><mo>=</mo><mfrac>
+            <mrow>
+              <mrow><mo>(</mo>
+                <mrow>
+                  <mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi></mrow>
+                <mo>)</mo></mrow></mrow>
+            <mn>2</mn>
+          </mfrac>
+          </mrow>
+      </math>  is one half of the perimeter of the triangle, sometimes called the semi-perimeter.</p>
+      </div>
+
+    <div class="example"><div class="exercise"><div class="problem">
+          <h6>Using Heron’s Formula to Find the Area of a Given Triangle</h6>
+          <p>Find the area of the triangle in  using Heron’s formula.</p>
+
+          <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_010.jpg" alt="A triangle with angles A, B, and C and opposite sides a, b, and c, respectively. Side a = 10, side b - 15, and side c = 7."></figure></div>
+        <div class="solution">
+          <p>First, we calculate <math>
+            <mrow>
+              <mi>s</mi><mo>.</mo></mrow>
+          </math>
+          </p>
+
+          <div class="eq"> <math display="block">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mi>s</mi><mo>=</mo><mfrac>
+         <mrow>
+          <mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </mfrac>
+
+       </mtd>
+      </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>s</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>10</mn><mo>+</mo><mn>15</mn><mo>+</mo><mn>7</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mn>16</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+</math>
+</div><p>Then we apply the formula.</p>
+          <div class="eq"> <math display="block">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mtext>Area</mtext><mo>=</mo><msqrt>
+         <mrow>
+          <mi>s</mi><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>b</mi><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>c</mi><mo stretchy="false">)</mo>
+         </mrow>
+        </msqrt>
+
+       </mtd>
+      </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Area</mtext><mo>=</mo><msqrt>
+       <mrow>
+        <mn>16</mn><mo stretchy="false">(</mo><mn>16</mn><mo>−</mo><mn>10</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>16</mn><mo>−</mo><mn>15</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>16</mn><mo>−</mo><mn>7</mn><mo stretchy="false">)</mo>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Area</mtext><mo>≈</mo><mn>29.4</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+</math>
+</div><p>The area is approximately 29.4 square units.</p></div>
+        </div></div><div class="note precalculus try">
+      
+      <div class="exercise">
+        <div class="problem"><p>Use Heron’s formula to find the area of a triangle with sides of lengths <math>
+ <mrow>
+  <mi>a</mi><mo>=</mo><mn>29.7</mn><mspace width="0.3em"></mspace><mtext>ft</mtext><mo>,</mo><mi>b</mi><mo>=</mo><mn>42.3</mn><mspace width="0.3em"></mspace><mtext>ft</mtext><mo>,</mo>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>c</mi><mo>=</mo><mn>38.4</mn><mspace width="0.3em"></mspace><mtext>ft</mtext><mo>.</mo>
+ </mrow>
+</math> </p></div>
+        <div class="solution"><p>Area = 552 square feet
+        </p></div>
+      </div>
+    </div>
+
+    <div class="example"><div class="exercise"><div class="problem">
+          <h6>Applying Heron’s Formula to a Real-World Problem</h6>
+          <p>A Chicago city developer wants to construct a building consisting of artist’s lofts on a triangular lot bordered by Rush Street, Wabash Avenue, and Pearson Street. The frontage along Rush Street is approximately 62.4 meters, along Wabash Avenue it is approximately 43.5 meters, and along Pearson Street it is approximately 34.1 meters. How many square meters are available to the developer? See  for a view of the city property.</p>
+
+          <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_011.jpg" alt="A triangle formed by sides Rush Street, N. Wabash Ave, and E. Pearson Street with lengths 62.4, 43.5, and 34.1, respectively. "></figure></div>
+        <div class="solution">
+          <p>Find the measurement for <math>
+            <mrow>
+              <mi>s</mi><mo>,</mo></mrow>
+          </math> which is one-half of the perimeter. </p>
+
+          <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>s</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>62.4</mn><mo>+</mo><mn>43.5</mn><mo>+</mo><mn>34.1</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>s</mi><mo>=</mo><mn>70</mn><mspace width="0.3em"></mspace><mtext>m</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Apply Heron’s formula.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Area</mtext><mo>=</mo><msqrt>
+       <mrow>
+        <mn>70</mn><mo stretchy="false">(</mo><mn>70</mn><mo>−</mo><mn>62.4</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>70</mn><mo>−</mo><mn>43.5</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>70</mn><mo>−</mo><mn>34.1</mn><mo stretchy="false">)</mo>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Area</mtext><mo>=</mo><msqrt>
+       <mrow>
+        <mn>506,118.2</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Area</mtext><mo>≈</mo><mn>711.4</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The developer has about 711.4 square meters.</p>
+        </div>
+        </div></div><div class="note precalculus try">
+      
+      <div class="exercise">
+        <div class="problem"><p>Find the area of a triangle given <math>
+          <mrow>
+            <mi>a</mi><mo>=</mo><mn>4.38</mn><mspace width="0.3em"></mspace><mtext>ft</mtext><mspace width="0.3em"></mspace><mo>,</mo><mi>b</mi><mo>=</mo><mn>3.79</mn><mspace width="0.3em"></mspace><mtext>ft,</mtext></mrow>
+        </math> and <math>
+          <mrow>
+            <mi>c</mi><mo>=</mo><mn>5.22</mn><mspace width="0.3em"></mspace><mtext>ft</mtext><mtext>.</mtext></mrow>
+        </math>
+        </p></div>
+        <div class="solution"><p>about 8.15 square feet</p></div>
+      </div>
+    </div>
+
+    <div class="note precalculus media media-notitle">
+    <p>Access these online resources for additional instruction and practice with the Law of Cosines.</p>
+<ul><li><a href="https://openstax.org/l/lawcosines" target="_blank" rel="noopener noreferrer">Law of Cosines</a></li><li><a href="https://openstax.org/l/cosineapp" target="_blank" rel="noopener noreferrer">Law of Cosines: Applications</a></li><li><a href="https://openstax.org/l/cosineapp2" target="_blank" rel="noopener noreferrer">Law of Cosines: Applications 2</a></li></ul>
+    </div></div>
+
+<div class="section key-equations"><h3>Key Equations</h3><table><tr><td>Law of Cosines</td><td> <math>
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>b</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>α</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>a</mi><mi>c</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>β</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>c</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>b</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mi>a</mi><mi>b</mi><mi>c</mi><mi>o</mi><mi>s</mi><mspace width="0.3em"></mspace><mi>γ</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</td></tr><tr><td>Heron’s formula</td><td> <math>
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>    Area</mtext><mo>=</mo><msqrt>
+       <mrow>
+        <mi>s</mi><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>b</mi><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>s</mi><mo>−</mo><mi>c</mi><mo stretchy="false">)</mo>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>where </mtext><mi>s</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</td></tr></table></div><div class="section key-concepts">
+    <h3>Key Concepts</h3>
+   <ul><li>The Law of Cosines defines the relationship among angle measurements and lengths of sides in oblique triangles.</li><li>The Generalized Pythagorean Theorem is the Law of Cosines for two cases of oblique triangles: SAS and SSS. Dropping an imaginary perpendicular splits the oblique triangle into two right triangles or forms one right triangle, which allows sides to be related and measurements to be calculated. See  and .</li><li>The Law of Cosines is useful for many types of applied problems. The first step in solving such problems is generally to draw a sketch of the problem presented. If the information given fits one of the three models (the three equations), then apply the Law of Cosines to find a solution. See  and .</li><li>Heron’s formula allows the calculation of area in oblique triangles. All three sides must be known to apply Heron’s formula. See  and See .</li></ul></div>
+
+  <div class="section section-exercises"><h3>Section Exercises</h3><div class="section">
+      <h4>Verbal</h4>
+
+      <div class="exercise">
+        <div class="problem">
+          <p>If you are looking for a missing side of a triangle, what do you need to know when using the Law of Cosines?</p>
+        </div>
+      <div class="solution">
+<p>two sides and the angle opposite the missing side. </p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>If you are looking for a missing angle of a triangle, what do you need to know when using the Law of Cosines?</p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Explain what <math>
+            <mrow>
+              <mi>s</mi></mrow>
+          </math> represents in Heron’s formula.</p>
+        </div>
+      <div class="solution">
+        <p> <math>
+          <mrow>
+            <mi>s</mi></mrow>
+        </math> is the semi-perimeter, which is half the perimeter of the triangle. </p></div>
+      </div>
+     <div class="exercise">
+       <div class="problem">
+         <p>Explain the relationship between the Pythagorean Theorem and the Law of Cosines.</p>
+       </div>
+     </div>
+     <div class="exercise">
+       <div class="problem">
+         <p>When must you use the Law of Cosines instead of the Pythagorean Theorem?</p>
+       </div>
+      <div class="solution">
+<p>The Law of Cosines must be used for any oblique (non-right) triangle. </p>
+      </div>
+     </div>
+
+    </div>
+    <div class="section">
+      <h4>Algebraic</h4>
+      <p>For the following exercises, assume <math>
+        <mrow>
+          <mi>α</mi></mrow>
+      </math> is opposite side <math>
+        <mrow>
+          <mi>a</mi><mo>,</mo><mi>β</mi></mrow>
+      </math>  is opposite side <math>
+        <mrow>
+          <mi>b</mi><mo>,</mo></mrow>
+      </math> and <math>
+        <mrow>
+          <mi>γ</mi></mrow>
+      </math>  is opposite side <math>
+        <mrow>
+          <mi>c</mi><mo>.</mo></mrow>
+      </math> If possible, solve each triangle for the unknown side. Round to the nearest tenth.</p><div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>γ</mi><mo>=</mo><mn>41.2°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>2.49</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>3.13</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>α</mi><mo>=</mo><mn>120°</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>6</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>7</mn></mrow>
+          </math>
+          </p></div>
+      <div class="solution">
+<p>11.3 </p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>β</mi><mo>=</mo><mn>58.7°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>10.6</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>15.7</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>γ</mi><mo>=</mo><mn>115°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>18</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>23</mn></mrow>
+          </math>
+          </p></div>
+        <div class="solution">
+          <p>34.7 </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>α</mi><mo>=</mo><mn>119°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>26</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>14</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>γ</mi><mo>=</mo><mn>113°</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>10</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>32</mn></mrow>
+          </math>
+          </p></div>
+        <div class="solution">
+          <p>26.7 </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>β</mi><mo>=</mo><mn>67°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>49</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>38</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>α</mi><mo>=</mo><mn>43.1°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>184.2</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>242.8</mn></mrow>
+          </math>
+          </p></div>
+        <div class="solution">
+          <p>
+            <math><mi>c</mi><mo>=</mo><mn>257.3</mn><mo>,</mo><mn>96.7</mn></math>
+          </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>α</mi><mo>=</mo><mn>36.6°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>186.2</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>242.2</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>β</mi><mo>=</mo>
+                <mrow>
+                  <mn>50°</mn></mrow>
+              <mo>,</mo><mi>a</mi><mo>=</mo><mn>105</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>45</mn><mmultiscripts>
+                <mrow></mrow>
+                <mprescripts></mprescripts>
+                <mrow></mrow>
+                <mrow></mrow>
+              </mmultiscripts>
+            </mrow>
+          </math>
+          </p></div>
+        <div class="solution">
+          <p>not possible </p>
+        </div>
+      </div>
+
+      <p>For the following exercises, use the Law of Cosines to solve for the missing angle of the oblique triangle. Round to the nearest tenth.</p>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>42</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>19</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>30</mn><mo>;</mo></mrow>
+          </math> find angle <math>
+            <mrow>
+              <mi>A</mi><mo>.</mo></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+ <mrow>
+  <mi>a</mi><mo>=</mo><mn>14</mn><mo>,</mo><mspace width="0.5em"></mspace><mi>b</mi><mo>=</mo><mn>13</mn><mo>,</mo><mspace width="0.5em"></mspace><mi>c</mi><mo>=</mo><mn>20</mn><mo>;</mo>
+ </mrow>
+</math> find angle <math>
+            <mrow>
+              <mi>C</mi><mo>.</mo></mrow>
+          </math> </p></div>
+      <div class="solution">
+        <p>95.5°</p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>16</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>31</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>20</mn><mo>;</mo></mrow>
+          </math> find angle <math>
+            <mrow>
+              <mi>B</mi><mo>.</mo></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>13</mn><mo>,</mo><mspace width="0.3em"></mspace><mi>b</mi><mo>=</mo><mn>22</mn><mo>,</mo><mspace width="0.3em"></mspace><mi>c</mi><mo>=</mo><mn>28</mn><mo>;</mo></mrow>
+          </math> find angle <math>
+            <mrow>
+              <mi>A</mi><mo>.</mo></mrow>
+          </math>
+          </p>
+        </div>
+      <div class="solution">
+        <p>26.9°</p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>108</mn><mo>,</mo><mspace width="0.3em"></mspace><mi>b</mi><mo>=</mo><mn>132</mn><mo>,</mo><mspace width="0.3em"></mspace><mi>c</mi><mo>=</mo><mn>160</mn><mo>;</mo></mrow>
+          </math> find angle <math>
+            <mrow>
+              <mi>C</mi><mo>.</mo></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+
+      <p>For the following exercises, solve the triangle. Round to the nearest tenth.</p>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>A</mi><mo>=</mo><mn>35°</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>8</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>11</mn></mrow>
+          </math>
+          </p></div>
+      <div class="solution">
+        <p> <math>
+          <mrow>
+            <mi>B</mi><mo>≈</mo><mn>45.9°</mn><mo>,</mo><mi>C</mi><mo>≈</mo><mn>99.1°</mn><mo>,</mo><mi>a</mi><mo>≈</mo><mn>6.4</mn></mrow>
+        </math>
+        </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>B</mi><mo>=</mo><mn>88°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>4.4</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>5.2</mn></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>C</mi><mo>=</mo><mn>121°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>21</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>37</mn></mrow>
+          </math>
+          </p></div>
+      <div class="solution">
+        <p> <math>
+          <mrow>
+            <mi>A</mi><mo>≈</mo><mn>20.6°</mn><mo>,</mo><mi>B</mi><mo>≈</mo><mn>38.4°</mn><mo>,</mo><mi>c</mi><mo>≈</mo><mn>51.1</mn></mrow>
+        </math>
+        </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>13</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>11</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>15</mn></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>3.1</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>3.5</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>5</mn></mrow>
+          </math>
+          </p>
+        </div>
+        <div class="solution">
+          <p> <math>
+            <mrow>
+              <mi>A</mi><mo>≈</mo><mn>37.8°</mn><mo>,</mo><mi>B</mi><mo>≈</mo><mn>43.8</mn><mo>,</mo><mi>C</mi><mo>≈</mo><mn>98.4°</mn></mrow>
+          </math>
+          </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>51</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>25</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>29</mn></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+
+      <p>For the following exercises, use Heron’s formula to find the area of the triangle. Round to the nearest hundredth.</p>
+
+      <div class="exercise">
+        <div class="problem">
+          <p>Find the area of a triangle with sides of length 18 in, 21 in, and 32 in. Round to the nearest tenth.</p>
+        </div>
+      <div class="solution">
+<p>177.56 in<sup>2</sup> </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Find the area of a triangle with sides of length 20 cm, 26 cm, and 37 cm. Round to the nearest tenth.</p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p> <math>
+ <mrow>
+  <mi>a</mi><mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mspace width="0.3em"></mspace><mtext>m</mtext><mo>,</mo><mi>b</mi><mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mspace width="0.3em"></mspace><mtext>m</mtext><mo>,</mo><mi>c</mi><mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mspace width="0.3em"></mspace><mtext>m</mtext>
+ </mrow>
+</math>
+</p></div>
+      <div class="solution">
+<p>0.04 m<sup>2</sup></p></div>
+      </div>
+      <div class="exercise material-set-2">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>12.4</mn><mtext> ft</mtext><mo>,</mo><mspace width="0.5em"></mspace><mi>b</mi><mo>=</mo><mn>13.7</mn><mtext> ft</mtext><mo>,</mo><mspace width="0.5em"></mspace><mi>c</mi><mo>=</mo><mn>20.2</mn><mtext> ft</mtext></mrow>
+          </math>
+          </p>
+        </div>
+      </div>
+      <div class="exercise material-set-2">
+        <div class="problem">
+          <p> <math>
+            <mrow>
+              <mi>a</mi><mo>=</mo><mn>1.6</mn><mtext> yd</mtext><mo>,</mo><mspace width="0.5em"></mspace><mi>b</mi><mo>=</mo><mn>2.6</mn><mtext> yd</mtext><mo>,</mo><mspace width="0.5em"></mspace><mi>c</mi><mo>=</mo><mn>4.1</mn><mtext> yd</mtext></mrow>
+          </math>
+          </p>
+        </div>
+      <div class="solution">
+<p>0.91 yd<sup>2</sup></p></div>
+      </div>
+
+    </div>
+    <div class="section">
+      <h4>Graphical</h4>
+      <p>For the following exercises, find the length of side <math>
+ <mrow>
+  <mi>x</mi><mo>.</mo>
+ </mrow>
+</math>  Round to the nearest tenth.</p><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_201.jpg" alt="A triangle. One angle is 72 degrees, with opposite side = x. The other two sides are 5 and 6.5."></figure>
+
+        </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_202.jpg" alt="A triangle. One angle is 42 degrees with opposite side = x. The other two sides are 4.5 and 3.4."></figure>
+
+      </div>
+      <div class="solution">
+<p>3.0 </p>
+</div></div><div class="exercise"><div class="problem">
+            <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_203.jpg" alt="A triangle. One angle is 40 degrees with opposite side = 15. The other two sides are 12 and x."></figure>
+
+        </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_204.jpg" alt="A triangle. One angle is 65 degrees with opposite side = x. The other two sides are 30 and 23."></figure>
+        </div>
+      <div class="solution">
+<p>29.1 </p>
+</div></div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_205.jpg" alt="A triangle. One angle is 50 degrees with opposite side = x. The other two sides are 225 and 305."></figure>
+        </div>
+      </div><div class="exercise"><div class="problem">
+       <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_206.jpg" alt="A triangle. One angle is 123 degrees with opposite side = x. The other two sides are 1/5 and 1/3."></figure>
+        </div>
+      <div class="solution">
+<p>0.5 </p>
+</div></div><p>For the following exercises, find the measurement of angle <math>
+        <mrow>
+          <mi>A</mi><mo>.</mo></mrow>
+      </math>
+      </p>
+      <div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_207.jpg" alt="A triangle. Angle A is opposite a side of length 2.3. The other two sides are 1.5 and 2.5."></figure>
+        </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_208.jpg" alt="A triangle. Angle A is opposite a side of length 125. The other two sides are 115 and 100."></figure>
+        </div>
+      <div class="solution">
+        <p>70.7°</p>
+      </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_209.jpg" alt="A triangle. Angle A is opposite a side of length 6.8. The other two sides are 4.3 and 8.2."></figure>
+
+      	  </div>
+      	</div><div class="exercise"><div class="problem">
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_210.jpg" alt="A triangle. Angle A is opposite a side of length 40.6. The other two sides are 38.7 and 23.3."></figure>
+        </div>
+      <div class="solution">
+        <p>77.4°</p>
+      </div>
+      </div><div class="exercise"><div class="problem">
+          <p>Find the measure of each angle in the triangle shown in . Round to the nearest tenth.</p>
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_211.jpg" alt="A triangle A B C. Angle A is opposite a side of length 10, angle B is opposite a side of length 12, and angle C is opposite a side of length 7."></figure></div>
+      </div><p>For the following exercises, solve for the unknown side. Round to the nearest tenth.</p><div class="exercise"><div class="problem">
+
+       <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_212.jpg" alt="A triangle. One angle is 60 degrees with opposite side unknown. The other two sides are 20 and 28."></figure>
+        </div>
+      <div class="solution">
+<p>25.0 </p>
+      </div>
+      </div><div class="exercise"><div class="problem">
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_213.jpg" alt="A triangle. One angle is 30 degrees with opposite side unknown. The other two sides are 16 and 10."></figure>
+        </div>
+      </div><div class="exercise"><div class="problem">
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_214.jpg" alt="A triangle. One angle is 22 degrees with opposite side unknown. The other two sides are 20 and 13."></figure>
+      </div>
+      <div class="solution">
+<p>9.3 </p>
+</div></div><div class="exercise"><div class="problem">
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_215.jpg" alt="A triangle. One angle is 88 degrees with opposite side = 9. Another side is 5."></figure>
+        </div>
+      </div><p>For the following exercises, find the area of the triangle. Round to the nearest hundredth.</p><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_216.jpg" alt="A triangle with sides 8, 12, and 17. Angles unknown."></figure>
+        </div>
+      <div class="solution">
+<p>43.52 </p>
+      </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_217.jpg" alt="A triangle with sides 50, 22, and 36. Angles unknown."></figure>
+        </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_218.jpg" alt="A triangle with sides 1.9, 2.6, and 4.3. Angles unknown."></figure>
+        </div>
+        <div class="solution">
+<p>1.41 </p>
+</div></div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_219.jpg" alt="A triangle with sides 8.9, 12.5, and 16.2. Angles unknown."></figure>
+
+        </div>
+      </div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_220.jpg" alt="A triangle with sides 1/2, 2/3, and 3/5. Angles unknown."></figure>
+        </div>
+      <div class="solution">
+<p>0.14 </p>
+      </div>
+      </div></div>
+    <div class="section">
+      <h4>Extensions</h4>
+      <div class="exercise">
+        <div class="problem">
+          <p>A parallelogram has sides of length 16 units and 10 units. The shorter diagonal is 12 units. Find the measure of the longer diagonal.</p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>The sides of a parallelogram are 11 feet and 17 feet. The longer diagonal is 22 feet. Find the length of the shorter diagonal.</p>
+        </div>
+      <div class="solution">
+<p>18.3 </p>
+      </div>
+      </div>
+
+      <div class="exercise">
+        <div class="problem">
+          <p>The sides of a parallelogram are 28 centimeters and 40 centimeters. The measure of the larger angle is 100°. Find the length of the shorter diagonal.</p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>A regular octagon is inscribed in a circle with a radius of 8 inches. (See .) Find the perimeter of the octagon.</p>
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_221.jpg" alt="An octagon inscribed in a circle."></figure></div>
+      <div class="solution">
+<p>48.98  </p>
+      </div>
+      </div>
+    <div class="exercise">
+      <div class="problem"><p>A regular pentagon is inscribed in a circle of radius 12 cm. (See .) Find the perimeter of the pentagon.  Round to the nearest tenth of a centimeter.</p>
+
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_222.jpg" alt="A pentagon inscribed in a circle."></figure></div>
+    </div>
+
+      <p>For the following exercises, suppose that <math>
+        <mrow>
+          <msup>
+            <mi>x</mi>
+            <mn>2</mn>
+          </msup>
+          <mo>=</mo><mn>25</mn><mo>+</mo><mn>36</mn><mo>−</mo><mn>60</mn><mi>cos</mi><mrow><mo>(</mo>
+            <mrow>
+              <mn>52</mn></mrow>
+            <mo>)</mo></mrow></mrow>
+      </math> represents the relationship of three sides of a triangle and the cosine of an angle.</p>
+      <div class="exercise"><div class="problem">
+          <p>Draw the triangle.</p></div>
+      <div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_223.jpg" alt="A triangle. One angle is 52 degrees with opposite side = x. The other two sides are 5 and 6."></figure></div>
+      </div><div class="exercise">
+        <div class="problem">
+          <p>Find the length of the third side.</p>
+        </div>
+      </div>
+
+      <p>For the following exercises, find the area of the triangle.</p>
+      <div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_224.jpg" alt="A triangle. One angle is 22 degrees with opposite side = 3.4. Another side is 5.3."></figure>
+
+        </div>
+      <div class="solution">
+<p>7.62</p>
+</div></div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_225.jpg" alt="A triangle. One angle is 80 degrees with opposite side unknown. The other two sides are 8 and 6."></figure>
+
+      	  </div>
+      	</div><div class="exercise"><div class="problem">
+
+        <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_226.jpg" alt="A triangle. One angle is 18 degrees with opposite side = 12.8. Another side is 18.8."></figure>
+
+        </div>
+      <div class="solution">
+<p>85.1 </p>
+      </div>
+      </div></div>
+    <div class="section">
+      <h4>Real-World Applications</h4>
+
+      <div class="exercise"><div class="problem"><p>A surveyor has taken the measurements shown in . Find the distance across the lake. Round answers to the nearest tenth.</p>
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_227.jpg" alt="A triangle. One angle is 70 degrees with opposite side unknown, which is the length of the lake. The other two sides are 800 and 900 feet."></figure></div></div>
+
+      <div class="exercise">
+        <div class="problem">
+          <p>A satellite calculates the distances and angle shown in  (not to scale). Find the distance between the two cities. Round answers to the nearest tenth.</p>
+
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_228.jpg" alt="Insert figure(table) alt text: A triangle formed by two cities on the ground and a satellite above them. The angle by the satellite is 2.1 degrees with opposite side unknown, which is the distance between the two cities. The lengths of the other sides are 370 and 350 km."></figure></div>
+      <div class="solution">
+<p>24.0 km </p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>An airplane flies 220 miles with a heading of 40°, and then flies 180 miles with a heading of 170°. How far is the plane from its starting point, and at what heading? Round answers to the nearest tenth.</p></div>
+      </div>
+     <div class="exercise">
+       <div class="problem">
+         <p>A 113-foot tower is located on a hill that is inclined 34° to the horizontal, as shown in . A guy-wire is to be attached to the top of the tower and anchored at a point 98 feet uphill from the base of the tower.  Find the length of wire needed.</p>
+
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_230.jpg" alt="Insert figure(table) alt text: Two triangles, one on top of the other. The bottom triangle is the hill inclined 34 degrees to the horizontal. The second is formed by the base of the tower on the incline of the hill, the top of the tower, and the wire anchor point uphill from the tower on the incline. The sides are the tower, the incline of the hill, and the wire. The tower side is 113 feet and the incline side is 98 feet."></figure></div>
+      <div class="solution">
+<p>99.9 ft </p>
+</div></div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Two ships left a port at the same time. One ship traveled at a speed of 18 miles per hour at a heading of 320°. The other ship traveled at a speed of 22 miles per hour at a heading of 194°. Find the distance between the two ships after 10 hours of travel.</p></div>
+      </div>
+     <div class="exercise">
+       <div class="problem">
+         <p>The graph in  represents two boats departing at the same time from the same dock. The first boat is traveling at 18 miles per hour at a heading of 327° and the second boat is traveling at 4 miles per hour at a heading of 60°. Find the distance between the two boats after 2 hours.</p>
+
+      <figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_231.jpg" alt="Insert figure(table) alt text: A graph of two rays, which represent the paths of the two boats. Both rays start at the origin. The first goes into the first quadrant at a 60 degree angle at 4 mph. The second goes into the fourth quadrant at a 327 degree angle from the origin. The second travels at 18 mph."></figure></div>
+      <div class="solution">
+<p>37.3 miles </p>
+</div></div>
+      <div class="exercise">
+        <div class="problem">
+          <p>A triangular swimming pool measures 40 feet on one side and 65 feet on another side. These sides form an angle that measures 50°. How long is the third side (to the nearest tenth)?</p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>A pilot flies in a straight path for 1 hour 30 min. She then makes a course correction, heading 10° to the right of her original course, and flies 2 hours in the new direction. If she maintains a constant speed of 680 miles per hour, how far is she from her starting position?</p></div>
+      <div class="solution">
+<p>2371 miles </p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Los Angeles is 1,744 miles from Chicago, Chicago is 714 miles from New York, and New York is 2,451 miles from Los Angeles.  Draw a triangle connecting these three cities, and find the angles in the triangle.</p>
+        </div>
+      </div>
+      <div class="exercise"><div class="problem"><p>Philadelphia is 140 miles from Washington, D.C., Washington, D.C. is 442 miles from Boston, and Boston is 315 miles from Philadelphia. Draw a triangle connecting these three cities and find the angles in the triangle.</p></div>
+      <div class="solution"><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_02_233.jpg" alt="Angle BO is 9.1 degrees, angle PH is 150.2 degrees, and angle DC is 20.7 degrees."></figure></div>
+      </div><div class="exercise">
+        <div class="problem">
+          <p>Two planes leave the same airport at the same time. One flies at 20° east of north at 500 miles per hour. The second flies at 30° east of south at 600 miles per hour. How far apart are the planes after 2 hours?</p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Two airplanes take off in different directions. One travels 300 mph due west and the other travels 25° north of west at 420 mph. After 90 minutes, how far apart are they, assuming they are flying at the same altitude?</p></div>
+      <div class="solution">
+<p>292.4 miles </p>
+</div></div>
+
+      <div class="exercise">
+        <div class="problem">
+          <p>A parallelogram has sides of length 15.4 units and 9.8 units. Its area is 72.9 square units. Find the measure of the longer diagonal.</p>
+        </div>
+      </div>
+      <div class="exercise"><div class="problem"><p>The four sequential sides of a quadrilateral have lengths 4.5 cm, 7.9 cm, 9.4 cm, and 12.9 cm.  The angle between the two smallest sides is 117°. What is the area of this quadrilateral?</p></div>
+      <div class="solution">
+<p>65.4 cm<sup>2</sup> </p>
+</div></div>
+      <div class="exercise">
+        <div class="problem">
+          <p>The four sequential sides of a quadrilateral have lengths 5.7 cm, 7.2 cm, 9.4 cm, and 12.8 cm.  The angle between the two smallest sides is 106°. What is the area of this quadrilateral?</p>
+        </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Find the area of a triangular piece of land that measures 30 feet on one side and 42 feet on another; the included angle measures 132°. Round to the nearest whole square foot.</p>
+        </div>
+      <div class="solution">
+<p>468 ft<sup>2</sup> </p>
+      </div>
+      </div>
+      <div class="exercise">
+        <div class="problem">
+          <p>Find the area of a triangular piece of land that measures 110 feet on one side and 250 feet on another; the included angle measures 85°. Round to the nearest whole square foot.</p>
+        </div>
+      </div>
+    </div>
+  </div><h2>Key terms</h2>
+    <p><strong>Law of Cosines</strong> states that the square of any side of a triangle is equal to the sum of the squares of the other two sides minus twice the product of the other two sides and the cosine of the included angle</p>
+    <p><strong>Generalized Pythagorean Theorem</strong> an extension of the Law of Cosines; relates the sides of an oblique triangle and is used for SAS and SSS triangles</p>
+
+  
+</body></html>

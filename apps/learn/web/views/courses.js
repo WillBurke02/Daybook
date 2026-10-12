@@ -187,13 +187,15 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
       return el('li', { class: (k === here ? 'on' : '') + (done ? ' done' : '') }, label, el('span', { class: 'num' }, mine.length));
     }));
   };
-  const paint = () => {
-    track.replaceChildren(...seq.map((c, i) => el('button', {
+  const paint = () => {                           // the ticks of the part you are in
+    const k = partOf(Math.max(pos, 0));
+    track.replaceChildren(...seq.map((c, i) => [c, i]).filter(([, i]) => partOf(i) === k).map(([c, i]) => el('button', {
       class: 'tick' + (i === pos ? ' on' : '') + (c.done || c.state?.last_seen ? ' seen' : '') + (c.why === 'again' || c.why === 'refresher' ? ' extra' : ''),
       type: 'button', 'aria-label': `Card ${i + 1}`, title: `Card ${i + 1}${c.stage ? ' · ' + c.stage : ''}`, onclick: () => show(i) })));
     paintStages();
   };
 
+  const original = (lesson.resources || []).filter(r => r.url?.startsWith('media/openstax/'));   // the words as their author wrote them
   const intro = () => {
     pos = -1;
     card = null;
@@ -210,6 +212,8 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
       prereq.length ? el('p', { class: 'small muted' }, 'Builds on: ', prereq.map((p, i) => [i ? ', ' : '',
         el('a', { href: lessonHref(p.id) }, p.title), p.asks ? ` (${pct(p.mastered, p.asks)}% solid)` : ''])) : null,
       resources((lesson.resources || []).filter(r => r.when === 'before'), 'Before you start (optional)'),
+      original.length ? el('p', { class: 'small' }, 'The original: ', original.map((r, i) => [i ? ', ' : '',
+        el('a', { href: r.url, target: '_blank', rel: 'noopener' }, r.title.replace(/^The original: /, ''))])) : null,
       ready ? el('p', { class: 'muted' }, ready) : null,
       fbtn(),
       warm.length ? el('p', { class: 'small muted' }, `It starts with ${warm.length} warm-up card${warm.length === 1 ? '' : 's'} from what it builds on.`) : null,

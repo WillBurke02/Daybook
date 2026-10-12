@@ -1,0 +1,3227 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11.3 Geometric Sequences · Precalculus 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Precalculus 2e, Abramson et al., section 11.3 Geometric Sequences. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/precalculus-2e/pages/11-3-geometric-sequences</p>
+<h1>11.3 Geometric Sequences</h1>
+
+<div class="section coreq-skills"><div class="section learning-objectives"><h4>Learning Objectives</h4><ul><li>Determine if a sequence is geometric (IA 12.3.1).</li><li>Find the general term (nth term) of a geometric sequence (IA 12.3.2).</li></ul></div><div class="section"><h4>Objective 1: Determine if a sequence is geometric (IA 12.3.1)</h4><p>A sequence is called a <strong>geometric sequence</strong> if the ratio between consecutive terms is always the same.
+</p><p>The ratio between consecutive terms in a geometric sequence is <em>r</em>, the <strong>common ratio</strong>, where <em>n</em> is greater than or equal to two.
+</p><div class="eq"> <math><mi>r</mi><mo>=</mo><mfrac><msub><mi>a</mi><mi>n</mi></msub><msub><mi>a</mi><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msub></mfrac></math> </div>
+<figure><img src="CNX_IntAlg_Figure_12_03_001_img.png" alt="This figure shows two sets of sequences where r is the common ratio."></figure><div class="example"><div class="exercise">
+<div class="problem">
+<p>Determine if each sequence is geometric. If so, indicate the common ratio.</p>
+<p>ⓐ <math><mrow><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>32</mn><mo>,</mo><mn>64</mn><mo>,</mo><mn>128</mn><mtext>,</mtext><mspace width="0.2em"></mspace><mtext>…</mtext></mrow></math> </p>
+<p>ⓑ <math><mrow><mn>−2</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>−12</mn><mo>,</mo><mn>36</mn><mo>,</mo><mn>−72</mn><mo>,</mo><mn>216</mn><mtext>,</mtext><mspace width="0.2em"></mspace><mtext>…</mtext></mrow></math> </p>
+
+</div>
+<div class="solution">
+<p>To determine if the sequence is geometric, we find the ratio of the consecutive terms shown.</p>
+<p>ⓐ<br>
+ <math><mrow><mtable><mtr><mtd columnalign="left"><mtable><mtr></mtr><mtr></mtr><mtr></mtr><mtr></mtr><mtr><mtd columnalign="left"><mtext>Find the ratio of</mtext></mtd></mtr><mtr><mtd columnalign="left"><mtext>the consecutive terms.</mtext></mtd></mtr></mtable></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mspace width="7em"></mspace><mtable><mtr><mtd columnalign="center"><mn>4</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>8</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>16</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>32</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>64</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>128</mn><mo>,</mo><mtext>…</mtext></mtd></mtr><mtr></mtr><mtr></mtr>
+<mtr><mtd columnalign="center"><mfrac><mn>8</mn><mn>4</mn></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>16</mn></mrow><mn>8</mn></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>32</mn></mrow><mrow><mn>16</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>64</mn></mrow><mrow><mn>32</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>128</mn></mrow><mrow><mn>64</mn></mrow></mfrac></mtd><mtd></mtd><mtd></mtd></mtr>
+<mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>2</mn></mtd><mtd></mtd><mtd></mtd></mtr></mtable></mtd></mtr><mtr></mtr><mtr></mtr>
+<mtr><mtd></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mspace width="3em"></mspace><mtext>The sequence is geometric. The common ratio is</mtext><mspace width="0.2em"></mspace><mi>r</mi><mo>=</mo><mn>2</mn><mo>.</mo></mtd></mtr></mtable></mrow></math> </p>
+<p>ⓑ<br>
+ <math><mrow><mtable><mtr><mtd columnalign="left"><mtable><mtr></mtr><mtr></mtr><mtr></mtr><mtr></mtr><mtr><mtd columnalign="left"><mtext>Find the ratio of</mtext></mtd></mtr><mtr><mtd columnalign="left"><mtext>the consecutive terms.</mtext></mtd></mtr></mtable></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mspace width="7em"></mspace><mtable><mtr><mtd columnalign="center"><mn>−2</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>6</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>−12</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>36</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>−72</mn><mo>,</mo></mtd><mtd></mtd><mtd columnalign="center"><mn>216</mn><mo>,</mo><mtext>…</mtext></mtd></mtr><mtr></mtr><mtr></mtr>
+<mtr><mtd columnalign="center"><mfrac><mrow><mn>6</mn></mrow><mrow><mn>−2</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>−12</mn></mrow><mrow><mn>6</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>36</mn></mrow><mrow><mn>−12</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>−72</mn></mrow><mrow><mn>36</mn></mrow></mfrac></mtd><mtd></mtd><mtd columnalign="center"><mfrac><mrow><mn>216</mn></mrow><mrow><mn>−72</mn></mrow></mfrac></mtd></mtr>
+<mtr><mtd columnalign="center"><mn>−3</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>−2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>−3</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>−2</mn></mtd><mtd></mtd><mtd columnalign="center"><mn>−3</mn></mtd><mtd></mtd><mtd></mtd></mtr></mtable></mtd></mtr><mtr></mtr><mtr></mtr>
+<mtr><mtd></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mspace width="3em"></mspace><mtext>The sequence is not geometric. There is no common ratio.</mtext></mtd></mtr></mtable></mrow></math> </p>
+
+</div>
+</div>
+</div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><p>
+Determine if each sequence is geometric. If so, indicate the common ratio.
+
+</p><div class="exercise"><div class="problem">
+  <p><math><mn>−150</mn></math>, <math><mn>−30</mn></math>, <math><mn>−15</mn></math>, <math><mn>−5</mn></math>, <math><mo>–</mo><mfrac><mn>5</mn><mn>2</mn></mfrac></math>, …</p>
+<table><tr><td>Find the ratio of consecutive terms.</td><td></td></tr><tr><td></td><td></td></tr></table></div>
+
+</div><div class="exercise"><div class="problem">
+  <p>8, 4, 2, 1, <math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, <math><mfrac><mn>1</mn><mn>4</mn></mfrac></math>, …</p>
+<table><tr><td>Find the ratio of consecutive terms.</td><td></td></tr><tr><td></td><td></td></tr></table></div>
+
+</div></div><div class="example"><div class="exercise">
+<div class="problem">
+<p>Write the first five terms of the sequence where the first term is 3 and the common ratio is <math><mrow><mi>r</mi><mo>=</mo><mn>−2</mn><mo>.</mo></mrow></math> </p>
+</div>
+<div class="solution">
+<p>We start with the first term and multiply it by the common ratio. Then we multiply that result by the common ratio to get the next term, and so on.</p>
+<div class="eq"> <math><mrow><mtable><mtr><mtd columnalign="center"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><msub><mi>a</mi><mn>4</mn></msub></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><msub><mi>a</mi><mn>5</mn></msub></mtd></mtr>
+<mtr><mtd columnalign="center"><mn>3</mn></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mn>3</mn><mo>·</mo><mrow><mo>(</mo><mrow><mn>−2</mn></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mo></mo><mn>−6</mn><mo>·</mo><mrow><mo>(</mo><mrow><mn>−2</mn></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mo></mo><mn>12</mn><mo>·</mo><mrow><mo>(</mo><mrow><mn>−2</mn></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mo></mo><mn>−24</mn><mo>·</mo><mrow><mo>(</mo><mrow><mn>−2</mn></mrow><mo>)</mo></mrow></mtd></mtr>
+<mtr><mtd></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mn>−6</mn></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mn>12</mn></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mn>−24</mn></mtd><mtd></mtd><mtd></mtd><mtd columnalign="center"><mn>48</mn></mtd></mtr></mtable></mrow></math> </div>
+<p>The sequence is <math><mrow><mn>3</mn><mo>,</mo><mn>−6</mn><mo>,</mo><mn>12</mn><mo>,</mo><mn>−24</mn><mo>,</mo><mn>48</mn><mtext>,</mtext><mspace width="0.2em"></mspace><mtext>…</mtext></mrow></math> </p>
+</div>
+</div>
+</div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><div class="exercise"><div class="problem"><p>
+Write the first five terms of the sequence where the first term is 7 and the common ratio is <math><mi>r</mi><mo>=</mo><mo>-</mo><mn>3</mn></math> .
+
+</p><table><tr><td> <math><msub><mi>a</mi><mn>1</mn></msub></math> </td><td> <math><msub><mi>a</mi><mn>2</mn></msub></math> </td><td> <math><msub><mi>a</mi><mn>3</mn></msub></math> </td><td> <math><msub><mi>a</mi><mn>4</mn></msub></math> </td><td> <math><msub><mi>a</mi><mn>5</mn></msub></math> </td></tr><tr><td>7</td><td></td><td></td><td></td><td></td></tr><tr><td>The sequence is: ________________________________________</td></tr></table></div></div></div></div><div class="section"><h4>Objective 2: Find the general term (nth term) of a geometric sequence (IA 12.3.2)</h4><p>Let’s find the formula for the general term of a geometric sequence.
+</p><p>Let’s write the first few terms of the sequence where the first term is <math><msub><mi>a</mi><mn>1</mn></msub></math> and the common ratio is <math><mi>r</mi></math> . We will then look for a pattern.
+</p>
+<figure><img src="CNX_IntAlg_Figure_12_03_002_img.png" alt="This figure shows an image of a geometric sequence."></figure><div class="note"><h5>General term (nth term) of a geometric sequence</h5>The general term of a geometric sequence with first term <math><msub><mi>a</mi><mn>1</mn></msub></math> and the common ratio <math><mi>r</mi></math> is<br> <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><mi>r</mi><msup><mrow></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msup></math>
+</div>
+<div class="example"><div class="exercise"><div class="problem"><h7>Find the general term (nth term) of a geometric sequence.</h7>
+<ul><li>ⓐ Find the thirteenth term of a sequence where the first term is 81 and the common ratio is r=1/3.</li><li>ⓑ Find the ninth term of the sequence 6, 18, 54, 162, 486, 1458, … Then find the general term for the sequence.</li></ul></div>
+<div class="solution">
+<ul><li>ⓐ 
+<p>Find the thirteenth term of a sequence where the first term is 81 and the common ratio is r=1/3.
+</p>
+<table><tr><td>To find the 13th term, use the formula with <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>81</mn><mo>,</mo><mo> </mo><mi>r</mi><mo>=</mo><mn>1</mn><mo>/</mo><mn>3</mn><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>n</mi><mo>=</mo><mn>13</mn></math> </td><td> <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><msup><mi>r</mi><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msup></math> </td></tr><tr><td>Substitute</td><td> <math><msub><mi>a</mi><mn>13</mn></msub><mo>=</mo><mn>81</mn><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>)</mo></mrow><mrow><mn>13</mn><mo>-</mo><mn>1</mn></mrow></msup></math> </td></tr><tr><td>Simplify</td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mn>13</mn></msub><mo>=</mo><mn>81</mn><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>)</mo></mrow><mrow><mn>13</mn><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>13</mn></msub><mo>=</mo><mn>81</mn><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>)</mo></mrow><mn>12</mn></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>13</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>729</mn></mfrac></mtd></mtr></mtable></math> </td></tr></table>
+</li><li>ⓑ 
+<p>Find the ninth term of the sequence 6, 18, 54, 162, 486, 1458, … Then find the general term for the sequence.</p><table><tr><td>Let’s first determine <math><msub><mi>a</mi><mi>1</mi></msub></math> and the common ratio <math><mi>r</mi></math> </td><td> <math><mtable><mtr><mtd><mi>The</mi><mo> </mo><mi>first</mi><mo> </mo><mi>term</mi><mo> </mo><mi>is</mi><mo> </mo><mn>6</mn><mo>,</mo><mo> </mo><mi>so</mi><mo> </mo><mo> </mo><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub><mo>=</mo><mn>6</mn></mtd></mtr><mtr><mtd><mi>The</mi><mo> </mo><mi>ratio</mi><mo> </mo><mi>is</mi><mo>:</mo><mo> </mo><mfrac><mn>18</mn><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>54</mn><mn>18</mn></mfrac><mo>=</mo><mfrac><mn>162</mn><mn>54</mn></mfrac><mo>=</mo><mfrac><mn>482</mn><mn>162</mn></mfrac><mo>=</mo><mfrac><mn>1458</mn><mn>486</mn></mfrac><mo>=</mo><mn>3</mn></mtd></mtr></mtable></math> </td></tr><tr><td>To find the 9th term, use the formula with <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>6</mn><mo>,</mo><mo> </mo><mi>r</mi><mo>=</mo><mn>3</mn></math> and n=9.<br>Substitute these values and simplify</td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><msup><mi>r</mi><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>9</mn></msub><mo>=</mo><mn>6</mn><msup><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mrow><mn>9</mn><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>9</mn></msub><mo>=</mo><mn>6</mn><msup><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mn>8</mn></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>9</mn></msub><mo>=</mo><mn>39366</mn></mtd></mtr></mtable></math> </td></tr><tr><td>To find the general term, substitute <math><msub><mi>a</mi><mi>1</mi></msub><mo>=</mo><mn>6</mn></math> and <math><mi>r</mi><mo>=</mo><mn>3</mn></math>
+into the formula
+</td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><msup><mi>r</mi><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>6</mn><msup><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr></mtable></math> </td></tr></table>
+</li></ul></div>
+</div></div>
+<div class="section practice-perfect"><h5>Practice Makes Perfect</h5><p>
+Find the general term (nth term) of a geometric sequence.
+</p><div class="exercise"><div class="problem">
+  <p>
+Find the sixteenth term of a sequence where the first term is 11 and the common ratio is −6.
+  </p>
+</div>
+
+</div><div class="exercise"><div class="problem">
+  <p>Find the 10th term of the sequence 9, 18, 36, 72, 144, 288, …. Then give the formula for the general term.
+
+  </p></div>
+
+</div></div><div class="note try"><p>Find the general term (nth term) of a geometric sequence.
+</p><p>A patient takes a 30 mg antibiotic capsule. At the end of any hour, the amount of antibiotic remaining in her body is only 90% of the amount in the beginning of that hour. The table below shows the amount of medicine remaining in the body at the beginning of each hour.
+</p>
+<table><tr><td>Time <em>t</em></td><td>Dose remaining after time <em>t</em></td></tr><tr><td>1</td><td>30mg</td></tr><tr><td>2</td><td>27mg</td></tr><tr><td>3</td><td>24.3mg</td></tr><tr><td>4</td><td>21.87mg</td></tr><tr><td>5</td><td>19.68mg</td></tr></table>
+<ul><li>ⓐ Find the ratio of consecutive terms. Is this a geometric sequence?</li><li>ⓑ Find a formula for the general term of this sequence.</li><li>ⓒ How much of the medicine is left at the beginning of hour 7? Hour 12? Hour 24? </li></ul></div></div></div><p>Many jobs offer an annual cost-of-living increase to keep salaries consistent with inflation. Suppose, for example, a recent college graduate finds a position as a sales manager earning an annual salary of $26,000. He is promised a 2% cost of living increase each year. His annual salary in any given year can be found by multiplying his salary from the previous year by 102%. His salary will be $26,520 after one year; $27,050.40 after two years; $27,591.41 after three years; and so on. When a salary increases by a constant rate each year, the salary grows by a constant factor. In this section, we will review sequences that grow in this way.</p>
+
+<div class="section"><h3>Finding Common Ratios</h3><p>The yearly salary values described form a <strong>geometric sequence</strong> because they change by a constant factor each year. Each term of a geometric sequence increases or decreases by a constant factor called the <strong>common ratio</strong>. The sequence below is an example of a geometric sequence because each term increases by a constant factor of 6. Multiplying any term of the sequence by the common ratio 6 generates the subsequent term.</p>
+<p><figure><img src="CNX_Precalc_Figure_11_03_001.jpg" alt="A sequence , {1, 6, 36, 216, 1296, ...} that shows all the numbers have a common ratio of 6."></figure></p>
+<div class="note">
+
+<h4>Definition of a Geometric Sequence</h4>
+<p>A <strong>geometric sequence</strong> is one in which any term divided by the previous term is a constant. This constant is called the <strong>common ratio</strong> of the sequence. The common ratio can be found by dividing any term in the sequence by the previous term. If <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+
+ </mrow>
+</math> is the initial term of a geometric sequence and <math>
+ <mi>r</mi>
+</math> is the common ratio, the sequence will be</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><mo> </mo><mspace width="0.5em"></mspace><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mi>r</mi><mo>,</mo><mspace width="0.5em"></mspace><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><mn>...</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math>
+</div></div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given a set of numbers, determine if they represent a geometric sequence.</strong></p>
+<ol><li>Divide each term by the previous term.</li><li>Compare the quotients. If they are the same, a common ratio exists and the sequence is geometric.</li></ol>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Finding Common Ratios</h6>
+<p>Is the sequence geometric? If so, find the common ratio.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <mn>1</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>2</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>4</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>8</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>16</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>...</mn>
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <mn>48</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>12</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>4</mn><mtext>, </mtext><mn>2</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mn>...</mn>
+ </mrow>
+</math>
+
+</li></ol></div>
+<div class="solution">
+<p>Divide each term by the previous term to determine whether a common ratio exists.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>2</mn>
+       <mn>1</mn>
+      </mfrac>
+      <mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>4</mn>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>8</mn>
+       <mn>4</mn>
+      </mfrac>
+      <mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mn>16</mn>
+       </mrow>
+       <mn>8</mn>
+      </mfrac>
+      <mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+
+<p>The sequence is geometric because there is a common ratio. The common ratio is 2.</p>
+</li><li>ⓑ <math>
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+       <mrow>
+        <mn>48</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>4</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>4</mn>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>2</mn>
+       <mn>4</mn>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+
+
+<p>The sequence is not geometric because there is not a common ratio.</p>
+</li></ol></div>
+<p>
+<h5>Analysis</h5>
+<p>The graph of each sequence is shown in . It seems from the graphs that both (a) and (b) appear have the form of the graph of an exponential function in this viewing window. However, we know that (a) is geometric and so this interpretation holds, but (b) is not.</p><figure><img src="CNX_Precalc_Figure_11_03_002.jpg" alt="Graph of two sequences where graph (a) is geometric and graph (b) is exponential."></figure>
+</p>
+</div>
+</div>
+
+<div class="note precalculus qa">
+
+<p><strong>If you are told that a sequence is geometric, do you have to divide every term by the previous term to find the common ratio?</strong></p>
+<p><em>No. If you know that the sequence is geometric, you can choose any one term in the sequence and divide it by the previous term to find the common ratio.</em></p></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p>Is the sequence geometric? If so, find the common ratio.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mn>5</mn><mo>,</mo><mn>10</mn><mo>,</mo><mn>15</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math>
+</div>
+</div>
+<div class="solution">
+<p>The sequence is not geometric because <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+   <mn>5</mn>
+  </mfrac>
+  <mo>≠</mo><mfrac>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> .</p></div>
+</div>
+</div><div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Is the sequence geometric? If so, find the common ratio.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mn>100</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>4</mn><mo>,</mo><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mn>...</mn>
+ </mrow>
+</math>
+</div>
+</div>
+<div class="solution">
+<p>The sequence is geometric. The common ratio is <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>5</mn>
+  </mfrac>
+
+ </mrow>
+</math> .</p></div>
+</div>
+</div>
+</div><div class="section"><h3>Writing Terms of Geometric Sequences</h3><p>Now that we can identify a geometric sequence, we will learn how to find the terms of a geometric sequence if we are given the first term and the common ratio. The terms of a geometric sequence can be found by beginning with the first term and multiplying by the common ratio repeatedly. For instance, if the first term of a geometric sequence is <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>2</mn>
+ </mrow>
+</math> and the common ratio is <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>4, </mn>
+ </mrow>
+</math> we can find subsequent terms by multiplying <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn><mo>⋅</mo><mn>4</mn>
+ </mrow>
+</math> to get <math>
+ <mrow>
+  <mo>−</mo><mn>8</mn>
+ </mrow>
+</math> then multiplying the result <math>
+ <mrow>
+  <mo>−</mo><mn>8</mn><mo>⋅</mo><mn>4</mn>
+ </mrow>
+</math> to get <math>
+ <mrow>
+  <mo>−</mo><mn>32</mn>
+ </mrow>
+</math> and so on.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo>⋅</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mn>8</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mo stretchy="false">(</mo><mo>−</mo><mn>8</mn><mo>⋅</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mn>32</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mo stretchy="false">(</mo><mo>−</mo><mn>32</mn><mo>⋅</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mn>128</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div>
+<p>The first four terms are <math>
+ <mrow>
+  <mo>{</mo><mn>–2</mn><mtext>, </mtext><mn>–8</mn><mtext>, </mtext><mn>–32</mn><mtext>, </mtext><mn>–128</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math>
+</p>
+<div class="note how-to-notitle">
+
+<p><strong>Given the first term and the common factor, find the first four terms of a geometric sequence.</strong></p>
+<ol><li>Multiply the initial term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> by the common ratio to find the next term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub><mo>.</mo>
+ </mrow>
+</math> </li><li>Repeat the process, using <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+
+ </mrow>
+</math> to find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+
+ </mrow>
+</math> and then <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+
+ </mrow>
+</math> to find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>4,</mn>
+  </msub>
+
+ </mrow>
+</math> until all four terms have been identified.</li><li>Write the terms separated by commons within brackets.</li></ol></div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Writing the Terms of a Geometric Sequence</h6>
+<p>List the first four terms of the geometric sequence with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>5</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>–2.</mn>
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p>Multiply <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+
+ </mrow>
+</math> by <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn>
+ </mrow>
+</math> to find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> Repeat the process, using <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+
+ </mrow>
+</math> to find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math>
+ and so on.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>10</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>20</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>40</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div>
+<p>The first four terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>5</mn><mo>,</mo><mn>–10</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>–40</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p>List the first five terms of the geometric sequence with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>18</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>18</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>2</mn><mo>,</mo><mfrac>
+    <mn>2</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>2</mn>
+    <mn>9</mn>
+   </mfrac>
+
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math>
+</p></div>
+</div>
+</div>
+</div><div class="section"><h3>Using Recursive Formulas for Geometric Sequences</h3><p>A <strong>recursive formula</strong> allows us to find any term of a geometric sequence by using the previous term. Each term is the product of the common ratio and the previous term. For example, suppose the common ratio is 9. Then each term is nine times the previous term. As with any recursive formula, the initial term must be given.</p>
+<div class="note">
+
+<h4>Recursive Formula for a Geometric Sequence</h4>
+<p>The recursive formula for a geometric sequence with common ratio <math>
+ <mi>r</mi>
+</math> and first term <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+
+ </mrow>
+</math> is</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mi>r</mi><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>,</mo><mi>n</mi><mo>≥</mo><mn>2</mn>
+ </mrow>
+</math> </div>
+ </div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given the first several terms of a geometric sequence, write its recursive formula.</strong></p>
+<ol><li>State the initial term.</li><li>Find the common ratio by dividing any term by the preceding term.</li><li>Substitute the common ratio into the recursive formula for a geometric sequence.</li></ol>
+</div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Using Recursive Formulas for Geometric Sequences</h6>
+<p>Write a recursive formula for the following geometric sequence.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>6</mn><mtext>, </mtext><mn>9</mn><mtext>, </mtext><mn>13.5</mn><mtext>, </mtext><mn>20.25</mn><mtext>, </mtext><mn>...</mn><mo>}</mo>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p>The first term is given as 6. The common ratio can be found by dividing the second term by the first term.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mi>r</mi><mo>=</mo><mfrac>
+   <mn>9</mn>
+   <mn>6</mn>
+  </mfrac>
+  <mo>=</mo><mn>1.5</mn>
+ </mrow>
+</math> </div>
+<p>Substitute the common ratio into the recursive formula for geometric sequences and define <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+<div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mi>r</mi><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mn>1.5</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mspace width="0.5em"></mspace><mtext>for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>=</mo><mn>6</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </div>
+</div>
+<p>
+<h5>Analysis</h5>
+<p>The sequence of data points follows an exponential pattern. The common ratio is also the base of an exponential function as shown in </p><figure><img src="CNX_Precalc_Figure_11_03_003.jpg" alt="Graph of the geometric sequence."></figure>
+</p>
+</div></div>
+
+<div class="note precalculus qa">
+
+<p><strong>Do we have to divide the second term by the first term to find the common ratio?</strong></p>
+<p><em>No. We can divide any term in the sequence by the previous term. It is, however, most common to divide the second term by the first term because it is often the easiest method of finding the common ratio.</em></p>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write a recursive formula for the following geometric sequence.</p>
+<div class="eq"> <math>
+ <mrow>
+  <mo>{</mo><mn>2</mn><mtext>, </mtext><mfrac>
+   <mn>4</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mtext>, </mtext><mfrac>
+   <mn>8</mn>
+   <mn>9</mn>
+  </mfrac>
+  <mtext>, </mtext><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mrow>
+    <mn>27</mn>
+   </mrow>
+  </mfrac>
+  <mtext>, </mtext><mn>...</mn><mo>}</mo>
+ </mrow>
+</math>
+</div></div>
+<div class="solution"><p> <math>
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mfrac>
+     <mn>2</mn>
+     <mn>3</mn>
+    </mfrac>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mspace width="0.5em"></mspace><mtext>for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </p></div>
+</div>
+</div></div><div class="section"><h3>Using Explicit Formulas for Geometric Sequences</h3><p>Because a geometric sequence is an exponential function whose domain is the set of positive integers, and the common ratio is the base of the function, we can write explicit formulas that allow us to find particular terms.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </div><p>Let’s take a look at the sequence <math>
+ <mrow>
+  <mo>{</mo><mn>18</mn><mtext>, </mtext><mn>36</mn><mtext>, </mtext><mn>72</mn><mtext>, </mtext><mn>144</mn><mtext>, </mtext><mn>288</mn><mtext>, </mtext><mn>...</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math> This is a geometric sequence with a common ratio of 2 and an exponential function with a base of 2. An explicit formula for this sequence is</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>18</mn><mo>·</mo><msup>
+   <mn>2</mn>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </div><p>The graph of the sequence is shown in .</p>
+
+<figure><img src="CNX_Precalc_Figure_11_03_004.jpg" alt="Graph of the geometric sequence."></figure>
+
+<div class="note"><h4>Explicit Formula for a Geometric Sequence</h4>
+
+<p>The <math><mi>n</mi></math> th term of a geometric sequence is given by the <strong>explicit formula</strong>:</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </div>
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Writing Terms of Geometric Sequences Using the Explicit Formula</h6>
+<p>Given a geometric sequence with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>3</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mn>24</mn><mo>,</mo>
+ </mrow>
+</math> find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The sequence can be written in terms of the initial term and the common ratio <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo>
+ </mrow>
+</math> </p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mn>3</mn><mo>,</mo><mn>3</mn><mi>r</mi><mo>,</mo><mn>3</mn><msup>
+   <mi>r</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>,</mo><mn>3</mn><msup>
+   <mi>r</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </div>
+<p>Find the common ratio using the given fourth term.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <msup>
+       <mi>r</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msup>
+       <mi>r</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Write the fourth term of sequence in terms of </mtext><msub>
+       <mi>α</mi>
+       <mn>1</mn>
+      </msub>
+      <mspace width="0.5em"></mspace><mtext>and </mtext><mi>r</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>24</mn><mo>=</mo><mn>3</mn><msup>
+       <mi>r</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Substitute </mtext><mn>24</mn><mspace width="0.5em"></mspace><mtext>for</mtext><mspace width="0.5em"></mspace><msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mn>8</mn><mo>=</mo><msup>
+       <mi>r</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Divide</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mi>r</mi><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>Solve for the common ratio</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Find the second term by multiplying the first term by the common ratio.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>6</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div></div>
+<p>
+<h5>Analysis</h5>
+<p>The common ratio is multiplied by the first term once to find the second term, twice to find the third term, three times to find the fourth term, and so on. The tenth term could be found by multiplying the first term by the common ratio nine times or by multiplying by the common ratio raised to the ninth power.</p>
+</p>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Given a geometric sequence with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>4</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mn>32</mn>
+ </mrow>
+</math> , find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>6</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>6</mn>
+  </msub>
+  <mo>=</mo><mn>16</mn><mo>,</mo><mn>384</mn>
+ </mrow>
+</math> </p></div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Writing an Explicit Formula for the <math><mi>n</mi></math> th Term of a Geometric Sequence</h6>
+<p>Write an explicit formula for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the following geometric sequence.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>2</mn><mtext>, </mtext><mn>10</mn><mtext>, </mtext><mn>50</mn><mtext>, </mtext><mn>250</mn><mtext>, </mtext><mn>...</mn><mo>}</mo>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p>The first term is 2. The common ratio can be found by dividing the second term by the first term.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mo>=</mo><mn>5</mn>
+ </mrow>
+</math> </div>
+<p>The common ratio is 5. Substitute the common ratio and the first term of the sequence into the formula.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <msup>
+       <mi>r</mi>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+       </mrow>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mn>2</mn><mo>⋅</mo><msup>
+       <mn>5</mn>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The graph of this sequence in  shows an exponential pattern.</p>
+
+<figure><img src="CNX_Precalc_Figure_11_03_005.jpg" alt="Graph of the geometric sequence."></figure>
+</div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write an explicit formula for the following geometric sequence.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>–1</mn><mtext>, </mtext><mn>3</mn><mtext>, </mtext><mn>–9</mn><mtext>, </mtext><mn>27</mn><mtext>, </mtext><mn>...</mn><mo>}</mo>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+</div>
+</div><div class="section"><h3>Solving Application Problems with Geometric Sequences</h3><p>In real-world scenarios involving geometric sequences, we may need to use an initial term of <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>0</mn>
+  </msub>
+
+ </mrow>
+</math> instead of <math>
+ <mrow>
+<msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> In these problems, we can alter the explicit formula slightly by using the following formula:</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>0</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> </div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Solving Application Problems with Geometric Sequences</h6>
+<p>In 2013, the number of students in a small school is 284. It is estimated that the student population will increase by 4% each year.</p>
+<ol><li>ⓐWrite a formula for the student population.</li><li>ⓑEstimate the student population in 2020.</li></ol>
+</div>
+<div class="solution">
+<ol><li>ⓐ
+<p>The situation can be modeled by a geometric sequence with an initial term of 284. The student population will be 104% of the prior year, so the common ratio is 1.04.</p>
+<p>Let <math>
+ <mi>P</mi>
+</math> be the student population and <math>
+ <mi>n</mi>
+</math> be the number of years after 2013. Using the explicit formula for a geometric sequence we get</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mi>n</mi>
+  </msub>
+  <mo> </mo><mo>=</mo><mn>284</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mn>1.04</mn>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math>
+</div></li><li>ⓑ
+<p>We can find the number of years since 2013 by subtracting.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mn>2020</mn><mo>−</mo><mn>2013</mn><mo>=</mo><mn>7</mn>
+ </mrow>
+</math> </div>
+<p>We are looking for the population after 7 years. We can substitute 7 for <math>
+ <mi>n</mi>
+</math> to estimate the population in 2020.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>7</mn>
+  </msub>
+<mo>=</mo><mn>284</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mn>1.04</mn>
+   </mrow>
+   <mn>7</mn>
+  </msup>
+<mo>≈</mo><mn>374</mn>
+ </mrow>
+</math>
+</div><p>The student population will be about 374 in 2020.</p>
+</li></ol></div>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise"><div class="problem">
+<p>A business starts a new website. Initially the number of hits is 293 due to the curiosity factor. The business estimates the number of hits will increase by 2.6% per week.</p>
+<p>
+<ol><li>ⓐWrite a formula for the number of hits.</li><li>ⓑEstimate the number of hits in 5 weeks.</li></ol>
+</p>
+</div>
+<div class="solution">
+<p><ol><li>ⓐ <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mi>n</mi>
+  </msub>
+  <mo> </mo><mo>=</mo><mo> </mo><mn>293</mn><mo>⋅</mo><mn>1.026</mn><msup>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math>
+</li><li>ⓑThe number of hits will be about 333.</li></ol></p></div>
+</div></div>
+<div class="note media-notitle">
+
+<p>Access these online resources for additional instruction and practice with geometric sequences.</p>
+<ul><li><a href="https://openstax.org/l/geometricseq" target="_blank" rel="noopener noreferrer">Geometric Sequences</a></li><li><a href="https://openstax.org/l/sequencetype" target="_blank" rel="noopener noreferrer">Determine the Type of Sequence</a></li><li><a href="https://openstax.org/l/sequenceformula" target="_blank" rel="noopener noreferrer">Find the Formula for a Sequence</a></li></ul>
+</div>
+</div><div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td>recursive formula for <math><mrow><mi>n</mi><mi>t</mi><mi>h</mi></mrow></math> term of a geometric sequence</td><td> <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mi>r</mi>
+<msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+<mo>,</mo><mi>n</mi><mo>≥</mo>
+    <mn>2</mn>
+ </mrow>
+</math>
+</td></tr><tr><td>explicit formula for <math>
+ <mrow>
+  <mi>n</mi><mi>t</mi><mi>h</mi>
+ </mrow>
+</math> term of a geometric sequence</td><td> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</td></tr></table></div><div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>A geometric sequence is a sequence in which the ratio between any two consecutive terms is a constant.</li><li>The constant ratio between two consecutive terms is called the common ratio.</li><li>The common ratio can be found by dividing any term in the sequence by the previous term. See .</li><li>The terms of a geometric sequence can be found by beginning with the first term and multiplying by the common ratio repeatedly. See  and .</li><li>A recursive formula for a geometric sequence with common ratio <math>
+ <mi>r</mi>
+</math> is given by <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mi>r</mi><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>–</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> for <math>
+ <mrow>
+  <mi>n</mi><mo>≥</mo><mn>2</mn>
+ </mrow>
+</math> .</li><li>As with any recursive formula, the initial term of the sequence must be given. See .</li><li>An explicit formula for a geometric sequence with common ratio <math>
+ <mi>r</mi>
+</math> is given by <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mrow>
+    <mi>n</mi><mo>–</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> See .</li><li>In application problems, we sometimes alter the explicit formula slightly to <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>0</mn>
+  </msub>
+  <msup>
+   <mi>r</mi>
+   <mi>n</mi>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> See .</li></ul></div>
+
+<div class="section section-exercises">
+<h3>Section Exercises</h3>
+<div class="section">
+<h4>Verbal</h4>
+<div class="exercise">
+<div class="problem"><p>What is a geometric sequence?</p></div>
+<div class="solution"><p>A sequence in which the ratio between any two consecutive terms is constant.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>How is the common ratio of a geometric sequence found?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>What is the procedure for determining whether a sequence is geometric?</p></div>
+<div class="solution"><p>Divide each term in a sequence by the preceding term. If the resulting quotients are equal, then the sequence is geometric.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>What is the difference between an arithmetic sequence and a geometric sequence?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Describe how exponential functions and geometric sequences are similar. How are they different?</p></div>
+<div class="solution"><p>Both geometric sequences and exponential functions have a constant ratio. However, their domains are not the same. Exponential functions are defined for all real numbers, and geometric sequences are defined only for positive integers. Another difference is that the base of a geometric sequence (the common ratio) can be negative, but the base of an exponential function must be positive.</p></div>
+</div>
+</div>
+<div class="section">
+<h4>Algebraic</h4>
+<p>For the following exercises, find the common ratio for the geometric sequence.</p>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>27</mn><mo>,</mo><mn>81</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>0.125</mn><mo>,</mo><mn>0.25</mn><mo>,</mo><mo>−</mo><mn>0.5</mn><mo>,</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>2</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The common ratio is <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn><mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>8</mn>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>32</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>128</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, determine whether the sequence is geometric. If so, find the common ratio.</p>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>6</mn><mo>,</mo><mo>−</mo><mn>12</mn><mo>,</mo><mo>−</mo><mn>24</mn><mo>,</mo><mo>−</mo><mn>48</mn><mo>,</mo><mo>−</mo><mn>96</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The sequence is geometric. The common ratio is 2.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>5</mn><mo>,</mo><mn>5.2</mn><mo>,</mo><mn>5.4</mn><mo>,</mo><mn>5.6</mn><mo>,</mo><mn>5.8</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>8</mn>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The sequence is geometric. The common ratio is <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>11</mn><mo>,</mo><mn>15</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>0.8</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>20</mn><mo>,</mo><mn>100</mn><mo>,</mo><mn>500</mn><mo>,</mo><mn>...</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The sequence is geometric. The common ratio is <math>
+ <mn>5.</mn>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write the first five terms of the geometric sequence, given the first term and common ratio.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>8</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <mi>r</mi><mo>=</mo><mn>0.3</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>5</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <mi>r</mi><mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>5</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>5</mn><mo>,</mo><mn>1</mn><mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>25</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>125</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write the first five terms of the geometric sequence, given any two terms.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>7</mn>
+      </msub>
+      <mo>=</mo><mn>64</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable><mo>=</mo><mn>512</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>6</mn>
+      </msub>
+      <mo>=</mo><mn>25</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>8</mn>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable><mo>=</mo><mn>6.25</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>800</mn><mo>,</mo><mn>400</mn><mo>,</mo><mn>200</mn><mo>,</mo><mn>100</mn><mo>,</mo><mn>50</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, find the specified term for the geometric sequence, given the first term and common ratio.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>The first term is <math>
+ <mn>2, </mn>
+</math> and the common ratio is <math>
+ <mn>3.</mn>
+</math> Find the 5<sup>th</sup> term.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The first term is 16 and the common ratio is <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> Find the 4<sup>th</sup> term.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mrow>
+    <mn>27</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, find the specified term for the geometric sequence, given the first four terms.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> Find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mfrac>
+    <mn>2</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>2</mn>
+    <mn>9</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>2</mn>
+    <mrow>
+     <mn>27</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> Find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>7</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>7</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>729</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write the first five terms of the geometric sequence.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>486</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>7</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mn>0.2</mn><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>7</mn><mo>,</mo><mn>1.4</mn><mo>,</mo><mn>0.28</mn><mo>,</mo><mn>0.056</mn><mo>,</mo><mn>0.0112</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write a recursive formula for each geometric sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>5</mn><mo>,</mo><mo>−</mo><mn>25</mn><mo>,</mo><mn>125</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>32</mn><mo>,</mo><mo>−</mo><mn>16</mn><mo>,</mo><mo>−</mo><mn>8</mn><mo>,</mo><mo>−</mo><mn>4</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <mi>a</mi><mmultiscripts>
+       <mo>=</mo>
+       <mprescripts></mprescripts>
+       <mn>1</mn>
+       <none></none>
+      </mmultiscripts>
+      <mo>−</mo><mn>32</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>14</mn><mo>,</mo><mn>56</mn><mo>,</mo><mn>224</mn><mo>,</mo><mn>896</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>10</mn><mo>,</mo><mo>−</mo><mn>3</mn><mo>,</mo><mn>0.9</mn><mo>,</mo><mo>−</mo><mn>0.27</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>10</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>0.3</mn><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>0.61</mn><mo>,</mo><mn>1.83</mn><mo>,</mo><mn>5.49</mn><mo>,</mo><mn>16.47</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mfrac>
+    <mn>3</mn>
+    <mn>5</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>10</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>60</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>360</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>3</mn>
+       <mn>5</mn>
+      </mfrac>
+      <mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>6</mn>
+      </mfrac>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mfrac>
+    <mn>4</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>8</mn>
+    <mn>9</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mrow>
+     <mn>16</mn>
+    </mrow>
+    <mrow>
+     <mn>27</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>512</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>128</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>32</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>1</mn>
+    <mn>8</mn>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>512</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>4</mn><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write the first five terms of the geometric sequence.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>4</mn><mo>⋅</mo><msup>
+   <mn>5</mn>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>12</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>12</mn><mo>,</mo><mo>−</mo><mn>6</mn><mo>,</mo><mn>3</mn><mo>,</mo><mo>−</mo><mfrac>
+   <mn>3</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>3</mn>
+   <mn>4</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, write an explicit formula for each geometric sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>4</mn><mo>,</mo><mo>−</mo><mn>8</mn><mo>,</mo><mo>−</mo><mn>16</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>27</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mn>3</mn>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>4</mn><mo>,</mo><mo>−</mo><mn>12</mn><mo>,</mo><mo>−</mo><mn>36</mn><mo>,</mo><mo>−</mo><mn>108</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>0.8</mn><mo>,</mo><mo>−</mo><mn>4</mn><mo>,</mo><mn>20</mn><mo>,</mo><mo>−</mo><mn>100</mn><mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>0.8</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>{</mo><mo>−</mo><mn>1.25</mn><mo>,</mo><mo>−</mo><mn>5</mn><mo>,</mo><mo>−</mo><mn>20</mn><mo>,</mo><mo>−</mo><mn>80</mn><mo>,</mo><mn>...</mn><mo>}</mo>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mfrac>
+    <mn>4</mn>
+    <mn>5</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mrow>
+     <mn>16</mn>
+    </mrow>
+    <mrow>
+     <mn>25</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mrow>
+     <mn>64</mn>
+    </mrow>
+    <mrow>
+     <mn>125</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>4</mn>
+       <mn>5</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>18</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>108</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mo>−</mo><mn>1</mn><mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>1</mn>
+    <mn>9</mn>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>3</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, find the specified term for the geometric sequence given.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>Let <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>4</mn><mo>,</mo>
+ </mrow>
+</math> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>3</mn><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> Find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>8</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Let <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> Find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>177</mn><mo>,</mo><mn>147</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<p>For the following exercises, find the number of terms in the given finite geometric sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mo>−</mo><mn>9</mn><mo>,</mo><mn>...</mn><mo>,</mo><mn>2187</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mn>2</mn>
+   </mfrac>
+   <mo>,</mo><mn>...</mn><mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>1024</mn>
+    </mrow>
+   </mfrac>
+
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>There are <math>
+ <mrow>
+  <mn>12</mn>
+ </mrow>
+</math> terms in the sequence.</p></div>
+</div>
+</div>
+
+<div class="section"><h4>Graphical</h4><p>For the following exercises, determine whether the graph shown represents a geometric sequence.</p>
+<div class="exercise material-set-2"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_03_201.jpg" alt="Graph of a scattered plot with labeled points: (1, -3), (2, -1), (3, 1), (4, 3), and (5, 5). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+</div>
+</div>
+<div class="exercise material-set-2"><div class="problem">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_03_202.jpg" alt="Graph of a scattered plot with labeled points: (1, -0.5), (2, 0.25), (3, 1.375), (4, 3.0625), and (5, 5.5938). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+<div class="solution">
+<p>The graph does not represent a geometric sequence.</p>
+</div>
+</div><p>For the following exercises, use the information provided to graph the first five terms of the geometric sequence.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>1</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <mi>r</mi><mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo>,</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_03_203.jpg" alt="Graph of a scattered plot with labeled points: (1, 3), (2, 6), (3, 12), (4, 24), and (5, 48). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>27</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mn>0.3</mn>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+</div><div class="section">
+<h4>Extensions </h4>
+<div class="exercise">
+<div class="problem">
+<p>Use recursive formulas to give two examples of geometric sequences whose 3<sup>rd</sup> terms are <math>
+ <mrow>
+  <mn>200.</mn>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>Answers will vary. Examples: <math>
+ <mrow>
+  <msub>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>=</mo><mn>800</mn><mo>,</mo>
+       </mrow>
+      </mtd>
+      <mtd>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><mn>0.5</mn><mi>a</mi>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>=</mo><mn>12.5</mn><mo>,</mo>
+       </mrow>
+      </mtd>
+      <mtd>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><mn>4</mn><mi>a</mi>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Use explicit formulas to give two examples of geometric sequences whose 7<sup>th</sup> terms are <math>
+ <mrow>
+  <mn>1024.</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the 5<sup>th</sup> term of the geometric sequence <math>
+ <mrow>
+  <mo>{</mo><mi>b</mi><mo>,</mo><mn>4</mn><mi>b</mi><mo>,</mo><mn>16</mn><mi>b</mi><mo>,</mo><mn>...</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>5</mn>
+  </msub>
+  <mo>=</mo><mn>256</mn><mi>b</mi>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the 7<sup>th</sup> term of the geometric sequence <math>
+ <mrow>
+  <mo>{</mo><mn>64</mn><mi>a</mi><mo stretchy="false">(</mo><mo>−</mo><mi>b</mi><mo stretchy="false">)</mo><mo>,</mo><mn>32</mn><mi>a</mi><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mi>b</mi><mo stretchy="false">)</mo><mo>,</mo><mn>16</mn><mi>a</mi><mo stretchy="false">(</mo><mo>−</mo><mn>9</mn><mi>b</mi><mo stretchy="false">)</mo><mo>,</mo><mn>...</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>At which term does the sequence <math>
+ <mrow>
+  <mo>{</mo><mn>10</mn><mo>,</mo><mn>12</mn><mo>,</mo><mn>14.4</mn><mo>,</mo><mn>17.28</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>...</mn><mo>}</mo>
+ </mrow>
+</math> exceed <math>
+ <mrow>
+  <mn>100</mn><mo>?</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution"><p>The sequence exceeds <math>
+ <mrow>
+  <mn>100</mn>
+ </mrow>
+</math> at the 14<sup>th</sup> term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>14</mn>
+   </mrow>
+  </msub>
+  <mo>≈</mo><mn>107.</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>At which term does the sequence <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>2187</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>729</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>243</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>1</mn>
+    <mrow>
+     <mn>81</mn>
+    </mrow>
+   </mfrac>
+   <mspace width="0.5em"></mspace><mtext></mtext><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> begin to have integer values?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>For which term does the geometric sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <msub>
+     <mrow></mrow>
+     <mn>n</mn>
+    </msub>
+
+   </mrow>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>36</mn><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>2</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> first have a non-integer value?
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>32</mn>
+   </mrow>
+   <mn>3</mn>
+  </mfrac>
+
+ </mrow>
+</math> is the first non-integer value</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Use the recursive formula to write a geometric sequence whose common ratio is an integer. Show the first four terms, and then find the 10<sup>th</sup> term.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Use the explicit formula to write a geometric sequence whose common ratio is a decimal number between 0 and 1. Show the first 4 terms, and then find the 8<sup>th</sup> term.</p>
+</div>
+<div class="solution">
+<p>Answers will vary. Example: Explicit formula with a decimal common ratio: <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>400</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mn>0.5</mn>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mo>;</mo>
+ </mrow>
+</math> First 4 terms: <math>
+ <mrow>
+  <mtable>
+   <mtr>
+    <mtd>
+     <mrow>
+      <mn>400</mn><mo>,</mo><mn>200</mn><mo>,</mo><mn>100</mn><mo>,</mo><mn>50</mn><mo>;</mo>
+     </mrow>
+    </mtd>
+    <mtd>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>8</mn>
+      </msub>
+      <mo>=</mo><mn>3.125</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Is it possible for a sequence to be both arithmetic and geometric? If so, give an example.</p>
+</div>
+</div>
+</div>
+</div>
+<h2>Key terms</h2>
+<p><strong>common ratio</strong> the ratio between any two consecutive terms in a geometric sequence</p>
+<p><strong>geometric sequence</strong> a sequence in which the ratio of a term to a previous term is a constant</p>
+
+</body></html>

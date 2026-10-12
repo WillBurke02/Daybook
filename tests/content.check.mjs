@@ -97,7 +97,7 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
     if (!TYPES.includes(c.type)) { bad(at, `unknown type ${c.type}`); continue; }
     if (c.widget && !WIDGETS[c.widget.name]) bad(at, `no widget called ${c.widget.name}`);
     if (c.type === 'widget' && !c.ask) bad(at, 'a widget card asks a question (ask)');
-    if (c.type === 'concept' && (c.body || '').split(/\s+/).length > 150) bad(at, 'a concept is short: 120 words or so');
+    if (c.type === 'concept' && !c.html && (c.body || '').split(/\s+/).length > 150) bad(at, 'a concept is short: 120 words or so');
     if (c.more && c.more.split(/\s+/).length > 180) bad(at, 'more (explain it another way) is 150 words or so');
     const q = c.type === 'widget' ? { ...c.ask } : c;
     const reported = c.type === 'widget' ? WIDGETS[c.widget?.name] || [] : [];
@@ -174,6 +174,7 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
 
 // ---- Learn 3's lesson template (LEARN-SPEC §2): the stages, and what a lesson carries ----
 function template(les, where) {
+  if (les.imported) return imported(les, where);
   const STAGES = ['try', 'learn', 'example', 'practise', 'mix', 'check'];
   const asks = c => c.type !== 'concept' && !(c.type === 'steps' && c.worked);
   const outline = lessons.get(les.id);
@@ -194,7 +195,7 @@ function template(les, where) {
   for (const r of les.resources || []) {
     if (!['before', 'after', 'during'].includes(r.when)) bad(where, `resource ${r.title}: when is before, during or after`);
     if (!['video', 'read', 'interactive', 'reference', 'listen'].includes(r.kind)) bad(where, `resource ${r.title}: kind is video, read, interactive, reference or listen`);
-    if (!/^https:\/\/[^\s]+$/.test(r.url || '')) bad(where, `resource ${r.title}: an https link`);
+    if (!/^https:\/\/[^\s]+$/.test(r.url || '') && !original(r.url)) bad(where, `resource ${r.title}: an https link, or an original page that is there`);
     if (!r.title || !r.by) bad(where, 'a resource has a title and says who it is by');
   }
   // Formula help: each formula says what it means and what its letters are
@@ -223,6 +224,23 @@ function template(les, where) {
     if (w < 0 || f < w || pr < 0) bad(where, 'a procedure works an example, fades one, then asks one: worked → given → a problem');
   }
   if (kind === 'facts' && at('mix').length) bad(where, 'a facts lesson does not mix (interleaving hurts facts and terms)');
+}
+
+// ---- a lesson brought in as published (SPEC.md §1): the original words and maths, credited, its pages there ----
+// An original page lives in web/media/openstax/<book>/<section>.html, beside its figures.
+function original(url) { return /^media\/openstax\/[\w-]+\/[\d.]+\.html$/.test(url || '') && existsSync(join(ROOT, 'apps/learn/web', url)); }
+function imported(les, where) {
+  if (!(Array.isArray(les.sources) && les.sources.length && les.sources.every(x => /CC BY-NC-SA 4\.0/.test(x) && /Imported as published/.test(x))))
+    bad(where, 'an import credits each section, its licence (CC BY-NC-SA 4.0) and says it is as published');
+  if (!(les.resources || []).length || !les.resources.every(r => original(r.url))) bad(where, 'an import links each section as published (The original)');
+  for (const c of les.cards) {
+    const at = `${les.id}/${c.id}`, html = [c.html, c.front_html, c.back_html].filter(Boolean).join('');
+    if (c.type === 'concept' && !c.html) bad(at, 'an imported reading card keeps its original (html)');
+    if (c.type === 'flash' && !(c.front_html && c.back_html)) bad(at, 'an imported exercise keeps its original question and answer');
+    if (!['learn', 'example', 'practise', 'check'].includes(c.stage)) bad(at, 'stage: learn, example, practise or check');
+    for (const [, src] of html.matchAll(/<img src="([^"]+)"/g)) if (!existsSync(join(ROOT, 'apps/learn/web', src))) bad(at, `figure ${src} is not there`);
+  }
+  if (les.cards.filter(c => c.stage === 'check').length < 2) bad(where, 'the check stage asks 2 or more questions');
 }
 
 // ---- the notation Formula help explains (content/symbols.json) ----

@@ -13,6 +13,7 @@ import { compile, machine, scan, test } from './st.js';
 import { formulaHelp, mathsOf } from './formulas.js';
 import { toggle } from './tools.js';
 import { learnedNote } from './road.js';
+import { verbatim } from './verbatim.js';
 
 // ---- text: paragraphs, - lists, **bold**, *italic*, `code`, $maths$ ------------------------
 
@@ -82,7 +83,7 @@ function rateButtons(done, why) {
 
 const TYPES = {
   concept(c, face, done) {
-    add(face, c.title ? el('h3', {}, c.title) : null, rich(c.body || ''));
+    add(face, c.title ? el('h3', {}, c.title) : null, c.html ? verbatim(c.html) : rich(c.body || ''));
     if (c.widget) { const w = el('div', { class: 'widget' }); add(face, w); mountWidget(w, c.widget, () => {}); }
     // the same idea again, slower and in other words, for when the first go did not land
     if (c.more) add(face, el('details', { class: 'more' }, el('summary', {}, 'Explain it another way'), rich(c.more)));
@@ -92,8 +93,8 @@ const TYPES = {
   },
 
   flash(c, face, done) {
-    add(face, el('div', { class: 'front' }, rich(c.front || ''), pics(c.img)));
-    const back = el('div', { class: 'back', hidden: true }, rich(c.back || ''), pics(c.back_img));
+    add(face, el('div', { class: 'front' }, c.front_html ? verbatim(c.front_html) : rich(c.front || ''), pics(c.img)));
+    const back = el('div', { class: 'back', hidden: true }, c.back_html ? verbatim(c.back_html) : rich(c.back || ''), pics(c.back_img));
     let rates = null;
     const show = el('button', { class: 'btn', type: 'button', onclick: () => {
       back.hidden = false; show.remove(); rates = rateButtons(done); add(face, rates);

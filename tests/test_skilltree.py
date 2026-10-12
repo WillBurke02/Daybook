@@ -57,13 +57,14 @@ except api.Err:
     pass
 
 # === parts: about 5 to 8 minutes each, never cutting an idea from its question ===========
-for lid in ("drives.motors.induction", "plc.basics.ladder", "electronics.dc.ohm-kirchhoff"):
+for lid in ("drives.motors.induction", "plc.basics.ladder", "electronics.dc.ohm-kirchhoff", "maths.pure.exp-log"):
     les = R("GET", "lesson", q={"id": [lid]})
     ps, cards = les["parts"], les["cards"]
     total = les["lesson"]["minutes"] or 25
     assert ps[0]["from"] == 0 and ps[-1]["to"] == len(cards) and all(a["to"] == b["from"] for a, b in zip(ps, ps[1:])), ps
     assert all(4 <= x["minutes"] <= 9 for x in ps) and abs(sum(x["minutes"] for x in ps) - total) <= 3, (lid, ps)
-    assert all(cards[x["from"] - 1]["type"] != "concept" for x in ps[1:]), (lid, "never cut between an idea and its question")
+    assert all(cards[x["from"] - 1]["type"] != "concept" or cards[x["from"]]["type"] == "concept" for x in ps[1:]), \
+        (lid, "never cut between an idea and its question")
 
 # === proven: the bench task done and logged; memory fades as cards are forgotten =========
 ISO = "electrical.safety.isolation"

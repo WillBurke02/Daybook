@@ -3,6 +3,11 @@
 Branch `SkillTree`. This is the plan the branch implements; what is deliberately
 left out is at the end.
 
+> **Superseded in part (Phase 2 of the review):** the Tree page and its goal route
+> gave way to **tracks** (apps/learn/content/tracks.json) drawn as a skill map: each
+> track a project at work, a line of stops, a goal per track, **Prove it** on a stop.
+> The principles below still hold; §1's layout, `GET tree` and `tree.check.mjs` are gone.
+
 ## What is wrong now
 
 Learn is a list: subject, unit, lesson, a status word. It is correct and it is

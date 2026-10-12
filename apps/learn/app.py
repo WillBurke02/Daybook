@@ -899,8 +899,8 @@ CARD_SECONDS = {"concept": 40, "flash": 25, "mcq": 35, "numeric": 75, "widget": 
 def parts(cards, minutes=None, aim=6.5 * 60):
     """A lesson in parts of about 5 to 8 minutes, so Continue fits the time you have. It takes as many
     parts as the lesson's length needs and shares the time out evenly: a part ends at an idea (a
-    reading card, or a new stage) once near its share, or between two questions rather than run
-    long; never between a reading card and its question. [{from, to, minutes}], `to` exclusive."""
+    reading card, or a new stage) once near its share, or between two questions or two reading
+    cards rather than run long; never between a reading card and its question. [{from, to, minutes}], `to` exclusive."""
     if not cards:
         return []
     secs = [CARD_SECONDS.get(c["type"], 45) for c in cards]
@@ -909,7 +909,7 @@ def parts(cards, minutes=None, aim=6.5 * 60):
     k = max(1, round(sum(secs) / aim))
     out, start, t = [], 0, 0.0
     for i, c in enumerate(cards):
-        if i > start and len(out) < k - 1 and cards[i - 1]["type"] != "concept":
+        if i > start and len(out) < k - 1 and (cards[i - 1]["type"] != "concept" or c["type"] == "concept"):
             share = sum(secs[start:]) / (k - len(out))           # what is left, shared between the parts left
             idea = c["type"] == "concept" or c.get("stage") != cards[i - 1].get("stage")
             if (idea and t >= share * 0.8) or t + secs[i] > share * 1.25:

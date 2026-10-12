@@ -1,0 +1,4296 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11.6 Binomial Theorem · Precalculus 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Precalculus 2e, Abramson et al., section 11.6 Binomial Theorem. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/precalculus-2e/pages/11-6-binomial-theorem</p>
+<h1>11.6 Binomial Theorem</h1>
+
+<div class="section coreq-skills"><div class="section learning-objectives"><h4>Learning Objectives</h4><ul><li>Use Pascal’s Triangle to expand a binomial. (IA 12.4.1)
+</li></ul></div><div class="section"><h4>Objective 1: Use Pascal’s Triangle to expand a binomial. (IA 12.4.1)</h4><p>Pascal’s triangle helps us find the coefficients of the terms in the expansion of a binomial.
+</p><p>To find the coefficients of the terms, we write our expansion again focusing on the coefficients. We rewrite the coefficients to the right forming an array of coefficients. The array to the right is called <strong>Pascal’s Triangle</strong>.
+</p><figure><img src="9_6_1.jpg" alt="A plus b to the power of 0 equals 1. The top level of Pascal’s Triangle is 1. A plus b to the power of 1 equals 1 a plus 1 b. The second level of Pascal’s Triangle is 1, 1. A plus b to the power of 2 equals 1 a to the power of 2 plus 2 a b plus 1 b to the power of 2. The third level of Pascal’s Triangle is 1, 2, 1. A plus b to the power of 3 equals 1 a to the power of 3 plus 3 a to the power of 2 b plus 3 a b to the power of 2 plus 1 b to the power of 3. The fourth level of Pascal’s Triangle is 1,3,3,1. A plus b to the power of 4 equals 1 a to the power of 4 plus 4 a to the power of 3 b plus 6 a to the power of 2 b to the power of 2 plus 4 a b to the power of 3 plus 1 b to the power of 4. The fifth level of Pascal’s Triangle is 1, 4, 6, 4, 1. A plus b to the power of 5 equals 1 a to the power of 5 plus 5 a to the power of 4 b plus 10 a to the power of 3 b to the power of 2 plus 10 a to the power of 2 b to the power of 3. The sixth row of the Pascal’s Triangle is 1, 5, 10, 10, 5, 1."></figure><p>Notice that in each expansion the powers of <em>a</em> in each term decrease from <em>n</em> to 0, and the powers of <em>b</em> increase from 0 to <em>n</em>.
+</p><p>Notice each number in the array is the sum of the two closest numbers in the row above. We can find the next row by starting and ending with one and then adding two adjacent numbers.
+</p><p>To find the coefficients of the expansion of the binomial <math><msup><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow><mi>n</mi></msup></math> , go to the row that has the value n as a second entry.
+</p>
+<figure><img src="9_6_2.jpg" alt="This figure shows Pascal’s Triangle. The first level is 1. The second level is 1, 1. The third level is 1, 2, 1. The fourth level is 1, 3, 3, 1. The fifth level is 1, 4, 6, 4, 1. The sixth level is 1, 5, 10, 10, 5, 1. The seventh level is 1, 6, 15, 20, 15, 6, 1."></figure><div class="example"><div class="exercise"><div class="problem">
+  <p>
+Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>)</mo></mrow><mn>6</mn></msup></math> .
+  </p>
+</div>
+
+<div class="solution">
+<table><tr><td>Go to Pascal’s Triangle and read off the coefficients from the row whose second entry is 6.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_001-01.jpg" alt="The image displays Pascal&#x27;s Triangle, a triangular array of binomial coefficients. The first seven rows are shown, with the numbers in the last row (1, 6, 15, 20, 15, 6, 1) highlighted in red. Each number in the triangle is the sum of the two numbers directly above it, and the rows represent the coefficients of binomial expansions."></figure></td></tr><tr><td>Write the expansion with the coefficients.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_001-02.jpg" alt="The image displays the binomial expansion of (x+y)^6, with the numerical coefficients (1, 6, 15, 20, 15, 6, 1) filled in from Pascal&#x27;s triangle. Underscores indicate the missing variable terms for each part of the expansion. The full expansion should be x^6 + 6x^5y + 15x^4y^2 + 20x^3y^3 + 15x^2y^4 + 6xy^5 + y^6."></figure></td></tr><tr><td>
+Fill in the variable with the power of x decreasing from 6 to 0, and the power of y increasing from 0 to 6.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_001-03.jpg" alt="The image displays the binomial expansion of (x+y)^6, which equals 1x^6 + 6x^5y^1 + 15x^4y^2 + 20x^3y^3 + 15x^2y^4 + 6x^1y^5 + 1y^6. The coefficients of the expansion are highlighted in red and underlined."></figure></td></tr><tr><td>Binomial expansion of <math><msup><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>)</mo></mrow><mn>6</mn></msup></math> .
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_001-04.jpg" alt="The image shows the binomial expansion of (x+y) raised to the power of 6, which equals x^6 + 6x^5y^1 + 15x^4y^2 + 20x^3y^3 + 15x^2y^4 + 6x^1y^5 + y^6."></figure></td></tr></table></div>
+</div></div><div class="example"><div class="exercise"><div class="problem">
+  <p>
+Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mn>5</mn></msup></math> .
+
+  </p>
+</div>
+
+<div class="solution">
+<table><tr><td><figure><img src="CNX_Coreq_Figure_09_06_002-06.jpg" alt="Two binomial expressions: the general form (a+b)^n in red, and a specific application (x+3)^5 in black, demonstrating the binomial expansion concept."></figure><br>Go to Pascal’s Triangle and read off the coefficients from the row whose second entry is 5.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_002-01.jpg" alt="An illustration of Pascal&#x27;s Triangle, a triangular array of binomial coefficients, with the fifth row (1 5 10 10 5 1) highlighted in red. Each number is the sum of the two directly above it."></figure></td></tr><tr><td>Write the expansion with the coefficients.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_002-05.jpg" alt="A mathematical expression displays the binomial expansion of (x+3) to the power of 5, showing the coefficients 1, 5, 10, 10, 5, and 1, with blank spaces for the variable terms."></figure></td></tr><tr><td>
+Fill in the variable with the power of x decreasing from 5 to 0, and the power of 3 increasing from 0 to 5.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_002-02.jpg" alt="The binomial expansion of (x+3)⁵, showing the sum of terms where each term consists of a binomial coefficient (highlighted in red), a decreasing power of x, and an increasing power of 3. The coefficients are 1, 5, 10, 10, 5, 1, corresponding to Pascal&#x27;s triangle for n=5."></figure><br><figure><img src="CNX_Coreq_Figure_09_06_002-03.jpg" alt="A mathematical equation illustrating the binomial expansion of (x + 3)^5. The expansion shows coefficients (1, 5, 10, 10, 5, 1) in red, multiplied by decreasing powers of &#x27;x&#x27; and increasing powers of &#x27;3&#x27;."></figure></td></tr><tr><td>Binomial expansion of <math><msup><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mn>5</mn></msup></math> .
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_002-04.jpg" alt="The image shows the mathematical equation representing the binomial expansion of (x+3) to the power of 5, which is equal to x^5 + 15x^4 + 90x^3 + 270x^2 + 405x^1 + 243."></figure></td></tr></table></div>
+</div></div><div class="example"><div class="exercise"><div class="problem">
+  <p>
+Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mn>4</mn></msup></math> .
+
+  </p>
+</div>
+
+<div class="solution">
+  <p><table><tr><td><figure><img src="CNX_Coreq_Figure_09_06_003-02.jpg" alt="The image displays two mathematical expressions: the general form of a binomial expansion, (a + b)^n, and a specific example, (3x - 2)^4."></figure><br>Go to Pascal’s Triangle and read off the coefficients from the row whose second entry is 4.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_003-01.jpg" alt="Pascal&#x27;s triangle displaying binomial coefficients, where each number is the sum of the two directly above it. The fifth row (1, 4, 6, 4, 1) is highlighted."></figure></td></tr><tr><td>Write the expansion with the coefficients.
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_003-03.jpg" alt="An algebraic expression showing the partial binomial expansion of (3x - 2)^4, with the coefficients 1, 4, 6, 4, 1 from Pascal&#x27;s triangle highlighted in red."></figure></td></tr><tr><td>Fill in the variable with the power of (3x) decreasing from 4 to 0, and the power of (-2) increasing from 0 to 4.</td><td><figure><img src="CNX_Coreq_Figure_09_06_003-04.jpg" alt="The image shows the mathematical identity (3x - 2) raised to the power of 4, which is expressed as being equal to the sum of (3x) and (-2), all raised to the power of 4. This demonstrates rewriting a subtraction within parentheses as an addition of a negative number."></figure><br><figure><img src="CNX_Coreq_Figure_09_06_003-05.jpg" alt="The image shows the binomial expansion of the expression (3x - 2)^4. It illustrates the application of the binomial theorem using the coefficients from Pascal&#x27;s triangle (1, 4, 6, 4, 1) and demonstrating the decreasing powers of (3x) and increasing powers of (-2) for each term."></figure><br><figure><img src="CNX_Coreq_Figure_09_06_003-06.jpg" alt="The image displays the binomial expansion of (3x - 2)^4. It shows the application of the binomial theorem with coefficients 1, 4, 6, 4, 1 (in red) multiplied by the corresponding terms."></figure></td></tr><tr><td>Binomial expansion of <math><msup><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mn>4</mn></msup></math> .
+</td><td><figure><img src="CNX_Coreq_Figure_09_06_003-07.jpg" alt="The image displays the binomial expansion of (3x - 2) raised to the power of 4, showing it equals 81x^4 - 216x^3 + 216x^2 - 96x + 16."></figure></td></tr></table></p></div>
+</div>
+</div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><p>
+Use Pascal’s Triangle to expand a binomial.
+
+</p><div class="exercise"><div class="problem">
+  <p>Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow><mn>4</mn></msup></math> .
+
+  </p></div>
+</div><div class="exercise"><div class="problem">
+  <p>
+Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mi>y</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mn>5</mn></msup></math> .
+
+  </p>
+</div>
+</div><div class="exercise"><div class="problem">
+  <p>
+Use Pascal’s Triangle to expand <math><msup><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mn>3</mn></msup></math> .
+
+  </p>
+</div></div></div></div></div><p>A polynomial with two terms is called a binomial. We have already learned to multiply binomials and to raise binomials to powers, but raising a binomial to a high power can be tedious and time-consuming. In this section, we will discuss a shortcut that will allow us to find <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> without multiplying the binomial by itself <math>
+ <mi>n</mi>
+</math> times.</p><div class="section">
+<h3>Identifying Binomial Coefficients</h3>
+<p>In Counting Principles, we studied <strong>combinations</strong>. In the shortcut to finding <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="true">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="true">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> we will need to use combinations to find the coefficients that will appear in the expansion of the binomial. In this case, we use the notation <math>
+ <mrow>
+  <mo stretchy="true">(</mo><mtable>
+   <mtr>
+    <mtd>
+     <mi>n</mi>
+    </mtd>
+   </mtr>
+   <mtr>
+    <mtd>
+     <mi>r</mi>
+    </mtd>
+   </mtr>
+
+  </mtable><mo stretchy="true">)</mo>
+ </mrow>
+</math> instead of <math>
+ <mrow>
+  <mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> but it can be calculated in the same way. So<div class="eq"> <math display="block">
+ <mrow><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mi>r</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </div></p><p>The combination <math>
+ <mrow>
+  <mo stretchy="true">(</mo><mtable>
+   <mtr>
+    <mtd>
+     <mi>n</mi>
+    </mtd>
+   </mtr>
+   <mtr>
+    <mtd>
+     <mi>r</mi>
+    </mtd>
+   </mtr>
+
+  </mtable><mo stretchy="true">)</mo>
+ </mrow>
+</math> is called a <strong>binomial coefficient</strong>. An example of a binomial coefficient is <math>
+ <mrow>
+  <mo stretchy="true">(</mo><mtable>
+   <mtr>
+    <mtd>
+     <mn>5</mn>
+    </mtd>
+   </mtr>
+   <mtr>
+    <mtd>
+     <mn>2</mn>
+    </mtd>
+   </mtr>
+
+  </mtable><mo stretchy="true">)</mo><mo>=</mo><mi>C</mi><mo stretchy="false">(</mo><mn>5</mn><mo>,</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mn>10.</mn>
+ </mrow>
+</math>
+</p>
+<div class="note"><h4>Binomial Coefficients</h4>
+
+<p>If <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>r</mi>
+ </mrow>
+</math> are integers greater than or equal to 0 with <math>
+ <mrow>
+  <mi>n</mi><mo>≥</mo><mi>r</mi><mo>,</mo>
+ </mrow>
+</math> then the <strong>binomial coefficient </strong> is</p><div class="eq"> <math display="block">
+ <mrow>
+<mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mi>r</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math>
+</div></div><div class="note precalculus qa">
+
+<p><strong>Is a binomial coefficient always a whole number?</strong></p>
+<p><em>Yes. Just as the number of combinations must always be a whole number, a binomial coefficient will always be a whole number.  </em></p>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Finding Binomial Coefficients</h6>
+<p>Find each binomial coefficient.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>3</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </li><li>ⓑ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </li><li>ⓒ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </li></ol>
+</div>
+<div class="solution">
+<p>Use the formula to calculate each binomial coefficient. You can also use the <math>
+ <mrow>
+   <mi>n</mi>
+  <msub>
+   <mi>C</mi>
+   <mi>r</mi>
+  </msub>
+ </mrow>
+</math> function on your calculator.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mi>r</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </div><ol><li>ⓐ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>3</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mfrac>
+   <mrow>
+    <mn>5</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>3</mn><mo>!</mo><mo stretchy="false">(</mo><mn>5</mn><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>5</mn><mo>⋅</mo><mn>4</mn><mo>⋅</mo><mn>3</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>3</mn><mo>!</mo><mn>2</mn><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>10</mn>
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mfrac>
+   <mrow>
+    <mn>9</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>2</mn><mo>!</mo><mo stretchy="false">(</mo><mn>9</mn><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>9</mn><mo>⋅</mo><mn>8</mn><mo>⋅</mo><mn>7</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>2</mn><mo>!</mo><mn>7</mn><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>36</mn>
+ </mrow>
+</math> </li><li>ⓒ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mfrac>
+   <mrow>
+    <mn>9</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>7</mn><mo>!</mo><mo stretchy="false">(</mo><mn>9</mn><mo>−</mo><mn>7</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>9</mn><mo>⋅</mo><mn>8</mn><mo>⋅</mo><mn>7</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>7</mn><mo>!</mo><mn>2</mn><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>36</mn>
+ </mrow>
+</math> </li></ol>
+</div>
+<p>
+<h5>Analysis </h5>
+<p>Notice that we obtained the same result for parts (b) and (c). If you look closely at the solution for these two parts, you will see that you end up with the same two factorials in the denominator, but the order is reversed, just as with combinations.<div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </div></p></p>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<p>Find each binomial coefficient.</p>
+<div class="exercise"><div class="problem">
+<p><ol><li>ⓐ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>3</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </li><li>ⓑ <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>11</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>4</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </li></ol>
+</p></div>
+<div class="solution">
+<p><ol><li>ⓐ35</li><li>ⓑ330</li></ol></p></div>
+</div></div>
+</div>
+<div class="section"><h3>Using the Binomial Theorem</h3><p>When we expand <math>
+ <mrow>
+<msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+ </mrow>
+</math> by multiplying, the result is called a <strong>binomial expansion</strong>, and it includes binomial coefficients. If we wanted to expand <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>52</mn>
+   </mrow>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> we might multiply <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> by itself fifty-two times. This could take hours! If we examine some simple binomial expansions, we can find patterns that will lead us to a shortcut for finding more complicated binomial expansions.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>2</mn><mi>x</mi><mi>y</mi><mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>3</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><mn>3</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>3</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>4</mn>
+      </msup>
+      <mo>+</mo><mn>4</mn><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>6</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>4</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div><p>First, let’s examine the exponents. With each successive term, the exponent for <math>
+ <mrow>
+  <mi>x</mi>
+ </mrow>
+</math> decreases and the exponent for <math>
+ <mrow>
+  <mi>y</mi>
+ </mrow>
+</math> increases. The sum of the two exponents is <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> for each term.</p><p>Next, let’s examine the coefficients. Notice that the coefficients increase and then decrease in a symmetrical pattern. The coefficients follow a pattern:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>0</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>1</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo><mn>...</mn><mo>,</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </div><p>These patterns lead us to the <strong>Binomial Theorem</strong>, which can be used to expand any binomial.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mi>n</mi>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mstyle displaystyle="true">
+       <munderover>
+        <mo>∑</mo>
+        <mrow>
+         <mi>k</mi><mo>=</mo><mn>0</mn>
+        </mrow>
+        <mi>n</mi>
+       </munderover>
+       <mrow>
+        <mrow><mo>(</mo>
+         <mrow>
+          <mtable>
+           <mtr>
+            <mtd>
+             <mi>n</mi>
+            </mtd>
+           </mtr>
+           <mtr>
+            <mtd>
+             <mi>k</mi>
+            </mtd>
+           </mtr>
+
+          </mtable>
+         </mrow>
+        <mo>)</mo></mrow><msup>
+         <mi>x</mi>
+         <mrow>
+          <mi>n</mi><mo>−</mo><mi>k</mi>
+         </mrow>
+        </msup>
+
+       </mrow>
+      </mstyle><msup>
+       <mi>y</mi>
+       <mi>k</mi>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mi>n</mi>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>1</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mi>y</mi><mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>2</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>2</mn>
+       </mrow>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>...</mn><mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mrow>
+            <mi>n</mi><mo>−</mo><mn>1</mn>
+           </mrow>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><mi>x</mi><msup>
+       <mi>y</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mi>n</mi>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div><p>Another way to see the coefficients is to examine the expansion of a binomial in general form, <math>
+ <mrow>
+  <mi>x</mi><mo>+</mo><mi>y</mi><mo>,</mo>
+ </mrow>
+</math> to successive powers 1, 2, 3, and 4.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>1</mn>
+      </msup>
+      <mo>=</mo><mi>x</mi><mo>+</mo><mi>y</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>2</mn><mi>x</mi><mi>y</mi><mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>3</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><mn>3</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>3</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>4</mn>
+      </msup>
+      <mo>+</mo><mn>4</mn><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>6</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>4</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div><p>Can you guess the next expansion for the binomial <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+  <mo>?</mo>
+ </mrow>
+</math> </p>
+<figure><img src="CNX_Precalc_Figure_11_06_002.jpg" alt="Graph of the function f_2."></figure><p>See , which illustrates the following:</p><ul><li>There are <math>
+ <mrow>
+  <mi>n</mi><mo>+</mo><mn>1</mn>
+ </mrow>
+</math> terms in the expansion of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </li><li>The degree (or sum of the exponents) for each term is <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> </li><li>The powers on <math>
+ <mrow>
+  <mi>x</mi>
+ </mrow>
+</math> begin with <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> and decrease to 0.</li><li>The powers on <math>
+ <mrow>
+  <mi>y</mi>
+ </mrow>
+</math> begin with 0 and increase to <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> </li><li>The coefficients are symmetric.</li></ul><p>To determine the expansion on <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> we see <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>5</mn><mo>,</mo>
+ </mrow>
+</math> thus, there will be 5+1 = 6 terms. Each term has a combined degree of 5. In descending order for powers of <math>
+ <mrow>
+  <mi>x</mi><mo>,</mo>
+ </mrow>
+</math> the pattern is as follows:</p><ul><li>Introduce <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> and then for each successive term reduce the exponent on <math>
+ <mrow>
+  <mi>x</mi>
+ </mrow>
+</math> by 1 until <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>0</mn>
+  </msup>
+  <mo>=</mo><mn>1</mn>
+ </mrow>
+</math> is reached.</li><li>Introduce <math>
+ <mrow>
+  <msup>
+   <mi>y</mi>
+   <mn>0</mn>
+  </msup>
+  <mo>=</mo><mn>1</mn><mo>,</mo>
+ </mrow>
+</math> and then increase the exponent on <math>
+ <mrow>
+  <mi>y</mi>
+ </mrow>
+</math> by 1 until <math>
+ <mrow>
+  <msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+   </mrow>
+</math> is reached.
+<div class="eq"> <math display="block">
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>,</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>,</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </div>
+</li></ul><p>The next expansion would be</p><div class="eq"> <math display="block">
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+  <mo>=</mo><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>+</mo><mn>5</mn><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mn>10</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>10</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>5</mn><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </div><p>But where do those coefficients come from? The binomial coefficients are symmetric. We can see these coefficients in an array known as <strong>Pascal&#x27;s Triangle</strong>, shown in . Pascal didn&#x27;t invent the triangle. The underlying principles had been developed and written about for over 1500 years, first by the Indian mathematician (and poet) Pingala in the second century BCE. Others throughout Asia and Europe worked with the concepts throughout, and the triangle was first published in its graphical form by Omar Khayyam, an Iranian mathematician and astronomer, for whom the triangle is named in Iran. French mathematician Blaise Pascal repopularized it when he republished it and used it to solve a number of probability problems.</p><figure><img src="CNX_Precalc_Figure_11_06_001.jpg" alt="Pascal&#x27;s Triangle"></figure>
+<p>To generate Pascal’s Triangle, we start by writing a 1. In the row below, row 2, we write two 1’s. In the 3<sup>rd</sup> row, flank the ends of the rows with 1’s, and add <math>
+ <mrow>
+  <mn>1</mn><mo>+</mo><mn>1</mn>
+ </mrow>
+</math> to find the middle number, 2. In the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> row, flank the ends of the row with 1’s. Each element in the triangle is the sum of the two elements immediately above it.</p><p>To see the connection between Pascal’s Triangle and binomial coefficients, let us revisit the expansion of the binomials in general form.</p>
+
+<figure><img src="CNX_Precalc_Figure_11_06_003.jpg" alt="Pascal&#x27;s Triangle expanded to show the values of the triangle as x and y terms with exponents"></figure>
+
+<div class="note">
+
+<h4>The Binomial Theorem</h4>
+<p>The <strong>Binomial Theorem</strong> is a formula that can be used to expand any binomial.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mi>n</mi>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mstyle displaystyle="true">
+       <munderover>
+        <mo>∑</mo>
+        <mrow>
+         <mi>k</mi><mo>=</mo><mn>0</mn>
+        </mrow>
+        <mi>n</mi>
+       </munderover>
+       <mrow>
+        <mrow><mo>(</mo>
+         <mrow>
+          <mtable>
+           <mtr>
+            <mtd>
+             <mi>n</mi>
+            </mtd>
+           </mtr>
+           <mtr>
+            <mtd>
+             <mi>k</mi>
+            </mtd>
+           </mtr>
+
+          </mtable>
+         </mrow>
+        <mo>)</mo></mrow><msup>
+         <mi>x</mi>
+         <mrow>
+          <mi>n</mi><mo>−</mo><mi>k</mi>
+         </mrow>
+        </msup>
+        <msup>
+         <mi>y</mi>
+         <mi>k</mi>
+        </msup>
+
+       </mrow>
+      </mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mi>n</mi>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>1</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mi>y</mi><mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>2</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>2</mn>
+       </mrow>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>...</mn><mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mi>n</mi>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mrow>
+            <mi>n</mi><mo>−</mo><mn>1</mn>
+           </mrow>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><mi>x</mi><msup>
+       <mi>y</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mi>n</mi>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div>
+</div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given a binomial, write it in expanded form.</strong></p><ol><li>Determine the value of <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> according to the exponent.</li><li>Evaluate the <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>0</mn>
+ </mrow>
+</math> through <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mi>n</mi>
+ </mrow>
+</math> using the Binomial Theorem formula.</li><li>Simplify.</li></ol></div>
+
+<div class="example"><div class="exercise">
+<div class="problem">
+<h6>Expanding a Binomial</h6>
+<p>Write in expanded form.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </li><li>ⓑ <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mn>3</mn><mi>x</mi><mo>−</mo><mi>y</mi>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> </li></ol></div>
+<div class="solution">
+<ol><li>ⓐSubstitute <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>5</mn>
+ </mrow>
+</math> into the formula. Evaluate the <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>0</mn>
+ </mrow>
+</math> through <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>5</mn>
+ </mrow>
+</math> terms. Simplify.
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>5</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>0</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>5</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>0</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>1</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>4</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>1</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>2</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>3</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>1</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>4</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>5</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mi>x</mi>
+       <mn>0</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>5</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>5</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msup>
+       <mi>x</mi>
+       <mn>5</mn>
+      </msup>
+      <mo>+</mo><mn>5</mn><msup>
+       <mi>x</mi>
+       <mn>4</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>10</mn><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mn>10</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><mn>5</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>4</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>5</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div>
+</li><li>ⓑSubstitute <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>4</mn>
+ </mrow>
+</math> into the formula. Evaluate the <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>0</mn>
+ </mrow>
+</math> through <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>4</mn>
+ </mrow>
+</math> terms. Notice that <math>
+ <mrow>
+  <mn>3</mn><mi>x</mi>
+ </mrow>
+</math> is in the place that was occupied by <math>
+ <mrow>
+  <mi>x</mi>
+ </mrow>
+</math> and that <math>
+ <mrow>
+  <mo>–</mo><mi>y</mi>
+ </mrow>
+</math> is in the place that was occupied by <math>
+ <mrow>
+  <mi>y</mi><mo>.</mo>
+ </mrow>
+</math> So we substitute them. Simplify.
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>0</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>0</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>1</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>3</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>1</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>2</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>3</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>1</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mtable>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+         <mtr>
+          <mtd>
+           <mn>4</mn>
+          </mtd>
+         </mtr>
+
+        </mtable>
+       </mrow>
+      <mo>)</mo></mrow><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>0</mn>
+      </msup>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>81</mn><msup>
+       <mi>x</mi>
+       <mn>4</mn>
+      </msup>
+      <mo>−</mo><mn>108</mn><msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mi>y</mi><mo>+</mo><mn>54</mn><msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <msup>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>12</mn><mi>x</mi><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mi>y</mi>
+       <mn>4</mn>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li></ol></div>
+<p>
+<h5>Analysis </h5>
+<p>Notice the alternating signs in part b. This happens because <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> raised to odd powers is negative, but <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> raised to even powers is positive. This will occur whenever the binomial contains a subtraction sign.</p>
+</p>
+</div>
+</div><div class="note precalculus try">
+
+<div class="exercise"><div class="problem">
+<p>Write in expanded form.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>5</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li></ol></div>
+<div class="solution">
+<ol><li>ⓐ <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>−</mo><mn>5</mn><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mn>10</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>−</mo><mn>10</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>5</mn><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>−</mo><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <mn>8</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>60</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mn>150</mn><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>125</mn><msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li></ol></div>
+</div></div>
+</div><div class="section"><h3>Using the Binomial Theorem to Find a Single Term</h3><p>Expanding a binomial with a high exponent such as <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> can be a lengthy process.</p><p>Sometimes we are interested only in a certain term of a binomial expansion. We do not need to fully expand a binomial to find a single specific term.</p><p>Note the pattern of coefficients in the expansion of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+  <mo>=</mo><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>1</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>3</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>4</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </div><p>The second term is <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>1</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>.</mo>
+ </mrow>
+</math> The third term is <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> We can generalize this result.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>r</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mi>r</mi>
+  </msup>
+
+ </mrow>
+</math> </div>
+<div class="note">
+
+<h4>The (r+1)th Term of a Binomial Expansion</h4>
+
+<p>The <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>r</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mtext>th</mtext>
+ </mrow>
+</math> term of the <strong>binomial expansion</strong> of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> is:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>r</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mi>r</mi>
+  </msup>
+
+ </mrow>
+</math> </div>
+ </div><div class="note how-to-notitle">
+
+<p><strong>Given a binomial, write a specific term without fully expanding.</strong></p>
+<ol><li>Determine the value of <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> according to the exponent.</li><li>Determine <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>r</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>.</mo>
+ </mrow>
+</math> </li><li>Determine <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo>
+ </mrow>
+</math> </li><li>Replace <math>
+ <mrow>
+  <mi>r</mi>
+ </mrow>
+</math> in the formula for the <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>r</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mtext>th</mtext>
+ </mrow>
+</math> term of the binomial expansion.</li></ol></div><div class="example"><div class="exercise">
+<div class="problem">
+<h6>Writing a Given Term of a Binomial Expansion</h6>
+<p>Find the tenth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> without fully expanding the binomial.</p>
+</div>
+<div class="solution">
+<p>Because we are looking for the tenth term, <math>
+ <mrow>
+  <mi>r</mi><mo>+</mo><mn>1</mn><mo>=</mo><mn>10</mn><mo>,</mo>
+ </mrow>
+</math> we will use <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>9</mn>
+ </mrow>
+</math> in our calculations.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>r</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mi>r</mi>
+  </msup>
+
+ </mrow>
+</math> </div>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>16</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mrow>
+    <mn>16</mn><mo>−</mo><mn>9</mn>
+   </mrow>
+  </msup>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>9</mn>
+  </msup>
+  <mo>=</mo><mn>5</mn><mtext>,</mtext><mn>857</mn><mtext>,</mtext><mn>280</mn><msup>
+   <mi>x</mi>
+   <mn>7</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>9</mn>
+  </msup>
+
+ </mrow>
+</math>
+</div></div>
+</div>
+</div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p>Find the sixth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>9</mn>
+  </msup>
+
+ </mrow>
+</math> without fully expanding the binomial.</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>10</mn><mo>,</mo><mn>206</mn><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+
+<div class="note media-notitle">
+
+<p>Access these online resources for additional instruction and practice with binomial expansion.</p>
+<ul><li><a href="https://openstax.org/l/binomialtheorem" target="_blank" rel="noopener noreferrer">The Binomial Theorem</a></li><li><a href="https://openstax.org/l/btexample" target="_blank" rel="noopener noreferrer">Binomial Theorem Example</a></li></ul></div>
+</div><div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td>Binomial Theorem</td><td> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup><mo>=</mo>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>−</mo><mn>0</mn>
+    </mrow>
+    <mi>n</mi>
+   </munderover>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mi>n</mi>
+        </mtd>
+       </mtr>
+       <mtr>
+        <mtd>
+         <mi>k</mi>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </mstyle><msup>
+   <mi>x</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>k</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math>
+</td></tr><tr><td> <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>r</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi>t</mi><mi>h</mi>
+ </mrow>
+</math> term of a binomial expansion</td><td> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>x</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>r</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mi>r</mi>
+  </msup>
+
+ </mrow>
+</math>
+</td></tr></table></div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> is called a binomial coefficient and is equal to <math>
+ <mrow>
+  <mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>.</mo>
+ </mrow>
+</math> See .</li><li>The Binomial Theorem allows us to expand binomials without multiplying. See .</li><li>We can find a given term of a binomial expansion without fully expanding the binomial. See .</li></ul></div>
+
+<div class="section section-exercises">
+<h3>Section Exercises</h3>
+<div class="section">
+<h4>Verbal </h4>
+<div class="exercise">
+<div class="problem">
+<p>What is a binomial coefficient, and how it is calculated?</p>
+</div>
+<div class="solution">
+<p>A binomial coefficient is an alternative way of denoting the combination <math>
+ <mrow>
+  <mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">).</mo>
+ </mrow>
+</math> It is defined as <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mspace width="0.5em"></mspace><mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mspace width="0.5em"></mspace><mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mi>r</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What role do binomial coefficients play in a binomial expansion? Are they restricted to any type of number?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is the Binomial Theorem and what is its use?</p>
+</div>
+<div class="solution">
+<p>The Binomial Theorem is defined as <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>=</mo><mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>0</mn>
+    </mrow>
+    <mi>n</mi>
+   </munderover>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mi>n</mi>
+        </mtd>
+       </mtr>
+       <mtr>
+        <mtd>
+         <mi>k</mi>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    <mo>)</mo></mrow><msup>
+     <mi>x</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mi>k</mi>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle><msup>
+   <mi>y</mi>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math> and can be used to expand any binomial.</p>
+</div>
+ </div>
+
+<div class="exercise">
+<div class="problem">
+<p>When is it an advantage to use the Binomial Theorem? Explain.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h4>Algebraic</h4>
+<p>For the following exercises, evaluate the binomial coefficient.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>6</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>15</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>5</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>3</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>4</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p>35</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>9</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>10</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>25</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>11</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>17</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>6</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>12,376</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>200</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mn>199</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, use the Binomial Theorem to expand each binomial.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>4</mn><mi>a</mi><mo>−</mo><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>64</mn><msup>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>−</mo><mn>48</mn><msup>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msup>
+  <mi>b</mi><mo>+</mo><mn>12</mn><mi>a</mi><msup>
+   <mi>b</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>−</mo><msup>
+   <mi>b</mi>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>5</mn><mi>a</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>a</mi><mo>+</mo><mn>2</mn><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>27</mn><msup>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>54</mn><msup>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msup>
+  <mi>b</mi><mo>+</mo><mn>36</mn><mi>a</mi><msup>
+   <mi>b</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>8</mn><msup>
+   <mi>b</mi>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>3</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>1024</mn><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>+</mo><mn>2560</mn><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mn>2560</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>1280</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>320</mn><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>+</mo><mn>32</mn><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>4</mn><mi>x</mi><mo>−</mo><mn>3</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>1024</mn><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <mo>−</mo><mn>3840</mn><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mi>y</mi><mo>+</mo><mn>5760</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>−</mo><mn>4320</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>1620</mn><mi>x</mi><msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>−</mo><mn>243</mn><msup>
+   <mi>y</mi>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>1</mn>
+       <mi>x</mi>
+      </mfrac>
+      <mo>+</mo><mn>3</mn><mi>y</mi>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msup>
+     <mi>x</mi>
+     <mrow>
+      <mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+    <mo>+</mo><mn>2</mn><msup>
+     <mi>y</mi>
+     <mrow>
+      <mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>4</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mn>8</mn>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>3</mn>
+    </msup>
+    <mi>y</mi>
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msup>
+    <msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>32</mn>
+   </mrow>
+   <mrow>
+    <mi>x</mi><msup>
+     <mi>y</mi>
+     <mn>3</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>y</mi>
+     <mn>4</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msqrt>
+     <mi>x</mi>
+    </msqrt>
+    <mo>−</mo><msqrt>
+     <mi>y</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, use the Binomial Theorem to write the first three terms of each binomial.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>17</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>17</mn>
+   </mrow>
+  </msup>
+  <mo>+</mo><mn>17</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </msup>
+  <mi>b</mi><mo>+</mo><mn>136</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>18</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>a</mi><mo>−</mo><mn>2</mn><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+  </msup>
+  <mo>−</mo><mn>30</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>14</mn>
+   </mrow>
+  </msup>
+  <mi>b</mi><mo>+</mo><mn>420</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>13</mn>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>8</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>a</mi><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>20</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>3</mn><mo>,</mo><mn>486</mn><mo>,</mo><mn>784</mn><mo>,</mo><mn>401</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>20</mn>
+   </mrow>
+  </msup>
+  <mo>+</mo><mn>23</mn><mo>,</mo><mn>245</mn><mo>,</mo><mn>229</mn><mo>,</mo><mn>340</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>19</mn>
+   </mrow>
+  </msup>
+  <mi>b</mi><mo>+</mo><mn>73</mn><mo>,</mo><mn>609</mn><mo>,</mo><mn>892</mn><mo>,</mo><mn>910</mn><msup>
+   <mi>a</mi>
+   <mrow>
+    <mn>18</mn>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>2</mn><mi>a</mi><mo>+</mo><mn>4</mn><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>7</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msup>
+     <mi>x</mi>
+     <mn>3</mn>
+    </msup>
+    <mo>−</mo><msqrt>
+     <mi>y</mi>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mn>8</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+  </msup>
+  <mo>−</mo><mn>8</mn><msup>
+   <mi>x</mi>
+   <mrow>
+    <mn>21</mn>
+   </mrow>
+  </msup>
+  <msqrt>
+   <mi>y</mi>
+  </msqrt>
+  <mo>+</mo><mn>28</mn><msup>
+   <mi>x</mi>
+   <mrow>
+    <mn>18</mn>
+   </mrow>
+  </msup>
+  <mi>y</mi>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, find the indicated term of each binomial without fully expanding the binomial.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>The fourth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>3</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The fourth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>720</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The third term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>6</mn><mi>x</mi><mo>−</mo><mn>3</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>7</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The eighth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>7</mn><mo>+</mo><mn>5</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>14</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>220</mn><mo>,</mo><mn>812</mn><mo>,</mo><mn>466</mn><mo>,</mo><mn>875</mn><mo>,</mo><mn>000</mn><msup>
+   <mi>y</mi>
+   <mn>7</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The seventh term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The fifth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>7</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>35</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The tenth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The ninth term of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>a</mi><mo>−</mo><mn>3</mn><msup>
+     <mi>b</mi>
+     <mn>2</mn>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>1</mn><mo>,</mo><mn>082</mn><mo>,</mo><mn>565</mn><msup>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The fourth term of <math display="inline">
+ <mrow>
+  <mspace width="0.5em"></mspace><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <msup>
+       <mi>x</mi>
+       <mn>3</mn>
+      </msup>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The eighth term of <math display="inline">
+ <mrow>
+  <mspace width="0.5em"></mspace><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mi>y</mi>
+       <mn>2</mn>
+      </mfrac>
+      <mo>+</mo><mfrac>
+       <mn>2</mn>
+       <mi>x</mi>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>9</mn>
+  </msup>
+
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>1152</mn><msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>7</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p></div>
+</div>
+</div>
+
+<div class="section">
+<h4>Graphical</h4>
+
+<p>For the following exercises, use the Binomial Theorem to expand the binomial <math>
+ <mrow>
+  <mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>3</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>4</mn>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> Then find and graph each indicated sum on one set of axes.</p><div class="exercise">
+<div class="problem">
+<p>Find and graph <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>1</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>1</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> is the first term of the expansion.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Find and graph <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>2</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>2</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> is the sum of the first two terms of the expansion.</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>2</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>+</mo><mn>12</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_06_202.jpg" alt="Graph of the function f_2."></figure></div>
+</div><div class="exercise">
+<div class="problem">
+<p>Find and graph <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>3</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>3</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> is the sum of the first three terms of the expansion.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Find and graph <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>4</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>4</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> is the sum of the first four terms of the expansion.</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>4</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup>
+   <mi>x</mi>
+   <mn>4</mn>
+  </msup>
+  <mo>+</mo><mn>12</mn><msup>
+   <mi>x</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>54</mn><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>108</mn><mi>x</mi>
+ </mrow>
+</math>
+</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_06_204.jpg" alt="Graph of the function f_4."></figure>
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p>Find and graph <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>5</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <msub>
+   <mi>f</mi>
+   <mn>5</mn>
+  </msub>
+  <mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math> is the sum of the first five terms of the expansion.</p></div>
+</div>
+
+</div>
+<div class="section"><h4>Extensions</h4><div class="exercise material-set-2">
+<div class="problem">
+<p>In the expansion of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>5</mn><mi>x</mi><mo>+</mo><mn>3</mn><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> each term has the form <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>k</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>–</mo><mi>k</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mi>k</mi>
+  </msup></mrow></math>, where <math><mrow><mi>k</mi>
+ </mrow>
+</math> successively takes on the value <math>
+ <mrow>
+  <mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mspace width="0.3em"></mspace><mn>...</mn><mo>,</mo><mspace width="0.3em"></mspace><mi>n</mi><mo>.</mo>
+ </mrow>
+</math> If <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>k</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mn>7</mn>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mn>2</mn>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo>
+ </mrow>
+</math> what is the corresponding term?</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>590</mn><mo>,</mo><mn>625</mn><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  <msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>In the expansion of <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>a</mi><mo>+</mo><mi>b</mi>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>,</mo>
+ </mrow>
+</math> the coefficient of <math>
+ <mrow>
+  <msup>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mi>k</mi>
+   </mrow>
+  </msup>
+  <msup>
+   <mi>b</mi>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math> is the same as the coefficient of which other term?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Consider the expansion of <math display="inline">
+ <mrow>
+  <mspace width="0.5em"></mspace><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>40</mn>
+   </mrow>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> What is the exponent of <math>
+ <mrow>
+  <mi>b</mi>
+ </mrow>
+</math> in the <math>
+ <mrow>
+  <mi>k</mi><mtext>th</mtext>
+ </mrow>
+</math> term?</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>k</mi><mo>−</mo><mn>1</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Find <math display="inline">
+ <mrow>
+  <mspace width="0.5em"></mspace><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mrow>
+        <mi>k</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>k</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> and write the answer as a binomial coefficient in the form <math display="inline">
+ <mrow>
+  <mspace width="0.5em"></mspace><mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>k</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow><mo>.</mo>
+ </mrow>
+</math> Prove it. <em>Hint:</em> Use the fact that, for any integer <math>
+ <mrow>
+  <mi>p</mi><mo>,</mo>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <mi>p</mi><mo>≥</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mi>p</mi><mo>!</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo><mtext>.</mtext>
+ </mrow>
+</math> </p></div>
+
+</div><div class="exercise"><div class="problem">
+<p>Which expression cannot be expanded using the Binomial Theorem? Explain.</p>
+<ul><li> <math>
+ <mrow>
+  <mo stretchy="false">(</mo><msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo>
+ </mrow>
+</math>
+</li><li> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msqrt>
+     <mi>a</mi>
+    </msqrt>
+    <mo>+</mo><mn>4</mn><msqrt>
+     <mi>a</mi>
+    </msqrt>
+    <mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>8</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li><li> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msup>
+     <mi>x</mi>
+     <mn>3</mn>
+    </msup>
+    <mo>+</mo><mn>2</mn><msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>−</mo><mi>z</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math>
+</li><li> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><msup>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>−</mo><msqrt>
+     <mrow>
+      <mn>2</mn><msup>
+       <mi>y</mi>
+       <mn>3</mn>
+      </msup>
+
+     </mrow>
+    </msqrt>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</li></ul></div>
+<div class="solution">
+<p>The expression <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><msup>
+     <mi>x</mi>
+     <mn>3</mn>
+    </msup>
+    <mo>+</mo><mn>2</mn><msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>−</mo><mi>z</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mn>5</mn>
+  </msup>
+
+ </mrow>
+</math> cannot be expanded using the Binomial Theorem because it cannot be rewritten as a binomial.</p>
+</div>
+</div></div></div>
+<h2>Key terms</h2>
+<p><strong>binomial coefficient</strong> the number of ways to choose<em> r</em> objects from <em>n</em> objects where order does not matter; equivalent to <math>
+ <mrow>
+  <mi>C</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> denoted <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtable>
+     <mtr>
+      <mtd>
+       <mi>n</mi>
+      </mtd>
+     </mtr>
+     <mtr>
+      <mtd>
+       <mi>r</mi>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+</p>
+<p><strong>binomial expansion</strong> the result of expanding <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> by multiplying</p>
+<p><strong>Binomial Theorem</strong> a formula that can be used to expand any binomial</p>
+
+</body></html>

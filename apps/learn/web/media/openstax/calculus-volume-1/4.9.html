@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.9 Newton’s Method · Calculus Volume 1</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Calculus Volume 1, Strang, Herman et al., section 4.9 Newton’s Method. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/calculus-volume-1/pages/4-9-newton-s-method</p>
+<h1>4.9 Newton’s Method</h1>
+
+<p>In many areas of pure and applied mathematics, we are interested in finding solutions to an equation of the form <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> For most functions, however, it is difficult—if not impossible—to calculate their zeroes explicitly. In this section, we take a look at a technique that provides a very efficient way of approximating the <strong>zeroes of functions</strong>. This technique makes use of tangent line approximations and is behind the method used often by calculators and computers to find zeroes.</p>
+<div class="section">
+<h3>Describing Newton’s Method</h3>
+<p>Consider the task of finding the solutions of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> If <math><mi>f</mi></math> is the first-degree polynomial <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mo>,</mo></mrow></math> then the solution of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math> is given by the formula <math><mrow><mi>x</mi><mo>=</mo><mo>−</mo><mfrac><mi>b</mi><mi>a</mi></mfrac><mo>.</mo></mrow></math> If <math><mi>f</mi></math> is the second-degree polynomial <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>x</mi><mo>+</mo><mi>c</mi><mo>,</mo></mrow></math> the solutions of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math> can be found by using the quadratic formula. However, for polynomials of degree <math><mn>3</mn></math> or more, finding roots of <math><mi>f</mi></math> becomes more complicated. Although formulas exist for third- and fourth-degree polynomials, they are quite complicated. Also, if <math><mi>f</mi></math> is a polynomial of degree <math><mn>5</mn></math> or greater, it is known that no such formulas exist. For example, consider the function</p>
+<div class="eq"><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>5</mn></msup><mo>+</mo><mn>8</mn><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><mn>4</mn><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>7</mn><mo>.</mo></mrow></math></div>
+<p>No formula exists that allows us to find the solutions of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Similar difficulties exist for nonpolynomial functions. For example, consider the task of finding solutions of <math><mrow><mtext>tan</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>−</mo><mi>x</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> No simple formula exists for the solutions of this equation. In cases such as these, we can use Newton’s method to approximate the roots.</p>
+<p><strong>Newton’s method</strong> makes use of the following idea to approximate the solutions of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> By sketching a graph of <math><mrow><mi>f</mi><mo>,</mo></mrow></math> we can estimate a root of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Let’s call this estimate <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>.</mo></mrow></math> We then draw the tangent line to <math><mi>f</mi></math> at <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>.</mo></mrow></math> If <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>≠</mo><mn>0</mn><mo>,</mo></mrow></math> this tangent line intersects the <math><mi>x</mi></math>-axis at some point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mn>0</mn></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> Now let <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> be the next approximation to the actual root. Typically, <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> is closer than <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> to an actual root. Next we draw the tangent line to <math><mi>f</mi></math> at <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>.</mo></mrow></math> If <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>≠</mo><mn>0</mn><mo>,</mo></mrow></math> this tangent line also intersects the <math><mi>x</mi></math>-axis, producing another approximation, <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math> We continue in this way, deriving a list of approximations: <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext><mo>.</mo></mrow></math> Typically, the numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> quickly approach an actual root <math><mrow><mi>x</mi><mo>*</mo><mo>,</mo></mrow></math> as shown in the following figure.</p>
+<figure><img src="CNX_Calc_Figure_04_09_001.jpg" alt="This function f(x) is drawn with points (x0, f(x0)), (x1, f(x1)), and (x2, f(x2)) marked on the function. From (x0, f(x0)), a tangent line is drawn, and it strikes the x axis at x1. From (x0, f(x0)), a tangent line is drawn, and it strikes the x axis at x2. If a tangent line were drawn from (x2, f(x2)), it appears that it would come very close to x*, which is the actual root. Each tangent line drawn in this order appears to get closer and closer to x*."><figcaption>The approximations <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> approach the actual root <math><mrow><mi>x</mi><mo>*</mo><mo>.</mo></mrow></math> The approximations are derived by looking at tangent lines to the graph of <math><mrow><mi>f</mi><mo>.</mo></mrow></math></figcaption></figure>
+<p>Now let’s look at how to calculate the approximations <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext><mo>.</mo></mrow></math> If <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> is our first approximation, the approximation <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> is defined by letting <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mn>0</mn></mrow><mo>)</mo></mrow></mrow></math> be the <math><mi>x</mi></math>-intercept of the tangent line to <math><mi>f</mi></math> at <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>.</mo></mrow></math> The equation of this tangent line is given by</p>
+<div class="eq"><math><mrow><mi>y</mi><mo>=</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Therefore, <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> must satisfy</p>
+<div class="eq"><math><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></div>
+<p>Solving this equation for <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo></mrow></math> we conclude that</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>Similarly, the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mn>0</mn></mrow><mo>)</mo></mrow></mrow></math> is the <math><mi>x</mi></math>-intercept of the tangent line to <math><mi>f</mi></math> at <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>.</mo></mrow></math> Therefore, <math><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></math> satisfies the equation</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>In general, for <math><mrow><mi>n</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow></math> satisfies</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>Next we see how to make use of this technique to approximate the root of the polynomial <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>.</mo></mrow></math></p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Finding a Root of a Polynomial</h6>
+<p>Use Newton’s method to approximate a root of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math> in the interval <math><mrow><mrow><mo>[</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math> Let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math> and find <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo></mrow></math> and <math><mrow><msub><mi>x</mi><mn>5</mn></msub><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>From , we see that <math><mi>f</mi></math> has one root over the interval <math><mrow><mrow><mo>(</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> Therefore <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math> seems like a reasonable first approximation. To find the next approximation, we use . Since <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>,</mo></mrow></math> the derivative is <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>3</mn><mo>.</mo></mrow></math> Using  with <math><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow></math> (and a calculator that displays <math><mrow><mn>10</mn></mrow></math> digits), we obtain</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mn>2</mn><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mn>2</mn><mo>−</mo><mfrac><mn>3</mn><mn>9</mn></mfrac><mo>≈</mo><mn>1.666666667</mn><mo>.</mo></mrow></math></div>
+<p>To find the next approximation, <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo></mrow></math> we use  with <math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math> and the value of <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> stored on the calculator. We find that</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>-</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>≈</mo><mn>1.548611111</mn><mo>.</mo></mrow></math></div>
+<p>Continuing in this way, we obtain the following results:</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>1</mn></msub><mo>≈</mo><mn>1.666666667</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>2</mn></msub><mo>≈</mo><mn>1.548611111</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>3</mn></msub><mo>≈</mo><mn>1.532390162</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>4</mn></msub><mo>≈</mo><mn>1.532088989</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>5</mn></msub><mo>≈</mo><mn>1.532088886</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>6</mn></msub><mo>≈</mo><mn>1.532088886</mn><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>We note that we obtained the same value for <math><mrow><msub><mi>x</mi><mn>5</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>6</mn></msub><mo>.</mo></mrow></math> Therefore, any subsequent application of Newton’s method will most likely give the same value for <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>.</mo></mrow></math></p>
+<figure><img src="CNX_Calc_Figure_04_09_002.jpg" alt="The function f(x) = x3 – 3x + 1 is drawn. It has roots between −2 and −1, 0 and 1, and 1 and 2."><figcaption>The function <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math> has one root over the interval <math><mrow><mrow><mo>[</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math></figcaption></figure>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Letting <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> let’s use Newton’s method to approximate the root of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math> over the interval <math><mrow><mrow><mo>[</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>]</mo></mrow></mrow></math> by calculating <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>≈</mo><mn>0.33333333</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>≈</mo><mn>0.347222222</mn></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Use .</p>
+</p>
+</div>
+</div>
+<p>Newton’s method can also be used to approximate square roots. Here we show how to approximate <math><mrow><msqrt><mn>2</mn></msqrt><mo>.</mo></mrow></math> This method can be modified to approximate the square root of any positive number.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Finding a Square Root</h6>
+<p>Use Newton’s method to approximate <math><mrow><msqrt><mn>2</mn></msqrt></mrow></math> (). Let <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mo>,</mo></mrow></math> let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><mo>,</mo></mrow></math> and calculate <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>5</mn></msub><mo>.</mo></mrow></math> (We note that since <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn></mrow></math> has a zero at <math><mrow><msqrt><mn>2</mn></msqrt><mo>,</mo></mrow></math> the initial value <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math> is a reasonable choice to approximate <math><mrow><msqrt><mn>2</mn></msqrt><mo>.</mo><mo stretchy="false">)</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>For <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mo>,</mo><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mi>x</mi><mo>.</mo></mrow></math> From , we know that</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msub><mi>x</mi><mi>n</mi></msub></mtd><mtd columnalign="left"><mo>=</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></mfrac></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup><msub><mrow></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mn>2</mn></mrow><mrow><mn>2</mn><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mfrac><mn>1</mn><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><mfrac><mn>2</mn><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac></mrow><mo>)</mo></mrow><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Therefore,</p>
+<div class="eq"><math><mtable><mtr></mtr><mtr></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>2</mn><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>2</mn><mo>+</mo><mfrac><mn>2</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mn>1.5</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mfrac><mn>2</mn><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>1.5</mn><mo>+</mo><mfrac><mn>2</mn><mrow><mn>1.5</mn></mrow></mfrac></mrow><mo>)</mo></mrow><mo>≈</mo><mn>1.416666667.</mn></mtd></mtr></mtable></math></div>
+<p>Continuing in this way, we find that</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>1.5</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>2</mn></msub><mo>≈</mo><mn>1.416666667</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>3</mn></msub><mo>≈</mo><mn>1.414215686</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>4</mn></msub><mo>≈</mo><mn>1.414213562</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>5</mn></msub><mo>≈</mo><mn>1.414213562.</mn></mtd></mtr></mtable></math></div>
+<p>Since we obtained the same value for <math><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>5</mn></msub><mo>,</mo></mrow></math> it is unlikely that the value <math><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></math> will change on any subsequent application of Newton’s method. We conclude that <math><mrow><msqrt><mn>2</mn></msqrt><mo>≈</mo><mn>1.414213562</mn><mo>.</mo></mrow></math></p>
+<figure><img src="CNX_Calc_Figure_04_09_003.jpg" alt="The function y = x2 – 2 is drawn. A dashed line comes up from x0 = 2, and a tangent line is drawn down from there. It touches x1 = 1.5, which is near x* = the square root of 2."><figcaption>We can use Newton’s method to find <math><mrow><msqrt><mn>2</mn></msqrt><mo>.</mo></mrow></math></figcaption></figure>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Use Newton’s method to approximate <math><mrow><msqrt><mn>3</mn></msqrt></mrow></math> by letting <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>3</mn></mrow></math> and <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>3</mn><mo>.</mo></mrow></math> Find <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1.75</mn></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>For <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>3</mn><mo>,</mo></mrow></math>  reduces to <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mn>2</mn></mfrac><mo>+</mo><mfrac><mn>3</mn><mrow><mn>2</mn><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac><mo>.</mo></mrow></math></p>
+</p>
+</div>
+</div>
+<p>When using Newton’s method, each approximation after the initial guess is defined in terms of the previous approximation by using the same formula. In particular, by defining the function <math><mrow><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><mo>−</mo><mrow><mo>[</mo><mrow><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></mrow><mo>]</mo></mrow><mo>,</mo></mrow></math> we can rewrite  as <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> This type of process, where each <math><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></math> is defined in terms of <math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></math> by repeating the same function, is an example of an <strong>iterative process</strong>. Shortly, we examine other iterative processes. First, let’s look at the reasons why Newton’s method could fail to find a root.</p>
+</div>
+<div class="section">
+<h3>Failures of Newton’s Method</h3>
+<p>Typically, Newton’s method is used to find roots fairly quickly. However, things can go wrong. Some reasons why Newton’s method might fail include the following:</p>
+<ol><li>At one of the approximations <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>,</mo></mrow></math> the derivative <math><msup><mi>f</mi><mo>′</mo></msup></math> is zero at <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>,</mo></mrow></math> but <math><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mo>≠</mo><mn>0</mn><mo>.</mo></mrow></math> As a result, the tangent line of <math><mi>f</mi></math> at <math><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></math> does not intersect the <math><mi>x</mi></math>-axis. Therefore, we cannot continue the iterative process.</li><li>The approximations <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> may approach a different root. If the function <math><mi>f</mi></math> has more than one root, it is possible that our approximations do not approach the one for which we are looking, but approach a different root (see ). This event most often occurs when we do not choose the approximation <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> close enough to the desired root.</li><li>The approximations may fail to approach a root entirely. In , we provide an example of a function and an initial guess <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> such that the successive approximations never approach a root because the successive approximations continue to alternate back and forth between two values.</li></ol>
+<figure><img src="CNX_Calc_Figure_04_09_004.jpg" alt="A function is drawn with two roots, labeled root sought and root found. A point x0 is chosen such that when the tangent of x0 is taken, even though it is nearer to the root sought, the tangent points to the root found."><figcaption>If the initial guess <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> is too far from the root sought, it may lead to approximations that approach a different root.</figcaption></figure>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>When Newton’s Method Fails</h6>
+<p>Consider the function <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>.</mo></mrow></math> Let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Show that the sequence <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> fails to approach a root of <math><mrow><mi>f</mi><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>For <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>,</mo></mrow></math> the derivative is <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mo>.</mo></mrow></math> Therefore,</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mn>0</mn><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mo>−</mo><mfrac><mn>2</mn><mrow><mn>−2</mn></mrow></mfrac><mo>=</mo><mn>1</mn><mo>.</mo></mrow></math></div>
+<p>In the next step,</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mn>1</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mn>1</mn></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></div>
+<p>Consequently, the numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> continue to bounce back and forth between <math><mn>0</mn></math> and <math><mn>1</mn></math> and never get closer to the root of <math><mi>f</mi></math> which is over the interval <math><mrow><mrow><mo>[</mo><mrow><mn>−2</mn><mo>,</mo><mn>−1</mn></mrow><mo>]</mo></mrow></mrow></math> (see ). Fortunately, if we choose an initial approximation <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> closer to the actual root, we can avoid this situation.</p>
+<figure><img src="CNX_Calc_Figure_04_09_005.jpg" alt="The function f(x) = x3 – 2x + 2 is drawn, which has a root between −2 and −1. The tangent from x = 0 goes to x = 1, and the tangent from x = 1 goes to x = 0."><figcaption>The approximations continue to alternate between <math><mrow><mn>0</mn><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mn>1</mn></mrow></math> and never approach the root of <math><mi>f</mi><mo>.</mo></math></figcaption></figure>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>For <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>,</mo></mrow></math> let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>−1.5</mn></mrow></math> and find <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>≈</mo><mo>−</mo><mn>1.842105263</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>≈</mo><mo>−</mo><mn>1.772826920</mn></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Use .</p>
+</p>
+</div>
+</div>
+<p>From , we see that Newton’s method does not always work. However, when it does work, the sequence of approximations approaches the root very quickly. Discussions of how quickly the sequence of approximations approach a root found using Newton’s method are included in texts on numerical analysis.</p>
+</div>
+<div class="section">
+<h3>Other Iterative Processes</h3>
+<p>As mentioned earlier, Newton’s method is a type of iterative process. We now look at an example of a different type of iterative process.</p>
+<p>Consider a function <math><mi>F</mi></math> and an initial number <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>.</mo></mrow></math> Define the subsequent numbers <math><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></math> by the formula <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> This process is an iterative process that creates a list of numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mtext>,…</mtext><mo>.</mo></mrow></math> This list of numbers may approach a finite number <math><mrow><mi>x</mi><mo>*</mo></mrow></math> as <math><mi>n</mi></math> gets larger, or it may not. In , we see an example of a function <math><mi>F</mi></math> and an initial guess <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> such that the resulting list of numbers approaches a finite value.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Finding a Limit for an Iterative Process</h6>
+<p>Let <math><mrow><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>x</mi><mo>+</mo><mn>4</mn></mrow></math> and let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> For all <math><mrow><mi>n</mi><mo>≥</mo><mn>1</mn><mo>,</mo></mrow></math> let <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> Find the values <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>5</mn></msub><mo>.</mo></mrow></math> Make a conjecture about what happens to this list of numbers <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mtext>…</mtext><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mtext>,…</mtext></mrow></math> as <math><mrow><mi>n</mi><mo stretchy="false">→</mo><mi>∞</mi><mo>.</mo></mrow></math> If the list of numbers <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mtext>,…</mtext></mrow></math> approaches a finite number <math><mrow><mi>x</mi><mo>*</mo><mo>,</mo></mrow></math> then <math><mrow><mi>x</mi><mo>*</mo></mrow></math> satisfies <math><mrow><mi>x</mi><mo>*</mo><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><mi>x</mi><mo>*</mo></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> and <math><mrow><mi>x</mi><mo>*</mo></mrow></math> is called a fixed point of <math><mrow><mi>F</mi><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>If <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> then</p>
+<div class="eq"><math><mtable><mtr></mtr><mtr></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mn>4</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>6</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mn>6</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>4</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mn>7</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.5</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>5</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>7.5</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.75</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>6</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>7.75</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.875</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>7</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>7.875</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.9375</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>8</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>7.9375</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.96875</mn></mtd></mtr><mtr><mtd columnalign="left"><msub><mi>x</mi><mn>9</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>7.96875</mn></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mo>=</mo><mn>7.984375.</mn></mtd></mtr></mtable></math></div>
+<p>From this list, we conjecture that the values <math><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></math> approach <math><mrow><mn>8</mn><mo>.</mo></mrow></math></p>
+<p> provides a graphical argument that the values approach <math><mn>8</mn></math> as <math><mrow><mi>n</mi><mo stretchy="false">→</mo><mi>∞</mi><mo>.</mo></mrow></math> Starting at the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> we draw a vertical line to the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> The next number in our list is <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> We use <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> to calculate <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math> Therefore, we draw a horizontal line connecting <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></math> to the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></math> on the line <math><mrow><mi>y</mi><mo>=</mo><mi>x</mi><mo>,</mo></mrow></math> and then draw a vertical line connecting <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></math> to the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> The output <math><mrow><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow></math> becomes <math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>.</mo></mrow></math> Continuing in this way, we could create an infinite number of line segments. These line segments are trapped between the lines <math><mrow><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mi>x</mi><mn>2</mn></mfrac><mo>+</mo><mn>4</mn></mrow></math> and <math><mrow><mi>y</mi><mo>=</mo><mi>x</mi><mo>.</mo></mrow></math> The line segments get closer to the intersection point of these two lines, which occurs when <math><mrow><mi>x</mi><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> Solving the equation <math><mrow><mi>x</mi><mo>=</mo><mfrac><mi>x</mi><mn>2</mn></mfrac><mo>+</mo><mn>4</mn><mo>,</mo></mrow></math> we conclude they intersect at <math><mrow><mi>x</mi><mo>=</mo><mn>8</mn><mo>.</mo></mrow></math> Therefore, our graphical evidence agrees with our numerical evidence that the list of numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> approaches <math><mrow><mi>x</mi><mo>*</mo><mo>=</mo><mn>8</mn></mrow></math> as <math><mrow><mi>n</mi><mo stretchy="false">→</mo><mi>∞</mi><mo>.</mo></mrow></math></p>
+<figure><img src="CNX_Calc_Figure_04_09_006.jpg" alt="The function F(x) = (1/2)x + 4 is graphed along with y = x. From x0, which appears to be at the origin, a line is drawn to the function F(x) at x1 = F(x0). Then a line is drawn to the right from here to the line y = x, at which point a line is drawn up to x2 = F(x1). Then a line is drawn to the right from here to the line y = x, at which point a line is drawn up to x3 = F(x2). Continuing this process would converge on the two lines’ intersection point at x* = 8."><figcaption>This iterative process approaches the value <math><mrow><mi>x</mi><mo>*</mo><mo>=</mo><mn>8</mn><mo>.</mo></mrow></math></figcaption></figure>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Consider the function <math><mrow><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mi>x</mi><mo>+</mo><mn>6</mn><mo>.</mo></mrow></math> Let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn></mrow></math> and let <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></math> for <math><mrow><mi>n</mi><mo>≥</mo><mn>2</mn><mo>.</mo></mrow></math> Find <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>5</mn></msub><mo>.</mo></mrow></math> Make a conjecture about what happens to the list of numbers <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mtext>,…</mtext><msub><mi>x</mi><mi>n</mi></msub><mtext>,…</mtext></mrow></math> as <math><mrow><mi>n</mi><mo stretchy="false">→</mo><mi>∞</mi><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>6</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>8</mn><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mfrac><mrow><mn>26</mn></mrow><mn>3</mn></mfrac><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>=</mo><mfrac><mrow><mn>80</mn></mrow><mn>9</mn></mfrac><mo>,</mo><msub><mi>x</mi><mn>5</mn></msub><mo>=</mo><mfrac><mrow><mn>242</mn></mrow><mrow><mn>27</mn></mrow></mfrac><mo>;</mo><mi>x</mi><mo>*</mo><mo>=</mo><mn>9</mn></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Consider the point where the lines <math><mrow><mi>y</mi><mo>=</mo><mi>x</mi></mrow></math> and <math><mrow><mi>y</mi><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> intersect.</p>
+</p>
+</div>
+</div>
+<div class="note project">
+<h4>Iterative Processes and Chaos</h4>
+<p>Iterative processes can yield some very interesting behavior. In this section, we have seen several examples of iterative processes that converge to a fixed point. We also saw in  that the iterative process bounced back and forth between two values. We call this kind of behavior a <math><mn>2</mn></math>-<em>cycle</em>. Iterative processes can converge to cycles with various periodicities, such as <math><mrow><mn>2</mn><mo>−</mo><mtext>cycles</mtext><mo>,</mo><mspace width="0.2em"></mspace><mn>4</mn><mo>−</mo><mtext>cycles</mtext></mrow></math> (where the iterative process repeats a sequence of four values), 8-cycles, and so on.</p>
+<p>Some iterative processes yield what mathematicians call <em>chaos</em>. In this case, the iterative process jumps from value to value in a seemingly random fashion and never converges or settles into a cycle. Although a complete exploration of <strong>chaos</strong> is beyond the scope of this text, in this project we look at one of the key properties of a chaotic iterative process: sensitive dependence on initial conditions. This property refers to the concept that small changes in initial conditions can generate drastically different behavior in the iterative process.</p>
+<p>Probably the best-known example of chaos is the <strong>Mandelbrot set</strong> (see ), named after Benoit Mandelbrot (1924–2010), who investigated its properties and helped popularize the field of chaos theory. The Mandelbrot set is usually generated by computer and shows fascinating details on enlargement, including self-replication of the set. Several colorized versions of the set have been shown in museums and can be found online and in popular books on the subject.</p>
+<figure><img src="CNX_Calc_Figure_04_09_007.jpg" alt="A very complicated and organic looking fractal."><figcaption>The Mandelbrot set is a well-known example of a set of points generated by the iterative chaotic behavior of a relatively simple function.</figcaption></figure>
+<p>In this project we use the logistic map</p>
+<div class="eq"><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>r</mi><mi>x</mi><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow><mo>)</mo></mrow><mo>,</mo><mspace width="0.2em"></mspace><mtext>where</mtext><mspace width="0.2em"></mspace><mi>x</mi><mo>∈</mo><mrow><mo>[</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>]</mo></mrow><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mi>r</mi><mo>&gt;</mo><mn>0</mn></mrow></math></div>
+<p>as the function in our iterative process. The logistic map is a deceptively simple function; but, depending on the value of <math><mrow><mi>r</mi><mo>,</mo></mrow></math> the resulting iterative process displays some very interesting behavior. It can lead to fixed points, cycles, and even chaos.</p>
+<p>To visualize the long-term behavior of the iterative process associated with the logistic map, we will use a tool called a <em>cobweb diagram</em>. As we did with the iterative process we examined earlier in this section, we first draw a vertical line from the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><mn>0</mn></mrow><mo>)</mo></mrow></mrow></math> to the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math> We then draw a horizontal line from that point to the point <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> then draw a vertical line to <math><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> and continue the process until the long-term behavior of the system becomes apparent.  shows the long-term behavior of the logistic map when <math><mrow><mi>r</mi><mo>=</mo><mn>3.55</mn></mrow></math> and <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0.2</mn><mo>.</mo></mrow></math> (The first <math><mrow><mn>100</mn></mrow></math> iterations are not plotted.) The long-term behavior of this iterative process is an <math><mrow><mn>8</mn></mrow></math>-cycle.</p>
+<figure><img src="CNX_Calc_Figure_04_09_008.jpg" alt="In the first quadrant, f(x) = 3.55x(1 – x) is graphed as is y = x. From some point on the x axis, a line is drawn up to the line y = x, at which point it turns to be horizontal and continues until it touches the outside edge of f(x), at which point it turns again to be vertical until it each the line y = x. This process continues a number of times and creates an interesting series of boxes."><figcaption>A cobweb diagram for <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3.55</mn><mi>x</mi><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow><mo>)</mo></mrow></mrow></math> is presented here. The sequence of values results in an <math><mn>8</mn></math>-cycle.</figcaption></figure>
+<ol><li>Let <math><mrow><mi>r</mi><mo>=</mo><mn>0.5</mn></mrow></math> and choose <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0.2</mn><mo>.</mo></mrow></math> Either by hand or by using a computer, calculate the first <math><mrow><mn>10</mn></mrow></math> values in the sequence. Does the sequence appear to converge? If so, to what value? Does it result in a cycle? If so, what kind of cycle (for example, <math><mrow><mn>2</mn><mo>−</mo><mtext>cycle</mtext><mo>,</mo><mspace width="0.2em"></mspace><mn>4</mn><mo>−</mo><mtext>cycle</mtext><mo>.</mo><mo stretchy="false">)</mo><mo>?</mo></mrow></math></li><li>What happens when <math><mrow><mi>r</mi><mo>=</mo><mn>2</mn><mo>?</mo></mrow></math></li><li>For <math><mrow><mi>r</mi><mo>=</mo><mn>3.2</mn></mrow></math> and <math><mrow><mi>r</mi><mo>=</mo><mn>3.5</mn><mo>,</mo></mrow></math> calculate the first <math><mrow><mn>100</mn></mrow></math> sequence values. Generate a cobweb diagram for each iterative process. (Several free applets are available online that generate cobweb diagrams for the logistic map.) What is the long-term behavior in each of these cases?</li><li>Now let <math><mrow><mi>r</mi><mo>=</mo><mn>4</mn><mo>.</mo></mrow></math> Calculate the first <math><mrow><mn>100</mn></mrow></math> sequence values and generate a cobweb diagram. What is the long-term behavior in this case?</li><li>Repeat the process for <math><mrow><mi>r</mi><mo>=</mo><mn>4</mn><mo>,</mo></mrow></math> but let <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0.201</mn><mo>.</mo></mrow></math> How does this behavior compare with the behavior for <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0.2</mn><mo>?</mo></mrow></math></li></ol>
+</div>
+</div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>Newton’s method approximates roots of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math> by starting with an initial approximation <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo></mrow></math> then uses tangent lines to the graph of <math><mi>f</mi></math> to create a sequence of approximations <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mtext>,…</mtext><mo>.</mo></mrow></math></li><li>Typically, Newton’s method is an efficient method for finding a particular root. In certain cases, Newton’s method fails to work because the list of numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> does not approach a finite value or it approaches a value other than the root sought.</li><li>Any process in which a list of numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext></mrow></math> is generated by defining an initial number <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> and defining the subsequent numbers by the equation <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></math> for some function <math><mi>F</mi></math> is an iterative process. Newton’s method is an example of an iterative process, where the function <math><mrow><mi>F</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><mo>−</mo><mrow><mo>[</mo><mrow><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></mrow><mo>]</mo></mrow></mrow></math> for a given function <math><mrow><mi>f</mi><mo>.</mo></mrow></math></li></ul>
+</div>
+<div class="section section-exercises">
+<p>For the following exercises, write Newton’s formula as <math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></math> for solving <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mfrac><mrow><msub><mi>x</mi><mi>n</mi></msub><msup><mrow></mrow><mn>3</mn></msup><mo>+</mo><mn>2</mn><msub><mi>x</mi><mi>n</mi></msub><mo>+</mo><mn>1</mn></mrow><mrow><mn>3</mn><msub><mi>x</mi><mi>n</mi></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mn>2</mn></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mfrac><mrow><msup><mi>e</mi><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></msup></mrow><mrow><msup><mi>e</mi><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></msup></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+</div>
+<p>For the following exercises, solve <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math> using the iteration <math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mi>c</mi><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> which differs slightly from Newton’s method. Find a <math><mi>c</mi></math> that works and a <math><mi>c</mi></math> that fails to converge, with the exception of <math><mrow><mi>c</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mo>,</mo></mrow></math> with <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mrow><mo>|</mo><mi>c</mi><mo>|</mo></mrow><mo>&gt;</mo><mn>0.5</mn></mrow></math> fails, <math><mrow><mrow><mo>|</mo><mi>c</mi><mo>|</mo></mrow><mo>≤</mo><mn>0.5</mn></mrow></math> works</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>3</mn><mo>,</mo></mrow></math> with <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>What is the value of <math><mtext>“</mtext><mi>c</mi><mtext>”</mtext></math> for Newton’s method?</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>c</mi><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<p>For the following exercises, start at</p>
+<p>a. <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0.6</mn></mrow></math> and</p>
+<p>b. <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><mo>.</mo></mrow></math></p>
+<p>Compute <math><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></math> and <math><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></math> using the specified iterative method.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><msup><mrow></mrow><mn>2</mn></msup><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mn>2</mn><msub><mi>x</mi><mi>n</mi></msub><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p>a. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><mn>12</mn></mrow><mrow><mn>25</mn></mrow></mfrac><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mfrac><mrow><mn>312</mn></mrow><mrow><mn>625</mn></mrow></mfrac><mo>;</mo></mrow></math> b. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>−4</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>−40</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msqrt><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></msqrt></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msqrt><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow></msqrt></mrow></mfrac></mrow></math></p>
+</div>
+<div class="solution">
+<p>a. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>1.291</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>0.8801</mn><mo>;</mo></mrow></math> b. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0.7071</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1.189</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mn>3</mn><msub><mi>x</mi><mi>n</mi></msub><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mn>2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>a. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mn>26</mn></mrow><mrow><mn>25</mn></mrow></mfrac><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mn>1224</mn></mrow><mrow><mn>625</mn></mrow></mfrac><mo>;</mo></mrow></math> b. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>4</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>18</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mrow><mo>|</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>|</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p>a. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>6</mn><mrow><mn>10</mn></mrow></mfrac><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>6</mn><mrow><mn>10</mn></mrow></mfrac><mo>;</mo></mrow></math> b. <math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<p>For the following exercises, solve to four decimal places using Newton’s method and a computer or calculator. Choose any initial guess <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> that is not the exact root.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>10</mn><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>100</mn><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>3.1623</mn><mspace width="0.2em"></mspace><mtext>or</mtext><mspace width="0.2em"></mspace><mo>−</mo><mn>3.1623</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>0</mn><mo>,</mo><mn>−1</mn><mspace width="0.2em"></mspace><mtext>or</mtext><mspace width="0.2em"></mspace><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mo>+</mo><mn>5</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mo>+</mo><mtext>tan</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> choose <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>∈</mo><mrow><mo>(</mo><mrow><mo>−</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mo>,</mo><mfrac><mi>π</mi><mn>2</mn></mfrac></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mn>0</mn></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mn>1</mn><mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow></mfrac><mo>=</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mn>1</mn><mo>+</mo><mi>x</mi><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><msup><mi>x</mi><mn>4</mn></msup><mo>=</mo><mn>2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>0.5188</mn><mspace width="0.2em"></mspace><mtext>or</mtext><mspace width="0.2em"></mspace><mo>−</mo><mn>1.2906</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><msup><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>3</mn></msup><mo>=</mo><msup><mrow><mn>10</mn></mrow><mn>3</mn></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mo>=</mo><msup><mrow><mtext>sin</mtext></mrow><mn>2</mn></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mn>0</mn></math></p>
+</div>
+</div>
+<p>For the following exercises, use Newton’s method to find the fixed points of the function where <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><mo>;</mo></mrow></math> round to three decimals.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mtext>tan</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> on <math><mrow><mi>x</mi><mo>=</mo><mrow><mo>(</mo><mrow><mfrac><mi>π</mi><mn>2</mn></mfrac><mo>,</mo><mfrac><mrow><mn>3</mn><mi>π</mi></mrow><mn>2</mn></mfrac></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>4.493</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>e</mi><mi>x</mi></msup><mo>−</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mtext>ln</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>+</mo><mn>2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>0.159</mn><mo>,</mo><mn>3.146</mn></mrow></math></p>
+</div>
+</div>
+<p>Newton’s method can be used to find maxima and minima of functions in addition to the roots. In this case apply Newton’s method to the derivative function <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> to find its roots, instead of the original function. For the following exercises, consider the formulation of the method.</p>
+<div class="exercise">
+<div class="problem">
+<p>To find candidates for maxima and minima, we need to find the critical points <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Show that to solve for the critical points of a function <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> Newton’s method is given by <math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>x</mi><mi>n</mi></msub><mo>−</mo><mfrac><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow><mrow><msup><mi>f</mi><mo>″</mo></msup><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>What additional restrictions are necessary on the function <math><mi>f</mi><mo>?</mo></math></p>
+</div>
+<div class="solution">
+<p>We need <math><mi>f</mi></math> to be twice continuously differentiable.</p>
+</div>
+</div>
+<p>For the following exercises, use Newton’s method to find the location of the local minima and/or maxima of the following functions; round to three decimals.</p>
+<div class="exercise">
+<div class="problem">
+<p>Minimum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>4</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Minimum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>16</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Minimum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Maximum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><mo>+</mo><mfrac><mn>1</mn><mi>x</mi></mfrac></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>x</mi><mo>=</mo><mn>−1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Maximum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>10</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>15</mn><mi>x</mi><mo>−</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Maximum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msqrt><mi>x</mi></msqrt><mo>−</mo><mroot><mi>x</mi><mn>3</mn></mroot></mrow><mi>x</mi></mfrac></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>x</mi><mo>=</mo><mn>5.619</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Minimum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>,</mo></mrow></math> closest non-zero minimum to <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Minimum of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>12</mn><mi>x</mi><mo>+</mo><mn>6</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>x</mi><mo>=</mo><mn>−1.326</mn></mrow></math></p>
+</div>
+</div>
+<p>For the following exercises, use the specified method to solve the equation. If it does not work, explain why it does not work.</p>
+<div class="exercise">
+<div class="problem">
+<p>Newton’s method, <math><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Newton’s method, <math><mrow><mn>0</mn><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p>There is no solution to the equation.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Newton’s method, <math><mrow><mn>0</mn><mo>=</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math> starting at <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Solving <math><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mtext>−</mtext><msub><mi>x</mi><mi>n</mi></msub><msup><mrow></mrow><mn>3</mn></msup></mrow></math> starting at <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>−1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>It enters a cycle.</p>
+</div>
+</div>
+<p>For the following exercises, use the <strong>secant method</strong>, an alternative iterative method to Newton’s method. The formula is given by</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mfrac><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>−</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></div>
+<div class="exercise">
+<div class="problem">
+<p>Find a root to <math><mrow><mn>0</mn><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mi>x</mi><mo>−</mo><mn>3</mn></mrow></math> accurate to three decimal places.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find a root to <math><mrow><mn>0</mn><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>+</mo><mn>3</mn><mi>x</mi></mrow></math> accurate to four decimal places.</p>
+</div>
+<div class="solution">
+<p><math><mn>0</mn></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find a root to <math><mrow><mn>0</mn><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup><mo>−</mo><mn>2</mn></mrow></math> accurate to four decimal places.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find a root to <math><mrow><mtext>ln</mtext><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math> accurate to four decimal places.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>−0.3513</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Why would you use the secant method over Newton’s method? What are the necessary restrictions on <math><mrow><mi>f</mi><mo>?</mo></mrow></math></p>
+</div>
+</div>
+<p>For the following exercises, use both Newton’s method and the secant method to calculate a root for the following equations. Use a calculator or computer to calculate how many iterations of each are needed to reach within three decimal places of the exact answer. For the secant method, use the first guess from Newton’s method.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>Newton: <math><mrow><mn>11</mn></mrow></math> iterations, secant: <math><mrow><mn>16</mn></mrow></math> iterations</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>Newton: three iterations, secant: six iterations</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup><mo>−</mo><mn>1</mn><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>4</mn><mo>,</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>Newton: five iterations, secant: eight iterations</p>
+</div>
+</div>
+<p>In the following exercises, consider Kepler’s equation regarding planetary orbits, <math><mrow><mi>M</mi><mo>=</mo><mi>E</mi><mo>−</mo><mi>ε</mi><mspace width="0.1em"></mspace><mtext>sin</mtext><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> where <math><mi>M</mi></math> is the mean anomaly, <math><mi>E</mi></math> is eccentric anomaly, and <math><mi>ε</mi></math> measures eccentricity.</p>
+<div class="exercise">
+<div class="problem">
+<p>Use Newton’s method to solve for the eccentric anomaly <math><mi>E</mi></math> when the mean anomaly <math><mrow><mi>M</mi><mo>=</mo><mfrac><mi>π</mi><mn>3</mn></mfrac></mrow></math> and the eccentricity of the orbit <math><mrow><mi>ε</mi><mo>=</mo><mn>0.25</mn><mo>;</mo></mrow></math> round to three decimals.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use Newton’s method to solve for the eccentric anomaly <math><mi>E</mi></math> when the mean anomaly <math><mrow><mi>M</mi><mo>=</mo><mfrac><mrow><mn>3</mn><mi>π</mi></mrow><mn>2</mn></mfrac></mrow></math> and the eccentricity of the orbit <math><mrow><mi>ε</mi><mo>=</mo><mn>0.8</mn><mo>;</mo></mrow></math> round to three decimals.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>E</mi><mo>=</mo><mn>4.071</mn></mrow></math></p>
+</div>
+</div>
+<p>The following two exercises consider a bank investment. The initial investment is <math><mrow><mtext>$</mtext><mn>10,000</mn><mo>.</mo></mrow></math> After <math><mrow><mn>25</mn></mrow></math> years, the investment has tripled to <math><mrow><mtext>$</mtext><mn>30,000</mn><mo>.</mo></mrow></math></p>
+<div class="exercise">
+<div class="problem">
+<p>Use Newton’s method to determine the interest rate if the interest was compounded annually.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use Newton’s method to determine the interest rate if the interest was compounded continuously.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>4</mn><mo>.</mo><mn>394</mn><mtext>%</mtext></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The total cost for printing <math><mi>x</mi></math> books can be given by the equation <math><mrow><mi>C</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>1000</mn><mo>+</mo><mn>12</mn><mi>x</mi><mo>+</mo><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><msup><mi>x</mi><mrow><mn>2</mn><mtext>/</mtext><mn>3</mn></mrow></msup><mo>.</mo></mrow></math> Use Newton’s method to find the break-even point if the printer sells each book for <math><mrow><mtext>$</mtext><mn>2</mn><mn>0</mn><mo>.</mo></mrow></math></p>
+</div>
+</div>
+</div>
+  <h2>Key terms</h2>
+<p><strong>iterative process</strong> process in which a list of numbers <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mtext>…</mtext></mrow></math> is generated by starting with a number <math><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></math> and defining <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></math> for <math><mrow><mi>n</mi><mo>≥</mo><mn>1</mn></mrow></math></p>
+<p><strong>Newton’s method</strong> method for approximating roots of <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>;</mo></mrow></math> using an initial guess <math><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>;</mo></mrow></math> each subsequent approximation is defined by the equation <math><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow><mrow><mi>f</mi><mo>′</mo><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow></mrow></mfrac></mrow></math></p>
+
+</body></html>

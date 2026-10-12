@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.6 Numerical Integration · Calculus Volume 2</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Calculus Volume 2, Strang, Herman et al., section 3.6 Numerical Integration. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/calculus-volume-2/pages/3-6-numerical-integration</p>
+<h1>3.6 Numerical Integration</h1>
+
+<p>The antiderivatives of many functions either cannot be expressed or cannot be expressed easily in closed form (that is, in terms of known functions). Consequently, rather than evaluate definite integrals of these functions directly, we resort to various techniques of <strong>numerical integration</strong> to approximate their values. In this section we explore several of these techniques. In addition, we examine the process of estimating the error in using these techniques.</p>
+<div class="section">
+<h3>The Midpoint Rule</h3>
+<p>Earlier in this text we defined the definite integral of a function over an interval as the limit of <strong>Riemann sums</strong>. In general, any Riemann sum of a function <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> over an interval <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow></math> may be viewed as an estimate of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> Recall that a Riemann sum of a function <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> over an interval <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow></math> is obtained by selecting a partition</p>
+<div class="eq"><math><mrow><mi>P</mi><mo>=</mo><mrow><mo>{</mo><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>}</mo></mrow><mo>,</mo><mspace width="0.2em"></mspace><mtext>where</mtext><mspace width="0.2em"></mspace><mi>a</mi><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&lt;</mo><mo>⋯</mo><mo>&lt;</mo><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>b</mi></mrow></math></div>
+<p>and a set</p>
+<div class="eq"><math><mrow><mi>S</mi><mo>=</mo><mrow><mo>{</mo><mrow><msubsup><mi>x</mi><mn>1</mn><mo>*</mo></msubsup><mo>,</mo><msubsup><mi>x</mi><mn>2</mn><mo>*</mo></msubsup><mtext>,…</mtext><mo>,</mo><msubsup><mi>x</mi><mi>n</mi><mo>*</mo></msubsup></mrow><mo>}</mo></mrow><mo>,</mo><mspace width="0.2em"></mspace><mtext>where</mtext><mspace width="0.2em"></mspace><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>≤</mo><msubsup><mi>x</mi><mi>i</mi><mo>*</mo></msubsup><mo>≤</mo><msub><mi>x</mi><mi>i</mi></msub><mspace width="0.2em"></mspace><mtext>for all</mtext><mspace width="0.2em"></mspace><mi>i</mi><mo>.</mo></mrow></math></div>
+<p>The Riemann sum corresponding to the partition <math><mi>P</mi></math> and the set <math><mi>S</mi></math> is given by <math><mrow><mstyle displaystyle="true"><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mrow><mi>f</mi><mo stretchy="false">(</mo><msubsup><mi>x</mi><mi>i</mi><mo>*</mo></msubsup><mo stretchy="false">)</mo><mtext>Δ</mtext><msub><mi>x</mi><mi>i</mi></msub></mrow></mstyle><mo>,</mo></mrow></math> where <math><mrow><mtext>Δ</mtext><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo></mrow></math> the length of the <em>i</em>th subinterval.</p>
+<p>The <strong>midpoint rule</strong> for estimating a definite integral uses a Riemann sum with subintervals of equal width and the midpoints, <math><mrow><msub><mi>m</mi><mi>i</mi></msub><mo>,</mo></mrow></math> of each subinterval in place of <math><mrow><msubsup><mi>x</mi><mi>i</mi><mo>*</mo></msubsup><mo>.</mo></mrow></math> Formally, we state a theorem regarding the convergence of the midpoint rule as follows.</p>
+<div class="note theorem">
+<h4>The Midpoint Rule</h4>
+<p>Assume that <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> is continuous on <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math> Let <em>n</em> be a positive integer and <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mi>n</mi></mfrac><mo>.</mo></mrow></math> If <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow></mrow></math> is divided into <math><mi>n</mi></math> subintervals, each of length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>,</mo></mrow></math> and <math><mrow><msub><mi>m</mi><mi>i</mi></msub></mrow></math> is the midpoint of the <em>i</em>th subinterval, set</p>
+<div class="eq"><math><mrow><msub><mi>M</mi><mi>n</mi></msub><mo>=</mo><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>m</mi><mi>i</mi></msub></mrow><mo>)</mo></mrow><mtext>Δ</mtext><mi>x</mi><mo>.</mo></mrow></math></div>
+<p>Then <math><mrow><munder><mrow><mtext>lim</mtext></mrow><mrow><mi>n</mi><mo stretchy="false">→</mo><mi>∞</mi></mrow></munder><msub><mi>M</mi><mi>n</mi></msub><mo>=</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<p>As we can see in , if <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>≥</mo><mn>0</mn></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo><mo>,</mo></mrow></math> then <math><mrow><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>m</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mtext>Δ</mtext><mi>x</mi></mrow></math> corresponds to the sum of the areas of rectangles approximating the area between the graph of <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> and the <em>x</em>-axis over <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math> The graph shows the rectangles corresponding to <math><mrow><msub><mi>M</mi><mn>4</mn></msub></mrow></math> for a nonnegative function over a closed interval <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo><mo>.</mo></mrow></math></p>
+<figure><img src="CNX_Calc_Figure_07_06_001.jpg" alt="This figure is a graph of a non-negative function in the first quadrant. The function increases and decreases. The quadrant is divided into a grid. Beginning on the x-axis at the point labeled a = x sub 0, there are rectangles shaded whose heights are approximately the height of the curve. The x-axis is scaled by increments of msub1, x sub 1, m sub 2, x sub 2, m sub 3, x sub 3, m sub 4 and b = x sub 4."><figcaption>The midpoint rule approximates the area between the graph of <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> and the <em>x</em>-axis by summing the areas of rectangles with midpoints that are points on <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>.</mo></mrow></math></figcaption></figure>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Using the Midpoint Rule with <math><mrow><msub><mi>M</mi><mn>4</mn></msub></mrow></math></h6>
+<p>Use the midpoint rule to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using four subintervals. Compare the result with the actual value of this integral.</p>
+</div>
+<div class="solution">
+<p>Each subinterval has length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mn>0</mn></mrow><mn>4</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>.</mo></mrow></math> Therefore, the subintervals consist of</p>
+<div class="eq"><math><mrow><mrow><mo>[</mo><mrow><mn>0</mn><mo>,</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow><mo>]</mo></mrow><mo>,</mo><mrow><mo>[</mo><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mo>]</mo></mrow><mo>,</mo><mrow><mo>[</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo><mfrac><mn>3</mn><mn>4</mn></mfrac></mrow><mo>]</mo></mrow><mo>,</mo><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mrow><mo>[</mo><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>,</mo><mn>1</mn></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math></div>
+<p>The midpoints of these subintervals are <math><mrow><mrow><mo>{</mo><mrow><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>,</mo><mfrac><mn>3</mn><mn>8</mn></mfrac><mo>,</mo><mfrac><mn>5</mn><mn>8</mn></mfrac><mo>,</mo><mfrac><mn>7</mn><mn>8</mn></mfrac></mrow><mo>}</mo></mrow><mo>.</mo></mrow></math> Thus,</p>
+<div class="eq"><math><mrow><msub><mi>M</mi><mn>4</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>8</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>3</mn><mn>8</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>5</mn><mn>8</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>7</mn><mn>8</mn></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>·</mo><mfrac><mn>1</mn><mrow><mn>64</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>·</mo><mfrac><mn>9</mn><mrow><mn>64</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>·</mo><mfrac><mrow><mn>25</mn></mrow><mrow><mn>64</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>·</mo><mfrac><mrow><mn>49</mn></mrow><mrow><mn>64</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>21</mn></mrow><mrow><mn>64</mn></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>Since</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></mrow></mstyle><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mrow><mo>|</mo><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>−</mo><mfrac><mrow><mn>21</mn></mrow><mrow><mn>64</mn></mrow></mfrac></mrow><mo>|</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mn>192</mn></mrow></mfrac><mo>≈</mo><mn>0.0052</mn><mo>,</mo></mrow></math></div>
+<p>we see that the midpoint rule produces an estimate that is somewhat close to the actual value of the definite integral.</p>
+</div>
+</div>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Using the Midpoint Rule with <math><mrow><msub><mi>M</mi><mn>6</mn></msub></mrow></math></h6>
+<p>Use <math><mrow><msub><mi>M</mi><mn>6</mn></msub></mrow></math> to estimate the length of the curve <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow></math> on <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>The length of <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow></math> on <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow></math> is</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>4</mn></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mrow><mrow><mo>(</mo><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></div>
+<p>Since <math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>=</mo><mi>x</mi><mo>,</mo></mrow></math> this integral becomes <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>4</mn></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+<p>If <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow></math> is divided into six subintervals, then each subinterval has length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mo>−</mo><mn>1</mn></mrow><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math> and the midpoints of the subintervals are <math><mrow><mrow><mo>{</mo><mrow><mfrac><mn>5</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mn>9</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mrow><mn>11</mn></mrow><mn>4</mn></mfrac><mo>,</mo><mfrac><mrow><mn>13</mn></mrow><mn>4</mn></mfrac><mo>,</mo><mfrac><mrow><mn>15</mn></mrow><mn>4</mn></mfrac></mrow><mo>}</mo></mrow><mo>.</mo></mrow></math> If we set <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mo>,</mo></mrow></math></p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msub><mi>M</mi><mn>6</mn></msub></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>5</mn><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>7</mn><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>9</mn><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mrow><mn>11</mn></mrow><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mrow><mn>13</mn></mrow><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mrow><mn>15</mn></mrow><mn>4</mn></mfrac></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>≈</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mn>1.6008</mn><mo>+</mo><mn>2.0156</mn><mo>+</mo><mn>2.4622</mn><mo>+</mo><mn>2.9262</mn><mo>+</mo><mn>3.4004</mn><mo>+</mo><mn>3.8810</mn></mrow><mo>)</mo></mrow><mo>=</mo><mn>8.1431.</mn></mtd></mtr></mtable></math></div>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Use the midpoint rule with <math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>2</mn></msubsup><mrow><mfrac><mn>1</mn><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mn>24</mn></mrow><mrow><mn>35</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p><math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo></mrow></math> <math><mrow><msub><mi>m</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>5</mn><mn>4</mn></mfrac><mo>,</mo></mrow></math> and <math><mrow><msub><mi>m</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>7</mn><mn>4</mn></mfrac><mo>.</mo></mrow></math></p>
+</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>The Trapezoidal Rule</h3>
+<p>We can also approximate the value of a definite integral by using trapezoids rather than rectangles. In , the area beneath the curve is approximated by trapezoids rather than by rectangles.</p>
+<figure><img src="CNX_Calc_Figure_07_06_002.jpg" alt="This figure is a graph of a non-negative function in the first quadrant. The function increases and decreases. The quadrant is divided into a grid. Beginning on the x-axis at the point labeled a = x sub 0, there are trapezoids shaded whose heights are approximately the height of the curve. The x-axis is scaled by increments of a = x sub 0, x sub 1, x sub 2, x sub 3, and b = x sub 4."><figcaption>Trapezoids may be used to approximate the area under a curve, hence approximating the definite integral.</figcaption></figure>
+<p>The <strong>trapezoidal rule</strong> for estimating definite integrals uses trapezoids rather than rectangles to approximate the area under a curve. To gain insight into the final form of the rule, consider the trapezoids shown in . We assume that the length of each subinterval is given by <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>.</mo></mrow></math> First, recall that the area of a trapezoid with a height of <em>h</em> and bases of length <math><mrow><msub><mi>b</mi><mn>1</mn></msub></mrow></math> and <math><mrow><msub><mi>b</mi><mn>2</mn></msub></mrow></math> is given by <math><mrow><mtext>Area</mtext><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>h</mi><mo stretchy="false">(</mo><msub><mi>b</mi><mn>1</mn></msub><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>.</mo></mrow></math> We see that the first trapezoid has a height <math><mrow><mtext>Δ</mtext><mi>x</mi></mrow></math> and parallel bases of length <math><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow></math> and <math><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>.</mo></mrow></math> Thus, the area of the first trapezoid in  is</p>
+<div class="eq"><math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>.</mo></mrow></math></div>
+<p>The areas of the remaining three trapezoids are</p>
+<div class="eq"><math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>,</mo><mtext>and</mtext><mspace width="0.2em"></mspace><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>4</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>.</mo></mrow></math></div>
+<p>Consequently,</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi><mo>≈</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>4</mn></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mrow></mstyle><mo>.</mo></mrow></math></div>
+<p>After taking out a common factor of <math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi></mrow></math> and combining like terms, we have</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi><mo>≈</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mrow><mo>(</mo><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>4</mn></msub><mo stretchy="false">)</mo></mrow><mo>)</mo></mrow><mo>.</mo></mrow></mrow></mstyle></mrow></math></div>
+<p>Generalizing, we formally state the following rule.</p>
+<div class="note theorem">
+<h4>The Trapezoidal Rule</h4>
+<p>Assume that <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> is continuous over <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math> Let <em>n</em> be a positive integer and <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mi>n</mi></mfrac><mo>.</mo></mrow></math> Let <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow></mrow></math> be divided into <math><mi>n</mi></math> subintervals, each of length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>,</mo></mrow></math> with endpoints at <math><mrow><mi>P</mi><mo>=</mo><mo>{</mo><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>…</mtext><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mo>}</mo><mo>.</mo></mrow></math> Set</p>
+<div class="eq"><math><mrow><msub><mi>T</mi><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mrow><mo>(</mo><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mo>⋯</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Then, <math><mrow><munder><mrow><mtext>lim</mtext></mrow><mrow><mi>n</mi><mo stretchy="false">→</mo><mtext>+</mtext><mi>∞</mi></mrow></munder><msub><mi>T</mi><mi>n</mi></msub><mo>=</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<p>Before continuing, let’s make a few observations about the trapezoidal rule. First of all, it is useful to note that</p>
+<div class="eq"><math><mrow><msub><mi>T</mi><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>L</mi><mi>n</mi></msub><mo>+</mo><msub><mi>R</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mspace width="0.2em"></mspace><mtext>where</mtext><mspace width="0.2em"></mspace><msub><mi>L</mi><mi>n</mi></msub><mo>=</mo><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo><mtext>Δ</mtext><mi>x</mi><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mtext>Δ</mtext><mi>x</mi><mo>.</mo></mrow></math></div>
+<p>That is, <math><mrow><msub><mi>L</mi><mi>n</mi></msub></mrow></math> and <math><mrow><msub><mi>R</mi><mi>n</mi></msub></mrow></math> approximate the integral using the left-hand and right-hand endpoints of each subinterval, respectively. In addition, a careful examination of  leads us to make the following observations about using the trapezoidal rules and midpoint rules to estimate the definite integral of a nonnegative function. The trapezoidal rule tends to overestimate the value of a definite integral systematically over intervals where the function is concave up and to underestimate the value of a definite integral systematically over intervals where the function is concave down. On the other hand, the midpoint rule tends to average out these errors somewhat by partially overestimating and partially underestimating the value of the definite integral over these same types of intervals. This leads us to hypothesize that, in general, the midpoint rule tends to be more accurate than the trapezoidal rule.</p>
+<figure><img src="CNX_Calc_Figure_07_06_003.jpg" alt="This figure has two graphs, both of the same non-negative function in the first quadrant. The function increases and decreases. The quadrant is divided into a grid. The first graph, beginning on the x-axis at the point labeled a = x sub 0, there are trapezoids shaded whose heights are approximately the height of the curve. The x-axis is scaled by increments of a = x sub 0, xsub1, x sub 2, x sub 3, and b = x sub 4. The second graph has on the x-axis at the point labeled a = x sub 0. There are rectangles shaded whose heights are approximately the height of the curve. The x-axis is scaled by increments of m sub 1, x sub 1, m sub 2, x sub 2, m sub 3, x sub 3, m sub 4 and b = x sub 4."><figcaption>The trapezoidal rule tends to be less accurate than the midpoint rule.</figcaption></figure>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Using the Trapezoidal Rule</h6>
+<p>Use the trapezoidal rule to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using four subintervals.</p>
+</div>
+<div class="solution">
+<p>The endpoints of the subintervals consist of elements of the set <math><mrow><mi>P</mi><mo>=</mo><mrow><mo>{</mo><mrow><mn>0</mn><mo>,</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>,</mo><mn>1</mn></mrow><mo>}</mo></mrow></mrow></math> and <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mn>0</mn></mrow><mn>4</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>.</mo></mrow></math> Thus,</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd columnalign="left"><mo>≈</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>·</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mn>1</mn><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mn>1</mn><mn>8</mn></mfrac><mrow><mo>(</mo><mrow><mn>0</mn><mo>+</mo><mn>2</mn><mo>·</mo><mfrac><mn>1</mn><mrow><mn>16</mn></mrow></mfrac><mo>+</mo><mn>2</mn><mo>·</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mn>2</mn><mo>·</mo><mfrac><mn>9</mn><mrow><mn>16</mn></mrow></mfrac><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mn>11</mn></mrow><mrow><mn>32</mn></mrow></mfrac><mo>.</mo></mtd></mtr></mtable></math></div>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Use the trapezoidal rule with <math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>2</mn></msubsup><mrow><mfrac><mn>1</mn><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mn>17</mn></mrow><mrow><mn>24</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Set <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>.</mo></mrow></math> The endpoints of the subintervals are the elements of the set <math><mrow><mi>P</mi><mo>=</mo><mrow><mo>{</mo><mrow><mn>1</mn><mo>,</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>,</mo><mn>2</mn></mrow><mo>}</mo></mrow><mo>.</mo></mrow></math></p>
+</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>Absolute and Relative Error</h3>
+<p>An important aspect of using these numerical approximation rules consists of calculating the error in using them for estimating the value of a definite integral. We first need to define <strong>absolute error</strong> and <strong>relative error</strong>.</p>
+<div class="note">
+<h4>Definition</h4>
+<p>If <math><mi>B</mi></math> is our estimate of some quantity having an actual value of <math><mrow><mi>A</mi><mo>,</mo></mrow></math> then the absolute error is given by <math><mrow><mrow><mo>|</mo><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mo>|</mo></mrow><mo>.</mo></mrow></math> The relative error is the error as a percentage of the absolute value and is given by <math><mrow><mrow><mo>|</mo><mrow><mfrac><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mi>A</mi></mfrac></mrow><mo>|</mo></mrow><mo>=</mo><mrow><mo>|</mo><mrow><mfrac><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mi>A</mi></mfrac></mrow><mo>|</mo></mrow><mo>·</mo><mn>100</mn><mtext>%</mtext><mo>.</mo></mrow></math></p>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Calculating Error in the Midpoint Rule</h6>
+<p>Calculate the absolute and relative error in the estimate of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the midpoint rule, found in .</p>
+</div>
+<div class="solution">
+<p>The calculated value is <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></mrow></mstyle></mrow></math> and our estimate from the example is <math><mrow><msub><mi>M</mi><mn>4</mn></msub><mo>=</mo><mfrac><mrow><mn>21</mn></mrow><mrow><mn>64</mn></mrow></mfrac><mo>.</mo></mrow></math> Thus, the absolute error is given by <math><mrow><mrow><mo>|</mo><mrow><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow><mo>)</mo></mrow><mo>−</mo><mrow><mo>(</mo><mrow><mfrac><mrow><mn>21</mn></mrow><mrow><mn>64</mn></mrow></mfrac></mrow><mo>)</mo></mrow></mrow><mo>|</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mn>192</mn></mrow></mfrac><mo>≈</mo><mn>0.0052</mn><mo>.</mo></mrow></math> The relative error is</p>
+<div class="eq"><math><mrow><mfrac><mrow><mn>1</mn><mtext>/</mtext><mn>192</mn></mrow><mrow><mn>1</mn><mtext>/</mtext><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mrow><mn>64</mn></mrow></mfrac><mo>≈</mo><mn>0.015625</mn><mo>≈</mo><mn>1.6</mn><mtext>%</mtext><mo>.</mo></mrow></math></div>
+</div>
+</div>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Calculating Error in the Trapezoidal Rule</h6>
+<p>Calculate the absolute and relative error in the estimate of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the trapezoidal rule, found in .</p>
+</div>
+<div class="solution">
+<p>The calculated value is <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></mrow></mstyle></mrow></math> and our estimate from the example is <math><mrow><msub><mi>T</mi><mn>4</mn></msub><mo>=</mo><mfrac><mrow><mn>11</mn></mrow><mrow><mn>32</mn></mrow></mfrac><mo>.</mo></mrow></math> Thus, the absolute error is given by <math><mrow><mrow><mo>|</mo><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>−</mo><mfrac><mrow><mn>11</mn></mrow><mrow><mn>32</mn></mrow></mfrac></mrow><mo>|</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mn>96</mn></mrow></mfrac><mo>≈</mo><mn>0.0104</mn><mo>.</mo></mrow></math> The relative error is given by</p>
+<div class="eq"><math><mrow><mfrac><mrow><mn>1</mn><mtext>/</mtext><mn>96</mn></mrow><mrow><mn>1</mn><mtext>/</mtext><mn>3</mn></mrow></mfrac><mo>=</mo><mn>0.03125</mn><mo>≈</mo><mn>3.1</mn><mtext>%</mtext><mo>.</mo></mrow></math></div>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>In an earlier checkpoint, we estimated <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>2</mn></msubsup><mrow><mfrac><mn>1</mn><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> to be <math><mrow><mfrac><mrow><mn>24</mn></mrow><mrow><mn>35</mn></mrow></mfrac></mrow></math> using <math><mrow><msub><mi>T</mi><mn>2</mn></msub><mo>.</mo></mrow></math> The actual value of this integral is <math><mrow><mtext>ln</mtext><mspace width="0.1em"></mspace><mn>2</mn><mo>.</mo></mrow></math> Using <math><mrow><mfrac><mrow><mn>24</mn></mrow><mrow><mn>35</mn></mrow></mfrac><mo>≈</mo><mn>0.6857</mn></mrow></math> and <math><mrow><mtext>ln</mtext><mspace width="0.1em"></mspace><mn>2</mn><mo>≈</mo><mn>0.6931</mn><mo>,</mo></mrow></math> calculate the absolute error and the relative error.</p>
+</div>
+<div class="solution">
+<p>0.0074, 1.1%</p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Use the previous examples as a guide.</p>
+</p>
+</div>
+</div>
+<p>In the two previous examples, we were able to compare our estimate of an integral with the actual value of the integral; however, we do not typically have this luxury. In general, if we are approximating an integral, we are doing so because we cannot compute the exact value of the integral itself easily. Therefore, it is often helpful to be able to determine an upper bound for the error in an approximation of an integral. The following theorem provides error bounds for the midpoint and trapezoidal rules. The theorem is stated without proof.</p>
+<div class="note theorem">
+<h4>Error Bounds for the Midpoint and Trapezoidal Rules</h4>
+<p>Let <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> be a continuous function over <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow><mo>,</mo></mrow></math> having a second derivative <math><mrow><msup><mi>f</mi><mo>″</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> over this interval. If <math><mi>M</mi></math> is the maximum value of <math><mrow><mrow><mo>|</mo><mrow><msup><mi>f</mi><mo>″</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mo>|</mo></mrow></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo><mo>,</mo></mrow></math> then the upper bounds for the error in using <math><mrow><msub><mi>M</mi><mi>n</mi></msub></mrow></math> and <math><mrow><msub><mi>T</mi><mi>n</mi></msub></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> are</p>
+<div class="eq"><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>M</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mrow><mo>(</mo><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mo>)</mo></mrow></mrow><mn>3</mn></msup></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac></mrow></math></div>
+<p>and</p>
+<div class="eq"><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>T</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup></mrow><mrow><mn>12</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mrow></math></div>
+</div>
+<p>We can use these bounds to determine the value of <math><mi>n</mi></math> necessary to guarantee that the error in an estimate is less than a specified value.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Determining the Number of Intervals to Use</h6>
+<p>What value of <math><mi>n</mi></math> should be used to guarantee that an estimate of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> is accurate to within 0.01 if we use the midpoint rule?</p>
+</div>
+<div class="solution">
+<p>We begin by determining the value of <math><mrow><mi>M</mi><mo>,</mo></mrow></math> the maximum value of <math><mrow><mrow><mo>|</mo><mrow><msup><mi>f</mi><mo>″</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mo>|</mo></mrow></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow></math> for <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mo>.</mo></mrow></math> Since <math><mrow><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mi>x</mi><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mo>,</mo></mrow></math> we have</p>
+<div class="eq"><math><mrow><msup><mi>f</mi><mrow><mtext>″</mtext></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mo>+</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mo>.</mo></mrow></math></div>
+<p>Thus,</p>
+<div class="eq"><math><mrow><mrow><mo>|</mo><mrow><msup><mi>f</mi><mo>″</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mo>|</mo></mrow><mo>=</mo><mn>2</mn><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mrow><mo>(</mo><mrow><mn>1</mn><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow><mo>)</mo></mrow><mo>≤</mo><mn>2</mn><mo>·</mo><mi>e</mi><mo>·</mo><mn>3</mn><mo>=</mo><mn>6</mn><mi>e</mi><mo>.</mo></mrow></math></div>
+<p>From the error-bound , we have</p>
+<div class="eq"><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>M</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mrow><mo>(</mo><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mo>)</mo></mrow></mrow><mn>3</mn></msup></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac><mo>≤</mo><mfrac><mrow><mn>6</mn><mi>e</mi><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><mn>3</mn></msup></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>6</mn><mi>e</mi></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>Now we solve the following inequality for <math><mi>n</mi><mtext>:</mtext></math></p>
+<div class="eq"><math><mrow><mfrac><mrow><mn>6</mn><mi>e</mi></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac><mo>≤</mo><mn>0.01</mn><mo>.</mo></mrow></math></div>
+<p>Thus, <math><mrow><mi>n</mi><mo>≥</mo><msqrt><mrow><mfrac><mrow><mn>600</mn><mi>e</mi></mrow><mrow><mn>24</mn></mrow></mfrac></mrow></msqrt><mo>≈</mo><mn>8.24</mn><mo>.</mo></mrow></math> Since <math><mi>n</mi></math> must be an integer satisfying this inequality, a choice of <math><mrow><mi>n</mi><mo>=</mo><mn>9</mn></mrow></math> would guarantee that <math><mrow><mrow><mo>|</mo><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi>d</mi><mi>x</mi><mo>−</mo><msub><mi>M</mi><mi>n</mi></msub></mrow></mrow></mstyle></mrow><mo>|</mo></mrow><mo>&lt;</mo><mn>0.01</mn><mo>.</mo></mrow></math></p>
+</div>
+<p>
+<h5>Analysis</h5>
+<p>We might have been tempted to round <math><mrow><mn>8.24</mn></mrow></math> down and choose <math><mrow><mi>n</mi><mo>=</mo><mn>8</mn><mo>,</mo></mrow></math> but this would be incorrect because we must have an integer greater than or equal to <math><mrow><mn>8.24</mn><mo>.</mo></mrow></math> We need to keep in mind that the error estimates provide an upper bound only for the error. The actual estimate may, in fact, be a much better approximation than is indicated by the error bound.</p>
+</p>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Use  to find an upper bound for the error in using <math><mrow><msub><mi>M</mi><mn>4</mn></msub></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mn>1</mn><mrow><mn>192</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p><math><mrow><msup><mi>f</mi><mo>″</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mo>,</mo></mrow></math> so <math><mrow><mi>M</mi><mo>=</mo><mn>2</mn><mo>.</mo></mrow></math></p>
+</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>Simpson’s Rule</h3>
+<p>With the midpoint rule, we estimated areas of regions under curves by using rectangles. In a sense, we approximated the curve with piecewise constant functions. With the trapezoidal rule, we approximated the curve by using piecewise linear functions. What if we were, instead, to approximate a curve using piecewise quadratic functions? With <strong>Simpson’s rule</strong>, we do just this. We partition the interval into an even number of subintervals, each of equal width. Over the first pair of subintervals we approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msubsup><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mo>,</mo></mrow></mrow></mstyle></mrow></math> where <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>B</mi><mi>x</mi><mo>+</mo><mi>C</mi></mrow></math> is the quadratic function passing through <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo><mo>,</mo></mrow></math> <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo><mo>,</mo></mrow></math> and <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo></mrow></math> (). Over the next pair of subintervals we approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with the integral of another quadratic function passing through <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo><mo>,</mo></mrow></math> <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo><mo>,</mo></mrow></math> and <math><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow><mo stretchy="false">)</mo><mo>.</mo></mrow></math> This process is continued with each successive pair of subintervals.</p>
+<figure><img src="CNX_Calc_Figure_07_06_004.jpg" alt="This figure has two graphs, both of the same non-negative function in the first quadrant. The function increases and decreases. The quadrant is divided into a grid. The first graph, beginning on the x-axis at the point labeled x sub 0, there are trapezoids shaded whose heights are represented by the function p(x), which is a curve following an approximate path of the original graph. The x-axis is scaled by increments of x sub 0, x sub 1, x sub 2. The second graph has on the x-axis at the point labeled x sub 0. There are shaded regions under the curve, divided by x sub 0, x sub 1, x sub 2, x sub 3, and x sub 4. The curve is sectioned into two different parts above the shaded areas. These two parts are labeled p sub 1(x) and p sub 2(x)."><figcaption>With Simpson’s rule, we approximate a definite integral by integrating a piecewise quadratic function.</figcaption></figure>
+<p>To understand the formula that we obtain for Simpson’s rule, we begin by deriving a formula for this approximation over the first two subintervals. As we go through the derivation, we need to keep in mind the following relationships:</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>p</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>p</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>1</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>p</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>C</mi></mtd></mtr></mtable></math></div>
+<p><math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><mtext>Δ</mtext><mi>x</mi><mo>,</mo></mrow></math> where <math><mrow><mtext>Δ</mtext><mi>x</mi></mrow></math> is the length of a subinterval.</p>
+<div class="eq"><math><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mspace width="0.2em"></mspace><mtext>since</mtext><mspace width="0.2em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo>.</mo></mrow></math></div>
+<p>Thus,</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd columnalign="left"><mo>≈</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msubsup><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msubsup><mrow><mo stretchy="false">(</mo><mi>A</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>B</mi><mi>x</mi><mo>+</mo><mi>C</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mi>A</mi><mn>3</mn></mfrac><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mfrac><mi>B</mi><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>C</mi><mi>x</mi><mrow><mo>|</mo><mrow><mtable><mtr><mtd><mrow><msup><mrow></mrow><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></msup></mrow></mtd></mtr><mtr><mtd><mrow><msub><mrow></mrow><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow></msub></mrow></mtd></mtr></mtable></mrow></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtext>Find the antiderivative.</mtext></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mi>A</mi><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>3</mn></msup><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>3</mn></msup></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mi>B</mi><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup></mrow><mo>)</mo></mrow><mo>+</mo><mi>C</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtext>Evaluate the antiderivative.</mtext></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mi>A</mi><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>+</mo><mfrac><mi>B</mi><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>C</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mn>6</mn></mfrac><mrow><mo>(</mo><mrow><mn>2</mn><mi>A</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup></mrow><mo>)</mo></mrow><mo>+</mo><mn>3</mn><mi>B</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mn>6</mn><mi>C</mi></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtext>Factor out</mtext><mspace width="0.2em"></mspace><mfrac><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mn>6</mn></mfrac><mo>.</mo></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mrow><mo>(</mo><mrow><mi>A</mi><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>C</mi></mrow><mo>)</mo></mrow><mo>+</mo><mo stretchy="false">(</mo><mi>A</mi><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mi>C</mi></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>+</mo><mi>A</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>B</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>C</mi><mo stretchy="false">)</mo></mtd><mtd></mtd><mtd></mtd><mtd></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>A</mi><msup><mrow><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>B</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>C</mi></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtext>Rearrange the terms.</mtext></mtd></mtr><mtr><mtd></mtd><mtd></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtable><mtr><mtd columnalign="left"><mtext>Factor and substitute.</mtext></mtd></mtr><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>2</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>C</mi><mspace width="0.2em"></mspace><mtext>and</mtext></mtd></mtr><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>0</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mi>C</mi><mo>.</mo></mtd></mtr></mtable></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>A</mi><msup><mrow><mrow><mo>(</mo><mrow><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>B</mi><mrow><mo>(</mo><mrow><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>C</mi></mrow><mo>)</mo></mrow></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtext>Substitute</mtext><mspace width="0.2em"></mspace><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>.</mo></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mtd><mtd></mtd><mtd></mtd><mtd columnalign="left"><mtable><mtr><mtd columnalign="left"><mtext>Expand and substitute</mtext></mtd></mtr><mtr><mtd columnalign="left"><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>=</mo><mi>A</mi><msub><mi>x</mi><mn>1</mn></msub><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mi>B</mi><msub><mi>x</mi><mn>1</mn></msub><mtext>+</mtext><mi>C</mi><mo>.</mo></mtd></mtr></mtable></mtd></mtr></mtable></math></div><p>If we approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the same method, we see that we have</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mo>≈</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></mrow></mstyle></mrow></math></div>
+<p>Combining these two approximations, we get</p>
+<div class="eq"><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></mrow></mstyle></mrow></math></div>
+<p>The pattern continues as we add pairs of subintervals to our approximation. The general rule may be stated as follows.</p>
+<div class="note theorem">
+<h4>Simpson’s Rule</h4>
+<p>Assume that <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> is continuous over <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math> Let <em>n</em> be a positive even integer and <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mi>n</mi></mfrac><mo>.</mo></mrow></math> Let <math><mrow><mrow><mo>[</mo><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><mo>]</mo></mrow></mrow></math> be divided into <math><mi>n</mi></math> subintervals, each of length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>,</mo></mrow></math> with endpoints at <math><mrow><mi>P</mi><mo>=</mo><mo>{</mo><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mtext>,…</mtext><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mo>}</mo><mo>.</mo></mrow></math> Set</p>
+<div class="eq"><math><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mo>⋯</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Then,</p>
+<div class="eq"><math><mrow><munder><mrow><mtext>lim</mtext></mrow><mrow><mi>n</mi><mo stretchy="false">→</mo><mtext>+</mtext><mi>∞</mi></mrow></munder><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mo>.</mo></mrow></mrow></mstyle></mrow></math></div>
+</div>
+<p>Just as the trapezoidal rule is the average of the left-hand and right-hand rules for estimating definite integrals, Simpson’s rule may be obtained from the midpoint and trapezoidal rules by using a weighted average. It can be shown that <math><mrow><msub><mi>S</mi><mrow><mn>2</mn><mi>n</mi></mrow></msub><mo>=</mo><mrow><mo>(</mo><mrow><mfrac><mn>2</mn><mn>3</mn></mfrac></mrow><mo>)</mo></mrow><msub><mi>M</mi><mi>n</mi></msub><mo>+</mo><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow><mo>)</mo></mrow><msub><mi>T</mi><mi>n</mi></msub><mo>.</mo></mrow></math></p>
+<p>It is also possible to put a bound on the error when using Simpson’s rule to approximate a definite integral. The bound in the error is given by the following rule:</p>
+<div class="note">
+<h4>Rule: Error Bound for Simpson’s Rule</h4>
+<p>Let <math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> be a continuous function over <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow></math> having a fourth derivative, <math><mrow><msup><mi>f</mi><mrow><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo></mrow></math> over this interval. If <math><mi>M</mi></math> is the maximum value of <math><mrow><mrow><mo>|</mo><mrow><msup><mi>f</mi><mrow><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mo>|</mo></mrow></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">]</mo><mo>,</mo></mrow></math> then the upper bound for the error in using <math><mrow><msub><mi>S</mi><mi>n</mi></msub></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> is given by</p>
+<div class="eq"><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>S</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><mn>5</mn></msup></mrow><mrow><mn>180</mn><msup><mi>n</mi><mn>4</mn></msup></mrow></mfrac><mo>.</mo></mrow></math></div>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Applying Simpson’s Rule 1</h6>
+<p>Use <math><mrow><msub><mi>S</mi><mn>2</mn></msub></mrow></math> to approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> Estimate a bound for the error in <math><mrow><msub><mi>S</mi><mn>2</mn></msub><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>Since <math><mrow><mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow></math> is divided into two intervals, each subinterval has length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mn>0</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>.</mo></mrow></math> The endpoints of these subintervals are <math><mrow><mrow><mo>{</mo><mrow><mn>0</mn><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo><mn>1</mn></mrow><mo>}</mo></mrow><mo>.</mo></mrow></math> If we set <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>,</mo></mrow></math> then</p>
+<p><math><mrow><msub><mi>S</mi><mn>4</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>·</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mn>1</mn><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mrow><mo>(</mo><mrow><mn>0</mn><mo>+</mo><mn>4</mn><mo>·</mo><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>.</mo></mrow></math> Since <math><mrow><msup><mi>f</mi><mrow><mrow><mo>(</mo><mn>4</mn><mo>)</mo></mrow></mrow></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math> and consequently <math><mrow><mi>M</mi><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> we see that</p>
+<div class="eq"><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>S</mi><mn>2</mn></msub><mo>≤</mo><mfrac><mrow><mn>0</mn><msup><mrow><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>5</mn></msup></mrow><mrow><mn>180</mn><mo>⋅</mo><msup><mn>2</mn><mn>4</mn></msup></mrow></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></div>
+<p>This bound indicates that the value obtained through Simpson’s rule is exact. A quick check will verify that, in fact, <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+</div>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Applying Simpson’s Rule 2</h6>
+<p>Use <math><mrow><msub><mi>S</mi><mn>6</mn></msub></mrow></math> to estimate the length of the curve <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>The length of <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow></math> over <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow></math> is <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>4</mn></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> If we divide <math><mrow><mo stretchy="false">[</mo><mn>1</mn><mo>,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow></math> into six subintervals, then each subinterval has length <math><mrow><mtext>Δ</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mo>−</mo><mn>1</mn></mrow><mn>6</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo></mrow></math> and the endpoints of the subintervals are <math><mrow><mrow><mo>{</mo><mrow><mn>1</mn><mo>,</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>,</mo><mn>2</mn><mo>,</mo><mfrac><mn>5</mn><mn>2</mn></mfrac><mo>,</mo><mn>3</mn><mo>,</mo><mfrac><mn>7</mn><mn>2</mn></mfrac><mo>,</mo><mn>4</mn></mrow><mo>}</mo></mrow><mo>.</mo></mrow></math> Setting <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mo>,</mo></mrow></math></p>
+<div class="eq"><math><mrow><msub><mi>S</mi><mn>6</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>·</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>3</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>5</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><mfrac><mn>7</mn><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mn>4</mn><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>After substituting, we have</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msub><mi>S</mi><mn>6</mn></msub></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mrow><mo>(</mo><mrow><mn>1.4142</mn><mo>+</mo><mn>4</mn><mo>·</mo><mn>1.80278</mn><mo>+</mo><mn>2</mn><mo>·</mo><mn>2.23607</mn><mo>+</mo><mn>4</mn><mo>·</mo><mn>2.69258</mn><mo>+</mo><mn>2</mn><mo>·</mo><mn>3.16228</mn><mo>+</mo><mn>4</mn><mo>·</mo><mn>3.64005</mn><mo>+</mo><mn>4.12311</mn></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>≈</mo><mn>8.14594.</mn></mtd></mtr></mtable></math></div>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Use <math><mrow><msub><mi>S</mi><mn>2</mn></msub></mrow></math> to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>2</mn></msubsup><mrow><mfrac><mn>1</mn><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mn>25</mn></mrow><mrow><mn>36</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p><math><mrow><msub><mi>S</mi><mn>2</mn></msub><mo>=</mo><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mo stretchy="false">(</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow></math></p>
+</p>
+</div>
+</div>
+</div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>We can use numerical integration to estimate the values of definite integrals when a closed form of the integral is difficult to find or when an approximate value only of the definite integral is needed.</li><li>The most commonly used techniques for numerical integration are the midpoint rule, trapezoidal rule, and Simpson’s rule.</li><li>The midpoint rule approximates the definite integral using rectangular regions whereas the trapezoidal rule approximates the definite integral using trapezoidal approximations.</li><li>Simpson’s rule approximates the definite integral by first approximating the original function using piecewise quadratic functions.</li></ul>
+</div>
+<div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td><strong>Midpoint rule</strong></td><td><math><mrow><msub><mi>M</mi><mi>n</mi></msub><mo>=</mo><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>m</mi><mi>i</mi></msub></mrow><mo>)</mo></mrow><mtext>Δ</mtext><mi>x</mi></mrow></math></td></tr><tr><td><strong>Trapezoidal rule</strong></td><td><math><mrow><msub><mi>T</mi><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mtext>Δ</mtext><mi>x</mi><mrow><mo>(</mo><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>+</mo><mo>⋯</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><mo>)</mo></mrow></mrow></math></td></tr><tr><td><strong>Simpson’s rule</strong></td><td><math><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>5</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mo>⋯</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow></math></td></tr><tr><td><strong>Error bound for midpoint rule</strong></td><td><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>M</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mrow><mo>(</mo><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow><mo>)</mo></mrow></mrow><mn>3</mn></msup></mrow><mrow><mn>24</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac></mrow></math></td></tr><tr><td><strong>Error bound for trapezoidal rule</strong></td><td><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>T</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><mn>3</mn></msup></mrow><mrow><mn>12</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac></mrow></math></td></tr><tr><td><strong>Error bound for Simpson’s rule</strong></td><td><math><mrow><mtext>Error in</mtext><mspace width="0.2em"></mspace><msub><mi>S</mi><mi>n</mi></msub><mo>≤</mo><mfrac><mrow><mi>M</mi><msup><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><mn>5</mn></msup></mrow><mrow><mn>180</mn><msup><mi>n</mi><mn>4</mn></msup></mrow></mfrac></mrow></math></td></tr></table>
+</div>
+<div class="section section-exercises">
+<p>Approximate the following integrals using either the midpoint rule, trapezoidal rule, or Simpson’s rule as indicated. (Round answers to three decimal places.)</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>2</mn></msubsup><mrow><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mi>x</mi></mfrac></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>5</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.696</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><msqrt><mrow><mn>4</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><msqrt><mrow><mn>4</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>9.484</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>12</mn></mrow></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> midpoint rule; <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mrow><mtext>sin</mtext></mrow><mn>2</mn></msup><mrow><mo>(</mo><mrow><mi>π</mi><mi>x</mi></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> midpoint rule; <math><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.5000</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use the midpoint rule with eight subdivisions to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>4</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use the trapezoidal rule with four subdivisions to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>4</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>T</mi><mn>4</mn></msub><mo>=</mo><mn>18.75</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find the exact value of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>4</mn></msubsup><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> Find the error of approximation between the exact value and the value calculated using the trapezoidal rule with four subdivisions. Draw a graph to illustrate.</p>
+</div>
+</div>
+<p>Approximate the integral to three decimal places using the indicated rule.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msup><mrow><mtext>sin</mtext></mrow><mn>2</mn></msup><mrow><mo>(</mo><mrow><mi>π</mi><mi>x</mi></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.500</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>1.129</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.8</mn></mrow></msubsup><mrow><msup><mi>e</mi><mrow><mtext>−</mtext><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.8</mn></mrow></msubsup><mrow><msup><mi>e</mi><mrow><mtext>−</mtext><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> Simpson’s rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.6577</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.4</mn></mrow></msubsup><mrow><mtext>sin</mtext><mo stretchy="false">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.4</mn></mrow></msubsup><mrow><mtext>sin</mtext><mo stretchy="false">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> Simpson’s rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.0213</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><mn>0.1</mn></mrow><mrow><mn>0.5</mn></mrow></msubsup><mrow><mfrac><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> trapezoidal rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mrow><mn>0.1</mn></mrow><mrow><mn>0.5</mn></mrow></msubsup><mrow><mfrac><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>;</mo></mrow></math> Simpson’s rule; <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>1.5629</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Evaluate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></mrow></mstyle></mrow></math> exactly and show that the result is <math><mrow><mrow><mi>π</mi><mtext>/</mtext><mn>4</mn></mrow><mo>.</mo></mrow></math> Then, find the approximate value of the integral using the trapezoidal rule with <math><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow></math> subdivisions. Use the result to approximate the value of <math><mrow><mi>π</mi><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>4</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the midpoint rule with four subdivisions to four decimal places.</p>
+</div>
+<div class="solution">
+<p>1.9133</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>4</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the trapezoidal rule with eight subdivisions to four decimal places.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use the trapezoidal rule with four subdivisions to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.8</mn></mrow></msubsup><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> to four decimal places.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mtext>T(4)</mtext><mo>=</mo><mn>0.1088</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use the trapezoidal rule with four subdivisions to estimate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mn>0.8</mn></mrow></msubsup><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> Compare this value with the exact value and find the error estimate.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Using Simpson’s rule with four subdivisions, find <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow></msubsup><mrow><mtext>cos</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>1.0</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Show that the exact value of <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mi>x</mi><msup><mi>e</mi><mrow><mtext>−</mtext><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>2</mn><mi>e</mi></mfrac><mo>.</mo></mrow></mrow></mstyle></mrow></math> Find the absolute error if you approximate the integral using the midpoint rule with 16 subdivisions.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Given <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mi>x</mi><msup><mi>e</mi><mrow><mtext>−</mtext><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mn>2</mn><mi>e</mi></mfrac><mo>,</mo></mrow></mrow></mstyle></mrow></math> use the trapezoidal rule with 16 subdivisions to approximate the integral and find the absolute error.</p>
+</div>
+<div class="solution">
+<p>Approximate error is 0.000325.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find an upper bound for the error in estimating <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><mo stretchy="false">(</mo><mn>5</mn><mi>x</mi><mo>+</mo><mn>4</mn><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the trapezoidal rule with six steps.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find an upper bound for the error in estimating <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>4</mn><mn>5</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><msup><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the trapezoidal rule with seven subdivisions.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mn>1</mn><mrow><mn>7938</mn></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find an upper bound for the error in estimating <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>3</mn></msubsup><mrow><mo stretchy="false">(</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using Simpson’s rule with <math><mrow><mi>n</mi><mo>=</mo><mn>10</mn></mrow></math> steps.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find an upper bound for the error in estimating <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>5</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><mi>x</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using Simpson’s rule with <math><mrow><mi>n</mi><mo>=</mo><mn>10</mn></mrow></math> steps.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mn>81</mn></mrow><mrow><mn>25</mn><mo>,</mo><mn>000</mn></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find an upper bound for the error in estimating <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mi>π</mi></msubsup><mrow><mn>2</mn><mi>x</mi><mspace width="0.1em"></mspace><mtext>cos</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using Simpson’s rule with four steps.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Estimate the minimum number of subintervals needed to approximate the integral <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>4</mn></msubsup><mrow><mrow><mo>(</mo><mrow><mn>5</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>8</mn></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with an error magnitude of less than 0.0001 using the trapezoidal rule.</p>
+</div>
+<div class="solution">
+<p>475</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Determine a value of <em>n</em> such that the trapezoidal rule will approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with an error of no more than 0.01.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Estimate the minimum number of subintervals needed to approximate the integral <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>2</mn><mn>3</mn></msubsup><mrow><mrow><mo>(</mo><mrow><mn>2</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with an error of magnitude less than 0.0001 using the trapezoidal rule.</p>
+</div>
+<div class="solution">
+<p>174</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Estimate the minimum number of subintervals needed to approximate the integral <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>3</mn><mn>4</mn></msubsup><mrow><mfrac><mn>1</mn><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> with an error magnitude of less than 0.0001 using the trapezoidal rule.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use Simpson’s rule with four subdivisions to approximate the area under the probability density function <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mrow><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac><msup><mi>e</mi><mrow><mrow><mrow><mtext>−</mtext><msup><mi>x</mi><mn>2</mn></msup></mrow><mtext>/</mtext><mn>2</mn></mrow></mrow></msup></mrow></math> from <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math> to <math><mrow><mi>x</mi><mo>=</mo><mn>0.4</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>0.1544</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Use Simpson’s rule with <math><mrow><mi>n</mi><mo>=</mo><mn>14</mn></mrow></math> to approximate (to three decimal places) the area of the region bounded by the graphs of <math><mrow><mi>y</mi><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> and <math><mrow><mi>x</mi><mo>=</mo><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The length of one arch of the curve <math><mrow><mi>y</mi><mo>=</mo><mn>3</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo stretchy="false">)</mo></mrow></math> is given by <math><mrow><mi>L</mi><mo>=</mo><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>+</mo><mn>36</mn><mspace width="0.1em"></mspace><msup><mrow><mtext>cos</mtext></mrow><mn>2</mn></msup><mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo stretchy="false">)</mo></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math> Estimate <em>L</em> using the trapezoidal rule with <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>6.2807</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The length of the ellipse <math><mrow><mi>x</mi><mo>=</mo><mi>a</mi><mspace width="0.1em"></mspace><mtext>cos</mtext><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>,</mo><mi>y</mi><mo>=</mo><mi>b</mi><mspace width="0.1em"></mspace><mtext>sin</mtext><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>,</mo><mn>0</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mn>2</mn><mi>π</mi></mrow></math> is given by <math><mrow><mi>L</mi><mo>=</mo><mn>4</mn><mi>a</mi><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow></msubsup><mrow><msqrt><mrow><mn>1</mn><mo>−</mo><msup><mi>e</mi><mn>2</mn></msup><msup><mrow><mtext>cos</mtext></mrow><mn>2</mn></msup><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></msqrt><mspace width="0.1em"></mspace><mi>d</mi><mi>t</mi></mrow></mrow></mstyle><mo>,</mo></mrow></math> where <em>e</em> is the eccentricity of the ellipse. Use Simpson’s rule with <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn></mrow></math> subdivisions to estimate the length of the ellipse when <math><mrow><mi>a</mi><mo>=</mo><mn>2</mn></mrow></math> and <math><mrow><mi>e</mi><mo>=</mo><mn>1</mn><mtext>/</mtext><mn>3</mn><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Estimate the area of the surface generated by revolving the curve <math><mrow><mi>y</mi><mo>=</mo><mtext>cos</mtext><mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo><mn>0</mn><mo>≤</mo><mi>x</mi><mo>≤</mo><mfrac><mi>π</mi><mn>4</mn></mfrac></mrow></math> about the <em>x</em>-axis. Use the trapezoidal rule with six subdivisions.</p>
+</div>
+<div class="solution">
+<p>4.606</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Estimate the area of the surface generated by revolving the curve <math><mrow><mi>y</mi><mo>=</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>,</mo></mrow></math> <math><mrow><mn>0</mn><mo>≤</mo><mi>x</mi><mo>≤</mo><mn>3</mn></mrow></math> about the <em>x-</em>axis. Use Simpson’s rule with <math><mrow><mi>n</mi><mo>=</mo><mn>6</mn><mo>.</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The growth rate of a certain tree (in feet) is given by <math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>2</mn><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><msup><mi>e</mi><mrow><mtext>−</mtext><msup><mi>t</mi><mn>2</mn></msup><mtext>/</mtext><mn>2</mn></mrow></msup><mo>,</mo></mrow></math> where <em>t</em> is time in years. Estimate the growth of the tree through the end of the second year by using Simpson’s rule, using two subintervals. (Round the answer to the nearest hundredth.)</p>
+</div>
+<div class="solution">
+<p>3.41 ft</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> Use a calculator to approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mtext>sin</mtext><mrow><mo>(</mo><mrow><mi>π</mi><mi>x</mi></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the midpoint rule with 25 subdivisions. Compute the relative error of approximation.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> Given <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mn>1</mn><mn>5</mn></msubsup><mrow><mrow><mo>(</mo><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi></mrow><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>=</mo><mn>100</mn><mo>,</mo></mrow></math> approximate the value of this integral using the trapezoidal rule with 16 subdivisions and determine the absolute error.</p>
+</div>
+<div class="solution">
+<p><math><mrow><msub><mi>T</mi><mrow><mn>16</mn></mrow></msub><mo>=</mo><mn>100.125</mn><mo>;</mo></mrow></math> absolute error = 0.125</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Given that we know the Fundamental Theorem of Calculus, why would we want to develop numerical methods for definite integrals?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The table represents the coordinates <math><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>,</mo><mtext>​</mtext><mi>y</mi></mrow><mo>)</mo></mrow></mrow></math> that give the boundary of a lot. The units of measurement are meters. Use the trapezoidal rule to estimate the number of square meters of land that is in this lot.</p>
+<table><tr><th><em>x</em></th><th><em>y</em></th><th><em>x</em></th><th><em>y</em></th></tr><tr><td>0</td><td>125</td><td>600</td><td>95</td></tr><tr><td>100</td><td>125</td><td>700</td><td>88</td></tr><tr><td>200</td><td>120</td><td>800</td><td>75</td></tr><tr><td>300</td><td>112</td><td>900</td><td>35</td></tr><tr><td>400</td><td>90</td><td>1000</td><td>0</td></tr><tr><td>500</td><td>90</td><td></td><td></td></tr></table>
+</div>
+<div class="solution">
+<p>about 89,250 m<sup>2</sup></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Choose the correct answer. When Simpson’s rule is used to approximate the definite integral, it is necessary that the number of partitions be____</p>
+<ol><li>an even number</li><li>odd number</li><li>either an even or an odd number</li><li>a multiple of 4</li></ol>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The “Simpson” sum is based on the area under a ____.</p>
+</div>
+<div class="solution">
+<p>parabola</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The error formula for Simpson’s rule depends on___.</p>
+<ol><li><math><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math></li><li><math><mrow><msup><mi>f</mi><mo>′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math></li><li><math><mrow><msup><mi>f</mi><mrow><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo></mrow></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math></li><li>the number of steps</li></ol>
+</div>
+</div>
+</div>
+ <h2>Key terms</h2>
+<p><strong>absolute error</strong> if <math><mi>B</mi></math> is an estimate of some quantity having an actual value of <math><mrow><mi>A</mi><mo>,</mo></mrow></math> then the absolute error is given by <math><mrow><mrow><mo>|</mo><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mo>|</mo></mrow></mrow></math></p>
+<p><strong>midpoint rule</strong> a rule that uses a Riemann sum of the form <math><mrow><msub><mi>M</mi><mi>n</mi></msub><mo>=</mo><munderover><mstyle displaystyle="true"><mo>∑</mo></mstyle><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mo stretchy="false">(</mo><msub><mi>m</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mtext>Δ</mtext><mi>x</mi><mo>,</mo></mrow></math> where <math><mrow><msub><mi>m</mi><mi>i</mi></msub></mrow></math> is the midpoint of the <em>i</em>th subinterval to approximate <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math></p>
+<p><strong>numerical integration</strong> the variety of numerical methods used to estimate the value of a definite integral, including the midpoint rule, trapezoidal rule, and Simpson’s rule</p>
+<p><strong>relative error</strong> error as a percentage of the absolute value, given by <math><mrow><mrow><mo>|</mo><mrow><mfrac><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mi>A</mi></mfrac></mrow><mo>|</mo></mrow><mo>=</mo><mrow><mo>|</mo><mrow><mfrac><mrow><mi>A</mi><mo>−</mo><mi>B</mi></mrow><mi>A</mi></mfrac></mrow><mo>|</mo></mrow><mo>·</mo><mn>100</mn><mtext>%</mtext></mrow></math></p>
+<p><strong>Simpson’s rule</strong> a rule that approximates <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using the integrals of a piecewise quadratic function. The approximation <math><mrow><msub><mi>S</mi><mi>n</mi></msub></mrow></math> to <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> is given by <math><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mrow><mtext>Δ</mtext><mi>x</mi></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mtable><mtr><mtd><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>3</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>4</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>5</mn></msub></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mo>+</mo><mo>⋯</mo><mo>+</mo><mn>2</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mtd></mtr></mtable><mo>)</mo></mrow></mrow></math> trapezoidal rule a rule that approximates <math><mrow><mstyle displaystyle="true"><mrow><msubsup><mo stretchy="false">∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></math> using trapezoids</p>
+
+</body></html>

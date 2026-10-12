@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15.4 Power in an AC Circuit · University Physics Volume 2</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, University Physics Volume 2, Ling, Sanny, Moebs, section 15.4 Power in an AC Circuit. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/university-physics-volume-2/pages/15-4-power-in-an-ac-circuit</p>
+<h1>15.4 Power in an AC Circuit</h1>
+
+<p>A circuit element dissipates or produces power according to <math><mrow><mi>P</mi><mo>=</mo><mi>I</mi><mi>V</mi><mo>,</mo></mrow></math> where <em>I</em> is the current through the element and <em>V</em> is the voltage across it. Since the current and the voltage both depend on time in an ac circuit, the instantaneous power <math><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>i</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></math> is also time dependent. A plot of <em>p</em>(<em>t</em>) for various circuit elements is shown in . For a resistor, <em>i</em>(<em>t</em>) and <em>v</em>(<em>t</em>) are in phase and therefore always have the same sign (see ). For a capacitor or inductor, the relative signs of <em>i</em>(<em>t</em>) and <em>v</em>(<em>t</em>) vary over a cycle due to their phase differences (see  and ). Consequently, <em>p</em>(<em>t</em>) is positive at some times and negative at others, indicating that capacitive and inductive elements produce power at some instants and absorb it at others.</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/main/media/CNX_UPhysics_32_04_acpower.jpg" alt="Figures a through d show sine waves on graphs of P versus t. All have the same amplitude and frequency. Figure a is labeled resistor. P bar is equal to half I0 V0. The sine wave is above the x axis, with the minimum y value being 0. It starts from a trough. Figure b is labeled capacitor. P bar is equal to 0. The equilibrium position of the sine wave is along the x axis. It starts at equilibrium with a positive slope. Figure c is labeled inductor. P bar is equal to 0. The equilibrium position of the sine wave is along the x axis. It starts at equilibrium with a negative slope. Figure d is labeled AC source. P bar is equal to half I0 V0 cos phi. The equilibrium position of the sine wave is above the x axis, with the minimum y-value of the wave being negative."><figcaption>Graph of instantaneous power for various circuit elements. (a) For the resistor, <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mrow><mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub></mrow><mtext>/</mtext><mn>2</mn></mrow><mo>,</mo></mrow></math> whereas for (b) the capacitor and (c) the inductor, <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> (d) For the source, <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mrow><mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mo stretchy="false">(</mo><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo stretchy="false">)</mo></mrow><mtext>/</mtext><mn>2</mn></mrow><mo>,</mo></mrow></math> which may be positive, negative, or zero, depending on <math><mrow><mi>ϕ</mi><mo>.</mo></mrow></math>
+</figcaption></figure>
+<p>Because instantaneous power varies in both magnitude and sign over a cycle, it seldom has any practical importance. What we’re almost always concerned with is the power averaged over time, which we refer to as the <strong>average power</strong>. It is defined by the time average of the instantaneous power over one cycle:</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mi>d</mi><mi>t</mi><mo>,</mo></mrow></mrow></mstyle></mrow></math></div>
+<p>where <math><mrow><mi>T</mi><mo>=</mo><mrow><mrow><mn>2</mn><mi>π</mi></mrow><mtext>/</mtext><mi>ω</mi></mrow></mrow></math> is the period of the oscillations. With the substitutions <math><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi></mrow></math> and <math><mrow><mi>i</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>I</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mo stretchy="false">(</mo><mi>ω</mi><mi>t</mi><mo>−</mo><mi>ϕ</mi><mo stretchy="false">)</mo><mo>,</mo></mrow></math> this integral becomes</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub></mrow><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mo stretchy="false">(</mo><mi>ω</mi><mi>t</mi><mo>−</mo><mi>ϕ</mi><mo stretchy="false">)</mo></mrow></mrow></mstyle><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mspace width="0.2em"></mspace><mi>d</mi><mi>t</mi><mo>.</mo></mrow></math></div>
+<p>Using the trigonometric relation <math><mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mo stretchy="false">(</mo><mi>A</mi><mo>−</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>A</mi><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>B</mi><mo>−</mo><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>B</mi><mspace width="0.2em"></mspace><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>A</mi><mo>,</mo></mrow></math> we obtain</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi></mrow><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><mspace width="0.2em"></mspace><msup><mtext>sin</mtext><mn>2</mn></msup><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mi>d</mi><mi>t</mi><mo>−</mo></mrow></mrow></mstyle><mfrac><mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi></mrow><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace></mrow><mi>ω</mi><mi>t</mi><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mi>d</mi><mi>t</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></div><p>Evaluation of these two integrals yields</p>
+<div class="eq"><math><mrow><mfrac><mn>1</mn><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><msup><mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace></mrow><mn>2</mn></msup><mi>ω</mi><mi>t</mi><mi>d</mi><mi>t</mi></mrow></mrow></mstyle><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></div>
+<p>and</p>
+<div class="eq"><math><mrow><mfrac><mn>1</mn><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mi>d</mi><mi>t</mi></mrow></mrow></mstyle><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math></div><p>Hence, the average power associated with a circuit element is given by</p>
+<div class="note equation-callout">
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>.</mo></mrow></math></div>
+</div>
+<p>In engineering applications, <math><mrow><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi></mrow></math> is known as the <strong>power factor</strong>, which is the amount by which the power delivered in the circuit is less than the theoretical maximum of the circuit due to voltage and current being out of phase. For a resistor, <math><mrow><mi>ϕ</mi><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> so the average power dissipated is</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mo>.</mo></mrow></math></div>
+<p>A comparison of <em>p</em>(<em>t</em>) and <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub></mrow></math> is shown in (d). To make <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mrow><mo>(</mo><mrow><mrow><mn>1</mn><mtext>/</mtext><mn>2</mn></mrow></mrow><mo>)</mo></mrow><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub></mrow></math> look like its dc counterpart, we use the rms values <math><mrow><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub></mrow></math> of the current and the voltage. By definition, these are</p>
+<div class="eq"><math><mrow><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><msqrt><mrow><msubsup><mi>i</mi><mrow><mtext>ave</mtext></mrow><mn>2</mn></msubsup></mrow></msqrt><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><msqrt><mrow><msubsup><mi>v</mi><mrow><mtext>ave</mtext></mrow><mn>2</mn></msubsup></mrow></msqrt><mo>,</mo></mrow></math></div>
+<p>where</p>
+<div class="eq"><math><mrow><msubsup><mi>i</mi><mrow><mtext>ave</mtext></mrow><mn>2</mn></msubsup><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><msup><mi>i</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mi>d</mi><mi>t</mi><mspace width="0.2em"></mspace><mtext>and </mtext><mspace width="0.2em"></mspace></mrow></mrow></mstyle><msubsup><mi>v</mi><mrow><mtext>ave</mtext></mrow><mn>2</mn></msubsup><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mstyle displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mrow><msup><mi>v</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mi>d</mi><mi>t</mi></mrow></mrow></mstyle><mo>.</mo></mrow></math></div>
+<p>With <math><mrow><mi>i</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>I</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mo stretchy="false">(</mo><mi>ω</mi><mi>t</mi><mo>−</mo><mi>ϕ</mi><mo stretchy="false">)</mo><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mo>,</mo></mrow></math> we obtain</p>
+<div class="eq"><math><mrow><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msqrt><mn>2</mn></msqrt></mrow></mfrac><msub><mi>I</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msqrt><mn>2</mn></msqrt></mrow></mfrac><msub><mi>V</mi><mn>0</mn></msub><mo>.</mo></mrow></math></div>
+<p>We may then write for the average power dissipated by a resistor,</p>
+<div class="note equation-callout">
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>I</mi><mn>0</mn></msub><msub><mi>V</mi><mn>0</mn></msub><mo>=</mo><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><msubsup><mi>I</mi><mrow><mtext>rms</mtext></mrow><mn>2</mn></msubsup><mi>R</mi><mo>.</mo></mrow></math></div>
+</div>
+<p>This equation further emphasizes why the rms value is chosen in discussion rather than peak values. Both equations for average power are correct for , but the rms values in the formula give a cleaner representation, so the extra factor of 1/2 is not necessary.</p>
+<p>Alternating voltages and currents are usually described in terms of their rms values. For example, the 110 V from a household outlet is an rms value. The amplitude of this source is <math><mrow><mn>110</mn><msqrt><mn>2</mn></msqrt><mspace width="0.2em"></mspace><mtext>V</mtext><mo>=</mo><mtext>156 V</mtext><mtext>.</mtext></mrow></math> Because most ac meters are calibrated in terms of rms values, a typical ac voltmeter placed across a household outlet will read 110 V.</p>
+<p>For a capacitor and an inductor, <math><mrow><mi>ϕ</mi><mo>=</mo><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><mo>−</mo><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow><mspace width="0.2em"></mspace><mtext>rad,</mtext></mrow></math> respectively. Since <math><mrow><mtext>cos</mtext><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow><mo>=</mo><mtext>cos</mtext><mo stretchy="false">(</mo><mtext>−</mtext><mrow><mi>π</mi><mtext>/</mtext><mn>2</mn></mrow><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn><mo>,</mo></mrow></math> we find from  that the average power dissipated by either of these elements is <math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Capacitors and inductors absorb energy from the circuit during one half-cycle and then discharge it back to the circuit during the other half-cycle. This behavior is illustrated in the plots of , (b) and (c), which show <em>p(</em>t) oscillating sinusoidally about zero.</p>
+<p>The phase angle for an ac generator may have any value. If <math><mrow><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo></mrow></math> the generator produces power; if <math><mrow><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>&lt;</mo><mn>0</mn><mo>,</mo></mrow></math> it absorbs power. In terms of rms values, the average power of an ac generator is written as</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mspace width="0.2em"></mspace><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>.</mo></mrow></math></div>
+<p>For the generator in an <em>RLC</em> circuit,</p>
+<div class="eq"><math><mrow><mtext>tan</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>=</mo><mfrac><mrow><msub><mi>X</mi><mi>L</mi></msub><mo>−</mo><msub><mi>X</mi><mi>C</mi></msub></mrow><mi>R</mi></mfrac></mrow></math></div>
+<p>and</p>
+<div class="eq"><math><mrow><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>=</mo><mfrac><mi>R</mi><mrow><msqrt><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>+</mo><msup><mrow><mo stretchy="false">(</mo><msub><mi>X</mi><mi>L</mi></msub><mo>−</mo><msub><mi>X</mi><mi>C</mi></msub><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mrow></msqrt></mrow></mfrac><mo>=</mo><mfrac><mi>R</mi><mi>Z</mi></mfrac><mo>.</mo></mrow></math></div>
+<p>Hence the average power of the generator is</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mspace width="0.2em"></mspace><mtext>cos</mtext><mspace width="0.2em"></mspace><mi>ϕ</mi><mo>=</mo><mfrac><mrow><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub></mrow><mi>Z</mi></mfrac><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mfrac><mi>R</mi><mi>Z</mi></mfrac><mo>=</mo><mfrac><mrow><msubsup><mi>V</mi><mrow><mtext>rms</mtext></mrow><mn>2</mn></msubsup><mi>R</mi></mrow><mrow><msup><mi>Z</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>This can also be written as</p>
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><msubsup><mi>I</mi><mrow><mtext>rms</mtext></mrow><mn>2</mn></msubsup><mi>R</mi><mo>,</mo></mrow></math></div>
+<p>which designates that the power produced by the generator is dissipated in the resistor. As we can see, Ohm’s law for the rms ac is found by dividing the rms voltage by the impedance.</p>
+<div class="example">
+<p><h3>Power Output of a Generator</h3>
+An ac generator whose emf is given by</p>
+<div class="eq"><math><mrow><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mrow><mn>4.00</mn><mspace width="0.2em"></mspace><mtext>V</mtext></mrow><mo>)</mo></mrow><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mrow><mo>[</mo><mrow><mrow><mo>(</mo><mrow><mn>1.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mn>4</mn></msup><mrow><mrow><mtext>rad</mtext></mrow><mtext>/</mtext><mtext>s</mtext></mrow></mrow><mo>)</mo></mrow><mi>t</mi></mrow><mo>]</mo></mrow></mrow></math></div>
+<p>is connected to an <em>RLC</em> circuit for which <math><mrow><mi>L</mi><mo>=</mo><mn>2.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mrow><mn>−3</mn></mrow></msup><mspace width="0.2em"></mspace><mtext>H</mtext></mrow></math>, <math><mrow><mi>C</mi><mo>=</mo><mn>4.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mrow><mn>−6</mn></mrow></msup><mspace width="0.2em"></mspace><mtext>F</mtext></mrow></math>, and <math><mrow><mi>R</mi><mo>=</mo><mn>5.00</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow></math>. (a) What is the rms voltage across the generator? (b) What is the impedance of the circuit? (c) What is the average power output of the generator?</p>
+<p><h3>Strategy</h3>
+The rms voltage is the amplitude of the voltage times <math><mrow><mrow><mn>1</mn><mtext>/</mtext><mrow><msqrt><mn>2</mn></msqrt></mrow></mrow></mrow></math>. The impedance of the circuit involves the resistance and the reactances of the capacitor and the inductor. The average power is calculated by , or more specifically, the last part of the equation, because we have the impedance of the circuit <em>Z</em>, the rms voltage <math><mrow><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub></mrow></math>, and the resistance <em>R</em>.</p>
+<p><h3>Solution</h3></p>
+<ol><li>Since <math><mrow><msub><mi>V</mi><mn>0</mn></msub><mo>=</mo><mn>4.00</mn><mspace width="0.2em"></mspace><mtext>V,</mtext></mrow></math> the rms voltage across the generator is
+<div class="eq"><math><mrow><msub><mi>V</mi><mrow><mtext>rms</mtext></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msqrt><mn>2</mn></msqrt></mrow></mfrac><mrow><mo>(</mo><mrow><mn>4.00</mn><mspace width="0.2em"></mspace><mtext>V</mtext></mrow><mo>)</mo></mrow><mo>=</mo><mn>2.83</mn><mspace width="0.2em"></mspace><mtext>V</mtext><mtext>.</mtext></mrow></math></div></li><li>The impedance of the circuit is
+<div class="eq"><math><mrow><mtable><mtr><mtd columnalign="right"><mrow><mi>Z</mi></mrow></mtd><mtd columnalign="left"><mo>=</mo><msqrt><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>+</mo><msup><mrow><mrow><mo>(</mo><mrow><msub><mi>X</mi><mi>L</mi></msub><mo>−</mo><msub><mi>X</mi><mi>C</mi></msub></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup></mrow></msqrt></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mrow><mo>=</mo><msup><mrow><mrow><mo>{</mo><mrow><msup><mrow><mrow><mo>(</mo><mrow><mn>5.00</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mrow><mo>[</mo><mrow><mrow><mo>(</mo><mrow><mn>1.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mn>4</mn></msup><mspace width="0.2em"></mspace><mtext>rad/s</mtext></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><mn>2.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mrow><mn>−3</mn></mrow></msup><mspace width="0.2em"></mspace><mtext>H</mtext></mrow><mo>)</mo></mrow><mo>−</mo><mfrac><mn>1</mn><mrow><mrow><mo>(</mo><mrow><mn>1.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mn>4</mn></msup><mspace width="0.2em"></mspace><mtext>rad/s</mtext></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><mn>4.00</mn><mspace width="0.2em"></mspace><mo>×</mo><mspace width="0.2em"></mspace><msup><mrow><mn>10</mn></mrow><mrow><mn>−6</mn></mrow></msup><mspace width="0.2em"></mspace><mtext>F</mtext></mrow><mo>)</mo></mrow></mrow></mfrac></mrow><mo>]</mo></mrow></mrow><mn>2</mn></msup></mrow><mo>}</mo></mrow></mrow><mrow><mn>1</mn><mtext>/</mtext><mn>2</mn></mrow></msup></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mrow><mo>=</mo><mn>7.07</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext><mtext>.</mtext></mrow></mtd></mtr></mtable></mrow></math></div></li><li>From , the average power transferred to the circuit is 
+<div class="eq"><math><mrow><msub><mi>P</mi><mrow><mtext>ave</mtext></mrow></msub><mo>=</mo><mfrac><mrow><msubsup><mi>V</mi><mrow><mtext>rms</mtext></mrow><mn>2</mn></msubsup><mi>R</mi></mrow><mrow><msup><mi>Z</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><msup><mrow><mrow><mo>(</mo><mrow><mn>2.83</mn><mspace width="0.2em"></mspace><mtext>V</mtext></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup><mrow><mo>(</mo><mrow><mn>5.00</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow><mo>)</mo></mrow></mrow><mrow><msup><mrow><mrow><mo>(</mo><mrow><mn>7.07</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow><mo>)</mo></mrow></mrow><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mn>0.801</mn><mspace width="0.2em"></mspace><mtext>W</mtext><mtext>.</mtext></mrow></math></div></li></ol>
+<p><h3>Significance</h3>
+If the resistance is much larger than the reactance of the capacitor or inductor, the average power is a dc circuit equation of <math><mrow><mi>P</mi><mo>=</mo><mrow><mrow><msup><mi>V</mi><mn>2</mn></msup></mrow><mtext>/</mtext><mi>R</mi></mrow><mo>,</mo></mrow></math> where <em>V</em> replaces the rms voltage.</p>
+</div>
+<div class="note check-understanding">
+<div class="exercise">
+<div class="problem">
+<p>An ac voltmeter attached across the terminals of a 45-Hz ac generator reads 7.07 V. Write an expression for the emf of the generator.</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mn>10.0</mn><mspace width="0.2em"></mspace><mtext>V</mtext><mo stretchy="false">)</mo><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mn>90</mn><mi>π</mi><mi>t</mi></mrow></math></p>
+</div>
+</div>
+</div>
+<div class="note check-understanding">
+<div class="exercise">
+<div class="problem">
+<p>Show that the rms voltages across a resistor, a capacitor, and an inductor in an ac circuit where the rms current is <math><mrow><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub></mrow></math> are given by <math><mrow><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><mi>R</mi><mo>,</mo><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><msub><mi>X</mi><mi>C</mi></msub><mo>,</mo><mspace width="0.2em"></mspace><mtext>and</mtext><mspace width="0.2em"></mspace><msub><mi>I</mi><mrow><mtext>rms</mtext></mrow></msub><msub><mi>X</mi><mi>L</mi></msub><mo>,</mo></mrow></math> respectively. Determine these values for the components of the <em>RLC</em> circuit of .</p>
+</div>
+<div class="solution">
+<p>2.00 V; 10.01 V; 8.01 V</p>
+</div>
+</div>
+</div>
+<div class="section key-concepts">
+<h3>Summary</h3>
+<ul><li>The average ac power is found by multiplying the rms values of current and voltage.</li><li>Ohm’s law for the rms ac is found by dividing the rms voltage by the impedance.</li><li>In an ac circuit, there is a phase angle between the source voltage and the current, which can be found by dividing the resistance by the impedance.</li><li>The average power delivered to an <em>RLC</em> circuit is affected by the phase angle.</li><li>The power factor ranges from –1 to 1.</li></ul>
+</div>
+<div class="section review-conceptual-questions">
+<h3>Conceptual Questions</h3>
+<div class="exercise">
+<div class="problem">
+<p>For what value of the phase angle <math><mi>ϕ</mi></math> between the voltage output of an ac source and the current is the average power output of the source a maximum?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Discuss the differences between average power and instantaneous power.</p>
+</div>
+<div class="solution">
+<p>The instantaneous power is the power at a given instant. The average power is the power averaged over a cycle or number of cycles.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The average ac current delivered to a circuit is zero. Despite this, power is dissipated in the circuit. Explain.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Can the instantaneous power output of an ac source ever be negative? Can the average power output be negative?</p>
+</div>
+<div class="solution">
+<p>The instantaneous power can be negative, but the power output can’t be negative.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The power rating of a resistor used in ac circuits refers to the maximum average power dissipated in the resistor. How does this compare with the maximum instantaneous power dissipated in the resistor?</p>
+</div>
+</div>
+</div>
+<div class="section review-problems">
+<h3>Problems</h3>
+<div class="exercise">
+<div class="problem">
+<p>The emf of an ac source is given by <math><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mo>,</mo></mrow></math> where <math><mrow><msub><mi>V</mi><mn>0</mn></msub><mo>=</mo><mn>100</mn><mspace width="0.2em"></mspace><mtext>V</mtext></mrow></math> and <math><mrow><mi>ω</mi><mo>=</mo><mn>200</mn><mi>π</mi><mspace width="0.2em"></mspace><mtext>rad/s</mtext><mtext>.</mtext></mrow></math> Calculate the average power output of the source if it is connected across (a) a <math><mrow><mn>20</mn><mtext>-</mtext><mi>μ</mi><mtext>F</mtext></mrow></math> capacitor, (b) a 20-mH inductor, and (c) a <math><mrow><mn>50</mn><mtext>-</mtext><mtext>Ω</mtext></mrow></math> resistor.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Calculate the rms currents for an ac source is given by <math><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>V</mi><mn>0</mn></msub><mspace width="0.2em"></mspace><mtext>sin</mtext><mspace width="0.2em"></mspace><mi>ω</mi><mi>t</mi><mo>,</mo></mrow></math> where <math><mrow><msub><mi>V</mi><mn>0</mn></msub><mo>=</mo><mn>100</mn><mspace width="0.2em"></mspace><mtext>V</mtext></mrow></math> and <math><mrow><mi>ω</mi><mo>=</mo><mn>200</mn><mi>π</mi><mspace width="0.2em"></mspace><mtext>rad/s</mtext></mrow></math> when connected across (a) a <math><mrow><mn>20</mn><mtext>-</mtext><mi>μ</mi><mtext>F</mtext></mrow></math> capacitor, (b) a 20-mH inductor, and (c) a <math><mrow><mn>50</mn><mtext>-</mtext><mtext>Ω</mtext></mrow></math> resistor.</p>
+</div>
+<div class="solution">
+<p>a. 0.89 A; b. 5.6A; c. 1.4 A</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>A 40-mH inductor is connected to a 60-Hz AC source whose voltage amplitude is 50 V. If an AC voltmeter is placed across the inductor, what does it read?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>For an <em>RLC</em> series circuit, the voltage amplitude and frequency of the source are 100 V and 500 Hz, respectively; <math><mrow><mi>R</mi><mo>=</mo><mn>500</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow></math>; and <math><mrow><mi>L</mi><mo>=</mo><mn>0.20</mn><mspace width="0.2em"></mspace><mtext>H</mtext></mrow></math>. Find the average power dissipated in the resistor for the following values for the capacitance: (a) <math><mrow><mi>C</mi><mo>=</mo><mn>2.0</mn><mi>μ</mi><mtext>F</mtext></mrow></math> and (b) <math><mrow><mi>C</mi><mo>=</mo><mn>0.20</mn><mspace width="0.2em"></mspace><mi>μ</mi><mtext>F</mtext><mtext>.</mtext></mrow></math></p>
+</div>
+<div class="solution">
+<p>a. 5.3 W; b. 2.1 W</p></div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>An ac source of voltage amplitude 10 V delivers electric energy at a rate of 0.80 W when its current output is 2.5 A. What is the phase angle <math><mi>ϕ</mi></math> between the emf and the current?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>An <em>RLC</em> series circuit has an impedance of <math><mrow><mn>60</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow></math> and a power factor of 0.50, with the voltage lagging the current. (a) Should a capacitor or an inductor be placed in series with the elements to raise the power factor of the circuit? (b) What is the value of the reactance across the inductor that will raise the power factor to unity?</p></div>
+<div class="solution">
+<p>a. inductor; b. <math><mrow><msub><mi>X</mi><mi>L</mi></msub><mo>=</mo><mn>52</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext></mrow></math></p>
+</div>
+</div>
+</div>
+ <h2>Key terms</h2>
+<p><strong>average power</strong> time average of the instantaneous power over one cycle</p>
+<p><strong>power factor</strong> amount by which the power delivered in the circuit is less than the theoretical maximum of the circuit due to voltage and current being out of phase</p>
+
+</body></html>

@@ -1,0 +1,5222 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11.4 Series and Their Notations · Precalculus 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Precalculus 2e, Abramson et al., section 11.4 Series and Their Notations. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/precalculus-2e/pages/11-4-series-and-their-notations</p>
+<h1>11.4 Series and Their Notations</h1>
+
+<div class="section coreq-skills"><div class="section learning-objectives"><h4>Learning Objectives</h4><ul><li>Use summation notation to write a sum. (IA 12.1.5)</li><li>Find the sum of the first n terms of an arithmetic sequence. (IA 12.2.3)</li></ul></div><div class="section"><h4>Objective 1: Use summation notation to write a sum. (IA 12.1.5)</h4><p>A <strong>series</strong> is the sum of the terms of a sequence. For example,  1 + 6 + 11+ 16 + 21 + 26 + 31 is the sum of the first seven terms arithmetic sequence with general term, <math><mpadded lspace="+1px"><msub><mi>a</mi><mi>n</mi></msub></mpadded><mo>=</mo><mn>5</mn><mi>n</mi><mo>-</mo><mn>4</mn><mo>.</mo></math> </p><p>We write a series by using the <strong>summation notation</strong>. In order to write that summation, we will need to find the general term of our sequence and the summation will look like:
+</p><figure><img src="9_4_1.jpg" alt="Explanation of summation notion as described in the text."></figure><p>For the series, 1 + 6 + 11 + 16  + 21 + 26 + 31 + .... the summation notation is <math><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mn>7</mn></munderover><mn>5</mn><mi>n</mi><mo>-</mo><mn>4</mn></math> </p><div class="example"><p>
+Use summation notation to write the sum.
+
+</p><div class="exercise"><div class="problem">
+  <p>
+Write the sum using summation notation: <math><mn>1</mn><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>5</mn></mfrac></math>
+
+  </p>
+</div>
+
+
+<div class="solution">
+<table><tr><td></td><td> <math><mtable><mtr><mtd><mi>n</mi><mo>:</mo></mtd><mtd><mn>1</mn><mo>,</mo></mtd><mtd><mn>2</mn><mo>,</mo></mtd><mtd><mn>3</mn><mo>,</mo></mtd><mtd><mn>4</mn><mo>,</mo></mtd><mtd><mn>5</mn></mtd></mtr></mtable></math> </td></tr><tr><td>Look for a pattern in the terms.</td><td>Terms: <math><mtable><mtr><mtd></mtd><mtd><mn>1</mn><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>5</mn></mfrac></mtd></mtr></mtable></math> </td></tr><tr><td>The numerators are all one. The denominators are the counting numbers from 1 thru 5.</td><td>Pattern: <math><mtable><mtr><mtd></mtd><mtd><mn>1</mn><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo></mtd><mtd><mfrac><mn>1</mn><mn>5</mn></mfrac></mtd></mtr></mtable></math> </td></tr><tr><td>The general terms is:</td><td> <math><mfrac><mn>1</mn><mi>n</mi></mfrac></math> </td></tr><tr><td>The sum in summation notation is:</td><td> <math><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mn>5</mn></munderover><mfrac><mn>1</mn><mi>n</mi></mfrac></math> </td></tr></table></div></div></div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><p>
+Use summation notation to write the sum.
+</p><div class="exercise"><div class="problem">
+  <p>Write the sum using summation notation: <math><mn>1</mn><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>9</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>16</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>25</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>36</mn></mfrac></math>
+  </p>
+</div>
+</div><div class="exercise"><div class="problem"><p>Write the sum using summation notation: <math><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>9</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>81</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>243</mn></mfrac></math>
+</p></div></div>
+</div></div><div class="section"><h4>Objective 2: Find the sum of the first n terms of an arithmetic sequence. (IA 12.2.3)</h4><div class="note"><h5>Sum of the First <em>n</em> Terms of an Arithmetic Sequence</h5><p>The sum, <math><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>,</mo></mrow></math> of the first <em>n</em> terms of an arithmetic sequence is</p>
+<div class="eq"> <math><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>n</mi><mn>2</mn></mfrac><mo stretchy="false">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow></math> </div>
+<p>where <math><mrow><msub><mi>a</mi><mn>1</mn></msub></mrow></math> is the first term and <math><mrow><msub><mi>a</mi><mi>n</mi></msub></mrow></math> is the <em>n</em>th term.</p>
+</div><div class="example"><p>
+Find the sum of the first n terms of an arithmetic sequence.
+</p><div class="exercise"><div class="problem">
+  <p>
+<ul><li>ⓐ Find the sum of the first 30 terms of the arithmetic sequence: 7, 10, 13, 13, 19,...</li><li>ⓑ Find the sum of the first 50 terms of the arithmetic sequence whose general term is <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>-</mo><mn>5</mn></math> .</li><li>ⓒ Find the sum <br>
+ <math><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>30</mn></munderover><mo>(</mo><mn>6</mn><mi>i</mi><mo>-</mo><mn>4</mn><mo>)</mo></math> </li></ul></p>
+</div>
+
+<div class="solution">
+<ul><li>ⓐ
+  <p>To find the sum of the 30 first terms, we use the formula <math><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>n</mi><mn>2</mn></mfrac><mo>(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo>)</mo></math>.
+</p>
+<p>We know that <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>7</mn><mo>,</mo><mo> </mo><mi>d</mi><mo>=</mo><mn>3</mn><mo> </mo><mo>,</mo><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>n</mi><mo>=</mo><mn>30</mn><mo> </mo></math> but we need to find <math><msub><mi>a</mi><mn>30</mn></msub></math> .</p>
+<table><tr><td>To find the 30th term, use the formula <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>7</mn><mo>,</mo><mo> </mo><mi>d</mi><mo>=</mo><mn>3</mn><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>n</mi><mo>=</mo><mn>30</mn></math> .</td><td> <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><mo>(</mo><mi>n</mi><mo>-</mo><mn>1</mn><mo>)</mo><mi>d</mi></math> </td></tr><tr><td>Substitute</td><td> <math><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>7</mn><mo>+</mo><mo>(</mo><mn>30</mn><mo>-</mo><mn>1</mn><mo>)</mo><mo>(</mo><mn>3</mn><mo>)</mo></math> </td></tr><tr><td>Simplify</td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>7</mn><mo>+</mo><mo>(</mo><mn>29</mn><mo>)</mo><mo>(</mo><mn>3</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>7</mn><mo>+</mo><mn>87</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>94</mn></mtd></mtr></mtable></math> </td></tr><tr><td>To find <math><msub><mi>S</mi><mn>30</mn></msub></math> use the formula with <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>7</mn><mo>,</mo><mo> </mo><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>94</mn><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>n</mi><mo>=</mo><mn>30</mn><mo>.</mo></math> </td><td> <math><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>n</mi><mn>2</mn></mfrac><mo>(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo>)</mo></math> </td></tr><tr><td>Substitute and simplify</td><td> <math><mtable><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mfrac><mn>30</mn><mn>2</mn></mfrac><mo>(</mo><mn>7</mn><mo>+</mo><mn>94</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mn>15</mn><mo>(</mo><mn>101</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mn>1515</mn></mtd></mtr></mtable></math> </td></tr></table>
+</li><li>ⓑ
+<p>To the sum of the first 50 terms of the arithmetic sequence whose general term is <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>-</mo><mn>5</mn></math> . We need to find <math><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub><mo> </mo><mi>and</mi><mo> </mo><msub><mi mathvariant="normal">a</mi><mn>50</mn></msub></math> and substitute in the formula.
+</p><table><tr><td>Find <math><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub></math> </td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>-</mo><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>(</mo><mn>1</mn><mo>)</mo><mo>-</mo><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>3</mn></mtd></mtr></mtable></math> </td></tr><tr><td>Find <math><msub><mi mathvariant="normal">a</mi><mn>50</mn></msub></math> </td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>-</mo><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>50</mn></msub><mo>=</mo><mn>2</mn><mo>(</mo><mn>50</mn><mo>)</mo><mo>-</mo><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>50</mn></msub><mo>=</mo><mn>95</mn></mtd></mtr></mtable></math> </td></tr><tr><td>Then find <math><msub><mi mathvariant="normal">S</mi><mn>50</mn></msub></math> , use the formula with <math><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>3</mn><mo>,</mo><mo> </mo><msub><mi mathvariant="normal">a</mi><mn>50</mn></msub><mo>=</mo><mn>95</mn><mo> </mo><mi>and</mi><mo> </mo><mi mathvariant="normal">n</mi><mo>=</mo><mn>50</mn><mo>.</mo></math> </td><td> <math><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>n</mi><mn>2</mn></mfrac><mo>(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo>)</mo></math> </td></tr><tr><td>Substitute and simplify</td><td> <math><mtable><mtr><mtd><msub><mi>S</mi><mn>50</mn></msub><mo>=</mo><mfrac><mn>50</mn><mn>2</mn></mfrac><mo>(</mo><mo>-</mo><mn>3</mn><mo>+</mo><mn>95</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>S</mi><mn>50</mn></msub><mo>=</mo><mn>25</mn><mo>(</mo><mn>92</mn><mo>)</mo></mtd></mtr></mtable></math> </td></tr><tr><td></td><td> <math><msub><mi>S</mi><mn>50</mn></msub><mo>=</mo><mn>2300</mn></math> </td></tr></table>
+
+</li><li>ⓒ
+<p> <math><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>30</mn></munderover><mo>(</mo><mn>6</mn><mi>i</mi><mo>-</mo><mn>4</mn><mo>)</mo></math> means find the sum of the first 30 terms of the sequence whose general term is <math><mn>6</mn><mi>i</mi><mo>-</mo><mn>4</mn></math> . We need to find <math><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub><mo> </mo><mi>and</mi><mo> </mo><msub><mi mathvariant="normal">a</mi><mn>30</mn></msub></math> and substitute in the formula.
+
+</p><table><tr><td>Find <math><msub><mi mathvariant="normal">a</mi><mn>1</mn></msub></math> </td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>i</mi></msub><mo>=</mo><mn>6</mn><mi>i</mi><mo>-</mo><mn>4</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>6</mn><mo>(</mo><mn>1</mn><mo>)</mo><mo>-</mo><mn>4</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn></mtd></mtr></mtable></math> </td></tr><tr><td>Find <math><msub><mi mathvariant="normal">a</mi><mn>30</mn></msub></math> </td><td> <math><mtable><mtr><mtd><msub><mi>a</mi><mi>i</mi></msub><mo>=</mo><mn>6</mn><mi>i</mi><mo>-</mo><mn>4</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>6</mn><mo>(</mo><mn>30</mn><mo>)</mo><mo>-</mo><mn>4</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>176</mn></mtd></mtr></mtable></math> </td></tr><tr><td>Then find <math><msub><mi>S</mi><mn>30</mn></msub></math> , use the formula with <math><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>,</mo><mo> </mo><msub><mi>a</mi><mn>30</mn></msub><mo>=</mo><mn>176</mn><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>n</mi><mo>=</mo><mn>30</mn><mo>.</mo></math> </td><td> <math><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>n</mi><mn>2</mn></mfrac><mo>(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><mo>)</mo></math> </td></tr><tr><td>Substitute and simplify</td><td> <math><mtable><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mfrac><mn>30</mn><mn>2</mn></mfrac><mo>(</mo><mn>2</mn><mo>+</mo><mn>176</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mn>15</mn><mo>(</mo><mn>178</mn><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>S</mi><mn>30</mn></msub><mo>=</mo><mn>2630</mn></mtd></mtr></mtable></math> </td></tr></table></li></ul></div>
+</div></div></div><div class="section"><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><div class="exercise"><div class="problem">
+  <p>Find the sum of the first 30 terms of the arithmetic sequence: 16, 10, 4, –2, –8, ………
+
+  </p></div>
+</div><div class="exercise"><div class="problem">
+  <p>
+Find the sum of the first 50 terms of the arithmetic sequence whose general term is <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>+</mo><mn>7</mn></math> .
+
+  </p>
+</div>
+
+</div><div class="exercise"><div class="problem">
+  <p>
+Find the sum: <math><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>30</mn></munderover><mo>(</mo><mn>7</mn><mi>i</mi><mo>-</mo><mn>5</mn><mo>)</mo></math>
+  </p>
+</div>
+
+
+</div></div></div></div><p>A parent decides to start a college fund for their daughter. They plan to invest $50 in the fund each month. The fund pays 6% annual interest, compounded monthly. How much money will they have saved when their daughter is ready to start college in 6 years? In this section, we will learn how to answer this question. To do so, we need to consider the amount of money invested and the amount of interest earned.</p>
+<div class="section"><h3>Using Summation Notation</h3><p>To find the total amount of money in the college fund and the sum of the amounts deposited, we need to add the amounts deposited each month and the amounts earned monthly. The sum of the terms of a sequence is called a <strong>series</strong>. Consider, for example, the following series.</p>
+<div class="eq"> <math display="block">
+<mrow>
+<mn>3</mn><mo>+</mo><mn>7</mn><mo>+</mo><mn>11</mn><mo>+</mo><mn>15</mn><mo>+</mo><mn>19</mn><mo>+</mo><mn>...</mn>
+</mrow>
+</math> </div>
+<p>The <strong><em>n</em>th partial sum</strong> of a series is the sum of a finite number of consecutive terms beginning with the first term. The notation <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+</mrow>
+</math> represents the partial sum.</p><div class="eq"> <math display="block">
+<mtable columnalign="left">
+<mtr>
+<mtd>
+<msub>
+<mi>S</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>3</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>S</mi>
+<mn>2</mn>
+</msub>
+<mo>=</mo><mn>3</mn><mo>+</mo><mn>7</mn><mo>=</mo><mn>10</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>S</mi>
+<mn>3</mn>
+</msub>
+<mo>=</mo><mn>3</mn><mo>+</mo><mn>7</mn><mo>+</mo><mn>11</mn><mo>=</mo><mn>21</mn>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msub>
+<mi>S</mi>
+<mn>4</mn>
+</msub>
+<mo>=</mo><mn>3</mn><mo>+</mo><mn>7</mn><mo>+</mo><mn>11</mn><mo>+</mo><mn>15</mn><mo>=</mo><mn>36</mn>
+</mtd>
+</mtr>
+</mtable>
+</math> </div>
+<p><strong>Summation notation </strong>is used to represent series. Summation notation is often known as sigma notation because it uses the Greek capital letter <strong>sigma</strong>, <math>
+ <mrow>
+  <mtext>Σ</mtext><mo>,</mo>
+ </mrow>
+</math> to represent the sum. Summation notation includes an explicit formula and specifies the first and last terms in the series. An explicit formula for each term of the series is given to the right of the sigma. A variable called the <strong>index of summation </strong>is written below the sigma. The index of summation is set equal to the <strong>lower limit of summation</strong>, which is the number used to generate the first term in the series. The number above the sigma, called the <strong>upper limit of summation</strong>, is the number used to generate the last term in a series.</p>
+<figure><img src="CNX_Precalc_Figure_11_04_001n.jpg" alt="Explanation of summation notion as described in the text."></figure>
+<p>If we interpret the given notation, we see that it asks us to find the sum of the terms in the series <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>k</mi>
+  </msub>
+  <mo>=</mo><mn>2</mn><mi>k</mi>
+ </mrow>
+</math> for <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> through <math>
+ <mrow>
+ <mi>k</mi><mo>=</mo><mn>5.</mn>
+ </mrow>
+</math> We can begin by substituting the terms for <math>
+<mi>k</mi>
+</math> and listing out the terms of this series.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mrow></mrow>
+       </mtd>
+      </mtr>
+      <mtr>
+       <mtd>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn>
+       </mtd>
+      </mtr>
+     </mtable>
+
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mn>8</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo><mo>=</mo><mn>10</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>We can find the sum of the series by adding the terms:</p>
+<div class="eq"> <math display="block">
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mn>5</mn>
+</munderover>
+<mrow>
+<mn>2</mn><mi>k</mi>
+</mrow>
+</mstyle><mo>=</mo><mn>2</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>8</mn><mo>+</mo><mn>10</mn><mo>=</mo><mn>30</mn>
+</mrow>
+</math> </div>
+
+<div class="note">
+
+<h4>Summation Notation</h4>
+<p>The sum of the first <math>
+<mi>n</mi>
+</math> terms of a <strong>series </strong>can be expressed in <strong>summation notation</strong> as follows:</p>
+<div class="eq"> <math display="block">
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mi>n</mi>
+</munderover>
+<mrow>
+<msub>
+<mi>a</mi>
+<mi>k</mi>
+</msub>
+
+</mrow>
+</mstyle>
+</mrow>
+</math> </div>
+<p>This notation tells us to find the sum of <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mi>k</mi>
+</msub>
+
+</mrow>
+</math> from <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+</math> to <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mi>n</mi><mo>.</mo>
+</mrow>
+</math> </p><p> <math>
+ <mrow>
+<mi>k</mi>
+ </mrow>
+</math> is called the <strong>index of summation</strong>, 1 is the <strong>lower limit of summation</strong>, and <math>
+<mi>n</mi>
+</math> is the <strong>upper limit of summation</strong>.</p></div>
+<div class="note precalculus qa">
+
+<p><strong>Does the lower limit of summation have to be 1?</strong></p>
+<p><em>No. The lower limit of summation can be any number, but 1 is frequently used. We will look at examples with lower limits of summation other than 1.</em></p>
+</div>
+<div class="note how-to-notitle">
+
+<p><strong>Given summation notation for a series, evaluate the value.</strong></p>
+<ol><li>Identify the lower limit of summation.</li><li>Identify the upper limit of summation.</li><li>Substitute each value of <math>
+<mi>k</mi>
+</math> from the lower limit to the upper limit into the formula.</li><li>Add to find the sum.</li></ol></div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Using Summation Notation</h6>
+<p>Evaluate <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>3</mn>
+</mrow>
+<mn>7</mn>
+</munderover>
+<mrow>
+<msup>
+<mi>k</mi>
+<mn>2</mn>
+</msup>
+
+</mrow>
+</mstyle><mo>.</mo>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>According to the notation, the lower limit of summation is 3 and the upper limit is 7. So we need to find the sum of <math>
+<mrow>
+<msup>
+<mi>k</mi>
+<mn>2</mn>
+</msup>
+
+</mrow>
+</math> from <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>3</mn>
+</mrow>
+</math> to <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>7.</mn>
+</mrow>
+</math> We find the terms of the series by substituting <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>3</mn><mtext>,</mtext><mn>4</mn><mtext>,</mtext><mn>5</mn><mtext>,</mtext><mn>6</mn><mtext>,</mtext>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mn>7</mn>
+ </mrow>
+</math> into the function <math>
+<mrow>
+<msup>
+<mi>k</mi>
+<mn>2</mn>
+</msup>
+<mo>.</mo>
+</mrow>
+</math> We add the terms to find the sum.</p><div class="eq"> <math display="block">
+<mrow>
+<mtable columnalign="left">
+<mtr columnalign="left">
+<mtd columnalign="left">
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>3</mn>
+</mrow>
+<mn>7</mn>
+</munderover>
+<mrow>
+<msup>
+<mi>k</mi>
+<mn>2</mn>
+</msup>
+
+</mrow>
+</mstyle>
+</mrow>
+</mtd>
+<mtd columnalign="left">
+<mrow>
+<mo>=</mo><msup>
+<mn>3</mn>
+<mn>2</mn>
+</msup>
+<mo>+</mo><msup>
+<mn>4</mn>
+<mn>2</mn>
+</msup>
+<mo>+</mo><msup>
+<mn>5</mn>
+<mn>2</mn>
+</msup>
+<mo>+</mo><msup>
+<mn>6</mn>
+<mn>2</mn>
+</msup>
+<mo>+</mo><msup>
+<mn>7</mn>
+<mn>2</mn>
+</msup>
+
+</mrow>
+</mtd>
+</mtr>
+<mtr columnalign="left">
+<mtd columnalign="left">
+<mrow></mrow>
+</mtd>
+<mtd columnalign="left">
+<mrow>
+<mo>=</mo><mn>9</mn><mo>+</mo><mn>16</mn><mo>+</mo><mn>25</mn><mo>+</mo><mn>36</mn><mo>+</mo><mn>49</mn>
+</mrow>
+</mtd>
+</mtr>
+<mtr columnalign="left">
+<mtd columnalign="left">
+<mrow></mrow>
+</mtd>
+<mtd columnalign="left">
+<mrow>
+<mo>=</mo><mn>135</mn>
+</mrow>
+</mtd>
+</mtr>
+
+</mtable>
+</mrow>
+</math> </div>
+</div>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Evaluate <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>2</mn>
+</mrow>
+<mn>5</mn>
+</munderover>
+<mrow>
+<mo stretchy="false">(</mo><mn>3</mn><mi>k</mi><mo>–</mo><mn>1</mn><mo stretchy="false">)</mo>
+</mrow>
+</mstyle><mo>.</mo>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>38</p>
+</div>
+</div>
+</div>
+</div><div class="section"><h3>Using the Formula for Arithmetic Series</h3><p>Just as we studied special types of sequences, we will look at special types of series. Recall that an <strong>arithmetic sequence</strong> is a sequence in which the difference between any two consecutive terms is the <strong>common difference</strong>, <math>
+<mrow>
+<mi>d</mi><mo>.</mo>
+</mrow>
+</math> The sum of the terms of an arithmetic sequence is called an <strong>arithmetic series</strong>. We can write the sum of the first <math>
+<mi>n</mi>
+</math> terms of an arithmetic series as:</p><div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mn>2</mn><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mn>...</mn><mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>–</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>.</mo>
+</mrow>
+</math> </div>
+<p>We can also reverse the order of the terms and write the sum as</p>
+<div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>–</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>–</mo><mn>2</mn><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mn>...</mn><mo>+</mo><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>.</mo>
+</mrow>
+</math> </div>
+<p>If we add these two expressions for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of an arithmetic series, we can derive a formula for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of any arithmetic series.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mtable columnalign="left">
+     <mtr columnalign="left">
+      <mtd columnalign="left">
+       <mrow>
+        <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msub>
+         <mi>S</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><mn>2</mn><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mn>...</mn><mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>–</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+
+       </mrow>
+      </mtd>
+     </mtr>
+     <mtr columnalign="left">
+      <mtd columnalign="left">
+       <mrow>
+        <mo>+</mo><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msub>
+         <mi>S</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>–</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>–</mo><mn>2</mn><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><mn>...</mn><mo>+</mo><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><mi>d</mi><mo stretchy="false">)</mo><mo>+</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+
+       </mrow>
+      </mtd>
+     </mtr>
+
+    </mtable>
+   </mrow>
+   <mrow>
+    <mn>2</mn><msub>
+     <mi>S</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mo stretchy="false">(</mo><msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>+</mo><msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>+</mo><msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo><mo>+</mo><mn>...</mn><mo>+</mo><mo stretchy="false">(</mo><msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>+</mo><msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</div><p>Because there are <math>
+<mi>n</mi>
+</math> terms in the series, we can simplify this sum to</p><div class="eq"> <math display="block">
+<mrow>
+<mn>2</mn><msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo stretchy="false">)</mo><mo>.</mo>
+</mrow>
+</math> </div><p>We divide by 2 to find the formula for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of an arithmetic series.</p><div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<mi>n</mi><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+</math> </div><div class="note">
+
+<h4>Formula for the Sum of the First <em>n</em> Terms of an Arithmetic Series</h4>
+<p>An <strong>arithmetic series</strong> is the sum of the terms of an arithmetic sequence. The formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of an arithmetic sequence is</p><div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<mi>n</mi><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+</math> </div>
+</div>
+<div class="note how-to-notitle">
+
+<p><strong>Given terms of an arithmetic series, find the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms.</strong></p><ol><li>Identify <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> and <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo>.</mo>
+</mrow>
+</math> </li><li>Determine <math>
+<mrow>
+<mi>n</mi><mo>.</mo>
+</mrow>
+</math> </li><li>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mtext>, </mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mtext>,</mtext>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> into the formula <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<mi>n</mi><mo stretchy="false">(</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msub>
+<mi>a</mi>
+<mi>n</mi>
+</msub>
+<mo stretchy="false">)</mo>
+</mrow>
+<mn>2</mn>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> </li><li>Simplify to find <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>.</mo>
+</mrow>
+</math> </li></ol></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the First <em>n</em> Terms of an Arithmetic Series</h6>
+<p>Find the sum of each arithmetic series.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <mtext>5 + 8 + 11 + 14 + 17 + 20 + 23 + 26 + 29 + 32</mtext>
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <mtext>20 + 15 + 10 +…+ −50</mtext></mrow>
+</math>
+</li><li>ⓒ <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mrow>
+<mn>12</mn>
+</mrow>
+</munderover>
+<mrow>
+<mn>3</mn><mi>k</mi><mo>−</mo><mn>8</mn>
+</mrow>
+</mstyle>
+</mrow>
+</math> </li></ol></div>
+<div class="solution">
+<ol><li>ⓐ
+<p>We are given <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>5</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>32.</mn>
+ </mrow>
+</math> </p><p>Count the number of terms in the sequence to find <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>10.</mn>
+ </mrow>
+</math> </p><p>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+<mtext>,</mtext>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> into the formula and simplify.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mo> </mo><msub>
+           <mi>S</mi>
+           <mi>n</mi>
+          </msub>
+          <mo>=</mo><mfrac>
+           <mrow>
+            <mi>n</mi><mo stretchy="false">(</mo><msub>
+             <mi>a</mi>
+             <mn>1</mn>
+            </msub>
+            <mo>+</mo><msub>
+             <mi>a</mi>
+             <mi>n</mi>
+            </msub>
+            <mo stretchy="false">)</mo>
+           </mrow>
+           <mn>2</mn>
+          </mfrac>
+
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>10</mn><mo stretchy="false">(</mo><mn>5</mn><mo>+</mo><mn>32</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mn>185</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div></li><li>ⓑ
+<p>We are given <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>20</mn>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>50.</mn>
+ </mrow>
+</math>
+</p><p>Use the formula for the general term of an arithmetic sequence to find <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math>
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>d</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>−</mo><mn>50</mn><mo>=</mo><mn>20</mn><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>−</mo><mn>70</mn><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mn>14</mn><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mspace width="0.5em"></mspace><mn>15</mn><mo>=</mo><mi>n</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mtext>,</mtext><mspace width="0.5em"></mspace><mi>n</mi>
+ </mrow>
+</math> into the formula and simplify.<br></p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mrow></mrow>
+       </mtd>
+      </mtr>
+      <mtr>
+       <mtd>
+        <msub>
+         <mi>S</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><mfrac>
+         <mrow>
+          <mi>n</mi><mo stretchy="false">(</mo><msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><msub>
+           <mi>a</mi>
+           <mi>n</mi>
+          </msub>
+          <mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </mfrac>
+
+       </mtd>
+      </mtr>
+     </mtable>
+
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mrow>
+        <mn>15</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>15</mn><mo stretchy="false">(</mo><mn>20</mn><mo>−</mo><mn>50</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mo>−</mo><mn>225</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li><li>ⓒ
+<p>To find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> substitute <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> into the given explicit formula.</p><div class="eq"> <math>
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>k</mi>
+      </msub>
+      <mo>=</mo><mn>3</mn><mi>k</mi><mo>−</mo><mn>8</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext></mtext><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>8</mn><mo>=</mo><mo>−</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div>
+<p>We are given that <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>12.</mn>
+ </mrow>
+</math> To find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> substitute <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mn>12</mn>
+ </mrow>
+</math> into the given explicit formula.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext></mtext><msub>
+       <mi>a</mi>
+       <mi>k</mi>
+      </msub>
+      <mo>=</mo><mn>3</mn><mi>k</mi><mo>−</mo><mn>8</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>12</mn><mo stretchy="false">)</mo><mo>−</mo><mn>8</mn><mo>=</mo><mn>28</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> into the formula and simplify.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext></mtext><msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mi>n</mi><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>12</mn><mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo>+</mo><mn>28</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mn>138</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div></li></ol></div>
+</div></div>
+
+<p>Use the formula to find the sum of each arithmetic series.</p>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtext>1</mtext><mtext>.4 + 1</mtext><mtext>.6 + 1</mtext><mtext>.8 + 2</mtext><mtext>.0 + 2</mtext><mtext>.2 + 2</mtext><mtext>.4 + 2</mtext><mtext>.6 + 2</mtext><mtext>.8 + 3</mtext><mtext>.0 + 3</mtext><mtext>.2 + 3</mtext><mtext>.4</mtext>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtext>26</mtext><mtext>.4</mtext>
+ </mrow>
+</math>
+</p></div>
+</div>
+</div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mtext>13 + 21 + 29 + </mtext><mo>…</mo><mtext>+ 69</mtext>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtext>328</mtext>
+ </mrow>
+</math>
+</p></div>
+</div>
+
+</div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mrow>
+<mn>10</mn>
+</mrow>
+</munderover>
+<mn>5</mn>
+</mstyle><mo>−</mo><mn>6</mn><mi>k</mi>
+</mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+ <mtext>−280</mtext></mrow>
+</math>
+</p></div>
+</div>
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Solving Application Problems with Arithmetic Series</h6>
+<p>On the Sunday after a minor surgery, a woman is able to walk a half-mile. Each Sunday, she walks an additional quarter-mile. After 8 weeks, what will be the total number of miles she has walked?</p>
+</div>
+<div class="solution">
+<p>This problem can be modeled by an arithmetic series with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>d</mi><mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> We are looking for the total number of miles walked after 8 weeks, so we know that <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>8</mn><mtext>,</mtext>
+ </mrow>
+</math> and we are looking for <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>8</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> To find <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>8</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> we can use the explicit formula for an arithmetic sequence. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mrow></mrow>
+       </mtd>
+      </mtr>
+      <mtr>
+       <mtd>
+        <msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo>=</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><mi>d</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+       </mtd>
+      </mtr>
+     </mtable>
+
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>8</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+      <mo>+</mo><mfrac>
+       <mn>1</mn>
+       <mn>4</mn>
+      </mfrac>
+      <mo stretchy="false">(</mo><mn>8</mn><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+       <mn>9</mn>
+       <mn>4</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>We can now use the formula for arithmetic series.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo> </mo><msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mi>n</mi><mo stretchy="false">(</mo><msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>+</mo><msub>
+         <mi>a</mi>
+         <mi>n</mi>
+        </msub>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext> </mtext><msub>
+       <mi>S</mi>
+       <mn>8</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>8</mn><mo stretchy="false">(</mo><mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+        <mo>+</mo><mfrac>
+         <mn>9</mn>
+         <mn>4</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+      <mo>=</mo><mn>11</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>She will have walked a total of 11 miles.</p>
+</div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>A man earns $100 in the first week of June. Each week, he earns $12.50 more than the previous week. After 12 weeks, how much has he earned?</p>
+</div>
+<div class="solution">
+<p>$2,025</p>
+</div>
+</div>
+</div>
+</div><div class="section"><h3>Using the Formula for Geometric Series</h3><p>Just as the sum of the terms of an arithmetic sequence is called an arithmetic series, the sum of the terms in a geometric sequence is called a <strong>geometric series</strong>. Recall that a <strong>geometric sequence</strong> is a sequence in which the ratio of any two consecutive terms is the <strong>common ratio</strong>, <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo>
+ </mrow>
+</math> We can write the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of a geometric series as</p><div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mi>r</mi><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msup>
+<mi>r</mi>
+<mn>2</mn>
+</msup>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mn>...</mn><mo>+</mo><msup>
+<mi>r</mi>
+<mrow>
+<mi>n</mi><mo>–</mo><mn>1</mn>
+</mrow>
+</msup>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>.</mo>
+</mrow>
+</math> </div><p>Just as with arithmetic series, we can do some algebraic manipulation to derive a formula for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of a geometric series. We will begin by multiplying both sides of the equation by <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo>
+ </mrow>
+</math> </p><div class="eq"> <math display="block">
+<mrow>
+<mi>r</mi><msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mi>r</mi><msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msup>
+<mi>r</mi>
+<mn>2</mn>
+</msup>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><msup>
+<mi>r</mi>
+<mn>3</mn>
+</msup>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>+</mo><mn>...</mn><mo>+</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> </div><p>Next, we subtract this equation from the original equation.<br></p><div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <mrow></mrow>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mfrac>
+     <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mspace width="0.5em"></mspace><mtext>   </mtext><msub>
+           <mi>S</mi>
+           <mi>n</mi>
+          </msub>
+          <mo>=</mo><msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><mi>r</mi><msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><msup>
+           <mi>r</mi>
+           <mn>2</mn>
+          </msup>
+          <msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><mn>...</mn><mo>+</mo><msup>
+           <mi>r</mi>
+           <mrow>
+            <mi>n</mi><mo>–</mo><mn>1</mn>
+           </mrow>
+          </msup>
+          <msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+
+         </mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mo>−</mo><mi>r</mi><msub>
+           <mi>S</mi>
+           <mi>n</mi>
+          </msub>
+          <mo>=</mo><mo>−</mo><mo stretchy="false">(</mo><mi>r</mi><msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><msup>
+           <mi>r</mi>
+           <mn>2</mn>
+          </msup>
+          <msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><msup>
+           <mi>r</mi>
+           <mn>3</mn>
+          </msup>
+          <msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo>+</mo><mn>...</mn><mo>+</mo><msup>
+           <mi>r</mi>
+           <mi>n</mi>
+          </msup>
+          <msub>
+           <mi>a</mi>
+           <mn>1</mn>
+          </msub>
+          <mo stretchy="false">)</mo>
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+     <mrow>
+      <mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>−</mo><msup>
+       <mi>r</mi>
+       <mi>n</mi>
+      </msup>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+
+     </mrow>
+    </mfrac>
+
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math>
+</div><p>Notice that when we subtract, all but the first term of the top equation and the last term of the bottom equation cancel out. To obtain a formula for <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>,</mo>
+</mrow>
+</math> divide both sides by <math>
+<mrow>
+<mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>r</mi><mo stretchy="false">)</mo><mo>.</mo>
+</mrow>
+</math> </p><div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mspace width="0.5em"></mspace><mtext>r</mtext><mo>≠</mo><mtext>1</mtext>
+</mrow>
+</math> </div>
+<div class="note">
+
+<h4>Formula for the Sum of the First <em>n</em> Terms of a Geometric Series</h4>
+<p>A <strong>geometric series</strong> is the sum of the terms in a geometric sequence. The formula for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of a geometric sequence is represented as</p>
+<div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mspace width="0.5em"></mspace><mtext>r</mtext><mo>≠</mo><mtext>1</mtext>
+</mrow>
+</math> </div>
+</div>
+<div class="note how-to-notitle">
+
+<strong>Given a geometric series, find the sum of the first <em>n</em> terms.</strong>
+<ol><li>Identify <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><mspace width="0.5em"></mspace><mi>r</mi><mo>,</mo><mspace width="0.5em"></mspace><mtext>and</mtext><mspace width="0.5em"></mspace><mi>n</mi><mo>.</mo>
+ </mrow>
+</math>
+</li><li>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><mspace width="0.5em"></mspace><mi>r</mi><mo>,</mo>
+ </mrow>
+</math> and <math>
+<mi>n</mi>
+</math> into the formula <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">(</mo><mn>1</mn><mo>–</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mn>1</mn><mo>–</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> </li><li>Simplify to find <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math>
+</li></ol></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the First <em>n</em> Terms of a Geometric Series</h6>
+<p>Use the formula to find the indicated partial sum of each geometric series.</p>
+<ol><li>ⓐ <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mrow>
+<mn>11</mn>
+</mrow>
+</msub>
+
+</mrow>
+</math> for the series <math>
+ <mrow>
+  <mtext>8 + -4 + 2 + </mtext><mo>…</mo>
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+ <mrow>
+  <munderover>
+   <mrow>
+    <msup>
+     <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+     <mtext>​</mtext>
+    </msup>
+
+   </mrow>
+   <mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow>
+
+    <mn>6</mn>
+
+  </munderover>
+  <mn>3</mn><mo>⋅</mo><msup>
+   <mn>2</mn>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math>
+</li></ol></div>
+<div class="solution">
+<ol><li>ⓐ
+<p> <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>8</mn><mo>,</mo>
+</mrow>
+</math> and we are given that <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>11.</mn>
+</mrow>
+</math> </p><p>We can find <math>
+<mi>r</mi>
+</math> by dividing the second term of the series by the first.</p><div class="eq"> <math display="block">
+<mrow>
+<mi>r</mi><mo>=</mo><mfrac>
+<mrow>
+<mo>−</mo><mn>4</mn>
+</mrow>
+<mn>8</mn>
+</mfrac>
+<mo>=</mo><mo>−</mo><mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+</math> </div>
+<p>Substitute values for <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>,</mo><mo> </mo><mi>r</mi><mo>,</mo><mo> </mo><mtext>and</mtext><mo> </mo><mi>n</mi>
+</mrow>
+</math> into the formula and simplify.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mrow><mo>(</mo>
+         <mrow>
+          <mn>1</mn><mo>−</mo><msup>
+           <mi>r</mi>
+           <mi>n</mi>
+          </msup>
+
+         </mrow>
+        <mo>)</mo></mrow>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mrow>
+        <mn>11</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>8</mn><mrow><mo>(</mo>
+         <mrow>
+          <mn>1</mn><mo>−</mo><msup>
+           <mrow>
+            <mrow><mo>(</mo>
+             <mrow>
+              <mo>−</mo><mfrac>
+               <mn>1</mn>
+               <mn>2</mn>
+              </mfrac>
+
+             </mrow>
+            <mo>)</mo></mrow>
+           </mrow>
+           <mrow>
+            <mn>11</mn>
+           </mrow>
+          </msup>
+
+         </mrow>
+        <mo>)</mo></mrow>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mrow><mo>(</mo>
+         <mrow>
+          <mo>−</mo><mfrac>
+           <mn>1</mn>
+           <mn>2</mn>
+          </mfrac>
+
+         </mrow>
+        <mo>)</mo></mrow>
+       </mrow>
+      </mfrac>
+      <mo>≈</mo><mn>5.336</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li><li>ⓑ
+<p>Find <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> by substituting <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+</math> into the given explicit formula.</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>3</mn><mo>⋅</mo><msup>
+   <mn>2</mn>
+   <mn>1</mn>
+  </msup>
+  <mo>=</mo><mn>6</mn>
+ </mrow>
+</math>
+</div><p>We can see from the given explicit formula that <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mn>2.</mn>
+</mrow>
+</math> The upper limit of summation is 6, so <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>6.</mn>
+</mrow>
+</math> </p><p>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><mspace width="0.5em"></mspace><mi>r</mi><mo>,</mo>
+ </mrow>
+</math> and <math>
+<mi>n</mi>
+</math> into the formula, and simplify.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+         <mi>r</mi>
+         <mi>n</mi>
+        </msup>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mn>6</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>6</mn><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+         <mn>2</mn>
+         <mn>6</mn>
+        </msup>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mn>2</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mn>378</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li></ol>
+</div>
+</div></div>
+
+<p>Use the formula to find the indicated partial sum of each geometric series.</p>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p> <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mrow>
+<mn>20</mn>
+</mrow>
+</msub>
+
+</mrow>
+</math> for the series <math>
+ <mrow>
+  <mtext>1,000 + 500 + 250 + </mtext><mo>…</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+<mrow>
+<mo>≈</mo><mn>2</mn><mo>,</mo><mn>000.00</mn>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mn>8</mn>
+</munderover>
+<mrow>
+<msup>
+<mn>3</mn>
+<mi>k</mi>
+</msup>
+
+</mrow>
+</mstyle>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>9,840</p>
+</div>
+</div>
+
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Solving an Application Problem with a Geometric Series</h6>
+<p>At a new job, an employee’s starting salary is $26,750. He receives a 1.6% annual raise. Find his total earnings at the end of 5 years.</p>
+</div>
+<div class="solution">
+<p>The problem can be represented by a geometric series with <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>26</mn><mo>,</mo><mn>750</mn><mtext>;</mtext>
+ </mrow>
+</math> <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>5</mn><mtext>;</mtext>
+ </mrow>
+</math> and <math>
+ <mrow>
+<mi>r</mi><mo>=</mo><mn>1.016.</mn>
+ </mrow>
+</math> Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mtext>,</mtext>
+ </mrow>
+</math> <math>
+ <mrow>
+  <mi>r</mi><mtext>,</mtext>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> into the formula and simplify to find the total amount earned at the end of 5 years.<br></p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+         <mi>r</mi>
+         <mi>n</mi>
+        </msup>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>S</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>26</mn><mtext>,</mtext><mn>750</mn><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+         <mrow>
+          <mn>1.016</mn>
+         </mrow>
+         <mn>5</mn>
+        </msup>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mn>1.016</mn>
+       </mrow>
+      </mfrac>
+      <mo>≈</mo><mn>138</mn><mtext>,</mtext><mn>099.03</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>He will have earned a total of $138,099.03 by the end of 5 years.</p>
+</div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>At a new job, an employee’s starting salary is $32,100. She receives a 2% annual raise. How much will she have earned by the end of 8 years?</p>
+</div>
+<div class="solution">
+<p>$275,513.31</p>
+</div>
+</div>
+</div>
+
+</div><div class="section">
+<h3>Using the Formula for the Sum of an Infinite Geometric Series</h3><p>Thus far, we have looked only at finite series. Sometimes, however, we are interested in the sum of the terms of an infinite sequence rather than the sum of only the first <math>
+<mi>n</mi>
+</math> terms. An <strong>infinite series</strong> is the sum of the terms of an infinite sequence. An example of an infinite series is <math>
+<mrow>
+<mn>2</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>8</mn><mo>+</mo><mn>...</mn>
+</mrow>
+</math> </p>
+<p>This series can also be written in summation notation as <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mi>∞</mi>
+</munderover>
+<mrow>
+<mn>2</mn><mi>k</mi><mo>,</mo>
+</mrow>
+</mstyle>
+</mrow>
+</math> where the upper limit of summation is infinity. Because the terms are not tending to zero, the sum of the series increases without bound as we add more terms. Therefore, the sum of this infinite series is not defined. When the sum is not a real number, we say the series <strong>diverges</strong>.</p><div class="section"><h4>Determining Whether the Sum of an Infinite Geometric Series is Defined</h4><p>If the terms of an <strong>infinite geometric sequence</strong> approach 0, the sum of an infinite geometric series can be defined.  The terms in this series approach 0:</p><div class="eq"> <math display="block">
+<mrow>
+<mn>1</mn><mo>+</mo><mn>0.2</mn><mo>+</mo><mn>0.04</mn><mo>+</mo><mn>0.008</mn><mo>+</mo><mn>0.0016</mn><mo>+</mo><mn>...</mn>
+</mrow>
+</math> </div>
+<p>The common ratio <math>
+ <mrow>
+  <mi>r</mi><mspace width="0.5em"></mspace><mtext>= 0</mtext><mtext>.2</mtext><mo>.</mo>
+ </mrow>
+</math>
+ As <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> gets very large, the values of <math>
+<mrow>
+<msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+
+</mrow>
+</math> get very small and approach 0.   Each successive term affects the sum less than the preceding term. As each succeeding term gets closer to 0, the sum of the terms approaches a finite value. The terms of any infinite geometric series with <math>
+<mrow>
+<mo>−</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1</mn>
+</mrow>
+</math> approach 0; the sum of a geometric series is defined when <math>
+<mrow>
+<mo>−</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1.</mn>
+</mrow>
+</math> </p><div class="note">
+
+<h5>Determining Whether the Sum of an Infinite Geometric Series is Defined</h5>
+<p>The sum of an infinite series is defined if the series is geometric and <math>
+<mrow>
+<mo>−</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1.</mn>
+</mrow>
+</math> </p></div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given the first several terms of an infinite series, determine if the sum of the series exists.</strong></p>
+<ol><li>Find the ratio of the second term to the first term.</li><li>Find the ratio of the third term to the second term.</li><li>Continue this process to ensure the ratio of a term to the preceding term is constant throughout. If so, the series is geometric.</li><li>If a common ratio, <math>
+<mrow>
+<mi>r</mi><mo>,</mo>
+</mrow>
+</math> was found in step 3, check to see if <math>
+<mrow>
+<mo>−</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1</mn>
+</mrow>
+</math> . If so, the sum is defined. If not, the sum is not defined.</li></ol></div><div class="example">
+<div class="exercise">
+<div class="problem">
+<h7>Determining Whether the Sum of an Infinite Series is Defined</h7>
+<p>Determine whether the sum of each infinite series is defined.</p>
+<ol><li>ⓐ <math>
+ <mrow>
+  <mtext>12 + 8 + 4 + </mtext><mo>…</mo>
+ </mrow>
+</math>
+</li><li>ⓑ <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mn>4</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mo>+</mo><mn>...</mn>
+</mrow>
+</math> </li><li>ⓒ <math>
+ <mrow>
+  <munderover>
+   <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+   <mi>∞</mi>
+  </munderover>
+  <mn>27</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mfrac>
+     <mn>1</mn>
+     <mn>3</mn>
+    </mfrac>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math>
+</li><li> ⓓ <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mi>∞</mi>
+</munderover>
+<mrow>
+<mn>5</mn><mi>k</mi>
+</mrow>
+</mstyle>
+</mrow>
+</math> </li></ol></div>
+<div class="solution">
+<ol><li>ⓐThe ratio of the second term to the first is <math>
+ <mrow>
+  <mfrac>
+   <mtext>2</mtext>
+   <mtext>3</mtext>
+  </mfrac>
+  <mo>,</mo>
+ </mrow>
+</math>
+ which is not the same as the ratio of the third term to the second, <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> The series is not geometric.</li><li>ⓑThe ratio of the second term to the first is the same as the ratio of the third term to the second. The series is geometric with a common ratio of <math>
+<mrow>
+<mfrac>
+<mn>2</mn>
+<mn>3</mn>
+</mfrac>
+<mtext>.</mtext>
+</mrow>
+</math> The sum of the infinite series is defined.</li><li>ⓒThe given formula is exponential with a base of <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mtext>;</mtext>
+</mrow>
+</math> the series is geometric with a common ratio of <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mtext>.</mtext>
+</mrow></math> The sum of the infinite series is defined.</li><li> ⓓThe given formula is not exponential; the series is not geometric because the terms are increasing, and so cannot yield a finite sum.</li></ol></div>
+</div>
+</div>
+
+<p>Determine whether the sum of the infinite series is defined.</p>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>3</mn>
+<mn>4</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>9</mn>
+<mn>8</mn>
+</mfrac>
+<mo>+</mo><mn>...</mn>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>The sum is not defined.</p></div>
+</div>
+
+</div><div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>24</mn><mo>+</mo><mrow><mo>(</mo>
+<mrow>
+<mn>−12</mn>
+</mrow>
+<mo>)</mo></mrow><mo>+</mo><mn>6</mn><mo>+</mo><mrow><mo>(</mo>
+<mrow>
+<mn>−3</mn>
+</mrow>
+<mo>)</mo></mrow><mo>+</mo><mn>...</mn>
+</mrow>
+</math> </p></div>
+<div class="solution">
+<p>The sum of the infinite series is defined.</p>
+</div>
+</div>
+</div><div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <munderover>
+   <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+   <mi>∞</mi>
+  </munderover>
+  <mn>15</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>–</mo><mn>0.3</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>The sum of the infinite series is defined.</p>
+</div>
+</div>
+</div>
+</div><div class="section"><h4>Finding Sums of Infinite Series</h4><p>When the sum of an infinite geometric series exists, we can calculate the sum. The formula for the sum of an infinite series is related to the formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of a geometric series.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+     <mi>r</mi>
+     <mi>n</mi>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mi>r</mi>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</div><p>We will examine an infinite series with <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> What happens to <math>
+ <mrow>
+<msup>
+   <mi>r</mi>
+   <mi>n</mi>
+  </msup>
+ </mrow>
+</math> as <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> increases?</p><div class="eq"> <math display="block">
+<mtable columnalign="left">
+<mtr>
+<mtd>
+<msup>
+<mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+<mn>2</mn>
+</msup>
+<mo>=</mo><mfrac>
+<mn>1</mn>
+<mn>4</mn>
+</mfrac>
+
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msup>
+<mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+<mn>3</mn>
+</msup>
+<mo>=</mo><mfrac>
+<mn>1</mn>
+<mn>8</mn>
+</mfrac>
+
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<msup>
+<mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+<mn>4</mn>
+</msup>
+<mo>=</mo><mfrac>
+<mn>1</mn>
+<mrow>
+<mn>16</mn>
+</mrow>
+</mfrac>
+
+</mtd>
+</mtr>
+</mtable>
+
+</math>
+</div>
+<p>The value of <math>
+ <mrow>
+  <msup>
+   <mi>r</mi>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> decreases rapidly. What happens for greater values of <math>
+<mrow>
+<mi>n</mi><mo>?</mo>
+</mrow>
+</math> </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+      </msup>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mrow>
+        <mn>1</mn><mtext>,</mtext><mn>024</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>20</mn>
+       </mrow>
+      </msup>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mrow>
+        <mn>1</mn><mtext>,</mtext><mn>048</mn><mtext>,</mtext><mn>576</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>30</mn>
+       </mrow>
+      </msup>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mrow>
+        <mn>1</mn><mtext>,</mtext><mn>073</mn><mtext>,</mtext><mn>741</mn><mtext>,</mtext><mn>824</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>As <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> gets very large, <math>
+<mrow>
+<msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+
+</mrow>
+</math> gets very small. We say that, as <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> increases without bound, <math>
+<mrow>
+<msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+
+</mrow>
+</math> approaches 0. As <math>
+ <mrow>
+  <msup>
+   <mi>r</mi>
+   <mi>n</mi>
+  </msup>
+ </mrow>
+</math> approaches 0, <math>
+<mrow>
+<mn>1</mn><mo>−</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+
+</mrow>
+</math> approaches 1. When this happens, the numerator approaches <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> This give us a formula for the sum of an infinite geometric series.</p><div class="note">
+
+<h5>Formula for the Sum of an Infinite Geometric Series</h5>
+<p>The formula for the sum of an infinite geometric series with <math>
+<mrow>
+<mn>−1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1</mn>
+</mrow>
+</math> is</p><div class="eq"> <math display="block">
+<mrow>
+<mi>S</mi><mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mi>r</mi>
+</mrow>
+</mfrac>
+
+</mrow>
+</math> </div>
+</div>
+<div class="note how-to-notitle">
+
+<p><strong>Given an infinite geometric series, find its sum.</strong></p>
+<ol><li>Identify <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> and <math>
+<mrow>
+<mi>r</mi><mo>.</mo>
+</mrow>
+</math> </li><li>Confirm that <math>
+<mrow>
+<mo>–</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1.</mn>
+</mrow>
+</math> </li><li>Substitute values for <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> and <math>
+<mi>r</mi>
+</math> into the formula, <math>
+<mrow>
+<mi>S</mi><mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math>
+</li><li>Simplify to find <math>
+ <mrow>
+  <mi>S</mi><mo>.</mo>
+ </mrow>
+</math> </li></ol></div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h7>Finding the Sum of an Infinite Geometric Series</h7>
+<p>Find the sum, if it exists, for the following:</p>
+<ol><li>ⓐ <math>
+<mrow>
+<mn>10</mn><mo>+</mo><mn>9</mn><mo>+</mo><mn>8</mn><mo>+</mo><mn>7</mn><mo>+</mo><mo>…</mo>
+</mrow>
+</math> </li><li>ⓑ <math>
+<mrow>
+<mn>248.6</mn><mo>+</mo><mn>99.44</mn><mo>+</mo><mn>39.776</mn><mo>+</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>…</mo>
+</mrow>
+</math> </li><li>ⓒ <math>
+ <mrow>
+  <munderover>
+   <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+   <mi>∞</mi>
+  </munderover>
+  <mn>4</mn><mtext>,</mtext><mn>374</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>–</mo><mfrac>
+     <mn>1</mn>
+     <mn>3</mn>
+    </mfrac>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>k</mi><mo>–</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</li><li> ⓓ <math>
+ <mrow>
+  <munderover>
+   <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+   <mi>∞</mi>
+  </munderover>
+  <mfrac>
+   <mn>1</mn>
+   <mn>9</mn>
+  </mfrac>
+  <mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mfrac>
+     <mn>4</mn>
+     <mn>3</mn>
+    </mfrac>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mi>k</mi>
+  </msup>
+
+ </mrow>
+</math>
+</li></ol></div>
+<div class="solution">
+<ol><li>ⓐThere is not a constant ratio; the series is not geometric.</li><li>ⓑ
+<p>There is a constant ratio; the series is geometric. <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>248.6</mn>
+</mrow>
+</math> and <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mfrac>
+<mrow>
+<mn>99.44</mn>
+</mrow>
+<mrow>
+<mn>248.6</mn>
+</mrow>
+</mfrac>
+<mo>=</mo><mn>0.4</mn><mo>,</mo>
+</mrow>
+</math> so the sum exists. Substitute <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>248.6</mn>
+</mrow>
+</math> and <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mn>0.4</mn>
+</mrow>
+</math> into the formula and simplify to find the sum:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>S</mi><mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>S</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mn>248.6</mn>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mn>0.4</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mn>414.</mn><mover accent="true">
+       <mn>3</mn>
+       <mo>¯</mo>
+      </mover>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li><li>ⓒ
+<p>The formula is exponential, so the series is geometric with <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mo>–</mo><mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> Find <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+</math> by substituting <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+</math> into the given explicit formula:</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>4</mn><mtext>,</mtext><mn>374</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>–</mo><mfrac>
+     <mn>1</mn>
+     <mn>3</mn>
+    </mfrac>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>–</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mo>=</mo><mn>4</mn><mtext>,</mtext><mn>374</mn>
+ </mrow>
+</math>
+</div><p>Substitute <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>4</mn><mtext>,</mtext><mn>374</mn>
+ </mrow>
+</math> and <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mo>−</mo><mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+</mrow>
+</math> into the formula, and simplify to find the sum:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>S</mi><mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mi>r</mi>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>S</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mn>4</mn><mtext>,</mtext><mn>374</mn>
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>−</mo><mo stretchy="false">(</mo><mo>−</mo><mfrac>
+         <mn>1</mn>
+         <mn>3</mn>
+        </mfrac>
+        <mo stretchy="false">)</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mn>3</mn><mtext>,</mtext><mn>280.5</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></li><li> ⓓThe formula is exponential, so the series is geometric, but <math>
+ <mrow>
+  <mi>r</mi><mo>&gt;</mo><mn>1.</mn>
+ </mrow>
+</math> The sum does not exist.</li></ol></div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h7>Finding an Equivalent Fraction for a Repeating Decimal</h7>
+<p>Find an equivalent fraction for the repeating decimal <math>
+ <mn>0.</mn><mover accent="true"><mn>3</mn><mo>¯</mo></mover>
+</math>
+</p></div>
+<div class="solution">
+<p>We notice the repeating decimal <math>
+
+  <mn>0.</mn><mover accent="true"><mn>3</mn><mo>¯</mo></mover>
+  <mo>=</mo><mn>0.333...</mn>
+
+</math> so we can rewrite the repeating decimal as a sum of terms.</p><div class="eq"> <math display="block">
+ <mn>0.</mn><mover accent="true"><mn>3</mn><mo>¯</mo></mover>
+  <mo>=</mo><mn>0.3</mn><mo>+</mo><mn>0.03</mn><mo>+</mo><mn>0.003</mn><mo>+</mo><mn>...</mn>
+
+</math>
+</div><p>Looking for a pattern, we rewrite the sum, noticing that we see the first term multiplied to 0.1 in the second term, and the second term multiplied to 0.1 in the third term.</p>
+<figure><img src="CNX_Precalc_Figure_11_04_002.jpg" alt="The image shows how to decompose a repeating decimal into an infinite geometric series using the example decimal."></figure><p>Notice the pattern; we multiply each consecutive term by a common ratio of 0.1 starting with the first term of 0.3. So, substituting into our formula for an infinite geometric sum, we have</p>
+<div class="eq"> <math display="block">
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mo>=</mo><mfrac>
+<mrow>
+<mn>0.3</mn>
+</mrow>
+<mrow>
+<mn>1</mn><mo>−</mo><mn>0.1</mn>
+</mrow>
+</mfrac>
+<mo>=</mo><mfrac>
+<mrow>
+<mn>0.3</mn>
+</mrow>
+<mrow>
+<mn>0.9</mn>
+</mrow>
+</mfrac>
+<mo>=</mo><mfrac>
+<mn>1</mn>
+<mn>3</mn>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> </div>
+</div>
+</div></div>
+
+<p>Find the sum, if it exists.</p>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>2</mn><mo>+</mo><mfrac>
+<mn>2</mn>
+<mn>3</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>2</mn>
+<mn>9</mn>
+</mfrac>
+<mo>+</mo><mn>...</mn>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>3</p>
+</div>
+</div>
+</div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mi>∞</mi>
+</munderover>
+<mrow>
+<mn>0.76</mn><mi>k</mi><mo>+</mo><mn>1</mn>
+</mrow>
+</mstyle>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>The series is not geometric.</p>
+</div>
+</div>
+</div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mi>∞</mi>
+</munderover>
+<mrow>
+<msup>
+<mrow>
+<mrow><mo>(</mo>
+<mrow>
+<mo>−</mo><mfrac>
+<mn>3</mn>
+<mn>8</mn>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+</mrow>
+<mi>k</mi>
+</msup>
+
+</mrow>
+</mstyle>
+</mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+<mrow>
+<mo>−</mo><mfrac>
+<mn>3</mn>
+<mrow>
+<mn>11</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math> </p>
+</div>
+</div>
+</div>
+
+</div></div>
+<div class="section"><h3>Solving Annuity Problems</h3><p>At the beginning of the section, we looked at a problem in which a parent invested a set amount of money each month into a college fund for six years. An <strong>annuity</strong> is an investment in which the purchaser makes a sequence of periodic, equal payments. To find the amount of an annuity, we need to find the sum of all the payments and the interest earned. In the example, the parent invests $50 each month. This is the value of the initial deposit. The account paid 6% <strong>annual interest</strong>, compounded monthly. To find the interest rate per payment period, we need to divide the 6% annual percentage interest (APR) rate by 12. So the monthly interest rate is 0.5%. We can multiply the amount in the account each month by 100.5% to find the value of the account after interest has been added.</p><p>We can find the value of the annuity right after the last deposit by using a geometric series with <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>50</mn>
+</mrow>
+</math> and <math>
+<mrow>
+<mi>r</mi><mo>=</mo><mn>100.5</mn><mi>%</mi><mo>=</mo><mn>1.005.</mn>
+</mrow>
+</math> After the first deposit, the value of the annuity will be $50. Let us see if we can determine the amount in the college fund and the interest earned.</p><p>We can find the value of the annuity after <math>
+<mi>n</mi>
+</math> deposits using the formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of a geometric series. In 6 years, there are 72 months, so <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>72.</mn>
+</mrow>
+</math> We can substitute <math>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo>=</mo><mn>50</mn><mo>,</mo><mo> </mo><mi>r</mi><mo>=</mo><mn>1.005</mn><mo>,</mo><mo> </mo><mtext>and</mtext><mo> </mo><mi>n</mi><mo>=</mo><mn>72</mn>
+</mrow>
+</math> into the formula, and simplify to find the value of the annuity after 6 years.</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mrow>
+    <mn>72</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>50</mn><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+     <mrow>
+      <mn>1.005</mn>
+     </mrow>
+     <mrow>
+      <mn>72</mn>
+     </mrow>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mn>1.005</mn>
+   </mrow>
+  </mfrac>
+  <mo>≈</mo><mn>4</mn><mtext>,</mtext><mn>320.44</mn>
+ </mrow>
+</math>
+</div><p>After the last deposit, the parent will have a total of $4,320.44 in the account. Notice, the parent made 72 payments of $50 each for a total of <math>
+ <mrow>
+  <mtext>72(50) = $3,600</mtext><mtext>.</mtext>
+ </mrow>
+</math> This means that because of the annuity, the parent earned $720.44 interest in their college fund.</p>
+<div class="note how-to-notitle">
+
+<p><strong>Given an initial deposit and an interest rate, find the value of an annuity.</strong></p>
+<ol><li>Determine <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mtext>,</mtext>
+ </mrow>
+</math> the value of the initial deposit.</li><li>Determine <math>
+ <mrow>
+  <mi>n</mi><mtext>,</mtext>
+ </mrow>
+</math> the number of deposits.</li><li>Determine <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo>
+ </mrow>
+</math>
+<ol><li>Divide the annual interest rate by the number of times per year that interest is compounded.</li><li>Add 1 to this amount to find <math>
+<mrow>
+<mi>r</mi><mo>.</mo>
+</mrow>
+</math> </li></ol></li><li>Substitute values for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mtext>,</mtext><mspace width="0.5em"></mspace><mi>r</mi><mo>,</mo><mspace width="0.5em"></mspace><mtext>and</mtext><mspace width="0.5em"></mspace><mi>n</mi>
+ </mrow>
+</math>
+into the formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of a geometric series, <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<msub>
+<mi>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">(</mo><mn>1</mn><mo>–</mo><msup>
+<mi>r</mi>
+<mi>n</mi>
+</msup>
+<mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mn>1</mn><mo>–</mo><mi>r</mi>
+</mrow>
+</mfrac>
+<mo>.</mo>
+</mrow>
+</math> </li><li>Simplify to find <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mi>n</mi>
+</msub>
+<mo>,</mo>
+</mrow>
+</math> the value of the annuity after <math>
+<mi>n</mi>
+</math> deposits.</li></ol></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Solving an Annuity Problem</h6>
+<p>A deposit of $100 is placed into a college fund at the beginning of every month for 10 years. The fund earns 9% annual interest, compounded monthly, and paid at the end of the month. How much is in the account right after the last deposit?</p>
+
+</div>
+<div class="solution">
+<p>The value of the initial deposit is $100, so <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>100.</mn>
+ </mrow>
+</math> A total of 120 monthly deposits are made in the 10 years, so <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>120.</mn>
+</mrow>
+</math> To find <math>
+ <mrow>
+  <mi>r</mi><mo>,</mo>
+ </mrow>
+</math> divide the annual interest rate by 12 to find the monthly interest rate and add 1 to represent the new monthly deposit.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>1</mn><mo>+</mo><mfrac>
+   <mrow>
+    <mn>0.09</mn>
+   </mrow>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>1.0075</mn>
+ </mrow>
+</math>
+</div><p>Substitute <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>100</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mi>r</mi><mo>=</mo><mn>1.0075</mn><mtext>,</mtext><mspace width="0.5em"></mspace><mtext>and</mtext><mspace width="0.5em"></mspace><mi>n</mi><mo>=</mo><mn>120</mn>
+ </mrow>
+</math> into the formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of a geometric series, and simplify to find the value of the annuity.</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mrow>
+    <mn>120</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>100</mn><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+     <mrow>
+      <mn>1.0075</mn>
+     </mrow>
+     <mrow>
+      <mn>120</mn>
+     </mrow>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mn>1.0075</mn>
+   </mrow>
+  </mfrac>
+  <mo>≈</mo><mn>19</mn><mtext>,</mtext><mn>351.43</mn>
+ </mrow>
+</math>
+</div><p>So the account has $19,351.43 after the last deposit is made.</p></div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>At the beginning of each month, $200 is deposited into a retirement fund. The fund earns 6% annual interest, compounded monthly, and paid into the account at the end of the month. How much is in the account if deposits are made for 10 years?</p>
+</div>
+<div class="solution">
+<p>$32,775.87</p></div>
+</div>
+</div>
+
+<div class="note media-notitle">
+
+<p>Access these online resources for additional instruction and practice with series.</p>
+<ul><li><a href="https://openstax.org/l/arithmeticser" target="_blank" rel="noopener noreferrer">Arithmetic Series</a></li><li><a href="https://openstax.org/l/geometricser" target="_blank" rel="noopener noreferrer">Geometric Series</a></li><li><a href="https://openstax.org/l/sumnotation" target="_blank" rel="noopener noreferrer">Summation Notation</a></li></ul>
+</div>
+</div><div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td>sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math>
+terms of an arithmetic series</td><td> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo stretchy="false">(</mo><msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>+</mo><msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math>
+</td></tr><tr><td>sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math>
+terms of a geometric series</td><td> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup>
+     <mi>r</mi>
+     <mi>n</mi>
+    </msup>
+    <mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mi>r</mi>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mi>r</mi><mo>≠</mo><mn>1</mn>
+ </mrow>
+</math>
+</td></tr><tr><td>sum of an infinite geometric series with <math>
+ <mrow>
+  <mo>–</mo><mn>1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>1</mn>
+ </mrow>
+</math> </td><td> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mi>r</mi>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mi>r</mi><mo>≠</mo><mn>1</mn>
+ </mrow>
+</math>
+</td></tr></table></div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>The sum of the terms in a sequence is called a series.</li><li>A common notation for series is called summation notation, which uses the Greek letter sigma to represent the sum. See .</li><li>The sum of the terms in an arithmetic sequence is called an arithmetic series.</li><li>The sum of the first <math>
+<mi>n</mi>
+</math> terms of an arithmetic series can be found using a formula. See  and .</li><li>The sum of the terms in a geometric sequence is called a geometric series.</li><li>The sum of the first <math>
+<mi>n</mi>
+</math> terms of a geometric series can be found using a formula. See  and .</li><li>The sum of an infinite series exists if the series is geometric with <math>
+<mrow>
+<mn>–1</mn><mo>&lt;</mo><mi>r</mi><mo>&lt;</mo><mn>1.</mn>
+</mrow>
+</math> </li><li>If the sum of an infinite series exists, it can be found using a formula. See , , and .</li><li>An annuity is an account into which the investor makes a series of regularly scheduled payments. The value of an annuity can be found using geometric series. See .</li></ul></div>
+
+<div class="section section-exercises">
+<h3>Section Exercises</h3>
+<div class="section">
+<h4>Verbal</h4>
+<div class="exercise">
+<div class="problem">
+<p>What is an <math>
+<mrow>
+<mi>n</mi><mtext>th</mtext>
+</mrow>
+</math> partial sum?</p></div>
+<div class="solution">
+<p>An <math>
+<mrow>
+<mi>n</mi><mtext>th</mtext>
+</mrow>
+</math> partial sum is the sum of the first <math>
+<mi>n</mi>
+</math> terms of a sequence.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is the difference between an arithmetic sequence and an arithmetic series?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is a geometric series?</p>
+</div>
+<div class="solution">
+<p>A geometric series is the sum of the terms in a geometric sequence.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>How is finding the sum of an infinite geometric series different from finding the <math>
+<mrow>
+<mi>n</mi><mtext>th</mtext>
+</mrow>
+</math> partial sum?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is an annuity?</p>
+</div>
+<div class="solution">
+<p>An annuity is a series of regular equal payments that earn a constant compounded interest.</p>
+</div>
+</div>
+</div>
+<div class="section"><h4>Algebraic</h4><p>For the following exercises, express each description of a sum using summation notation.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum of terms <math>
+<mrow>
+<msup>
+<mi>m</mi>
+<mn>2</mn>
+</msup>
+<mo>+</mo><mn>3</mn><mi>m</mi>
+</mrow>
+</math>
+from <math>
+<mrow>
+<mi>m</mi><mo>=</mo><mn>1</mn>
+</mrow>
+</math>
+to <math>
+<mrow>
+<mi>m</mi><mo>=</mo><mn>5</mn>
+</mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum from  of <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>0</mn>
+</mrow>
+</math>
+to <math>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>4</mn>
+</mrow>
+</math>
+of <math>
+<mrow>
+<mn>5</mn><mi>n</mi>
+</mrow>
+</math>
+</p></div>
+<div class="solution"><p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>n</mi><mo>=</mo><mn>0</mn>
+</mrow>
+<mn>4</mn>
+</munderover>
+<mrow>
+<mn>5</mn><mi>n</mi>
+</mrow>
+</mstyle>
+</mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum of <math>
+<mrow>
+<mn>6</mn><mi>k</mi><mo>−</mo><mn>5</mn>
+</mrow>
+</math>
+from <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mo>−</mo><mn>2</mn>
+</mrow>
+</math>
+to <math>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum that results from adding the number 4 five times</p></div>
+<div class="solution">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mn>5</mn>
+</munderover>
+<mn>4</mn>
+</mstyle>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+<p>For the following exercises, express each arithmetic sum using summation notation.</p>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>5</mn><mo>+</mo><mn>10</mn><mo>+</mo><mn>15</mn><mo>+</mo><mn>20</mn><mo>+</mo><mn>25</mn><mo>+</mo><mn>30</mn><mo>+</mo><mn>35</mn><mo>+</mo><mn>40</mn><mo>+</mo><mn>45</mn><mo>+</mo><mn>50</mn>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>10</mn><mo>+</mo><mn>18</mn><mo>+</mo><mn>26</mn><mo>+</mo><mo>…</mo><mo>+</mo><mn>162</mn>
+</mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+<mrow>
+<mstyle displaystyle="true">
+<munderover>
+<mo>∑</mo>
+<mrow>
+<mi>k</mi><mo>=</mo><mn>1</mn>
+</mrow>
+<mrow>
+<mn>20</mn>
+</mrow>
+</munderover>
+<mrow>
+<mn>8</mn><mi>k</mi><mo>+</mo><mn>2</mn>
+</mrow>
+</mstyle>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mn>1</mn><mo>+</mo><mfrac>
+<mn>3</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mn>2</mn><mo>+</mo><mo>…</mo><mo>+</mo><mn>4</mn>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<p>For the following exercises, use the formula for the sum of the first <math>
+<mi>n</mi>
+</math> terms of each arithmetic sequence.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mn>2</mn><mo>+</mo><mfrac>
+<mn>5</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mn>3</mn><mo>+</mo><mfrac>
+<mn>7</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mn>5</mn>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<mn>5</mn><mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mn>2</mn>
+</mfrac>
+<mo>+</mo><mfrac>
+<mn>7</mn>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+</mrow>
+<mn>2</mn>
+</mfrac>
+
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>19</mn><mo>+</mo><mn>25</mn><mo>+</mo><mn>31</mn><mo>+</mo><mo>…</mo><mo>+</mo><mn>73</mn>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+<mrow>
+<mn>3.2</mn><mo>+</mo><mn>3.4</mn><mo>+</mo><mn>3.6</mn><mo>+</mo><mo>…</mo><mo>+</mo><mn>5.6</mn>
+</mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+<mrow>
+<msub>
+<mi>S</mi>
+<mrow>
+<mn>13</mn>
+</mrow>
+</msub>
+<mo>=</mo><mfrac>
+<mrow>
+<mn>13</mn><mrow><mo>(</mo>
+<mrow>
+<mn>3.2</mn><mo>+</mo><mn>5.6</mn>
+</mrow>
+<mo>)</mo></mrow>
+</mrow>
+<mn>2</mn>
+</mfrac>
+</mrow>
+</math>
+</p>
+</div>
+</div>
+
+<p>For the following exercises, express each geometric sum using summation notation.</p>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+<mn>1</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>9</mn><mo>+</mo><mn>27</mn><mo>+</mo><mn>81</mn><mo>+</mo><mn>243</mn><mo>+</mo><mn>729</mn><mo>+</mo><mn>2187</mn>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+<mn>8</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>2</mn><mo>+</mo><mo>…</mo><mo>+</mo><mn>0.125</mn>
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mn>7</mn>
+   </munderover>
+   <mrow>
+    <mn>8</mn><mo>⋅</mo><msup>
+     <mrow>
+      <mn>0.5</mn>
+     </mrow>
+     <mrow>
+      <mi>k</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>6</mn>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </mfrac>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mo>…</mo><mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>768</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<p>For the following exercises, use the formula for the sum of the first <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms of each geometric sequence, and then state the indicated sum.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>9</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>1</mn><mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mn>9</mn>
+  </mfrac>
+
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>5</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>9</mn><mrow><mo>(</mo>
+     <mrow>
+      <mn>1</mn><mo>−</mo><msup>
+       <mrow>
+        <mrow><mo>(</mo>
+         <mrow>
+          <mfrac>
+           <mn>1</mn>
+           <mn>3</mn>
+          </mfrac>
+
+         </mrow>
+        <mo>)</mo></mrow>
+       </mrow>
+       <mn>5</mn>
+      </msup>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mfrac>
+     <mn>1</mn>
+     <mn>3</mn>
+    </mfrac>
+
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>121</mn>
+   </mrow>
+   <mn>9</mn>
+  </mfrac>
+  <mo>≈</mo><mn>13.44</mn>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>n</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mn>9</mn>
+   </munderover>
+   <mrow>
+    <mn>5</mn><mo>⋅</mo><msup>
+     <mn>2</mn>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>a</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mn>11</mn>
+    </mrow>
+   </munderover>
+   <mrow>
+    <mn>64</mn><mo>⋅</mo><msup>
+     <mrow>
+      <mn>0.2</mn>
+     </mrow>
+     <mrow>
+      <mi>a</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>64</mn><mrow><mo>(</mo>
+     <mrow>
+      <mn>1</mn><mo>−</mo><msup>
+       <mrow>
+        <mn>0.2</mn>
+       </mrow>
+       <mrow>
+        <mn>11</mn>
+       </mrow>
+      </msup>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mn>0.2</mn>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>781</mn><mo>,</mo><mn>249</mn><mo>,</mo><mn>984</mn>
+   </mrow>
+   <mrow>
+    <mn>9</mn><mo>,</mo><mn>765</mn><mo>,</mo><mn>625</mn>
+   </mrow>
+  </mfrac>
+  <mo>≈</mo><mn>80</mn>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<p>For the following exercises, determine whether the infinite series has a sum. If so, write the formula for the sum. If not, state the reason.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>12</mn><mo>+</mo><mn>18</mn><mo>+</mo><mn>24</mn><mo>+</mo><mn>30</mn><mo>+</mo><mn>...</mn>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>2</mn><mo>+</mo><mn>1.6</mn><mo>+</mo><mn>1.28</mn><mo>+</mo><mn>1.024</mn><mo>+</mo><mn>...</mn>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>The series is defined. <math>
+ <mrow>
+  <mi>S</mi><mo>=</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mn>0.8</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>m</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mi>∞</mi>
+   </munderover>
+   <mrow>
+    <msup>
+     <mn>4</mn>
+     <mrow>
+      <mi>m</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <munderover>
+   <mrow>
+    <msup>
+     <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+     <mtext>​</mtext>
+    </msup>
+
+   </mrow>
+   <mi>∞</mi>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+  </munderover>
+  <mo>−</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>k</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>The series is defined. <math>
+ <mrow>
+  <mi>S</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mo>−</mo><mn>1</mn>
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>−</mo><mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+</div><div class="section">
+<h4>Graphical</h4>
+
+<p>For the following exercises, use the following scenario. Javier makes monthly deposits into a savings account. He opened the account with an initial deposit of $50. Each month thereafter he increased the previous deposit amount by $20.</p><div class="exercise">
+<div class="problem"><p>Graph the arithmetic sequence showing one year of Javier’s deposits.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Graph the arithmetic series showing the monthly sums of one year of Javier’s deposits.</p>
+</div>
+<div class="solution">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_04_202.jpg" alt="Graph of Javier&#x27;s deposits where the x-axis is the months of the year and the y-axis is the sum of deposits."></figure></div>
+</div><p>For the following exercises, use the geometric series <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mstyle displaystyle="true">
+     <munderover>
+      <mo>∑</mo>
+      <mrow>
+       <mi>k</mi><mo>=</mo><mn>1</mn>
+      </mrow>
+      <mi>∞</mi>
+     </munderover>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+    </mstyle>
+   </mrow>
+   <mi>k</mi>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </p><div class="exercise">
+<div class="problem">
+<p>Graph the first 7 partial sums of the series.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What number does <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> seem to be approaching in the graph? Find the sum to explain why this makes sense.</p></div>
+<div class="solution">
+<p>Sample answer: The graph of <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> seems to be approaching 1. This makes sense because <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mi>∞</mi>
+   </munderover>
+   <mrow>
+    <msup>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+     <mi>k</mi>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> is a defined infinite geometric series with <math>
+ <mrow>
+  <mi>S</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mfrac>
+     <mn>1</mn>
+     <mn>2</mn>
+    </mfrac>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>–</mo><mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>1.</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+</div>
+<div class="section"><h4>Numeric</h4><p>For the following exercises, find the indicated sum.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>a</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mn>14</mn>
+    </mrow>
+   </munderover>
+   <mi>a</mi>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>n</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mn>6</mn>
+   </munderover>
+   <mrow>
+    <mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo>
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>49</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mn>17</mn>
+    </mrow>
+   </munderover>
+   <mrow>
+    <msup>
+     <mi>k</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mn>7</mn>
+   </munderover>
+   <mrow>
+    <msup>
+     <mn>2</mn>
+     <mi>k</mi>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>254</p>
+</div>
+</div>
+
+<p>For the following exercises, use the formula for the sum of the first <math><mi>n</mi></math> terms of an arithmetic series to find the sum.</p>
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>1.7</mn><mo>+</mo><mo>−</mo><mn>0.4</mn><mo>+</mo><mn>0.9</mn><mo>+</mo><mn>2.2</mn><mo>+</mo><mn>3.5</mn><mo>+</mo><mn>4.8</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>6</mn><mo>+</mo><mfrac>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mo>+</mo><mn>9</mn><mo>+</mo><mfrac>
+   <mrow>
+    <mn>21</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mo>+</mo><mn>12</mn><mo>+</mo><mfrac>
+   <mrow>
+    <mn>27</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mo>+</mo><mn>15</mn>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>7</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>147</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>7</mn><mo>+</mo><mn>...</mn><mo>+</mo><mn>31</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mn>11</mn>
+    </mrow>
+   </munderover>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mi>k</mi>
+       <mn>2</mn>
+      </mfrac>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>55</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<p>For the following exercises, use the formula for the sum of the first <math>
+ <mi>n</mi>
+</math> terms of a geometric series to find the partial sum.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>6</mn>
+  </msub>
+
+ </mrow>
+</math> for the series <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn><mo>−</mo><mn>10</mn><mo>−</mo><mn>50</mn><mo>−</mo><mn>250...</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>7</mn>
+  </msub>
+
+ </mrow>
+</math> for the series <math>
+ <mrow>
+  <mn>0.4</mn><mo>−</mo><mn>2</mn><mo>+</mo><mn>10</mn><mo>−</mo><mn>50...</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mn>7</mn>
+  </msub>
+  <mo>=</mo><mn>5208.4</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mn>9</mn>
+   </munderover>
+   <mrow>
+    <msup>
+     <mn>2</mn>
+     <mrow>
+      <mi>k</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>n</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mrow>
+     <mn>10</mn>
+    </mrow>
+   </munderover>
+   <mrow>
+    <mo>−</mo><mn>2</mn><mo>⋅</mo><msup>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mn>1</mn>
+         <mn>2</mn>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>S</mi>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>1023</mn>
+   </mrow>
+   <mrow>
+    <mn>256</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, find the sum of the infinite geometric series.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>4</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>1</mn><mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mn>...</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </mfrac>
+  <mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>64</mn>
+   </mrow>
+  </mfrac>
+  <mn>...</mn>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>S</mi><mo>=</mo><mo>−</mo><mfrac>
+   <mn>4</mn>
+   <mn>3</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <munderover>
+   <mrow>
+    <msup>
+     <mstyle displaystyle="true"><mo>∑</mo></mstyle>
+     <mtext>​</mtext>
+    </msup>
+
+   </mrow>
+   <mi>∞</mi>
+   <mrow>
+    <mi>k</mi><mo>=</mo><mn>1</mn>
+   </mrow>
+  </munderover>
+  <mn>3</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>1</mn>
+       <mn>4</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>k</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>n</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mi>∞</mi>
+   </munderover>
+   <mrow>
+    <mn>4.6</mn><mo>⋅</mo><msup>
+     <mrow>
+      <mn>0.5</mn>
+     </mrow>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>S</mi><mo>=</mo><mn>9.2</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, determine the value of the annuity for the indicated monthly deposit amount, the number of deposits, and the interest rate.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>Deposit amount: <math>
+ <mrow>
+  <mtext>$</mtext><mn>50</mn><mo>;</mo>
+ </mrow>
+</math> total deposits: <math>
+ <mrow>
+  <mn>60</mn><mo>;</mo>
+ </mrow>
+</math> interest rate: <math>
+ <mrow>
+  <mn>5</mn><mi>%</mi><mo>,</mo>
+ </mrow>
+</math> compounded monthly</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Deposit amount: <math>
+ <mrow>
+  <mtext>$</mtext><mn>150</mn><mo>;</mo>
+ </mrow>
+</math> total deposits: <math>
+ <mrow>
+  <mn>24</mn><mo>;</mo>
+ </mrow>
+</math> interest rate: <math>
+ <mrow>
+  <mn>3</mn><mi>%</mi><mo>,</mo>
+ </mrow>
+</math> compounded monthly</p></div>
+<div class="solution">
+<p>$3,705.42</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Deposit amount: <math>
+ <mrow>
+  <mtext>$</mtext><mn>450</mn><mo>;</mo>
+ </mrow>
+</math> total deposits: <math>
+ <mrow>
+  <mn>60</mn><mo>;</mo>
+ </mrow>
+</math> interest rate: <math>
+ <mrow>
+  <mn>4.5</mn><mi>%</mi><mo>,</mo>
+ </mrow>
+</math> compounded quarterly</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Deposit amount: <math>
+ <mrow>
+  <mtext>$</mtext><mn>100</mn><mo>;</mo>
+ </mrow>
+</math> total deposits: <math>
+ <mrow>
+  <mn>120</mn><mo>;</mo>
+ </mrow>
+</math> interest rate: <math>
+ <mrow>
+  <mn>10</mn><mi>%</mi><mo>,</mo>
+ </mrow>
+</math> compounded semi-annually</p></div>
+<div class="solution">
+<p>$695,823.97</p>
+</div>
+</div>
+</div><div class="section">
+<h4>Extensions</h4>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum of terms <math>
+ <mrow>
+  <mn>50</mn><mo>−</mo><msup>
+   <mi>k</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> from <math>
+ <mrow>
+  <mi>k</mi><mo>=</mo><mi>x</mi>
+ </mrow>
+</math> through <math>
+ <mn>7</mn>
+</math> is <math>
+ <mrow>
+  <mn>115.</mn>
+ </mrow>
+</math> What is <em>x</em>?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Write an explicit formula for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>k</mi>
+  </msub>
+ </mrow>
+</math> such that <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>0</mn>
+    </mrow>
+    <mn>6</mn>
+   </munderover>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mi>k</mi>
+    </msub>
+    <mo>=</mo><mn>189.</mn>
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> Assume this is an arithmetic series.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>k</mi>
+  </msub>
+  <mo>=</mo><mn>30</mn><mo>−</mo><mi>k</mi>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the smallest value of <em>n</em> such that <math>
+ <mrow>
+  <mstyle displaystyle="true">
+   <munderover>
+    <mo>∑</mo>
+    <mrow>
+     <mi>k</mi><mo>=</mo><mn>1</mn>
+    </mrow>
+    <mi>n</mi>
+   </munderover>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>3</mn><mi>k</mi><mo>–</mo><mn>5</mn><mo stretchy="false">)</mo><mo>&gt;</mo><mn>100.</mn>
+   </mrow>
+  </mstyle>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>How many terms must be added before the series <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>−</mo><mn>3</mn><mo>−</mo><mn>5</mn><mo>−</mo><mn>7</mn><mn>....</mn>
+ </mrow>
+</math> has a sum less than <math>
+ <mrow>
+  <mo>−</mo><mn>75</mn><mo>?</mo>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>9 terms</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Write <math>
+ <mrow>
+  <mn>0.</mn><mover accent="true">
+   <mrow>
+    <mn>65</mn>
+   </mrow>
+   <mo stretchy="true">¯</mo>
+  </mover>
+
+ </mrow>
+</math> as an infinite geometric series using summation notation. Then use the formula for finding the sum of an infinite geometric series to convert <math>
+ <mrow>
+  <mn>0.</mn><mover accent="true">
+   <mrow>
+    <mn>65</mn>
+   </mrow>
+   <mo stretchy="true">¯</mo>
+  </mover>
+
+ </mrow>
+</math> to a fraction.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>The sum of an infinite geometric series is five times the value of the first term. What is the common ratio of the series?</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>To get the best loan rates available, the Coleman family want to save enough money to place 20% down on a $160,000 home. They plan to make monthly deposits of $125 in an investment account that offers 8.5% annual interest compounded semi-annually. Will the Colemans have enough for a 20% down payment after five years of saving? How much money will they have saved?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Karl has two years to save <math>
+ <mrow>
+  <mi>$</mi><mn>10</mn><mo>,</mo><mn>000</mn>
+ </mrow>
+</math> to buy a used car when he graduates. To the nearest dollar, what would his monthly deposits need to be if he invests in an account offering a 4.2% annual interest rate that compounds monthly?</p></div>
+<div class="solution">
+<p>$400 per month</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h4>Real-World Applications</h4>
+
+<div class="exercise">
+<div class="problem">
+<p>Keisha devised a week-long study plan to prepare for finals. On the first day, she plans to study for <math>
+ <mrow>
+  <mn>1</mn>
+ </mrow>
+</math> hour, and each successive day she will increase her study time by <math>
+ <mrow>
+  <mn>30</mn>
+ </mrow>
+</math> minutes. How many hours will Keisha have studied after one week?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>A boulder rolled down a mountain, traveling 6 feet in the first second. Each successive second, its distance increased by 8 feet. How far did the boulder travel after 10 seconds?</p>
+</div>
+<div class="solution">
+<p>420 feet</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>A scientist places 50 cells in a petri dish. Every hour, the population increases by 1.5%. What will the cell count be after 1 day?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>A pendulum travels a distance of 3 feet on its first swing. On each successive swing, it travels <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>4</mn>
+  </mfrac>
+
+ </mrow>
+</math> the distance of the previous swing. What is the total distance traveled by the pendulum when it stops swinging?</p></div>
+<div class="solution">
+<p>12 feet</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Rachael deposits $1,500 into a retirement fund each year. The fund earns 8.2% annual interest, compounded monthly. If she opened her account when she was 19 years old, how much will she have by the time she is 55? How much of that amount will be interest earned?</p></div>
+</div>
+</div>
+</div>
+<h2>Key terms</h2>
+<p><strong>annuity</strong> an investment in which the purchaser makes a sequence of periodic, equal payments</p>
+
+<p><strong>arithmetic series</strong> the sum of the terms in an arithmetic sequence</p>
+
+<p><strong>diverge</strong> a series is said to diverge if the sum is not a real number</p>
+
+<p><strong>geometric series</strong> the sum of the terms in a geometric sequence</p>
+
+<p><strong>index of summation</strong> in summation notation, the variable used in the explicit formula for the terms of a series and written below the sigma with the lower limit of summation</p>
+
+<p><strong>infinite series</strong> the sum of the terms in an infinite sequence</p>
+
+<p><strong>lower limit of summation</strong> the number used in the explicit formula to find the first term in a series</p>
+
+<p><strong>nth partial sum</strong> the sum of the first <math>
+ <mi>n</mi>
+</math> terms of a sequence</p>
+
+<p><strong>series</strong> the sum of the terms in a sequence</p>
+
+<p><strong>summation notation</strong> a notation for series using the Greek letter sigma; it includes an explicit formula and specifies the first and last terms in the series</p>
+
+<p><strong>upper limit of summation</strong> the number used in the explicit formula to find the last term in a series</p>
+
+</body></html>

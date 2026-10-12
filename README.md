@@ -9,7 +9,7 @@ every device (see *On the Pi*).
 - **Spending** (`/spending/`): spending, accounts, bills, safe to spend, savings, pension, receipts.
   Both are Money: one database, two doors (`/money/` shows the lot).
 - **Log** (`/log/`): a diary of the day and the work day, with photos and voice notes.
-- **Learn** (`/learn/`): courses, a skill tree, and a feed of short cards to use instead of scrolling.
+- **Learn** (`/learn/`): courses, a skill map of tracks, and a feed of short cards to use instead of scrolling.
 
 **Home** (`/`) has a card for each: payday and safe to spend, today's log, the
 day's cards and what is due; on a new install, a **Set up Daybook** card with the
@@ -56,7 +56,7 @@ Sample data: `python3 demo.py demo-data`, then `python3 daybook.py serve --data 
 
 Checks: `python3 tests/test_money.py`, `tests/test_log.py`, `tests/test_learn.py`,
 `tests/test_suite.py`, `tests/test_skilltree.py`, `tests/test_sync.py`, `tests/test_update.py`, `tests/test_packs.py`, and `node tests/<name>.check.mjs` for calc, formula, math,
-learn, content, tree and web.
+learn, content and web.
 
 ## Money
 
@@ -117,49 +117,47 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
 
 ## Learn
 
+- **Learn home.** A big **Continue** (the next part of the lesson you are on, and
+  how long it takes), three short starts (practise the fading ones, the next stop on
+  your track, the feed), and the week: days studied as dots, minutes, lessons
+  learned and proven. The first time, **Where are you now?** places you per subject
+  in a tap (or **Find my level** for the quiz).
+- **Skill map.** Six tracks, each a project you could do at work (a VFD on a
+  conveyor, a PLC fault-find, a servo axis, A-level pure maths, an instrument loop,
+  a control panel), each a line of stops: ★ proven, ✓ learned, fading, going,
+  ready, needs something first, not written yet. One track opens as a metro map,
+  a lane per subject. **Make this my goal** puts its next stop on Learn home. A
+  track that needs an unwritten lesson says so and gives no time to finish.
+  **Prove it** on a learned stop: do the bench task for real, log it (a photo if
+  you like) and the stop is proven. Nothing locks; no points, ranks or badges.
+  The plan and what it leaves out: PLAN-SKILLTREE.md.
+- **Lessons in parts** of 5 to 8 minutes: a pause between parts ("Part 2 of 4
+  done"), never between a reading card and its question; Continue starts the next.
+  A lesson is learned when its check questions are right, wherever you answer them.
 - **Feed.** Full-screen cards, one at a time: swipe up (or ↓, Space) for the
-  next, left (←) for "too easy", right (→) to save it for later. It brings
-  what is due for review first, then the next new cards in the courses you have
-  on, then practice with new numbers, taking turns between subjects by weight.
-  After every 20 cards it sums up and offers to stop; the ring is the daily goal
-  (20 cards, or minutes, in Today → Feed settings).
-- **Skill tree.** Each subject as a map: columns are the stages (easy to hard,
-  left to right), rows are units, lines are prerequisites. Every lesson shows
-  where it stands (★ solid, ✓ learned, ◐ in progress, ○ ready, ◌ needs
-  something first, · not written yet). Pick one to see what it needs and what it
-  opens. **Make this my goal** and the tree becomes a route to it: the steps
-  numbered, the rest dimmed, the next step on Today. Nothing locks.
-  No points, ranks or badges: Today counts what matters (minutes, days and
-  lessons learned this week). A lesson is learned when its check questions are
-  right, wherever you answer them (the feed and Review count too); it then says
-  what it opened.
-  The plan and what it leaves out: PLAN-SKILLTREE.md. Ideas for more interactive
-  lessons: LESSON-INTERACTIVITY.md.
-- **Courses.** Subject, unit, lesson. A lesson is a run of cards; Continue
-  takes you back to where you were. Prerequisites show but never lock.
+  next, left (←) for "too easy", right (→) to save it for later. What is due
+  first, then new cards from one lesson (the one you are on), then practice. A
+  refresher only comes from what you have studied; a numeric card you missed comes
+  back with new numbers.
+- **Courses.** Subject, unit, lesson. Prerequisites show but never lock.
 - **Review** is only what is due. **Practice** is endless numeric questions
   with new numbers, on the lessons you pick.
-- **Stats**: a heatmap of the days, accuracy by subject, mastery by topic
-  (cards next due in 21 days or more), the hardest cards, timed study.
-- **Study timer** on Today logs focus minutes against a subject.
+- **Record**: your learning as CPD, day by day (minutes, cards, lessons learned and
+  proven), with **Download CSV**. **Stats**: a heatmap, accuracy, the hardest cards.
+  The **study timer** on Learn home logs focus minutes against a subject.
 - **My cards**: write your own (a flash card, or any type as JSON), file them in
   your own lessons or any course lesson, and import a CSV of `front,back,topic`.
-  A wrong answer becomes a flash card of its own, due at once.
-- **Whiteboard and calculator** beside any card: **Alt+W** and **Alt+C** (they
-  work while typing an answer; W and C too when not), or the links on the card.
-  On a wide screen they dock in a column at the right and the page makes room,
-  so the card is never covered; drag one by its title bar and it floats where
-  you leave it, until **Dock**. Ctrl+Z after drawing undoes the drawing. The board
-  takes a pen (with pressure), a finger or a mouse; pen, eraser, four colours,
-  four pen widths, plain, squared or graph paper (enlarging the window shows
-  more of it, it never zooms), undo and redo. One board a card, kept: when the
-  card comes back it offers your working from last time. The calculator types or
-  takes its keys (Shift for sin⁻¹ and the like): **Calc** for sums, with SI
-  prefixes (`4.7k`, `220µ`), degrees or radians, `ans` and engineering notation,
-  and **Use this answer** into the card's box; **Graph** for up to three
-  functions of x (drag to move, scroll to zoom, point to read values, Fit y);
-  **Solve** for an equation in x (`x^2 - 5 = 3x`), every root in a range, then
-  Graph it. `2x`, `3sin(30)` and `(1+2)(3)` read as written; `-2^2` is −4.
+  A wrong answer comes back: a numeric one with new numbers, any other as a flash card.
+- **The workbench** beside any card: **Alt+C** calculator, **Alt+W** whiteboard,
+  tabs in one panel docked at the right (a sheet from the bottom on a phone); the
+  card stays in view. The calculator shows the card's numbers as buttons, keeps
+  each card's sums with the card, carries units through (`230V/10A` is 23 Ω; a
+  sum that mixes units that do not match says so), shows fractions, hex and binary
+  (`0x1F`, `0b101`), takes `5!`, graphs in radians, and **Solve** finds any one
+  letter (`V = I*R`, R unknown) in a range or anywhere. **Use this answer** puts
+  it, with its unit, in the card's box. The whiteboard: pen, straight line (or
+  Shift), text, eraser, labelled widths, undo, redo and clear (with undo). One
+  board a card, kept.
 
 - **Courses from elsewhere** (My cards): an Anki deck (`.apkg`), a Moodle XML or
   GIFT quiz, or a Daybook course pack (`.zip`) becomes a subject of its own.
@@ -426,11 +424,14 @@ Tax rates live in Money's database (Settings → Tax figures). Check them each A
 
 ## Credits
 
-Some Learn lessons are adapted from OpenStax textbooks (Prealgebra 2e, Algebra and
-Trigonometry 2e, College Physics 2e, University Physics Volume 2), © Rice University,
-licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Each such
-lesson names its section in its sources and links to it. Their text was rewritten,
-shortened and set in engineering examples before Daybook's rule that lesson text is kept
-verbatim (SPEC.md §1); each is to get the original section back as an option. Lessons
-imported from now on keep their authors' words exactly, with Daybook's additions beside
-them. Download them free at https://openstax.org.
+Some Learn lessons come from OpenStax textbooks (Prealgebra 2e, Algebra and
+Trigonometry 2e, Precalculus 2e, Calculus Volumes 1 and 2, College Physics 2e,
+University Physics Volume 2), © Rice University, licensed under CC BY-NC-SA 4.0
+(https://creativecommons.org/licenses/by-nc-sa/4.0/): free to share and adapt, not
+for sale, and anything made from them under the same licence. Seven maths lessons are
+**imported as published**: the section's own words, maths and figures, cut into
+cards (`python3 daybook.py learn-import`, from `apps/learn/content/imports.json`).
+Nine earlier lessons were adapted (rewritten and shortened) before Daybook's rule that
+lesson text is verbatim (SPEC.md §1); each now links **The original**, the section
+word for word. Every such lesson names its section in its sources. Download the books
+free at https://openstax.org.

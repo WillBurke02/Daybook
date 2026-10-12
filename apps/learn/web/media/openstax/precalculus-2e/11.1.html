@@ -1,0 +1,5830 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11.1 Sequences and Their Notations · Precalculus 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Precalculus 2e, Abramson et al., section 11.1 Sequences and Their Notations. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/precalculus-2e/pages/11-1-sequences-and-their-notations</p>
+<h1>11.1 Sequences and Their Notations</h1>
+
+<div class="section coreq-skills"><div class="section learning-objectives"><h4>Learning Objectives</h4><ul><li>Write the first few terms of a sequence (IA 12.1.1)</li><li>Find a formula for the general term (nth term) of a sequence (IA 12.1.2)</li></ul></div><div class="section"><h4>Objective 1: Write the first few terms of a sequence (IA 12.1.1).</h4><p>A patient takes a 30 mg antibiotic capsule. At the end of that hour, the amount of antibiotic remaining in her body is only 90% of the amount in the beginning of that hour. The 30mg dose is taken at time t = 1 hour. How much of this dose remains at the end of 1 hour? 2hours? 3 hours? 4 hours?</p><table><tr><th>Time t</th><th>Dose remaining after time t</th></tr><tr><td>1</td><td>0.90(30)=27mg</td></tr><tr><td>2</td><td>0.90(27)=24.3mg</td></tr><tr><td>3</td><td>0.90(24.3)=21.87mg</td></tr><tr><td>4</td><td>0.90(21.87)=19.68mg</td></tr></table><p>This ordered list of numbers 27, 24.3, 21.87, 19.68, … is a <strong>sequence</strong>. Each number in the list is a <strong>term</strong>.
+</p><p>A sequence is a <strong>function</strong> whose domain is the counting numbers. A sequence may have an infinite number of terms or a finite number of terms. Our sequence has three dots (ellipsis) at the end which indicates the list never ends. If the domain is the set of all counting numbers, then the sequence is an <strong>infinite sequence</strong>.</p><p>Often when working with sequences we do not want to write out all the terms. We want a more compact way to show how each term is defined. When we worked with functions, we wrote <math><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>2</mn><mi>x</mi></math> and we said the expression 2x was the rule that defined values in the range.
+</p><p>While a sequence is a function, we do not use the usual function notation. Instead of writing the function as <math><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>2</mn><mi>x</mi></math> , we would write it as <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi></math> . The <math><msub><mi>a</mi><mi>n</mi></msub></math> is the <strong><em>n</em>th term of the sequence</strong>, the term in the <em>n</em>th position where <em>n</em> is a value in the domain. The formula for writing the nth term of the sequence is called the <strong>general term</strong> or formula of the sequence.
+</p><p>General sequence terms are denoted as follows:<br> <math><mtable><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>-</mo><mi>first</mi><mo> </mo><mi>term</mi></mtd><mtd></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>-</mo><mi>second</mi><mo> </mo><mi>term</mi></mtd><mtd></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>3</mn></msub><mo>-</mo><mi>third</mi><mo> </mo><mi>term</mi></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub><mo>-</mo><msup><mi>n</mi><mrow><mi>t</mi><mi>h</mi></mrow></msup><mo> </mo><mi>term</mi></mtd><mtd></mtd></mtr><mtr><mtd><msub><mi>a</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>-</mo><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo> </mo><mi>term</mi></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr><mtr><mtd><mo>.</mo></mtd><mtd></mtd></mtr></mtable></math> </p><div class="example"><div class="exercise"><div class="problem">
+  <p>
+Write the first five terms of the sequence whose general term is <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>2</mn><mi>n</mi><mo>-</mo><mn>7</mn></math> .
+  </p>
+</div>
+
+<div class="solution">
+  <p>
+ <math><mtable><mtr><mtd><mi>n</mi></mtd><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mi>n</mi></msub></mtd><mtd><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd><msub><mi>a</mi><mn>4</mn></msub></mtd><mtd><msub><mi>a</mi><mn>5</mn></msub></mtd></mtr><mtr><mtd><mn>2</mn><mi>n</mi><mo>-</mo><mn>7</mn></mtd><mtd><mn>2</mn><mo>(</mo><mn>1</mn><mo>)</mo><mo>-</mo><mn>7</mn></mtd><mtd><mn>2</mn><mo>(</mo><mn>2</mn><mo>)</mo><mo>-</mo><mn>7</mn></mtd><mtd><mn>2</mn><mo>(</mo><mn>3</mn><mo>)</mo><mo>-</mo><mn>7</mn></mtd><mtd><mn>2</mn><mo>(</mo><mn>4</mn><mo>)</mo><mo>-</mo><mn>7</mn></mtd><mtd><mn>2</mn><mo>(</mo><mn>5</mn><mo>)</mo><mo>-</mo><mn>7</mn></mtd></mtr><mtr><mtd></mtd><mtd><mo>-</mo><mn>5</mn></mtd><mtd><mo>-</mo><mn>3</mn></mtd><mtd><mo>-</mo><mn>1</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable></math>
+  </p>
+</div>
+</div>
+</div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><p>
+Write the first few terms of a sequence.
+</p><div class="exercise"><div class="problem"><p>Write the first five terms of the sequence whose general term is
+<math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>4</mn><mi>n</mi><mo>+</mo><mn>2</mn></math>.</p>
+<table><tr><td><math><mi>n</mi></math></td><td><math><mn>1</mn></math></td><td><math><mn>2</mn></math></td><td><math><mn>3</mn></math></td><td><math><mn>4</mn></math></td><td><math><mn>5</mn></math></td></tr><tr><td><math><msub><mi>a</mi><mi>n</mi></msub></math></td><td><math><msub><mi>a</mi><mn>1</mn></msub></math></td><td><math><msub><mi>a</mi><mn>2</mn></msub></math></td><td><math><msub><mi>a</mi><mn>3</mn></msub></math></td><td><math><msub><mi>a</mi><mn>4</mn></msub></math></td><td><math><msub><mi>a</mi><mn>5</mn></msub></math></td></tr><tr><td><math><mn>4</mn><mi>n</mi><mo>+</mo><mn>2</mn></math></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
+
+  </div>
+
+</div><div class="exercise"><div class="problem"><p>Write the first five terms of the sequence whose general term is <math><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><msup><mn>3</mn><mi>n</mi></msup><mo>–</mo><mn>1</mn></math>.</p><table><tr><td><math><mi>n</mi></math></td><td><math><mn>1</mn></math></td><td><math><mn>2</mn></math></td><td><math><mn>3</mn></math></td><td><math><mn>4</mn></math></td><td><math><mn>5</mn></math></td></tr><tr><td><math><msub><mi>a</mi><mi>n</mi></msub></math></td><td><math><msub><mi>a</mi><mn>1</mn></msub></math></td><td><math><msub><mi>a</mi><mn>2</mn></msub></math></td><td><math><msub><mi>a</mi><mn>3</mn></msub></math></td><td><math><msub><mi>a</mi><mn>4</mn></msub></math></td><td><math><msub><mi>a</mi><mn>5</mn></msub></math></td></tr><tr><td><math><msup><mn>3</mn><mi>n</mi></msup><mo>–</mo><mn>1</mn></math></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
+
+</div>
+
+</div></div></div><div class="section"><h4>Objective 2: Find a formula for the general term (nth term) of a sequence (IA 12.1.2)</h4><p>Sometimes we have a few terms of a sequence and it would be helpful to know the <strong>general term or <em>n</em>th term</strong>. To find the general term, we <strong>look for patterns in the terms</strong>. Often the patterns involve multiples or powers. We also look for a pattern in the signs of the terms.
+</p><div class="example"><div class="exercise"><div class="problem"><h7>Find a formula for the general term (nth term) of a sequence.</h7>
+  <ul><li>ⓐ Find a general term for the sequence whose first five terms are shown below:<br>4, 8, 12, 16, 20...</li><li>ⓑ
+Find a general term for the sequence whose first five terms are shown below:<br> <math><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>9</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>81</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>243</mn></mfrac><mo>,</mo><mo> </mo><mo>.</mo><mo>.</mo><mo>.</mo></math> </li></ul>
+</div>
+
+<div class="solution">
+
+<table><tr><td>ⓐ</td><td>
+<figure><img src="CNX_IntAlg_Figure_12_01_006a_img.jpg" alt="A series of numbers 4, 8, 12, 16, 20, followed by an ellipsis indicating continuation."></figure>
+</td></tr><tr><td></td><td><figure><img src="CNX_IntAlg_Figure_12_01_006b_img.jpg" alt="The notation &#x27;n: 1, 2, 3, 4, 5, ...n&#x27; representing an ordered list or sequence of integers from 1 to n."></figure>
+</td></tr><tr><td>Look for a pattern in the terms</td><td><figure><img src="CNX_IntAlg_Figure_12_01_006c_img.jpg" alt="The image displays the first five terms of an arithmetic sequence: 4, 8, 12, 16, 20, followed by an ellipsis, indicating the sequence continues. The common difference is 4."></figure>
+</td></tr><tr><td>The numbers are all multiples of 4</td><td><figure><img src="CNX_IntAlg_Figure_12_01_006d_img.jpg" alt="A mathematical pattern is displayed, showing a sequence of multiplications: &quot;Pattern: 4 • 1, 4 • 2, 4 • 3, 4 • 4, 4 • 5, ..., 4 • n&quot;. The second factor in each term (1, 2, 3, 4, 5, n) is highlighted in red."></figure>
+</td></tr><tr><td>The general term of the sequence:</td><td> <math><mrow><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mn>4</mn><mi>n</mi><mo>.</mo></mrow></math> </td></tr></table>
+
+<table><tr><td>ⓑ</td><td><figure><img src="CNX_IntAlg_Figure_12_01_008a_img.jpg" alt="A mathematical sequence showing fractions: 1/3, 1/9, 1/27, 1/81, 1/243, and so on, indicating a geometric progression where each term is (1/3)^n."></figure></td></tr><tr><td></td><td><figure><img src="CNX_IntAlg_Figure_12_01_008b_img.jpg" alt="The image displays the notation &quot;n:&quot; followed by the sequence of integers &quot;1, 2, 3, 4, 5, ... n&quot;, illustrating the concept of a sequence of numbers up to an arbitrary integer &#x27;n&#x27;."></figure>
+</td></tr><tr><td>Look for a pattern in the terms.</td><td><figure><img src="CNX_IntAlg_Figure_12_01_008c_img.jpg" alt="The image displays the heading &quot;Terms:&quot; followed by a mathematical sequence of five fractions and an ellipsis, indicating that the sequence continues. The terms are 1/3, 1/9, 1/27, 1/81, and 1/243. Each term is a fraction with a numerator of 1, and the denominators are successive powers of 3 (3^1, 3^2, 3^3, 3^4, 3^5)."></figure>
+</td></tr><tr><td>The numerators are all 1 and the denominators are powers of 3</td><td><figure><img src="CNX_IntAlg_Figure_12_01_008d_img.jpg" alt="A mathematical pattern displays a sequence of fractions: 1/3^1, 1/3^2, 1/3^3, 1/3^4, 1/3^5, ..., up to 1/3^n, indicating an increasing exponent in the denominator."></figure>
+</td></tr><tr><td>The general term of the sequence:</td><td> <math><mrow><msub><mi>a</mi><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mn>3</mn><mi>n</mi></msup></mrow></mfrac></mrow></math>
+</td></tr></table></div>
+</div></div><div class="section practice-perfect"><h5>Practice Makes Perfect</h5><div class="exercise"><div class="problem"><p>Find a general term for the sequence whose first five terms are shown:<br>8, 16, 24, 32, 40, ...<table><tr><td></td><td><figure><img src="CNX_IntAlg_Figure_12_01_008b_img.jpg" alt="The image displays the notation &quot;n:&quot; followed by the sequence of integers &quot;1, 2, 3, 4, 5, ... n&quot;, illustrating the concept of a sequence of numbers up to an arbitrary integer &#x27;n&#x27;."></figure></td></tr><tr><td>Look for a pattern in the terms</td><td>Terms: ________________</td></tr><tr><td>The general term of the sequence: ________________</td><td></td></tr></table></p></div></div>
+<div class="exercise"><div class="problem"><p>Find a general term for the sequence whose first five terms are shown:<br> <math><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>16</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>64</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>256</mn></mfrac><mo>,</mo><mo> </mo><mfrac><mn>1</mn><mn>1024</mn></mfrac><mo>,</mo><mo> </mo><mo>.</mo><mo>.</mo><mo>.</mo></math> <br><table><tr><td></td><td><figure><img src="CNX_IntAlg_Figure_12_01_008b_img.jpg" alt="The image displays the notation &quot;n:&quot; followed by the sequence of integers &quot;1, 2, 3, 4, 5, ... n&quot;, illustrating the concept of a sequence of numbers up to an arbitrary integer &#x27;n&#x27;."></figure></td></tr><tr><td>Look for a pattern in the terms</td><td>Terms: ________________</td></tr><tr><td>The general term of the sequence: ________________</td><td></td></tr></table></p>
+</div></div></div></div></div><p>A video game company launches an exciting new advertising campaign. They predict the number of online visits to their website, or hits, will double each day. The model they are using shows 2 hits the first day, 4 hits the second day, 8 hits the third day, and so on. See .</p>
+
+<table><tr><td><strong>Day</strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>…</td></tr><tr><td><strong>Hits</strong></td><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>…</td></tr></table>
+
+<p>If their model continues, how many hits will there be at the end of the month? To answer this question, we’ll first need to know how to determine a list of numbers written in a specific order. In this section, we will explore these kinds of ordered lists.</p>
+
+<div class="section"><h3>Writing the Terms of a Sequence Defined by an Explicit Formula</h3><p>One way to describe an ordered list of numbers is as a <strong>sequence</strong>. A sequence is a function whose domain is a subset of the counting numbers. The sequence established by the number of hits on the website is</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>32</mn><mo>,</mo><mo>…</mo><mo>}</mo><mo>.</mo>
+ </mrow>
+</math> </div><p>The <strong>ellipsis</strong> (…) indicates that the sequence continues indefinitely. Each number in the sequence is called a <strong>term</strong>. The first five terms of this sequence are 2, 4, 8, 16, and 32.</p>
+
+<p>Listing all of the terms for a sequence can be cumbersome. For example, finding the number of hits on the website at the end of the month would require listing out as many as 31 terms. A more efficient way to determine a specific term is by writing a formula to define the sequence.</p>
+
+<p>One type of formula is an <strong>explicit formula</strong>, which defines the terms of a sequence using their position in the sequence. Explicit formulas are helpful if we want to find a specific term of a sequence without finding all of the previous terms. We can use the formula to find the <strong>nth term of the sequence</strong>, where <math>
+ <mi>n</mi>
+</math> is any positive number. In our example, each number in the sequence is double the previous number, so we can use powers of 2 to write a formula for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term.
+</p><figure><img src="CNX_Precalc_Figure_11_01_001.jpg" alt="Sequence of {2, 4, 8, 16, 32, ...} expressed in exponential form (i.e., {2^1, 2^2, 2^3, ..., 2^n, ...}"></figure>
+<p>The first term of the sequence is <math>
+ <mrow>
+ <msup>
+   <mn>2</mn>
+   <mn>1</mn>
+  </msup>
+  <mo>=</mo><mn>2</mn><mo>,</mo>
+ </mrow>
+</math> the second term is <math>
+ <mrow>
+ <msup>
+   <mn>2</mn>
+   <mn>2</mn>
+  </msup>
+  <mo>=</mo><mn>4</mn><mo>,</mo>
+ </mrow>
+</math> the third term is <math>
+ <mrow>
+ <msup>
+   <mn>2</mn>
+   <mn>3</mn>
+  </msup>
+  <mo>=</mo><mn>8</mn><mo>,</mo>
+ </mrow>
+</math> and so on. The <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence can be found by raising 2 to the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> power. An explicit formula for a sequence is named by a lower case letter <math>
+ <mrow>
+  <mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mn>...</mn>
+ </mrow>
+</math> with the subscript <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> The explicit formula for this sequence is</p> <div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mn>2</mn>
+   <mi>n</mi>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </div><p>Now that we have a formula for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence, we can answer the question posed at the beginning of this section. We were asked to find the number of hits at the end of the month, which we will take to be 31 days. To find the number of hits on the last day of the month, we need to find the 31<sup>st</sup> term of the sequence. We will substitute 31 for <math>
+ <mi>n</mi>
+</math> in the formula.</p> <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mn>31</mn>
+       </mrow>
+      </msub>
+      <mo>=</mo><msup>
+       <mn>2</mn>
+       <mrow>
+        <mn>31</mn>
+       </mrow>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mspace width="0.5em"></mspace><mtext>     </mtext><mo>=</mo><mtext>2,147,483,648</mtext>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div>
+<p>If the doubling trend continues, the company will get <math>
+ <mrow>
+  <mtext>2,147,483,648</mtext>
+ </mrow>
+</math> hits on the last day of the month. That is over 2.1 billion hits! The huge number is probably a little unrealistic because it does not take consumer interest and competition into account. It does, however, give the company a starting point from which to consider business decisions.</p><p>Another way to represent the sequence is by using a table. The first five terms of the sequence and the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence are shown in .</p>
+
+<table><tr><td><strong> <math>
+ <mi>n</mi>
+</math> </strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td> <math>
+ <mi>n</mi>
+</math> </td></tr><tr><td><strong> <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> </strong></td><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td> <math>
+ <mrow>
+  <msup>
+   <mn>2</mn>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> </td></tr></table>
+
+<p>Graphing provides a visual representation of the sequence as a set of distinct points. We can see from the graph in  that the number of hits is rising at an exponential rate. This particular sequence forms an exponential function.</p>
+<figure><img src="CNX_Precalc_Figure_11_01_002.jpg" alt="Graph of a plotted exponential function, f(n) = 2^n, where the x-axis is labeled n and the y-axis is labeled a_n."></figure>
+<p>Lastly, we can write this particular sequence as</p><div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>32</mn><mo>,</mo><mo>…</mo><mo>,</mo><msup>
+   <mn>2</mn>
+   <mi>n</mi>
+  </msup>
+  <mo>,</mo><mo>…</mo><mo>}</mo><mo>.</mo>
+ </mrow>
+</math> </div><p>A sequence that continues indefinitely is called an <strong>infinite sequence</strong>. The domain of an infinite sequence is the set of counting numbers. If we consider only the first 10 terms of the sequence, we could write</p>
+    <div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>16</mn><mo>,</mo><mn>32</mn><mo>,</mo><mo>…</mo><mo>,</mo><msup>
+   <mn>2</mn>
+   <mi>n</mi>
+  </msup>
+  <mo>,</mo><mo>…</mo><mo>,</mo><mn>1024</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math>
+</div><p>This sequence is called a <strong>finite sequence</strong> because it does not continue indefinitely.</p>
+
+<div class="note">
+
+<h4>Sequence</h4>
+
+<p>A <strong>sequence</strong> is a function whose domain is the set of positive integers. A <strong>finite sequence</strong> is a sequence whose domain consists of only the first <math>
+ <mi>n</mi>
+</math> positive integers. The numbers in a sequence are called <strong>terms</strong>. The variable <math>
+ <mi>a</mi>
+</math> with a number subscript is used to represent the terms in a sequence and to indicate the position of the term in the sequence.</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>,</mo><mo>…</mo><mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>,</mo><mo>…</mo>
+ </mrow>
+</math>
+</div><p>We call <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+
+ </mrow>
+</math> the first term of the sequence, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+
+ </mrow>
+</math> the second term of the sequence, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+
+ </mrow>
+</math> the third term of the sequence, and so on. The term <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> is called the <strong>nth term of the sequence</strong>, or the general term of the sequence. An <strong>explicit formula</strong> defines the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of a sequence using the position of the term. A sequence that continues indefinitely is an <strong>infinite sequence</strong>.</p></div>
+<div class="note precalculus qa">
+
+<p><strong>Does a sequence always have to begin with</strong> <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>?</mo>
+ </mrow>
+</math> </p>
+<p><em>No. In certain problems, it may be useful to define the initial term as <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>0</mn>
+  </msub>
+
+ </mrow>
+</math> instead of <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> In these problems, the domain of the function includes 0.</em></p></div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given an explicit formula, write the first</strong> <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> <strong>terms of a sequence.</strong></p><ol><li>Substitute each value of <math>
+ <mi>n</mi>
+</math> into the formula. Begin with <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> to find the first term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> </li><li>To find the second term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> use <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>2.</mn>
+ </mrow>
+</math> </li><li>Continue in the same manner until you have identified all <math>
+ <mi>n</mi>
+</math> terms.</li></ol>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Writing the Terms of a Sequence Defined by an Explicit Formula</h6>
+<p>Write the first five terms of the sequence defined by the explicit formula <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>3</mn><mi>n</mi><mo>+</mo><mn>8.</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>Substitute <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> into the formula. Repeat with values 2 through 5 for <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> </p> <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>3</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mn>8</mn><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>3</mn><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mn>8</mn><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>3</mn><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>+</mo><mn>8</mn><mo>=</mo><mo>−</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>3</mn><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo><mo>+</mo><mn>8</mn><mo>=</mo><mo>−</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mo>−</mo><mn>3</mn><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo><mo>+</mo><mn>8</mn><mo>=</mo><mo>−</mo><mn>7</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first five terms are <math>
+ <mrow>
+ <mo>{</mo><mn>5</mn><mo>,</mo><mspace width="0.5em"></mspace><mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mn>−1</mn><mo>,</mo><mspace width="0.5em"></mspace><mn>−4</mn><mo>,</mo><mspace width="0.5em"></mspace><mn>−7</mn><mo>}</mo><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<p>
+<h5>Analysis</h5>
+<p>The sequence values can be listed in a table. A table, such as , is a convenient way to input the function into a graphing utility.</p>
+<table><tr><td><strong> <math>
+ <mi>n</mi>
+</math> </strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><td><strong> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> </strong></td><td>5</td><td>2</td><td>–1</td><td>–4</td><td>–7</td></tr></table>
+
+<p>A graph can be made from this table of values. From the graph in , we can see that this sequence represents a linear function, but notice the graph is not continuous because the domain is over the positive integers only.</p>
+
+<figure><img src="CNX_Precalc_Figure_11_01_003.jpg" alt="Graph of a scattered plot where the x-axis is labeled n and the y-axis is labeled a_n."></figure>
+</p>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write the first five terms of the sequence defined by the <strong>explicit formula</strong> <math>
+ <mrow>
+ <msub>
+   <mi>t</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>5</mn><mi>n</mi><mo>−</mo><mn>4.</mn>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>The first five terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mn>6</mn><mo>,</mo><mo> </mo><mn>11</mn><mo>,</mo><mo> </mo><mn>16</mn><mo>,</mo><mo> </mo><mn>21</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+
+<div class="section"><h4>Investigating Alternating Sequences</h4><p>Sometimes sequences have terms that are alternate. In fact, the terms may actually alternate in sign. The steps to finding terms of the sequence are the same as if the signs did not alternate. However, the resulting terms will not show increase or decrease as <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> increases. Let’s take a look at the following sequence.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mo>{</mo><mn>2</mn><mo>,</mo><mn>−4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>−8</mn><mo>}</mo>
+ </mrow>
+</math>
+</div><p>Notice the first term is greater than the second term, the second term is less than the third term, and the third term is greater than the fourth term. This trend continues forever. Do not rearrange the terms in numerical order to interpret the sequence.</p>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given an explicit formula with alternating terms, write the first <math>
+ <mi>n</mi>
+</math> terms of a sequence.</strong></p>
+<ol><li>Substitute each value of <math>
+ <mi>n</mi>
+</math> into the formula. Begin with <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> to find the first term, <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> The sign of the term is given by the <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> in the explicit formula.</li><li>To find the second term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> use <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>2.</mn>
+ </mrow>
+</math> </li><li>Continue in the same manner until you have identified all <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> terms.</li></ol></div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h7>Writing the Terms of an Alternating Sequence Defined by an Explicit Formula</h7>
+<p>Write the first five terms of the sequence.</p>
+    <div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mrow>
+      <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+     </mrow>
+     <mi>n</mi>
+    </msup>
+    <msup>
+     <mi>n</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p>Substitute <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn><mo>,</mo>
+ </mrow>
+</math> <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>2</mn><mo>,</mo>
+ </mrow>
+</math> and so on in the formula.</p>
+    <div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>1</mn>
+        </msup>
+        <msup>
+         <mn>1</mn>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+       <mrow>
+        <mn>1</mn><mo>+</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <msup>
+         <mn>2</mn>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+       <mrow>
+        <mn>2</mn><mo>+</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>4</mn>
+       <mn>3</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>3</mn>
+        </msup>
+        <msup>
+         <mn>3</mn>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+       <mrow>
+        <mn>3</mn><mo>+</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mn>9</mn>
+       <mn>4</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>4</mn>
+        </msup>
+        <msup>
+         <mn>4</mn>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+       <mrow>
+        <mn>4</mn><mo>+</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>16</mn>
+       </mrow>
+       <mn>5</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>5</mn>
+        </msup>
+        <msup>
+         <mn>5</mn>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+       <mrow>
+        <mn>5</mn><mo>+</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mrow>
+        <mn>25</mn>
+       </mrow>
+       <mn>6</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first five terms are <math>
+ <mrow>
+  <mrow><mo>{</mo><mrow>
+   <mo>−</mo><mfrac>
+    <mn>1</mn>
+    <mn>2</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>4</mn>
+    <mn>3</mn>
+   </mfrac>
+   <mo>,−</mo><mfrac>
+    <mn>9</mn>
+    <mn>4</mn>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mrow>
+     <mn>16</mn>
+    </mrow>
+    <mn>5</mn>
+   </mfrac>
+   <mo>,−</mo><mfrac>
+    <mrow>
+     <mn>25</mn>
+    </mrow>
+    <mn>6</mn>
+   </mfrac>
+
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<p>
+<h6>Analysis</h6>
+<p>The graph of this function, shown in , looks different from the ones we have seen previously in this section because the terms of the sequence alternate between positive and negative values.</p>
+
+<figure><img src="CNX_Precalc_Figure_11_01_004.jpg" alt="Graph of a scattered plot with labeled points: (1, -1/2), (2, 4/3), (3, -9/4), (4, 16/5), and (5, -25/6). The x-axis is labeled n and the y-axis is labeled a_n."></figure></p>
+</div>
+</div>
+
+<div class="note precalculus qa">
+
+<p><strong>In , does the (–1) to the power of</strong> <math>
+ <mi>n</mi>
+</math> <strong>account for the oscillations of signs?</strong></p>
+<p><em>Yes, the power might be</em> <math>
+ <mrow>
+  <mi>n</mi><mo>,</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>,</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>,</mo>
+ </mrow>
+</math> <em>and so on, but any odd powers will result in a negative term, and any even power will result in a positive term.</em></p></div>
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+    <p>Write the first five terms of the sequence. </p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>4</mn><mi>n</mi>
+   </mrow>
+   <mrow>
+    <msup>
+     <mrow>
+      <mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo>
+     </mrow>
+     <mi>n</mi>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </div>
+</div>
+<div class="solution">
+<p>The first five terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mo> </mo><mn>2</mn><mo>,</mo><mo> </mo><mo>−</mo><mfrac>
+    <mn>3</mn>
+    <mn>2</mn>
+   </mfrac>
+   <mo>,</mo><mo> </mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mfrac>
+    <mn>5</mn>
+    <mn>8</mn>
+   </mfrac>
+
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+</div>
+</div></div><div class="section">
+<h4>Investigating Piecewise Explicit Formulas</h4>
+<p>We’ve learned that sequences are functions whose domain is over the positive integers. This is true for other types of functions, including some <strong>piecewise functions</strong>. Recall that a piecewise function is a function defined by multiple subsections. A different formula might represent each individual subsection.</p>
+<div class="note how-to-notitle">
+
+<p><strong>Given an explicit formula for a piecewise function, write the first <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> terms of a sequence</strong></p><ol><li>Identify the formula to which <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> applies. </li><li>To find the first term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> use <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>1</mn>
+ </mrow>
+</math> in the appropriate formula.</li><li>Identify the formula to which <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>2</mn>
+ </mrow>
+</math> applies.</li><li>To find the second term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> use <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>2</mn>
+ </mrow>
+</math> in the appropriate formula.</li><li>Continue in the same manner until you have identified all <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> terms.</li></ol>
+</div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h7>Writing the Terms of a Sequence Defined by a Piecewise Explicit Formula</h7>
+    <p>Write the first six terms of the sequence. </p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <msup>
+        <mi>n</mi>
+        <mn>2</mn>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is not divisible by 3</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mi>n</mi>
+        <mn>3</mn>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is divisible by 3</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </div>
+</div>
+<div class="solution">
+<p>Substitute <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>n</mi><mo>=</mo><mn>2</mn><mo>,</mo>
+ </mrow>
+</math> and so on in the appropriate formula. Use <math>
+ <mrow>
+  <msup>
+   <mi>n</mi>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> when <math>
+ <mi>n</mi>
+</math> is not a multiple of 3. Use <math>
+ <mrow>
+  <mfrac>
+   <mi>n</mi>
+   <mn>3</mn>
+  </mfrac>
+
+ </mrow>
+</math> when <math>
+ <mi>n</mi>
+</math> is a multiple of 3. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><msup>
+       <mn>1</mn>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>1</mn><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>1 is not a multiple of 3</mtext><mtext>.  Use </mtext><msup>
+       <mi>n</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><msup>
+       <mn>2</mn>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>2 is not a multiple of 3</mtext><mtext>.  Use </mtext><msup>
+       <mi>n</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>3</mn>
+       <mn>3</mn>
+      </mfrac>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>3 is a multiple of 3</mtext><mtext>.  Use </mtext><mfrac>
+       <mi>n</mi>
+       <mn>3</mn>
+      </mfrac>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><msup>
+       <mn>4</mn>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>16</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>4 is not a multiple of 3</mtext><mtext>.  Use </mtext><msup>
+       <mi>n</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><msup>
+       <mn>5</mn>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>25</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>5 is not a multiple of 3</mtext><mtext>.  Use </mtext><msup>
+       <mi>n</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>6</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mn>6</mn>
+       <mn>3</mn>
+      </mfrac>
+      <mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>6 is a multiple of 3</mtext><mtext>.  Use </mtext><mfrac>
+       <mi>n</mi>
+       <mn>3</mn>
+      </mfrac>
+      <mo>.</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first six terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>16</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>25</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>2</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+<p>
+<h6>Analysis</h6>
+<p>Every third point on the graph shown in  stands out from the two nearby points. This occurs because the sequence was defined by a piecewise function.</p>
+
+<figure><img src="CNX_Precalc_Figure_11_01_005.jpg" alt="Graph of a scattered plot where the x-axis is labeled n and the y-axis is labeled a_n."></figure></p>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+    <p>Write the first six terms of the sequence. </p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mn>2</mn><msup>
+        <mi>n</mi>
+        <mn>3</mn>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is odd</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mrow>
+         <mn>5</mn><mi>n</mi>
+        </mrow>
+        <mn>2</mn>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is even</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </div>
+</div>
+<div class="solution">
+<p>The first six terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>5</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>54</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>10</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>250</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>15</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h4>Finding an Explicit Formula</h4>
+<p>Thus far, we have been given the explicit formula and asked to find a number of terms of the sequence. Sometimes, the explicit formula for the <math>
+ <mrow>
+ <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of a sequence is not given. Instead, we are given several terms from the sequence. When this happens, we can work in reverse to find an explicit formula from the first few terms of a sequence. The key to finding an explicit formula is to look for a pattern in the terms. Keep in mind that the pattern may involve alternating terms, formulas for numerators, formulas for denominators, exponents, or bases.</p>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given the first few terms of a sequence, find an explicit formula for the sequence.</strong></p>
+<ol><li>Look for a pattern among the terms.</li><li>If the terms are fractions, look for a separate pattern among the numerators and denominators.</li><li>Look for a pattern among the signs of the terms.</li><li>Write a formula for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> in terms of <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> Test your formula for <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mi>n</mi><mo>=</mo><mn>2</mn><mo>,</mo>
+ </mrow>
+</math>
+and
+ <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>3.</mn>
+ </mrow>
+</math> </li></ol></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h7>Writing an Explicit Formula for the <em>n</em>th Term of a Sequence</h7>
+<p>Write an explicit formula for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of each sequence.</p>
+
+<ol><li>ⓐ <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mfrac>
+    <mn>2</mn>
+    <mrow>
+     <mn>11</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>3</mn>
+    <mrow>
+     <mn>13</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>4</mn>
+    <mrow>
+     <mn>15</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mn>5</mn>
+    <mrow>
+     <mn>17</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>6</mn>
+    <mrow>
+     <mn>19</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>…</mo>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </li><li>ⓑ <math>
+ <mrow>
+  <mo>{</mo><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>25</mn>
+   </mrow>
+  </mfrac>
+  <mtext>,</mtext><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>125</mn>
+   </mrow>
+  </mfrac>
+  <mtext>,</mtext><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>625</mn>
+   </mrow>
+  </mfrac>
+  <mtext>,</mtext><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>3</mn><mtext>,</mtext><mn>125</mn>
+   </mrow>
+  </mfrac>
+  <mtext>,</mtext><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <mn>15</mn><mtext>,</mtext><mn>625</mn>
+   </mrow>
+  </mfrac>
+  <mtext>,</mtext><mo>…</mo><mo>}</mo>
+ </mrow>
+</math> </li><li>ⓒ
+ <math>
+ <mrow>
+  <mo>{</mo><msup>
+   <mi>e</mi>
+   <mn>4</mn>
+  </msup>
+  <mtext>,</mtext><msup>
+   <mi>e</mi>
+   <mn>5</mn>
+  </msup>
+  <mtext>,</mtext><msup>
+   <mi>e</mi>
+   <mn>6</mn>
+  </msup>
+  <mtext>,</mtext><msup>
+   <mi>e</mi>
+   <mn>7</mn>
+  </msup>
+  <mtext>,</mtext><msup>
+   <mi>e</mi>
+   <mn>8</mn>
+  </msup>
+  <mtext>,</mtext><mo>…</mo><mo>}</mo>
+ </mrow>
+</math>
+</li></ol></div>
+<div class="solution">
+<p>Look for the pattern in each sequence.</p>
+<ol><li>ⓐThe terms alternate between positive and negative. We can use <math>
+ <mrow>
+ <msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> to make the terms alternate. The numerator can be represented by <math>
+ <mrow>
+  <mi>n</mi><mo>+</mo><mn>1.</mn>
+ </mrow>
+</math> The denominator can be represented by <math>
+ <mrow>
+  <mn>2</mn><mi>n</mi><mo>+</mo><mn>9.</mn>
+ </mrow>
+</math>
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mrow>
+      <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+     </mrow>
+     <mi>n</mi>
+    </msup>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mn>2</mn><mi>n</mi><mo>+</mo><mn>9</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></li><li>ⓑ<p>The terms are all negative.</p>
+
+<figure><img src="CNX_Coreq_Figure_09_02_001.png" alt="The image illustrates a sequence of fractions. The top line shows the sequence as {2/25, 2/125, 2/625, 2/3,125, 2/15,125, ...} and explicitly states that the numerator is 2. The bottom line reiterates the sequence with the denominators expressed as powers of 5: {2/5^2, 2/5^3, 2/5^4, 2/5^6, 2/5^7, ..., 2/5^n}, clarifying that the denominators are increasing powers of 5."></figure>
+<p>So we know that the fraction is negative, the numerator is 2, and the denominator can be represented by <math>
+ <mrow>
+  <msup>
+   <mn>5</mn>
+   <mrow>
+    <mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mo>.</mo>
+ </mrow>
+</math> </p> <div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mn>2</mn>
+   <mrow>
+    <msup>
+     <mn>5</mn>
+     <mrow>
+      <mi>n</mi><mo>+</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </div></li><li>ⓒ<p>The terms are powers of <math>
+ <mrow>
+  <mi>e</mi><mo>.</mo>
+ </mrow>
+</math> For <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>1</mn><mo>,</mo>
+ </mrow>
+</math> the first term is <math>
+ <mrow>
+  <msup>
+   <mi>e</mi>
+   <mn>4</mn>
+  </msup>
+
+ </mrow>
+</math> so the exponent must be <math>
+ <mrow>
+  <mi>n</mi><mo>+</mo><mn>3.</mn>
+ </mrow>
+</math> </p>
+    <div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mi>e</mi>
+   <mrow>
+    <mi>n</mi><mo>+</mo><mn>3</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </div>
+</li></ol></div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write an explicit formula for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtext>{9,</mtext><mspace width="0.5em"></mspace><mo>−</mo><mtext>81,</mtext><mspace width="0.5em"></mspace><mtext>729,</mtext><mspace width="0.5em"></mspace><mo>−</mo><mtext>6,561,</mtext><mspace width="0.5em"></mspace><mtext>59,049,</mtext><mspace width="0.5em"></mspace><mtext>…}</mtext>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mrow>
+    <mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <msup>
+   <mn>9</mn>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+</div><div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write an explicit formula for the <math>
+ <mrow>
+ <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mo>−</mo><mfrac>
+    <mn>3</mn>
+    <mn>4</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mn>9</mn>
+    <mn>8</mn>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mrow>
+     <mn>27</mn>
+    </mrow>
+    <mrow>
+     <mn>12</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mrow>
+     <mn>81</mn>
+    </mrow>
+    <mrow>
+     <mn>16</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo>−</mo><mfrac>
+    <mrow>
+     <mn>243</mn>
+    </mrow>
+    <mrow>
+     <mn>20</mn>
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math>
+</div>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <msup>
+     <mn>3</mn>
+     <mi>n</mi>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>4</mn><mi>n</mi>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+</div><div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write an explicit formula for the <math>
+ <mrow>
+ <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of the sequence.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mfrac>
+    <mn>1</mn>
+    <mrow>
+     <msup>
+      <mi>e</mi>
+      <mn>2</mn>
+     </msup>
+
+    </mrow>
+   </mfrac>
+   <mo>,</mo><mo> </mo><mfrac>
+    <mn>1</mn>
+    <mi>e</mi>
+   </mfrac>
+   <mo>,</mo><mo> </mo><mn>1</mn><mo>,</mo><mo> </mo><mi>e</mi><mo>,</mo><mo> </mo><msup>
+    <mi>e</mi>
+    <mn>2</mn>
+   </msup>
+   <mo>,</mo><mn>...</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </div></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mi>e</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>3</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+</div></div><div class="section">
+<h3>Writing the Terms of a Sequence Defined by a Recursive Formula</h3>
+<p>Sequences occur naturally in the growth patterns of nautilus shells, pinecones, tree branches, and many other natural structures. We may see the sequence in the leaf or branch arrangement, the number of petals of a flower, or the pattern of the chambers in a nautilus shell. Their growth follows the Fibonacci sequence, a famous sequence in which each term can be found by adding the preceding two terms. The numbers in the sequence are 1, 1, 2, 3, 5, 8, 13, 21, 34,…. Other examples from the natural world that exhibit the Fibonacci sequence are the Calla Lily, which has just one petal, the Black-Eyed Susan with 13 petals, and different varieties of daisies that may have 21 or 34 petals.</p>
+<p>Each term of the Fibonacci sequence depends on the terms that come before it. The Fibonacci sequence cannot easily be written using an explicit formula. Instead, we describe the sequence using a <strong>recursive formula</strong>, a formula that defines the terms of a sequence using previous terms.</p>
+
+<p>A recursive formula always has two parts: the value of an initial term (or terms), and an equation defining <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> in terms of preceding terms. For example, suppose we know the following: </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mn>2</mn><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>−</mo><mn>1</mn><mo> </mo><mtext>for</mtext><mo> </mo><mi>n</mi><mo>≥</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>We can find the subsequent terms of the sequence using the first term.</p><div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>=</mo><mn>3</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn><msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>5</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>3</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn><msub>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>9</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>4</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn><msub>
+     <mi>a</mi>
+     <mn>3</mn>
+    </msub>
+    <mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn><mo stretchy="false">(</mo><mn>9</mn><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>17</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </div>
+<p>So the first four terms of the sequence are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>5</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>9</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>17</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> .</p>
+    <p>The recursive formula for the Fibonacci sequence states the first two terms and defines each successive term as the sum of the preceding two terms. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>+</mo><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>2</mn>
+       </mrow>
+      </msub>
+      <mo> </mo><mtext>for</mtext><mo> </mo><mo> </mo><mi>n</mi><mo>≥</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>To find the tenth term of the sequence, for example, we would need to add the eighth and ninth terms. We were told previously that the eighth and ninth terms are 21 and 34, so </p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mn>9</mn>
+  </msub>
+  <mo>+</mo><msub>
+   <mi>a</mi>
+   <mn>8</mn>
+  </msub>
+  <mo>=</mo><mn>34</mn><mo>+</mo><mn>21</mn><mo>=</mo><mn>55</mn>
+ </mrow>
+</math> </div>
+
+<div class="note">
+
+<h4>Recursive Formula</h4>
+<p>A <strong>recursive formula</strong> is a formula that defines each term of a sequence using preceding term(s). Recursive formulas must always state the initial term, or terms, of the sequence.</p>
+</div>
+<div class="note precalculus qa">
+
+<p><strong>Must the first two terms always be given in a recursive formula?</strong></p>
+<p><em>No. The Fibonacci sequence defines each term using the two preceding terms, but many recursive formulas define each term using only one preceding term. These sequences need only the first term to be defined.</em></p>
+</div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given a recursive formula with only the first term provided, write the first <math>
+ <mi>n</mi>
+</math> terms of a sequence.</strong></p>
+<ol><li>Identify the initial term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> which is given as part of the formula. This is the first term.</li><li>To find the second term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> substitute the initial term into the formula for <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> Solve.</li><li>To find the third term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> substitute the second term into the formula. Solve.</li><li>Repeat until you have solved for the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term.</li></ol></div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Writing the Terms of a Sequence Defined by a Recursive Formula</h6>
+    <p>Write the first five terms of the sequence defined by the recursive formula. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mrow></mrow>
+       </mtd>
+      </mtr>
+      <mtr>
+       <mtd>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>=</mo><mn>9</mn>
+       </mtd>
+      </mtr>
+     </mtable>
+
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>−</mo><mn>20</mn><mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p>The first term is given in the formula. For each subsequent term, we replace <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> with the value of the preceding term.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>1</mn><mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+        <mtd columnalign="left">
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>9</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>−</mo><mn>20</mn><mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>9</mn><mo stretchy="false">)</mo><mo>−</mo><mn>20</mn><mo>=</mo><mn>27</mn><mo>−</mo><mn>20</mn><mo>=</mo><mn>7</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>−</mo><mn>20</mn><mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>7</mn><mo stretchy="false">)</mo><mo>−</mo><mn>20</mn><mo>=</mo><mn>21</mn><mo>−</mo><mn>20</mn><mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>−</mo><mn>20</mn><mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>20</mn><mo>=</mo><mn>3</mn><mo>−</mo><mn>20</mn><mo>=</mo><mo>−</mo><mn>17</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>−</mo><mn>20</mn><mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mo>−</mo><mn>17</mn><mo stretchy="false">)</mo><mo>−</mo><mn>20</mn><mo>=</mo><mo>−</mo><mn>51</mn><mo>−</mo><mn>20</mn><mo>=</mo><mo>−</mo><mn>71</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first five terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>9</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>7</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>–</mo><mn>17</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>–</mo><mn>71</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> See .</p><figure><img src="CNX_Precalc_Figure_11_01_006.jpg" alt="Graph of a scattered plot with labeled points: (1, 9), (2, 7), (3, 1), (4, -17), and (5, -71). The x-axis is labeled n and the y-axis is labeled a_n."></figure></div>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write the first five terms of the sequence defined by the recursive formula.
+</p><div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mn>2</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>+</mo><mn>1</mn><mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </div>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mo> </mo><mn>5</mn><mo>,</mo><mo> </mo><mn>11</mn><mo>,</mo><mo> </mo><mn>23</mn><mo>,</mo><mo> </mo><mn>47</mn>
+  </mrow> <mo>}</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+
+<div class="note how-to-notitle">
+
+<p><strong>Given a recursive formula with two initial terms, write the first <math>
+ <mi>n</mi>
+</math> terms of a sequence.</strong></p>
+<ol><li>Identify the initial term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> which is given as part of the formula.</li><li>Identify the second term, <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo>
+ </mrow>
+</math> which is given as part of the formula.</li><li>To find the third term, substitute the initial term and the second term into the formula. Evaluate.</li><li>Repeat until you have evaluated the <math>
+ <mrow>
+  <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term.</li></ol>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Writing the Terms of a Sequence Defined by a Recursive Formula</h6>
+    <p>Write the first six terms of the sequence defined by the recursive formula. </p><div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>=</mo><mn>1</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>=</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>=</mo><mn>3</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>+</mo><mn>4</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>2</mn>
+     </mrow>
+    </msub>
+    <mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>3</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </div>
+</div>
+<div class="solution">
+<p>The first two terms are given. For each subsequent term, we replace <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>2</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> with the values of the two preceding terms. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>+</mo><mn>4</mn><msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mn>4</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>10</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>+</mo><mn>4</mn><msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>+</mo><mn>4</mn><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mn>38</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>+</mo><mn>4</mn><msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>38</mn><mo stretchy="false">)</mo><mo>+</mo><mn>4</mn><mo stretchy="false">(</mo><mn>10</mn><mo stretchy="false">)</mo><mo>=</mo><mn>154</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>6</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>6</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>+</mo><mn>4</mn><msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mn>3</mn><mo stretchy="false">(</mo><mn>154</mn><mo stretchy="false">)</mo><mo>+</mo><mn>4</mn><mo stretchy="false">(</mo><mn>38</mn><mo stretchy="false">)</mo><mo>=</mo><mn>614</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first six terms are <math display="inline">
+ <mrow><mtext>{1,2,10,38,154,614}</mtext><mtext>.</mtext>
+ </mrow>
+</math> See .</p><figure><img src="CNX_Precalc_Figure_11_01_007.jpg" alt="Graph of a scattered plot with labeled points: (1, 1), (2, 2), (3, 10), (4, 38), (5, 154) and (6, 614). The x-axis is labeled n and the y-axis is labeled a_n."></figure></div>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem">
+<p>Write the first 8 terms of the sequence defined by the recursive formula.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mtable columnalign="left">
+      <mtr>
+       <mtd>
+        <mrow></mrow>
+       </mtd>
+      </mtr>
+      <mtr>
+       <mtd>
+        <msub>
+         <mi>a</mi>
+         <mn>1</mn>
+        </msub>
+        <mo>=</mo><mn>0</mn>
+       </mtd>
+      </mtr>
+     </mtable>
+
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mi>n</mi>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mrow>
+          <mi>n</mi><mo>−</mo><mn>1</mn>
+         </mrow>
+        </msub>
+
+       </mrow>
+       <mrow>
+        <msub>
+         <mi>a</mi>
+         <mrow>
+          <mi>n</mi><mo>−</mo><mn>2</mn>
+         </mrow>
+        </msub>
+
+       </mrow>
+      </mfrac>
+      <mo>+</mo><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>3</mn>
+       </mrow>
+      </msub>
+      <mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>0</mn><mo>,</mo><mo> </mo><mn>1</mn><mo>,</mo><mo> </mo><mn>1</mn><mo>,</mo><mo> </mo><mn>1</mn><mo>,</mo><mo> </mo><mn>2</mn><mo>,</mo><mo> </mo><mn>3</mn><mo>,</mo><mo> </mo><mfrac>
+    <mn>5</mn>
+    <mn>2</mn>
+   </mfrac>
+   <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+    <mrow>
+     <mn>17</mn>
+    </mrow>
+    <mn>6</mn>
+   </mfrac>
+
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section"><h3>Using Factorial Notation</h3><p>The formulas for some sequences include products of consecutive positive integers. <strong> <math>
+ <mi>n</mi>
+</math> factorial</strong>, written as <math>
+ <mrow>
+  <mi>n</mi><mo>!</mo><mo>,</mo>
+ </mrow>
+</math> is the product of the positive integers from 1 to <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math> For example, </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>4</mn><mo>!</mo><mo>=</mo><mn>4</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>2</mn><mo>⋅</mo><mn>1</mn><mo>=</mo><mn>24</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>5</mn><mo>!</mo><mo>=</mo><mn>5</mn><mo>⋅</mo><mn>4</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>2</mn><mo>⋅</mo><mn>1</mn><mo>=</mo><mn>120</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div>
+
+<p>An example of formula containing a <strong>factorial</strong> is <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo><mo>.</mo>
+ </mrow>
+</math> The sixth term of the sequence can be found by substituting 6 for <math>
+ <mrow>
+  <mi>n</mi><mo>.</mo>
+ </mrow>
+</math>
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>6</mn>
+  </msub>
+  <mo>=</mo><mo stretchy="false">(</mo><mn>6</mn><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo><mo>=</mo><mn>7</mn><mo>!</mo><mo>=</mo><mn>7</mn><mo>·</mo><mn>6</mn><mo>·</mo><mn>5</mn><mo>·</mo><mn>4</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn><mo>=</mo><mn>5040</mn>
+ </mrow>
+</math> </div>
+<p>The factorial of any whole number <math>
+ <mi>n</mi>
+</math> is <math>
+ <mrow>
+  <mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo>
+ </mrow>
+</math> We can therefore also think of <math>
+ <mrow>
+  <mn>5</mn><mo>!</mo>
+ </mrow>
+</math> as <math>
+ <mrow>
+ <mn>5</mn><mo>⋅</mo><mn>4</mn><mo>!</mo><mtext>.</mtext>
+ </mrow>
+</math> </p>
+<div class="note"><h4>n Factorial</h4>
+
+<p><strong><em>n</em> factorial</strong> is a mathematical operation that can be defined using a recursive formula. The factorial of <math>
+ <mrow>
+ <mi>n</mi><mo>,</mo>
+ </mrow>
+</math> denoted <math>
+ <mrow>
+ <mi>n</mi><mo>!</mo><mo>,</mo>
+ </mrow>
+</math> is defined for a positive integer <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> as:</p><div class="eq"> <math display="block">
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <mn>0</mn><mo>!</mo><mo>=</mo><mn>1</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mn>1</mn><mo>!</mo><mo>=</mo><mn>1</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mi>n</mi><mo>!</mo><mo>=</mo><mi>n</mi><mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>2</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>⋯</mo><mrow><mo>(</mo>
+     <mn>2</mn>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mn>1</mn>
+    <mo>)</mo></mrow><mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math> </div>
+<p>The special case <math>
+ <mrow>
+  <mn>0</mn><mo>!</mo>
+ </mrow>
+</math> is defined as <math>
+ <mrow>
+<mn>0</mn><mo>!</mo><mo>=</mo><mn>1.</mn>
+ </mrow>
+</math> </p></div><div class="note precalculus qa">
+
+<p><strong>Can factorials always be found using a calculator?</strong></p>
+<p><em>No. Factorials get large very quickly—faster than even exponential functions! When the output gets too large for the calculator, it will not be able to calculate the factorial.</em></p>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Writing the Terms of a Sequence Using Factorials</h6>
+<p>Write the first five terms of the sequence defined by the explicit formula <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>5</mn><mi>n</mi>
+   </mrow>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>Substitute <math>
+ <mrow>
+ <mi>n</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>n</mi><mo>=</mo><mn>2</mn><mo>,</mo>
+ </mrow>
+</math> and so on in the formula.
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mrow>
+        <mn>3</mn><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mrow>
+        <mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mn>6</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>2</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>2</mn><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+       <mrow>
+        <mn>4</mn><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>10</mn>
+       </mrow>
+       <mrow>
+        <mn>4</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mrow>
+        <mn>12</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>3</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>3</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>3</mn><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>15</mn>
+       </mrow>
+       <mrow>
+        <mn>5</mn><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>15</mn>
+       </mrow>
+       <mrow>
+        <mn>5</mn><mo>·</mo><mn>4</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mn>8</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>4</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>4</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>4</mn><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>20</mn>
+       </mrow>
+       <mrow>
+        <mn>6</mn><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>20</mn>
+       </mrow>
+       <mrow>
+        <mn>6</mn><mo>·</mo><mn>5</mn><mo>·</mo><mn>4</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>1</mn>
+       <mrow>
+        <mn>36</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>n</mi><mo>=</mo><mn>5</mn>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mn>5</mn>
+      </msub>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>5</mn><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>25</mn>
+       </mrow>
+       <mrow>
+        <mn>7</mn><mo>!</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>25</mn>
+       </mrow>
+       <mrow>
+        <mn>7</mn><mo>·</mo><mn>6</mn><mo>·</mo><mn>5</mn><mo>·</mo><mn>4</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mrow>
+        <mn>1</mn><mtext>,</mtext><mn>008</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The first five terms are <math>
+ <mrow>
+  <mo>{</mo><mfrac>
+   <mn>5</mn>
+   <mn>6</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>8</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>36</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>1,008</mn>
+   </mrow>
+  </mfrac>
+  <mo>}</mo><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<p>
+<h5>Analysis</h5>
+<p> shows the graph of the sequence. Notice that, since factorials grow very quickly, the presence of the factorial term in the denominator results in the denominator becoming much larger than the numerator as <math>
+ <mrow>
+  <mi>n</mi>
+ </mrow>
+</math> increases. This means the quotient gets smaller and, as the plot of the terms shows, the terms are decreasing and nearing zero.</p><figure><img src="CNX_Precalc_Figure_11_01_008.jpg" alt="Graph of a scattered plot with labeled points: (1, 5/6), (2, 5/12), (3, 1/8), (4, 1/36),  and (5, 5/1008). The x-axis is labeled n and the y-axis is labeled a_n."></figure></p>
+</div>
+</div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p>Write the first five terms of the sequence defined by the explicit formula <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>2</mn><mi>n</mi>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>The first five terms are <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mo> </mo><mfrac>
+    <mn>3</mn>
+    <mn>2</mn>
+   </mfrac>
+   <mo>,</mo><mo> </mo><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>15</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>72</mn>
+  </mrow> <mo>}</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div>
+
+<div class="note media-notitle">
+
+<p>Access this online resource for additional instruction and practice with sequences.</p><ul><li><a href="https://openstax.org/l/findingterms" target="_blank" rel="noopener noreferrer">Finding Terms in a Sequence</a></li></ul>
+</div>
+</div><div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td>Formula for a factorial</td><td> <math>
+ <mtable columnalign="left">
+  <mtr>
+   <mtd>
+    <mn>0</mn><mo>!</mo><mo>=</mo><mn>1</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mn>1</mn><mo>!</mo><mo>=</mo><mn>1</mn>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mi>n</mi><mo>!</mo><mo>=</mo><mi>n</mi><mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>2</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>⋯</mo><mrow><mo>(</mo>
+     <mn>2</mn>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mn>1</mn>
+    <mo>)</mo></mrow><mtext>, for </mtext><mi>n</mi><mo>≥</mo><mn>2</mn>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math>
+</td></tr></table></div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>A sequence is a list of numbers, called terms, written in a specific order.</li><li>Explicit formulas define each term of a sequence using the position of the term. See , , and .</li><li>An explicit formula for the <math>
+ <mrow>
+ <mi>n</mi><mtext>th</mtext>
+ </mrow>
+</math> term of a sequence can be written by analyzing the pattern of several terms. See .</li><li>Recursive formulas define each term of a sequence using previous terms.</li><li>Recursive formulas must state the initial term, or terms, of a sequence.</li><li>A set of terms can be written by using a recursive formula. See  and .</li><li>A factorial is a mathematical operation that can be defined recursively.</li><li>The factorial of <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> is the product of all integers from 1 to <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> See .</li></ul>
+</div>
+
+<div class="section section-exercises">
+<h3>Section Exercises</h3>
+<div class="section">
+<h4>Verbal</h4>
+<div class="exercise">
+<div class="problem">
+<p>Discuss the meaning of a sequence. If a finite sequence is defined by a formula, what is its domain? What about an infinite sequence?</p>
+</div>
+<div class="solution">
+<p>A sequence is an ordered list of numbers that can be either finite or infinite in number. When a finite sequence is defined by a formula, its domain is a subset of the non-negative integers. When an infinite sequence is defined by a formula, its domain is all positive or all non-negative integers.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Describe three ways that a sequence can be defined.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Is the ordered set of even numbers an infinite sequence? What about the ordered set of odd numbers? Explain why or why not.</p>
+</div>
+<div class="solution">
+<p>Yes, both sets go on indefinitely, so they are both infinite sequences.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What happens to the terms <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> of a sequence when there is a negative factor in the formula that is raised to a power that includes <math>
+ <mrow>
+  <mi>n</mi><mo>?</mo>
+ </mrow>
+</math> What is the term used to describe this phenomenon?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is a factorial, and how is it denoted? Use an example to illustrate how factorial notation can be beneficial.</p>
+</div>
+<div class="solution">
+<p>A factorial is the product of a positive integer and all the positive integers below it. An exclamation point is used to indicate the operation. Answers may vary. An example of the benefit of using factorial notation is when indicating the product  It is much easier to write   than it is to write out <math>
+ <mrow>
+ <mtext>13</mtext><mo>⋅</mo><mtext>12</mtext><mo>⋅</mo><mtext>11</mtext><mo>⋅</mo><mtext>10</mtext><mo>⋅</mo><mtext>9</mtext><mo>⋅</mo><mtext>8</mtext><mo>⋅</mo><mtext>7</mtext><mo>⋅</mo><mtext>6</mtext><mo>⋅</mo><mtext>5</mtext><mo>⋅</mo><mtext>4</mtext><mo>⋅</mo><mtext>3</mtext><mo>⋅</mo><mtext>2</mtext><mo>⋅</mo><mtext>1</mtext><mtext>.</mtext>
+ </mrow>
+</math> </p></div>
+</div>
+</div>
+
+<div class="section"><h4>Algebraic</h4><p>For the following exercises, write the first four terms of the sequence.</p>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mn>2</mn>
+   <mi>n</mi>
+  </msup>
+  <mo>−</mo><mn>2</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mo>−</mo><mn>8</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mn>3</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mn>5</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mn>5</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mn>2</mn>
+     <mi>n</mi>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>3</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>8</mn>
+   <mrow>
+    <mn>27</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+
+ </mrow>
+</math> .</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>2</mn><mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>3</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>1.25</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mn>4</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mn>1.25</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>5</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>20</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>80</mn>
+ </mrow>
+</math> .</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>4</mn><mo>⋅</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mn>6</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>2</mn><mi>n</mi><mo>+</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>9</mn>
+   <mn>7</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mn>9</mn>
+  </mfrac>
+
+ </mrow>
+</math> .</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mn>10</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>+</mo><mn>1</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>4</mn><mo>⋅</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+
+     </mrow>
+     <mn>5</mn>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>20</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>100</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write the first eight terms of the piecewise sequence.</p>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <msup>
+        <mrow>
+         <mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo>
+        </mrow>
+        <mi>n</mi>
+       </msup>
+       <mo>−</mo><mn>2</mn>
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is even</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <msup>
+        <mrow>
+         <mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo>
+        </mrow>
+        <mrow>
+         <mi>n</mi><mo>−</mo><mn>1</mn>
+        </mrow>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is odd</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mrow>
+         <msup>
+          <mi>n</mi>
+          <mn>2</mn>
+         </msup>
+
+        </mrow>
+        <mrow>
+         <mn>2</mn><mi>n</mi><mo>+</mo><mn>1</mn>
+        </mrow>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext></mtext><mo>≤</mo><mtext>5</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <msup>
+        <mi>n</mi>
+        <mn>2</mn>
+       </msup>
+       <mo>−</mo><mn>5</mn>
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>&gt;5</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>9</mn>
+   <mn>7</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mn>9</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>25</mn>
+   </mrow>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>31</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>44</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>59</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <msup>
+        <mrow>
+         <mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo>
+        </mrow>
+        <mn>2</mn>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is divisible by 4</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mn>2</mn>
+        <mi>n</mi>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is not divisible by 4</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mo>−</mo><mn>0.6</mn><mo>⋅</mo><msup>
+        <mn>5</mn>
+        <mrow>
+         <mi>n</mi><mo>−</mo><mn>1</mn>
+        </mrow>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is prime or 1</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mn>2.5</mn><mo>⋅</mo><msup>
+        <mrow>
+         <mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo>
+        </mrow>
+        <mrow>
+         <mi>n</mi><mo>−</mo><mn>1</mn>
+        </mrow>
+       </msup>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is composite</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>0.6</mn><mo>,</mo><mo>−</mo><mn>3</mn><mo>,</mo><mo>−</mo><mn>15</mn><mo>,</mo><mo>−</mo><mn>20</mn><mo>,</mo><mo>−</mo><mn>375</mn><mo>,</mo><mo>−</mo><mn>80</mn><mo>,</mo><mo>−</mo><mn>9375</mn><mo>,</mo><mo>−</mo><mn>320</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mn>4</mn><mo stretchy="false">(</mo><msup>
+        <mi>n</mi>
+        <mn>2</mn>
+       </msup>
+       <mo>−</mo><mn>2</mn><mo stretchy="false">)</mo>
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext></mtext><mo>≤</mo><mn>3</mn><mspace width="0.5em"></mspace><mtext>or </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>&gt; 6</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mrow>
+         <msup>
+          <mi>n</mi>
+          <mn>2</mn>
+         </msup>
+         <mo>−</mo><mn>2</mn>
+        </mrow>
+        <mn>4</mn>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mn>3</mn><mo>&lt;</mo><mi>n</mi><mo>≤</mo><mn>6</mn>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write an explicit formula for each sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>4</mn><mo>,</mo><mo> </mo><mn>7</mn><mo>,</mo><mo> </mo><mn>12</mn><mo>,</mo><mo> </mo><mn>19</mn><mo>,</mo><mo> </mo><mn>28</mn><mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mi>n</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>3</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>4</mn><mo>,</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>10</mn><mo>,</mo><mn>14</mn><mo>,</mo><mo>−</mo><mn>34</mn><mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mfrac>
+   <mn>4</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>,</mo><mn>2</mn><mo>,</mo><mfrac>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mn>2</mn>
+     <mi>n</mi>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>2</mn><mi>n</mi>
+   </mrow>
+  </mfrac>
+  <mspace width="0.5em"></mspace><mtext>or </mtext><mfrac>
+   <mrow>
+    <msup>
+     <mn>2</mn>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+   <mi>n</mi>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>0</mn><mo>,</mo><mfrac>
+   <mrow>
+    <mn>1</mn><mo>−</mo><msup>
+     <mi>e</mi>
+     <mn>1</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>+</mo><msup>
+     <mi>e</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mrow>
+    <mn>1</mn><mo>−</mo><msup>
+     <mi>e</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>+</mo><msup>
+     <mi>e</mi>
+     <mn>3</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mrow>
+    <mn>1</mn><mo>−</mo><msup>
+     <mi>e</mi>
+     <mn>3</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>+</mo><msup>
+     <mi>e</mi>
+     <mn>4</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mrow>
+    <mn>1</mn><mo>−</mo><msup>
+     <mi>e</mi>
+     <mn>4</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>1</mn><mo>+</mo><msup>
+     <mi>e</mi>
+     <mn>5</mn>
+    </msup>
+
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mo>…</mo>
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>1</mn><mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>,</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>8</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write the first five terms of the sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>9</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mi>n</mi>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>3</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>3</mn>
+   </mrow>
+  <mo>)</mo></mrow><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First five terms: <math>
+ <mrow>
+  <mn>3</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>9</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>27</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>81</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>243</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>+</mo><mn>2</mn><mi>n</mi>
+   </mrow>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>−</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mo>−</mo><mn>3</mn>
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>−</mo><mn>2</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First five terms: <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>−</mo><mn>9</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>27</mn>
+   </mrow>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>891</mn>
+   </mrow>
+   <mn>5</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>30</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>+</mo><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+
+   </mrow>
+  <mo>)</mo></mrow><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write the first eight terms of the sequence.</p>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><msub>
+   <mrow>
+    <mspace width="0.5em"></mspace><mtext>a</mtext>
+   </mrow>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>2</mn>
+     </mrow>
+    </msub>
+
+   </mrow>
+  <mo>)</mo></mrow><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext>1, </mtext><mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>3</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>9</mn>
+   <mn>4</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>81</mn>
+   </mrow>
+   <mn>4</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>2187</mn>
+   </mrow>
+   <mn>8</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>531</mn><mo>,</mo><mn>441</mn>
+   </mrow>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>1</mn><mo>,</mo><msub>
+   <mrow>
+    <mspace width="0.5em"></mspace><mtext>a</mtext>
+   </mrow>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>5</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>2</mn>
+   </mrow>
+  </msub>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>−</mo><msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn><mo>,</mo><msub>
+   <mrow>
+    <mspace width="0.5em"></mspace><mtext>a</mtext>
+   </mrow>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>10</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>2</mn><mrow><mo>(</mo>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>+</mo><mn>2</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>2</mn>
+     </mrow>
+    </msub>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>10</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>12</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mrow>
+    <mn>14</mn>
+   </mrow>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mfrac>
+   <mn>4</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>10</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>12</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write a recursive formula for each sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>2.5</mn><mo>,</mo><mo>−</mo><mn>5</mn><mo>,</mo><mo>−</mo><mn>10</mn><mo>,</mo><mo>−</mo><mn>20</mn><mo>,</mo><mo>−</mo><mn>40</mn><mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>8</mn><mo>,</mo><mo>−</mo><mn>6</mn><mo>,</mo><mo>−</mo><mn>3</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>6</mn><mo>,</mo><mo>…</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>8</mn><mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mi>n</mi>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>12</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>48</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>240</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>…</mo>
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>35</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>38</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>41</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>44</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mn>47</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><mo>…</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>35</mn><mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mn>3</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>15</mn><mo>,</mo><mn>3</mn><mo>,</mo><mfrac>
+   <mn>3</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>3</mn>
+   <mrow>
+    <mn>25</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>3</mn>
+   <mrow>
+    <mn>125</mn>
+   </mrow>
+  </mfrac>
+  <mo>,</mo><mo>⋯</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, evaluate the factorial.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mn>6</mn><mo>!</mo>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>720</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>12</mn>
+     </mrow>
+     <mn>6</mn>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow><mo>!</mo>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>12</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>6</mn><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>665</mn><mo>,</mo><mn>280</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>100</mn><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>99</mn><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>For the following exercises, write the first four terms of the sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mtext>2</mtext>
+    </msup>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution"><p>First four terms: <math>
+ <mrow>
+  <mn>1</mn><mo>,</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>2</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mn>3</mn>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>3</mn><mo>⋅</mo><mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mn>4</mn><mo>⋅</mo><mi>n</mi><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>−</mo><mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p>First four terms: <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mfrac>
+   <mn>6</mn>
+   <mn>5</mn>
+  </mfrac>
+  <mo>,</mo><mfrac>
+   <mrow>
+    <mn>24</mn>
+   </mrow>
+   <mrow>
+    <mn>11</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>100</mn><mo>⋅</mo><mi>n</mi>
+   </mrow>
+   <mrow>
+    <mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p></div>
+</div>
+</div><div class="section">
+<h4>Graphical</h4>
+<p>For the following exercises, graph the first five terms of the indicated sequence</p>
+
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mo>−</mo><mn>1</mn>
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+     <mi>n</mi>
+    </msup>
+
+   </mrow>
+   <mi>n</mi>
+  </mfrac>
+  <mo>+</mo><mi>n</mi>
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_201.jpg" alt="Graph of a scattered plot with points at (1, 0), (2, 5/2), (3, 8/3), (4, 17/4), and (5, 24/5). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mfrac>
+        <mrow>
+         <mn>4</mn><mo>+</mo><mi>n</mi>
+        </mrow>
+        <mrow>
+         <mn>2</mn><mi>n</mi>
+        </mrow>
+       </mfrac>
+
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is even</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mn>3</mn><mo>+</mo><mi>n</mi>
+      </mrow>
+     </mtd>
+     <mtd columnalign="left">
+      <mrow>
+       <mtext>if </mtext><mi>n</mi><mspace width="0.5em"></mspace><mtext>is odd</mtext>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mo>−</mo><msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>+</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_203.jpg" alt="Graph of a scattered plot with points at (1, 2), (2, 1), (3, 0), (4, 1), and (5, 0). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>1</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mn>8</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>+</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_205.jpg" alt="Graph of a scattered plot with labeled points: (1, 2), (2, 6), (3, 12), (4, 20), and (5, 30). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+</div><p>For the following exercises, write an explicit formula for the sequence using the first five points shown on the graph.</p>
+
+<div class="exercise"><div class="problem">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_206.jpg" alt="Graph of a scattered plot with labeled points: (1, 5), (2, 7), (3, 9), (4, 11), and (5, 13). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+</div><div class="exercise"><div class="problem">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_207.jpg" alt="Graph of a scattered plot with labeled points: (1, 0.5), (2, 1), (3, 2), (4, 4), and (5, 8). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mn>2</mn>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>2</mn>
+   </mrow>
+  </msup>
+
+ </mrow>
+</math>
+</p></div>
+</div><div class="exercise"><div class="problem">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_208.jpg" alt="Graph of a scattered plot with labeled points: (1, 12), (2, 9), (3, 6), (4, 3), and (5, 0). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+</div><p>For the following exercises, write a recursive formula for the sequence using the first five points shown on the graph.</p>
+<div class="exercise"><div class="problem">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_209.jpg" alt="Graph of a scattered plot with labeled points: (1, 6), (2, 7), (3, 9), (4, 13), and (5, 21). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>6</mn><mo>,</mo><mspace width="0.5em"></mspace><mtext></mtext><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>2</mn><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>−</mo><mn>5</mn>
+ </mrow>
+</math>
+</p></div>
+</div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_11_01_210.jpg" alt="Graph of a scattered plot with labeled points: (1, 16), (2, 8), (3, 4), (4, 2), and (5, 1). The x-axis is labeled n and the y-axis is labeled a_n."></figure>
+</div>
+</div></div>
+
+<div class="section"><h4>Technology</h4><p>Follow these steps to evaluate a sequence defined recursively using a graphing calculator:</p>
+<p><ul><li>On the home screen, key in the value for the initial term <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+
+ </mrow>
+</math> and press <strong>[ENTER]</strong>.</li><li>Enter the recursive formula by keying in all numerical values given in the formula, along with the key strokes <strong>[2ND] ANS</strong> for the previous term <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>.</mo>
+ </mrow>
+</math> Press <strong>[ENTER]</strong>.</li><li>Continue pressing <strong>[ENTER]</strong> to calculate the values for each successive term.</li></ul></p>
+
+<p>For the following exercises, use the steps above to find the indicated term or terms for the sequence.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the first five terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>87</mn>
+   </mrow>
+   <mrow>
+    <mn>111</mn>
+   </mrow>
+  </mfrac>
+ </mrow></math>, <math><mrow><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mn>4</mn>
+   <mn>3</mn>
+  </mfrac>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+   <mrow>
+    <mn>37</mn>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> Use the &gt;<strong>Frac</strong> feature to give fractional results.</p>
+</div>
+<div class="solution">
+<p>First five terms: <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>29</mn>
+   </mrow>
+   <mrow>
+    <mn>37</mn>
+   </mrow>
+  </mfrac>
+  </mrow></math>,
+<math><mrow><mfrac>
+   <mrow>
+    <mn>152</mn>
+   </mrow>
+   <mrow>
+    <mn>111</mn>
+   </mrow>
+  </mfrac>
+</mrow></math>,
+<math><mrow><mfrac>
+   <mrow>
+    <mn>716</mn>
+   </mrow>
+   <mrow>
+    <mn>333</mn>
+   </mrow>
+  </mfrac></mrow></math>,
+<math><mrow><mfrac>
+   <mrow>
+    <mn>3188</mn>
+   </mrow>
+   <mrow>
+    <mn>999</mn>
+   </mrow>
+  </mfrac>
+  </mrow></math>, <math><mrow><mfrac>
+   <mrow>
+    <mn>13724</mn>
+   </mrow>
+   <mrow>
+    <mn>2997</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the 15<sup>th</sup> term of the sequence <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>625</mn></mrow></math>, <math><mrow><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mn>0.8</mn><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>+</mo><mn>18.</mn>
+ </mrow>
+</math> </p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the first five terms of the sequence <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn></mrow></math>, <math><mrow><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mn>2</mn>
+   <mrow>
+    <mo stretchy="false">[</mo><mo stretchy="false">(</mo><msub>
+     <mi>a</mi>
+     <mi>n</mi>
+    </msub>
+    <mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo>
+   </mrow>
+  </msup>
+  <mo>+</mo><mn>1.</mn>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p>First five terms: 2, 3, 5, 17, 65537</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the first ten terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>8</mn></mrow></math>, <math><mrow><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <msub>
+       <mi>a</mi>
+       <mrow>
+        <mi>n</mi><mo>−</mo><mn>1</mn>
+       </mrow>
+      </msub>
+      <mo>+</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>!</mo>
+   </mrow>
+   <mrow>
+    <msub>
+     <mi>a</mi>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msub>
+    <mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find the tenth term of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn></mrow></math>, <math><mrow><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mi>n</mi><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </msub>
+  <mo>=</mo><mn>7</mn><mo>,</mo><mn>257</mn><mo>,</mo><mn>600</mn>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<p>Follow these steps to evaluate a finite sequence defined by an explicit formula. Using a TI-84, do the following.</p>
+<p><ul><li>In the home screen, press <strong>[2ND] LIST</strong>.</li><li>Scroll over to <strong>OPS</strong> and choose <strong>“seq(”</strong> from the dropdown list. Press <strong>[ENTER]</strong>.</li><li>In the line headed <strong>“Expr:”</strong> type in the explicit formula, using the <math>
+ <mrow>
+ <mo stretchy="false">[</mo><mtext>X,T</mtext><mo>,</mo><mi>θ</mi><mo>,</mo><mi>n</mi><mo stretchy="false">]</mo>
+ </mrow>
+</math> button for <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> </li><li>In the line headed <strong>“Variable:”</strong> type in the variable used on the previous step.</li><li>In the line headed <strong>“start:”</strong> key in the value of <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> that begins the sequence.</li><li>In the line headed <strong>“end:”</strong> key in the value of <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> that ends the sequence.</li><li>Press <strong>[ENTER]</strong> 3 times to return to the home screen. You will see the sequence syntax on the screen. Press <strong>[ENTER]</strong> to see the list of terms for the finite sequence defined. Use the right arrow key to scroll through the list of terms.</li></ul></p>
+<p>Using a TI-83, do the following.</p>
+<p><ul><li>In the home screen, press <strong>[2ND] LIST</strong>.</li><li>Scroll over to <strong>OPS</strong> and choose <strong>“seq(”</strong> from the dropdown list. Press <strong>[ENTER]</strong>.</li><li>Enter the items in the order <strong>“Expr”</strong>, <strong>“Variable”</strong>, <strong>“start”</strong>, <strong>“end”</strong> separated by commas. See the instructions above for the description of each item.</li><li>Press <strong>[ENTER]</strong> to see the list of terms for the finite sequence defined. Use the right arrow key to scroll through the list of terms.</li></ul></p>
+<p>For the following exercises, use the steps above to find the indicated terms for the sequence. Round to the nearest thousandth when necessary.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>List the first five terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>28</mn>
+   </mrow>
+   <mn>9</mn>
+  </mfrac>
+  <mi>n</mi><mo>+</mo><mfrac>
+   <mn>5</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>List the first six terms of the sequence <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>3</mn>
+    </msup>
+    <mo>−</mo><mn>3.5</mn><msup>
+     <mi>n</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><mo> </mo><mn>4.1</mn><mi>n</mi><mo>−</mo><mn>1.5</mn>
+   </mrow>
+   <mrow>
+    <mn>2.4</mn><mi>n</mi>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>First six terms: 0.042, 0.146, 0.875, 2.385, 4.708</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>List the first five terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>15</mn><mi>n</mi><mo>⋅</mo><msup>
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mo>−</mo><mn>2</mn>
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>47</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>List the first four terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mrow>
+    <mn>5.7</mn>
+   </mrow>
+   <mi>n</mi>
+  </msup>
+  <mo>+</mo><mn>0.275</mn><mrow><mo>(</mo>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  <mo>)</mo></mrow><mo>!</mo>
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution"><p>First four terms: 5.975, 2.765, 185.743, 1057.25, 6023.521</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>List the first six terms of the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mi>n</mi><mo>!</mo>
+   </mrow>
+   <mi>n</mi>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div><div class="section"><h4>Extensions</h4><div class="exercise">
+<div class="problem">
+<p>Consider the sequence defined by <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>6</mn><mo>−</mo><mn>8</mn><mi>n</mi><mo>.</mo>
+ </mrow>
+</math> Is <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>421</mn>
+ </mrow>
+</math> a term in the sequence?  Verify the result.</p></div>
+<div class="solution">
+<p>If <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>421</mn>
+ </mrow>
+</math> is a term in the sequence, then solving the equation <math>
+ <mrow>
+  <mo>−</mo><mn>421</mn><mo>=</mo><mo>−</mo><mn>6</mn><mo>−</mo><mn>8</mn><mi>n</mi>
+ </mrow>
+</math> for <math>
+ <mi>n</mi>
+</math> will yield a non-negative integer. However, if <math>
+ <mrow>
+ <mo>−</mo><mn>421</mn><mo>=</mo><mo>−</mo><mn>6</mn><mo>−</mo><mn>8</mn><mi>n</mi><mo>,</mo>
+ </mrow>
+</math> then <math>
+ <mrow>
+  <mi>n</mi><mo>=</mo><mn>51.875</mn>
+ </mrow>
+</math> so <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mo>−</mo><mn>421</mn>
+ </mrow>
+</math> is not a term in the sequence.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What term in the sequence <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <msup>
+     <mi>n</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><mn>4</mn><mi>n</mi><mo>+</mo><mn>4</mn>
+   </mrow>
+   <mrow>
+    <mn>2</mn><mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>+</mo><mn>2</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> has the value <math>
+ <mrow>
+  <mn>41</mn><mo>?</mo>
+ </mrow>
+</math> Verify the result.</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find a recursive formula for the sequence 1, 0, −1, −1, 0, 1, 1, 0, −1, −1, 0, 1, 1, .... (<em>Hint</em>: find a pattern for <math>
+ <mrow>
+ <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+
+ </mrow>
+</math> based on the first two terms.)</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>1</mn><mo>,</mo><msub>
+   <mi>a</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>0</mn><mo>,</mo><msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>1</mn>
+   </mrow>
+  </msub>
+  <mo>−</mo><msub>
+   <mi>a</mi>
+   <mrow>
+    <mi>n</mi><mo>−</mo><mn>2</mn>
+   </mrow>
+  </msub>
+
+ </mrow>
+</math> </p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p>Calculate the first eight terms of the sequences <math>
+ <mrow>
+  <msub>
+   <mi>a</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>+</mo><mn>2</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>n</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow><mo>!</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>b</mi>
+   <mi>n</mi>
+  </msub>
+  <mo>=</mo><msup>
+   <mi>n</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>3</mn><msup>
+   <mi>n</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>2</mn><mi>n</mi><mo>,</mo>
+ </mrow>
+</math> and then make a conjecture about the relationship between these two sequences.</p>
+</div>
+</div>
+
+<div class="exercise material-set-2">
+<div class="problem">
+<p>Prove the conjecture made in the preceding exercise.</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>·</mo><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>·</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>·</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>·</mo><mn>...</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+   </mrow>
+   <mrow>
+    <mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>·</mo><mn>...</mn><mo>·</mo><mn>3</mn><mo>·</mo><mn>2</mn><mo>·</mo><mn>1</mn>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><msup>
+   <mi>n</mi>
+   <mn>3</mn>
+  </msup>
+  <mo>+</mo><mn>3</mn><msup>
+   <mi>n</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mn>2</mn><mi>n</mi>
+ </mrow>
+</math> </p>
+</div>
+</div>
+</div></div>
+<h2>Key terms</h2>
+<p><strong>explicit formula</strong> a formula that defines each term of a sequence in terms of its position in the sequence</p>
+
+<p><strong>finite sequence</strong> a function whose domain consists of a finite subset of the positive integers <math>
+ <mrow>
+ <mo>{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mo>…</mo><mi>n</mi><mo>}</mo>
+ </mrow>
+</math> for some positive integer <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> </p>
+
+<p><strong>infinite sequence</strong> a function whose domain is the set of positive integers</p>
+<p><strong>n factorial</strong> the product of all the positive integers from 1 to <math>
+ <mrow>
+ <mi>n</mi>
+ </mrow>
+</math> </p>
+
+<p><strong>nth term of a sequence</strong> a formula for the general term of a sequence</p>
+<p><strong>recursive formula</strong> a formula that defines each term of a sequence using previous term(s)</p>
+<p><strong>sequence</strong> a function whose domain is a subset of the positive integers</p>
+<p><strong>term</strong> a number in a sequence</p>
+
+</body></html>

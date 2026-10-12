@@ -16,6 +16,7 @@
     python3 daybook.py sync --folder PATH --code CODE      join from another computer
     python3 daybook.py sync                one round now, and what it did
     python3 daybook.py update              take the newest release from GitHub (--check, --rollback)
+    python3 daybook.py learn-import        open textbooks into Learn, as published (apps/learn/content/imports.json)
 """
 import argparse
 import getpass
@@ -341,6 +342,16 @@ def cmd_sync(a):
     return 0
 
 
+def cmd_learn_import(a):
+    """Open textbooks into Learn as published (apps/learn/content/imports.json). It fetches from GitHub."""
+    from apps.learn import openstax
+    try:
+        openstax.run()
+    except (OSError, ValueError) as e:
+        raise _db.Stop(f"The import stopped: {e}")
+    print("Done. Commit apps/learn/content and apps/learn/web/media, and every copy of Daybook has them without fetching.")
+
+
 def cmd_update(a):
     """The newest code from GitHub, put in place; the data is left as it is."""
     from core import update
@@ -410,6 +421,7 @@ def main(argv=None):
     s = add("update"); s.set_defaults(fn=cmd_update)
     s.add_argument("--check", action="store_true", help="only say whether there is newer code")
     s.add_argument("--rollback", action="store_true", help="put back the code from before the last update")
+    add("learn-import").set_defaults(fn=cmd_learn_import)
     s = add("import"); s.set_defaults(fn=cmd_import)
     s.add_argument("files", nargs="+")
     s.add_argument("--account", type=int, required=True, help="account id (see Settings)")

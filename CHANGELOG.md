@@ -2,6 +2,31 @@
 
 ## 4.0 — in progress (not released)
 
+- **Phase 2: easy learning** (the plan doc "Daybook review and plan"):
+  - **Lesson text is verbatim** (SPEC.md §1): a lesson keeps its author's words; Daybook adds
+    beside them and never rewrites. The nine lessons adapted from OpenStax earlier each link
+    **The original**, the section word for word.
+  - **Open textbooks in, as published**: `daybook.py learn-import` brings OpenStax sections in
+    from their source (CNXML on GitHub) with their own maths (MathML) and figures: seven A-level
+    lessons (coordinate geometry, sequences and series, the binomial theorem, exponentials and
+    logarithms, integration, numerical methods, vectors). Track 4 now has 10 of its 11 stops.
+    OpenStax's licence is CC BY-NC-SA 4.0 (it was wrongly given as CC BY 4.0).
+  - **Tracks and a skill map** in place of the Tree: six tracks, each a project at work, as a
+    line of stops (proven, learned, fading, going, ready, needs, not written). A track that
+    needs an unwritten lesson is blocked, not timed. **Prove it**: a bench task done and logged.
+  - **Learn home**: Continue (the next part and its minutes), three short starts, the week as
+    days, minutes, learned and proven. A rough level per subject the first time.
+    Five pages in the menu, the rest under More.
+  - **Lessons in parts** of 5 to 8 minutes, with a pause between; never between an idea and
+    its question. Only the part you are in shows its ticks.
+  - **Feed**: new cards from one lesson at a time; a refresher only from what you studied; a
+    missed numeric card comes back with new numbers; your level shows after about 8 answers.
+  - **Learning record** (CPD) by day, as CSV.
+  - **The workbench**: calculator and whiteboard as tabs in one docked panel (a sheet on a
+    phone), 36 px labelled tools, the card's numbers as buttons, sums kept with the card, units
+    through sums, fractions, hex and binary, `n!`, radians on graphs, Solve for any letter;
+    straight lines and text on the board, Clear with undo.
+
 - **Phase 1: always there, everywhere** (the plan doc "Daybook review and plan"):
   - **On the Pi in one command**: `sudo python3 daybook.py install --service` finds the Pi's
     Tailscale name, writes, enables and starts the systemd service, and points Tailscale's

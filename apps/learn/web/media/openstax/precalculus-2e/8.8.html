@@ -1,0 +1,6082 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8.8 Vectors · Precalculus 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Precalculus 2e, Abramson et al., section 8.8 Vectors. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/precalculus-2e/pages/8-8-vectors</p>
+<h1>8.8 Vectors</h1>
+
+
+<p>An airplane is flying at an airspeed of 200 miles per hour headed on a SE bearing of 140°. A north wind (from north to south) is blowing at 16.2 miles per hour, as shown in . What are the ground speed and actual bearing of the plane?</p><figure><img src="CNX_Precalc_Figure_08_08_001.jpg" alt="Image of a plan flying SE at 140 degrees and the north wind blowing "></figure><p>Ground speed refers to the speed of a plane relative to the ground. Airspeed refers to the speed a plane can travel relative to its surrounding air mass. These two quantities are not the same because of the effect of wind. In an earlier section, we used triangles to solve a similar problem involving the movement of boats. Later in this section, we will find the airplane’s groundspeed and bearing, while investigating another approach to problems of this type. First, however, let’s examine the basics of vectors.</p>
+
+<div class="section"><h3>A Geometric View of Vectors </h3><p>A <strong>vector</strong> is a specific quantity drawn as a line segment with an arrowhead at one end. It has an <strong>initial point</strong>, where it begins, and a <strong>terminal point</strong>, where it ends. A vector is defined by its <strong>magnitude</strong>, or the length of the line, and its direction, indicated by an arrowhead at the terminal point. Thus, a vector is a directed line segment. There are various symbols that distinguish vectors from other quantities:</p>
+<ul><li>Lower case, boldfaced type, with or without an arrow on top such as <strong> <math>
+ <mrow><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo></mrow></math> <math><mrow><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>,</mo></mrow></math> <math><mrow><mi mathvariant="bold">w</mi><mo>,</mo></mrow></math> <math><mrow><mover accent="true">
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow><mrow><mo stretchy="false">→</mo></mrow></mrow>
+  </mover>
+  <mo>,</mo></mrow></math> <math><mrow><mover accent="true">
+   <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+   <mrow><mrow><mo stretchy="false">→</mo></mrow></mrow>
+  </mover>
+  <mo>,</mo><mspace width="0.3em"></mspace><mover accent="true">
+   <mi mathvariant="bold">w</mi>
+   <mrow><mrow><mo stretchy="false">→</mo></mrow></mrow>
+  </mover>
+  <mo>.</mo>
+ </mrow>
+</math> </strong>
+</li><li>Given initial point <math>
+ <mrow>
+  <mi>P</mi></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mi>Q</mi><mo>,</mo></mrow>
+</math> a vector can be represented as <math>
+ <mrow>
+  <mover accent="true">
+   <mrow>
+    <mi>P</mi><mi>Q</mi></mrow>
+   <mo stretchy="true">→</mo>
+  </mover><mo>.</mo></mrow>
+</math> The arrowhead on top is what indicates that it is not just a line, but a directed line segment.</li><li>Given an initial point of <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mi>a</mi><mi>b</mi></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> a vector may be represented as <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+    <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math> </li></ul><p>This last symbol <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+    <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow></mrow>
+</math>  has special significance. It is called the <strong>standard position</strong>. The <strong>position vector</strong> has an initial point <math>
+ <mrow><mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and a terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo> <mrow>
+    <mi>a</mi><mo>,</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle></mrow> <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> To change any vector into the position vector, we think about the change in the <em>x</em>-coordinates and the change in the <em>y</em>-coordinates. Thus, if the initial point of a vector <math>
+ <mrow>
+  <mover accent="true">
+   <mrow>
+    <mi>C</mi><mi>D</mi></mrow>
+   <mo stretchy="true">→</mo>
+  </mover>
+  </mrow>
+</math> is <math>
+ <mrow>
+  <mi>C</mi><mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>x</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>,</mo><msub>
+     <mi>y</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and the terminal point is <math>
+ <mrow>
+  <mi>D</mi><mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>,</mo><msub>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> then the position vector is found by calculating</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mover accent="true">
+       <mrow>
+        <mi>A</mi><mi>B</mi></mrow>
+       <mo stretchy="true">→</mo>
+      </mover>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <msub>
+        <mi>x</mi>
+        <mn>2</mn>
+       </msub>
+       <mo>−</mo><msub>
+        <mi>x</mi>
+        <mn>1</mn>
+       </msub>
+       <mo>,</mo><msub>
+        <mi>y</mi>
+        <mn>2</mn>
+       </msub>
+       <mo>−</mo><msub>
+        <mi>y</mi>
+        <mn>1</mn>
+       </msub>
+       </mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+        <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>In , we see the original vector <math>
+ <mrow>
+  <mover accent="true">
+   <mrow>
+    <mi>C</mi><mi>D</mi></mrow>
+   <mo stretchy="true">→</mo>
+  </mover>
+  </mrow>
+</math> and the position vector <math>
+ <mrow>
+  <mover accent="true">
+   <mrow>
+    <mi>A</mi><mi>B</mi></mrow>
+   <mo stretchy="true">→</mo>
+  </mover>
+  <mo>.</mo></mrow>
+</math>
+</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_003.jpg" alt="Plot of the original vector CD in blue and the position vector AB in orange extending from the origin."></figure><div class="note"><h4>Properties of Vectors</h4>
+
+ <p>A vector is a directed line segment with an initial point and a terminal point. Vectors are identified by magnitude, or the length of the line, and direction, represented by the arrowhead pointing toward the terminal point. The position vector has an initial point at <math>  <mrow><mrow><mo>(</mo>    <mrow>     <mn>0</mn><mo>,</mo><mn>0</mn></mrow>   <mo>)</mo></mrow></mrow> </math> and is identified by its terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo> <mrow>
+  <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> </p></div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Find the Position Vector</h6>
+<p>Consider the vector whose initial point is <math>
+ <mrow>
+  <mi>P</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point is <math>
+ <mrow>
+  <mi>Q</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Find the position vector.</p>
+</div>
+<div class="solution">
+<p>The position vector is found by subtracting one <em>x</em>-coordinate from the other <em>x</em>-coordinate, and one <em>y</em>-coordinate from the other <em>y</em>-coordinate. Thus </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>6</mn><mo>−</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>−</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>4</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>The position vector begins at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminates at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>4</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> The graphs of both vectors are shown in .</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_022.jpg" alt="Plot of the original vector in blue and the position vector in orange extending from the origin."></figure><p>We see that the position vector is <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>4</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math> </p></div>
+</div></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Drawing a Vector with the Given Criteria and Its Equivalent Position Vector</h6>
+<p>Find the position vector given that vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>has an initial point at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>3</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and a terminal point at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>4</mn><mo>,</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> then graph both vectors in the same plane.</p>
+
+</div>
+<div class="solution">
+<p>The position vector is found using the following calculation:</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>4</mn><mo>−</mo><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mo>,</mo><mn>5</mn><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>  </mtext><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>7</mn><mo>,</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>Thus, the position vector begins at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminates at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> See .</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_004n.jpg" alt="Plot of the two given vectors their same position vector."></figure></div>
+</div></div>
+
+
+<div class="note precalculus try">
+<div class="exercise"><div class="problem"><p>Draw a vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>that connects from the origin to the point <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo stretchy="false">)</mo><mo>.</mo></mrow>
+</math>
+</p></div>
+<div class="solution"> <figure><img src="CNX_Precalc_Figure_08_08_006.jpg" alt="A vector from the origin to (3,5) - a line with an arrow at the (3,5) endpoint."></figure></div>
+</div></div></div><div class="section">
+<h3>Finding Magnitude and Direction </h3>
+<p>To work with a vector, we need to be able to find its magnitude and its direction. We find its magnitude using the Pythagorean Theorem or the distance formula, and we find its direction using the inverse tangent function.</p>
+
+<div class="note">
+
+<h4>Magnitude and Direction of a Vector</h4>
+<p>Given a position vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+ </mrow>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+  <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> the magnitude is found by <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><msqrt>
+   <mrow>
+    <msup>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><msup>
+     <mi>b</mi>
+     <mn>2</mn>
+    </msup>
+    </mrow>
+  </msqrt>
+  <mo>.</mo></mrow>
+</math> The direction is equal to the angle formed with the <em>x</em>-axis, or with the <em>y</em>-axis, depending on the application. For a position vector, the direction is found by <math>
+ <mrow>
+  <mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>b</mi>
+     <mi>a</mi>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow><mo stretchy="false">⇒</mo><mi>θ</mi><mo>=</mo><msup>
+   <mrow>
+    <mi>tan</mi></mrow>
+   <mrow>
+    <mo>−</mo><mn>1</mn></mrow>
+  </msup>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>b</mi>
+     <mi>a</mi>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> as illustrated in .</p><figure><img src="CNX_Precalc_Figure_08_08_017new.png" alt="Standard plot of a position vector (a,b) with magnitude |v| extending into Q1 at theta degrees. "></figure><p>Two vectors <strong><em>v</em></strong> and <strong><em>u</em></strong> are considered equal if they have the same magnitude and the same direction. Additionally, if both vectors have the same position vector, they are equal.</p></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Magnitude and Direction of a Vector</h6>
+<p>Find the magnitude and direction of the vector with initial point <math>
+ <mrow>
+  <mi>P</mi><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>8</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mi>Q</mi><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Draw the vector.</p>
+</div>
+<div class="solution">
+<p>First, find the <strong>position vector</strong>.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>−2</mn><mo>,</mo><mo>−</mo><mo stretchy="false">(</mo><mn>−8</mn><mo stretchy="false">)</mo><mo>,</mo><mn>−5</mn><mo></mo><mn>−1</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>  </mtext><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>6</mn><mo>,</mo><mo>−</mo><mn>6</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>We use the Pythagorean Theorem to find the magnitude. </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo><mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>6</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>6</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>72</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>6</mn><msqrt>
+       <mn>2</mn>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The direction is given as</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mn>−6</mn></mrow>
+       <mn>6</mn>
+      </mfrac>
+      <mo>=</mo><mn>−1</mn><mo stretchy="false">⇒</mo><mi>θ</mi><mo>=</mo><msup>
+       <mrow>
+        <mi>tan</mi></mrow>
+       <mrow>
+        <mn>−1</mn></mrow>
+      </msup>
+      <mo stretchy="false">(</mo><mn>−1</mn><mo stretchy="false">)</mo></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mn>45°</mn></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>However, the angle terminates in the fourth quadrant, so we add 360° to obtain a positive angle. Thus, <math>
+ <mrow>
+  <mo>−</mo><mn>45°</mn><mo>+</mo><mn>360°</mn><mo>=</mo><mn>315°</mn><mo>.</mo>
+ </mrow>
+</math> See .</p><figure><img src="CNX_Precalc_Figure_08_08_018.jpg" alt="Plot of the position vector extending into Q4 from the origin with the magnitude 6rad2."></figure></div>
+</div></div>
+
+<div class="example"><div class="exercise"><div class="problem">
+<h6>Showing That Two Vectors Are Equal</h6>
+<p>Show that vector <strong><em>v</em></strong> with <strong>initial point</strong> at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>−3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and <strong>terminal point</strong> at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−1</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> is equal to vector <strong><em>u</em></strong> with initial point at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−1</mn><mo>,</mo><mn>−3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−7</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Draw the position vector on the same grid as <strong><em>v</em></strong> and <strong><em>u</em></strong>. Next, find the magnitude and direction of each vector.</p></div>
+<div class="solution">
+<p>As shown in , draw the vector <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> starting at initial <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>−3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−1</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Draw the vector <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−1</mn><mo>,</mo><mn>−3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>−7</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Find the standard position for each. </p><p>Next, find and sketch the position vector for <strong><em>v</em></strong> and <strong><em>u</em></strong>. We have</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo>〈</mo><mn>−1</mn><mo>−</mo><mn>5</mn><mo>,</mo><mn>2</mn><mo>−</mo><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mo>〉</mo></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>  </mtext><mo>=</mo><mo>〈</mo><mn>−6</mn><mo>,</mo><mn>5</mn><mo>〉</mo></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mo>〈</mo><mn>−7</mn><mo>−</mo><mo stretchy="false">(</mo><mn>−1</mn><mo stretchy="false">)</mo><mo>,</mo><mn>2</mn><mo>−</mo><mo stretchy="false">(</mo><mn>−3</mn><mo stretchy="false">)</mo><mo>〉</mo></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>  </mtext><mo>=</mo><mo>〈</mo><mn>−6</mn><mo>,</mo><mn>5</mn><mo>〉</mo></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>Since the position vectors are the same, <strong><em>v</em></strong> and <strong><em>u</em></strong> are the same.</p><p>An alternative way to check for vector equality is to show that the magnitude and direction are the same for both vectors. To show that the magnitudes are equal, use the Pythagorean Theorem.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo><mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>−1</mn><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>2</mn><mo>−</mo><mo stretchy="false">(</mo><mn>−3</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>−6</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>36</mn><mo>+</mo><mn>25</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>61</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo><mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>−7</mn><mo>−</mo><mo stretchy="false">(</mo><mn>−1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>2</mn><mo>−</mo><mo stretchy="false">(</mo><mn>−3</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>−6</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>36</mn><mo>+</mo><mn>25</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>61</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>As the magnitudes are equal, we now need to verify the direction. Using the tangent function with the position vector gives</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mo>−</mo><mfrac>
+       <mn>5</mn>
+       <mn>6</mn>
+      </mfrac>
+      <mo stretchy="false">⇒</mo><mi>θ</mi><mo>=</mo><msup>
+       <mrow>
+        <mi>tan</mi></mrow>
+       <mrow>
+        <mo>−</mo><mn>1</mn></mrow>
+      </msup>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mo>−</mo><mfrac>
+         <mn>5</mn>
+         <mn>6</mn>
+        </mfrac>
+        </mrow>
+      <mo>)</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mn>39.8°</mn></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>However, we can see that the position vector terminates in the second quadrant, so we add <math>
+ <mrow>
+  <mn>180°</mn><mo>.</mo>
+ </mrow>
+</math> Thus, the direction is <math>
+ <mrow>
+  <mo>−</mo><mn>39.8°</mn><mo>+</mo><mn>180°</mn><mo>=</mo><mn>140.2°</mn><mo>.</mo>
+ </mrow>
+</math> </p>
+<figure><img src="CNX_Precalc_Figure_08_08_005n.jpg" alt="Plot of the two given vectors their same position vector."></figure></div>
+</div></div></div>
+<div class="section"><h3>Performing Vector Addition and Scalar Multiplication</h3><p>Now that we understand the properties of vectors, we can perform operations involving them. While it is convenient to think of the vector <strong> <math><mstyle mathvariant="bold"><mi>u</mi></mstyle></math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mi>x</mi><mo>,</mo><mi>y</mi></mrow> <mo>〉</mo></mrow></mrow>
+</math> as an arrow or directed line segment from the origin to the point <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>,</mo></mrow>
+</math> vectors can be situated anywhere in the plane. The sum of two vectors <strong><em>u</em></strong> and <strong><em>v</em></strong>, or <strong>vector addition</strong>, produces a third vector <strong><em>u</em></strong> + <strong><em>v</em></strong>, the <strong>resultant</strong> vector.</p><p>To find <strong><em>u</em></strong> + <strong><em>v</em></strong>, we first draw the vector <strong><em>u</em></strong>, and from the terminal end of <strong><em>u</em></strong>, we drawn the vector <strong><em>v</em></strong>. In other words, we have the initial point of <strong><em>v</em></strong> meet the terminal end of <strong><em>u</em></strong>. This position corresponds to the notion that we move along the first vector and then, from its terminal point, we move along the second vector. The sum <strong><em>u</em></strong> + <strong><em>v</em></strong> is the resultant vector because it results from addition or subtraction of two vectors. The resultant vector travels directly from the beginning of <strong><em>u</em></strong> to the end of <strong><em>v</em></strong> in a straight path, as shown in .</p><figure><img src="CNX_Precalc_Figure_08_08_008.jpg" alt="Diagrams of vector addition and subtraction. "></figure><p>Vector subtraction is similar to vector addition. To find <strong><em>u</em></strong> − <strong><em>v</em></strong>, view it as <strong><em>u</em></strong> + (−<strong><em>v</em></strong>). Adding −<strong><em>v</em></strong> is reversing direction of <strong><em>v</em></strong> and adding it to the end of  <strong><em>u</em></strong>. The new vector begins at the start of  <strong><em>u</em></strong> and stops at the end point of −<strong><em>v</em></strong>. See  for a visual that compares vector addition and vector subtraction using <strong>parallelograms</strong>.</p><figure><img src="CNX_Precalc_Figure_08_08_009.jpg" alt="Showing vector addition and subtraction with parallelograms. For addition, the base is u, the side is v, the diagonal connecting the start of the base to the end of the side is u+v. For subtraction, thetop is u, the side is -v, and the diagonal connecting the start of the top to the end of the side is u-v."></figure><div class="example"><div class="exercise"><div class="problem">
+<h6>Adding and Subtracting Vectors</h6>
+<p>Given <strong> <math>
+ <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> and<strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>−1</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> find two new vectors <strong><em>u</em></strong> + <strong><em>v</em></strong>, and <strong><em>u</em></strong> − <strong><em>v</em></strong>.</p></div>
+<div class="solution">
+<p>To find the sum of two vectors, we add the components. Thus,</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>+</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow><mo>+</mo><mrow><mo>〈</mo> <mrow>
+       <mo>−</mo><mn>1</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>+</mo><mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>,</mo><mo>−</mo><mn>2</mn><mo>+</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>2</mn><mo>,</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>See <strong>(a)</strong>.</p>
+<p>To find the difference of two vectors, add the negative components of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>to<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>Thus,</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><mo>−</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow><mo>+</mo><mrow><mo>〈</mo> <mrow>
+       <mn>1</mn><mo>,</mo><mo>−</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>+</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>2</mn><mo>+</mo><mo stretchy="false">(</mo><mo>−</mo><mn>4</mn><mo stretchy="false">)</mo></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>4</mn><mo>,</mo><mo>−</mo><mn>6</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>See <strong>(b).</strong></p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_019.jpg" alt="Further diagrams of vector addition and subtraction."><figcaption>(a) Sum of two vectors (b) Difference of two vectors</figcaption></figure></div>
+</div></div></div><div class="section">
+<h3>Multiplying By a Scalar</h3>
+<p>While adding and subtracting vectors gives us a new vector with a different magnitude and direction, the process of multiplying a vector by a <strong>scalar</strong>, a constant, changes only the magnitude of the vector or the length of the line. Scalar multiplication has no effect on the direction unless the scalar is negative, in which case the direction of the resulting vector is opposite the direction of the original vector.</p><div class="note"><h4>Scalar Multiplication</h4>
+
+<p><strong>Scalar multiplication</strong> involves the product of a vector and a scalar. Each component of the vector is multiplied by the scalar. Thus, to multiply <strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+    <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow></mrow>
+</math>  by <math>
+ <mrow>
+ <mi>k</mi></mrow>
+</math>, we have </p><div class="eq"> <math display="block">
+ <mrow>
+  <mi>k</mi><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mi>k</mi><mi>a</mi><mo>,</mo><mi>k</mi><mi>b</mi></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</div><p>Only the magnitude changes, unless <math>
+ <mrow>
+  <mi>k</mi></mrow>
+</math> is negative, and then the vector reverses direction.</p>
+</div><div class="example"><div class="exercise"><div class="problem">
+<h6>Performing Scalar Multiplication</h6>
+<p>Given vector<strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> find 3<strong><em>v</em></strong>, <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+ </mrow>
+</math> <strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo>
+ </mrow>
+</math> </strong>and −<strong><em>v</em></strong>.</p></div>
+<div class="solution">
+<p>See  for a geometric interpretation. If<strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> then</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>3</mn><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>⋅</mo><mn>3</mn><mo>,</mo><mn>3</mn><mo>⋅</mo><mn>1</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>9</mn><mo>,</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mn>1</mn>
+       <mn>2</mn>
+      </mfrac>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mfrac>
+        <mn>1</mn>
+        <mn>2</mn>
+       </mfrac>
+       <mo>⋅</mo><mn>3</mn><mo>,</mo><mfrac>
+        <mn>1</mn>
+        <mn>2</mn>
+       </mfrac>
+       <mo>⋅</mo><mn>1</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mfrac>
+        <mn>3</mn>
+        <mn>2</mn>
+       </mfrac>
+       <mo>,</mo><mfrac>
+        <mn>1</mn>
+        <mn>2</mn>
+       </mfrac>
+       </mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>−</mi><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>−3</mn><mo>,</mo><mn>−1</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><figure><img src="CNX_Precalc_Figure_08_08_007.jpg" alt="Showing the effect of scaling a vector: 3x, 1x, .5x, and -1x. The 3x is three times as long, the 1x stays the same, the .5x halves the length, and the -1x reverses the direction of the vector but keeps the length the same. The rest keep the same direction; only the magnitude changes."></figure></div>
+<p>
+<h5>Analysis </h5>
+<p>Notice that the vector 3<strong><em>v</em></strong> is three times the length of <strong><em>v</em></strong>, <math>
+ <mfrac>
+  <mn>1</mn>
+  <mn>2</mn>
+ </mfrac></math> <strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong>is half the length of <strong><em>v</em></strong>, and –<strong><em>v</em></strong> is the same length of <strong><em>v</em></strong>, but in the opposite direction.</p></p>
+</div></div><div class="note precalculus try">
+<div class="exercise"><div class="problem"><p>Find the <strong>scalar multiple</strong> 3<strong> <math>
+ <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+</math> </strong> given <strong> <math>
+ <mstyle mathvariant="bold"><mi>u</mi></mstyle></math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>5</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div>
+<div class="solution"><p> <math>
+ <mrow>
+  <mn>3</mn><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>15</mn><mo>,</mo><mn>12</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div>
+</div>
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Using Vector Addition and Scalar Multiplication to Find a New Vector</h6>
+<p>Given <strong> <math>
+ <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> and<strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> find a new vector <strong><em>w</em></strong> = 3<strong><em>u</em></strong> + 2<strong><em>v</em></strong>.
+</p></div>
+<div class="solution">
+<p>First, we must multiply each vector by the scalar.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>3</mn><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mn>3</mn><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>9</mn><mo>,</mo><mo>−</mo><mn>6</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mn>2</mn><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mn>2</mn><mrow><mo>〈</mo> <mrow>
+       <mo>−</mo><mn>1</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mo>−</mo><mn>2</mn><mo>,</mo><mn>8</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>Then, add the two together.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>w</mi><mo>=</mo><mn>3</mn><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>+</mo><mn>2</mn><mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>9</mn><mo>,</mo><mo>−</mo><mn>6</mn></mrow> <mo>〉</mo></mrow><mo>+</mo><mrow><mo>〈</mo> <mrow>
+       <mo>−</mo><mn>2</mn><mo>,</mo><mn>8</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>9</mn><mo>−</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>6</mn><mo>+</mo><mn>8</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>7</mn><mo>,</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>So, <strong> <math>
+ <mi>w</mi>
+</math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>7</mn><mo>,</mo><mn>2</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div>
+</div></div>
+</div>
+
+<div class="section"><h3>Finding Component Form</h3><p>In some applications involving vectors, it is helpful for us to be able to break a vector down into its components. Vectors are comprised of two components: the horizontal component is the <math>
+ <mrow>
+  <mi>x</mi></mrow>
+</math> direction, and the vertical component is the <math>
+ <mrow>
+  <mi>y</mi></mrow>
+</math> direction. For example, we can see in the graph in  that the position vector <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> comes from adding the vectors <strong><em>v</em></strong><sub>1</sub> and <strong><em>v</em></strong><sub>2</sub>. We have <strong><em>v</em></strong><sub>1</sub> with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>1</mn>
+      </msub>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>2</mn><mo>−</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>−</mo><mn>0</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>2</mn><mo>,</mo><mn>0</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>We also have <strong><em>v</em></strong><sub>2</sub> with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mspace width="0.3em"></mspace><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>0</mn><mo>−</mo><mn>0</mn><mo>,</mo><mn>3</mn><mo>−</mo><mn>0</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>0</mn><mo>,</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>Therefore, the position vector is</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>2</mn><mo>+</mo><mn>0</mn><mo>,</mo><mn>3</mn><mo>+</mo><mn>0</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>2</mn><mo>,</mo><mn>3</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>Using the Pythagorean Theorem, the magnitude of <strong><em>v</em></strong><sub>1</sub> is 2, and the magnitude of <strong><em>v</em></strong><sub>2</sub> is 3. To find the magnitude of <strong><em>v</em></strong>, use the formula with the position vector.</p><div class="eq"> <math display="block">
+ <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo><mo>=</mo><msqrt>
+           <mrow>
+            <mo>|</mo><msub>
+             <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+             <mn>1</mn>
+            </msub>
+            <msup>
+             <mo>|</mo>
+             <mn>2</mn>
+            </msup>
+            <mo>+</mo><mo>|</mo><msub>
+             <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+             <mn>2</mn>
+            </msub>
+            <msup>
+             <mo>|</mo>
+             <mn>2</mn>
+            </msup>
+
+           </mrow>
+          </msqrt>
+
+         </mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <mtable columnalign="left">
+           <mtr columnalign="left">
+            <mtd columnalign="left">
+             <mrow>
+              <mo>=</mo><msqrt>
+               <mrow>
+                <msup>
+                 <mn>2</mn>
+                 <mn>2</mn>
+                </msup>
+                <mo>+</mo><msup>
+                 <mn>3</mn>
+                 <mn>2</mn>
+                </msup>
+
+               </mrow>
+              </msqrt>
+
+             </mrow>
+            </mtd>
+           </mtr>
+           <mtr columnalign="left">
+            <mtd columnalign="left">
+             <mrow>
+              <mo>=</mo><msqrt>
+               <mrow>
+                <mn>13</mn>
+               </mrow>
+              </msqrt>
+
+             </mrow>
+            </mtd>
+           </mtr>
+
+          </mtable>
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+</math>
+</div><p>The magnitude of <strong><em>v</em></strong> is <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mn>13</mn></mrow>
+  </msqrt>
+  <mo>.</mo></mrow>
+</math> To find the direction, we use the tangent function <math>
+ <mrow>
+  <mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+   <mi>y</mi>
+   <mi>x</mi>
+  </mfrac>
+  <mo>.</mo></mrow>
+</math>
+</p><div class="eq"> <math><mtable columnalign="left"><mtr><mtd><mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac><mfenced open="|" close="|"><msub><mi mathvariant="bold">v</mi><mn>2</mn></msub></mfenced><mfenced open="|" close="|"><msub><mi mathvariant="bold">v</mi><mn>1</mn></msub></mfenced></mfrac></mtd></mtr><mtr><mtd><mi>tan</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac><mn>3</mn><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><mi>θ</mi><mo>=</mo><msup><mi>tan</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mrow><mo>(</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mo>=</mo><mn>56.3°</mn></mtd></mtr></mtable></math>
+</div><figure><img src="CNX_Precalc_Figure_08_08_020.jpg" alt="Diagram of a vector in root position with its horizontal and vertical components."></figure><p>Thus, the magnitude of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>is <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mn>13</mn></mrow>
+  </msqrt>
+  </mrow>
+</math> and the direction is <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mn>56.3</mn></mrow>
+   <mo>∘</mo>
+  </msup>
+  </mrow>
+</math> off the horizontal.</p><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Components of the Vector</h6>
+<p>Find the components of the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math>
+ </p></div>
+<div class="solution">
+<p>First find the standard position.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>7</mn><mo>−</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>−</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>4</mn><mo>,</mo><mn>2</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>See the illustration in .</p>
+<figure><img src="CNX_Precalc_Figure_08_08_021.jpg" alt="Diagram of a vector in root position with its horizontal (4,0) and vertical (0,2) components."></figure><p>The horizontal component is <strong> <math>
+ <msub>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+  <mn>1</mn>
+ </msub></math> </strong> <math><mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>4</mn><mo>,</mo><mn>0</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math> and the vertical component is<strong> <math>
+ <msub>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+  <mn>2</mn>
+ </msub></math> </strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>0</mn><mo>,</mo><mn>2</mn>
+  </mrow> <mo>〉.</mo></mrow></mrow>
+</math>
+
+</p></div>
+</div></div>
+</div><div class="section">
+<h3>Finding the Unit Vector in the Direction of <em>v</em></h3><p>In addition to finding a vector’s components, it is also useful in solving problems to find a vector in the same direction as the given vector, but of magnitude 1. We call a vector with a magnitude of 1 a <strong>unit vector</strong>. We can then preserve the direction of the original vector while simplifying calculations.</p>
+<p>Unit vectors are defined in terms of components. The horizontal unit vector is written as <strong> <math>
+ <mstyle mathvariant="bold"><mi>i</mi></mstyle></math> </strong> <math>
+ <mo>=</mo><mrow><mo>〈</mo> <mrow>
+  <mn>1</mn><mo>,</mo><mn>0</mn>
+ </mrow> <mo>〉</mo></mrow>
+</math> and is directed along the positive horizontal axis. The vertical unit vector is written as<strong> <math>
+ <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+</math> </strong> <math>
+ <mo>=</mo><mrow><mo>〈</mo> <mrow>
+  <mn>0</mn><mo>,</mo><mn>1</mn>
+ </mrow> <mo>〉</mo></mrow>
+</math> and is directed along the positive vertical axis. See .</p><figure><img src="CNX_Precalc_Figure_08_08_011n.jpg" alt="Plot showing the unit vectors i=91,0) and j=(0,1)"></figure><div class="note">
+
+<h4>The Unit Vectors</h4>
+<p>If<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>is a nonzero vector, then<strong> <math>
+ <mrow>
+  <mfrac>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow>
+    <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow></mrow>
+  </mfrac>
+  </mrow>
+</math> </strong>is a unit vector in the direction of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>Any vector divided by its magnitude is a unit vector. Notice that magnitude is always a scalar, and dividing by a scalar is the same as multiplying by the reciprocal of the scalar.</p></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Unit Vector in the Direction of <em>v</em>
+</h6>
+<p>Find a unit vector in the same direction as <strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> <math>
+ <mo>=</mo><mrow><mo>〈</mo> <mrow>
+  <mn>−5</mn><mo>,</mo><mn>12</mn>
+ </mrow> <mo>〉.</mo></mrow></math>
+
+</p></div>
+<div class="solution">
+<p>First, we will find the magnitude.</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo><mo>=</mo><msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mo stretchy="false">(</mo><mn>12</mn><mo stretchy="false">)</mo>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>25</mn><mo>+</mo><mn>144</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mn>169</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>13</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Then we divide each component by <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|,</mo></mrow></mrow>
+</math> which gives a unit vector in the same direction as <strong><em>v</em></strong>:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mfrac>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow>
+    <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow></mrow>
+  </mfrac>
+  <mo>=</mo><mo>−</mo><mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>13</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <mn>12</mn></mrow>
+   <mrow>
+    <mn>13</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</div><p>or, in component form</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mfrac>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow>
+    <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow></mrow>
+  </mfrac>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mfrac>
+    <mn>5</mn>
+    <mrow>
+     <mn>13</mn></mrow>
+   </mfrac>
+   <mo>,</mo><mfrac>
+    <mrow>
+     <mn>12</mn></mrow>
+    <mrow>
+     <mn>13</mn></mrow>
+   </mfrac>
+   </mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</div><p>See .</p>
+<figure><img src="CNX_Precalc_Figure_08_08_012.jpg" alt="Plot showing the unit vector (-5/13, 12/13) in the direction of (-5, 12)"></figure><p>Verify that the magnitude of the unit vector equals 1. The magnitude of <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>13</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <mn>12</mn></mrow>
+   <mrow>
+    <mn>13</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math> is given as</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msqrt>
+       <mrow>
+        <msup>
+         <mrow>
+          <mrow><mo>(</mo>
+           <mrow>
+            <mo>−</mo><mfrac>
+             <mn>5</mn>
+             <mrow>
+              <mn>13</mn>
+             </mrow>
+            </mfrac>
+
+           </mrow>
+          <mo>)</mo></mrow>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+        <mo>+</mo><msup>
+         <mrow>
+          <mrow><mo>(</mo>
+           <mrow>
+            <mfrac>
+             <mrow>
+              <mn>12</mn>
+             </mrow>
+             <mrow>
+              <mn>13</mn>
+             </mrow>
+            </mfrac>
+
+           </mrow>
+          <mo>)</mo></mrow>
+         </mrow>
+         <mn>2</mn>
+        </msup>
+
+       </mrow>
+      </msqrt>
+      <mo>=</mo><msqrt>
+       <mrow>
+        <mfrac>
+         <mrow>
+          <mn>25</mn>
+         </mrow>
+         <mrow>
+          <mn>169</mn>
+         </mrow>
+        </mfrac>
+        <mo>+</mo><mfrac>
+         <mrow>
+          <mn>144</mn>
+         </mrow>
+         <mrow>
+          <mn>169</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>                            </mtext><mo>=</mo><msqrt>
+       <mrow>
+        <mfrac>
+         <mrow>
+          <mn>169</mn>
+         </mrow>
+         <mrow>
+          <mn>169</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      </msqrt>
+      <mo>=</mo><mn>1</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The vector <strong><em>u</em></strong> <math>
+ <mrow>
+  <mo>=</mo><mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>13</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> <strong><em>i</em></strong> <math>
+ <mrow>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+   <mrow>
+    <mn>13</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> <strong><em>j</em></strong> is the unit vector in the same direction as <strong><em>v</em></strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>5</mn><mo>,</mo><mn>12</mn>
+  </mrow> <mo>〉</mo></mrow><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+</div></div>
+</div>
+
+<div class="section">
+<h3>Performing Operations with Vectors in Terms of <em>i</em> and <em>j </em></h3>
+<p>So far, we have investigated the basics of vectors: magnitude and direction, vector addition and subtraction, scalar multiplication, the components of vectors, and the representation of vectors geometrically. Now that we are familiar with the general strategies used in working with vectors, we will represent vectors in rectangular coordinates in terms of <strong>i</strong> and <strong>j</strong>.
+</p><div class="note"><h4>Vectors in the Rectangular Plane</h4>
+
+<p>Given a vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>with initial point <math>
+ <mrow>
+  <mi>P</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>x</mi>
+     <mn>1</mn>
+    </msub>
+    <mo>,</mo><msub>
+     <mi>y</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mi>Q</mi><mo>=</mo><mo stretchy="false">(</mo><msub>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo><msub>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msub>
+  <mo stretchy="false">),</mo>
+ </mrow>
+</math>  <strong><em>v</em></strong> is written as</p>
+<div class="eq"> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>−</mo><msub>
+     <mi>x</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>−</mo><msub>
+     <mi>y</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</div><p>The position vector from <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> to <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mi>a</mi><mo>,</mo><mi>b</mi></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> where <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>−</mo><msub>
+     <mi>x</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mi>a</mi></mrow>
+</math> and <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <msub>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msub>
+    <mo>−</mo><msub>
+     <mi>y</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mi>b</mi><mo>,</mo></mrow>
+</math> is written as <strong><em>v</em></strong> = <em>ai</em> + <em>bj</em>. This vector sum is called a linear combination of the vectors <strong><em>i</em></strong> and <strong><em>j</em></strong>.</p><p>The magnitude of <strong><em>v</em></strong> = <em>ai</em> + <em>bj</em> is given as <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><msqrt>
+   <mrow>
+    <msup>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><msup>
+     <mi>b</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+  </msqrt>
+  <mo>.</mo>
+ </mrow>
+</math> See .
+</p><figure><img src="CNX_Precalc_Figure_08_08_010.jpg" alt="Plot showing vectors in rectangular coordinates in terms of i and j. The position vector v (in orange) extends from the origin to some point (a,b) in Q1. The horizontal (ai) and vertical (bj) components are shown."></figure></div><div class="example"><div class="exercise"><div class="problem">
+<h6>Writing a Vector in Terms of <em>i</em> and <em>j</em>
+</h6>
+<p>Given a vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>with initial point <math>
+ <mrow>
+  <mi>P</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>−6</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mi>Q</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>−6</mn><mo>,</mo><mn>6</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p>Begin by writing the general form of the vector. Then replace the coordinates with the given values.</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo stretchy="false">(</mo><msub>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>−</mo><msub>
+       <mi>x</mi>
+       <mn>1</mn>
+      </msub>
+      <mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><msub>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>−</mo><msub>
+       <mi>y</mi>
+       <mn>1</mn>
+      </msub>
+      <mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo stretchy="false">(</mo><mo>−</mo><mn>6</mn><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><mn>6</mn><mo>−</mo><mo stretchy="false">(</mo><mo>−</mo><mn>6</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mn>8</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>12</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div>
+</div></div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Writing a Vector in Terms of <em>i</em> and <em>j</em> Using Initial and Terminal Points</h6>
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>7</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p>Begin by writing the general form of the vector. Then replace the coordinates with the given values.</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo stretchy="false">(</mo><msub>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>−</mo><msub>
+       <mi>x</mi>
+       <mn>1</mn>
+      </msub>
+      <mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><msub>
+       <mi>y</mi>
+       <mn>2</mn>
+      </msub>
+      <mo>−</mo><msub>
+       <mi>y</mi>
+       <mn>1</mn>
+      </msub>
+      <mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo stretchy="false">(</mo><mn>2</mn><mo>−</mo><mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><mn>7</mn><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>3</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>4</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div></div>
+</div></div>
+
+<div class="note precalculus try">
+<div class="exercise">
+<div class="problem"><p>Write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> </strong>with initial point <math>
+ <mrow>
+  <mi>P</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>6</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mi>Q</mi><mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mo>−</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution"><p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mn>8</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mn>11</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div>
+</div>
+</div></div>
+
+<div class="section">
+<h3>Performing Operations on Vectors in Terms of <em>i</em> and <em>j</em></h3><p>When vectors are written in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>,</mo></mrow>
+</math> </strong>we can carry out addition, subtraction, and scalar multiplication by performing operations on corresponding components.</p><div class="note"><h4>Adding and Subtracting Vectors in Rectangular Coordinates</h4>
+
+<p>Given <strong><em>v</em></strong> = <em>ai</em> + <em>bj</em> and <strong><em>u</em></strong> = <em>ci</em> + <em>dj</em>, then </p><div class="eq"> <math display="block">
+ <mtable>
+  <mtr>
+   <mtd>
+    <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>+</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>(</mo>
+     <mrow>
+      <mi>a</mi><mo>+</mo><mi>c</mi></mrow>
+    <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mrow><mo>(</mo>
+     <mrow>
+      <mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>+</mo><mi>d</mi></mrow>
+    <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+   </mtd>
+  </mtr>
+  <mtr>
+   <mtd>
+    <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>−</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>(</mo>
+     <mrow>
+      <mi>a</mi><mo>−</mo><mi>c</mi></mrow>
+    <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mrow><mo>(</mo>
+     <mrow>
+      <mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>−</mo><mi>d</mi></mrow>
+    <mo>)</mo></mrow><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+   </mtd>
+  </mtr>
+ </mtable>
+
+</math>
+</div>
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Sum of the Vectors</h6>
+<p>Find the sum of <math>
+ <mrow>
+  <msub>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mn>3</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>4</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>5</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p>According to the formula, we have</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>1</mn>
+      </msub>
+      <mo>+</mo><msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mo stretchy="false">(</mo><mn>2</mn><mo>+</mo><mn>4</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo>+</mo><mn>5</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>6</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>2</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math> </div></div>
+</div></div>
+</div>
+<div class="section">
+<h3>Calculating the Component Form of a Vector: Direction </h3>
+<p>We have seen how to draw vectors according to their initial and terminal points and how to find the position vector. We have also examined notation for vectors drawn specifically in the Cartesian coordinate plane using <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mspace width="0.3em"></mspace><mtext>and</mtext><mspace width="0.3em"></mspace><mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> For any of these vectors, we can calculate the magnitude. Now, we want to combine the key points, and look further at the ideas of magnitude and direction.</p><p>Calculating direction follows the same straightforward process we used for polar coordinates. We find the direction of the vector by finding the angle to the horizontal. We do this by using the basic trigonometric identities, but with<strong> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow></mrow>
+</math> </strong>replacing<strong> <math>
+ <mrow>
+  <mi>r</mi><mo>.</mo></mrow>
+</math> </strong>
+</p>
+
+<div class="note"><h4>Vector Components in Terms of Magnitude and Direction</h4>
+
+<p>Given a position vector <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mi>x</mi><mo>,</mo><mi>y</mi></mrow> <mo>〉</mo></mrow></mrow>
+</math> and a direction angle <math>
+ <mrow>
+  <mi>θ</mi><mo>,</mo></mrow>
+</math> </p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+       <mi>x</mi>
+       <mrow>
+        <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mtext>and</mtext><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+       <mi>y</mi>
+       <mrow>
+        <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>=</mo><mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mtable>
+       <mtr>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+        <mtd>
+         <mrow></mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow></mrow>
+    </mtd>
+    <mtd columnalign="left">
+     <mrow>
+      <mi>y</mi><mo>=</mo><mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Thus, <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mi>x</mi><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mi>y</mi><mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>=</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>,</mo></mrow>
+</math> and magnitude is expressed as <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><msqrt>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+    </mrow>
+  </msqrt>
+  <mo>.</mo></mrow>
+</math>
+</p></div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Writing a Vector in Component Form When It Is Given in Magnitude and Direction Form</h6>
+<p>Given a vector with length 7 and an angle of 135°, write it in component form.</p></div>
+<div class="solution">
+<p>Using the conversion formulas <math>
+ <mrow>
+  <mi>x</mi><mo>=</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi></mrow>
+</math> and <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>,</mo></mrow>
+</math> we find that</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>=</mo><mn>7</mn><mi>cos</mi><mo stretchy="false">(</mo><mn>135°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mrow>
+        <mn>7</mn><msqrt>
+         <mn>2</mn>
+        </msqrt>
+
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>y</mi><mo>=</mo><mn>7</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>135°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>7</mn><msqrt>
+         <mn>2</mn>
+        </msqrt>
+
+       </mrow>
+       <mn>2</mn>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>This vector can be written as <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mn>7</mn><mi>cos</mi><mo stretchy="false">(</mo><mn>135°</mn><mo stretchy="false">)</mo><mo>+</mo><mn>7</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>135°</mn><mo stretchy="false">)</mo>
+ </mrow>
+</math> or simplified as</p><div class="eq"> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo>−</mo><mfrac>
+   <mrow>
+    <mn>7</mn><msqrt>
+     <mn>2</mn>
+    </msqrt>
+    </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <mn>7</mn><msqrt>
+     <mn>2</mn>
+    </msqrt>
+    </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+  <mo></mo></mrow>
+</math>
+</div></div>
+</div></div>
+
+<div class="note precalculus try">
+
+<div class="exercise">
+<div class="problem"><p>A vector travels from the origin to the point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Write the vector in terms of magnitude and direction.</p></div>
+<div class="solution"><p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><msqrt>
+   <mrow>
+    <mn>34</mn>
+   </mrow>
+  </msqrt>
+  <mi>cos</mi><mo stretchy="false">(</mo><mn>59°</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><msqrt>
+   <mrow>
+    <mn>34</mn>
+   </mrow>
+  </msqrt>
+  <mi>sin</mi><mo stretchy="false">(</mo><mn>59°</mn><mo stretchy="false">)</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+ </mrow>
+</math>
+</p><p>Magnitude = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mn>34</mn></mrow>
+  </msqrt>
+  </mrow>
+</math>
+</p>
+<p> <math>
+ <mrow>
+  <mi>θ</mi><mo>=</mo><msup>
+   <mrow>
+    <mi>tan</mi>
+   </mrow>
+   <mrow>
+    <mo>−</mo><mn>1</mn>
+   </mrow>
+  </msup>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mn>5</mn>
+     <mn>3</mn>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow><mo>=</mo><mn>59.04°</mn>
+ </mrow>
+</math>
+</p></div>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h3>Finding the Dot Product of Two Vectors </h3>
+<p>As we discussed earlier in the section, scalar multiplication involves multiplying a vector by a scalar, and the result is a vector. As we have seen, multiplying a vector by a number is called scalar multiplication. If we multiply a vector by a vector, there are two possibilities: the <em>dot product</em> and the <em>cross product</em>. We will only examine the dot product here; you may encounter the cross product in more advanced mathematics courses.</p>
+<p>The dot product of two vectors involves multiplying two vectors together, and the result is a scalar.</p>
+
+<div class="note"><h4>Dot Product</h4>
+
+<p>The <strong>dot product</strong> of two vectors <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+  <mi>a</mi><mo>,</mo><mi>b</mi>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mi>c</mi><mo>,</mo><mi>d</mi>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math> is the sum of the product of the horizontal components and the product of the vertical components.</p><div class="eq"> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mi>a</mi><mi>c</mi><mo>+</mo><mi>b</mi><mi>d</mi></mrow>
+</math>
+</div>
+<p>To find the angle between the two vectors, use the formula below.</p><div class="eq"> <math>
+ <mrow>
+  <mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow>
+    <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow></mrow>
+  </mfrac>
+  <mo>⋅</mo><mfrac>
+   <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+   <mrow>
+    <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>u</mi></mstyle> <mo>|</mo></mrow></mrow>
+  </mfrac>
+  </mrow>
+</math>
+</div></div><div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Dot Product of Two Vectors</h6>
+<p>Find the dot product of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>5</mn><mo>,</mo><mn>12</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>−3</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p>Using the formula, we have </p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>5</mn><mo>,</mo><mn>12</mn></mrow> <mo>〉</mo></mrow><mo>⋅</mo><mrow><mo>〈</mo> <mrow>
+       <mo>−</mo><mn>3</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>5</mn><mo>⋅</mo><mo stretchy="false">(</mo><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mo>+</mo><mn>12</mn><mo>⋅</mo><mn>4</mn></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mn>15</mn><mo>+</mo><mn>48</mn></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>33</mn></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div></div>
+</div></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding the Dot Product of Two Vectors and the Angle between Them</h6>
+<p>Find the dot product of <strong><em>v</em></strong><sub>1</sub> = 5<strong><em>i</em></strong> + 2<strong><em>j</em></strong> and <strong><em>v</em></strong><sub>2</sub> = 3<strong><em>i</em></strong> + 7<strong><em>j</em></strong>. Then, find the angle between the two vectors.</p></div>
+<div class="solution">
+<p>Finding the dot product, we multiply corresponding components.</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>1</mn>
+      </msub>
+      <mo>⋅</mo><msub>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mn>2</mn>
+      </msub>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mn>5</mn><mo>,</mo><mn>2</mn></mrow> <mo>〉</mo></mrow><mo>⋅</mo><mrow><mo>〈</mo> <mrow>
+       <mn>3</mn><mo>,</mo><mn>7</mn></mrow> <mo>〉</mo></mrow></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>5</mn><mo>⋅</mo><mn>3</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mn>7</mn></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>15</mn><mo>+</mo><mn>14</mn></mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>29</mn></mrow>
+    </mtd>
+   </mtr>
+
+  </mtable></mrow>
+</math>
+</div><p>To find the angle between them, we use the formula <math>
+ <mrow>
+  <mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>=</mo><mfrac>
+   <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+   <mrow>
+    <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+   </mrow>
+  </mfrac>
+  <mo>⋅</mo><mfrac>
+   <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+   <mrow>
+    <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo>
+   </mrow>
+  </mfrac>
+  <mo>.</mo>
+ </mrow>
+</math>
+</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+       <mrow>
+        <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+       </mrow>
+      </mfrac>
+      <mo>⋅</mo><mfrac>
+       <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+       <mrow>
+        <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mrow><mo>〈</mo> <mrow>
+       <mfrac>
+        <mn>5</mn>
+        <mrow>
+         <msqrt>
+          <mrow>
+           <mn>29</mn>
+          </mrow>
+         </msqrt>
+
+        </mrow>
+       </mfrac>
+       <mo>,</mo><mfrac>
+        <mn>2</mn>
+        <mrow>
+         <msqrt>
+          <mrow>
+           <mn>29</mn>
+          </mrow>
+         </msqrt>
+
+        </mrow>
+       </mfrac>
+
+      </mrow> <mo>〉</mo></mrow><mo>⋅</mo><mrow><mo>〈</mo> <mrow>
+       <mfrac>
+        <mn>3</mn>
+        <mrow>
+         <msqrt>
+          <mrow>
+           <mn>58</mn>
+          </mrow>
+         </msqrt>
+
+        </mrow>
+       </mfrac>
+       <mo>,</mo><mfrac>
+        <mn>7</mn>
+        <mrow>
+         <msqrt>
+          <mrow>
+           <mn>58</mn>
+          </mrow>
+         </msqrt>
+
+        </mrow>
+       </mfrac>
+
+      </mrow> <mo>〉</mo></mrow>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mfrac>
+       <mn>5</mn>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>29</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+      <mo>⋅</mo><mfrac>
+       <mn>3</mn>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>58</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+      <mo>+</mo><mfrac>
+       <mn>2</mn>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>29</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+      <mo>⋅</mo><mfrac>
+       <mn>7</mn>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>58</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>15</mn>
+       </mrow>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>1682</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+      <mo>+</mo><mfrac>
+       <mrow>
+        <mn>14</mn>
+       </mrow>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>1682</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>29</mn>
+       </mrow>
+       <mrow>
+        <msqrt>
+         <mrow>
+          <mn>1682</mn>
+         </mrow>
+        </msqrt>
+
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mtable columnalign="left">
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow><mo>=</mo><mn>0.707107</mn>
+         </mrow>
+        </mtd>
+       </mtr>
+       <mtr columnalign="left">
+        <mtd columnalign="left">
+         <mrow>
+          <msup>
+           <mrow>
+            <mi>cos</mi>
+           </mrow>
+           <mrow>
+            <mo>−</mo><mn>1</mn>
+           </mrow>
+          </msup>
+          <mo stretchy="false">(</mo><mn>0.707107</mn><mo stretchy="false">)</mo><mo>=</mo><mn>45°</mn>
+         </mrow>
+        </mtd>
+       </mtr>
+
+      </mtable>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>See .</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_014_Errata.jpg" alt="Plot showing the two position vectors (3,7) and (5,2) and the 45 degree angle between them."></figure></div>
+</div></div>
+
+<div class="example">
+<div class="exercise"><div class="problem"><h6>Finding the Angle between Two Vectors</h6>
+<p>Find the angle between <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>3</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> and <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>5</mn><mo>,</mo><mn>12</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math> </p></div>
+<div class="solution">
+<p>Using the formula, we have</p>
+
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>θ</mi><mo>=</mo><msup>
+       <mrow>
+        <mi>cos</mi>
+       </mrow>
+       <mrow>
+        <mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+         <mrow>
+          <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo>
+         </mrow>
+        </mfrac>
+        <mo>⋅</mo><mfrac>
+         <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+         <mrow>
+          <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mstyle mathvariant="bold"><mi>u</mi></mstyle>
+         <mrow>
+          <mo>|</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>|</mo>
+         </mrow>
+        </mfrac>
+        <mo>⋅</mo><mfrac>
+         <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+         <mrow>
+          <mo>|</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>|</mo>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow><mo>=</mo><mfrac>
+       <mrow>
+        <mo>−</mo><mn>3</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>4</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+       </mrow>
+       <mn>5</mn>
+      </mfrac>
+      <mo>⋅</mo><mfrac>
+       <mrow>
+        <mn>5</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>12</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle>
+       </mrow>
+       <mrow>
+        <mn>13</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mrow><mo>(</mo>
+       <mrow>
+        <mo>−</mo><mfrac>
+         <mn>3</mn>
+         <mn>5</mn>
+        </mfrac>
+        <mo>⋅</mo><mfrac>
+         <mn>5</mn>
+         <mrow>
+          <mn>13</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mn>4</mn>
+         <mn>5</mn>
+        </mfrac>
+        <mo>⋅</mo><mfrac>
+         <mrow>
+          <mn>12</mn>
+         </mrow>
+         <mrow>
+          <mn>13</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mo>−</mo><mfrac>
+       <mrow>
+        <mn>15</mn>
+       </mrow>
+       <mrow>
+        <mn>65</mn>
+       </mrow>
+      </mfrac>
+      <mo>+</mo><mfrac>
+       <mrow>
+        <mn>48</mn>
+       </mrow>
+       <mrow>
+        <mn>65</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mn>33</mn>
+       </mrow>
+       <mrow>
+        <mn>65</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>θ</mi><mo>=</mo><msup>
+       <mrow>
+        <mi>cos</mi>
+       </mrow>
+       <mrow>
+        <mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mrow><mo>(</mo>
+       <mrow>
+        <mfrac>
+         <mrow>
+          <mn>33</mn>
+         </mrow>
+         <mrow>
+          <mn>65</mn>
+         </mrow>
+        </mfrac>
+
+       </mrow>
+      <mo>)</mo></mrow>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><msup>
+       <mrow>
+        <mn>59.5</mn>
+       </mrow>
+       <mo>∘</mo>
+      </msup>
+
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>See .</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_013_Errata.jpg" alt="Plot showing the two position vectors (-3,4) and (5,12) and the 59.5 degree angle between them."></figure></div>
+</div></div>
+
+<div class="example">
+<div class="exercise"><div class="problem">
+<h6>Finding Ground Speed and Bearing Using Vectors</h6>
+<p>We now have the tools to solve the problem we introduced in the opening of the section.</p><p>An airplane is flying at an airspeed of 200 miles per hour headed on a SE bearing of 140°. A north wind (from north to south) is blowing at 16.2 miles per hour. What are the ground speed and actual bearing of the plane? See .</p><figure><img src="CNX_Precalc_Figure_08_08_015.jpg" alt="Image of a plan flying SE at 140 degrees and the north wind blowing."></figure></div>
+<div class="solution">
+<p>The ground speed is represented by <math>
+ <mrow>
+  <mi>x</mi></mrow>
+</math> in the diagram, and we need to find the angle <math>
+ <mrow>
+  <mi>α</mi></mrow>
+</math> in order to calculate the adjusted bearing, which will be <math>
+ <mrow>
+  <mn>140°</mn><mo>+</mo><mi>α</mi><mo>.</mo></mrow>
+</math>  </p><p>Notice in , that angle <math>
+ <mrow>
+  <mi>B</mi><mi>C</mi><mi>O</mi></mrow>
+</math> must be equal to angle <math>
+ <mrow>
+  <mi>A</mi><mi>O</mi><mi>C</mi></mrow>
+</math> by the rule of alternating interior angles, so angle <math>
+ <mrow>
+  <mi>B</mi><mi>C</mi><mi>O</mi></mrow>
+</math> is 140°. We can find <math>
+ <mrow>
+  <mi>x</mi></mrow>
+</math> by the Law of Cosines:</p><div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>16.2</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>+</mo><msup>
+       <mrow>
+        <mo stretchy="false">(</mo><mn>200</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mo>−</mo><mn>2</mn><mo stretchy="false">(</mo><mn>16.2</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>200</mn><mo stretchy="false">)</mo><mi>cos</mi><mo stretchy="false">(</mo><mn>140°</mn><mo stretchy="false">)</mo>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mi>x</mi>
+       <mn>2</mn>
+      </msup>
+      <mo>=</mo><mn>45</mn><mo>,</mo><mn>226.41</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>=</mo><msqrt>
+       <mrow>
+        <mn>45</mn><mo>,</mo><mn>226.41</mn>
+       </mrow>
+      </msqrt>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo>=</mo><mn>212.7</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>The ground speed is approximately 213 miles per hour. Now we can calculate the bearing using the Law of Sines.</p>
+<div class="eq"> <math display="block">
+ <mrow>
+  <mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mi>sin</mi><mspace width="0.3em"></mspace><mi>α</mi>
+       </mrow>
+       <mrow>
+        <mn>16.2</mn>
+       </mrow>
+      </mfrac>
+      <mo>=</mo><mfrac>
+       <mrow>
+        <mi>sin</mi><mo stretchy="false">(</mo><mn>140°</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>212.7</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>sin</mi><mspace width="0.3em"></mspace><mi>α</mi><mo>=</mo><mfrac>
+       <mrow>
+        <mn>16.2</mn><mi>sin</mi><mo stretchy="false">(</mo><mn>140°</mn><mo stretchy="false">)</mo>
+       </mrow>
+       <mrow>
+        <mn>212.7</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mo>=</mo><mn>0.04896</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mrow>
+        <mo>−</mo><mn>1</mn>
+       </mrow>
+      </msup>
+      <mo stretchy="false">(</mo><mn>0.04896</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2.8°</mn>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</div><p>Therefore, the plane has a SE bearing of 140°+2.8°=142.8°. The ground speed is 212.7 miles per hour.</p></div>
+</div></div>
+
+<div class="note precalculus media media-notitle">
+
+<p>Access these online resources for additional instruction and practice with vectors.</p>
+<ul><li><a href="https://openstax.org/l/introvectors" target="_blank" rel="noopener noreferrer">Introduction to Vectors</a></li><li><a href="https://openstax.org/l/vectoroperation" target="_blank" rel="noopener noreferrer">Vector Operations</a></li><li><a href="https://openstax.org/l/unitvector" target="_blank" rel="noopener noreferrer">The Unit Vector</a></li></ul>
+</div>
+</div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3><ul><li>The position vector has its initial point at the origin. See .</li><li>If the position vector is the same for two vectors, they are equal. See .</li><li>Vectors are defined by their magnitude and direction. See .</li><li>If two vectors have the same magnitude and direction, they are equal. See .</li><li>Vector addition and subtraction result in a new vector found by adding or subtracting corresponding elements. See .</li><li>Scalar multiplication is multiplying a vector by a constant. Only the magnitude changes; the direction stays the same. See  and .</li><li>Vectors are comprised of two components: the horizontal component along the positive <em>x</em>-axis, and the vertical component along the positive <em>y</em>-axis. See .</li><li>The unit vector in the same direction of any nonzero vector is found by dividing the vector by its magnitude.</li><li>The magnitude of a vector in the rectangular coordinate system is <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><msqrt>
+   <mrow>
+    <msup>
+     <mi>a</mi>
+     <mn>2</mn>
+    </msup>
+    <mo>+</mo><msup>
+     <mi>b</mi>
+     <mn>2</mn>
+    </msup>
+    </mrow>
+  </msqrt>
+  <mo>.</mo></mrow>
+</math> See <strong>.</strong></li><li>In the rectangular coordinate system, unit vectors may be represented in terms of <strong> <math>
+ <mstyle mathvariant="bold"><mi>i</mi></mstyle>
+</math> </strong> and <strong> <math>
+ <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+</math> </strong> where<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>represents the horizontal component and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math> </strong>represents the vertical component. Then, <strong><em>v</em></strong> = a<strong><em>i</em></strong> + b<strong><em>j</em></strong>  is a scalar multiple of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>by real numbers <math>
+ <mrow>
+  <mi>a</mi><mspace width="0.3em"></mspace><mtext>and</mtext><mspace width="0.3em"></mspace><mi>b</mi><mo>.</mo></mrow>
+</math> See  and .</li><li>Adding and subtracting vectors in terms of <em>i</em> and <em>j</em> consists of adding or subtracting corresponding coefficients of <em>i</em> and corresponding coefficients of <em>j</em>. See .</li><li> A vector <em>v</em> = <em>a<strong>i</strong></em> + <em>b<strong>j</strong></em> is written in terms of magnitude and direction as <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> See .</li><li>The dot product of two vectors is the product of the<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>terms plus the product of the<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+ </mrow>
+</math> </strong>terms. See .</li><li>We can use the dot product to find the angle between two vectors.  and .</li><li>Dot products are useful for many types of physics applications. See .</li></ul></div>
+
+
+<div class="section section-exercises">
+<h3>Section Exercises</h3><div class="section">
+<h4>Verbal</h4>
+<div class="exercise">
+<div class="problem"><p>What are the characteristics of the letters that are commonly used to represent vectors?</p></div>
+<div class="solution">
+<p>lowercase, bold letter, usually <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>,</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo><mi>w</mi></mrow>
+</math>
+</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>How is a vector more specific than a line segment?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>What are<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>,</mo></mrow>
+</math> </strong>and what do they represent?</p></div>
+<div class="solution">
+<p>They are unit vectors. They are used to represent the horizontal and vertical components of a vector. They each have a magnitude of 1. </p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>What is component form?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>When a unit vector is expressed as <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> which letter is the coefficient of the<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle>
+ </mrow>
+</math> </strong>and which the<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>?</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p>The first number always represents the coefficient of the <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>,</mo></mrow>
+</math> and the second represents the <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math>
+</p>
+</div>
+</div>
+
+</div>
+<div class="section">
+<h4>Algebraic</h4>
+
+<div class="exercise">
+<div class="problem">
+<p>Given a vector with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> find an equivalent vector whose initial point is <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Write the vector in component form <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math> </p></div>
+</div>
+<div class="exercise"><div class="problem"><p>Given a vector with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>4</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mo>−</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> find an equivalent vector whose initial point is <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Write the vector in component form <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>7</mn><mo>,</mo><mo>−</mo><mn>5</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Given a vector with initial point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>7</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> find an equivalent vector whose initial point is <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math> Write the vector in component form <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mi>a</mi><mo>,</mo><mi>b</mi></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, determine whether the two vectors<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>are equal, where<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> </strong>has an initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  </mrow>
+</math> and a terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  </mrow>
+</math> and <strong> <math>
+ <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+</math> </strong> has an initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  </mrow>
+</math> and a terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  </mrow>
+</math>.</p><div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>9</mn><mo>,</mo><mo>−</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>not equal</p>
+</div></div>
+<div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mo>−</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>9</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>4</mn><mo>,</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>10</mn><mo>,</mo><mn>6</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>13</mn><mo>,</mo><mn>12</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>equal</p>
+</div></div>
+<div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>7</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>1</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>8</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>11</mn><mo>,</mo><mn>8</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>9</mn><mo>,</mo><mn>10</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>equal</p>
+</div></div>
+<div class="exercise material-set-2">
+<div class="problem">
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>3</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong>
+
+</p></div></div>
+<div class="exercise material-set-2"><div class="problem">
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mn>0</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong>
+
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>7</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mn>3</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div></div>
+
+<p>For the following exercises, use the vectors <strong><em>u</em></strong> = <strong><em>i</em></strong> + 5<strong><em>j</em></strong>, <strong><em>v</em></strong> = −2<strong><em>i</em></strong>− 3<strong><em>j</em></strong>,  and <strong><em>w</em></strong> = 4<strong><em>i</em></strong> − <strong><em>j</em></strong>.</p><div class="exercise"><div class="problem">
+<p>Find <strong><em>u</em></strong> + (<strong><em>v</em></strong> − <strong><em>w</em></strong>)</p></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Find 4<strong><em>v</em></strong> + 2<strong><em>u</em></strong></p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>6</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mn>2</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div>
+</div>
+<p>For the following exercises, use the given vectors to compute <strong><em>u</em></strong> + <strong><em>v</em></strong>, <strong><em>u</em></strong> − <strong><em>v</em></strong>, and 2<strong><em>u</em></strong> − 3<strong><em>v</em></strong>.</p><div class="exercise">
+<div class="problem"><p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mo>−</mo><mn>3</mn></mrow> <mo>〉</mo></mrow><mo>,</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mn>5</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>3</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow><mo>,</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>+</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>5</mn><mo>,</mo><mn>5</mn>
+  </mrow> <mo>〉</mo></mrow><mo>,</mo><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>−</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>3</mn>
+  </mrow> <mo>〉</mo></mrow><mo>,</mo><mn>2</mn><mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>−</mo><mn>3</mn><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>0</mn><mo>,</mo><mn>5</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Let <strong><em>v</em></strong> = −4<strong><em>i</em></strong> + 3<strong><em>j</em></strong>. Find a vector that is half the length and points in the same direction as<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong></p></div></div>
+<div class="exercise"><div class="problem"><p>Let <strong><em>v</em></strong> = 5<strong><em>i</em></strong> + 2<strong><em>j</em></strong>. Find a vector that is twice the length and points in the opposite direction as<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong></p></div><div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>10</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>–</mo><mn>4</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div>
+</div>
+<p>For the following exercises, find a unit vector in the same direction as the given vector.</p>
+<div class="exercise">
+<div class="problem">
+<p><strong><em>a</em></strong> = 3<strong><em>i</em></strong> + 4<strong><em>j</em></strong></p></div></div>
+<div class="exercise"><div class="problem">
+<p><strong><em>b</em></strong> = −2<strong><em>i</em></strong> + 5<strong><em>j</em></strong></p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <mn>2</mn><msqrt>
+     <mrow>
+      <mn>29</mn></mrow>
+    </msqrt>
+    </mrow>
+   <mrow>
+    <mn>29</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <mn>5</mn><msqrt>
+     <mrow>
+      <mn>29</mn></mrow>
+    </msqrt>
+    </mrow>
+   <mrow>
+    <mn>29</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+ </p>
+</div></div>
+<div class="exercise">
+<div class="problem">
+<p><strong><em>c</em></strong> = 10<strong><em>i</em></strong> – <strong><em>j</em></strong></p></div></div>
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <mi>d</mi><mo>=</mo><mo>−</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mn>5</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <mn>2</mn><msqrt>
+     <mrow>
+      <mn>229</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>229</mn>
+   </mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <mn>15</mn><msqrt>
+     <mrow>
+      <mn>229</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>229</mn>
+   </mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem">
+<p><strong><em>u</em></strong> = 100<strong><em>i</em></strong> + 200<strong><em>j</em></strong></p></div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong><em>u</em></strong> = −14<strong><em>i</em></strong> + 2<strong><em>j</em></strong></p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <mn>7</mn><msqrt>
+     <mn>2</mn>
+    </msqrt>
+    </mrow>
+   <mrow>
+    <mn>10</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <msqrt>
+     <mn>2</mn>
+    </msqrt>
+    </mrow>
+   <mrow>
+    <mn>10</mn></mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div></div>
+<p>For the following exercises, find the magnitude and direction of the vector, <math>
+ <mrow>
+  <mn>0</mn><mo>≤</mo><mi>θ</mi><mo>&lt;</mo><mn>2</mn><mi>π</mi><mo>.</mo></mrow>
+</math>
+</p>
+<div class="exercise">
+<div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>0</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>6</mn><mo>,</mo><mn>5</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>7.810</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>39.806</mn><mo>°</mo></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mn>−5</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>−4</mn><mo>,</mo><mn>−6</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>7.211</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>236.310°</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise">
+<div class="problem">
+<p>Given <strong><em>u</em></strong> = 3<strong><em>i</em></strong> − 4<strong><em>j</em></strong> and <strong><em>v</em></strong> = −2<strong><em>i</em></strong> + 3<strong><em>j</em></strong>, calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Given <strong><em>u</em></strong> = −<strong><em>i</em></strong> − <strong><em>j</em></strong> and <strong><em>v</em></strong> = <strong><em>i</em></strong> + 5<strong><em>j</em></strong>, calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>6</mn></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Given <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>2</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> and <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>3</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow><mo>,</mo></mrow>
+</math> calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Given <strong><em>u</em></strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mo>−</mo><mn>1</mn><mo>,</mo><mn>6</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math> and <strong><em>v</em></strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>6</mn><mo>,</mo><mo>−</mo><mn>1</mn>
+  </mrow> <mo>〉</mo></mrow><mo>,</mo>
+ </mrow>
+</math> calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mn>12</mn></mrow>
+</math>
+</p>
+</div></div>
+
+</div>
+<div class="section">
+<h4>Graphical</h4>
+<p>For the following exercises, given<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo></mrow>
+</math> </strong>draw<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo>
+ </mrow>
+</math> </strong>3<strong><em>v</em></strong> and <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo></mrow>
+</math> </p><div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>2</mn><mo>,</mo><mn>−1</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>−1</mn><mo>,</mo><mn>4</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_253.jpg" alt="Three graphs illustrate scalar multiplication of a vector. The first graph shows vector v. The second shows vector 3v, which is three times longer than v. The third shows vector 1/2v, half the length of v."></figure>
+
+
+</div>
+</div><div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>−3</mn><mo>,</mo><mn>−2</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, use the vectors shown to sketch <strong><em>u</em></strong> + <strong><em>v</em></strong>, <strong><em>u</em></strong> − <strong><em>v</em></strong>, and 2<strong><em>u</em></strong>.
+</p>
+
+<div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_204.jpg" alt="Plot of vectors u and v extending from the same origin point. In terms of that point, u goes to (1,1) and v goes to (-1,2)."></figure>
+</div>
+<div class="solution">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_205.jpg" alt="Plot of u+v, u-v, and 2u based on the above vectors. In relation to the same origin point, u+v goes to (0,3), u-v goes to (2,-1), and 2u goes to (2,2)."></figure>
+</div></div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_206.jpg" alt="Plot of vectors u and v extending from the same origin point. In terms of that point, u goes to (1,2) and v goes to (1,-1)."></figure>
+</div></div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_208.jpg" alt="Plot of vectors u and v located head to tail. Take u&#x27;s start point as the origin. In terms of that, u goes from the origin to (3,-2), and v goes from (3,-2) to (2,-3)"></figure>
+</div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_209.jpg" alt="Plot of vectors u+v, u-v, and 2u based on the above vectors.Given that u&#x27;s start point was the origin, u+v starts at the origin and goes to (2,-3); u-v starts at the origin and goes to (4,-1); 2u goes from the origin to (6,-4)."></figure>
+
+</div></div><p>For the following exercises, use the vectors shown to sketch 2<strong><em>u</em></strong> + <strong><em>v</em></strong>.</p>
+<div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_210.jpg" alt="Plot of the vectors u and v extending from the same point. Taking that base point as the origin, u goes from the origin to (3,1) and v goes from the origin to (2,-2)."></figure>
+</div></div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_212.jpg" alt="Plot of the vectors u and v extending from the same point. Taking that base point as the origin, u goes from the origin to (1,-2) and v goes from the origin to (-3,-2)."></figure>
+
+</div><div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_213.jpg" alt="Plot of a single vector. Taking the start point of the vector as (0,0) from the above set up, the vector goes from the origin to (-1,-6)."></figure>
+
+</div>
+</div><p>For the following exercises, use the vectors shown to sketch <strong><em>u</em></strong> − 3<strong><em>v</em></strong>.</p>
+
+<div class="exercise"><div class="problem"><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_214.jpg" alt="Plot of the vectors u and v extending from the same point. Taking that base point as the origin, u goes from the origin to (-4,0) and v goes from the origin to (1,-1)."></figure>
+</div></div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_216.jpg" alt="Plot of the vectors u and v extending from the same point. Taking that base point as the origin, u goes from the origin to (1,2) and v goes from the origin to (-2,1)."></figure>
+</div>
+<div class="solution">
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_217.jpg" alt="Vector extending from the origin to (7,5), taking the base as the origin."></figure>
+
+</div></div><p>For the following exercises, write the vector shown in component form.</p>
+<div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_218.jpg" alt="Vector going from the origin to (-4,2)."></figure>
+</div></div><div class="exercise"><div class="problem">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_219.jpg" alt="Insert figure(table) alt text: Vector going from the origin to (4,1)."></figure>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>4</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math>
+</p>
+</div>
+</div><div class="exercise"><div class="problem">
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>,</mo></mrow>
+</math> </strong>then draw the vector on the graph.</p></div></div>
+<div class="exercise"><div class="problem">
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>4</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>3</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong>Draw the points and the vector on the graph.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mo>−</mo><mn>7</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>3</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-algebra-bundle/main/media/CNX_Precalc_Figure_08_08_221.jpg" alt="Vector going from (4,-1) to (-3,2)."></figure></div></div><div class="exercise">
+<div class="problem">
+<p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>3</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>Draw the points and the vector on the graph.</p>
+</div>
+</div>
+
+</div>
+<div class="section">
+<h4>Extensions</h4>
+<p>For the following exercises, use the given magnitude and direction in standard position, write the vector in component form.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>6</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>45</mn><mo>°</mo></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>3</mn><msqrt>
+   <mn>2</mn>
+  </msqrt>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>3</mn><msqrt>
+   <mn>2</mn>
+  </msqrt>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>8</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>220°</mn></mrow>
+</math> </p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>2</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>300°</mn></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><msqrt>
+   <mn>3</mn>
+  </msqrt>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>|</mo> <mstyle mathvariant="bold"><mi>v</mi></mstyle> <mo>|</mo></mrow><mo>=</mo><mn>5</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>135°</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>A 60-pound box is resting on a ramp that is inclined 12°. Rounding to the nearest tenth,</p>
+<ol><li>ⓐ Find the magnitude of the normal (perpendicular) component of the force.</li><li>ⓑ Find the magnitude of the component of the force that is parallel to the ramp.</li></ol>
+</div>
+<div class="solution">
+<ol><li>ⓐ 58.7</li><li>ⓑ 12.5</li></ol></div></div>
+<div class="exercise"><div class="problem"><p>A 25-pound box is resting on a ramp that is inclined 8°. Rounding to the nearest tenth,</p>
+<ol><li>ⓐ Find the magnitude of the normal (perpendicular) component of the force.</li><li>ⓑ Find the magnitude of the component of the force that is parallel to the ramp.</li></ol>
+</div>
+</div>
+<div class="exercise"><div class="problem"><p>Find the magnitude of the horizontal and vertical components of a vector with magnitude 8 pounds pointed in a direction of 27° above the horizontal. Round to the nearest hundredth.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>x</mi><mo>=</mo><mn>7.13</mn></mrow>
+</math> pounds, <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mn>3.63</mn></mrow>
+</math> pounds</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Find the magnitude of the horizontal and vertical components of the vector with magnitude 4 pounds pointed in a direction of 127° above the horizontal. Round to the nearest hundredth.</p></div></div>
+<div class="exercise"><div class="problem"><p>Find the magnitude of the horizontal and vertical components of a vector with magnitude 5 pounds pointed in a direction of 55° above the horizontal. Round to the nearest hundredth.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>x</mi><mo>=</mo><mn>2.87</mn></mrow>
+</math> pounds, <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mn>4.10</mn></mrow>
+</math> pounds</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Find the magnitude of the horizontal and vertical components of the vector with magnitude 1 pound pointed in a direction of 8° above the horizontal. Round to the nearest hundredth.</p></div></div>
+
+</div>
+<div class="section">
+<h4>Real-World Applications</h4>
+<div class="exercise">
+<div class="problem">
+<p>A woman leaves home and walks 3 miles west, then 2 miles southwest. How far from home is she, and in what direction must she walk to head directly home?</p>
+</div>
+<div class="solution">
+<p>4.635 miles, 17.764° N of E	</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>A boat leaves the marina and sails 6 miles north, then 2 miles northeast. How far from the marina is the boat, and in what direction must it sail to head directly back to the marina?</p></div></div>
+<div class="exercise"><div class="problem"><p>A man starts walking from home and walks 4 miles east, 2 miles southeast, 5 miles south, 4 miles southwest, and 2 miles east. How far has he walked? If he walked straight home, how far would he have to walk?</p></div>
+<div class="solution">
+<p>17 miles. 10.318 miles	</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>A woman starts walking from home and walks 4 miles east, 7 miles southeast, 6 miles south, 5 miles southwest, and 3 miles east. How far has she walked? If she walked straight home, how far would she have to walk?</p></div></div>
+<div class="exercise"><div class="problem"><p>A man starts walking from home and walks 3 miles at 20° north of west, then 5 miles at 10° west of south, then 4 miles at 15° north of east. If he walked straight home, how far would he have to the walk, and in what direction?</p></div>
+<div class="solution">
+<p>Distance: 2.868. Direction: 86.474° North of West, or 3.526° West of North</p>
+</div>
+</div>
+<div class="exercise"><div class="problem"><p>A woman starts walking from home and walks 6 miles at 40° north of east, then 2 miles at 15° east of south, then 5 miles at 30° south of west. If she walked straight home, how far would she have to walk, and in what direction?</p></div></div>
+<div class="exercise"><div class="problem"><p>An airplane is heading north at an airspeed of 600 km/hr, but there is a wind blowing from the southwest at 80 km/hr. How many degrees off course will the plane end up flying, and what is the plane’s speed relative to the ground?</p></div>
+<div class="solution">
+<p>4.924°. 659 km/hr	</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>An airplane is heading north at an airspeed of 500 km/hr, but there is a wind blowing from the northwest at 50 km/hr. How many degrees off course will the plane end up flying, and what is the plane’s speed relative to the ground?</p></div></div>
+<div class="exercise"><div class="problem"><p>An airplane needs to head due north, but there is a wind blowing from the southwest at 60 km/hr. The plane flies with an airspeed of 550 km/hr. To end up flying due north, how many degrees west of north will the pilot need to fly the plane?</p></div>
+<div class="solution">
+<p>4.424°</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>An airplane needs to head due north, but there is a wind blowing from the northwest at 80 km/hr. The plane flies with an airspeed of 500 km/hr. To end up flying due north, how many degrees west of north will the pilot need to fly the plane?</p></div></div>
+<div class="exercise"><div class="problem"><p>As part of a video game, the point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>7</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> is rotated counterclockwise about the origin through an angle of 35°. Find the new coordinates of this point.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0.081</mn><mo>,</mo><mn>8.602</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>As part of a video game, the point <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mn>3</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> is rotated counterclockwise about the origin through an angle of 40°. Find the new coordinates of this point.</p></div></div>
+<div class="exercise"><div class="problem"><p>Two children are throwing a ball back and forth straight across the back seat of a car. The ball is being thrown 10 mph relative to the car, and the car is traveling 25 mph down the road. If one child doesn&#x27;t catch the ball, and it flies out the window, in what direction does the ball fly (ignoring wind resistance)?</p></div>
+<div class="solution">
+<p>21.801°, relative to the car’s forward direction</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Two children are throwing a ball back and forth straight across the back seat of a car. The ball is being thrown 8 mph relative to the car, and the car is traveling 45 mph down the road. If one child doesn&#x27;t catch the ball, and it flies out the window, in what direction does the ball fly (ignoring wind resistance)?</p></div></div>
+<div class="exercise"><div class="problem"><p>A 50-pound object rests on a ramp that is inclined 19°. Find the magnitude of the components of the force parallel to and perpendicular to (normal) the ramp to the nearest tenth of a pound.</p></div>
+<div class="solution">
+<p>parallel: 16.28, perpendicular: 47.28 pounds</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Suppose a body has a force of 10 pounds acting on it to the right, 25 pounds acting on it upward, and 5 pounds acting on it 45° from the horizontal. What single force is the resultant force acting on the body?</p></div></div>
+<div class="exercise"><div class="problem"><p>Suppose a body has a force of 10 pounds acting on it to the right, 25 pounds acting on it ─135° from the horizontal, and 5 pounds acting on it directed 150° from the horizontal. What single force is the resultant force acting on the body?</p></div>
+<div class="solution">
+<p>19.35 pounds, 231.54° from the horizontal</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>The condition of equilibrium is when the sum of the forces acting on a body is the zero vector. Suppose a body has a force of 2 pounds acting on it to the right, 5 pounds acting on it upward, and 3 pounds acting on it 45° from the horizontal. What single force is needed to produce a state of equilibrium on the body?</p></div></div>
+<div class="exercise"><div class="problem"><p>Suppose a body has a force of 3 pounds acting on it to the left, 4 pounds acting on it upward, and 2 pounds acting on it 30° from the horizontal. What single force is needed to produce a state of equilibrium on the body? Draw the vector.</p></div>
+<div class="solution">
+<p>5.1583 pounds, 75.8° from the horizontal</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section review-exercises">
+<h3>Chapter Review Exercises</h3><div class="section"><h4>Non-right Triangles: Law of Sines</h4><p>For the following exercises, assume <math>
+ <mrow>
+  <mi>α</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>a</mi><mo>,</mo><mi>β</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <mi>γ</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>c</mi><mo>.</mo></mrow>
+</math> Solve each triangle, if possible. Round each answer to the nearest tenth.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>β</mi><mo>=</mo><mn>50°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>105</mn><mo>,</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>=</mo><mn>45</mn></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>Not possible</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>α</mi><mo>=</mo><mn>43.1°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>184.2</mn><mo>,</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>=</mo><mn>242.8</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Solve the triangle.</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_223.jpg" alt="Triangle with standard labels. Angle A is 36 degrees with opposite side a unknown. Angle B is 24 degrees with opposite side b = 16. Angle C and side c are unknown."></figure>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>C</mi><mo>=</mo><mn>120°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>23.1</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>34.1</mn></mrow>
+</math>
+</p></div></div><div class="exercise"><div class="problem"><p>Find the area of the triangle.</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_224.jpg" alt="A triangle. One angle is 75 degrees with opposite side unknown. The adjacent sides to the 75 degree angle are 8 and 11."></figure>
+</div></div><div class="exercise"><div class="problem"><p>A pilot is flying over a straight highway. He determines the angles of depression to two mileposts, 2.1 km apart, to be 25° and 49°, as shown in . Find the distance of the plane from point <math>
+ <mrow>
+  <mi>A</mi></mrow>
+</math> and the elevation of the plane.</p><figure><img src="CNX_Precalc_Figure_08_08_225.jpg" alt="Diagram of a plane flying over a highway. It is to the left and above points A and B on the ground in that order. There is a horizontal line going through the plan parallel to the ground. The angle formed by the horizontal line, the plane, and the line from the plane to point B is 25 degrees. The angle formed by the horizontal line, the plane, and point A is 49 degrees."></figure></div>
+<div class="solution">
+<p>distance of the plane from point <math>
+ <mrow>
+  <mi>A</mi><mo>:</mo></mrow>
+</math> 2.2 km, elevation of the plane: 1.6 km</p>
+</div></div></div><div class="section"><h4>Non-right Triangles: Law of Cosines</h4><div class="exercise"><div class="problem"><p>Solve the triangle, rounding to the nearest tenth, assuming <math>
+ <mrow>
+  <mi>α</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>a</mi><mo>,</mo><mi>β</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>b</mi><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <mi>γ</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>c</mi><mo>:</mo><mspace width="0.3em"></mspace><mi>a</mi><mo>=</mo><mn>4</mn><mo>,</mo><mspace width="0.5em"></mspace><mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>=</mo><mn>6</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>8.</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Solve the triangle in , rounding to the nearest tenth.</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_226.jpg" alt="A standardly labeled triangle. Angle A is 54 degrees with opposite side a unknown. Angle B is unknown with opposite side b=15. Angle C is unknown with opposite side C=13. "></figure></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>b</mi></mstyle><mo>=</mo><mn>71.0°</mn><mo>,</mo><mi>C</mi><mo>=</mo><mn>55.0°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>12.8</mn></mrow>
+</math> </p></div></div><div class="exercise"><div class="problem"><p>Find the area of a triangle with sides of length 8.3, 6.6, and 9.1.</p></div></div>
+<div class="exercise"><div class="problem"><p>To find the distance between two cities, a satellite calculates the distances and angle shown in  (not to scale). Find the distance between the cities. Round answers to the nearest tenth.</p><figure><img src="CNX_Precalc_Figure_08_08_227.jpg" alt="Diagram of a satellite above and to the right of two cities. The distance from the satellite to the closer city is 210 km. The distance from the satellite to the further city is 250 km. The angle formed by the closer city, the satellite, and the other city is 1.8 degrees. "></figure></div>
+<div class="solution">
+<p>40.6 km </p>
+</div></div>
+
+</div><div class="section"><h4>Polar Coordinates</h4><div class="exercise"><div class="problem"><p>Plot the point with polar coordinates <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mfrac>
+     <mi>π</mi>
+     <mn>6</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Plot the point with polar coordinates <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mo>−</mo><mfrac>
+     <mrow>
+      <mn>2</mn><mi>π</mi></mrow>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p><br>
+
+<figure><img src="CNX_Precalc_Figure_08_08_229.jpg" alt="Polar coordinate grid with a point plotted on the fifth concentric circle 2/3 the way between pi and 3pi/2 (closer to 3pi/2)."></figure>
+
+</p></div></div><div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mo>−</mo><mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>4</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> to rectangular coordinates.</p></div></div>
+<div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>2</mn><mo>,</mo><mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>2</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> to rectangular coordinates.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mo>,</mo><mo>−</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> to polar coordinates.</p></div></div>
+<div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>9</mn><mo>,</mo><mo>−</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+to polar coordinates.</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>9.8489</mn><mo>,</mo><mn>203.96°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, convert the given Cartesian equation to a polar equation.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>x</mi><mo>=</mo><mo>−</mo><mn>2</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>=</mo><mn>64</mn></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>8</mn></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>=</mo><mo>−</mo><mn>2</mn><mi>y</mi></mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, convert the given polar equation to a Cartesian equation.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>7</mn><mtext>cos</mtext><mspace width="0.3em"></mspace><mi>θ</mi>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>=</mo><mn>7</mn><mi>x</mi></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mo>−</mo><mn>2</mn>
+   </mrow>
+   <mrow>
+    <mn>4</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>+</mo><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, convert to rectangular form and graph.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>θ</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mn>3</mn><mi>π</mi></mrow>
+   <mn>4</mn>
+  </mfrac>
+  </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mo>−</mo><mi>x</mi></mrow>
+</math>
+</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_230.jpg" alt="Plot of the function y=-x in rectangular coordinates."></figure>
+
+
+</div>
+</div><div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>5</mn><mi>sec</mi><mspace width="0.3em"></mspace><mi>θ</mi>
+ </mrow>
+</math>
+</p></div></div>
+
+</div><div class="section"><h4>Polar Coordinates: Graphs</h4><p>For the following exercises, test each equation for symmetry.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>4</mn><mo>+</mo><mn>4</mn><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>symmetric with respect to the line <math>
+ <mrow>
+  <mi>θ</mi><mo>=</mo><mfrac>
+   <mi>π</mi>
+   <mn>2</mn>
+  </mfrac>
+  </mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>7</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Sketch a graph of the polar equation <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>1</mn><mo>−</mo><mn>5</mn><mi>sin</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>.</mo></mrow>
+</math> Label the axis intercepts.</p></div>
+<div class="solution">
+<p><br>
+
+<figure><img src="CNX_Precalc_Figure_08_08_232.jpg" alt="Graph of the given polar equation - an inner loop limaçon."></figure>
+
+</p></div></div><div class="exercise"><div class="problem"><p>Sketch a graph of the polar equation <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>5</mn><mi>sin</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>7</mn><mi>θ</mi></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Sketch a graph of the polar equation <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>3</mn><mo>−</mo><mn>3</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p><br>
+
+<figure><img src="CNX_Precalc_Figure_08_08_234.jpg" alt="Graph of the given polar equation - a cardioid."></figure></p></div></div></div><div class="section"><h4>Polar Form of Complex Numbers</h4><p>For the following exercises, find the absolute value of each complex number.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mo>−</mo><mn>2</mn><mo>+</mo><mn>6</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mn>4</mn><mo>−</mo><mtext>​</mtext><mn>3</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>5 </p>
+</div></div>
+
+<p>Write the complex number in polar form.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mn>5</mn><mo>+</mo><mn>9</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <msqrt>
+     <mn>3</mn>
+    </msqrt>
+    </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mtext>​</mtext><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mfrac>
+     <mi>π</mi>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<p>For the following exercises, convert the complex number from polar to rectangular form.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>5</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>5</mn><mi>π</mi></mrow>
+     <mn>6</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> </p>
+</div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>3</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>40°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>2.3</mn><mo>+</mo><mn>1.9</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p>
+</div></div>
+<p>For the following exercises, find the product <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  </mrow>
+</math> in polar form.</p>
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>89°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> </p><p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>5</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>23°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+
+</p></div></div>
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>10</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>π</mi>
+     <mn>6</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>6</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>π</mi>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>60</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>π</mi>
+     <mn>2</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<p>For the following exercises, find the quotient <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <msub>
+     <mi>z</mi>
+     <mn>1</mn>
+    </msub>
+    </mrow>
+   <mrow>
+    <msub>
+     <mi>z</mi>
+     <mn>2</mn>
+    </msub>
+    </mrow>
+  </mfrac>
+  </mrow>
+</math> in polar form.</p>
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>12</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>55°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p><p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>3</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>18°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>27</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>5</mn><mi>π</mi></mrow>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>9</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mi>π</mi>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>3</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>4</mn><mi>π</mi></mrow>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+
+<p>For the following exercises, find the powers of each complex number in polar form.</p>
+<div class="exercise"><div class="problem"><p>Find <math>
+ <mrow>
+  <msup>
+   <mi>z</mi>
+   <mn>4</mn>
+  </msup>
+  </mrow>
+</math> when <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>2</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>70°</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> </p></div></div>
+<div class="exercise"><div class="problem"><p>Find <math>
+ <mrow>
+  <msup>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msup>
+  </mrow>
+</math> when <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>5</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>4</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>25</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>2</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+
+<p>For the following exercises, evaluate each root.</p>
+<div class="exercise"><div class="problem"><p>Evaluate the cube root of <math>
+ <mrow>
+  <mi>z</mi></mrow>
+</math> when <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>64</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>210°</mn></mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Evaluate the square root of <math>
+ <mrow>
+  <mi>z</mi></mrow>
+</math> when <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>25</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>2</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow><mo>.</mo></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>5</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>3</mn><mi>π</mi></mrow>
+     <mn>4</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow><mo>,</mo><mn>5</mn><mi mathvariant="normal">cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>7</mn><mi>π</mi></mrow>
+     <mn>4</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+
+<p>For the following exercises, plot the complex number in the complex plane.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mn>6</mn><mo>−</mo><mn>2</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mo>−</mo><mn>1</mn><mo>+</mo><mn>3</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </p></div>
+<div class="solution">
+
+
+<figure><img src="CNX_Precalc_Figure_08_08_236n.jpg" alt="Plot of -1 + 3i in the complex plane (-1 along the real axis, 3 along the imaginary)."></figure>
+
+
+</div>
+</div></div><div class="section"><h4>Parametric Equations</h4><p>For the following exercises, eliminate the parameter <math>
+ <mrow>
+  <mi>t</mi></mrow>
+</math> to rewrite the parametric equation as a Cartesian equation.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><mn>3</mn><mi>t</mi><mo>−</mo><mn>1</mn></mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><msqrt>
+        <mi>t</mi>
+       </msqrt>
+       </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable></mrow> </mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mo>{</mo><mtable columnalign="left">
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mi>cos</mi><mspace width="0.3em"></mspace><mi>t</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+   <mtr columnalign="left">
+    <mtd columnalign="left">
+     <mrow>
+      <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msup>
+       <mrow>
+        <mi>sin</mi>
+       </mrow>
+       <mn>2</mn>
+      </msup>
+      <mi>t</mi>
+     </mrow>
+    </mtd>
+   </mtr>
+
+  </mtable>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+  <mi>y</mi><mo>=</mo><mn>1</mn></mrow>
+</math>
+</p>
+</div></div>
+
+<div class="exercise"><div class="problem"><p>Parameterize (write a parametric equation for) each Cartesian equation by using <math>
+ <mrow>
+  <mi>x</mi><mrow><mo>(</mo>
+   <mi>t</mi>
+  <mo>)</mo></mrow><mo>=</mo><mi>a</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>t</mi></mrow>
+</math> and <math>
+ <mrow>
+  <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle><mi>sin</mi><mspace width="0.3em"></mspace><mi>t</mi></mrow>
+</math> for <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msup>
+    </mrow>
+   <mrow>
+    <mn>25</mn></mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+    </mrow>
+   <mrow>
+    <mn>16</mn></mrow>
+  </mfrac>
+  <mo>=</mo><mn>1.</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Parameterize the line from <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow>
+</math> to <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mn>4</mn><mo>,</mo><mn>7</mn><mo stretchy="false">)</mo></mrow>
+</math> so that the line is at <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow>
+</math> at <math>
+ <mrow>
+  <mi>t</mi><mo>=</mo><mn>0</mn></mrow>
+</math> and <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mn>4</mn><mo>,</mo><mn>7</mn><mo stretchy="false">)</mo></mrow>
+</math> at <math>
+ <mrow>
+  <mi>t</mi><mo>=</mo><mn>1.</mn></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><mo>−</mo><mn>2</mn><mo>+</mo><mn>6</mn><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><mn>3</mn><mo>+</mo><mn>4</mn><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math>
+</p></div>
+</div>
+</div><div class="section"><h4>Parametric Equations: Graphs</h4><p>For the following exercises, make a table of values for each set of parametric equations, graph the equations, and include an orientation; then write the Cartesian equation.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><mn>3</mn><msup>
+        <mi>t</mi>
+        <mn>2</mn>
+       </msup>
+       </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mrow><mo>(</mo>
+        <mi>t</mi>
+       <mo>)</mo></mrow><mo>=</mo><mn>2</mn><mi>t</mi><mo>−</mo><mn>1</mn></mrow>
+     </mtd>
+    </mtr>
+
+   </mtable></mrow> </mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msup>
+        <mi>e</mi>
+        <mi>t</mi>
+       </msup>
+
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mn>2</mn><msup>
+        <mi>e</mi>
+        <mrow>
+         <mn>5</mn><mspace width="0.3em"></mspace><mi>t</mi>
+        </mrow>
+       </msup>
+
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mo>−</mo><mn>2</mn><msup>
+   <mi>x</mi>
+   <mn>5</mn>
+  </msup>
+  </mrow>
+</math>
+<br>
+</p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_238.jpg" alt="Plot of the given parametric equations."></figure>
+
+
+
+</div></div><div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><mi>sin</mi><mspace width="0.3em"></mspace><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise material-set-2"><div class="problem"><p>A ball is launched with an initial velocity of 80 feet per second at an angle of 40° to the horizontal. The ball is released at a height of 4 feet above the ground. </p><ol><li>ⓐ Find the parametric equations to model the path of the ball.</li><li>ⓑ Where is the ball after 3 seconds?</li><li>ⓒ How long is the ball in the air?</li></ol>
+</div>
+<div class="solution">
+
+<ol><li> <math>
+ <mrow>
+  <mrow><mo>{</mo> <mtable columnalign="left">
+   <mtr>
+    <mtd>
+     <mi>x</mi><mrow><mo>(</mo>
+      <mi>t</mi>
+     <mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo>
+      <mrow>
+       <mn>80</mn><mi>cos</mi><mrow><mo>(</mo>
+        <mrow>
+         <mn>40°</mn></mrow>
+       <mo>)</mo></mrow></mrow>
+     <mo>)</mo></mrow><mi>t</mi>
+    </mtd>
+   </mtr>
+   <mtr>
+    <mtd>
+     <mi>y</mi><mrow><mo>(</mo>
+      <mi>t</mi>
+     <mo>)</mo></mrow><mo>=</mo><mo>−</mo><mn>16</mn><msup>
+      <mi>t</mi>
+      <mn>2</mn>
+     </msup>
+     <mo>+</mo><mrow><mo>(</mo>
+      <mrow>
+       <mn>80</mn><mi>sin</mi><mrow><mo>(</mo>
+        <mrow>
+         <mn>40°</mn></mrow>
+       <mo>)</mo></mrow></mrow>
+     <mo>)</mo></mrow><mi>t</mi><mo>+</mo><mn>4</mn>
+    </mtd>
+   </mtr>
+  </mtable>
+   </mrow></mrow>
+</math>
+</li><li>The ball is 14 feet high and 184 feet from where it was launched.</li><li>3.3 seconds</li></ol></div></div>
+
+
+</div><div class="section"><h4>Vectors</h4><p>For the following exercises, determine whether the two vectors,<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo></mrow>
+</math> </strong>are equal, where<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle></mrow>
+</math> </strong>has an initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  </mrow>
+</math> and a terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>,</mo></mrow>
+</math> and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>has an initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  </mrow>
+</math> and a terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>.</mo></mrow>
+</math>
+</p><div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>4</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>5</mn><mo>,</mo><mn>5</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>9</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise material-set-2"><div class="problem"><p> <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>6</mn><mo>,</mo><mn>11</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>2</mn><mo>,</mo><mn>8</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo><msub>
+   <mi>P</mi>
+   <mn>3</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>4</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>8</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>not equal </p>
+</div></div>
+
+<p>For the following exercises, use the vectors<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mstyle mathvariant="bold"><mo>=</mo></mstyle><mn>2</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mstyle mathvariant="bold"><mi>j</mi></mstyle><mtext>,</mtext><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>=</mo><mn>4</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>−</mo><mn>3</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle><mtext>,</mtext></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mi>w</mi><mo>=</mo><mo>−</mo><mn>2</mn><mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mn>5</mn><mstyle mathvariant="bold"><mi>j</mi></mstyle></mrow>
+</math> </strong>to evaluate the expression.</p><div class="exercise"><div class="problem"><p><strong><em>u</em></strong> − <strong><em>v</em></strong>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>2<strong><em>v</em></strong> − <strong><em>u</em></strong> + <strong><em>w</em></strong>
+</p></div>
+<div class="solution">
+<p>4<strong><em>i</em></strong>
+</p></div></div>
+
+<p>For the following exercises, find a unit vector in the same direction as the given vector.</p>
+<div class="exercise"><div class="problem"><p><strong><em>a</em></strong> = 8<strong><em>i</em></strong> − 6<strong><em>j</em></strong></p></div></div>
+<div class="exercise"><div class="problem"><p><strong><em>b</em></strong> = −3<strong><em>i</em></strong> − <strong><em>j</em></strong>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <mn>3</mn><msqrt>
+     <mrow>
+      <mn>10</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> <strong><em>i</em></strong> <math>
+ <mrow>
+  <mo>−</mo><mfrac>
+   <mrow>
+    <msqrt>
+     <mrow>
+      <mn>10</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>10</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> <strong><em>j</em></strong></p></div></div>
+<p>For the following exercises, find the magnitude and direction of the vector.</p>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>6</mn><mo>,</mo><mn>−2</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p> <math>
+ <mrow>
+  <mrow><mo>〈</mo> <mrow>
+   <mn>−3</mn><mo>,</mo><mn>−3</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p>Magnitude: <math>
+ <mrow>
+  <mn>3</mn><msqrt>
+   <mn>2</mn>
+  </msqrt>
+  <mo>,</mo></mrow>
+</math> Direction: <math>
+ <mrow>
+  <mtext>225°</mtext>
+ </mrow>
+</math>
+</p></div></div>
+
+<p>For the following exercises, calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mtext>.</mtext></mrow>
+</math> </strong>
+</p><div class="exercise"><div class="problem"><p><strong><em>u</em></strong> = −2<strong><em>i</em></strong> + <strong><em>j</em></strong> and <strong><em>v</em></strong> = 3<strong><em>i</em></strong> + 7<strong><em>j</em></strong>
+</p></div></div>
+<div class="exercise"><div class="problem"><p><strong><em>u</em></strong> = <strong><em>i</em></strong> + 4<strong><em>j</em></strong> and <strong><em>v</em></strong> = 4<strong><em>i</em></strong> + 3<strong><em>j</em></strong>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtext>16</mtext>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Given <strong><em>v</em></strong> <math>
+ <mrow>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+<mn>−3</mn><mo>,</mo><mn>4</mn>
+  </mrow> <mo>〉</mo></mrow>
+ </mrow>
+</math> draw <strong><em>v</em></strong>, 2<strong><em>v</em></strong>, and <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math> <strong><em>v</em></strong>.</p></div></div>
+<div class="exercise"><div class="problem"><p>Given the vectors shown in , sketch <strong><em>u</em></strong> + <strong><em>v</em></strong>, <strong><em>u</em></strong> − <strong><em>v</em></strong> and 3<strong><em>v</em></strong>.</p><figure><img src="CNX_Precalc_Figure_08_08_241.jpg" alt="Diagram of vectors v, 2v, and 1/2 v. The 2v vector is in the same direction as v but has twice the magnitude. The 1/2 v vector is in the same direction as v but has half the magnitude. "></figure></div>
+<div class="solution">
+<p><br>
+
+<figure><img src="CNX_Precalc_Figure_08_08_242.jpg" alt="Diagram of vectors u and v. Taking u&#x27;s starting point as the origin, u goes from the origin to (4,1), and v goes from (4,1) to (6,0)."></figure>
+
+</p></div>
+</div><div class="exercise"><div class="problem"><p>Given initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>5</mn><mo>,</mo><mo>−</mo><mn>1</mn></mrow>
+  <mo>)</mo></mrow><mo>,</mo></mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle></mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle></mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo></mrow>
+</math> </strong>Draw the points and the vector on the graph.</p></div></div>
+</div></div>
+
+<div class="section practice-test">
+<h3>Practice Test</h3><div class="exercise"><div class="problem"><p>Assume <math>
+ <mrow>
+  <mi>α</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>a</mi><mo>,</mo><mi>β</mi>
+ </mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>b</mi><mo>,</mo></mrow>
+</math> and <math>
+ <mrow>
+  <mi>γ</mi></mrow>
+</math> is opposite side <math>
+ <mrow>
+  <mi>c</mi><mo>.</mo></mrow>
+</math> Solve the triangle, if possible, and round each answer to the nearest tenth, given <math>
+ <mrow>
+  <mi>β</mi><mo>=</mo><mn>68°</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>21</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>16.</mn></mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>α</mi><mo>=</mo><mn>67.1°</mn><mo>,</mo><mi>γ</mi><mo>=</mo><mn>44.9°</mn><mo>,</mo><mi>a</mi><mo>=</mo><mn>20.9</mn></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Find the area of the triangle in . Round each answer to the nearest tenth.</p>
+<figure><img src="CNX_Precalc_Figure_08_08_244.jpg" alt="A triangle. One angle is 60 degrees with opposite side 6.25. The other two sides are 5 and 7. "></figure></div></div><div class="exercise"><div class="problem"><p>A pilot flies in a straight path for 2 hours. He then makes a course correction, heading 15° to the right of his original course, and flies 1 hour in the new direction. If he maintains a constant speed of 575 miles per hour, how far is he from his starting position?</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mtext>1712 miles</mtext>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>2</mn></mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+to polar coordinates, and then plot the point.</p></div></div>
+<div class="exercise"><div class="problem"><p>Convert <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mfrac>
+     <mi>π</mi>
+     <mn>3</mn>
+    </mfrac>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math> to rectangular coordinates.
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>1</mn><mo>,</mo><msqrt>
+     <mn>3</mn>
+    </msqrt>
+    </mrow>
+  <mo>)</mo></mrow></mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise"><div class="problem"><p>Convert the polar equation to a Cartesian equation: <math>
+ <mrow>
+  <msup>
+   <mi>x</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>+</mo><msup>
+   <mi>y</mi>
+   <mn>2</mn>
+  </msup>
+  <mo>=</mo><mn>5</mn><mi>y.</mi></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Convert to rectangular form and graph: <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mo>−</mo><mn>3</mn><mi>csc</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>.</mo>
+ </mrow>
+</math> </p></div>
+
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mo>−</mo><mn>3</mn></mrow>
+</math>
+<br></p>
+
+<figure><img src="CNX_Precalc_Figure_08_08_246.jpg" alt="Plot of the given equation in rectangular form - line y=-3."></figure>
+
+
+</div></div><div class="exercise"><div class="problem"><p>Test the equation for symmetry: <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mo>−</mo><mn>4</mn><mi>sin</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mi>θ</mi></mrow>
+  <mo>).</mo></mrow></mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Graph <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>3</mn><mo>+</mo><mn>3</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>θ</mi><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p><br>
+<figure><img src="CNX_Precalc_Figure_08_08_247.jpg" alt="Graph of the given equations - a cardioid."></figure>
+</p></div></div><div class="exercise">
+<div class="problem">
+<p>Graph <math>
+ <mrow>
+  <mi>r</mi><mo>=</mo><mn>3</mn><mo>−</mo><mn>5</mn><mtext>sin</mtext><mspace width="0.3em"></mspace><mi>θ</mi><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Find the absolute value of the complex number
+ <math>
+ <mrow>
+  <mn>5</mn><mo>−</mo><mn>9</mn><mi>i</mi><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mn>106</mn>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+<div class="exercise"><div class="problem"><p>Write the complex number in polar form: <math>
+ <mrow>
+  <mn>4</mn><mo>+</mo><mi>i</mi><mtext>.</mtext>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise">
+<div class="problem">
+<p>Convert the complex number from polar to rectangular form: <math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mn>5</mn><mtext>cis</mtext><mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mn>2</mn><mi>π</mi>
+     </mrow>
+     <mn>3</mn>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow><mo>.</mo>
+ </mrow>
+</math> </p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mo>−</mo><mn>5</mn>
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+  <mo>+</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle><mfrac>
+   <mrow>
+    <mn>5</mn><msqrt>
+     <mn>3</mn>
+    </msqrt>
+
+   </mrow>
+   <mn>2</mn>
+  </mfrac>
+
+ </mrow>
+</math>
+</p>
+</div></div>
+<p>Given <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mn>8</mn><mi>cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>36°</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mn>2</mn><mi>cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>15°</mn>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo>
+ </mrow>
+</math> evaluate each expression.</p><div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msub>
+   <mi>z</mi>
+   <mn>1</mn>
+  </msub>
+  <msub>
+   <mi>z</mi>
+   <mn>2</mn>
+  </msub>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <msub>
+     <mi>z</mi>
+     <mn>1</mn>
+    </msub>
+
+   </mrow>
+   <mrow>
+    <msub>
+     <mi>z</mi>
+     <mn>2</mn>
+    </msub>
+
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>4</mn><mi>cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>21°</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <msub>
+       <mi>z</mi>
+       <mn>2</mn>
+      </msub>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>3</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p> <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <msub>
+     <mi>z</mi>
+     <mn>1</mn>
+    </msub>
+
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math>
+</p>
+</div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mn>2</mn><msqrt>
+   <mn>2</mn>
+  </msqrt>
+  <mi>cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>18°</mn>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo><mn>2</mn><msqrt>
+   <mn>2</mn>
+  </msqrt>
+  <mi>cis</mi><mrow><mo>(</mo>
+   <mrow>
+    <mn>198°</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Plot the complex number <math>
+ <mrow>
+  <mn>−5</mn><mo>−</mo><mstyle mathvariant="bold"><mi>i</mi></mstyle>
+ </mrow>
+</math> in the complex plane.
+</p></div>
+</div>
+<div class="exercise"><div class="problem"><p>Eliminate the parameter <math>
+ <mrow>
+  <mi>t</mi>
+ </mrow>
+</math> to rewrite the following parametric equations as a Cartesian equation: <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>t</mi><mo>+</mo><mn>1</mn>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msup>
+        <mi>t</mi>
+        <mn>2</mn>
+       </msup>
+
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow><mo>.</mo>
+ </mrow>
+</math>
+</p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mi>y</mi><mo>=</mo><mn>2</mn><msup>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mi>x</mi><mo>−</mo><mn>1</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+   <mn>2</mn>
+  </msup>
+
+ </mrow>
+</math>
+</p>
+</div></div>
+<div class="exercise">
+<div class="problem">
+<p>Parameterize (write a parametric equation for) the following Cartesian equation by using <math>
+ <mrow>
+  <mi>x</mi><mrow><mo>(</mo>
+   <mi>t</mi>
+  <mo>)</mo></mrow><mo>=</mo><mi>a</mi><mi>cos</mi><mspace width="0.3em"></mspace><mi>t</mi>
+ </mrow>
+</math> and <math>
+ <mrow>
+  <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle><mi>sin</mi><mspace width="0.3em"></mspace><mi>t</mi><mo>:</mo>
+ </mrow>
+</math> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <msup>
+     <mi>x</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>36</mn>
+   </mrow>
+  </mfrac>
+  <mo>+</mo><mfrac>
+   <mrow>
+    <msup>
+     <mi>y</mi>
+     <mn>2</mn>
+    </msup>
+
+   </mrow>
+   <mrow>
+    <mn>100</mn>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mn>1.</mn>
+ </mrow>
+</math>
+</p></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Graph the set of parametric equations and find the Cartesian equation: <math>
+ <mrow>
+  <mrow><mo>{</mo> <mrow>
+   <mtable columnalign="left">
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mn>2</mn><mi>sin</mi><mspace width="0.3em"></mspace><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+    <mtr columnalign="left">
+     <mtd columnalign="left">
+      <mrow>
+       <mi>y</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>5</mn><mi>cos</mi><mspace width="0.3em"></mspace><mi>t</mi>
+      </mrow>
+     </mtd>
+    </mtr>
+
+   </mtable>
+  </mrow> </mrow><mo>.</mo>
+ </mrow>
+</math>
+</p>
+
+</div>
+<div class="solution">
+<p><br>
+<figure><img src="CNX_Precalc_Figure_08_08_250.jpg" alt="Graph of the given equations - a vertical ellipse."></figure>
+</p></div>
+</div><div class="exercise"><div class="problem">
+<p>A ball is launched with an initial velocity of 95 feet per second at an angle of 52° to the horizontal. The ball is released at a height of 3.5 feet above the ground.</p><ol><li>ⓐFind the parametric equations to model the path of the ball.</li><li>ⓑWhere is the ball after 2 seconds?</li><li>ⓒHow long is the ball in the air?</li></ol></div>
+</div><p>For the following exercises, use the vectors <strong><em>u</em></strong> = <strong><em>i</em></strong> − 3<strong><em>j</em></strong> and <strong><em>v</em></strong> = 2<strong><em>i</em></strong> + 3<strong><em>j</em></strong>.</p>
+
+<div class="exercise">
+<div class="problem">
+<p>Find 2<strong><em>u</em></strong> − 3<strong><em>v</em></strong>.</p>
+</div>
+<div class="solution">
+<p>−4<strong><em>i</em></strong> − 15<strong><em>j</em></strong>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Calculate<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>u</mi></mstyle><mo>⋅</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong></p></div></div>
+<div class="exercise"><div class="problem"><p>Find a unit vector in the same direction as<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong></p></div>
+<div class="solution">
+<p> <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>2</mn><msqrt>
+     <mrow>
+      <mn>13</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>13</mn>
+   </mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle><mo>+</mo><mfrac>
+   <mrow>
+    <mn>3</mn><msqrt>
+     <mrow>
+      <mn>13</mn>
+     </mrow>
+    </msqrt>
+
+   </mrow>
+   <mrow>
+    <mn>13</mn>
+   </mrow>
+  </mfrac>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+ </mrow>
+</math>
+</p></div></div>
+<div class="exercise"><div class="problem"><p>Given vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+ </mrow>
+</math> </strong>has an initial point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>1</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mn>2</mn><mo>,</mo><mn>2</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> and terminal point <math>
+ <mrow>
+  <msub>
+   <mi>P</mi>
+   <mn>2</mn>
+  </msub>
+  <mo>=</mo><mrow><mo>(</mo>
+   <mrow>
+    <mo>−</mo><mn>1</mn><mo>,</mo><mn>0</mn>
+   </mrow>
+  <mo>)</mo></mrow><mo>,</mo>
+ </mrow>
+</math> write the vector<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle>
+ </mrow>
+</math> </strong>in terms of<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>i</mi></mstyle>
+ </mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>j</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong>On the graph, draw<strong> <math>
+ <mrow>
+  <mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>,</mo>
+ </mrow>
+</math> </strong>and<strong> <math>
+ <mrow>
+  <mo>−</mo><mstyle mathvariant="bold"><mi>v</mi></mstyle><mo>.</mo>
+ </mrow>
+</math> </strong>
+</p></div></div>
+</div>
+
+<h2>Key terms</h2>
+<p><strong>dot product</strong> given two vectors, the sum of the product of the horizontal components and the product of the vertical components</p>
+<p><strong>initial point</strong> the origin of a vector</p>
+<p><strong>magnitude</strong> the length of a vector; may represent a quantity such as speed, and is calculated using the Pythagorean Theorem</p>
+<p><strong>resultant</strong> a vector that results from addition or subtraction of two vectors, or from scalar multiplication</p>
+<p><strong>scalar</strong> a quantity associated with magnitude but not direction; a constant</p>
+<p><strong>scalar multiplication</strong> the product of a constant and each component of a vector</p>
+<p><strong>standard position</strong> the placement of a vector with the initial point at <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>0</mn><mo>,</mo><mn>0</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> and the terminal point <math>
+ <mrow>
+  <mo stretchy="false">(</mo><mi>a</mi><mo>,</mo><mstyle mathvariant="bold"><mi>b</mi></mstyle><mo stretchy="false">)</mo><mo>,</mo>
+ </mrow>
+</math> represented by the change in the <em>x</em>-coordinates and the change in the <em>y</em>-coordinates of the original vector</p>
+<p><strong>terminal point</strong> the end point of a vector, usually represented by an arrow indicating its direction</p>
+<p><strong>unit vector</strong> a vector that begins at the origin and has magnitude of 1; the horizontal unit vector runs along the <em>x</em>-axis and is defined as <math>
+ <mrow>
+   <mstyle mathvariant="bold"><mi>i</mi></mstyle>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>1</mn><mo>,</mo><mn>0</mn></mrow> <mo>〉</mo></mrow></mrow>
+</math> the vertical unit vector runs along the <em>y</em>-axis and is defined as <math>
+ <mrow>
+   <mstyle mathvariant="bold"><mi>j</mi></mstyle>
+  <mo>=</mo><mrow><mo>〈</mo> <mrow>
+   <mn>0</mn><mo>,</mo><mn>1</mn></mrow> <mo>〉</mo></mrow><mo>.</mo></mrow>
+</math>
+</p>
+<p><strong>vector</strong> a quantity associated with both magnitude and direction, represented as a directed line segment with a starting point (initial point) and an end point (terminal point)</p>
+<p><strong>vector addition</strong> the sum of two vectors, found by adding corresponding components</p>
+
+</body></html>
