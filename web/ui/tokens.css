@@ -1339,10 +1339,13 @@ body.docked main { margin-right: var(--dock); }                         /* the p
 .tstop.st-proven { stroke: var(--credit); stroke-width: 4; }
 .tproject { fill: var(--ink); }
 .tstops { list-style: none; margin: 0; padding: 0; }
-.tstops li { height: var(--row); box-sizing: border-box; display: grid; align-content: center; gap: 1px; padding: 4px 0;
-  border-bottom: 1px solid var(--rule-soft); overflow: hidden; }
-.tstops li strong { font-size: 14.5px; }
+.tstops li { height: var(--row); box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+  column-gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--rule-soft); overflow: hidden; }
+.tst { display: grid; gap: 1px; min-width: 0; }
+.tst strong { font-size: 14.5px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tst > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tstops li .btn { padding: 4px 12px; }
+.tstops li.st-unwritten { border: 0; border-bottom: 1px dashed var(--rule); background: none; }
 .tstops li.st-unwritten strong { color: var(--ink-3); font-weight: 600; }
 .tstops li.tproj { border-bottom: 0; }
 .tstops li.tproj strong { font-size: 16px; }
@@ -1352,7 +1355,7 @@ body.docked main { margin-right: var(--dock); }                         /* the p
 /* ---- Learn home ---- */
 .lhome { display: grid; gap: 16px; padding: 22px 26px; }
 .lcontinue { display: grid; gap: 4px; padding: 20px 24px; border-radius: 14px; background: var(--accent); color: var(--accent-ink); text-decoration: none; }
-.lcontinue .eyebrow { font: 600 12px var(--sans); letter-spacing: .07em; text-transform: uppercase; opacity: .85; }
+.lcontinue .eyebrow { color: inherit; font: 600 12px var(--sans); letter-spacing: .07em; text-transform: uppercase; opacity: .85; }
 .lcontinue strong { font: 700 24px/1.2 var(--sans); }
 .lcontinue:hover { filter: brightness(1.06); }
 .lstarts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }

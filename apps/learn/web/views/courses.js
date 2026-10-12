@@ -165,11 +165,12 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   // the lesson in parts of 5 to 8 minutes: a pause between them, so a part fits the time you have
   const parts = got.parts || [];
   const startsPart = new Map(parts.map((p, k) => [got.cards[p.from]?.id, k]));
-  const partOf = i => { let k = 0; for (let j = 0; j <= i && j < seq.length; j++) if (startsPart.has(seq[j].id) && !seq[j].why) k = startsPart.get(seq[j].id); return k; };
+  const extra = c => c.why === 'again' || c.why === 'refresher' || c.stage === 'warmup';    // put in, not the lesson's own
+  const partOf = i => { let k = 0; for (let j = 0; j <= i && j < seq.length; j++) if (startsPart.has(seq[j].id) && !extra(seq[j])) k = startsPart.get(seq[j].id); return k; };
   const paused = new Set();
   const step = () => {                            // forward one card, pausing at the start of a part
     const k = startsPart.get(seq[pos + 1]?.id);
-    if (k > 0 && !seq[pos + 1].why && !paused.has(k)) { paused.add(k); partDone(k); } else show(pos + 1);
+    if (k > 0 && !extra(seq[pos + 1]) && !paused.has(k)) { paused.add(k); partDone(k); } else show(pos + 1);
   };
   const count = el('span', { class: 'num small muted' });
   const track = el('div', { class: 'ltrack' });

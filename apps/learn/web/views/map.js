@@ -10,7 +10,7 @@ import { lessonHref } from './courses.js';
 const SVG = 'http://www.w3.org/2000/svg';
 const svg = (tag, attrs = {}) => { const e = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
 const LANE = ['--s1', '--s3', '--s2', '--s5', '--s4', '--s6'];
-const ROW = 76, GAP = 24, TOP = 22;
+const GAP = 24, TOP = 22;
 const timeLeft = t => t.left == null ? `Blocked: ${t.unwritten} lesson${t.unwritten === 1 ? '' : 's'} not written yet`
   : t.left ? `About ${hm(t.left)} to go` : 'Every stop learned';
 const figures = t => [`${t.learned} of ${t.total} learned`, t.proven ? `${t.proven} proven` : null,
@@ -32,13 +32,14 @@ const mapPanel = { title: 'Skill map', w: 12, deps: ['card', 'lesson', 'setting'
         el('i', { class: `st-${stopState(s)}`, title: `${s.can} · ${MARK[stopState(s)][1]}` }))),
       el('p', { class: 'small' }, figures(x), el('br'), el('span', { class: x.left == null ? 'deb' : 'muted' }, timeLeft(x))),
       x.counts ? el('p', { class: 'small muted' }, 'Counts towards: ', x.counts) : null,
+      x.next ? el('p', { class: 'small' }, el('span', { class: 'muted' }, 'Next: '), el('a', { href: lessonHref(x.next.id) }, x.next.can)) : null,
       el('div', { class: 'row' }, el('a', { class: 'btn sm', href: `#/map?t=${x.id}` }, 'Open'),
-        x.next ? el('a', { class: 'btn plain sm', href: lessonHref(x.next.id) }, `Next: ${x.next.can}`) : null,
         el('button', { class: 'btn plain sm', type: 'button', onclick: () => goal(x.goal ? null : x.id) }, x.goal ? 'Clear goal' : 'Make this my goal'))))));
 } };
 
 /** One track: subjects are the lines, stops the skills in order, and the lines meet at the project. */
 function oneTrack(body, t, goal) {
+  const ROW = innerWidth < 640 ? 96 : 76;                    // a phone wraps a skill's name onto two lines
   // unwritten stops in a row fold into one: "+2 not written"
   const rows = [];
   for (const s of t.stops) {
@@ -72,23 +73,23 @@ function oneTrack(body, t, goal) {
   g.append(svg('rect', { x: W / 2 - 9, y: y(rows.length) - 9, width: 18, height: 18, rx: 4, class: 'tproject' }));
 
   const list = el('ol', { class: 'tstops', style: `--row:${ROW}px; padding-top:${TOP - ROW / 2}px` }, rows.map(r => {
-    if (r.fold) return el('li', { class: 'st-unwritten' },
+    if (r.fold) return el('li', { class: 'st-unwritten' }, el('div', { class: 'tst' },
       el('strong', {}, r.fold.length === 1 ? r.fold[0].can : `+${r.fold.length} not written yet`),
       el('span', { class: 'muted small' }, r.fold.map(s => s.title).join(' · ')),
-      el('span', { class: 'small muted' }, `${r.subject} · not written yet: comes in a later import`));
+      el('span', { class: 'small muted' }, `${r.subject} · not written yet: comes in a later import`)));
     const st = stopState(r);
     const act = r.state === 'proven' ? null
       : r.learned ? (r.fading ? el('a', { class: 'btn plain sm', href: `#/practice?lessons=${encodeURIComponent(r.id)}` }, 'Practise')
         : el('a', { class: 'btn plain sm', href: lessonHref(r.id, '&prove=1') }, 'Prove it'))
       : el('a', { class: 'btn sm', href: lessonHref(r.id) }, r.state === 'going' ? 'Continue' : 'Start');
-    return el('li', { class: `st-${st}` },
-      el('div', { class: 'row mid' }, el('strong', {}, r.can), el('span', { class: 'spacer' }), act),
+    return el('li', { class: `st-${st}` }, el('div', { class: 'tst' },
+      el('strong', {}, r.can),
       el('span', { class: 'muted small' }, r.title),
       el('span', { class: 'small' }, mark(st), ` ${MARK[st][1]}`,
         r.memory != null && r.learned ? el('span', { class: 'muted' }, ` · remembered ${Math.round(100 * r.memory)}%`) : null,
         !r.learned ? el('span', { class: 'muted' }, ` · ${hm(r.left || r.minutes)}`) : null,
-        r.proven ? el('span', { class: 'muted' }, ` · proven ${r.proven}`) : null));
-  }), el('li', { class: 'tproj' }, el('strong', {}, t.project), el('span', { class: 'small muted' }, 'The project at the end of the line')));
+        r.proven ? el('span', { class: 'muted' }, ` · proven ${r.proven}`) : null)), act);
+  }), el('li', { class: 'tproj' }, el('div', { class: 'tst' }, el('strong', {}, t.project), el('span', { class: 'small muted' }, 'The project at the end of the line'))));
 
   body.append(
     el('div', { class: 'row mid' }, el('a', { class: 'btn plain sm', href: '#/map' }, '← All tracks'), el('h2', { class: 'trk-h' }, t.title),
