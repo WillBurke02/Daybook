@@ -376,19 +376,28 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
     for s in subs:
         due = [r for r in db.execute(CARD_SQL + "WHERE v.subject_id = ? AND v.asks AND v.due IS NOT NULL AND v.due <= ? "
                                                 "ORDER BY v.due", (s, now)) if r["id"] not in ex]
-        new = []
-        for les in frontier(db, s):
-            new += [r for r in db.execute(CARD_SQL + "WHERE c.lesson_id = ? AND v.reps IS NULL AND v.last_seen IS NULL "
-                                                     "AND c.source <> 'mistake' AND COALESCE(v.stage, '') <> 'calibrate' "
-                                                     "ORDER BY c.sort", (les["id"],)) if r["id"] not in ex]
-            if len(new) >= n:
-                break
+        new = []                                          # filled below, from one lesson only
         weak = {r[0]: r[1] for r in db.execute("SELECT u.scope, u.theta - s.theta FROM skill u JOIN unit x ON x.id = u.scope "
                                                "JOIN skill s ON s.scope = x.subject_id WHERE x.subject_id = ?", (s,))}
         practice = sorted((r for r in db.execute(CARD_SQL + "WHERE v.subject_id = ? AND c.type = 'numeric' AND v.reps > 0", (s,))
                            if r["id"] not in ex), key=lambda r: (weak.get(r["unit_id"], 0), rng.random()))
         pools[s] = {"review": [r for r in due if not r["struggle"]], "struggle": [r for r in due if r["struggle"]],
                     "new": new, "practice": practice}
+    # New cards come from one lesson at a time, in its order, so an idea sits next to its question:
+    # Continue's lesson (your goal's next stop, or the one you are in), else the first one to learn.
+    unseen = lambda lid: [r for r in db.execute(CARD_SQL + "WHERE c.lesson_id = ? AND v.reps IS NULL AND v.last_seen IS NULL "
+                                                           "AND c.source <> 'mistake' AND COALESCE(v.stage, '') <> 'calibrate' "
+                                                           "ORDER BY c.sort", (lid,)) if r["id"] not in ex]
+    here = continue_at(db, _tree.goal_track(db))
+    weight = lambda s: float(weights.get(s, 1) or 0)
+    for lid in ([here["id"]] if here and here["subject_id"] in subs and weight(here["subject_id"]) > 0 else []) + \
+               [les["id"] for s in sorted(subs, key=lambda s: -weight(s)) for les in frontier(db, s)]:
+        rows = unseen(lid)
+        if rows and rows[0]["subject_id"] in pools:
+            pools[rows[0]["subject_id"]]["new"] = rows
+            break
+    if "mine" in pools:                                # your own flash cards are no lesson: they always join
+        pools["mine"]["new"] += [r for les in frontier(db, "mine") for r in unseen(les["id"])]
     out, k = [], at
     while len(out) < n:
         live = [s for s in subs if any(pools[s].values())]
@@ -542,11 +551,14 @@ def answer(db, body):
     if correct is False and card["source"] != "mistake" and body.get("mistake") and mode not in NO_SCHEDULE:
         m = body["mistake"]
         made = f"mistake/{cid}"
-        mdata = json.dumps({"id": made, "type": "flash", "front": m.get("front", ""), "back": m.get("back", ""), "from": cid},
-                           ensure_ascii=False)
-        db.execute("INSERT INTO card (id, lesson_id, type, text, data, source) VALUES (?, ?, 'flash', ?, ?, 'mistake') "
-                   "ON CONFLICT(id) DO UPDATE SET text = excluded.text, data = excluded.data",
-                   (made, card["lesson_id"], m.get("front", "")[:400], mdata))
+        if card["type"] == "numeric":                 # asked again with new numbers, not shown with the old ones
+            kind, mdata = "numeric", json.dumps({**data, "id": made, "from": cid}, ensure_ascii=False)
+        else:
+            kind, mdata = "flash", json.dumps({"id": made, "type": "flash", "front": m.get("front", ""), "back": m.get("back", ""),
+                                               "from": cid}, ensure_ascii=False)
+        db.execute("INSERT INTO card (id, lesson_id, type, text, data, source) VALUES (?, ?, ?, ?, ?, 'mistake') "
+                   "ON CONFLICT(id) DO UPDATE SET type = excluded.type, text = excluded.text, data = excluded.data",
+                   (made, card["lesson_id"], kind, m.get("front", "")[:400], mdata))
         db.execute("INSERT INTO card_state (card_id, due, reps, lapses) VALUES (?, ?, 0, 0) "
                    "ON CONFLICT(card_id) DO UPDATE SET due = excluded.due", (made, now))
     lvl = update_skill(db, card["subject_id"], card["unit_id"], mode) if cold else None
@@ -570,7 +582,8 @@ def answer(db, body):
 
 
 def shaky_prereqs(db, lesson_id, n=3):
-    """A missed card whose lesson builds on one that is not solid: a few cards from that one first."""
+    """A missed card whose lesson builds on one you studied and are forgetting: a few cards from that one first.
+    A lesson never studied is not offered: a refresher is for what you knew, not a detour into a new subject."""
     les = db.execute("SELECT prereq FROM lesson WHERE id = ?", (lesson_id,)).fetchone()
     ids = json.loads(les["prereq"] or "[]") if les else []
     now = datetime.now()
@@ -579,10 +592,9 @@ def shaky_prereqs(db, lesson_id, n=3):
                                                  "AND COALESCE(v.stage, '') <> 'calibrate'", (pid,))]
         if not rows:
             continue
-        learned = db.execute("SELECT learned FROM lesson_state WHERE lesson_id = ?", (pid,)).fetchone()
         seen = [r for r in rows if r["stability"] is not None]
         mean = sum(_recall(r, now) for r in seen) / len(seen) if seen else 0
-        if (learned and learned[0] and mean >= 0.8) or (seen and mean >= 0.8):
+        if not seen or mean >= 0.8:                   # never studied (not yours to repair), or still remembered
             continue
         pick = sorted(rows, key=lambda r: (r["stage"] != "check", _recall(r, now)))[:n]
         return [_card(r, "refresher") for r in pick]
@@ -682,11 +694,34 @@ def calibrate_next(db, subject_id, asked, rng=random):
             "now": _level.describe(theta, sd)}
 
 
+def rough_level(db, subject_id, stage):
+    """First run, before any answer: where you say you are in a subject. Lessons well below it
+    count as probably known, so the feed starts near you; answers soon take over from it."""
+    calibrate_start(db, subject_id, stage)
+    update_skill(db, subject_id, None, "said")
+    _place(db, subject_id)
+    db.commit()
+
+
 def calibrate_result(db, subject_id):
     """Your level, the units, and where to start: lessons well below your level are
     'probably known' (a test out settles it), the first one at your level is 'start here'."""
     lv = update_skill(db, subject_id, None, "calibrate")
     db.execute("UPDATE skill SET placed = ? WHERE scope = ?", (_now(), subject_id))
+    _place(db, subject_id)
+    db.commit()
+    units = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute(
+        "SELECT * FROM v_skill WHERE subject_id = ? AND kind = 'unit' ORDER BY unit_sort", (subject_id,))]
+    first = db.execute("SELECT l.id, l.title, l.level FROM lesson_state s JOIN v_lesson l ON l.id = s.lesson_id "
+                       "WHERE s.placed = 'start' AND l.subject_id = ? LIMIT 1", (subject_id,)).fetchone()
+    known = db.execute("SELECT COUNT(*) FROM lesson_state s JOIN v_lesson l ON l.id = s.lesson_id "
+                       "WHERE s.placed = 'known' AND l.subject_id = ?", (subject_id,)).fetchone()[0]
+    return {"subject": lv, "units": units, "start": dict(first) if first else None, "known": known}
+
+
+def _place(db, subject_id):
+    """Each lesson of a subject against your level there: well below it, probably known; the
+    first written one at it, start here."""
     k = db.execute("SELECT theta FROM skill WHERE scope = ?", (subject_id,)).fetchone()
     mine = _level.level(k["theta"])
     ulv = {r["scope"]: _level.level(r["theta"]) for r in db.execute(
@@ -702,14 +737,6 @@ def calibrate_result(db, subject_id):
                 placed = start = "start"
         db.execute("INSERT INTO lesson_state (lesson_id, pos, placed) VALUES (?, 0, ?) "
                    "ON CONFLICT(lesson_id) DO UPDATE SET placed = excluded.placed", (les["id"], placed))
-    db.commit()
-    units = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute(
-        "SELECT * FROM v_skill WHERE subject_id = ? AND kind = 'unit' ORDER BY unit_sort", (subject_id,))]
-    first = db.execute("SELECT l.id, l.title, l.level FROM lesson_state s JOIN v_lesson l ON l.id = s.lesson_id "
-                       "WHERE s.placed = 'start' AND l.subject_id = ? LIMIT 1", (subject_id,)).fetchone()
-    known = db.execute("SELECT COUNT(*) FROM lesson_state s JOIN v_lesson l ON l.id = s.lesson_id "
-                       "WHERE s.placed = 'known' AND l.subject_id = ?", (subject_id,)).fetchone()[0]
-    return {"subject": lv, "units": units, "start": dict(first) if first else None, "known": known}
 
 
 # --- checkpoints, test out, the weekly comeback ----------------------------------------------
@@ -809,7 +836,7 @@ def lesson_finished(db, lesson_id):
     if ok is False:
         return False, None
     # learned by its last check card a moment ago, the end screen still lists what it opened
-    return True, mark_learned(db, lesson_id) or {"lesson": lesson_id, "unlocked": _tree.unlocked(db, lesson_id), "goal_reached": False}
+    return True, mark_learned(db, lesson_id) or {"lesson": lesson_id, "unlocked": _tree.unlocked(db, lesson_id)}
 
 
 def plan(db):
@@ -828,8 +855,69 @@ def plan(db):
         if f:
             nxt.append({k: f[0][k] for k in ("id", "title", "subject", "subject_id", "level", "minutes", "pos", "cards", "opened")})
     lv = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute("SELECT * FROM v_skill WHERE kind = 'subject'")]
+    by = _tree.lessons(db)
+    goal = _tree.goal_track(db, by)
+    fading = [x for t in _tree.tracks(db, by) for x in t["stops"] if x["fading"]]
     return {**t, "struggles": struggles, "struggles_due": struggles_due, "comeback": week, "comeback_today": is_day,
-            "next": nxt, "levels": lv, "roadmap": _tree.roadmap(db), "week": _tree.week(db)}
+            "next": nxt, "levels": lv, "week": _tree.week(db), "rhythm": _tree.rhythm(db), "goal": goal,
+            "continue": continue_at(db, goal), "fading": list({x["id"]: x for x in fading}.values()),
+            "skills": dict(zip(("learned", "proven"), db.execute(
+                "SELECT COUNT(learned), COUNT(CASE WHEN learned IS NOT NULL THEN proven END) FROM lesson_state").fetchone())),
+            "fresh": not db.execute("SELECT 1 FROM answer LIMIT 1").fetchone()}
+
+
+def continue_at(db, goal=None):
+    """Where Continue goes: the next stop on your goal's track, else the lesson you were last in,
+    else the first lesson to learn; with the part you are at and how long it takes."""
+    lid = goal["next"]["id"] if goal and goal["next"] else None
+    if not lid:
+        r = db.execute("SELECT v.id FROM v_lesson v JOIN lesson_state s ON s.lesson_id = v.id WHERE v.cards > 0 "
+                       "AND v.learned IS NULL AND s.seen IS NOT NULL ORDER BY s.seen DESC LIMIT 1").fetchone()
+        lid = r[0] if r else None
+    if not lid:
+        _st, on, _w = _settings(db)
+        for sid in on or [r[0] for r in db.execute("SELECT id FROM subject WHERE id <> 'mine' ORDER BY sort")]:
+            f = frontier(db, sid)
+            if f:
+                lid = f[0]["id"]
+                break
+    les = db.execute("SELECT * FROM v_lesson WHERE id = ?", (lid,)).fetchone() if lid else None
+    if not les:
+        return None
+    ps = parts(lesson_cards(db, lid), les["minutes"])
+    pos = min(les["pos"] or 0, (les["cards"] or 1) - 1)
+    k = next((i for i, x in enumerate(ps) if x["from"] <= pos < x["to"]), 0)
+    return {"id": lid, "title": les["title"], "subject": les["subject"], "subject_id": les["subject_id"], "part": k + 1, "parts": len(ps),
+            "minutes": ps[k]["minutes"] if ps else les["minutes"], "pos": les["pos"] or 0, "started": bool(les["opened"])}
+
+
+# A card's time, roughly, in seconds; a lesson's own minutes scale them so the parts add up to it.
+CARD_SECONDS = {"concept": 40, "flash": 25, "mcq": 35, "numeric": 75, "widget": 90, "order": 50, "match": 50,
+                "steps": 120, "code": 180, "explain": 90, "spot": 60}
+
+
+def parts(cards, minutes=None, aim=6.5 * 60):
+    """A lesson in parts of about 5 to 8 minutes, so Continue fits the time you have. It takes as many
+    parts as the lesson's length needs and shares the time out evenly: a part ends at an idea (a
+    reading card, or a new stage) once near its share, or between two questions rather than run
+    long; never between a reading card and its question. [{from, to, minutes}], `to` exclusive."""
+    if not cards:
+        return []
+    secs = [CARD_SECONDS.get(c["type"], 45) for c in cards]
+    if minutes:
+        secs = [x * minutes * 60 / sum(secs) for x in secs]
+    k = max(1, round(sum(secs) / aim))
+    out, start, t = [], 0, 0.0
+    for i, c in enumerate(cards):
+        if i > start and len(out) < k - 1 and cards[i - 1]["type"] != "concept":
+            share = sum(secs[start:]) / (k - len(out))           # what is left, shared between the parts left
+            idea = c["type"] == "concept" or c.get("stage") != cards[i - 1].get("stage")
+            if (idea and t >= share * 0.8) or t + secs[i] > share * 1.25:
+                out.append([start, i, t])
+                start, t = i, 0.0
+        t += secs[i]
+    out.append([start, len(cards), t])
+    return [{"from": a, "to": b, "minutes": max(1, round(t / 60))} for a, b, t in out]
 
 
 def import_csv(db, text):
@@ -906,7 +994,8 @@ def route(db, method, p, query, body, ctx):
         notes = db.execute("SELECT notes FROM lesson_state WHERE lesson_id = ?", (lid,)).fetchone()
         return 200, {"lesson": {**dict(les), **{k_: (json.loads(full[k_]) if full[k_] and k_ != "summary" else full[k_])
                                                 for k_ in ("goals", "summary", "resources", "sources", "bench")}},
-                     "cards": lesson_cards(db, lid), "prereq": pre, "warmup": warmup(db, les),
+                     "cards": (cards := lesson_cards(db, lid)), "parts": parts(cards, les["minutes"]),
+                     "prereq": pre, "warmup": warmup(db, les),
                      "you": _level.describe(k["theta"], k["sd"]) if k else None, "notes": notes[0] if notes else None}
     if p[:2] == ["lesson", "place"] and method == "POST":
         lid = body.get("lesson_id")
@@ -944,14 +1033,25 @@ def route(db, method, p, query, body, ctx):
         return 200, today_counts(db)
     if p == ["plan"] and method == "GET":
         return 200, plan(db)
-    if p == ["tree"] and method == "GET":
-        return 200, _tree.tree(db, g("subject"))
+    if p == ["tracks"] and method == "GET":
+        return 200, {"tracks": _tree.tracks(db), "goal": _tree.goal(db)}
     if p == ["goal"] and method == "POST":
-        lid = body.get("lesson_id")
-        if lid and not db.execute("SELECT 1 FROM lesson WHERE id = ?", (lid,)).fetchone():
+        tid = body.get("track")
+        if tid and tid not in {t["id"] for t in _tree.track_list()}:
+            raise Err(404, "no such track")
+        _tree.set_goal(db, tid)
+        return 200, {"goal": _tree.goal_track(db)}
+    if p == ["lesson", "proven"] and method == "POST":       # its bench task done for real, and logged
+        if not db.execute("SELECT 1 FROM lesson WHERE id = ?", (body.get("lesson_id"),)).fetchone():
             raise Err(404, "no such lesson")
-        _tree.set_goal(db, lid)
-        return 200, {"roadmap": _tree.roadmap(db)}
+        _tree.prove(db, body["lesson_id"], undo=bool(body.get("undo")))
+        return 200, {"ok": True}
+    if p == ["cpd"] and method == "GET":
+        return 200, _tree.cpd(db)
+    if p == ["level", "rough"] and method == "POST":         # first run: where you are, by subject, before any answer
+        for sid, stage in (body.get("levels") or {}).items():
+            rough_level(db, sid, stage)
+        return 200, {"ok": True}
     if p == ["levels"] and method == "GET":
         return 200, levels(db)
     if p == ["calibrate", "start"] and method == "POST":

@@ -1,0 +1,111 @@
+{
+  "about": "Tracks: each a line of skills that ends in a project you could do on the bench or on site. A stop is a lesson, named as what you can do once it is learned. The map is drawn from this file; the order of the stops is the order to learn them.",
+  "tracks": [
+    {
+      "id": "vfd-conveyor",
+      "title": "Controls: VFD conveyor",
+      "project": "Commission a VFD-driven conveyor on the training rig",
+      "counts": "HNC units (to map against the specification); CPD record",
+      "stops": [
+        ["electrical.safety.isolation", "Isolate and prove dead"],
+        ["electronics.dc.ohm-kirchhoff", "Work out the currents and voltages in a circuit"],
+        ["physics.elec.ac", "Read AC: peak, RMS and frequency"],
+        ["electrical.supply.ac-power", "Work out kW, kVA and power factor"],
+        ["electrical.supply.three-phase", "Wire and measure three-phase, star and delta"],
+        ["practice.job.schematics", "Read a motor-control schematic"],
+        ["electrical.machines.motor-circuits", "Choose and wire a motor starter"],
+        ["drives.motors.induction", "Work out an induction motor's speed and slip"],
+        ["drives.motors.vf-vector", "Set a drive up for V/f or vector control"],
+        ["drives.power.braking", "Choose braking and regeneration"],
+        ["drives.practice.params", "Set a drive's parameters and clear its faults"],
+        ["practice.job.fault-finding", "Find a fault by method"]
+      ]
+    },
+    {
+      "id": "plc-faults",
+      "title": "PLC fault-finding",
+      "project": "Find three planted faults on a PLC-controlled machine",
+      "counts": "HNC units (to map against the specification); CPD record",
+      "stops": [
+        ["plc.basics.scan-cycle", "Explain what a PLC does every scan"],
+        ["plc.basics.data-types", "Address bits, words and reals"],
+        ["plc.basics.ladder", "Read and write a seal-in rung"],
+        ["plc.basics.timers-counters", "Use timers and counters"],
+        ["plc.basics.edges", "Catch a rising or falling edge"],
+        ["practice.job.schematics", "Trace an I/O point through the drawings"],
+        ["plc.process.faults", "Read a PLC's diagnostics"],
+        ["plc.comms.comms", "Find a fault on Profinet or Modbus"],
+        ["electrical.protection.testing", "Test insulation, continuity and Zs"],
+        ["drives.practice.params", "Set a drive's parameters and clear its faults"],
+        ["practice.job.fault-finding", "Find a fault by method"]
+      ]
+    },
+    {
+      "id": "servo-axis",
+      "title": "Servo axis",
+      "project": "Size and tune a servo axis for a given move",
+      "counts": "Your role: motion commissioning; CPD record",
+      "stops": [
+        ["drives.motors.servo", "Pick a servo motor and amplifier"],
+        ["drives.feedback.encoders", "Read an encoder or resolver"],
+        ["drives.motion.profiles", "Plan a trapezoidal or S-curve move"],
+        ["drives.motion.inertia", "Match the load's inertia to the motor"],
+        ["drives.motion.sizing", "Size a servo by its RMS torque"],
+        ["drives.control.pid", "Explain P, I and D in a loop"],
+        ["drives.control.tuning", "Tune the current, speed and position loops"],
+        ["drives.motion.homing", "Set up homing and limits"]
+      ]
+    },
+    {
+      "id": "a-level-pure",
+      "title": "A-level Pure Maths",
+      "project": "Sit a timed past Pure paper",
+      "counts": "A-level Mathematics: the Pure papers",
+      "stops": [
+        ["maths.pure.algebra-functions", "Handle algebra and functions"],
+        ["maths.pure.coordinate-geometry", "Work with lines and circles"],
+        ["maths.pure.sequences-series", "Sum sequences and series"],
+        ["maths.pure.binomial", "Expand with the binomial theorem"],
+        ["maths.pure.trigonometry", "Solve trig equations and use the identities"],
+        ["maths.pure.exp-log", "Solve exponential and log equations"],
+        ["maths.pure.differentiation", "Differentiate: gradients and turning points"],
+        ["maths.pure.integration", "Integrate: areas under curves"],
+        ["maths.pure.numerical-methods", "Find roots numerically"],
+        ["maths.pure.vectors", "Work with vectors"],
+        ["maths.pure.proof", "Write a proof"]
+      ]
+    },
+    {
+      "id": "instrument-loop",
+      "title": "Instrument loop",
+      "project": "Loop-check and tune a 4–20 mA PID loop",
+      "counts": "HNC units (to map against the specification); CPD record",
+      "stops": [
+        ["electronics.signals.sensors", "Read 4–20 mA and 0–10 V signals"],
+        ["instrumentation.sensors.chain", "Wire 2-, 3- and 4-wire transmitters"],
+        ["instrumentation.sensors.temperature", "Measure temperature with RTDs and thermocouples"],
+        ["instrumentation.sensors.pressure-level-flow", "Measure pressure, level and flow"],
+        ["instrumentation.process.accuracy", "Calibrate an instrument"],
+        ["plc.process.analogue", "Scale an analogue input in the PLC"],
+        ["drives.control.pid", "Explain P, I and D in a loop"],
+        ["instrumentation.loops.step-tests", "Run a step test"],
+        ["instrumentation.loops.tuning", "Tune a process loop"]
+      ]
+    },
+    {
+      "id": "control-panel",
+      "title": "Control panel",
+      "project": "Inspect and test a panel to BS 7671 and BS EN 60204-1",
+      "counts": "HNC units (to map against the specification); CPD record",
+      "stops": [
+        ["electrical.safety.isolation", "Isolate and prove dead"],
+        ["electrical.protection.protective-devices", "Choose fuses, MCBs and RCDs"],
+        ["electrical.protection.cables", "Size a cable for current and volt drop"],
+        ["electrical.protection.earthing", "Check earthing and bonding"],
+        ["electrical.supply.transformers", "Size a transformer and a 24 V supply"],
+        ["electrical.machines.panels", "Lay out a panel to BS EN 60204-1"],
+        ["electrical.protection.testing", "Test insulation, continuity and Zs"]
+      ]
+    }
+  ]
+}

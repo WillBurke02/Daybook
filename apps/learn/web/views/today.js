@@ -1,12 +1,12 @@
-// Learn's front page: the day's ring and counts, where to go next, the study
+// Learn's front page: Continue and three short starts, the week, skills, memory and your track; the study
 // timer, and the feed's settings (goal, subjects and their weights).
 import { api } from '../api.js';
-import { el, flash } from '../core/dom.js';
+import { el, flash, seg } from '../core/dom.js';
 import { today as todayISO } from '../core/format.js';
 import { loadMeta, setting } from '../core/state.js';
-import { ring } from '../ui/ring.js';
-import { stageChip } from './levels.js';
-import { roadmapBar } from '../road.js';
+import { stageChip, known } from './levels.js';
+import { hm } from '../road.js';
+import { lessonHref } from './courses.js';
 
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 export const minutes = m => m >= 60 ? `${Math.floor(m / 60)} h ${Math.round(m % 60)} min` : `${Math.round(m)} min`;
@@ -16,11 +16,15 @@ async function saveSetting(key, value, ctx) {
   catch (e) { flash(e.message); }
 }
 
-const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study'], async render(body, ctx) {
-  const [t, going] = await Promise.all([api.plan(), api.view('v_lesson', { finished: '', opened__gte: '0', order: 'opened', desc: 1, limit: 1 })]);
-  const unit = t.goal_kind === 'cards' ? 'card' : 'minute';
-  const left = Math.max(0, Math.round(t.goal - t.done));
-  const l = going[0];
+// ---- Learn home: one Continue, three short starts with their length, and progress you could show ----
+// No score: the week in sessions, skills learned and proven, what is fading, and your track.
+const GROUPS = [['Maths', ['maths']], ['Physics and electronics', ['physics', 'electronics']],
+                ['Electrical, drives and controls', ['electrical', 'drives', 'plc', 'instrumentation', 'networks', 'practice']],
+                ['Mechanical and fluids', ['mechanical', 'fluids', 'materials']]];
+const WHERE = [['New to it', 2], ['Some', 3.5], ['Confident', 5], ['Expert', 6.5]];
+
+const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study', 'lesson'], async render(body, ctx) {
+  const t = await api.plan();
   body.classList.add('flush');
   ctx.setTitle('');
   let broken = [];
@@ -28,35 +32,55 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study'], 
   if (broken.length) body.append(el('details', { class: 'note warn' },
     el('summary', {}, `${broken.length} lesson file${broken.length === 1 ? '' : 's'} could not be read and ${broken.length === 1 ? 'is' : 'are'} left out; the rest of Learn works.`),
     el('ul', { class: 'small' }, broken.map(b => el('li', {}, b)))));
-  body.append(el('div', { class: 'lhero' },
-    ring(Math.round(t.done), Math.round(t.goal), 132),
-    el('div', { class: 'lhero-main' },
-      el('h2', {}, left ? `${plural(left, unit)} to today's goal` : `Today's goal is done: ${plural(Math.round(t.done), unit)}`),
-      el('p', { class: 'muted' }, [t.due ? `${t.due} due for review` : 'Nothing due for review',
-        t.struggles ? `${t.struggles} coming back` : null, t.streak ? `a ${t.streak}-day streak` : null, `${minutes(t.minutes)} today`].filter(Boolean).join(' · ')),
-      el('div', { class: 'row mid' },
-        el('a', { class: 'btn big', href: '#/feed' }, 'Start the feed'),
-        t.due ? el('a', { class: 'btn plain big', href: '#/review' }, `Review ${t.due} due`) : null,
-        t.comeback_today && t.comeback ? el('a', { class: 'btn plain big', href: '#/review?mode=comeback', title: 'This week’s misses, once more' },
-          `Weekly comeback: ${t.comeback}`) : null,
-        el('a', { class: 'btn plain big', href: '#/courses' }, 'Courses'))),
-    l ? el('a', { class: 'lcontinue-card', href: `#/lesson?id=${encodeURIComponent(l.id)}` },
-      el('span', { class: 'eyebrow' }, 'Continue'), el('strong', {}, l.title),
-      el('span', { class: 'muted small' }, `${l.subject} · card ${Math.min((l.pos || 0) + 1, l.cards)} of ${l.cards}`),
-      el('span', { class: 'mbar' }, el('i', { style: `width:${Math.round(100 * Math.min(1, (l.pos || 0) / (l.cards || 1)))}%` }))) : null));
-} };
 
-// ---- the road: the goal's route (or a way to set one), and the week in things that count ----
-const roadPanel = { title: 'Your road', w: 12, deps: ['card', 'lesson', 'skill', 'setting'], async render(body, ctx) {
-  const { roadmap: rm, week: wk, next } = await api.plan();
-  const fresh = next.find(n => n.opened == null) || next[0];
-  body.append(el('div', { class: 'row mid' },
-    el('span', { class: 'muted' }, `This week: ${minutes(wk.minutes)} on ${wk.days} day${wk.days === 1 ? '' : 's'}, `
-      + `${wk.learned} lesson${wk.learned === 1 ? '' : 's'} learned`),
-    el('span', { class: 'spacer' }), el('a', { class: 'btn plain sm', href: '#/tree' }, 'Skill tree')),
-    rm ? roadmapBar(rm, { clear: async () => { try { await api.setGoal(null); ctx.refresh(); } catch (e) { flash(e.message); } } })
-      : el('p', { class: 'note' }, 'Pick something to be able to do: open the ', el('a', { href: '#/tree' }, 'skill tree'), ', choose a lesson and “Make this my goal”.',
-          fresh ? [' Or carry on with ', el('a', { href: `#/lesson?id=${encodeURIComponent(fresh.id)}` }, fresh.title), '.'] : null));
+  // first run: where you are, so the first card is not cutting cable from a reel
+  if (t.fresh && !t.levels.some(k => k.n || k.placed || k.prior != null)) {
+    const said = {};
+    body.append(el('section', { class: 'lhome-first' },
+      el('h2', {}, 'Where are you now?'),
+      el('p', { class: 'muted' }, 'A rough answer is enough: the feed starts near it, and your answers soon take over. ',
+        el('a', { href: '#/calibrate' }, 'Find my level'), ' measures it properly (about 10 minutes a subject).'),
+      el('table', { class: 'g' }, el('tbody', {}, GROUPS.map(([label, subs]) => el('tr', {}, el('td', {}, label),
+        el('td', {}, seg(WHERE.map(([w, v]) => ({ v: String(v), label: w })), '', v => { subs.forEach(s => { said[s] = +v; }); })))))),
+      el('div', { class: 'row' }, el('button', { class: 'btn', type: 'button', onclick: async () => {
+        try { await api.rough(said); flash('Thanks: the feed starts near that'); ctx.refresh(); } catch (e) { flash(e.message); }
+      } }, 'Start from there'))));
+  }
+
+  const c = t.continue;
+  const reviewMin = Math.max(1, Math.round(Math.min(t.due, 30) * 0.4));
+  const fading = t.fading || [];
+  const starts = [
+    t.due ? ['Review', `${t.due} due`, `${reviewMin} min`, '#/review'] : ['Feed', 'what is new and due', '5 min', '#/feed'],
+    fading.length ? ['Keep it fresh', `${fading.length} fading skill${fading.length === 1 ? '' : 's'}: ${fading[0].can}`, '5 min',
+                     `#/practice?lessons=${encodeURIComponent(fading.map(f => f.id).join(','))}`]
+      : t.due ? ['Feed', 'what is new and due', '5 min', '#/feed'] : ['Find my level', 'a subject you have not placed', '10 min', '#/calibrate'],
+    t.goal?.next && t.goal.next.id !== c?.id ? ['Next stop', t.goal.next.can, hm(t.goal.next.left || t.goal.next.minutes), lessonHref(t.goal.next.id)]
+      : ['Skill map', t.goal ? t.goal.title : 'pick a track to follow', '', '#/map'],
+  ];
+  const r = t.rhythm;
+  body.append(el('div', { class: 'lhome' },
+    c ? el('a', { class: 'lcontinue', href: lessonHref(c.id) },
+      el('span', { class: 'eyebrow' }, c.started ? 'Continue' : 'Start'), el('strong', {}, c.title),
+      el('span', {}, `${c.parts > 1 ? `Part ${c.part} of ${c.parts} · ` : ''}${c.minutes} min · ${c.subject}`))
+      : el('a', { class: 'lcontinue', href: '#/feed' }, el('span', { class: 'eyebrow' }, 'Start'), el('strong', {}, 'The feed'), el('span', {}, '5 min')),
+    el('div', { class: 'lstarts' }, starts.map(([what, sub, len, href]) => el('a', { class: 'lstart', href },
+      el('strong', {}, what), el('span', { class: 'muted small' }, sub), len ? el('span', { class: 'chip' }, len) : null))),
+    el('div', { class: 'lprogress' },
+      el('div', {}, el('small', {}, 'This week'),
+        el('div', { class: 'rdots', role: 'img', 'aria-label': `${r.sessions} of ${r.target} sessions of 5 minutes or more this week` },
+          r.days.map(d => el('i', { class: d.session ? 'on' : d.future ? 'later' : '', title: `${d.day}: ${minutes(d.minutes)}` }))),
+        el('span', { class: 'small' }, `${r.sessions} of ${r.target} sessions · ${minutes(r.minutes)}`)),
+      el('div', {}, el('small', {}, 'Skills'), el('b', { class: 'num' }, String(t.skills.learned)),
+        el('span', { class: 'small muted' }, `learned · ${t.skills.proven} proven`)),
+      el('div', {}, el('small', {}, 'Memory'), el('b', { class: 'num' }, String(fading.length)),
+        el('span', { class: 'small muted' }, fading.length ? 'fading: practise to keep them' : 'fading: all fresh')),
+      el('a', { class: 'go', href: t.goal ? `#/map?t=${t.goal.id}` : '#/map' }, el('small', {}, 'Your track'),
+        el('b', {}, t.goal ? t.goal.title : 'None yet'),
+        el('span', { class: 'small muted' }, t.goal ? `${t.goal.learned} of ${t.goal.total} learned · ${t.goal.left == null
+          ? `blocked: ${t.goal.unwritten} not written` : `${hm(t.goal.left)} to go`}` : 'Pick one on the skill map')),
+      el('a', { class: 'go', href: '#/record' }, el('small', {}, 'Record'), el('b', {}, 'CPD'),
+        el('span', { class: 'small muted' }, 'hours and skills by date')))));
 } };
 
 // ---- the subjects: your level in each, how much is solid, and the next lesson ---------------
@@ -74,7 +98,7 @@ const subjectsPanel = { title: 'Your subjects', w: 8, deps: ['card', 'setting', 
     const k = lv[s.id], n = nxt[s.id];
     return el('div', { class: 'scard' + (on.length && !on.includes(s.id) ? ' off' : '') },
       el('a', { class: 'stitle', href: `#/courses?s=${encodeURIComponent(s.id)}` }, el('strong', {}, s.title)),
-      s.id === 'mine' ? null : k?.n || k?.placed ? stageChip(k)
+      s.id === 'mine' ? null : known(k) ? stageChip(k)
         : el('a', { class: 'small', href: `#/calibrate?s=${encodeURIComponent(s.id)}` }, 'Find my level (about 10 min)'),
       el('span', { class: 'mbar' }, el('i', { style: `width:${pct}%` })),
       el('span', { class: 'small muted' }, s.cards ? `${pct}% solid · ${s.learned} of ${s.written} lessons learned` : 'none written yet',
@@ -163,5 +187,7 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
 } };
 
 export const page = { title: 'Today', quick: false,
-  layout: [{ use: 'learn.today' }, { use: 'learn.road' }, { use: 'learn.subjects', w: 8 }, { use: 'learn.timer', w: 4 }, { use: 'learn.settings', w: 12 }],
-  panels: { 'learn.today': todayPanel, 'learn.road': roadPanel, 'learn.subjects': subjectsPanel, 'learn.timer': timerPanel, 'learn.settings': settingsPanel } };
+  layout: [{ use: 'learn.today' }, { use: 'learn.subjects', w: 8 }, { use: 'learn.timer', w: 4 }, { use: 'learn.settings', w: 12 }],
+  // learn.road was the old goal panel: a layout that still has it gets an empty panel, not an error
+  panels: { 'learn.today': todayPanel, 'learn.road': { title: 'Your track', w: 12, render: () => {} }, 'learn.subjects': subjectsPanel,
+            'learn.timer': timerPanel, 'learn.settings': settingsPanel } };

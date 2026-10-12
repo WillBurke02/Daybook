@@ -7,7 +7,8 @@ import * as stats from './views/stats.js';
 import * as mine from './views/mine.js';
 import * as levels from './views/levels.js';
 import * as notes from './views/notes.js';
-import * as tree from './views/tree.js';
+import * as map from './views/map.js';
+import * as record from './views/record.js';
 import search from './search.js';
 import { formulasPanel } from './formulas.js';
 import { toggle } from './tools.js';
@@ -15,11 +16,11 @@ import { toggle } from './tools.js';
 export default {
   name: 'learn', title: 'Learn', home: 'today', period: false,
   about: 'courses, and a feed of short cards to use instead of scrolling.',
-  pages: { today: today.page, feed: feed.page, tree: tree.page, courses: courses.page, lesson: courses.lessonPage, review: review.page,
+  pages: { today: today.page, feed: feed.page, map: map.page, record: record.page, courses: courses.page, lesson: courses.lessonPage, review: review.page,
            practice: review.practicePage, stats: stats.page, mine: mine.page, calibrate: levels.calibratePage,
            checkpoint: levels.checkpointPage, notes: notes.page,
            formulas: { title: 'Formulas', quick: false, narrow: true, layout: [{ use: 'learn.formulas' }], panels: { 'learn.formulas': formulasPanel } } },
-  groups: [[null, ['today', 'feed']], ['Study', ['tree', 'courses', 'review', 'practice', 'notes', 'formulas']], ['Progress', ['calibrate', 'stats']]],
+  groups: [[null, ['today', 'feed', 'map', 'courses', 'review']], ['More', ['practice', 'notes', 'formulas', 'stats', 'record', 'calibrate']]],
   setup: ['mine'],
   quick: [{ label: 'Start the feed', href: '#/feed' }],
   sqlHint: 'SELECT subject, COUNT(*) FROM v_card GROUP BY subject',
@@ -30,7 +31,8 @@ export default {
   file: shell => [
     { label: 'Start the feed', fn: () => shell.go('feed') },
     { label: 'Review what is due', fn: () => shell.go('review') },
-    { label: 'Skill tree', fn: () => shell.go('tree') },
+    { label: 'Skill map', fn: () => shell.go('map') },
+    { label: 'Learning record', fn: () => shell.go('record') },
     { label: 'Find my level…', fn: () => shell.go('calibrate') },
     { label: 'Notes', fn: () => shell.go('notes') },
     { label: 'Formulas', fn: () => shell.go('formulas') },

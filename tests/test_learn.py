@@ -56,14 +56,14 @@ _s, _u, _l, _c = learn.read_content(os.path.dirname(bad), skipped=left)
 assert [c["id"] for c in _c] == ["s.u.ok/a"] and len(left) == 1 and "bad.json" in left[0], (_c, left)
 assert {x["id"]: x["title"] for x in _l}["s.u.bad"] == "Broken", "a broken file changes nothing, not even its title"
 
-# === the feed: new cards in course order, subjects taking turns ======================
+# === the feed: new cards from one lesson at a time, in its order =====================
 rng = random.Random(3)
 f = learn.feed(db, 6, subjects=["physics"], rng=rng)
 assert [c["id"] for c in f[:2]] == [f"{pe}/echo-between", f"{pe}/idea"], "the first physics lesson with cards, from the top"
 assert all(c["why"] == "new" for c in f)
 mixed = learn.feed(db, 40, rng=rng)
 with_cards = {c["lesson_id"].split(".")[0] for c in cards if c["stage"] != "calibrate"}   # bank questions only place you
-assert {c["subject_id"] for c in mixed} == with_cards, "every subject with cards takes a turn"
+assert len({c["lesson_id"] for c in mixed if c["why"] == "new"}) == 1, "new cards from one lesson, not ten subjects at once"
 assert len({c["id"] for c in mixed}) == len(mixed), "no card twice in one batch"
 ex = learn.feed(db, 3, exclude=[f"{pe}/echo-between"], subjects=["physics"], rng=rng)
 assert ex[0]["id"] == f"{pe}/idea", "the ones already on screen are left out"

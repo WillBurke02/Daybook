@@ -9,8 +9,9 @@ import { el, flash, seg, readVal, writeVal } from '../core/dom.js';
 import { state } from '../core/state.js';
 import { frame, rich, listenButton } from '../cards.js';
 import { formulaHelp, loadFormulas, mathsOf } from '../formulas.js';
-import { stageChip, levelText } from './levels.js';
+import { stageChip, levelText, known } from './levels.js';
 import { learnedNote } from '../road.js';
+import { pictureInput, shrinkAll } from '../ui/media.js';
 
 const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
 export const lessonHref = (id, extra = '') => `#/lesson?id=${encodeURIComponent(id)}${extra}`;
@@ -61,7 +62,7 @@ const coursesPanel = { title: 'Courses', w: 12, deps: ['card', 'lesson', 'skill'
   const going = lessons.filter(l => l.opened && !l.finished).sort((a, b) => (b.opened > a.opened) - (b.opened < a.opened))[0];
   if (going) body.append(el('p', { class: 'lcontinue' }, el('a', { class: 'btn', href: lessonHref(going.id) }, `Continue where you left off: ${going.title}`),
     el('span', { class: 'muted small' }, ` ${going.subject} · card ${Math.min((going.pos || 0) + 1, going.cards)} of ${going.cards}`)));
-  body.append(el('p', { class: 'small muted' }, 'The same lessons as a map: ', el('a', { href: '#/tree' }, 'skill tree'), '.'));
+  body.append(el('p', { class: 'small muted' }, 'The same lessons as tracks of skills: ', el('a', { href: '#/map' }, 'skill map'), '.'));
   const show = readVal('learn:show', 'all');
   body.append(el('div', { class: 'row mid lfilter' }, el('span', { class: 'muted small' }, 'Show'),
     seg(SHOW.map(([v, label]) => ({ v, label })), show, v => { writeVal('learn:show', v); ctx.refresh(); }),
@@ -77,14 +78,14 @@ const coursesPanel = { title: 'Courses', w: 12, deps: ['card', 'lesson', 'skill'
       const ls = mine.filter(l => l.unit_id === u), vis = ls.filter(l => shows(show, statusOf(l)));
       if (!vis.length) return null;
       const ku = skill[u];
-      return el('div', { class: 'lunit' }, el('h3', {}, ls[0].unit, ku ? stageChip(ku, true) : null,
+      return el('div', { class: 'lunit' }, el('h3', {}, ls[0].unit, known(ku) ? stageChip(ku, true) : null,
           el('span', { class: 'ucount' }, counts(ls)),
           ls.some(l => l.learned) ? el('a', { class: 'btn plain sm', href: `#/checkpoint?unit=${encodeURIComponent(u)}`, title: 'Ten mixed questions: your level in this unit' }, 'Checkpoint') : null),
         el('ul', { class: 'llessons' }, vis.map(l => lessonCard(l, titles))));
     }).filter(Boolean);
     body.append(el('details', { class: 'lsubject', open: open ? open === s.id : s.written > 0, id: `s-${s.id}` },   // nothing written yet: starts closed
       el('summary', {}, el('strong', {}, s.title),
-        k?.placed || k?.n ? stageChip(k) : null,
+        known(k) ? stageChip(k) : null,
         el('span', { class: 'muted small' }, ` ${counts(mine)}`),
         s.asks ? el('span', { class: 'small' }, ' ', bar(s.mastered / s.asks, `${pct(s.mastered, s.asks)}% solid`), ` ${pct(s.mastered, s.asks)}% solid`) : null,
         s.due ? el('span', { class: 'chip on' }, `${s.due} due`) : null,
@@ -140,6 +141,13 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     return;
   }
   if (ctx.params.testout) { await testOut(body, ctx, lesson); return; }
+  if (ctx.params.prove) {                        // from the map: do it for real, log it, and the stop is proven
+    body.append(el('div', { class: 'lcard' }, el('h3', {}, `Prove it: ${lesson.title}`),
+      el('p', { class: 'small muted' }, 'On the bench or on site. Logged to today in Log (with a photo if you like), it marks this skill proven on the map.'),
+      (lesson.bench?.length ? lesson.bench : [{ task: 'Show you can do this for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
+      el('div', { class: 'row' }, el('a', { class: 'btn plain', href: '#/map' }, 'Skill map'), el('a', { class: 'btn plain', href: lessonHref(id) }, 'The lesson'))));
+    return;
+  }
 
   // Above the lesson's level, the problem comes first and the worked examples wait to be asked for.
   const ahead = you && lesson.level != null && you.level >= lesson.level + 0.3;
@@ -154,12 +162,21 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   let pos = at >= 0 ? at : -1;
   let right = 0, answered = 0, card = null;
   const repaired = new Set();
+  // the lesson in parts of 5 to 8 minutes: a pause between them, so a part fits the time you have
+  const parts = got.parts || [];
+  const startsPart = new Map(parts.map((p, k) => [got.cards[p.from]?.id, k]));
+  const partOf = i => { let k = 0; for (let j = 0; j <= i && j < seq.length; j++) if (startsPart.has(seq[j].id) && !seq[j].why) k = startsPart.get(seq[j].id); return k; };
+  const paused = new Set();
+  const step = () => {                            // forward one card, pausing at the start of a part
+    const k = startsPart.get(seq[pos + 1]?.id);
+    if (k > 0 && !seq[pos + 1].why && !paused.has(k)) { paused.add(k); partDone(k); } else show(pos + 1);
+  };
   const count = el('span', { class: 'num small muted' });
   const track = el('div', { class: 'ltrack' });
   const stages = el('ol', { class: 'lstages' });
   const stage = el('div', { class: 'player' });
   const prev = el('button', { class: 'btn plain sm', type: 'button', onclick: () => show(pos - 1) }, '← Back');
-  const next = el('button', { class: 'btn plain sm', type: 'button', onclick: () => show(pos + 1) }, 'Next →');
+  const next = el('button', { class: 'btn plain sm', type: 'button', onclick: () => step() }, 'Next →');
 
   const paintStages = () => {
     const here = seq[pos]?.stage;
@@ -180,11 +197,13 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     pos = -1;
     card = null;
     const resume = lesson.pos && !lesson.finished && lesson.pos < seq.length ? lesson.pos : 0;
+    const rk = partOf(resume);
     const ready = you ? (you.level >= lesson.level + 0.5 ? 'You are above this lesson’s level in this unit: test out if you like.'
       : you.level >= lesson.level - 0.5 ? 'This is at your level.' : 'This is a stretch from where you are: the worked examples will help.') : null;
     stage.replaceChildren(el('div', { class: 'lcard lintro' },
       el('div', { class: 'row mid' }, lesson.level != null ? stageChip({ level: lesson.level }) : null,
-        lesson.minutes ? el('span', { class: 'chip' }, `about ${lesson.minutes} min`) : null,
+        lesson.minutes ? el('span', { class: 'chip' }, parts.length > 1 ? `${parts.length} parts of about ${Math.round(lesson.minutes / parts.length)} min`
+          : `about ${lesson.minutes} min`) : null,
         lesson.kind ? el('span', { class: 'chip' }, { procedure: 'How to', concept: 'Ideas', facts: 'Facts' }[lesson.kind]) : null),
       lesson.goals?.length ? [el('h3', {}, 'By the end you can'), el('ul', {}, lesson.goals.map(g => el('li', {}, rich(g))))] : null,
       prereq.length ? el('p', { class: 'small muted' }, 'Builds on: ', prereq.map((p, i) => [i ? ', ' : '',
@@ -194,7 +213,8 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
       fbtn(),
       warm.length ? el('p', { class: 'small muted' }, `It starts with ${warm.length} warm-up card${warm.length === 1 ? '' : 's'} from what it builds on.`) : null,
       el('div', { class: 'row' },
-        el('button', { class: 'btn big', type: 'button', onclick: () => show(resume) }, resume ? `Continue at card ${resume + 1}` : 'Start'),
+        el('button', { class: 'btn big', type: 'button', onclick: () => show(resume) },
+          resume ? `Continue: part ${rk + 1} of ${parts.length || 1}` : parts.length > 1 ? `Start part 1 · ${parts[0].minutes} min` : 'Start'),
         resume ? el('button', { class: 'btn plain', type: 'button', onclick: () => show(0) }, 'From the start') : null,
         you && you.level >= lesson.level - 0.3 ? el('a', { class: 'btn plain', href: lessonHref(id, '&testout=1') }, 'Test out') : null)));
     count.textContent = `${seq.length} cards`;
@@ -210,6 +230,20 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     return el('div', { class: 'row' }, b);
   };
 
+  const partDone = k => {
+    card = null;
+    stage.replaceChildren(el('div', { class: 'lcard lpart' },
+      el('h3', {}, `Part ${k} of ${parts.length} done`),
+      el('p', { class: 'muted' }, answered ? `${answered} answered so far, ${right} right. ` : '', 'A good place to stop: Continue picks up here.'),
+      el('div', { class: 'row' },
+        el('button', { class: 'btn big', type: 'button', onclick: () => show(pos + 1) }, `Part ${k + 1} · ${parts[k].minutes} min`),
+        el('a', { class: 'btn plain big', href: '#/today' }, 'Stop here'))));
+    api.place(id, pos + 1, false).catch(() => {});
+    count.textContent = `Part ${k} of ${parts.length} done`;
+    next.disabled = false;
+    queueMicrotask(() => stage.querySelector('.btn')?.focus({ preventScroll: true }));
+  };
+
   const finish = async () => {
     card = null;
     pos = seq.length;
@@ -223,20 +257,22 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
         hasCheck && learned ? 'Its check questions come back in about a day, a week and three weeks; right each time and it is solid.'
           : hasCheck ? 'The check questions you missed come back first, and the lesson counts as learned once you get them all right.'
           : 'The cards you answered come back in Review when they are due.'),
-      opened?.unlocked?.length ? el('div', { class: 'unlocked' }, el('h4', {}, opened.goal_reached ? 'Goal reached. This opens:' : 'This opened:'),
-        el('ul', {}, opened.unlocked.map(u => el('li', {}, el('a', { href: lessonHref(u.id) }, u.title))))) : opened?.goal_reached ? el('p', {}, el('strong', {}, 'Goal reached.'),
-        ' ', el('a', { href: '#/tree' }, 'Pick the next one in the skill tree.')) : null,
+      opened?.unlocked?.length ? el('div', { class: 'unlocked' }, el('h4', {}, 'This opened:'),
+        el('ul', {}, opened.unlocked.map(u => el('li', {}, el('a', { href: lessonHref(u.id) }, u.title))))) : null,
+      opened?.next && opened.next.id !== id ? el('p', {}, `Next on ${opened.track}: `, el('a', { href: lessonHref(opened.next.id) }, opened.next.can), '.') : null,
       lesson.summary ? [el('div', { class: 'row mid' }, el('h4', {}, 'Summary'), listenButton(lesson.summary)),
         el('div', { class: 'lsummary' }, rich(lesson.summary))] : null,
       fbtn(),
-      lesson.bench?.length ? [el('h4', {}, 'Try it on the bench or on site'), lesson.bench.map(b => benchTask(b, id))] : null,
+      el('h4', {}, 'Prove it: do it for real'),
+      el('p', { class: 'small muted' }, 'On the bench or on site. Logged to today in Log (with a photo if you like), it marks this skill proven on the map.'),
+      (lesson.bench?.length ? lesson.bench : [{ task: 'Show you can do this for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
       resources((lesson.resources || []).filter(r => r.when !== 'before'), 'To go further'),
       el('h4', {}, 'Your notes'), notesBox(id, got.notes),
       el('div', { class: 'row' },
         nextLesson ? el('a', { class: 'btn', href: lessonHref(nextLesson.id) }, `Next: ${nextLesson.title}`) : null,
         cards.some(c => c.type === 'numeric') ? el('a', { class: 'btn plain', href: `#/practice?lessons=${encodeURIComponent(id)}` }, 'Practise with new numbers') : null,
         el('button', { class: 'btn plain', type: 'button', onclick: () => show(0) }, 'From the start'),
-        el('a', { class: 'btn plain', href: `#/tree?s=${encodeURIComponent(lesson.subject_id)}&l=${encodeURIComponent(id)}` }, 'Skill tree'),
+        el('a', { class: 'btn plain', href: '#/map' }, 'Skill map'),
         el('a', { class: 'btn plain', href: '#/courses' }, 'Courses'))));
     count.textContent = `${seq.length} of ${seq.length}`;
     next.disabled = true; prev.disabled = false;
@@ -261,7 +297,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
       }
       api.place(id, pos + 1, false).catch(e => flash(e.message));
       paint();
-      if (item.card.type === 'concept') show(pos + 1);
+      if (item.card.type === 'concept') step();
       else next.focus({ preventScroll: true });
     } });
     card.classList.add('current');
@@ -273,7 +309,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
           show(pos);
         } }, 'Show me a worked example first') : null;
     stage.replaceChildren(card, extra || '');
-    count.textContent = `${pos + 1} of ${seq.length}`;
+    count.textContent = parts.length > 1 ? `Part ${partOf(pos) + 1} of ${parts.length} · card ${pos + 1} of ${seq.length}` : `${pos + 1} of ${seq.length}`;
     prev.disabled = false; next.disabled = false;
     paint();
     card.querySelector('input:not([type=checkbox]):not([type=range])')?.focus({ preventScroll: true });
@@ -283,7 +319,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     if (!stage.isConnected || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || document.querySelector('dialog[open]')) return;
     if (e.target.closest?.('input, textarea, select')) return;
     if (card && !card.finished() && card.keys?.(e)) { e.preventDefault(); return; }
-    if (e.key === 'ArrowRight' || ((e.key === 'Enter' || e.key === ' ') && (card?.finished() || pos < 0))) { e.preventDefault(); if (!next.disabled) show(pos + 1); }
+    if (e.key === 'ArrowRight' || ((e.key === 'Enter' || e.key === ' ') && (card?.finished() || pos < 0))) { e.preventDefault(); if (!next.disabled) step(); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); if (pos >= 0) show(pos - 1); }
   }, { signal: ctx.signal });
   body.append(stages, track, stage, el('div', { class: 'row mid lnav' }, prev, count, el('span', { class: 'spacer' }), next));
@@ -295,14 +331,23 @@ function benchTask(b, lessonId) {
   const ticks = (b.check || []).map(x => el('label', {}, el('input', { type: 'checkbox' }), rich(x)));
   const found = el('input', { class: 'sm', placeholder: 'What you found (optional)', style: 'flex:1;min-width:200px' });
   const hasLog = (state.meta?.apps || []).some(a => a.name === 'log');
-  const log = hasLog ? el('button', { class: 'btn plain sm', type: 'button', onclick: async () => {
+  let photos = [];
+  const shown = el('span', { class: 'muted small' });
+  const pick = pictureInput(async files => { photos.push(...await shrinkAll(files)); shown.textContent = `${photos.length} photo${photos.length === 1 ? '' : 's'}`; });
+  const log = el('button', { class: 'btn sm', type: 'button', onclick: async () => {
     const done = ticks.filter(t => t.querySelector('input').checked).map(t => `- ${t.textContent.trim()}`);
     const text = [`Bench: ${String(b.task).replace(/\*\*|`/g, '')}`, ...done, found.value.trim(),
                   `#bench #${lessonId.split('.').pop()}`].filter(Boolean).join('\n');
-    try { await appApi('log').send('quick', { text }); flash('Added to today in Log'); log.disabled = true; } catch (e) { flash(e.message); }
-  } }, 'Add to today’s Log') : null;
+    try {
+      if (hasLog) await appApi('log').send('quick', { text, photos });
+      await api.proven(lessonId);
+      flash(hasLog ? 'Proven: added to today in Log' : 'Proven');
+      log.disabled = true;
+    } catch (e) { flash(e.message); }
+  } }, hasLog ? 'Done it: log it' : 'Done it');
   return el('div', { class: 'bench' }, rich(b.task), ticks.length ? el('div', { class: 'points' }, ticks) : null,
-    el('div', { class: 'row mid' }, found, log));
+    el('div', { class: 'row mid' }, found, hasLog ? el('button', { class: 'btn plain sm', type: 'button', onclick: () => pick.click() }, 'Add a photo') : null,
+      pick, shown, log));
 }
 
 /** Test out: the lesson's hardest questions. All right and it is learned; its cards start as reviews. */

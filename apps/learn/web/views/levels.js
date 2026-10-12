@@ -13,6 +13,8 @@ export const STAGES = [
   [4, 'Secure', 'Level 2 (GCSE grades 4–9)'], [5, 'Advanced', 'Level 3 (A level)'], [6, 'Higher', 'Level 4 (HNC)'],
   [7, 'Diploma', 'Level 5 (HND)'], [8, 'Graduate', 'Level 6 (degree)'], [9, 'Master', "Level 7 (master's)"]];
 export const stageOf = level => STAGES[Math.min(Math.max(Math.floor(level + 1e-9), 1), 9) - 1];
+/** A level worth showing: placed by a test, or from about 8 answers (one answer says little). */
+export const known = k => !!(k && (k.placed || k.n >= 8));
 export const levelText = level => { const [n, name, rqf] = stageOf(level); return `Stage ${level.toFixed(1)}: ${name} (${rqf})`; };
 
 /** A level as a chip: "4.3 Secure", with the range and the qualification level on hover. */
