@@ -12,6 +12,13 @@ Read these first:
 - `LEARN-SPEC.md` §1–§3 and §7 (the research, the lesson template, the level scale).
 - The widgets you use: `apps/learn/web/widgets/<name>.js` (header comment = params and what it reports).
 
+**Keep the original words.** Text that comes from somewhere (a textbook, a course pack, a
+lesson already written) is copied verbatim and never reworded, shortened or "improved": not
+a word, not the order. What you write goes *alongside* it, marked as Daybook's: context for
+an engineer, another way of explaining it, worked examples, questions, a summary. If an
+explanation in other words would help, add it as an extra, and keep the original there or one
+click away. Credit the source on every card that carries its words (SPEC.md §1).
+
 Who it is for: one adult learner in the UK, working in industrial engineering (ultrasonic
 testing, PLCs, drives). He may be below GCSE in maths. Write for him: plain British English,
 short sentences, "you", bold the key terms, concrete workshop examples (plates, motors,

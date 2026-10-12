@@ -58,6 +58,15 @@ learning that can replace idle scrolling.
   native browser features first. No abstractions with one user. Deliberate
   simplifications carry a `ponytail:` comment naming their limit. Every piece
   of non-trivial logic leaves one runnable check behind (see §11).
+- **Lesson text is verbatim.** A lesson's words stay exactly as their author
+  wrote them: a textbook section imported as published, a course pack, a lesson
+  as written. Never reword, shorten, "simplify" or "improve" them. Adding is
+  fine: Daybook's own context, another way of explaining it, questions on it,
+  a summary, a widget, a name for the skill on the map. Each addition reads as
+  Daybook's, never as the author's. The original is always there, or one click
+  away (**The original**); an extra explanation sits beside it, never in its
+  place. Text adapted before this rule (the nine OpenStax lessons) gets its
+  original back as that option.
 - **Commas are thousands.** `24,000` is twenty-four thousand everywhere a
   number is typed.
 - **Pages must not jump.** Saving or refreshing keeps the page where it was.

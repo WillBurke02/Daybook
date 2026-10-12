@@ -429,6 +429,8 @@ Tax rates live in Money's database (Settings → Tax figures). Check them each A
 Some Learn lessons are adapted from OpenStax textbooks (Prealgebra 2e, Algebra and
 Trigonometry 2e, College Physics 2e, University Physics Volume 2), © Rice University,
 licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Each such
-lesson names its section in its sources and links to it; the text has been rewritten,
-shortened and set in engineering examples for Daybook. Download them free at
-https://openstax.org.
+lesson names its section in its sources and links to it. Their text was rewritten,
+shortened and set in engineering examples before Daybook's rule that lesson text is kept
+verbatim (SPEC.md §1); each is to get the original section back as an option. Lessons
+imported from now on keep their authors' words exactly, with Daybook's additions beside
+them. Download them free at https://openstax.org.

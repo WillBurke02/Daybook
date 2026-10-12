@@ -281,6 +281,7 @@ next interval for a desired retention r:  I = (S / f) · (r^(−1/w20) − 1)
 
 **The plan:**
 1. **Rewrite the 5 written lessons to the template** (about 20 cards each). They become the worked examples of the format.
+   *(Since superseded: lesson text is now kept verbatim, with Daybook's additions beside it. See SPEC.md §1.)*
 2. **Write the calibration bank:** 3 cards per outline lesson, at that lesson's level, subject by subject (about 260 cards in all). It is written before most lessons, because placement needs the whole course.
 3. **Write lessons in batches of 8–10,** following prerequisites, starred first. My proposed order (§10 asks you):
    - **Batch 1 (controls first):**
