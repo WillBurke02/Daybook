@@ -6,6 +6,7 @@
 //     "answer": "d", "unit": "mm", "tolerance": 0.02,               relative; "abs": 0.1 for an absolute one
 //     "why": "…", "work": "d = {v} × {t} µs ÷ 2 = {d} mm" }
 import { parse, evaluate } from './core/formula.js';
+import { calc as sum } from './calc.js';
 
 /** Up to 4 significant figures, no trailing zeros: 29.6, 0.00118, 5920, 1.23e+6 for the very large. */
 export function fmt(x, dp) {
@@ -60,7 +61,10 @@ export function read(typed, unit = '') {
   const m = s.match(/[\d.)]\s*([pnuµμmkMG])$/);
   if (m && (m[1] !== 'm' || had || (BASES.includes(base) && base !== 'm'))) { p = SI[m[1]]; s = s.slice(0, -1); }
   if (!s) return NaN;
-  try { const v = evaluate(parse(s), {}); return typeof v === 'number' ? v * 10 ** (p - up) : NaN; } catch { return NaN; }
+  try { const v = evaluate(parse(s), {}); if (typeof v === 'number') return v * 10 ** (p - up); } catch { /* a sum with units, below */ }
+  // a sum with units, as the calculator reads it: 230V/10A on an Ω card is 23; units that are not the card's are not an answer
+  const r = sum(String(typed ?? ''), { deg: true });
+  return r.value !== undefined && r.unit && r.unit === base ? r.value * 10 ** -up : NaN;
 }
 
 /** Right if within the card's tolerance: relative (default 2%) or absolute. */

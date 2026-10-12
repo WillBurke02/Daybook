@@ -1,131 +1,84 @@
-// The tools beside a card: a whiteboard and a calculator. On a wide screen they dock in a column
-// at the right and the page makes room, so they never cover the card; drag one by its title bar
-// (or resize it) and it floats where you leave it, until "Dock" puts it back. Alt+W opens or
-// closes the whiteboard and Alt+C the calculator, even while typing an answer (W and C too, when
-// not typing); the card's own links do the same. Ctrl+Z after drawing undoes the drawing.
+// The tools beside a card: a calculator and a whiteboard, two tabs of one workbench. On a wide
+// screen it docks at the right at full height (40% of the width, at most 480 px) and the page
+// makes room, so it never covers the card; on a phone it is a sheet along the bottom with the card
+// above it. Alt+C opens the calculator and Alt+W the whiteboard, even while typing an answer (C and
+// W too, when not typing); the same key again, or Esc, closes it. Ctrl+Z after drawing undoes the drawing.
 //
-// The board is one per card, kept in learn.db (sketch), so when the card comes back it
-// offers "your working last time". The calculator is Daybook's formula engine (calc.js),
-// and "Use this answer" puts its result in the card's box.
+// The board is one per card, kept in learn.db (sketch), so when the card comes back it offers
+// "your working last time". The calculator is Daybook's formula engine (calc.js), with units: the
+// card's numbers are buttons to put into a sum, the card's sums stay with it, and "Use this answer"
+// puts the result, with its unit, in the card's box.
 // ponytail: no popped-out browser windows; the dock covers it until one is missed.
 import { api } from './api.js';
 import { el, flash } from './core/dom.js';
 import { dateUK } from './core/format.js';
-import { calc, compile, eng, plain, solve, step } from './calc.js';
+import { calc, compile, eng, plain, solve, step, also } from './calc.js';
 
 const current = () => document.querySelector('.lcard.current') || [...document.querySelectorAll('.lcard')].at(-1) || null;
 const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch { return null; } };
 
-const TOOLS = { board: ['Whiteboard', 'Alt+W', { min: [280, 260] }], calc: ['Calculator', 'Alt+C', { min: [300, 360] }] };
-const WIDE = 1000, BELOW = 70;                   // the dock needs this much screen; it starts below the shell's top bar
-const wins = {};
-let top = 70, watch = null;
+const WIDE = 1000;                               // narrower than this, the workbench is a sheet along the bottom
+let wb = null, watch = null;
 
-/** Open a tool, or close it if it is open. */
+/** Open the workbench on a tool, or close it if that tool is already showing. */
 export function toggle(name) {
-  if (wins[name] && !wins[name].win.hidden) return close(name);
+  if (wb && !wb.box.hidden && wb.tab === name) return close();
   open(name);
 }
 
 function open(name) {
-  const w = wins[name] || (wins[name] = make(name));
-  w.win.hidden = false;
-  dock();
-  front(w.win);
-  w.tool.shown?.();
-  if (name === 'board') {
-    clearInterval(watch);
-    watch = setInterval(() => !w.win.hidden && w.tool.follow(), 600);   // the card on screen changes under us
-  }
+  wb ||= make();
+  wb.box.hidden = false;
+  pick(name);
+  layout();
+  clearInterval(watch);
+  watch = setInterval(() => { if (!wb.box.hidden) for (const t of Object.values(wb.tools)) t.follow(); }, 600);   // the card changes under us
 }
 
-function close(name) {
-  const w = wins[name];
-  if (!w || w.win.hidden) return;
-  if (name === 'board') { w.tool.save(); clearInterval(watch); }
-  w.win.hidden = true;
-  dock();
+function close() {
+  if (!wb || wb.box.hidden) return;
+  wb.tools.board.save();
+  clearInterval(watch);
+  wb.box.hidden = true;
+  layout();
 }
 
-function make(name) {
-  const [title, key] = TOOLS[name];
-  const tool = name === 'board' ? board() : calculator();
-  const bar = el('header', { class: 'tw-bar row mid', title: 'Drag to move' },
-    el('strong', {}, title), el('kbd', {}, key), el('span', { class: 'spacer' }),
-    el('button', { class: 'btn plain sm tw-dock', type: 'button', title: 'Back in the column at the right', onclick: () => { store(`learn.tool.${name}`, ''); dock(); } }, 'Dock'),
-    el('button', { class: 'icon', type: 'button', 'aria-label': `Close the ${title.toLowerCase()}`, title: 'Close (Esc)', onclick: () => close(name) }, '×'));
-  const grip = el('span', { class: 'tw-grip', title: 'Drag to resize', 'aria-hidden': 'true' });
-  const win = el('section', { class: `toolwin tw-${name}`, hidden: true, role: 'dialog', 'aria-label': title }, bar, tool.box, grip);
-  win.addEventListener('pointerdown', () => front(win), true);
-  win.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(name); } });
-  follow(bar, win, name, (r, dx, dy) => ({ left: r.left + dx, top: r.top + dy }));
-  follow(grip, win, name, (r, dx, dy) => ({ width: r.width + dx, height: r.height + dy }));
-  document.body.append(win);
-  if (name === 'board') addEventListener('beforeunload', () => tool.save());
-  return { win, tool };
+function pick(name) {
+  wb.tab = name;
+  for (const [n, t] of Object.entries(wb.tools)) t.box.hidden = n !== name;
+  wb.tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.k === name)));
+  wb.tools[name].shown();
 }
 
-const front = win => { win.style.zIndex = ++top; };
-const saved = name => { try { return JSON.parse(store(`learn.tool.${name}`) || 'null'); } catch { return null; } };
-
-/** Lay out the open tools: the docked ones stack in a column at the right and the page narrows to
- *  leave room (body.docked); a floating one stays where it was left. Narrow screens have no dock. */
-function dock() {
-  const open = Object.entries(wins).filter(([, w]) => !w.win.hidden);
-  const docked = innerWidth >= WIDE ? open.filter(([n]) => !saved(n)) : [];
-  const width = Math.min(440, Math.round(innerWidth * 0.36)), gap = 8;
-  const h = Math.floor((innerHeight - BELOW - gap * (docked.length + 1)) / (docked.length || 1));
-  docked.forEach(([, w], i) => Object.assign(w.win.style, { left: `${innerWidth - width - gap}px`, top: `${BELOW + i * (h + gap)}px`,
-    width: `${width}px`, height: `${h}px` }));
-  for (const [n, w] of open) { w.win.classList.toggle('docked', docked.some(([m]) => m === n)); if (!docked.some(([m]) => m === n)) place(w.win, n); }
-  document.body.classList.toggle('docked', docked.length > 0);
-  document.body.style.setProperty('--dock', `${width + gap * 2}px`);
+function make() {
+  const tools = { calc: calculator(), board: board() };
+  const tabs = el('div', { class: 'wb-tabs', role: 'tablist' }, [['calc', 'Calculator', 'Alt+C'], ['board', 'Whiteboard', 'Alt+W']].map(([k, label, key]) =>
+    el('button', { type: 'button', role: 'tab', 'data-k': k, onclick: () => pick(k) }, label, el('kbd', {}, key))));
+  const box = el('section', { class: 'workbench', hidden: true, 'aria-label': 'Calculator and whiteboard' },
+    el('header', { class: 'row mid wb-head' }, tabs, el('span', { class: 'spacer' }),
+      el('button', { class: 'btn plain sm', type: 'button', title: 'Close (Esc)', onclick: close }, 'Close')),
+    tools.calc.box, tools.board.box);
+  box.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
+  document.body.append(box);
+  addEventListener('beforeunload', () => tools.board.save());
+  return { box, tools, tabs, tab: null };
 }
 
-/** Where a floating window goes: where it was left, else (a narrow screen) along the bottom; always on screen. */
-function place(win, name, at = saved(name)) {
-  const [, , d] = TOOLS[name], vw = innerWidth, vh = innerHeight;
-  let { x, y, w, h } = at || {};
-  if (!at) {                                      // half a screen or a phone: along the bottom, the card in view above
-    const pair = vw >= 600;
-    w = pair ? Math.floor(vw / 2) - 18 : vw - 24; h = Math.round(vh * 0.48);
-    x = pair && name === 'board' ? vw - w - 12 : 12; y = vh - h - (pair ? 12 : 66);   // a phone's tab bar is along the bottom
-  }
-  w = Math.max(d.min[0], Math.min(w, vw)); h = Math.max(d.min[1], Math.min(h, vh));
-  x = Math.max(0, Math.min(x, vw - 120)); y = Math.max(0, Math.min(y, vh - 44));   // the title bar stays reachable
-  Object.assign(win.style, { left: `${x}px`, top: `${y}px`, width: `${w}px`, height: `${h}px` });
+/** Docked at the right on a wide screen, with the page narrowed to make room; a sheet along the bottom on a narrow one. */
+function layout() {
+  const on = !!wb && !wb.box.hidden, wide = innerWidth >= WIDE;
+  document.body.classList.toggle('docked', on && wide);
+  document.body.classList.toggle('sheeted', on && !wide);
+  document.body.style.setProperty('--dock', `${Math.min(480, Math.round(innerWidth * 0.4))}px`);
+  wb?.box.classList.toggle('sheet', !wide);
 }
-
-/** Drag `handle` to move or resize `win`: `to` turns the pointer's travel into new styles. */
-function follow(handle, win, name, to) {
-  handle.addEventListener('pointerdown', e => {
-    if (e.button > 0 || e.target.closest('button')) return;
-    e.preventDefault();
-    handle.setPointerCapture(e.pointerId);
-    const r = win.getBoundingClientRect(), x0 = e.clientX, y0 = e.clientY;
-    const move = ev => {
-      const s = to(r, ev.clientX - x0, ev.clientY - y0);
-      for (const [k, v] of Object.entries(s)) win.style[k] = `${v}px`;
-    };
-    const up = () => {
-      handle.removeEventListener('pointermove', move);
-      const b = win.getBoundingClientRect();
-      store(`learn.tool.${name}`, JSON.stringify({ x: Math.round(b.left), y: Math.round(b.top), w: Math.round(b.width), h: Math.round(b.height) }));
-      dock();                                     // moved or resized: it floats now, and the others close up
-    };
-    handle.addEventListener('pointermove', move);
-    handle.addEventListener('pointerup', up, { once: true });
-    handle.addEventListener('pointercancel', up, { once: true });
-  });
-}
-
-globalThis.addEventListener?.('resize', dock);
+globalThis.addEventListener?.('resize', () => { if (wb) layout(); });
 
 // ---- the whiteboard ---------------------------------------------------------------------------
 
 const COLOURS = ['--ink', '--s1', '--debit', '--s3'];
 const PAPERS = [['plain', 'Plain'], ['squared', 'Squared'], ['graph', 'Graph']];
-const SIZES = [1.5, 3, 6, 12];                    // pen widths, in screen pixels
+const SIZES = [[1.5, 'Fine'], [3, 'Medium'], [6, 'Thick'], [12, 'Marker']];   // pen widths, in screen pixels
 // The board is measured in screen pixels: a bigger window shows more of it, never a zoomed copy.
 
 function board() {
@@ -160,6 +113,11 @@ function board() {
     g.lineCap = g.lineJoin = 'round';
     for (const st of [...strokes, drawing].filter(Boolean)) {
       g.strokeStyle = ink(st.c);
+      if (st.t === 'text') {                        // typed text, sized by the pen width
+        g.fillStyle = ink(st.c); g.font = `${(13 + st.w * 2) * s}px ${getComputedStyle(canvas).fontFamily}`; g.textBaseline = 'middle';
+        g.fillText(st.s, st.x * s, st.y * s);
+        continue;
+      }
       const p = st.p;
       if (p.length === 1) { g.fillStyle = ink(st.c); g.beginPath(); g.arc(p[0][0] * s, p[0][1] * s, st.w * s / 2, 0, 7); g.fill(); continue; }
       for (let k = 1; k < p.length; k++) {         // each piece as wide as the pen was pressed
@@ -179,22 +137,37 @@ function board() {
   const at = e => { const r = canvas.getBoundingClientRect(), k = 1;
     return [+((e.clientX - r.left) * k).toFixed(1), +((e.clientY - r.top) * k).toFixed(1), e.pointerType === 'pen' ? +e.pressure.toFixed(2) : 0.5]; };
   const change = next => { undo.push(strokes); redo = []; strokes = next; dirty = true; clearTimeout(timer); timer = setTimeout(save, 1500); paint(); };
-  const hits = pt => strokes.filter(st => st.p.some(q => Math.hypot(q[0] - pt[0], q[1] - pt[1]) < 12 + st.w));
+  const hits = pt => strokes.filter(st => st.t === 'text' ? Math.hypot(st.x - pt[0], st.y - pt[1]) < 20
+    : st.p.some(q => Math.hypot(q[0] - pt[0], q[1] - pt[1]) < 12 + st.w));
+  // Text: a box where you click; Enter puts the words on the board
+  const write = ([x, y]) => {
+    const r = canvas.getBoundingClientRect(), box_ = box.getBoundingClientRect();
+    const t = el('input', { class: 'wb-text', placeholder: 'Type, then Enter', style: `left:${r.left - box_.left + x}px;top:${r.top - box_.top + y - 14}px` });
+    let over = false;                              // Enter, then the blur as it goes: once only
+    const done = keep => { if (over) return; over = true; if (keep && t.value.trim()) change([...strokes, { t: 'text', x, y, s: t.value.trim(), c: colour, w: size, px: 1 }]);
+      t.remove(); canvas.focus({ preventScroll: true }); };
+    t.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') done(true); if (e.key === 'Escape') done(false); });
+    t.addEventListener('blur', () => done(true));
+    box.append(t); t.focus();
+  };
 
   canvas.addEventListener('pointerdown', e => {
     if (e.button > 0) return;
     e.preventDefault();
     canvas.focus({ preventScroll: true });         // out of the answer box, so Ctrl+Z means the drawing
+    qbox.open = false;                               // the question folds away to give the drawing room
+    if (tool === 'text') return write(at(e));
     canvas.setPointerCapture(e.pointerId);
     if (tool === 'erase') { const gone = hits(at(e)); if (gone.length) change(strokes.filter(st => !gone.includes(st))); drawing = { erase: true, c: 0, w: 0, p: [] }; return; }
-    drawing = { c: colour, w: size, px: 1, p: [at(e)] };
+    drawing = { c: colour, w: size, px: 1, p: [at(e)], line: tool === 'line' };
     paint();
   });
   canvas.addEventListener('pointermove', e => {
     if (!drawing) return;
     const evs = e.getCoalescedEvents?.() || [e];
     if (drawing.erase) { for (const ev of evs) { const gone = hits(at(ev)); if (gone.length) change(strokes.filter(st => !gone.includes(st))); } return; }
-    for (const ev of evs) drawing.p.push(at(ev));
+    if (drawing.line || e.shiftKey) drawing.p = [drawing.p[0], at(e)];   // Line, or Shift: straight from where it started
+    else for (const ev of evs) drawing.p.push(at(ev));
     paint();
   });
   const end = () => {
@@ -213,7 +186,7 @@ function board() {
     mine.set(card, strokes);
     try { await api.send('sketch', { card_id: card, strokes, paper }); } catch (e) { flash(`The board was not kept: ${e.message}`); }
   }
-  const old = list => list.map(st => st.px ? st : { ...st, px: 1, w: st.w * 0.44, p: st.p.map(([x, y, q]) => [x * 0.44, y * 0.44, q]) });
+  const old = list => list.map(st => st.px || st.t ? st : { ...st, px: 1, w: st.w * 0.44, p: st.p.map(([x, y, q]) => [x * 0.44, y * 0.44, q]) });
   const load = (list, p) => { strokes = old(list); undo = []; redo = []; if (p) paper = p; paper_.value = paper; paint(); };
 
   /** The card on screen changed: keep this board, then take up that card's. */
@@ -238,7 +211,7 @@ function board() {
     last.hidden = false;
   }
 
-  const tool_ = el('span', { class: 'seg' }, [['pen', 'Pen'], ['erase', 'Eraser']].map(([k, label]) =>
+  const tool_ = el('span', { class: 'seg wb-seg' }, [['pen', 'Pen'], ['line', 'Line'], ['text', 'Text'], ['erase', 'Eraser']].map(([k, label]) =>
     el('button', { type: 'button', 'aria-pressed': String(k === tool), onclick: e => {
       tool = k; tool_.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
     } }, label)));
@@ -248,7 +221,7 @@ function board() {
       colours.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
       tool_.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', String(k === 0)));
     } })));
-  const sizes = el('span', { class: 'swatches', title: 'Pen width' }, SIZES.map(w => el('button', { class: 'penw', type: 'button', 'aria-label': `Pen width ${w}`,
+  const sizes = el('span', { class: 'swatches', title: 'Pen width' }, SIZES.map(([w, name]) => el('button', { class: 'penw', type: 'button', 'aria-label': name, title: name,
     'aria-pressed': String(w === size), style: `--pw: ${Math.max(3, w)}px`, onclick: e => {
       size = w; store('learn.pen', String(w)); tool = 'pen';
       sizes.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
@@ -259,20 +232,21 @@ function board() {
   paper_.value = paper;
   const back = () => { if (undo.length) { redo.push(strokes); strokes = undo.pop(); dirty = true; paint(); save(); } };
   const fwd = () => { if (redo.length) { undo.push(strokes); strokes = redo.pop(); dirty = true; paint(); save(); } };
-  const box = el('div', { class: 'wb' },
-    el('details', { class: 'wb-qbox', open: true }, el('summary', { class: 'muted small' }, 'The question'), question),
-    last,
-    el('div', { class: 'row mid wb-tools' }, tool_, colours, sizes,
-      el('button', { class: 'icon', type: 'button', title: 'Undo (Ctrl+Z)', 'aria-label': 'Undo', onclick: back }, '↶'),
-      el('button', { class: 'icon', type: 'button', title: 'Redo (Ctrl+Y)', 'aria-label': 'Redo', onclick: fwd }, '↷'),
-      el('button', { class: 'btn plain sm', type: 'button', onclick: () => strokes.length && change([]) }, 'Clear'), paper_),
+  const qbox = el('details', { class: 'wb-qbox', open: true }, el('summary', { class: 'muted small' }, 'The question'), question);
+  const clear = () => { if (!strokes.length) return; change([]); flash('Board cleared', { label: 'Undo', fn: back }); };
+  const box = el('div', { class: 'wb' }, qbox, last,
+    el('div', { class: 'row mid wb-tools' }, tool_,
+      el('button', { class: 'btn plain', type: 'button', title: 'Undo (Ctrl+Z)', onclick: back }, 'Undo'),
+      el('button', { class: 'btn plain', type: 'button', title: 'Redo (Ctrl+Y)', onclick: fwd }, 'Redo'),
+      el('button', { class: 'btn plain', type: 'button', onclick: clear }, 'Clear')),
+    el('div', { class: 'row mid wb-tools' }, colours, sizes, paper_),
     canvas);
   // Ctrl+Z (Ctrl+Y or Ctrl+Shift+Z again) undoes the drawing, not Daybook's last saved change, while the board
   // was the last thing touched; preventDefault is how the shell's own Ctrl+Z knows to stand aside
   let here = false;
   document.addEventListener('pointerdown', e => { here = !!box.contains(e.target); }, true);
   document.addEventListener('keydown', e => {
-    if (!here || box.closest('.toolwin')?.hidden || !(e.ctrlKey || e.metaKey) || e.target.closest?.('input, textarea, [contenteditable]')) return;
+    if (!here || box.hidden || box.closest('.workbench')?.hidden || !(e.ctrlKey || e.metaKey) || e.target.closest?.('input, textarea, [contenteditable]')) return;
     const k = e.key.toLowerCase();
     if (k === 'z' || k === 'y') { e.preventDefault(); k === 'y' || e.shiftKey ? fwd() : back(); }
   });
@@ -299,22 +273,48 @@ function calculator() {
   };
 
   // Calc: a line to type in, the answer, and a tape of earlier sums
-  const tape = el('ol', { class: 'calc-tape', 'aria-label': 'Earlier sums' });
+  const tape = el('ol', { class: 'calc-tape', 'aria-label': 'This card\'s sums' });
   const out = el('div', { class: 'calc-out num', 'aria-live': 'polite' });
-  let history = [], back = 0;
-  const show = v => out.replaceChildren(el('strong', {}, plain(v)), / \S$/.test(eng(v)) ? el('span', { class: 'muted' }, `  =  ${eng(v)}`) : '');
+  let history = [], back = 0, unit = '', card = null;
+  const sums = new Map();                       // each card's sums, so they are there when it comes back
+  // 4.7 kΩ beside 4700 Ω; 3/8 beside 0.375; the engineering form only when it says more (not 500 m for 0.5)
+  const show = (v, u = '', src = '') => {
+    const a = Math.abs(v), e = eng(v);
+    const extra = [u || a >= 1e4 || (a && a < 1e-2) ? `${e}${u}` : null, ...also(v, src)].filter(x => x && x !== `${plain(v)}${u}` && x !== plain(v));
+    out.replaceChildren(el('strong', {}, `${plain(v)}${u ? ' ' + u : ''}`), extra.length ? el('span', { class: 'muted' }, `  =  ${extra.join('  =  ')}`) : '');
+  };
+  const paintTape = () => tape.replaceChildren(...(sums.get(card) || []).map(x => el('li', { title: 'Use this sum again',
+    onclick: () => { line.value = x.src; line.focus(); } }, el('span', {}, x.src), el('span', { class: 'num' }, ` = ${plain(x.value)}${x.unit ? ' ' + x.unit : ''}`))));
   const go = () => {
     const src = line.value.trim();
     if (!src) return;
     const r = calc(src, { ans, deg });
     if (r.error) { out.replaceChildren(el('span', { class: 'deb' }, r.error)); return; }
-    ans = r.value;
+    ans = r.value; unit = r.unit;
     history.push(src); back = history.length;
-    tape.append(el('li', { title: 'Use this sum again', onclick: () => { line.value = src; line.focus(); } },
-      el('span', {}, src), el('span', { class: 'num' }, ` = ${plain(r.value)}`)));
+    sums.set(card, [...(sums.get(card) || []), { src, value: r.value, unit: r.unit }]);
+    paintTape();
     tape.scrollTop = tape.scrollHeight;
-    show(ans);
+    show(ans, unit, src);
     line.value = '';
+  };
+  // the card's numbers, as buttons that put them into the sum: 230 V, 4.7 kΩ
+  const given = el('div', { class: 'row wrap calc-given', 'aria-label': 'Numbers on the card' });
+  const NUM_RE = /(?<![\w.])(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s?(k|M|G|m|µ|μ|u|n|p)?(Ω|ohm|Hz|Pa|V|A|W|J|N|C|F|H|s|%)?(?![\w])/g;
+  const follow = () => {
+    const c = current(), id = c?.dataset.id || null;
+    if (id === card) return;
+    card = id;
+    paintTape();
+    const q = c?.querySelector('.face');
+    const seen = new Set(), found = [];
+    for (const m of (q?.textContent || '').matchAll(NUM_RE)) {
+      const t = `${m[1].replace(/,/g, '')}${m[2] || ''}${m[3] && m[3] !== '%' ? m[3] : ''}`;
+      if (!seen.has(t) && found.length < 10) { seen.add(t); found.push([t, `${m[1]}${m[2] || m[3] ? ' ' : ''}${m[2] || ''}${m[3] || ''}`]); }
+    }
+    given.replaceChildren(...found.map(([t, label]) => el('button', { class: 'chip num', type: 'button', title: 'Put it in the sum',
+      onpointerdown: e => e.preventDefault(), onclick: () => typeIn(t) }, label)));
+    given.hidden = !found.length;
   };
   const line = field({ 'aria-label': 'A sum',
     title: 'ans is the last answer; k, m, µ, n, M after a number are prefixes' }, go);
@@ -322,7 +322,7 @@ function calculator() {
     if (e.key === 'ArrowUp' && back > 0) { e.preventDefault(); line.value = history[--back]; }
     else if (e.key === 'ArrowDown') { e.preventDefault(); back = Math.min(history.length, back + 1); line.value = history[back] || ''; }
   });
-  const sums = el('div', { class: 'calc-pane' }, tape,
+  const sumsPane = el('div', { class: 'calc-pane' }, given, tape,
     el('div', { class: 'row mid calc-res' }, out, el('button', { class: 'btn plain sm', type: 'button', title: 'Put the answer in the card\'s box', onclick: () => use() }, 'Use this answer')), line);
 
   // Graph: up to three functions of x; drag to move, scroll or the buttons to zoom, point to read
@@ -342,7 +342,7 @@ function calculator() {
       const s = r.input.value.replace(/^\s*y\s*=/i, '').trim();
       r.f = null; r.input.classList.remove('bad'); r.input.title = '';
       if (!s) continue;
-      try { r.f = compile(s, { deg }); } catch (e) { r.input.classList.add('bad'); r.input.title = e.message; }
+      try { r.f = compile(s, { deg: false }); } catch (e) { r.input.classList.add('bad'); r.input.title = e.message; }   // a graph is in radians
     }
   }
   const val = (r, x) => r.f({ x, ans });
@@ -420,7 +420,7 @@ function calculator() {
     zoom(e.deltaY > 0 ? 1.2 : 1 / 1.2, (e.clientX - b.left) / b.width, (e.clientY - b.top) / b.height); }, { passive: false });
   const graph = el('div', { class: 'calc-pane' },
     ...fns.map((r, i) => el('label', { class: 'row mid g-fn' }, el('span', { class: 'g-sw', style: `--sw: var(${r.c})` }), `y${i + 1} =`, r.input)),
-    canvas, read,
+    canvas, read, el('p', { class: 'muted small' }, 'x is in radians on the graph, so sin(x) has its usual shape; Calc and Solve use the Degrees or Radians setting.'),
     el('div', { class: 'row mid g-ctl' },
       el('button', { class: 'btn plain sm', type: 'button', 'aria-label': 'Zoom in', onclick: () => zoom(1 / 1.5) }, '+'),
       el('button', { class: 'btn plain sm', type: 'button', 'aria-label': 'Zoom out', onclick: () => zoom(1.5) }, '−'),
@@ -429,9 +429,10 @@ function calculator() {
 
   // Solve: where two sides are equal, for x in a range
   const res = el('div', { class: 'solve-out' });
-  const range = (s, d) => { const r = calc(s, { ans, deg }); return r.error ? d : r.value; };
+  const range = s => { if (!s.trim()) return null; const r = calc(s, { ans, deg }); return r.error ? null : r.value; };
   const run = () => {
-    const a = range(from.value, -100), b = range(to.value, 100), r = solve(eq.value, { a: Math.min(a, b), b: Math.max(a, b), deg, vars: { ans } });
+    const a = range(from.value), b = range(to.value), both = a != null && b != null;
+    const r = solve(eq.value, { a: both ? Math.min(a, b) : undefined, b: both ? Math.max(a, b) : undefined, deg, vars: { ans } });
     if (r.error) return res.replaceChildren(el('span', { class: 'deb' }, r.error));
     const graphIt = el('button', { class: 'btn plain sm', type: 'button', onclick: () => {
       const [l, rh = '0'] = eq.value.split('=');
@@ -439,16 +440,17 @@ function calculator() {
       if (r.roots.length) { const lo = r.roots[0], hi = r.roots.at(-1), w = Math.max(hi - lo, 2); v = { ...v, x0: lo - w * 0.5, x1: hi + w * 0.5 }; }
       setMode('graph'); compileAll(); fit();
     } }, 'Graph it');
-    if (!r.roots.length) return res.replaceChildren(el('p', { class: 'muted small' }, `No solution between ${plain(Math.min(a, b))} and ${plain(Math.max(a, b))}. Widen the range, or graph it to see where the sides meet.`), graphIt);
+    if (!r.roots.length) return res.replaceChildren(el('p', { class: 'muted small' }, both ? `No solution between ${plain(Math.min(a, b))} and ${plain(Math.max(a, b))}.`
+      : 'No solution found between −10⁹ and 10⁹.', ' Graph it to see where the sides meet.'), graphIt);
     res.replaceChildren(el('div', { class: 'row wrap' }, r.roots.map(x => el('button', { class: 'chip num', type: 'button', title: 'Keep it as ans',
-      onclick: () => { ans = x; show(x); flash(`ans = ${plain(x)}`); } }, `x = ${plain(x)}`))), graphIt);
+      onclick: () => { ans = x; unit = ''; show(x); flash(`ans = ${plain(x)}`); } }, `${r.name} = ${plain(x)}`))), graphIt);
   };
-  const eq = field({ 'aria-label': 'An equation in x (e.g. x^2 - 5 = 3x)' }, run);
-  const from = field({ value: '-100', 'aria-label': 'Look from x =', class: 'calc-in calc-num' }, run);
-  const to = field({ value: '100', 'aria-label': 'Look to x =', class: 'calc-in calc-num' }, run);
+  const eq = field({ 'aria-label': 'An equation with one unknown', placeholder: 'e.g. 24/(220+R) = 0.05' }, run);
+  const from = field({ placeholder: 'anywhere', 'aria-label': 'Look from', class: 'calc-in calc-num' }, run);
+  const to = field({ placeholder: 'anywhere', 'aria-label': 'Look to', class: 'calc-in calc-num' }, run);
   const solver = el('div', { class: 'calc-pane' }, eq,
-    el('div', { class: 'row mid small' }, 'for x from', from, 'to', to, el('button', { class: 'btn sm', type: 'button', onclick: run }, 'Solve')),
-    res, el('p', { class: 'muted small' }, 'Use x for the unknown. Every place the sides cross is found; one where they only touch may be missed, so graph it to check.'));
+    el('div', { class: 'row mid small' }, 'between', from, 'and', to, el('button', { class: 'btn sm', type: 'button', onclick: run }, 'Solve')),
+    res, el('p', { class: 'muted small' }, 'Any one letter is the unknown (x, R, I…). Every place the sides cross is found; one where they only touch may be missed, so graph it to check.'));
 
   // the keys: they type into whichever box was last used
   const typeIn = s => {
@@ -482,7 +484,7 @@ function calculator() {
     return b;
   }));
 
-  const panes = { calc: sums, graph, solve: solver };
+  const panes = { calc: sumsPane, graph, solve: solver };
   const tabs = el('span', { class: 'seg' }, [['calc', 'Calc'], ['graph', 'Graph'], ['solve', 'Solve']].map(([k, label]) =>
     el('button', { type: 'button', 'data-k': k, onclick: () => setMode(k) }, label)));
   function setMode(k) {
@@ -504,14 +506,14 @@ function calculator() {
   function use() {
     const box = current()?.querySelector('input.answer:not(:disabled)');
     if (!box) return flash('This card has no box for a number');
-    box.value = plain(ans);
+    box.value = `${plain(ans)}${unit ? ' ' + unit : ''}`;              // the box reads the unit into the card's own (4700 Ω on a kΩ card)
     box.dispatchEvent(new Event('input', { bubbles: true }));
     box.focus();
   }
   const box = el('div', { class: 'calc' },
     el('div', { class: 'row mid' }, tabs, el('span', { class: 'spacer' }), angle, keysBtn),
-    sums, graph, solver, keypad);
-  box.addEventListener('keydown', e => { if (e.key !== 'Escape') e.stopPropagation(); });   // typing here is not the card's or the page's keys
+    sumsPane, graph, solver, keypad);
+  box.addEventListener('keydown', e => { if (e.key !== 'Escape' && !e.altKey) e.stopPropagation(); });   // typing here is not the card's or the page's keys (Alt+W and Alt+C still switch)
   setMode(mode);
-  return { box, shown: () => { setMode(mode); } };
+  return { box, follow, shown: () => { setMode(mode); follow(); } };
 }

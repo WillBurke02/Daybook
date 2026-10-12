@@ -38,4 +38,18 @@ assert.deepEqual(solve('tan(x) = 0', { a: 45, b: 135 }).roots, [90].filter(() =>
 assert.deepEqual(roots('x^3 = 8'), [2]);
 assert.ok(solve('3 = 4').error && solve('x = 1 = 2').error);
 assert.equal(step(20), 2); assert.equal(step(1), 0.1); assert.equal(step(700), 100);
-console.log('ok — calculator: prefixes, degrees, ans, log, engineering notation, errors, implicit times, graphs and equations');
+// units carry through the sum; a sum that mixes them is said, not added
+const { also } = await load('apps/learn/web/calc.js');
+const u = (src, want, unit) => { const r = calc(src); near(src, want); assert.equal(r.unit, unit, `${src} → ${JSON.stringify(r)}`); };
+u('230V/10A', 23, 'Ω'); u('4.7kΩ', 4700, 'Ω'); u('230V*10A', 2300, 'W'); u('12V/4.7kohm', 12 / 4700, 'A'); u('1/(2*pi*50Hz*10µF)', 1 / (2 * Math.PI * 50 * 10e-6), 'Ω');
+u('10mA*2.2kΩ', 22, 'V'); u('3W*20s', 60, 'J'); u('sqrt(100W*4Ω)', 20, 'V'); u('2*3', 6, ''); u('5V/5V', 1, '');
+assert.ok(calc('230V + 10A').error.includes('units'), 'volts added to amps');
+assert.equal(calc('10A').unit, 'A'); assert.equal(calc('2sin(30)').unit, '', 'sin is not seconds');
+// written as on paper; hex, binary and factorial
+near('10log(2)', 10 * Math.log10(2)); near('√2', Math.SQRT2); near('2√9', 6); near('5!', 120); near('0x1F + 1', 32); near('0b1010', 10);
+assert.deepEqual(also(0.375), ['3/8']); assert.deepEqual(also(31, '0x1F'), ['0x1F', '0b11111']); assert.deepEqual(also(Math.PI), []);
+// solve: any letter, and further out when nothing is near
+const one = (eq, want) => { const r = solve(eq); assert.ok(r.roots.length && Math.abs(r.roots[0] - want) < 1e-6 * Math.max(1, Math.abs(want)), `${eq} → ${JSON.stringify(r)}`); };
+one('24/(220+x)=0.05', 260); one('230/R = 0.5', 460); one('P = 2300', 2300); one('1/(2*pi*50*C) = 1000', 1 / (2 * Math.PI * 50 * 1000));
+assert.ok(solve('x + y = 2').error.startsWith('One unknown'));
+console.log('ok — calculator: prefixes, degrees, ans, log, engineering notation, errors, implicit times, graphs and equations, units, any letter');

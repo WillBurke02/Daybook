@@ -95,6 +95,7 @@ const hhmm = h => { const m = Math.round(Math.abs(h) * 60); return `${h < 0 ? '-
 const need = (d, what) => { if (!d) throw new Error(`${what} needs a date`); return d; };
 
 export const FUNCTIONS = {
+  FACT:     { args: 'n', about: 'n factorial: FACT(5) is 120.', fn: n => { n = num(n); if (!(n >= 0 && n <= 170 && Number.isInteger(n))) throw new Error('A factorial needs a whole number from 0 to 170'); let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; } },
   SUM:      { args: 'values…', about: 'Adds up. SUM(Hours) adds the whole column.', agg: true, fn: (...a) => nums(a).reduce((x, y) => x + y, 0) },
   AVERAGE:  { args: 'values…', about: 'The mean. AVERAGE(Hours).', agg: true, fn: (...a) => { const n = nums(a); return n.length ? n.reduce((x, y) => x + y, 0) / n.length : 0; } },
   MIN:      { args: 'values…', about: 'The smallest.', agg: true, fn: (...a) => Math.min(...nums(a)) },

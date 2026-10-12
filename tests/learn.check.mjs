@@ -36,6 +36,9 @@ const st = await load('apps/learn/web/st.js');
   near(tpl.read('4.7 kΩ', 'kΩ'), 4.7); near(tpl.read('470µF', 'F'), 470e-6); near(tpl.read('470u', 'µF'), 470); near(tpl.read('5m', 'A'), 0.005);
   near(tpl.read('5m', 'mA'), 5); near(tpl.read('10m', 'm'), 10); near(tpl.read('10mm', 'm'), 0.01); near(tpl.read('10 min', 'min'), 10);
   near(tpl.read('2.2M'), 2.2e6); assert.ok(isNaN(tpl.read('10m'))); assert.ok(isNaN(tpl.read('10m', 'min'))); near(tpl.read('3', 'kV'), 3);
+  // a sum with units, as the calculator reads it, in the card's unit
+  near(tpl.read('230V/10A', 'Ω'), 23); near(tpl.read('12V/4.7kΩ', 'mA'), 12 / 4.7); near(tpl.read('230V*10A', 'kW'), 2.3);
+  assert.ok(isNaN(tpl.read('230V/10A', 'A')), 'ohms are not an answer in amps');
   // within 2% by default, or the card's own tolerance, relative or absolute
   assert.ok(tpl.right(30, 29.6) && !tpl.right(30.3, 29.6));
   assert.ok(tpl.right(31, 29.6, { tolerance: 0.05 }) && tpl.right(29.9, 29.6, { abs: 0.5 }) && !tpl.right(30.2, 29.6, { abs: 0.5 }));

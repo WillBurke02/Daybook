@@ -538,6 +538,7 @@ pre.out { font: 400 11.5px/1.5 var(--mono); background: var(--ground); border: 1
   .pagehead h1 { font-size: 23px; }
 }
 @media (max-width: 600px) {
+  .workbench.sheet { bottom: calc(60px + env(safe-area-inset-bottom)); height: 50vh; }   /* above the apps along the bottom */
   .appbar .apps, .appbar .mark { display: none; }
   .appbar .here { display: block; }
   main { padding: 14px 12px 90px; }
@@ -1207,28 +1208,34 @@ li.st-unwritten .ltitle { font-weight: 400; color: var(--ink-3); }
 li.st-unwritten .lstatus { font-weight: 400; color: var(--ink-3); }
 li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 
-/* ---- Learn's tools: a whiteboard and a calculator, each a floating window ------------------------ */
-.toolwin { position: fixed; z-index: 70; display: flex; flex-direction: column; background: var(--raised); border: 1px solid var(--rule);
-           border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.22); overflow: clip; container-type: size; }
-.toolwin[hidden] { display: none; }
-.toolwin.docked .tw-grip, .toolwin.docked .tw-dock { display: none; }   /* docked: drag the bar to float it */
+/* ---- Learn's workbench: a calculator and a whiteboard on two tabs, docked beside the card -------- */
+.workbench { position: fixed; z-index: 70; top: 70px; right: 0; bottom: 0; width: var(--dock); display: flex; flex-direction: column;
+             background: var(--raised); border-left: 1px solid var(--rule); box-shadow: -6px 0 20px rgba(0,0,0,.08); container-type: size; }
+.workbench[hidden] { display: none; }
+.workbench.sheet { top: auto; left: 0; width: auto; height: 55vh; border-left: 0; border-top: 1px solid var(--rule); box-shadow: 0 -6px 20px rgba(0,0,0,.1); }
 body.docked main { margin-right: var(--dock); }                         /* the page makes room: the tools never cover the card */
-.tw-bar { padding: 6px 8px 6px 12px; gap: 6px; border-bottom: 1px solid var(--rule-soft); cursor: move; touch-action: none; user-select: none;
-          background: var(--panel-2); }
-.tw-bar kbd { font: 10px var(--mono); opacity: .7; }
-.toolwin > .wb, .toolwin > .calc { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px; }
-.toolwin > .calc { overflow: auto; }   /* too short even for the small keys: it scrolls rather than hides them */
-.tw-grip { position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; cursor: nwse-resize; touch-action: none;
-           background: linear-gradient(135deg, transparent 50%, var(--rule) 50%, var(--rule) 60%, transparent 60%, transparent 72%, var(--rule) 72%, var(--rule) 82%, transparent 82%); }
+body.sheeted main { padding-bottom: calc(55vh + 20px); }
+.wb-head { padding: 8px 10px; gap: 6px; border-bottom: 1px solid var(--rule-soft); background: var(--panel-2); }
+.wb-tabs { display: flex; gap: 4px; }
+.wb-tabs button { min-height: 36px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 8px; background: var(--raised); color: var(--ink); font: 600 14px var(--sans); cursor: pointer; }
+.wb-tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.wb-tabs kbd { margin-left: 6px; font: 10px var(--mono); opacity: .7; }
+.workbench > .wb, .workbench > .calc { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px; position: relative; }
+.workbench > .calc { overflow: auto; }   /* too short even for the small keys: it scrolls rather than hides them */
+.workbench > [hidden] { display: none; }
+.wb-tools .btn, .wb-seg button { min-height: 36px; }
+.wb-text { position: absolute; z-index: 2; font: 14px var(--sans); padding: 4px 6px; min-width: 160px; }
+.calc-given { gap: 4px; }
+.calc-given .chip { cursor: pointer; }
 .wb-canvas { flex: 1; min-height: 180px; width: 100%; touch-action: none; background: var(--panel); border: 1px solid var(--rule-soft);
              border-radius: var(--r, 6px); cursor: crosshair; display: block; }
 .wb-qbox .wb-q { max-height: 24vh; overflow: auto; padding: 4px 2px; }
 .wb-tools { gap: 6px; }
 .swatches { display: inline-flex; gap: 6px; align-items: center; }
-.swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--raised); background: var(--sw); box-shadow: 0 0 0 1px var(--rule);
+.swatch { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--raised); background: var(--sw); box-shadow: 0 0 0 1px var(--rule);
           padding: 0; cursor: pointer; }
 .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
-.penw { width: 22px; height: 22px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
+.penw { width: 32px; height: 32px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
 .penw::after { content: ''; width: var(--pw); height: var(--pw); border-radius: 50%; background: var(--ink); }
 .penw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--c-learn, var(--accent)); }
 .wb-last { gap: 8px; padding: 6px 8px; border-radius: 6px; background: var(--c-learn-soft, var(--accent-soft)); }
@@ -1263,7 +1270,7 @@ body.docked main { margin-right: var(--dock); }                         /* the p
 .solve-out { display: flex; flex-direction: column; gap: 8px; }
 .solve-out .row { gap: 6px; }
 @container (max-height: 600px) {                 /* a short window: smaller keys, so the tab above keeps its room */
-  .toolwin > .calc { gap: 5px; padding: 8px; }
+  .workbench > .calc { gap: 5px; padding: 8px; }
   .ckeys { gap: 3px; }
   .ckey { padding: 2px 0; font-size: 12px; }
   .calc-out { font-size: 1.2em; }
