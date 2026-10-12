@@ -21,6 +21,12 @@
     its question. Only the part you are in shows its ticks.
   - **Feed**: new cards from one lesson at a time; a refresher only from what you studied; a
     missed numeric card comes back with new numbers; your level shows after about 8 answers.
+  - **Fifteen new lessons** where the outline was empty: Electronics (sensors and signals,
+    diodes and rectifiers, test gear), Mechanical (gears, belts and chains; stress and strain),
+    NDT (the six methods; immersion testing), Materials (properties; welding and weld
+    defects), Software (Python for engineers; Linux and services), Fluids (pneumatics;
+    hydraulics; pumps, fans and the affinity laws) and Instrumentation (P&IDs and ISA
+    symbols). Written for Daybook, so no source text is reworded; each names its sources.
   - **Learning record** (CPD) by day, as CSV.
   - **The workbench**: calculator and whiteboard as tabs in one docked panel (a sheet on a
     phone), 36 px labelled tools, the card's numbers as buttons, sums kept with the card, units

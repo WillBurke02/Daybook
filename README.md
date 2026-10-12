@@ -208,7 +208,12 @@ Ohm's and Kirchhoff's laws, pulse-echo and acoustic impedance, the PLC basics
 (scan cycle, data types, ladder, timers and counters, edges), the drives
 lessons (motors, V/f and vector, DC, servo, encoders, PID, motion profiles), and
 the first curriculum batch: safe isolation, proximity sensors, IP addressing,
-reading schematics, fault finding, fasteners. Every subject has a calibration
+reading schematics, fault finding, fasteners; seven A-level pure maths lessons
+imported from OpenStax; and a second batch: sensors and signals (4–20 mA, PT100,
+thermocouples, encoders), diodes and rectifiers, test gear, gears and belts, stress
+and strain, the six NDT methods, immersion UT, material properties, welding,
+Python, Linux, pneumatics, hydraulics, pumps and fans (the affinity laws), and
+P&IDs. 60 of the 236 are written. Every subject has a calibration
 bank (`calibrate.json`, 643 questions, 3 or more per outline lesson) for Find
 my level; bank questions place you and never count as a lesson's cards.
 
