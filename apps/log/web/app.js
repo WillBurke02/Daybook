@@ -1,6 +1,7 @@
 // Log, as the shell sees it: a diary of the day and the work day.
 import { el } from './core/dom.js';
 import { today, addDays, dayLong } from './core/format.js';
+import search from './search.js';
 import * as day from './views/day.js';
 import * as browse from './views/browse.js';
 import * as printing from './views/print.js';
@@ -28,11 +29,7 @@ export default {
     ']': () => onDay() && toDay(addDays(dayShown(), 1)),
     t: () => toDay(today()),
   },
-  search: {
-    entry: ['Entries', r => ({ when: r.date, thumb: r.thumb, what: (r.text || (r.kind === 'day' ? 'Diary' : 'Photo or voice note')).split('\n')[0],
-      more: [r.kind === 'day' ? 'diary' : r.at, (r.text || '').split('\n').slice(1).join(' ').slice(0, 120)].filter(Boolean).join(' · '),
-      href: `#/day?d=${r.date}&e=${r.id}` })],
-  },
+  search,
   // the quick add, above every page
   bar: ctx => day.quickBar(ctx),
 };

@@ -78,7 +78,7 @@ assert raw("/login", host="100.101.102.103:8765")[0] == 403
 # signing in: a cookie the page cannot read, kept to this site, good for 30 days
 assert raw("/api/login", "POST", {"password": "wrong"}, W)[0] == 403
 code, hdr, _ = raw("/api/login", "POST", {"password": "pass"}, W)
-assert code == 200 and "HttpOnly" in hdr["Set-Cookie"] and "SameSite=Strict" in hdr["Set-Cookie"], hdr
+assert code == 200 and "HttpOnly" in hdr["Set-Cookie"] and "SameSite=Lax" in hdr["Set-Cookie"], hdr   # Lax: links from Outlook arrive signed in
 assert f"Max-Age={30 * 86400}" in hdr["Set-Cookie"] and "Secure" not in hdr["Set-Cookie"]
 C = {"Cookie": hdr["Set-Cookie"].split(";")[0]}
 CW = dict(W, **C)
@@ -97,6 +97,29 @@ assert b"home.js" in raw("/", headers=C)[2]
 for bad in ("/../core/db.py", "/money/..%2f..%2fcore/db.py", "/money/../../core/db.py", "/money/../apps/money/app.py"):
     assert raw(bad, headers=C)[0] == 404, bad
 assert raw("/admin", headers=C)[1]["Location"] == "/money/#/admin"
+
+# front doors: /hours/ and /spending/ are Money's, each installing as its own app with its own icon
+assert [(d["name"], d["app"]) for d in meta["doors"]] == [("hours", "money"), ("spending", "money"), ("log", "log"), ("learn", "learn")]
+for d in ("hours", "spending"):
+    man = json.loads(raw(f"/{d}/manifest.json")[2])
+    assert man["start_url"] == man["scope"] == man["id"] == f"/{d}/" and man["icons"][0]["src"] == f"/assets/icons/{d}-192.png", man
+    assert raw(man["icons"][0]["src"])[0] == 200 and b"start(app)" in raw(f"/{d}/", headers=C)[2]
+    assert json.loads(raw(f"/{d}/api/meta", headers=C)[2])["app"] == "money", "the same database behind both doors"
+assert raw("/hours", headers=C)[1].get("Location") == "/hours/" and raw("/nowhere/", headers=C)[0] == 404
+print("ok — front doors")
+
+# kept signed in while used: a cookie more than a day old comes back renewed; a fresh one is left alone
+old = {"Cookie": "daybook=" + suite.make_session(days=20)}
+code, hdr, _ = raw("/api/meta", headers=old)
+assert code == 200 and "Max-Age=2592000" in hdr.get("Set-Cookie", ""), hdr
+assert "Set-Cookie" not in raw("/api/meta", headers=C)[1]
+# the page's files: kept by the browser and checked, a 304 when unchanged
+code, hdr, _ = raw("/money/core/api.js", headers=C)
+assert code == 200 and hdr["Cache-Control"] == "no-cache" and hdr["ETag"]
+code, _, body = raw("/money/core/api.js", headers=dict(C, **{"If-None-Match": hdr["ETag"]}))
+assert code == 304 and body == b""
+assert raw("/money/api/meta", headers=C)[1]["Cache-Control"] == "no-store", "data is never cached"
+print("ok — sessions renew, files revalidate")
 
 # CSRF: a cross-site form POST cannot set a custom header, so it is refused
 assert raw("/money/api/t/tag", "POST", {"name": "csrf"}, dict(C, **{"Content-Type": "text/plain"}))[0] == 403

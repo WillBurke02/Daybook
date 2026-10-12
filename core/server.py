@@ -69,6 +69,7 @@ def known_host(host):
 class Handler(BaseHTTPRequestHandler):
     server_version = "daybook/" + _db.APP_VERSION
     protocol_version = "HTTP/1.1"
+    _renew = None                             # a fresh sign-in cookie to send with this response
 
     def log_message(self, fmt, *a):
         if _suite.env("VERBOSE"):
@@ -87,6 +88,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(data)))
         if not any(k == "Cache-Control" for k, _ in (extra or [])):
             self.send_header("Cache-Control", "no-store")
+        if self._renew and not any(k == "Set-Cookie" for k, _ in (extra or [])):
+            self.send_header("Set-Cookie", self._renew)
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "no-referrer")
         for k, v in (extra or []):
@@ -119,14 +122,21 @@ class Handler(BaseHTTPRequestHandler):
         return self.headers.get("X-Forwarded-Proto") == "https" or self._host().endswith(".ts.net")
 
     def _signed_in(self):
+        """Signed in, and kept signed in while used: a cookie a day old is swapped for a fresh one."""
         c = SimpleCookie(self.headers.get("Cookie", ""))
-        return COOKIE in c and _suite.session_ok(c[COOKIE].value)
+        ok = COOKIE in c and _suite.session_ok(c[COOKIE].value)
+        if ok and _suite.session_left(c[COOKIE].value) < (_suite.SESSION_DAYS - 1) * 86400:
+            self._renew = self._cookie(_suite.make_session(), _suite.SESSION_DAYS * 86400)
+        return ok
 
     def _cookie(self, value, age):
-        return (f"{COOKIE}={value}; Path=/; HttpOnly; SameSite=Strict; Max-Age={age}"
+        # Lax, not Strict: a link to Daybook clicked in Outlook arrives signed in. Writes stay
+        # same-site anyway: they need the X-Daybook header and our Origin.
+        return (f"{COOKIE}={value}; Path=/; HttpOnly; SameSite=Lax; Max-Age={age}"
                 + ("; Secure" if self._https() else ""))
 
     def _handle(self, method):
+        self._renew = None                    # a kept-alive connection reuses this handler: nothing carried over
         url = urlparse(self.path)
         path = unquote(url.path)
         query = parse_qs(url.query, keep_blank_values=True)       # ?parent_id= means IS NULL: keep it
@@ -161,16 +171,17 @@ class Handler(BaseHTTPRequestHandler):
             if path.startswith("/api/"):
                 return self._suite_api(method, [p for p in path[5:].split("/") if p], query)
             head, _, rest = path.lstrip("/").partition("/")
-            if head in SUITE.apps:
+            name = _suite.door(head)                  # /hours/ is Money's front door, and so on
+            if name:
                 if rest.startswith("api/"):
-                    return self._app_api(head, method, [p for p in rest[4:].split("/") if p], query)
+                    return self._app_api(name, method, [p for p in rest[4:].split("/") if p], query)
                 if share:
-                    return self._share(head)
+                    return self._share(name)
             if method not in ("GET", "HEAD"):
                 return self._send(405, {"error": "method not allowed"})
             if path.rstrip("/") == "/admin":
                 return self._go(f"/{next(iter(SUITE.apps))}/#/admin")
-            if head in SUITE.apps and not path.endswith("/") and not rest:
+            if name and not path.endswith("/") and not rest:
                 return self._go(path + "/")           # so the page's relative imports resolve inside /money/
             return self._static(path)
         except _api.Err as e:
@@ -320,8 +331,11 @@ class Handler(BaseHTTPRequestHandler):
         is web/core/api.js, /money/views/hours.js is apps/money/web/views/hours.js.
         Home, at /, is web/home over web."""
         head, _, rest = path.lstrip("/").partition("/")
-        if head in SUITE.apps:
-            layers, rel = [os.path.join(ROOT, "apps", head, "web"), WEB], rest or "index.html"
+        name = _suite.door(head)
+        if name:
+            layers, rel = [os.path.join(ROOT, "apps", name, "web"), WEB], rest or "index.html"
+            if rel == "manifest.json" and head != name:
+                rel = f"manifest.{head}.json"          # a door installs as its own app, with its own icon
         elif path == "/login":
             layers, rel = [WEB], "login.html"
         else:
@@ -333,9 +347,16 @@ class Handler(BaseHTTPRequestHandler):
         else:
             return self._send(404, {"error": "not found"})
         ctype = mimetypes.guess_type(full)[0] or "application/octet-stream"
+        if "/assets/" in full:
+            extra = [("Cache-Control", "max-age=604800")]
+        else:                                   # the browser keeps the page's files and asks if they changed:
+            st = os.stat(full)                  # a 304 instead of the file, so switching app is quick
+            tag = f'"{st.st_mtime_ns:x}-{st.st_size:x}"'
+            extra = [("Cache-Control", "no-cache"), ("ETag", tag)]
+            if self.headers.get("If-None-Match") == tag:
+                return self._send(304, b"", ctype, extra=extra)
         with open(full, "rb") as f:
             data = f.read()
-        extra = [("Cache-Control", "max-age=604800")] if "/assets/" in full else None
         self._send(200, data, ctype, extra=extra)
 
     def do_GET(self):    self._handle("GET")
@@ -353,7 +374,7 @@ def suite_meta():
         themes = [dict(r) for r in s.execute("SELECT * FROM theme ORDER BY name")]
     finally:
         s.close()
-    return {"apps": [{"name": m.NAME, "title": m.TITLE} for m in SUITE.apps.values()],
+    return {"apps": [{"name": m.NAME, "title": m.TITLE} for m in SUITE.apps.values()], "doors": _suite.doors(),
             "themes": themes, "settings": {"default_mode": settings.get("mode", "system"), "home": settings.get("home", "")},
             "password_default": _suite.password_is_default(),
             "suite_version": _db.APP_VERSION}

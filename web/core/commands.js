@@ -142,7 +142,7 @@ const MENUS = () => [
     ...app.groups().flatMap(([group, ids]) => ['-', group ? { head: group } : null,
       ...ids.map(id => ({ label: app.titleOf(id), on: app.page() === id, fn: () => app.go(id) }))]),
     '-', { head: 'Apps' }, { label: 'Home', fn: () => { location.href = '/'; } },
-    ...state.meta.apps.filter(a => a.name !== APP).map(a => ({ label: a.title, fn: () => { location.href = `/${a.name}/`; } })),
+    ...state.meta.doors.filter(a => a.name !== APP).map(a => ({ label: a.title, fn: () => { location.href = `/${a.name}/`; } })),
     '-', { label: 'Admin', fn: () => { location.hash = '#/admin'; } },
   ] },
   { label: 'Help', items: () => [
@@ -154,6 +154,7 @@ const MENUS = () => [
 function shortcuts() {
   dialog('Keyboard shortcuts', el('table', {}, el('tbody', {}, [
     ['/', `Search ${app.app.title}`], ...(app.app.keys || [['[ and ]', 'Previous and next period'], ['T', 'Back to today']]),
+    ['Alt+1 to 6', `Home, then ${state.meta.doors.map(d => d.title).join(', ')}`],
     ['Ctrl+Z', 'Undo the last change (outside a text box)'], ['Enter', 'In a table: save and move down'],
     ['Esc', 'Close a menu or box'], ['?', 'This list'],
     ['Right-click', 'Things to do with what is under the pointer'], ['Shift+right-click', 'The browser’s own menu'],
@@ -167,16 +168,12 @@ function about() {
       .map(([k, v]) => el('tr', {}, el('td', { style: 'width:120px' }, k), el('td', {}, v)))))));
 }
 
-/** The menu button on the bar: File, Edit, View, Go and Help, then the things most often wanted. */
+/** The menu button on the bar: File, Edit, View, Go and Help. Each thing once: Customise is in Edit
+ *  (and on the bar), Theme in View, Admin in Go (and the sidebar), Lock in File. */
 export function openMenu(button) {
   if (button.getAttribute('aria-expanded') === 'true') { closeMenus(); return; }
   const r = button.getBoundingClientRect();
-  popup([...MENUS().map(x => ({ label: x.label, sub: x.items() })), '-',
-    { label: state.editing ? 'Stop customising' : 'Customise this page', fn: app.editLayout },
-    { label: 'Theme', sub: app.modes().map(t => ({ label: t.label, on: (document.documentElement.dataset.mode || 'system') === t.v,
-      fn: async () => { await app.useTheme(t.v); app.render(); } })) },
-    { label: 'Admin', fn: () => { location.hash = '#/admin'; } },
-    '-', { label: 'Lock (sign out here)', fn: app.lock }], r.right - 250, r.bottom + 4);
+  popup(MENUS().map(x => ({ label: x.label, sub: x.items() })), r.right - 250, r.bottom + 4);
   button.setAttribute('aria-expanded', 'true');
 }
 
@@ -194,6 +191,10 @@ export function install(a) {
     if (e.altKey) {                                // an app's Alt keys work while typing too ('Alt+w' in its keymap); AltGr is Ctrl+Alt
       const k = !e.ctrlKey && e.code?.startsWith('Key') && app.app.keymap?.[`Alt+${e.code.slice(3).toLowerCase()}`];
       if (k) { e.preventDefault(); closeMenus(); k(); }
+      // Alt+1 Home, Alt+2… the apps in the order of the bar; not while typing (a Mac types # with Alt+3)
+      const n = !e.ctrlKey && !typing(e.target) && /^Digit[1-9]$/.test(e.code || '') ? +e.code.slice(5) : 0;
+      const to = n === 1 ? '/' : state.meta.doors[n - 2] && `/${state.meta.doors[n - 2].name}/`;
+      if (to) { e.preventDefault(); location.href = to; }
       return;
     }
     if (e.ctrlKey) { if (e.key === 'z' && !typing(e.target)) { e.preventDefault(); undo(); } return; }

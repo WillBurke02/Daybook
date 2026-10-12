@@ -9,17 +9,19 @@
     python3 daybook.py import <files...>   Money: import statements from the command line
     python3 daybook.py backup              force today's copy of every database
     python3 daybook.py export              one zip of every database
-    python3 daybook.py install             Start menu and desktop shortcuts to Daybook.pyw
+    python3 daybook.py install             Start menu shortcuts, one per app (Ctrl+Alt+L opens Log), and Daybook on the desktop
+    python3 daybook.py install --url https://pi.tail1234.ts.net     ...that open the Pi's Daybook
     python3 daybook.py install --service   a systemd service (Raspberry Pi)
     python3 daybook.py sync --folder PATH  start syncing with other computers through a folder
     python3 daybook.py sync --folder PATH --code CODE      join from another computer
     python3 daybook.py sync                one round now, and what it did
-    python3 daybook.py update              take the newest code from GitHub (--check, --rollback)
+    python3 daybook.py update              take the newest release from GitHub (--check, --rollback)
 """
 import argparse
 import getpass
 import json
 import os
+import sqlite3
 import sys
 import webbrowser
 
@@ -174,12 +176,69 @@ After=network-online.target
 User={user}
 WorkingDirectory={here}
 ExecStart={py} {here}/daybook.py serve --host 127.0.0.1 --port 8765 {hosts}
-Environment=DAYBOOK_DATA={data}
+Environment=DAYBOOK_DATA={data}{backups}
 Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
 """
+
+
+def tailscale_name(run):
+    """This machine's name on Tailscale (pi.tail1234.ts.net), or None."""
+    try:
+        out = run(["tailscale", "status", "--json"], capture_output=True, text=True, timeout=10)
+        return (json.loads(out.stdout).get("Self", {}).get("DNSName") or "").rstrip(".") or None
+    except (OSError, ValueError, AttributeError):
+        return None
+
+
+def install_service(a, subprocess):
+    """Daybook from boot on a Raspberry Pi, behind Tailscale's HTTPS, in one command (run with sudo):
+    the unit, enabled and started, and `tailscale serve` pointed at it. Each step it cannot do, it prints."""
+    data = os.path.abspath(os.path.expanduser(a.data or _suite.env("DATA") or os.path.join(HERE, "data")))
+    user = os.environ.get("SUDO_USER") or getpass.getuser()
+    # read suite.db without writing a thing (no journal files owned by root, which the service could not open)
+    store = os.path.join(data, "suite.db")
+    try:
+        con = sqlite3.connect(f"file:{store}?immutable=1", uri=True)
+        set_ = con.execute("SELECT 1 FROM secret WHERE key = 'password'").fetchone()
+        con.close()
+    except sqlite3.Error:
+        set_ = None
+    if not set_:
+        raise _db.Stop("Set Daybook's password first, as yourself (not sudo):\n  python3 daybook.py password\n"
+                       "Daybook answers nothing but this machine while the password is 'pass'.")
+    name = tailscale_name(subprocess.run)
+    hosts = " ".join(f"--allow-host {h}" for h in [name, *a.allow_host] if h)
+    unit = UNIT.format(user=user, here=HERE, py=sys.executable, data=data, hosts=hosts,
+                       backups=f"\nEnvironment=DAYBOOK_BACKUPS={os.path.abspath(a.backup_dir)}" if a.backup_dir else "")
+    dest = "/etc/systemd/system/daybook.service"
+    try:
+        with open(dest, "w") as f:
+            f.write(unit)
+    except OSError:
+        print(unit)
+        print(f"Not allowed to write {dest}. Run again with sudo, or save the text above there.")
+        return 1
+    steps = [["systemctl", "daemon-reload"], ["systemctl", "enable", "--now", "daybook"],
+             ["systemctl", "restart", "daybook"]] + ([["tailscale", "serve", "--bg", "8765"]] if name else [])
+    for cmd in steps:
+        try:
+            ok = subprocess.run(cmd, capture_output=True, text=True, timeout=60).returncode == 0
+        except OSError:
+            ok = False
+        if not ok:
+            print(f"Could not run: sudo {' '.join(cmd)}  (run it yourself)")
+    print(f"Wrote {dest}: Daybook starts with the Pi, as {user}, data in {data}.")
+    if name:
+        print(f"Open https://{name}/ on the PC and the phone (HTTPS must be on once in the Tailscale admin "
+              f"console, under DNS).\nOn the PC: python daybook.py install --url https://{name}")
+    else:
+        print("Tailscale is not running here: install it (curl -fsSL https://tailscale.com/install.sh | sh),\n"
+              "sudo tailscale up, then run this again so Daybook answers to the Pi's Tailscale name.")
+    return 0
 
 
 def cmd_install(a):
@@ -187,35 +246,29 @@ def cmd_install(a):
     a systemd unit so a Raspberry Pi runs it from boot."""
     import subprocess
     if a.service:
-        _setup(a)
-        hosts = " ".join(f"--allow-host {h}" for h in a.allow_host)
-        unit = UNIT.format(user=os.environ.get("SUDO_USER") or getpass.getuser(), here=HERE,
-                           py=sys.executable, data=SUITE.data, hosts=hosts)
-        dest = "/etc/systemd/system/daybook.service"
-        try:
-            with open(dest, "w") as f:
-                f.write(unit)
-        except OSError:
-            print(unit)
-            print(f"Not allowed to write {dest}. Run again with sudo, or save the text above there.")
-            return 1
-        print(f"Wrote {dest}. Now:\n  sudo systemctl daemon-reload && sudo systemctl enable --now daybook\n"
-              "  sudo tailscale serve --bg --https=443 http://127.0.0.1:8765")
-        return 0
+        return install_service(a, subprocess)
     app = os.path.join(HERE, "Daybook.pyw")
     icons = os.path.join(HERE, "web", "assets", "icons")
     py = sys.executable
+    _setup(a)
+    url = f" --url {a.url.rstrip('/')}" if a.url else ""
+    # Daybook (Home), and each app's front door with its own icon: Log, Hours and pay, Spending, Learn
+    links = [("Daybook", "", "daybook", "Money, Log and Learn")] + [
+        (f"Daybook {d['title']}", d["name"], d["name"], f"{d['title']}, in Daybook") for d in _suite.doors()]
     if sys.platform == "win32":
         pyw = os.path.join(os.path.dirname(py), "pythonw.exe")
-        ps = ("foreach ($w in 'Programs','DesktopDirectory') {"
-              " $d = [Environment]::GetFolderPath($w);"
-              " $p = Join-Path $d 'Daybook.lnk';"
+        items = [{"name": n, "args": f'"{app}" {door}{url}'.strip(), "icon": os.path.join(icons, f"{ico}.ico"), "desc": desc,
+                  "where": w, "hotkey": "CTRL+ALT+L" if door == "log" and w == "Programs" else ""}
+                 for n, door, ico, desc in links for w in ("Programs",) + (("DesktopDirectory",) if not door else ())]
+        ps = ("foreach ($i in ($env:LINKS | ConvertFrom-Json)) {"
+              " $d = [Environment]::GetFolderPath($i.where);"
+              " $p = Join-Path $d ($i.name + '.lnk');"
               " $s = (New-Object -ComObject WScript.Shell).CreateShortcut($p);"
-              " $s.TargetPath = $env:PYW; $s.Arguments = [char]34 + $env:APP + [char]34; $s.WorkingDirectory = $env:HERE;"
-              " $s.IconLocation = $env:ICO; $s.Description = 'Money, Log and Learn'; $s.Save(); $p }")
+              " $s.TargetPath = $env:PYW; $s.Arguments = $i.args; $s.WorkingDirectory = $env:HERE;"
+              " $s.IconLocation = $i.icon; $s.Description = $i.desc; if ($i.hotkey) { $s.Hotkey = $i.hotkey }; $s.Save(); $p }")
         out = subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", ps], capture_output=True,
-                             text=True, env=dict(os.environ, PYW=pyw if os.path.exists(pyw) else py, APP=app,
-                                                 HERE=HERE, ICO=os.path.join(icons, "daybook.ico")))
+                             text=True, env=dict(os.environ, PYW=pyw if os.path.exists(pyw) else py, HERE=HERE,
+                                                 LINKS=json.dumps(items)))
         if out.returncode:
             raise _db.Stop(out.stderr.strip() or "PowerShell could not make the shortcuts")
         made = out.stdout.split()
@@ -223,8 +276,8 @@ def cmd_install(a):
         root = os.path.expanduser("~/Applications/Daybook.app/Contents")
         os.makedirs(root + "/MacOS", exist_ok=True)
         os.makedirs(root + "/Resources", exist_ok=True)
-        with open(root + "/MacOS/Daybook", "w") as f:
-            f.write(f'#!/bin/sh\nexec "{py}" "{app}"\n')
+        with open(root + "/MacOS/Daybook", "w") as f:              # ponytail: one Mac app, Home; doors when a Mac asks
+            f.write(f'#!/bin/sh\nexec "{py}" "{app}"{url}\n')
         os.chmod(root + "/MacOS/Daybook", 0o755)
         with open(root + "/Info.plist", "w") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n<plist version="1.0"><dict>'
@@ -238,14 +291,17 @@ def cmd_install(a):
     else:
         folder = os.path.join(os.environ.get("XDG_DATA_HOME") or os.path.expanduser("~/.local/share"), "applications")
         os.makedirs(folder, exist_ok=True)
-        made = [os.path.join(folder, "daybook.desktop")]
-        with open(made[0], "w") as f:
-            f.write(f'[Desktop Entry]\nType=Application\nName=Daybook\nComment=Money, Log and Learn\n'
-                    f'Exec="{py}" "{app}"\nIcon={os.path.join(icons, "icon-512.png")}\nTerminal=false\n'
-                    f'Categories=Office;\n')
+        made = []
+        for name, door, ico, desc in links:
+            made.append(os.path.join(folder, f"daybook{'-' + door if door else ''}.desktop"))
+            with open(made[-1], "w") as f:
+                f.write(f'[Desktop Entry]\nType=Application\nName={name}\nComment={desc}\n'
+                        f'Exec="{py}" "{app}" {door}{url}\nIcon={os.path.join(icons, (ico if door else "icon") + "-512.png")}\n'
+                        f'Terminal=false\nCategories=Office;\n')
     print("Made:\n  " + "\n  ".join(made))
-    print("Open Daybook from there. On a USB stick the shortcut works while the stick keeps the same\n"
-          "drive letter; run install again if it moves.")
+    print("Open Daybook, or any one app, from there" + ("; Ctrl+Alt+L opens Log to write in" if sys.platform == "win32" else "")
+          + (f".\nThey open {a.url}: nothing runs on this computer." if a.url else
+             ".\nOn a USB stick the shortcuts work while the stick keeps the same drive letter; run install again if it moves."))
 
 
 def cmd_sync(a):
@@ -342,6 +398,7 @@ def main(argv=None):
     s.add_argument("--out")
     s = add("install"); s.set_defaults(fn=cmd_install)
     s.add_argument("--service", action="store_true", help="a systemd unit instead of shortcuts (Raspberry Pi)")
+    s.add_argument("--url", help="shortcuts that open this Daybook (the Pi's, e.g. https://pi.tail1234.ts.net) instead of starting one here")
     s.add_argument("--allow-host", action="append", default=[], metavar="NAME")
     s = add("sync"); s.set_defaults(fn=cmd_sync)
     s.add_argument("--folder", help="start or join sync through this folder")

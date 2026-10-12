@@ -2,8 +2,7 @@
 import { api } from './api.js';
 import { el, flash, select } from './core/dom.js';
 import { state } from './core/state.js';
-import { fmtWhen, plain, dayShort } from './core/format.js';
-import { writeVal } from './core/dom.js';
+import search from './search.js';
 import * as overview from './views/overview.js';
 import * as hours from './views/hours.js';
 import * as pay from './views/pay.js';
@@ -14,9 +13,7 @@ import * as settings from './views/settings.js';
 import * as pension from './views/pension.js';
 import * as reminders from './views/reminders.js';
 
-const at = d => `p=month:${d}`;
-
-export default {
+const app = {
   name: 'money', title: 'Money', home: 'overview', period: true,
   about: 'hours, pay, leave, spending and bills.',
   pages: { overview, hours, pay, holidays, spending, accounts, reminders, investments: pension.investments, pension, settings },
@@ -34,23 +31,8 @@ export default {
     { label: 'Import hours…', fn: () => { shell.go('hours'); setTimeout(() => document.getElementById('p-hours.import')?.scrollIntoView({ behavior: 'smooth' }), 700); } },
   ],
 
-  // How each kind of search result reads, and where clicking it goes.
-  search: {
-    txn: ['Transactions', r => ({ when: r.date, what: r.merchant || r.description, amount: r.amount, signed: true,
-      more: [r.account, r.category_path, r.merchant ? r.description : null, r.note].filter(Boolean).join(' · '), href: `#/spending?${at(r.date)}` })],
-    payee: ['Payees', r => ({ what: r.name, more: `${r.category || 'No category'} · ${r.txns} transactions`, href: '#/settings' })],
-    shift: ['Shifts', r => ({ when: r.date, what: `${r.start}–${r.end}`, more: [r.project, r.note].filter(Boolean).join(' · '),
-      href: `#/hours?${at(r.date)}&add=${r.date}` })],
-    payslip: ['Payslip lines', r => ({ when: r.date, what: r.label, amount: r.amount, more: `Payslip paid ${dayShort(r.date)}${r.note ? ' · ' + r.note : ''}`,
-      href: `#/pay?slip=${r.date}` })],
-    leave: ['Days off', r => ({ when: r.date, what: r.note || { holiday: 'Annual leave', extra: 'Time off in lieu', other: 'Day off' }[r.kind],
-      more: `${fmtWhen(r.date, r.to_date)} · ${plain(r.days)} days`, href: '#/holidays', go: () => writeVal('holiday_year', r.date.slice(0, 4)) })],
-    reminder: ['Reminders', r => ({ when: r.date, what: r.title, amount: r.amount, more: [r.every, r.note].filter(Boolean).join(' · '), href: '#/reminders' })],
-    receipt: ['Receipts', r => ({ when: r.date, what: r.note || 'Receipt', thumb: r.thumb, amount: r.amount,
-      more: r.txn_id ? r.description || '' : 'not matched to a payment yet', href: `#/spending?${at(r.date || '')}` })],
-    account: ['Accounts', r => ({ what: r.name, more: [r.kind, r.provider].filter(Boolean).join(' · '), href: '#/accounts' })],
-    category: ['Categories', r => ({ what: r.path, more: r.kind, href: '#/settings' })],
-  },
+  search,
+
 
   /** Account, category and tag, above the pages that say filters: true. */
   async filterBar(render) {
@@ -74,3 +56,16 @@ export default {
     } }, 'Re-apply rules to every transaction'))],
   },
 };
+
+// The front door this page came in by: /hours/ is work, /spending/ is private, /money/ is all of it.
+// Every page still opens from any door (a link to #/pay works in Spending); the door sets the menu.
+const door = {
+  hours: { title: 'Hours and pay', about: 'hours, overtime, Send to HR, payslips and leave.', home: 'hours',
+           groups: [[null, ['hours', 'pay', 'holidays']]], quick: app.quick.slice(0, 2),
+           file: shell => app.file(shell).filter((_, i) => i !== 2) },
+  spending: { title: 'Spending', about: 'spending, accounts, bills, savings and pension.', home: 'overview',
+              groups: app.groups.filter(([g]) => g !== 'Hours'), quick: app.quick.slice(2),
+              file: shell => [app.file(shell)[2]] },
+}[location.pathname.split('/')[1]];
+
+export default { ...app, ...door };

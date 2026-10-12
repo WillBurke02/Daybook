@@ -150,7 +150,7 @@ export async function holdings(body, ctx, kinds = ['savings', 'investment', 'pen
       })));
   }
   if (!hold.some(h => kinds.includes(h.kind)))
-    body.append(el('p', { class: 'note' }, 'Add savings, investment or pension accounts in Settings → Accounts.'));
+    body.append(el('p', { class: 'note' }, 'No savings, investment or pension accounts yet. ', el('a', { class: 'btn sm', href: '#/settings?panel=settings.accounts' }, 'Add one')));
 }
 
 /** Money put in and taken out: typed rows to change or remove, and where the rest came from. */
@@ -232,7 +232,7 @@ export const panels = {
     body.classList.add('flush');
     if (!pots.length) {
       body.classList.remove('flush');
-      body.append(el('p', { class: 'note' }, 'Add an account of kind "pension" in Settings → Accounts.'));
+      body.append(el('p', { class: 'note' }, 'No pension account yet (an account of kind "pension"). ', el('a', { class: 'btn sm', href: '#/settings?panel=settings.accounts' }, 'Add one')));
       return;
     }
     body.append(tiles(

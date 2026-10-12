@@ -3,8 +3,12 @@
 
 It starts the server and opens Daybook in a window of its own: Edge (else Chrome)
 in app mode, so no tabs and no address bar, with Daybook's own icon on the
-taskbar. Money, Log and Learn switch inside that window. Closing it stops the
-server. `python daybook.py install` adds it to the Start menu and desktop.
+taskbar. Closing it stops the server. `python daybook.py install` adds it to the
+Start menu and desktop, and gives each app its own shortcut, window and icon:
+
+    Daybook.pyw                    Home
+    Daybook.pyw log                straight into Log (hours, spending, learn, money alike)
+    Daybook.pyw log --url https://pi.tail1234.ts.net     the Pi's Daybook: start nothing here
 
     DAYBOOK_DATA     the folder with the databases (default: data/ next to this file)
     DAYBOOK_BACKUPS  where the daily copies go (the computer's disk, when data is on a stick)
@@ -25,13 +29,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from core.suite import env   # noqa: E402
 
+ARGS = sys.argv[1:]
 PORT = int(env("PORT") or 8765)
-URL = (env("URL") or f"http://127.0.0.1:{PORT}").rstrip("/")
+REMOTE = (ARGS[ARGS.index("--url") + 1] if "--url" in ARGS[:-1] else env("URL") or "").rstrip("/")
+URL = REMOTE or f"http://127.0.0.1:{PORT}"
+DOOR = next((a for a in ARGS if a.isalpha()), "")         # the app this window opens on; none is Home
+# a window's title ends "· <its app> · Daybook": which door that is, for its taskbar group and icon
+TITLES = {"Hours and pay": "hours", "Spending": "spending", "Money": "money", "Log": "log", "Learn": "learn"}
 DATA = os.path.join(os.environ.get("LOCALAPPDATA") or (
     os.path.expanduser("~/Library/Application Support") if sys.platform == "darwin"
     else os.environ.get("XDG_DATA_HOME") or os.path.expanduser("~/.local/share")), "Daybook")
 PROFILE = os.path.join(DATA, "window")      # the window's own browser profile, off the USB stick
-ICON = os.path.join(HERE, "web", "assets", "icons", "daybook.ico")
+ICONS = os.path.join(HERE, "web", "assets", "icons")
+ICON = os.path.join(ICONS, "daybook.ico")
 
 
 def say(msg):
@@ -75,8 +85,9 @@ def browser():
 def launch():
     """The app window, or None when there is no Edge or Chrome to make one."""
     exe = browser()
-    return exe and subprocess.Popen([exe, f"--app={URL}/", f"--user-data-dir={PROFILE}", "--no-first-run",
-                                     "--no-default-browser-check", "--window-size=1440,920"])
+    size = "560,760" if DOOR == "log" else "1440,920"     # Log is a box and a list: a small window to write in
+    return exe and subprocess.Popen([exe, f"--app={URL}/{DOOR + '/' if DOOR else ''}", f"--user-data-dir={PROFILE}",
+                                     "--no-first-run", "--no-default-browser-check", f"--window-size={size}"])
 
 
 def window():
@@ -132,29 +143,37 @@ def pin_as_us():
     IID_IPropertyStore = guid("886D8EEB-8CF2-4446-8D02-CDBA1DBDCF99")
     AUM = "9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"
     pyw = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
-    values = [(5, "Daybook.App"),                                                # the id: windows and pin group under it
-              (2, f'"{pyw if os.path.exists(pyw) else sys.executable}" "{os.path.abspath(__file__)}"'),
-              (3, ICON + ",0"),
-              (4, "Daybook")]                                                    # the pin's name
+    exe = f'"{pyw if os.path.exists(pyw) else sys.executable}" "{os.path.abspath(__file__)}"'
+
+    def values(door):
+        """Each app its own taskbar group, pin and icon: a pinned Log opens Log."""
+        ico = os.path.join(ICONS, f"{door}.ico")
+        name = next((t for t, d in TITLES.items() if d == door), "")
+        return [(5, f"Daybook.{door.title() or 'App'}"),                         # the id: windows and pin group under it
+                (2, " ".join(filter(None, [exe, door, f"--url {REMOTE}" if REMOTE else ""]))),
+                (3, (ico if door and os.path.isfile(ico) else ICON) + ",0"),
+                (4, f"{name} · Daybook" if name else "Daybook")]                 # the pin's name
     shell32.SHGetPropertyStoreForWindow.argtypes = [w.HWND, ctypes.POINTER(GUID), ctypes.POINTER(ctypes.c_void_p)]
     shell32.SHGetPropertyStoreForWindow.restype = ctypes.HRESULT
     user32.LoadImageW.restype = w.HANDLE
     user32.LoadImageW.argtypes = [w.HINSTANCE, w.LPCWSTR, w.UINT, ctypes.c_int, ctypes.c_int, w.UINT]
     user32.SendMessageW.restype = w.LPARAM
     user32.SendMessageW.argtypes = [w.HWND, w.UINT, w.WPARAM, w.LPARAM]
-    big = user32.LoadImageW(None, ICON, 1, 48, 48, 0x10)                          # IMAGE_ICON, LR_LOADFROMFILE
-    small = user32.LoadImageW(None, ICON, 1, 16, 16, 0x10)
+    def icons(door):                                                               # IMAGE_ICON, LR_LOADFROMFILE
+        ico = os.path.join(ICONS, f"{door}.ico")
+        ico = ico if door and os.path.isfile(ico) else ICON
+        return user32.LoadImageW(None, ico, 1, 48, 48, 0x10), user32.LoadImageW(None, ico, 1, 16, 16, 0x10)
 
     def method(obj, i, *args):
         vtbl = ctypes.cast(obj, ctypes.POINTER(ctypes.POINTER(ctypes.c_void_p))).contents
         return ctypes.WINFUNCTYPE(ctypes.HRESULT, ctypes.c_void_p, *args)(vtbl[i])
 
-    def tag(hwnd):
+    def tag(hwnd, door):
         store = ctypes.c_void_p()
         shell32.SHGetPropertyStoreForWindow(hwnd, ctypes.byref(IID_IPropertyStore), ctypes.byref(store))
         try:
             set_value = method(store, 6, ctypes.POINTER(PKEY), ctypes.POINTER(PROPVARIANT))
-            for pid, text in values:
+            for pid, text in values(door):
                 buf = ctypes.create_unicode_buffer(text)
                 pv = PROPVARIANT(vt=31, val=ctypes.cast(buf, ctypes.c_void_p))   # VT_LPWSTR; the store copies it
                 set_value(store, ctypes.byref(PKEY(guid(AUM), pid)), ctypes.byref(pv))
@@ -170,29 +189,32 @@ def pin_as_us():
             title, cls = ctypes.create_unicode_buffer(256), ctypes.create_unicode_buffer(64)
             user32.GetWindowTextW(h, title, 256); user32.GetClassNameW(h, cls, 64)
             if cls.value.startswith("Chrome_WidgetWin") and title.value.endswith("Daybook"):
-                found.append(h)                    # an app window's title is the page's; a tab's ends "Microsoft Edge"
+                parts = title.value.split(" · ")     # an app window's title is the page's; a tab's ends "Microsoft Edge"
+                found.append((h, TITLES.get(parts[-2], "") if len(parts) > 2 else ""))
             return True
         user32.EnumWindows(ctypes.WINFUNCTYPE(w.BOOL, w.HWND, w.LPARAM)(each), 0)
         return found
 
-    done = set()
+    done, loaded = {}, {}
     while True:                                    # ponytail: a 1 s poll; new windows get tagged within a second
-        for h in ours():
-            # the browser gives the window the page's favicon, small and blurry on the taskbar: ours instead
+        for h, door in ours():
+            # the browser gives the window the page's favicon, small and blurry on the taskbar: its app's instead
+            big, small = loaded.setdefault(door, icons(door))
             if big and user32.SendMessageW(h, 0x7F, 1, 0) != big:                  # WM_GETICON, ICON_BIG
                 user32.SendMessageW(h, 0x80, 1, big); user32.SendMessageW(h, 0x80, 0, small)   # WM_SETICON
-            if h not in done:
+            if done.get(h) != door:                # new, or moved to another app's tab inside the window
                 try:
-                    tag(h); done.add(h)
+                    tag(h, door)
                 except OSError as e:
-                    print(f"could not tag window {h}: {e}"); done.add(h)
+                    print(f"could not tag window {h}: {e}")
+                done[h] = door
         time.sleep(1)
 
 
 def fallback():
     """No Edge or Chrome: an ordinary tab, and a small window whose closing stops the server."""
     import webbrowser
-    webbrowser.open(URL + "/")
+    webbrowser.open(f"{URL}/{DOOR + '/' if DOOR else ''}")
     try:
         import tkinter
     except ImportError:
@@ -209,7 +231,7 @@ def main():
         sys.stdout = sys.stderr = open(os.path.join(DATA, "daybook.log"), "a", buffering=1)
     if sys.platform == "win32":
         threading.Thread(target=pin_as_us, daemon=True).start()
-    if env("URL"):                           # another machine's Daybook: just the window
+    if REMOTE:                               # another machine's Daybook (the Pi): just the window
         return window()
     if running():                            # already open here: one more window on the same server
         if not launch():

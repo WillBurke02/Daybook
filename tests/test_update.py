@@ -79,4 +79,24 @@ except ValueError as e:
     assert "git pull" in str(e)
 assert open(os.path.join(inst, "web", "core", "api.js")).read() == before
 print("ok — refused: not Daybook, older than the data, a git checkout")
+# which code an update takes: the newest release; a named branch's newest commit; main's until there is a release
+import json as _j
+def fake(answers):
+    def get(url, token=None):
+        for k, v in answers.items():
+            if url.endswith(k):
+                if v is None:
+                    raise ValueError("GitHub said 404 Not Found")
+                return _j.dumps(v).encode()
+        raise AssertionError(url)
+    return get
+commit = lambda sha: {"sha": sha, "commit": {"committer": {"date": "2026-10-12T10:00:00Z"}, "message": "m\nmore"}}
+os.environ.pop("DAYBOOK_UPDATE_BRANCH", None)
+got = update.latest(fake({"/releases/latest": {"tag_name": "v4.1"}, "/commits/v4.1": commit("r41")}))
+assert (got["sha"], got["release"], got["message"]) == ("r41", "v4.1", "m"), got
+assert update.latest(fake({"/releases/latest": None, "/commits/main": commit("m1")}))["sha"] == "m1"
+os.environ["DAYBOOK_UPDATE_BRANCH"] = "SkillTree"
+assert update.latest(fake({"/commits/SkillTree": commit("st")}))["sha"] == "st", "a named branch skips releases"
+os.environ.pop("DAYBOOK_UPDATE_BRANCH")
+print("ok — releases first")
 print("all update checks passed")

@@ -88,14 +88,38 @@ async function load() {
   if (!cards.length) $('.cards').append(el('p', { class: 'note' }, 'Every card is hidden. Arrange shows them again.'));
 }
 
+// ---- first run: five things that make Daybook yours, each ticked from what is really there --------------
+async function setup() {
+  const box = $('.setupbox'), p = prefs();
+  if (p.setup === 'hidden') return box.replaceChildren();
+  const has = (app, t) => appApi(app).table(t, { limit: 1 }).then(r => r.length > 0).catch(() => null);   // null: app not here
+  const steps = [
+    ['Set your own password', 'then the phone and the Pi can open Daybook', !state.meta.password_default, '/admin'],
+    ['Add your pay', 'salary from a date: payslip checks and overtime come from it', await has('money', 'pay_rate'), '/hours/#/pay?panel=pay.rates'],
+    ['Add your bank accounts', 'then import a statement from each', await has('money', 'account'), '/spending/#/settings?panel=settings.accounts'],
+    ['Log some hours', 'or import them from Clockify', await has('money', 'shift'), '/hours/#/hours?add=today'],
+    ['Find your level in Learn', 'about 10 minutes a subject, so lessons start where you are', await has('learn', 'answer'), '/learn/#/calibrate'],
+  ].filter(x => x[2] !== null);
+  const done = steps.filter(x => x[2]).length;
+  if (done === steps.length) return box.replaceChildren();
+  box.replaceChildren(el('section', { class: 'hcard wide setup' },
+    el('header', {}, el('strong', { class: 'name' }, 'Set up Daybook'), el('span', { class: 'muted small' }, `${done} of ${steps.length} done`),
+      el('span', { class: 'spacer' }),
+      el('button', { class: 'btn plain sm', type: 'button', onclick: async () => { await savePrefs({ ...prefs(), setup: 'hidden' }); setup(); } }, 'Hide')),
+    el('ol', { class: 'body steps' }, steps.map(([what, why, ok, href]) => el('li', { class: ok ? 'done' : '' },
+      el('span', { class: 'tick', 'aria-hidden': 'true' }, ok ? '✓' : '○'),
+      el('span', {}, el('strong', {}, what), el('span', { class: 'muted small' }, ` ${why}`), ok ? el('span', { class: 'sr-only' }, ' (done)') : null),
+      ok ? null : el('a', { class: 'btn sm', href }, 'Do it'))))));
+}
+
 const hello = () => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'; };
 
 async function start() {
   state.meta = await suite.meta();
   themeCSS();
   applyMode(state.meta.settings.default_mode || 'system');
-  appbar($('.appbar'), state.meta.apps, 'home', { custom: 'Arrange' });
-  tabbar($('.tabbar'), state.meta.apps, 'home');
+  appbar($('.appbar'), state.meta.doors, 'home', { custom: 'Arrange' });
+  tabbar($('.tabbar'), state.meta.doors, 'home');
   $('.appbar .burger').hidden = true;
   $('.appbar .custom').addEventListener('click', e => {
     arranging = !arranging;
@@ -109,7 +133,7 @@ async function start() {
     popup([{ label: 'Theme', sub: modes().map(m => ({ label: m.label, on: (document.documentElement.dataset.mode || 'system') === m.v,
              fn: () => useTheme(m.v) })) },
            { label: arranging ? 'Stop arranging' : 'Arrange the cards', fn: () => $('.appbar .custom').click() },
-           '-', ...state.meta.apps.map(a => ({ label: `Open ${a.title}`, fn: () => { location.href = `/${a.name}/`; } })),
+           '-', ...state.meta.doors.map(a => ({ label: `Open ${a.title}`, fn: () => { location.href = `/${a.name}/`; } })),
            '-', { label: 'Lock (sign out here)', fn: async () => { await suite.logout(); location.href = '/login'; } }],
           r.right - 240, r.bottom + 4);
   });
@@ -117,7 +141,7 @@ async function start() {
   $('.hello').textContent = hello();
   document.title = 'Home · Daybook';
   banner(state.meta);
-  await load();
-  addEventListener('focus', () => { if (!arranging) load(); });     // back to the window: fresh figures
+  await Promise.all([setup(), load()]);
+  addEventListener('focus', () => { if (!arranging) { setup(); load(); } });     // back to the window: fresh figures
 }
 start();

@@ -2,6 +2,31 @@
 
 ## 4.0 — in progress (not released)
 
+- **Phase 1: always there, everywhere** (the plan doc "Daybook review and plan"):
+  - **On the Pi in one command**: `sudo python3 daybook.py install --service` finds the Pi's
+    Tailscale name, writes, enables and starts the systemd service, and points Tailscale's
+    HTTPS at it; it refuses while the password is "pass" and never writes suite.db as root.
+    `--backup-dir` sends the daily copies to a USB drive.
+  - **A front door per app**: `/hours/` (Hours and pay) and `/spending/` (Spending) are two doors
+    on Money's one database, each with its own menu, manifest and icon; the bar's tabs are
+    Home, Hours and pay, Spending, Log, Learn. Each installs on the phone (Add to Home screen) and
+    in Edge as its own app.
+  - **The PC and laptop open the Pi**: `daybook.py install --url https://pi.…ts.net` makes a
+    Start menu shortcut per app, each its own window, taskbar group and icon (`Daybook.pyw log`);
+    **Ctrl+Alt+L** opens Log ready to type in.
+  - **Kept signed in while used** (the cookie renews itself; 30 days unused and it asks again);
+    `SameSite=Lax`, so a link to Daybook clicked in Outlook arrives signed in.
+  - **Switching app is quicker**: the page's files are revalidated (ETag, 304), not re-sent.
+  - **Log keeps what you are writing** across switching app or a reload; leaving with photos
+    or voice unsent asks first. On a computer the box is ready to type in.
+  - **Set up Daybook** on Home: password, pay, accounts, hours, your level in Learn, each ticked
+    from what is there and each a button; empty pages offer the button too ("Add an account").
+  - **Updates take the newest release** (a tag), so a half-made change on main never reaches the
+    Pi; `DAYBOOK_UPDATE_BRANCH` follows a branch instead.
+  - **Frame**: grey text now 4.5:1 or better in every theme; the menu lists each thing once;
+    Alt+1… switches app; "Search every app" opens the item itself in its app; links take the
+    app's colour, not the browser's blue.
+
 - **Phase 0 of the review** (the plan doc "Daybook review and plan"):
   - **XP, rank, badges and daily quests are gone**: they counted clicks, not learning.
     Today shows the week in minutes, days studied and lessons learned; the `badge` table

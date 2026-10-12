@@ -1,6 +1,6 @@
 """Updating Daybook from GitHub: the code is replaced; the data is never touched.
 
-    python daybook.py update             take the newest code from GitHub and put it in place
+    python daybook.py update             take the newest release from GitHub and put it in place
     python daybook.py update --check     say whether there is newer code
     python daybook.py update --rollback  put back the code from before the last update
 
@@ -33,7 +33,9 @@ def _env(k, d):
 
 
 def repo():
-    return _env("UPDATE_REPO", "WillBurke02/Daybook"), _env("UPDATE_BRANCH", "main")
+    """(owner/name, branch). A branch named in DAYBOOK_UPDATE_BRANCH means its newest commit;
+    otherwise the newest release, so a half-finished change on main never reaches the Pi."""
+    return _env("UPDATE_REPO", "WillBurke02/Daybook"), _env("UPDATE_BRANCH", None)
 
 
 def _get(url, token=None):
@@ -57,16 +59,26 @@ def current(root=ROOT):
         return None
 
 
-def latest():
+def latest(get=None):
+    """{sha, at, message, release}: the newest release's commit (a tag such as v4.1), or the branch's
+    newest commit when a branch is named; main's while the repository has no release yet."""
+    get = get or _get
     name, branch = repo()
-    c = json.loads(_get(f"https://api.github.com/repos/{name}/commits/{branch}"))
-    return {"sha": c["sha"], "at": c["commit"]["committer"]["date"],
+    tag = None
+    if not branch:
+        try:
+            tag = json.loads(get(f"https://api.github.com/repos/{name}/releases/latest"))["tag_name"]
+        except ValueError as e:
+            if "404" not in str(e):
+                raise
+    c = json.loads(get(f"https://api.github.com/repos/{name}/commits/{tag or branch or 'main'}"))
+    return {"sha": c["sha"], "at": c["commit"]["committer"]["date"], "release": tag,
             "message": c["commit"]["message"].split("\n")[0]}
 
 
 def check(root=ROOT):
     have, new = current(root), latest()
-    return {"repo": "/".join(repo()), "current": have, "latest": new, "git": _is_git(root),
+    return {"repo": "/".join(filter(None, repo())), "current": have, "latest": new, "git": _is_git(root),
             "available": not have or have.get("sha") != new["sha"]}
 
 

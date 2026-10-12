@@ -140,7 +140,7 @@ export const panels = {
       b.budget += r.budget; b.actual += r.actual;
     }
     const list = Object.values(by).sort((a, b) => b.budget - a.budget);
-    if (!list.length) { body.append(el('p', { class: 'note' }, 'Set budgets in Settings → Categories.')); return; }
+    if (!list.length) { body.append(el('p', { class: 'note' }, 'No budgets yet. ', el('a', { class: 'btn sm', href: '#/settings?panel=settings.categories' }, 'Set budgets'))); return; }
     body.append(table([
       { k: 'path', label: 'Category' },
       { k: 'budget', label: 'Budget', n: true, fmt: money },

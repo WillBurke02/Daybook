@@ -51,7 +51,7 @@ const pics = list => list?.length ? el('div', { class: 'pics' }, list.filter(src
 /** Element.append prints null as "null": this leaves the nulls out. */
 const add = (node, ...kids) => node.append(...kids.flat().filter(k => k != null && k !== false));
 /** A card's words for a list: the first line, maths and template numbers shown as … */
-export const brief = (text, n = 140) => String(text || '').replace(/\$[^$]*\$/g, '…').replace(/\{\w+(:\d)?\}/g, '…').replace(/\*\*|`/g, '').split('\n')[0].slice(0, n);
+export { brief } from './search.js';
 const shuffle = (xs, rand = Math.random) => { const a = [...xs]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const plain = (text, values) => fill(text, values).replace(/\*\*|`/g, '');
 

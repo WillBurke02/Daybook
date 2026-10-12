@@ -18,12 +18,19 @@ const changed = ctx => { cache = null; ctx.reload(); };
 // ---- the quick add ----------------------------------------------------------------
 
 let pending = { photos: [], voice: null };
+// The words being written survive switching app or a reload (this browser only); photos and voice
+// are too big to keep, so leaving with them unsent asks first.
+const DRAFT = 'log.draft';
+const draft = v => { try { return v === undefined ? localStorage.getItem(DRAFT) || '' : v ? localStorage.setItem(DRAFT, v) : localStorage.removeItem(DRAFT); } catch { return ''; } };
+addEventListener('beforeunload', e => { if (pending.photos.length || pending.voice) e.preventDefault(); });
 
 export async function quickBar(ctx) {
   const onDayPage = !location.hash || location.hash.startsWith('#/day');
   const forDay = onDayPage ? dayOf(ctx) : today();
   const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened? #tags work' : `Add to ${dayLong(forDay)}`,
                                 'aria-label': 'Log text' });
+  text.value = draft();
+  text.addEventListener('input', () => draft(text.value));
   const at = el('input', { class: 'sm', value: forDay === today() ? now() : '', placeholder: 'time', inputmode: 'numeric',
                            style: 'width:64px', 'aria-label': 'Time' });
   let kind = 'work';
@@ -41,6 +48,7 @@ export async function quickBar(ctx) {
       await api.quick({ text: text.value, kind, day: forDay, at: toTime(at.value) || null,
                         photos: pending.photos, voice: pending.voice });
       pending = { photos: [], voice: null };
+      draft('');
       flash(`Added to ${forDay === today() ? 'today' : dayLong(forDay)}`, { label: 'Undo', fn: async () => { await api.undo(); changed(ctx); } });
       changed(ctx);
     } catch (e) { flash(e.message); }
@@ -60,6 +68,9 @@ export async function quickBar(ctx) {
   document.body.ondrop = e => { bar.classList.remove('drop'); const f = picturesIn(e.dataTransfer); if (f.length) { e.preventDefault(); takePictures(f); } };
   show();
   fileInbox(ctx);
+  // opened to write (the Log icon, Ctrl+Alt+L): the box is ready to type in, with a mouse and keyboard;
+  // a phone waits for a tap, so the keyboard does not cover the day
+  if (onDayPage && matchMedia('(pointer: fine)').matches) setTimeout(() => text.focus({ preventScroll: true }));   // once it is on the page
   return bar;
 }
 
@@ -178,7 +189,7 @@ export const panels = {
     const d = dayOf(ctx), money = appApi('money');
     const [shifts, [day]] = await Promise.all([money.table('shift', { date: d, order: 'start' }), money.view('v_day', { date: d })])
       .catch(() => [[], []]);
-    ctx.aside.append(el('a', { class: 'link', href: `/money/#/hours?p=month:${d}&add=${d}` }, 'Open in Money'));
+    ctx.aside.append(el('a', { class: 'link', href: `/hours/#/hours?p=month:${d}&add=${d}` }, 'Open in Hours'));
     if (!shifts.length) { body.append(el('p', { class: 'note' }, 'No shifts on this day.')); return; }
     body.append(el('table', {}, el('tbody', {}, shifts.map(s => el('tr', {},
       el('td', { class: 'num' }, `${s.start}–${s.end}`), el('td', { class: 'n num' }, hhmm(span(s.start, s.end))),

@@ -8,7 +8,7 @@ import * as mine from './views/mine.js';
 import * as levels from './views/levels.js';
 import * as notes from './views/notes.js';
 import * as tree from './views/tree.js';
-import { brief } from './cards.js';
+import search from './search.js';
 import { formulasPanel } from './formulas.js';
 import { toggle } from './tools.js';
 
@@ -36,9 +36,5 @@ export default {
     { label: 'Formulas', fn: () => shell.go('formulas') },
     { label: 'Import flash cards (CSV)…', fn: () => shell.go('mine') },
   ],
-  search: {
-    card: ['Cards', r => ({ what: brief(r.text), more: `${r.subject} · ${r.lesson} · ${r.type}`,
-      href: `#/lesson?id=${encodeURIComponent(r.lesson_id)}&card=${encodeURIComponent(r.id)}` })],
-    lesson: ['Lessons', r => ({ what: r.title, more: `${r.subject} · ${r.unit}`, href: `#/lesson?id=${encodeURIComponent(r.id)}` })],
-  },
+  search,
 };

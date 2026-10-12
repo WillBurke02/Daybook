@@ -15,6 +15,9 @@ from . import importer, matching, reminders, statement, tax, timesheet, t212
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME, TITLE, ORDER = "money", "Money", 1
+# Two front doors on the one database: work (hours, pay, leave) and private (spending, accounts,
+# savings). /money/ still opens everything.
+DOORS = {"hours": "Hours and pay", "spending": "Spending"}
 MIGRATIONS = os.path.join(HERE, "migrations")
 VIEWS = os.path.join(HERE, "views.sql")
 SIGNATURE = "txn"                 # a Money database has transactions

@@ -173,13 +173,13 @@ export async function start(theApp) {
   app = theApp;
   PAGES = { ...app.pages, search: searchPage(app), changes: changesPage };
   Object.values(PAGES).forEach(m => register(m.panels || {}));
-  document.body.dataset.app = APP;
+  document.body.dataset.app = app.name;           // a door (/hours/) wears its app's colours
   document.querySelector('link[rel="apple-touch-icon"]')?.setAttribute('href', `/assets/icons/${APP}-apple.png`);
   try { await loadMeta(); } catch (e) {
     main().append(el('p', { class: 'err' }, 'Cannot reach the Daybook server: ' + e.message)); return;
   }
-  appbar($('.appbar'), state.meta.apps, APP, { find: `Search ${app.title}…`, undo: true, custom: 'Customise' });
-  tabbar($('.tabbar'), state.meta.apps, APP);
+  appbar($('.appbar'), state.meta.doors, APP, { find: `Search ${app.title}…`, undo: true, custom: 'Customise' });
+  tabbar($('.tabbar'), state.meta.doors, APP);
   if (app.period) periodBox = makePeriod();
   $('.appbar .undo').addEventListener('click', async () => {
     try { const r = await api.undo(); flash(r.undid); render(); } catch (e) { flash(e.message); }

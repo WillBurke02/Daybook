@@ -27,7 +27,7 @@ export const panels = {
       { k: 'gaps', label: 'Gaps', n: true, render: r => r.gaps ? el('span', { class: 'chip warn' }, String(r.gaps)) : '' },
       { k: 'unreconciled', label: 'Don’t balance', n: true, render: r => r.unreconciled ? el('span', { class: 'chip bad' }, String(r.unreconciled)) : '' },
       { k: 'txns', label: 'Transactions', n: true },
-    ], rows, { empty: 'Add your accounts in Settings.' }));
+    ], rows, { empty: ['No accounts yet. ', el('a', { class: 'btn sm', href: '#/settings?panel=settings.accounts' }, 'Add an account')] }));
   } },
 
   'accounts.statements': { title: 'Statements', w: 7, deps: ['statement', 'txn'], async render(body, ctx) {

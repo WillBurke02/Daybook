@@ -23,7 +23,7 @@
 :root {
   color-scheme: light;
   --ground: #e8ebea; --panel: #f6f8f7; --panel-2: #dfe4e3; --raised: #fdfefe;
-  --ink: #10181a; --ink-2: #465457; --ink-3: #75868a;
+  --ink: #10181a; --ink-2: #465457; --ink-3: #56666a;   /* 4.5:1 or better on every surface */
   --rule: #c9d2d1; --rule-soft: #d9e0df;
   --accent: #006b5e; --accent-soft: #cfe4e0; --accent-ink: #ffffff;
   --debit: #a8352a; --credit: #1d6b3c; --flag: #8a6f00;
@@ -41,7 +41,7 @@
   :root:not([data-mode]) {
     color-scheme: dark;
     --ground: #0d1213; --panel: #151d1f; --panel-2: #1f292b; --raised: #1b2426;
-    --ink: #eef2f1; --ink-2: #a3b2b3; --ink-3: #75868a;
+    --ink: #eef2f1; --ink-2: #a3b2b3; --ink-3: #8a9a9d;
     --rule: #2a3739; --rule-soft: #1f2b2d;
     --accent: #4cc0ad; --accent-soft: #123430; --accent-ink: #06201c;
     --debit: #e07f72; --credit: #62bd83; --flag: #c4a53a;
@@ -53,7 +53,7 @@
 :root[data-mode="dusk"] {
   color-scheme: dark;
   --ground: #1b2224; --panel: #232d2f; --panel-2: #2c3739; --raised: #293436;
-  --ink: #e6ebea; --ink-2: #a3b2b3; --ink-3: #7d8d8f;
+  --ink: #e6ebea; --ink-2: #a3b2b3; --ink-3: #91a1a3;
   --rule: #354245; --rule-soft: #2a3537;
   --accent: #4cc0ad; --accent-soft: #163a35; --accent-ink: #06201c;
   --debit: #e07f72; --credit: #62bd83; --flag: #c4a53a;
@@ -64,7 +64,7 @@
 :root[data-mode="ink"] {
   color-scheme: dark;
   --ground: #0d1213; --panel: #151d1f; --panel-2: #1f292b; --raised: #1b2426;
-  --ink: #eef2f1; --ink-2: #a3b2b3; --ink-3: #75868a;
+  --ink: #eef2f1; --ink-2: #a3b2b3; --ink-3: #8a9a9d;
   --rule: #2a3739; --rule-soft: #1f2b2d;
   --accent: #4cc0ad; --accent-soft: #123430; --accent-ink: #06201c;
   --debit: #e07f72; --credit: #62bd83; --flag: #c4a53a;
@@ -116,6 +116,8 @@ body {
 .appbar .app[data-app="money"] .dot { background: var(--c-money); }
 .appbar .app[data-app="log"] .dot { background: var(--c-log); }
 .appbar .app[data-app="learn"] .dot { background: var(--c-learn); }
+.appbar .app[data-app="hours"] .dot { background: #2b6cb0; }
+.appbar .app[data-app="spending"] .dot { background: var(--c-money); }
 .appbar .app.on { color: var(--ink); font-weight: 600; background: var(--accent-soft); }
 .appbar .app[data-app="home"].on { background: var(--panel-2); }
 .appbar .here { display: none; font: 700 16px var(--sans); white-space: nowrap; }
@@ -351,6 +353,7 @@ label.c { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; 
 button { cursor: pointer; }
 button:disabled { opacity: .5; cursor: default; }
 .btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; padding: 6px 13px; }
+:where(a) { color: var(--accent); }   /* not the browser's blue and purple (unreadable in the dark); any class rule still wins */
 a.btn { text-decoration: none; display: inline-block; border: 1px solid var(--accent); border-radius: 7px; }
 a.btn.plain { border-color: var(--rule); }
 .btn.plain { background: var(--raised); color: var(--ink-2); border-color: var(--rule); font-weight: 500; }
@@ -670,6 +673,7 @@ td > span:has(> .dot) { white-space: nowrap; }
 .hits a { display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; gap: 10px; align-items: baseline;
   padding: 5px 6px; border-bottom: 1px solid var(--rule-soft); text-decoration: none; color: var(--ink); }
 .hits a:hover { background: var(--panel-2); }
+.hits a { color: inherit; }
 .hits .what img { width: 28px; height: 28px; object-fit: cover; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
 .hits mark { background: color-mix(in srgb, var(--flag) 35%, transparent); color: inherit; border-radius: 2px; }
 .hits .amt { text-align: right; white-space: nowrap; }
@@ -709,6 +713,12 @@ body.signin input { width: 100%; }
 .homehead { display: flex; align-items: flex-end; margin-bottom: 22px; }
 .homehead .sub { color: var(--ink-3); font-size: 14px; }
 .homehead h1 { font: 700 32px/1.1 var(--sans); letter-spacing: -.02em; margin: 4px 0 0; }
+.setupbox .setup { margin-bottom: 20px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.setup .steps { list-style: none; margin: 0; padding: 4px 16px 14px; display: grid; gap: 8px; }
+.setup .steps li { display: grid; grid-template-columns: 1.4em 1fr auto; gap: 8px; align-items: center; }
+.setup .steps li.done { color: var(--ink-3); }
+.setup .tick { font-weight: 700; color: var(--credit); }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start; }
 .hcard { --c: var(--accent); --soft: var(--panel-2); background: var(--raised); border: 1px solid var(--rule-soft);
   border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(16, 24, 26, .05); }

@@ -112,7 +112,7 @@ export function searchPage(app) {
         return;
       }
       ctx.setTitle(`Search · “${q}”`);
-      const others = everywhere ? state.meta.apps.filter(a => a.name !== APP) : [];
+      const others = everywhere ? state.meta.apps.filter(a => a.name !== app.name) : [];   // a door's app is this one
       const [mine, ...rest] = await Promise.all([api.search(q), ...others.map(a => appApi(a.name).search(q).catch(() => null))]);
       let n = 0;
       const section = (title, groups, show) => {
@@ -127,8 +127,13 @@ export function searchPage(app) {
         if (!groups.length && title) body.append(el('p', { class: 'note' }, 'Nothing here.'));
       };
       section(everywhere ? app.title : null, mine, kind => app.search?.[kind] || [kind, r => plainHit(APP, r, q)]);
-      others.forEach((a, i) => rest[i] ? section(a.title, rest[i], kind => [kind[0].toUpperCase() + kind.slice(1), r => plainHit(a.name, r, q)])
-                                       : body.append(el('h2', { class: 'hits-app' }, a.title), el('p', { class: 'note' }, 'Could not be searched.')));
+      // another app's results read as in that app and open the item there (its search.js; its #/ links get its path)
+      const theirs = await Promise.all(others.map(a => import(`/${a.name}/search.js`).then(m => m.default).catch(() => ({}))));
+      others.forEach((a, i) => rest[i] ? section(a.title, rest[i], kind => {
+        const [label, show] = theirs[i][kind] || [kind[0].toUpperCase() + kind.slice(1), null];
+        return [label, r => { const h = show ? show(r) : plainHit(a.name, r, q);
+          return h.href?.startsWith('#') ? { ...h, href: `/${a.name}/${h.href}` } : h; }];
+      }) : body.append(el('h2', { class: 'hits-app' }, a.title), el('p', { class: 'note' }, 'Could not be searched.')));
       ctx.aside.append(el('span', { class: 'num muted' }, `${n} found`));
       if (!n) body.append(el('p', { class: 'note' }, `Nothing matches “${q}”.`));
     } } },

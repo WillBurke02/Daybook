@@ -527,7 +527,7 @@ function version() {
       table([{ k: 0, label: '' }, { k: 1, label: '' }], [
         ['Version', u.version],
         ['This copy', u.current ? `${u.current.message} (${when(u.current.at)})` : u.git ? 'a git checkout' : 'not installed by an update'],
-        [`On GitHub (${u.repo})`, `${u.latest.message} (${when(u.latest.at)})`]]),
+        [`On GitHub (${u.repo})`, `${u.latest.release ? u.latest.release + ': ' : ''}${u.latest.message} (${when(u.latest.at)})`]]),
       !u.available ? el('p', { class: 'note cre' }, 'Up to date.')
         : u.git ? el('p', { class: 'note' }, 'This copy is a git checkout: update it with git pull.')
         : el('div', { class: 'row' }, el('button', { class: 'btn sm', onclick: e => {

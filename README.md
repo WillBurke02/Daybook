@@ -1,14 +1,20 @@
 # Daybook
 
-Money, Log and Learn: three apps in one window, one password, a database each.
-Python standard library and SQLite only, no build step, nothing online.
+Money, Log and Learn: one engine, one password, a database each, and a front
+door per app with its own window and icon. Python standard library and SQLite
+only, no build step, nothing online. Best run on a Raspberry Pi and opened from
+every device (see *On the Pi*).
 
-- **Money**: hours, pay, annual leave, spending, pension, reminders, safe to spend, receipts.
-- **Log**: a diary of the day and the work day, with photos and voice notes.
-- **Learn**: courses, and a feed of short cards to use instead of scrolling.
+- **Hours and pay** (`/hours/`): hours, overtime, Send to HR, payslips, annual leave.
+- **Spending** (`/spending/`): spending, accounts, bills, safe to spend, savings, pension, receipts.
+  Both are Money: one database, two doors (`/money/` shows the lot).
+- **Log** (`/log/`): a diary of the day and the work day, with photos and voice notes.
+- **Learn** (`/learn/`): courses, a skill tree, and a feed of short cards to use instead of scrolling.
 
 **Home** (`/`) has a card for each: payday and safe to spend, today's log, the
-day's cards and what is due.
+day's cards and what is due; on a new install, a **Set up Daybook** card with the
+five things to do first, each a button. **Alt+1** is Home and **Alt+2** onwards
+the apps in the order of the bar.
 
 ## Run it
 
@@ -297,7 +303,7 @@ and each computer takes the newest with Admin → **Daybook version** → Update
 or:
 
 ```sh
-python daybook.py update             # the newest code from GitHub
+python daybook.py update             # the newest release from GitHub
 python daybook.py update --check     # is there any?
 python daybook.py update --rollback  # the code from before the last update
 ```
@@ -306,38 +312,59 @@ Then close Daybook and open it again. Your data is never touched: `core/`,
 `apps/`, `web/` and `tests/` are replaced whole and the files beside
 `daybook.py` overwritten; `data/`, `backups/` and a portable `python/` stay as
 they are. Code older than your databases is refused. A copy that is a git
-checkout is updated with `git pull` instead. `DAYBOOK_UPDATE_REPO` and
-`DAYBOOK_UPDATE_BRANCH` point it somewhere else; `DAYBOOK_GITHUB_TOKEN` for a
-private repository.
+checkout is updated with `git pull` instead. It takes the newest **release** (a
+tag such as v4.1, made on GitHub under Releases), so work in progress on `main`
+never reaches the Pi; until the first release it takes `main`.
+`DAYBOOK_UPDATE_BRANCH` follows a branch's newest commit instead,
+`DAYBOOK_UPDATE_REPO` points it at another repository, `DAYBOOK_GITHUB_TOKEN`
+for a private one.
 
-## The phone, and a Raspberry Pi
+## On the Pi: always there, from the PC, the laptop and the phone
 
-Daybook runs on one machine; the phone is a window onto it.
+Daybook runs on a Raspberry Pi all day; the PC, the site laptop and the phone are
+windows onto it over **Tailscale** (free: a private network of your own devices,
+with HTTPS). Nothing is open to the internet, and the PC no longer has to be on.
 
-**Tailscale** (free) puts the computer and the phone on a private network of
-their own. Install it on both and sign both in. Then, on the machine running
-Daybook, serve it over HTTPS on its Tailscale name:
+**Once, on the Pi** (Raspberry Pi OS has Python already):
 
 ```sh
-tailscale serve --bg 8765                                     # https://yourpc.tailXXXX.ts.net
-python3 daybook.py serve --allow-host yourpc.tailXXXX.ts.net
+curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up   # sign in; switch HTTPS on once in
+                                                                         # the Tailscale admin console, under DNS
+scp -r you@yourpc:Daybook ~/Daybook        # the whole folder from the PC: the code and data/ with it
+cd ~/Daybook
+python3 daybook.py password                # if it is still "pass" (as yourself, not sudo)
+sudo python3 daybook.py install --service  # add --backup-dir /media/usb/daybook for copies on a USB drive
 ```
 
-(HTTPS has to be switched on once in the Tailscale admin console, under DNS.
-Older versions of Tailscale spell the serve command differently: see
-`tailscale serve --help`.) Change the password first; Daybook refuses other
-names while it is `pass`. Never forward a port on the router.
+`install --service` finds the Pi's Tailscale name, writes and starts a systemd
+service (Daybook from boot, restarted if it stops, listening on 127.0.0.1 only)
+and points Tailscale's HTTPS at it. It prints the address:
+`https://pi.tailXXXX.ts.net`. Stop using the copy on the PC once the Pi has it
+(rename its `data` folder), so there is one Daybook.
 
-On the phone, open `https://yourpc.tailXXXX.ts.net/log/` and sign in (the
-session lasts 30 days). **Add to Home screen** gives Log, Money and Learn icons
-of their own.
+**On the PC and the site laptop** (Tailscale installed and signed in):
+
+```sh
+python daybook.py install --url https://pi.tailXXXX.ts.net
+```
+
+Start menu shortcuts: **Daybook** (Home), **Daybook Log**, **Daybook Hours and pay**,
+**Daybook Spending** and **Daybook Learn**, each its own window with its own taskbar
+icon (pin the ones you use). **Ctrl+Alt+L** opens Log, ready to type in. Without
+Python on a machine, open the address in Edge and use **Install this site as an
+app** on each app's page: the same windows and icons.
+
+**On the phone** (Tailscale app signed in): open the address, sign in, and on each
+of `/log/`, `/hours/`, `/spending/` and `/learn/` use **Add to Home screen**: an
+icon each. A note to Log is then tap the icon, tap the box, type, Add. You stay
+signed in while you use it (the sign-in renews itself; 30 days unused and it asks again).
 
 - **Android**: once Log is on the home screen, it is in the **share sheet**:
   share a photo or text to it and it is filed in today's log (a photo that
   arrives on its own waits in the inbox at the top of the day).
 - **iPhone**: the camera button in Log's box takes a photo. For a quick note
   without opening anything, make a Shortcut: **Get Contents of URL**,
-  `https://yourpc.tailXXXX.ts.net/log/api/quick`, method POST, headers
+  `https://pi.tailXXXX.ts.net/log/api/quick`, method POST, headers
   `Authorization: Bearer <key>` and `X-Daybook: 1`, request body JSON with a
   `text` field (Dictate Text or Ask for Input before it). The key is in Admin →
   Calendar feed and phone; it opens that one door and nothing else.
@@ -346,17 +373,10 @@ of their own.
   switched on). The phone's own calendar and Outlook can reach a Tailscale
   address; a cloud calendar such as Google's cannot.
 
-**A Raspberry Pi** can run it all day instead of the PC:
-
-```sh
-sudo python3 daybook.py install --service --allow-host pi.tailXXXX.ts.net
-sudo tailscale serve --bg 8765
-```
-
-That writes `/etc/systemd/system/daybook.service` (or prints it, if it cannot),
-listening on 127.0.0.1 only, behind Tailscale's HTTPS. On the PC, set
-`DAYBOOK_URL=https://pi.tailXXXX.ts.net` and `Daybook.pyw` opens the Pi's
-Daybook in its window and starts nothing locally.
+Updates on the Pi: `python3 daybook.py update` (the newest release), then
+`sudo systemctl restart daybook`. Without a Pi, the PC can serve the phone the
+same way: `tailscale serve --bg 8765` and
+`python3 daybook.py serve --allow-host yourpc.tailXXXX.ts.net`.
 
 ## Carrying it on a stick
 
@@ -373,7 +393,7 @@ Stop Daybook before unplugging.
 
 | | |
 |---|---|
-| One password | PBKDF2-SHA256; 30-day `HttpOnly`, `SameSite=Strict` cookie, `Secure` over HTTPS; 8 wrong tries in 5 minutes and it waits |
+| One password | PBKDF2-SHA256; `HttpOnly`, `SameSite=Lax` cookie (so a link from Outlook arrives signed in), `Secure` over HTTPS, renewed while used and gone after 30 days unused; 8 wrong tries in 5 minutes and it waits |
 | Default password | only this computer is answered until it is changed |
 | `Host` header checked | stops DNS rebinding; Tailscale names only if you allow them |
 | `Origin` checked on writes | stops cross-site writes |

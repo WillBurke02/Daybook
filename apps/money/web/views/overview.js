@@ -73,7 +73,7 @@ export const panels = {
       { k: 'balance', label: 'Closing balance', n: true, render: r => r.valuation != null ? money(r.valuation) : r.balance == null ? el('span', { class: 'muted' }, '—') : money(r.balance) },
       { k: 'as_of', label: 'As of', render: r => el('span', { class: 'muted' }, r.valuation != null ? dateUK(r.valued_on) : r.as_of ? dateUK(r.as_of) : '') },
       { k: 'statements', label: 'Statements', n: true },
-    ], rows, { empty: 'Add accounts in Settings', href: () => '#/accounts' }));
+    ], rows, { empty: ['No accounts yet. ', el('a', { class: 'btn sm', href: '#/settings?panel=settings.accounts' }, 'Add an account')], href: () => '#/accounts' }));
   } },
 
   'overview.recent': { title: 'Latest transactions', w: 6, deps: ['txn', 'match_rule', 'category'], async render(body, ctx) {

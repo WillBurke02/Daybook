@@ -50,6 +50,20 @@ def discover():
     return {m.NAME: m for m in sorted(found, key=lambda m: getattr(m, "ORDER", 50))}
 
 
+def door(name):
+    """The app behind a front door: /hours/ and /spending/ are Money's; an app is its own door."""
+    for app_name, m in SUITE.apps.items():
+        if name == app_name or name in getattr(m, "DOORS", {}):
+            return app_name
+    return None
+
+
+def doors():
+    """The apps as their front doors, in menu order: what the tabs and icons show."""
+    return [{"name": d, "title": t, "app": name} for name, m in SUITE.apps.items()
+            for d, t in (getattr(m, "DOORS", None) or {name: m.TITLE}).items()]
+
+
 def setup(data=None, backup_dir=None, apps=None):
     SUITE.data = os.path.abspath(os.path.expanduser(data or env("DATA") or os.path.join(ROOT, "data")))
     SUITE.backup_dir = backup_dir or env("BACKUPS")
@@ -167,6 +181,11 @@ def make_session(days=SESSION_DAYS):
     ponytail: stateless, so Lock signs out one device; a new password signs out all."""
     body = f"{int(time.time() + days * 86400)}.{secrets.token_urlsafe(9)}"
     return body + "." + hmac.new(_session_key().encode(), body.encode(), "sha256").hexdigest()[:32]
+
+
+def session_left(value):
+    """Seconds until a good session cookie runs out."""
+    return int((value or "0").split(".")[0]) - time.time()
 
 
 def session_ok(value):
