@@ -326,13 +326,18 @@ with HTTPS). Nothing is open to the internet, and the PC no longer has to be on.
 **Once, on the Pi** (Raspberry Pi OS has Python already):
 
 ```sh
+sudo apt update && sudo apt install -y git
 curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up   # sign in; switch HTTPS on once in
                                                                          # the Tailscale admin console, under DNS
-scp -r you@yourpc:Daybook ~/Daybook        # the whole folder from the PC: the code and data/ with it
+git clone -b SkillTree https://github.com/willburke02/daybook.git ~/Daybook   # 4.0's branch until it is released
 cd ~/Daybook
-python3 daybook.py password                # if it is still "pass" (as yourself, not sudo)
-sudo python3 daybook.py install --service  # add --backup-dir /media/usb/daybook for copies on a USB drive
+python3 daybook.py password                # as yourself, not sudo
+sudo python3 daybook.py install --service  # add --backup-dir /mnt/backup/daybook for copies on a USB drive
 ```
+
+Your data from the PC: close Daybook there, then from the PC
+`scp -r data you@daybook.local:Daybook/` (from the PC's Daybook folder) before
+`install --service`; leave it out to start afresh.
 
 `install --service` finds the Pi's Tailscale name, writes and starts a systemd
 service (Daybook from boot, restarted if it stops, listening on 127.0.0.1 only)
@@ -371,8 +376,9 @@ signed in while you use it (the sign-in renews itself; 30 days unused and it ask
   switched on). The phone's own calendar and Outlook can reach a Tailscale
   address; a cloud calendar such as Google's cannot.
 
-Updates on the Pi: `python3 daybook.py update` (the newest release), then
-`sudo systemctl restart daybook`. Without a Pi, the PC can serve the phone the
+Updates on the Pi: `git pull`, then `sudo systemctl restart daybook` (a git
+checkout updates with git, not `daybook.py update`). Left running, it still makes
+each day's copies of the databases (on the day's first visit). Without a Pi, the PC can serve the phone the
 same way: `tailscale serve --bg 8765` and
 `python3 daybook.py serve --allow-host yourpc.tailXXXX.ts.net`.
 

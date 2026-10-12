@@ -32,6 +32,16 @@ for p in [suite.store_path()] + [suite.path(n) for n in SUITE.apps]:
     assert c.execute("PRAGMA journal_mode").fetchone()[0].lower() in ("delete", "truncate"), p
     c.close()
 
+# === a server left running still makes each day's copies ======================
+folder = _db.backup_folder(suite.path("money"), SUITE.backup_dir)
+shutil.rmtree(folder, ignore_errors=True)            # no copies yet
+server._copied[0] = date(2000, 1, 1)                 # as if it started yesterday
+t = server.daily_copies()
+assert t and server.daily_copies() is None, "once a day, not once a request"
+t.join()
+copies = os.listdir(folder)
+assert any(f.startswith("money.db." + date.today().isoformat()) for f in copies), copies
+
 # === the password and sessions ================================================
 assert suite.password_is_default() and suite.password_ok("pass") and not suite.password_ok("nope")
 s1 = suite.make_session()

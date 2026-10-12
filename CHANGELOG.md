@@ -48,6 +48,8 @@
     from what is there and each a button; empty pages offer the button too ("Add an account").
   - **Updates take the newest release** (a tag), so a half-made change on main never reaches the
     Pi; `DAYBOOK_UPDATE_BRANCH` follows a branch instead.
+  - **A server left running makes each day's copies** (the first visit of a day starts them);
+    before, an always-on Pi copied its databases only when it started.
   - **Frame**: grey text now 4.5:1 or better in every theme; the menu lists each thing once;
     Alt+1… switches app; "Search every app" opens the item itself in its app; links take the
     app's colour, not the browser's blue.

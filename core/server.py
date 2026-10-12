@@ -23,6 +23,7 @@ import json
 import mimetypes
 import os
 import sqlite3
+import threading
 import time
 from datetime import date, datetime, timedelta, timezone
 from http.cookies import SimpleCookie
@@ -50,6 +51,23 @@ class Config:
 
 
 CFG = Config()
+_copied = [date.today()]          # open_all made today's copies before the server listened
+_copying = threading.Lock()
+
+
+def daily_copies():
+    """A server left running (the Pi, for months) still makes each day's copies: the first app
+    request of a day starts them, in the background. Returns that thread, or None."""
+    with _copying:
+        if _copied[0] == date.today():
+            return None
+        _copied[0] = date.today()
+    def copy():
+        for p in [_suite.store_path(), *map(_suite.path, SUITE.apps)]:
+            _db.back_up(p, SUITE.backup_dir)
+    t = threading.Thread(target=copy, daemon=True)
+    t.start()
+    return t
 
 
 def known_host(host):
@@ -277,6 +295,7 @@ class Handler(BaseHTTPRequestHandler):
                         app=SUITE.apps[name], meta=suite_meta() if meta else None)
 
     def _app_api(self, name, method, parts, query):
+        daily_copies()
         body = self._json() if method in WRITE_METHODS else None
         ctx = self._ctx(name, meta=parts == ["meta"])
         db = _db.connect(ctx.db_path)
