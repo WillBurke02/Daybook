@@ -125,10 +125,12 @@ export const BLOCKS = {
    *  current that match a real one (lrt, lrc × rated), and the shaft: J dω/dt = T − load (which opposes the motion,
    *  like friction or a conveyor) + pull (a steady torque, like a hanging load). on 0 means no supply: it coasts.
    *  The rated figures are the nameplate's: kw, rpm (at 50 Hz), poles, Ir (amps; worked out if 0).
- *  fn is the frequency it would turn at with no slip (n × poles / 120). */
+ *  fn is the frequency it would turn at with no slip (n × poles / 120). heat is the windings' temperature rise as a
+ *  % of the rated rise (100 running at rated current for good; over about 150 the insulation is ageing fast),
+ *  warming as I² with time constant tau (s). */
   motor: {
-    in: { f: 50, on: 1, load: 0, pull: 0, kw: 1.5, rpm: 1430, poles: 4, J: 0, tk: 2.5, lrt: 2, lrc: 6, Ir: 0 },
-    out: { n: 0, fn: 0, T: 0, I: 0, P: 0, slip: 0, turns: 0, Tr: 0, Ir: 0, kw: 0, _w: 0 },
+    in: { f: 50, on: 1, load: 0, pull: 0, kw: 1.5, rpm: 1430, poles: 4, J: 0, tk: 2.5, lrt: 2, lrc: 6, Ir: 0, tau: 600 },
+    out: { n: 0, fn: 0, T: 0, I: 0, P: 0, slip: 0, turns: 0, Tr: 0, Ir: 0, kw: 0, heat: 0, _w: 0 },
     start(o, i) { o.Tr = i.kw * 1000 / (i.rpm * Math.PI / 30); o.Ir = i.Ir || i.kw * 2; o.kw = i.kw; },
     step(o, i, dt) {
       const p = i.poles, ns50 = 6000 / p, dnr = ns50 - i.rpm, u = i.tk + Math.sqrt(i.tk * i.tk - 1), dk = u * dnr;
@@ -157,6 +159,7 @@ export const BLOCKS = {
       o.slip = i.f ? 100 * dn / (120 * i.f / p) : 0;
       const ir = rot(dn) + (rlr - r0) * s * s;
       o.I = i.on ? Ir * Math.sqrt(i0 * i0 + (1 - i0 * i0) * ir * ir) : 0;
+      o.heat += (100 * (o.I / Ir) ** 2 - o.heat) * Math.min(1, dt / i.tau);    // its windings' temperature rise, % of rated
     },
   },
 
@@ -178,16 +181,21 @@ export const BLOCKS = {
 
   /** A servo axis (mm): a trapezoid move to target (vmax, amax), a position loop (kp, 1/s) with velocity
    *  feed-forward ff (0–1), round a velocity loop that answers with time constant 1/kv. ferr is the following
-   *  error; over maxerr it trips (FE). invert 1 is an encoder wired backwards: the loop pushes the wrong way. */
+   *  error; over maxerr it trips (FE). invert 1 is an encoder wired backwards: the loop pushes the wrong way.
+   *  x is where the carriage really is (for sensors and the 3D); pos is where the controller thinks it is.
+   *  They differ until homing: preset rising says "here is pos0" (the home position), as a drive's homing does. */
   axis: {
-    in: { target: 0, enable: 1, vmax: 200, amax: 1000, kp: 30, kv: 300, ff: 1, maxerr: 5, invert: 0, reset: 0, pos0: 0, load: 0 },
-    out: { pos: 0, vel: 0, cmd: 0, ferr: 0, done: 0, trip: 0, fault: '', _v: 0, _r: 0 },
-    start(o, i) { o.pos = o.cmd = i.pos0; },
+    in: { target: 0, enable: 1, vmax: 200, amax: 1000, kp: 30, kv: 300, ff: 1, maxerr: 5, invert: 0, reset: 0, pos0: 0, x0: null, preset: 0, load: 0 },
+    out: { pos: 0, x: 0, vel: 0, cmd: 0, ferr: 0, done: 0, trip: 0, fault: '', homed: 0, _v: 0, _r: 0, _p: 0, _off: 0 },
+    start(o, i) { o.x = i.x0 ?? i.pos0; o.pos = o.cmd = i.pos0; o._off = o.x - i.pos0; },
     step(o, i, dt) {
       if (i.reset && !o._r && o.trip) { o.trip = 0; o.fault = ''; o.cmd = o.pos; o._v = 0; }
       o._r = i.reset;
+      if (i.preset && !o._p) { o._off = o.x - i.pos0; o.pos = i.pos0; o.cmd = i.pos0; o._v = 0; o.homed = 1; }
+      o._p = i.preset;
+      o.pos = o.x - o._off;
       const fb = i.invert ? 2 * i.pos0 - o.pos : o.pos;
-      if (!i.enable || o.trip) { o.cmd = fb; o._v = 0; o.vel *= Math.max(0, 1 - 20 * dt); o.pos += o.vel * dt; o.done = 0; o.ferr = 0; return; }
+      if (!i.enable || o.trip) { o.cmd = fb; o._v = 0; o.vel *= Math.max(0, 1 - 20 * dt); o.x += o.vel * dt; o.pos = o.x - o._off; o.done = 0; o.ferr = 0; return; }
       // the profile: as fast as vmax allows, slowing in time to stop at the target
       const d = i.target - o.cmd, vstop = Math.sqrt(2 * i.amax * Math.abs(d));
       const want = Math.sign(d) * Math.min(i.vmax, vstop);
@@ -196,7 +204,7 @@ export const BLOCKS = {
       else o.cmd += o._v * dt;
       const vref = i.ff * o._v + i.kp * (o.cmd - fb);
       o.vel += (vref - i.load - o.vel) * Math.min(1, i.kv * dt);
-      o.pos += o.vel * dt;
+      o.x += o.vel * dt; o.pos = o.x - o._off;
       o.ferr = o.cmd - (i.invert ? 2 * i.pos0 - o.pos : o.pos);
       o.done = Math.abs(i.target - o.cmd) < 1e-6 && Math.abs(o.ferr) < 0.05 && Math.abs(o.vel) < 1 ? 1 : 0;
       if (Math.abs(o.ferr) > i.maxerr) { o.trip = 1; o.fault = 'FE'; }

@@ -197,9 +197,9 @@ The blocks (each one's settings, defaults and units are in `blocks.js`):
 |---|---|---|
 | `plc` | `src` (ST) or `ladder` (rungs, as the ladder widget's), `inputs` {Tag: formula}, `outputs` [names], `scan_ms` | every variable as `plc.Name`, a block's as `plc.T1.ET`, `plc.err` |
 | `drive` | `run rev ref reset sto motor` (block id) `fmax fmin accel decel ilim stall brake coast hold` | `f on running at bus trip fault` ("OC", "OV") `I brk` |
-| `motor` | `f on load` (opposes motion) `pull` (steady) `kw rpm poles J tk lrt lrc Ir` | `n` (rpm) `fn T I P slip turns Tr Ir` |
+| `motor` | `f on load` (opposes motion) `pull` (steady) `kw rpm poles J tk lrt lrc Ir tau` | `n` (rpm) `fn T I P slip turns Tr Ir heat` (% of rated rise) |
 | `overload` | `I set class reset auto` | `trip heat nc no` |
-| `axis` (mm) | `target enable vmax amax kp kv ff maxerr invert reset pos0 load` | `pos vel cmd ferr done trip fault` ("FE") |
+| `axis` (mm) | `target enable vmax amax kp kv ff maxerr invert reset pos0 x0 preset load` | `pos` (as the controller reads it) `x` (where it really is) `vel cmd ferr done trip fault` ("FE") `homed` |
 | `conveyor` | `rpm ratio dia length every add size pattern stop eject eject_at slip preload` | `v pos items n out rejects last` |
 | `eye` | `belt` (block id) `at dark kind stuck` | `on blocked` |
 | `sensor` | `x at range above below nc stuck` | `on hit` |

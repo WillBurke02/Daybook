@@ -52,6 +52,8 @@ const machine = (blocks, inputs = {}, extra = {}) => E.build({ inputs, blocks, .
   near(sim.env['m.T'] / sim.env['m.Tr'], 2, 0.15, 'starting torque');
   E.run(sim, 1);
   near(sim.env['m.n'], 1430, 5, 'rated speed at rated load');
+  E.run(sim, 3000);
+  near(sim.env['m.heat'], 100, 2, 'at rated current it warms to its rated rise');
   near(sim.env['m.I'] / sim.env['m.Ir'], 1, 0.05, 'rated current at rated load');
   const stall = machine({ m: { type: 'motor', load: 'm.Tr * 3', J: 0.01 } });
   E.run(stall, 1);
@@ -128,6 +130,10 @@ const machine = (blocks, inputs = {}, extra = {}) => E.build({ inputs, blocks, .
   const peak = kp => { const s = axis({ kp, ff: 0, amax: 1e7, vmax: 1e5, maxerr: 1e9 });   // near enough a step
     E.set(s, 'tgt', 100); let top = 0; for (let k = 0; k < 1500; k++) { E.step(s); top = Math.max(top, s.env['ax.pos']); } return top - 100; };
   assert.ok(peak(30) < 0.01 && peak(1000) > 5, `a stiff loop overshoots: ${peak(30)} vs ${peak(1000)}`);
+  const h = machine({ ax: { type: 'axis', target: 'tgt', x0: 37, preset: 'home' } }, { tgt: { slider: 'Target', min: -500, max: 500, value: 0 }, home: { button: 'Home' } });
+  assert.equal(h.env['ax.pos'], 0, 'before homing it thinks it is at 0');
+  E.press(h, 'home'); E.run(h, 0.5); E.set(h, 'tgt', 10); E.run(h, 2);
+  near(h.env['ax.x'], 47, 0.05, 'after homing, 10 mm from where it was homed');
   const inv = axis({ invert: 1 }); E.set(inv, 'tgt', 100); E.run(inv, 2);
   assert.equal(inv.env['ax.fault'], 'FE', 'an encoder wired backwards runs away and trips on following error');
   console.log('ok — servo axis: move, overshoot with gain, runaway on a reversed encoder');
