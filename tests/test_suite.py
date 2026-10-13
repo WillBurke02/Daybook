@@ -216,7 +216,11 @@ assert code == 200 and fig["version"] == _db.APP_VERSION and hdr["Cache-Control"
 money = next(a for a in fig["apps"] if a["app"] == "money")
 assert any(f["label"] == "Payday" for f in money["figures"]) and set(money["figures"][0]) == {"label", "value", "sub"}, money
 assert raw("/api/changelog")[0] == 401 and json.loads(raw("/api/changelog", headers=C)[2])["text"].startswith("# Changes")
-print("ok — widget, changelog")
+sid = json.loads(raw("/api/t/suggestion", "POST", {"text": "Bigger buttons", "app": "Log", "page": "#/day", "screen": "390×844"}, CW)[2])
+got = json.loads(raw("/api/t/suggestion", headers=C)[2])
+assert [g["text"] for g in got] == ["Bigger buttons"] and got[0]["created"] and not got[0]["done"], got
+assert raw("/api/t/suggestion", "POST", {"text": "  "}, CW)[0] >= 400, "an empty suggestion is refused"
+print("ok — widget, changelog, suggestions")
 
 # === the phone: a share-sheet form post, and the capture key for a Shortcut =========
 if "log" in SUITE.apps:

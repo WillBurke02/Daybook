@@ -147,6 +147,7 @@ const MENUS = () => [
   ] },
   { label: 'Help', items: () => [
     { label: 'Keyboard shortcuts', key: '?', fn: shortcuts },
+    { label: 'Suggest a change…', fn: suggest },
     { label: `What’s new in ${state.meta.version}`, fn: whatsNew },
     { label: `About ${app.app.title}`, fn: about },
   ] },
@@ -160,6 +161,20 @@ function shortcuts() {
     ['Esc', 'Close a menu or box'], ['?', 'This list'],
     ['Right-click', 'Things to do with what is under the pointer'], ['Shift+right-click', 'The browser’s own menu'],
   ].map(([k, v]) => el('tr', {}, el('td', { class: 'num', style: 'width:150px' }, k), el('td', {}, v))))));
+}
+
+/** Help → Suggest a change: a note on what to change, saved with where it was written. Admin → Suggestions lists them. */
+function suggest() {
+  const box = el('textarea', { rows: 4, 'aria-label': 'Suggestion', placeholder: 'What would you change? If something went wrong: what you did, and what you expected.' });
+  const where = { app: app.app.title, page: location.hash || '#/', screen: `${innerWidth}×${innerHeight}`, version: state.meta.version };
+  dialog('Suggest a change', el('div', { class: 'stack' }, box,
+    el('p', { class: 'note' }, `Saved with where you are: ${where.app} ${where.page}, a ${where.screen} window. Admin → Suggestions lists them, to copy.`)),
+    [{ label: 'Save', fn: async () => {
+      if (!box.value.trim()) { box.focus(); return false; }
+      try { await suite.save('suggestion', { text: box.value.trim(), ...where }); flash('Saved to Admin → Suggestions'); }
+      catch (e) { flash(e.message); return false; }
+    } }]);
+  setTimeout(() => box.focus());
 }
 
 /** CHANGELOG.md: each version a section, the newest open. Bullets, their nested bullets, and paragraphs. */

@@ -21,7 +21,7 @@ export async function render(main, { reload, app, pages: all }) {
   main.querySelector('.pagehead')?.set(`Admin`, `Every app, then ${app.title}’s own`);
   if (state.meta.password_default) main.querySelector('.pagehead .ctl')?.append(el('span', { class: 'chip bad' }, 'Still using the default password'));
   main.append(g);
-  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), keys(), sync(), version(), themes(),
+  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), suggestions(), keys(), sync(), version(), themes(),
            el('h2', { class: 'admin-h' }, app.title), databases(), pages(reload), columns(reload),
            data(), sql(reload), views(reload), backups(reload), health());
 }
@@ -581,9 +581,37 @@ if (config.runsInWidget) Script.setWidget(w); else await w.presentMedium();
 Script.complete();
 `;
 
+const copy = async text => { try { await navigator.clipboard.writeText(text); flash('Copied'); } catch { flash('Select it and copy by hand'); } };
+
+// --- suggestions: written from any page (Help → Suggest a change), copied from here to whoever changes Daybook ---
+function suggestions() {
+  const box = el('div', { class: 'stack' });
+  let all = false;
+  const where = s => [s.app, s.page, s.screen, s.version && 'v' + s.version, s.created?.slice(0, 16)].filter(Boolean).join(' · ');
+  const draw = async () => {
+    const rows = (await suite.table('suggestion')).sort((a, b) => b.id - a.id), open = rows.filter(s => !s.done);
+    const set = async (s, done) => { await suite.save('suggestion', { id: s.id, done }); draw(); };
+    box.replaceChildren(
+      (all ? rows : open).length ? el('ul', { class: 'suggs' }, (all ? rows : open).map(s => el('li', { class: s.done ? 'done' : null },
+        el('div', {}, s.text), el('div', { class: 'muted small' }, where(s)),
+        el('div', { class: 'row' },
+          el('button', { class: 'btn plain sm', onclick: () => set(s, s.done ? null : new Date().toISOString().slice(0, 16).replace('T', ' ')) }, s.done ? 'Not done' : 'Done'),
+          el('button', { class: 'btn plain sm', onclick: async () => {
+            await suite.remove('suggestion', s.id);
+            flash('Deleted', { label: 'Undo', fn: async () => { await suite.undo(); draw(); } }); draw();
+          } }, 'Delete')))))
+        : el('p', { class: 'note' }, rows.length ? 'Nothing open.' : 'None yet. Help → Suggest a change, on any page, writes one down with where you were.'),
+      el('div', { class: 'row' },
+        open.length ? el('button', { class: 'btn sm', onclick: () => copy(`Daybook suggestions:\n${open.map(s => `- ${s.text.replace(/\s*\n\s*/g, ' / ')} (${where(s)})`).join('\n')}`) },
+          `Copy the ${open.length} open`) : null,
+        rows.length > open.length ? el('button', { class: 'btn plain sm', onclick: () => { all = !all; draw(); } }, all ? 'Hide done' : `Show done (${rows.length - open.length})`) : null));
+  };
+  draw().catch(e => box.replaceChildren(el('p', { class: 'note deb' }, e.message)));
+  return panel('Suggestions', 6, box);
+}
+
 function keys() {
   const box = el('div', { class: 'stack' });
-  const copy = async text => { try { await navigator.clipboard.writeText(text); flash('Copied'); } catch { flash('Select it and copy by hand'); } };
   const row = (label, value, reset, extra) => el('div', { class: 'keyrow' },
     el('div', { class: 'k' }, label), el('input', { value, readonly: true, onfocus: e => e.target.select() }),
     el('button', { class: 'btn plain sm', onclick: () => copy(value) }, 'Copy'),

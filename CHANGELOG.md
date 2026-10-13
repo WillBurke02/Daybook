@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.3 — 13 October 2026
+
+- **Suggest a change**: Help → Suggest a change, on any page, writes down what you would change,
+  with where you were (the app, the page, the window's size, the version). Admin → Suggestions
+  lists them; **Copy the open ones** to paste to whoever changes Daybook, and tick each off as Done.
+
 ## 4.0.2 — 13 October 2026
 
 - **What's new**: Help → What's new shows this list, newest first. The first time Daybook
