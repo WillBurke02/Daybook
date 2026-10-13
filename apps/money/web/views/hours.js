@@ -1,5 +1,5 @@
 import { api } from '../api.js';
-import { el, flash, tiles, tile, table, download } from '../core/dom.js';
+import { el, flash, tiles, tile, table, download, dialog } from '../core/dom.js';
 import { hrs, hhmm, money, today, dow, dateUK, span, addMonths, monthOnly, dayShort, lastDay,
          mondayOf, addDays, usualTimes } from '../core/format.js';
 import { extraCols, setting, settingsForm } from '../core/state.js';
@@ -100,7 +100,9 @@ export const panels = {
     const tot = days.reduce((a, d) => a + d.hours, 0);
     ctx.aside.append(el('span', { class: 'num muted' }, `${shifts.length} shifts · ${hhmm(tot)}`));
     body.append(g);
-    if (focusNext || ctx.params.add) queueMicrotask(() => g.focusDraft?.());
+    // on a phone, + Hours is a small form (the grid is for a keyboard); on a computer, the grid's new row
+    if (ctx.params.add && matchMedia('(max-width: 600px)').matches) { if (/[?&]add=/.test(location.hash)) addHours(addDate || today(), usual, ctx); }
+    else if (focusNext || ctx.params.add) queueMicrotask(() => g.focusDraft?.());
     focusNext = null;
   } },
 
@@ -227,3 +229,32 @@ export const layout = [
   { type: 'chart', id: 'hours-ot', title: 'Overtime by rate', w: 6, source: 'v_day', date: 'date', x: 'date',
     y: ['ot_hours'], split: 'ot_mult', names: { 1.5: '×1.5', 2: '×2' }, chart: 'bar', grain: 'month', window: '12m', fmt: 'hours' },
 ];
+
+/** A shift, from a phone: the date and your usual times filled in, a big Add. The ?add= leaves the address
+ *  once it is open, so a refresh does not ask again. */
+let adding = false;
+function addHours(date, usual, ctx) {
+  if (adding) return;
+  adding = true;
+  history.replaceState(null, '', location.href.replace(/([?&])add=[^&]*&?/, '$1').replace(/[?&]$/, ''));
+  const day = el('input', { type: 'date', value: date }), start = el('input', { type: 'time', value: usual.start || '' });
+  const end = el('input', { type: 'time', value: usual.end || '' }), note = el('input', { type: 'text', placeholder: 'Note (optional)' });
+  const d = dialog('Add hours', el('div', { class: 'addhours' },
+    el('label', { class: 'f' }, 'Date', day),
+    el('div', { class: 'row' }, el('label', { class: 'f' }, 'Started', start), el('label', { class: 'f' }, 'Finished', end)),
+    el('label', { class: 'f' }, 'Note', note)), [{ label: 'Add', fn: async () => {
+      if (!day.value || !start.value || !end.value) { flash('A date, a start and a finish'); return false; }
+      // the same shift twice (a second tap, a forgotten earlier entry) would double the hours
+      const mins = t => +t.slice(0, 2) * 60 + +t.slice(3, 5), a = mins(start.value), b = mins(end.value) <= a ? mins(end.value) + 1440 : mins(end.value);
+      const clash = (await api.table('shift', { date: day.value }).catch(() => [])).find(x => {
+        const xa = mins(x.start), xb = mins(x.end) <= xa ? mins(x.end) + 1440 : mins(x.end);
+        return a < xb && xa < b;
+      });
+      if (clash) { flash(`That overlaps ${clash.start}–${clash.end}, already on ${dateUK(day.value)}: change the times, or edit that one in the timesheet.`); return false; }
+      try { await api.save('shift', { date: day.value, start: start.value, end: end.value, note: note.value.trim() || null, source: 'manual' }); }
+      catch (x) { flash(x.message); return false; }
+      flash(`Added ${start.value}–${end.value} on ${dateUK(day.value)}`, { label: 'Undo', fn: async () => { await api.undo(); ctx.changed('shift'); ctx.refresh(); } });
+      ctx.changed('shift'); ctx.refresh();
+    } }]);
+  d.addEventListener('close', () => { adding = false; });
+}

@@ -134,6 +134,8 @@ body {
   border: 1px solid var(--rule); border-radius: 9px; background: var(--ground); color: var(--ink-3); cursor: text; min-width: 0; }
 .findbox:focus-within { border-color: var(--accent); background: var(--raised); }
 .findbox input { flex: 1; min-width: 0; border: 0; background: none; padding: 0; outline: none; font: 400 13.5px var(--sans); }
+.findbox { container-type: inline-size; }
+@container (max-width: 130px) { .findbox input:not(:focus)::placeholder { color: transparent; } }   /* squeezed by a long title: the lens says it */
 .findbox kbd { font: 11px var(--mono); border: 1px solid var(--rule); border-radius: 4px; padding: 0 5px; color: var(--ink-3); }
 .ic { display: inline-flex; flex: none; } .ic svg { display: block; }
 .appbar .icon { width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center;
@@ -1031,6 +1033,10 @@ svg.wplot { width: 100%; height: auto; display: block; background: var(--raised)
 .s3trend .legend .k2 { fill: var(--s1); } .s3trend .legend .k3 { fill: var(--s5); }
 .s3plc .ladder { overflow-x: auto; } .s3plc .ladsvg { max-width: 560px; }
 .s3fail { color: var(--debit); margin: 6px 0; }
+/* Hours, + Hours on a phone: a small form */
+.addhours { display: grid; gap: 12px; min-width: min(320px, 80vw); }
+.addhours .row { gap: 12px; } .addhours .row .f { flex: 1; }
+.addhours input { font-size: 16px; min-height: 40px; width: 100%; }   /* 16px: iOS does not zoom in on it */
 @media (max-width: 600px) { .s3stage canvas { aspect-ratio: 4 / 3; } .s3label { font-size: 9.5px; padding: 0 4px; } }
 .s3plc pre.st { margin: 6px 0; }
 @media (max-width: 600px) {
