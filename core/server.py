@@ -209,6 +209,8 @@ class Handler(BaseHTTPRequestHandler):
             if name:
                 if rest.startswith("api/"):
                     return self._app_api(name, method, [p for p in rest[4:].split("/") if p], query)
+                if rest.startswith("clip/") and hasattr(SUITE.apps[name], "clip_in"):
+                    return self._clip(name, method, rest[5:], query)
                 if share:
                     return self._share(name)
             if method not in ("GET", "HEAD"):
@@ -328,6 +330,39 @@ class Handler(BaseHTTPRequestHandler):
             self._send(400, {"error": f"database: {e}"})
         except (ValueError, TypeError, KeyError) as e:
             self._send(400, {"error": str(e)})
+        finally:
+            db.close()
+
+    def _clip(self, name, method, rest, query):
+        """A video: POST /log/clip/<entry id> with the file as the body (raw, so up to 60 MB without base64);
+        GET /log/clip/<id> plays it, in the pieces a phone asks for (Safari will not play one without)."""
+        app, ctx = SUITE.apps[name], self._ctx(name)
+        db = _db.connect(ctx.db_path)
+        try:
+            if method == "POST" and rest.isdigit():
+                duration = (query.get("duration") or [None])[0]
+                cid = app.clip_in(db, int(rest), self.headers.get("Content-Type", ""), self._body(), duration)
+                _sync.soon()
+                return self._send(200, {"ok": True, "id": cid})
+            if method not in ("GET", "HEAD") or not rest.isdigit():
+                return self._send(405, {"error": "method not allowed"})
+            found = app.clip_out(db, int(rest))
+            if not found:
+                return self._send(404, {"error": "no such video"})
+            mime, size, read = found
+            keep = [("Accept-Ranges", "bytes"), ("Cache-Control", "private, max-age=86400")]
+            m = re.fullmatch(r"bytes=(\d*)-(\d*)", (self.headers.get("Range") or "").strip())
+            if not m or not (m[1] or m[2]):
+                return self._send(200, read(0, size), mime, extra=keep)
+            start, end = (int(m[1]), int(m[2]) if m[2] else None) if m[1] else (max(0, size - int(m[2])), size - 1)
+            if end is None:                       # open-ended: a piece at a time, the player asks for the next
+                end = start + 4 * 2**20 - 1
+            end = min(end, size - 1)
+            if start >= size or start > end:
+                return self._send(416, b"", mime, extra=keep + [("Content-Range", f"bytes */{size}")])
+            self._send(206, read(start, end - start + 1), mime, extra=keep + [("Content-Range", f"bytes {start}-{end}/{size}")])
+        except _api.Err as e:
+            self._send(e.code, {"error": e.msg})
         finally:
             db.close()
 

@@ -132,6 +132,34 @@ assert not R("GET", "t/inbox") and one("SELECT COUNT(*) n FROM attachment WHERE 
 assert log.share(db, {}, []) == "/log/#/day", "nothing shared, nothing added"
 refused(lambda: db.execute("INSERT INTO inbox (entry_id, mime, data) VALUES (?, 'text/html', 'data:text/html;base64,x')", (sh["id"],)), "HTML in the inbox")
 
+# === videos ===========================================================================
+# raw bytes, up to 60 MB, played back in pieces; an entry of only videos is allowed; deleting the entry and
+# undoing it brings the video back (its bytes wait, outside the change history, for 30 days)
+vid = R("POST", "quick", {"text": "", "videos": 1})["id"]
+cid = log.clip_in(db, vid, "video/mp4; codecs=avc1", b"\x00\x00\x00\x18ftypmp42" + bytes(range(256)) * 40, "12.34")
+mime, size, read = log.clip_out(db, cid)
+assert mime == "video/mp4" and size == 12 + 256 * 40 and read(4, 4) == b"ftyp" and read(12 + 255, 2) == bytes([255, 0])
+d = R("GET", "day", q={"d": [date.today().isoformat()]})
+v = [a for e in d["entries"] if e["id"] == vid for a in e["attachments"]]
+assert v and v[0]["type"] == "video" and v[0]["duration_s"] == 12.3 and "data" not in v[0], v
+R("POST", f"clip/{cid}/thumb", {"thumb": JPEG})
+assert one("SELECT thumb FROM clip WHERE id = ?", cid)["thumb"] == JPEG
+refused(lambda: log.clip_in(db, vid, "text/html", b"<x>"), "not a video")
+refused(lambda: log.clip_in(db, vid, "video/mp4", b"x" * (log.CLIP_MAX + 1)), "a video over the limit")
+refused(lambda: log.clip_in(db, 999999, "video/mp4", b"x"), "a video for no entry")
+R("DELETE", f"t/entry/{vid}")
+assert not log.clip_out(db, cid) and one("SELECT gone FROM clip_data WHERE clip_id = ?", cid)["gone"], "gone, but kept"
+assert "ftyp" not in one("SELECT detail FROM change_log ORDER BY id DESC LIMIT 1")["detail"], "no video in the change history"
+R("POST", "undo", {})
+assert log.clip_out(db, cid)[1] == size and one("SELECT gone FROM clip_data WHERE clip_id = ?", cid)["gone"] is None, "undo: it plays again"
+assert R("GET", "v/v_entry", q={"id": [str(vid)]})[0]["videos"] == 1
+db.execute("UPDATE clip_data SET gone = '2000-01-01 00:00' WHERE clip_id = ?", (cid,))
+db.execute("DELETE FROM clip WHERE id = ?", (cid,))
+db.execute("UPDATE clip_data SET gone = '2000-01-01 00:00' WHERE clip_id = ?", (cid,))
+log.clip_in(db, vid, "video/mp4", b"x")                      # the next one in clears the long-gone
+assert not one("SELECT 1 FROM clip_data WHERE clip_id = ?", cid), "a video gone 30 days is cleared"
+print("ok — videos: raw, in pieces, only videos, delete and undo, the limit")
+
 # === Home =============================================================================
 R("POST", "quick", {"text": "Today's first", "at": "08:00"})
 h = R("GET", "home")

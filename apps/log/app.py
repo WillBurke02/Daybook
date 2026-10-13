@@ -23,8 +23,10 @@ SOURCES = {
     "v_attachment": ["Photos and voice notes", "Each attachment, without the picture or sound itself."],
 }
 OTHERS = ("money", "learn")
-LABELS = {"entry": "entry", "attachment": "attachment"}
+LABELS = {"entry": "entry", "attachment": "attachment", "clip": "video"}
 SHARE_MAX = 25 * 1024 * 1024        # one shared file; larger ones are refused, not truncated
+CLIP_MAX = 60 * 1024 * 1024         # one video: about a minute from a phone; trim a longer one there first
+CLIP_KEEP = 30                      # days a deleted video's bytes wait, in case the delete is undone
 SYNC_SKIP = ("inbox",)              # a shared photo waits here until Log files it; the filed one syncs
 
 SEARCH = [
@@ -64,15 +66,16 @@ def sync_merge(db, name, mine, theirs):
 
 # --- adding ------------------------------------------------------------------------
 
-def add(db, text=None, kind="work", day=None, at=None, photos=(), voice=None, log=True):
+def add(db, text=None, kind="work", day=None, at=None, photos=(), voice=None, log=True, videos=0):
     """One entry for a day, or, for kind 'day', more text on that day's diary.
-    photos: [{image, thumb}] already shrunk in the browser; voice: {data, duration_s}.
+    photos: [{image, thumb}] already shrunk in the browser; voice: {data, duration_s};
+    videos: how many are about to follow (clip_in), so an entry of only videos is allowed.
     Returns the entry's id. Undo takes back everything it did."""
     day = day or date.today().isoformat()
     text = (text or "").strip() or None
     if kind not in ("day", "work"):
         raise Err(400, "kind is day or work")
-    if not text and not photos and not voice:
+    if not text and not photos and not voice and not videos:
         raise Err(400, "write something, or add a photo or a voice note")
     undo = []
     diary = db.execute("SELECT * FROM entry WHERE day = ? AND kind = 'day'", (day,)).fetchone() if kind == "day" else None
@@ -102,6 +105,43 @@ def add(db, text=None, kind="work", day=None, at=None, photos=(), voice=None, lo
                        eid, detail={"undo": undo})
     db.commit()
     return eid
+
+
+def clip_in(db, entry_id, mime, data, duration=None):
+    """A video for an entry, as it came (raw bytes, not JSON: see the server's /log/clip/). Returns its id."""
+    mime = (mime or "").split(";")[0].strip().lower()
+    if not mime.startswith("video/"):
+        raise Err(415, "that is not a video")
+    if not data:
+        raise Err(400, "the video is empty")
+    if len(data) > CLIP_MAX:
+        raise Err(413, f"videos up to {CLIP_MAX // 2**20} MB: trim it on the phone first")
+    e = db.execute("SELECT id, day FROM entry WHERE id = ?", (entry_id,)).fetchone()
+    if not e:
+        raise Err(404, "no such entry")
+    db.execute("DELETE FROM clip_data WHERE gone IS NOT NULL AND gone < datetime('now', 'localtime', ?)", (f"-{CLIP_KEEP} days",))
+    cid = db.execute("INSERT INTO clip (entry_id, mime, size, duration_s) VALUES (?,?,?,?)",
+                     (e["id"], mime, len(data), round(float(duration), 1) if duration else None)).lastrowid
+    db.execute("INSERT INTO clip_data (clip_id, data) VALUES (?, ?)", (cid, data))
+    _db.log_change(db, "edit", "clip", f"Added a video to the entry of {e['day']}", e["id"],
+                   detail={"undo": [{"op": "remove", "table": "clip", "pk": "id", "ids": [cid]}]})
+    db.commit()
+    return cid
+
+
+def clip_out(db, cid):
+    """A video to play: (its type, its size, read(start, n) for a piece of it), or None."""
+    r = db.execute("SELECT c.mime, LENGTH(d.data) FROM clip c JOIN clip_data d ON d.clip_id = c.id WHERE c.id = ?",
+                   (cid,)).fetchone()
+    if not r:
+        return None
+    def read(start, n):
+        if hasattr(db, "blobopen"):                  # Python 3.11: straight from the file, not the whole video
+            with db.blobopen("clip_data", "data", cid, readonly=True) as b:
+                b.seek(start)
+                return b.read(n)
+        return db.execute("SELECT substr(data, ?, ?) FROM clip_data WHERE clip_id = ?", (start + 1, n, cid)).fetchone()[0]
+    return r[0], r[1], read
 
 
 def share(db, fields, files):
@@ -151,7 +191,8 @@ def route(db, method, p, query, body, ctx):
     if p == ["quick"] and method == "POST":
         now = datetime.now()
         eid = add(db, body.get("text"), body.get("kind") or "work", body.get("day") or now.date().isoformat(),
-                  body.get("at") if "at" in body else now.strftime("%H:%M"), body.get("photos") or (), body.get("voice"))
+                  body.get("at") if "at" in body else now.strftime("%H:%M"), body.get("photos") or (), body.get("voice"),
+                  videos=int(body.get("videos") or 0))
         return 200, {"ok": True, "id": eid}
 
     if p[:1] == ["attach"] and len(p) == 2 and method == "POST":
@@ -175,6 +216,14 @@ def route(db, method, p, query, body, ctx):
         db.commit()
         return 200, {"ok": True, "ids": ids}
 
+    if p[:1] == ["clip"] and len(p) == 3 and p[2] == "thumb" and method == "POST":     # a video's picture, made in the browser
+        thumb = body.get("thumb")
+        if thumb is not None and not str(thumb).startswith("data:image/jpeg;base64,"):
+            raise Err(400, "a thumbnail is a JPEG")
+        db.execute("UPDATE clip SET thumb = ? WHERE id = ?", (thumb, int(p[1])))
+        db.commit()
+        return 200, {"ok": True}
+
     if p == ["day"] and method == "GET":
         d = g("d") or date.today().isoformat()
         entries = [dict(r) for r in db.execute(
@@ -182,8 +231,11 @@ def route(db, method, p, query, body, ctx):
         ids = [e["id"] for e in entries]
         atts = [dict(r) for r in db.execute(
             f"SELECT * FROM v_attachment WHERE entry_id IN ({','.join('?' * len(ids))}) ORDER BY id", ids)] if ids else []
+        clips = [dict(r, type="video") for r in db.execute(
+            f"SELECT id, entry_id, thumb, duration_s, size, created FROM clip WHERE entry_id IN ({','.join('?' * len(ids))}) "
+            "ORDER BY id", ids)] if ids else []
         for e in entries:
-            e["attachments"] = [a for a in atts if a["entry_id"] == e["id"]]
+            e["attachments"] = [a for a in atts if a["entry_id"] == e["id"]] + [c for c in clips if c["entry_id"] == e["id"]]
         near = db.execute("SELECT (SELECT MAX(day) FROM entry WHERE day < ?), (SELECT MIN(day) FROM entry WHERE day > ?)",
                           (d, d)).fetchone()
         return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1],
@@ -207,7 +259,7 @@ def route(db, method, p, query, body, ctx):
                 "ORDER BY a.id LIMIT 6", (d,))]
             out.append({"day": d, "thumbs": thumbs,
                         "lines": [{"at": r["at"], "kind": r["kind"], "text": (r["text"] or "").strip().split("\n")[0][:160],
-                                   "photos": r["photos"], "voices": r["voices"]} for r in rows]})
+                                   "photos": r["photos"], "voices": r["voices"], "videos": r["videos"]} for r in rows]})
         return 200, {"days": out, "more": len(days) == limit}
 
     if p == ["print"] and method == "GET":
@@ -219,5 +271,6 @@ def route(db, method, p, query, body, ctx):
                 "SELECT data FROM attachment WHERE entry_id = ? AND type = 'photo' ORDER BY id", (e["id"],))]
             e["voices"] = db.execute("SELECT COUNT(*) FROM attachment WHERE entry_id = ? AND type = 'voice'",
                                      (e["id"],)).fetchone()[0]
+            e["videos"] = db.execute("SELECT COUNT(*) FROM clip WHERE entry_id = ?", (e["id"],)).fetchone()[0]
         return 200, {"from": frm, "to": to, "entries": entries}
     return None

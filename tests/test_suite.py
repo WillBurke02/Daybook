@@ -135,6 +135,22 @@ raw("/api/t/setting", "POST", {"key": "mode", "value": "system"}, {**C, **W})
 assert '<html lang="en-GB">' in raw("/hours/", headers=C)[2].decode()
 print("ok — pages: versioned files, modules preloaded, theme on the page, gzip, 304")
 
+# a video goes up raw (not JSON) and comes back in the pieces a phone asks for (Safari plays nothing without)
+eid = json.loads(raw("/log/api/quick", "POST", {"videos": 1}, {**C, **W})[2])["id"]
+clip = bytes(range(256)) * 100
+code, _, body = raw(f"/log/clip/{eid}?duration=3.5", "POST", clip, {**C, "X-Daybook": "1", "Content-Type": "video/quicktime"})
+assert code == 200, body
+cid = json.loads(body)["id"]
+code, hdr, body = raw(f"/log/clip/{cid}", headers={**C, "Range": "bytes=256-511"})
+assert code == 206 and body == bytes(range(256)) and hdr["Content-Range"] == f"bytes 256-511/{len(clip)}" and hdr["Content-Type"] == "video/quicktime", hdr
+code, hdr, body = raw(f"/log/clip/{cid}", headers={**C, "Range": "bytes=-10"})
+assert code == 206 and body == clip[-10:]
+assert raw(f"/log/clip/{cid}", headers={**C, "Range": f"bytes={len(clip)}-"})[0] == 416
+assert raw(f"/log/clip/{cid}", headers=C)[2] == clip
+assert raw(f"/log/clip/{eid}", "POST", clip, {**C, "Content-Type": "video/mp4"})[0] == 403, "a write needs X-Daybook"
+assert raw(f"/log/clip/{cid}")[0] == 302, "and signing in"
+print("ok — videos: raw upload, played back in ranges")
+
 # kept signed in while used: a cookie more than a day old comes back renewed; a fresh one is left alone
 old = {"Cookie": "daybook=" + suite.make_session(days=20)}
 code, hdr, _ = raw("/api/meta", headers=old)

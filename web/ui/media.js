@@ -32,7 +32,56 @@ export async function shrinkAll(files) {
   return out;
 }
 
-/** Take pictures from the camera (phone) or files. accept may add PDF (receipts). */
+// --- videos (Log) ------------------------------------------------------------------------
+// A browser cannot shrink a video, so it goes up as it is (raw, not base64) and plays from the Pi
+// in pieces. A phone's minute of video is about 60 MB; a longer one is trimmed on the phone first.
+export const CLIP_MAX = 60 * 1024 * 1024;
+export const isVideo = f => f.type.startsWith('video/') || /\.(mov|mp4|m4v|webm)$/i.test(f.name || '');
+/** Pictures and videos in a paste or a drop. */
+export const mediaIn = dt => [...(dt?.files || [])].filter(f => f.type.startsWith('image/') || isVideo(f));
+
+/** A video's first frame (240px JPEG) and its length, if this browser can read it (a PC may not read an
+ *  iPhone's HEVC: it still uploads, without a picture). */
+export function videoInfo(file) {
+  return new Promise(done => {
+    const url = URL.createObjectURL(file), v = el('video', { muted: true, playsinline: true, preload: 'metadata' });
+    const end = (thumb = null) => { URL.revokeObjectURL(url); done({ thumb, duration: isFinite(v.duration) ? v.duration : null }); };
+    const timer = setTimeout(() => end(), 6000);
+    v.addEventListener('loadeddata', () => { v.currentTime = Math.min(0.2, (v.duration || 1) / 2); }, { once: true });
+    v.addEventListener('seeked', () => {
+      clearTimeout(timer);
+      try {
+        const s = 240 / Math.max(v.videoWidth, v.videoHeight, 1), c = el('canvas', { width: Math.round(v.videoWidth * s), height: Math.round(v.videoHeight * s) });
+        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+        end(c.toDataURL('image/jpeg', 0.7));
+      } catch { end(); }
+    }, { once: true });
+    v.addEventListener('error', () => { clearTimeout(timer); end(); }, { once: true });
+    v.src = url;
+  });
+}
+
+/** Send a video to an entry: base is the app's own path ('/log/'). Returns its id. */
+export async function uploadClip(base, entryId, file, info = {}) {
+  const r = await fetch(`${base}clip/${entryId}${info.duration ? `?duration=${info.duration.toFixed(1)}` : ''}`, {
+    method: 'POST', body: file, headers: { 'Content-Type': file.type || 'video/mp4', 'X-Daybook': '1' } });
+  const out = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(out.error || `the video did not upload (${r.status})`);
+  if (info.thumb) await fetch(`${base}api/clip/${out.id}/thumb`, { method: 'POST', body: JSON.stringify({ thumb: info.thumb }),
+    headers: { 'Content-Type': 'application/json', 'X-Daybook': '1' } }).catch(() => {});
+  return out.id;
+}
+
+/** A video on an entry: its picture with ▶; opens a player (the Pi sends it in pieces as it plays). */
+export function videoTile(att, base, title) {
+  return el('button', { class: 'thumb vid', type: 'button', title: 'Play video', onclick: () => {
+    const v = el('video', { controls: true, playsinline: true, autoplay: true, class: 'full', src: `${base}clip/${att.id}` });
+    dialog(title, v);
+  } }, att.thumb ? el('img', { src: att.thumb, alt: 'Video' }) : el('span', { class: 'novid' }, 'Video'),
+    el('span', { class: 'play' }, '▶'), att.duration_s ? el('span', { class: 'len num' }, clock(att.duration_s)) : null);
+}
+
+/** Take pictures from the camera (phone) or files. accept may add PDF (receipts), or video (Log). */
 export function pictureInput(onFiles, { multiple = true, camera = true, accept = 'image/*' } = {}) {
   const i = el('input', { type: 'file', accept, multiple, capture: camera ? 'environment' : null, hidden: true });
   i.addEventListener('change', () => { if (i.files.length) onFiles([...i.files]); i.value = ''; });

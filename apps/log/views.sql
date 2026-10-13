@@ -5,6 +5,7 @@ CREATE VIEW v_entry AS
 SELECT e.*,
        (SELECT COUNT(*) FROM attachment a WHERE a.entry_id = e.id AND a.type = 'photo') AS photos,
        (SELECT COUNT(*) FROM attachment a WHERE a.entry_id = e.id AND a.type = 'voice') AS voices,
+       (SELECT COUNT(*) FROM clip c WHERE c.entry_id = e.id) AS videos,
        (SELECT thumb FROM attachment a WHERE a.entry_id = e.id AND a.thumb IS NOT NULL ORDER BY a.id LIMIT 1) AS thumb
 FROM entry e;
 
@@ -17,7 +18,8 @@ FROM attachment;
 CREATE VIEW v_log_day AS
 SELECT day, SUM(kind = 'work') AS work, MAX(kind = 'day' AND TRIM(COALESCE(text, '')) <> '') AS diary,
        COUNT(*) AS entries,
-       (SELECT COUNT(*) FROM attachment a JOIN entry x ON x.id = a.entry_id WHERE x.day = e.day) AS attachments
+       (SELECT COUNT(*) FROM attachment a JOIN entry x ON x.id = a.entry_id WHERE x.day = e.day)
+       + (SELECT COUNT(*) FROM clip c JOIN entry x ON x.id = c.entry_id WHERE x.day = e.day) AS attachments
 FROM entry e GROUP BY day;
 
 -- Every tag, how often, and when last used.
