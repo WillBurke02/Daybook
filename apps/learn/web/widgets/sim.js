@@ -99,7 +99,9 @@ export async function mount(box, p, report) {
   };
   const io = new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen && !raf) { last = null; raf = requestAnimationFrame(frame); } });
   io.observe(box);
-  const stop = () => { cancelAnimationFrame(raf); raf = 0; io.disconnect(); view?.destroy(); };
+  // out of sight it does not run; once the card is gone, its 3D view is let go (a page holds only so many)
+  const gone = setInterval(() => { if (!box.isConnected) stop(); }, 2000);
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; io.disconnect(); clearInterval(gone); view?.destroy(); };
   tick(true);
   raf = requestAnimationFrame(frame);
 

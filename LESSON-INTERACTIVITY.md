@@ -14,6 +14,12 @@ build, and the content-check rule that keeps it honest.
   ladder, impedance, encoder, A-scan, timer, profile, fraction. A `widget` card
   can ask a question *about whatever the learner set* (`"answer": "q_on"`) and
   can **predict first**: controls stay locked until they commit to a guess.
+- **Machines** (the `sim` widget, `apps/learn/web/sim/`, scenes in `apps/learn/web/sims/`): a PLC,
+  drives, motors, sensors, conveyors, axes, tanks, simulated in real time and drawn in 3D, with a real
+  control for every input. A card reuses a scene and asks a **goal** (make it do something; a formula
+  checks it, and the content check runs the author's solution to prove it can be done) or a
+  **diagnose** (one of the scene's faults, picked afresh at every review). How to write one: the
+  Machines section of CONTENT-BRIEF.md.
 - **Tools beside the card**: the whiteboard and the calculator/grapher.
 - **Bench tasks**: do it for real, tick a checklist, log it.
 
@@ -53,7 +59,7 @@ Every `learn` stage widget card should be followed by one of these in
 `practise`. Add a content-check warning for lessons with a widget in `learn` and
 no widget-based ask in `practise`. Cost: authoring only.
 
-### 2. Fix the fault  ·  effort: medium
+### 2. Fix the fault  ·  effort: medium  ·  done for machines: a goal card with a fault set
 
 A broken thing the learner repairs, not just describes. Three flavours, one
 mechanism (a start state, an editable part, a pass condition):
@@ -70,7 +76,10 @@ widget already knows how to run; the card adds a pass predicate over its
 reported values, which `content.check.mjs` evaluates against the *intended*
 fix (so a card that cannot be solved cannot ship).
 
-### 3. Fault-finding scenarios (branching)  ·  effort: medium, highest value for this audience
+### 3. Fault-finding scenarios (branching)  ·  effort: medium, highest value for this audience  ·  partly done: diagnose cards on machines
+
+The diagnose card does this on a running machine: no tree to write, the learner tests by running it.
+A branching card is still worth having where the tests are not on the machine (a meter, a smell, a log).
 
 "The pump will not start." The learner chooses the next test; each choice
 returns a result (a reading, a photo caption, a noise) and may close branches.
@@ -152,8 +161,9 @@ phrased as "what it checks".
 - **Animations without a question.** If nothing is asked, it is a diagram.
 - **Timers on first attempts.** Speed is for fluency rounds on cards already known.
 - **Rewarding clicks.** Nothing counts interactions; only answers and lessons passed show.
-- **A generic simulator.** Each widget does one job (the existing ones do); a
-  "build any circuit" sandbox is a product, not a lesson card.
+- **A sandbox for the learner.** The machine engine is general so that authors can build scenes
+  quickly, but each card gives the learner one machine and one job; a "build any circuit" sandbox is a
+  product, not a lesson card.
 - **Drag-only.** Anything draggable also works by tap-then-tap and by keyboard.
 
 ## Suggested order
