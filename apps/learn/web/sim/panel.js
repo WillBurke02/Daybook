@@ -29,7 +29,14 @@ export function panel(get, opts = {}) {
         title: i.latch ? 'Stays in until pressed again' : 'A push-button: on only while held' }, label);
       if (i.latch) b.addEventListener('click', () => set(get(), k, now() === at ? rest : at));
       else {
-        const go = v => set(get(), k, v ? at : rest);
+        // held while down; a quick tap still lasts 150 ms, so the PLC's scan sees it
+        let downAt = 0, down = false;
+        const go = v => {
+          if (v) { down = true; downAt = performance.now(); set(get(), k, at); return; }
+          if (!down) return;
+          down = false;
+          setTimeout(() => { if (!down) set(get(), k, rest); }, Math.max(0, 150 - (performance.now() - downAt)));
+        };
         b.addEventListener('pointerdown', e => { e.preventDefault(); b.setPointerCapture(e.pointerId); go(true); });
         for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) b.addEventListener(ev, () => go(false));
         b.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); if (!e.repeat) go(true); } });

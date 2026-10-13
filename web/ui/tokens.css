@@ -991,7 +991,7 @@ svg.wplot { width: 100%; height: auto; display: block; background: var(--raised)
 .s3stage canvas { width: 100%; aspect-ratio: 16 / 9; max-height: 62vh; display: block; border: 1px solid var(--rule); border-radius: 6px; background: var(--raised); touch-action: pan-y; cursor: grab; }
 .s3stage canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .s3labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.s3label { position: absolute; left: 0; top: 0; font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; white-space: nowrap;
+.s3label { position: absolute; left: 0; top: 0; font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; white-space: nowrap; pointer-events: none;
   color: var(--ink); background: color-mix(in srgb, var(--raised) 82%, transparent); border: 1px solid var(--rule-soft); }
 .s3cam { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; }
 .s3cam .btn { min-width: 30px; padding-inline: 6px; background: color-mix(in srgb, var(--raised) 85%, transparent); }
@@ -1015,6 +1015,7 @@ svg.wplot { width: 100%; height: auto; display: block; background: var(--raised)
 .s3trend .legend .k2 { fill: var(--s1); } .s3trend .legend .k3 { fill: var(--s5); }
 .s3plc .ladder { overflow-x: auto; }
 .s3fail { color: var(--debit); margin: 6px 0; }
+@media (max-width: 600px) { .s3stage canvas { aspect-ratio: 4 / 3; } .s3label { font-size: 9.5px; padding: 0 4px; } }
 .s3plc pre.st { margin: 6px 0; }
 @media (max-width: 600px) {
   .plc { grid-template-columns: 1fr 1fr; } .plc .col.grow { grid-column: 1 / -1; order: -1; }

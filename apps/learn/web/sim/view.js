@@ -230,7 +230,9 @@ export function view3d(canvas, scene, known, hooks = {}) {
     const yaw = cam.yaw * Math.PI / 180, pitch = cam.pitch * Math.PI / 180;
     const eye = [cam.target[0] + cam.dist * Math.cos(pitch) * Math.sin(yaw), cam.target[1] + cam.dist * Math.sin(pitch), cam.target[2] + cam.dist * Math.cos(pitch) * Math.cos(yaw)];
     const V = lookAt(eye, cam.target);
-    VP = mul(perspective(cam.fov * Math.PI / 180, w / h, 0.02, 100), V);
+    // the scene is framed for 16:9; on a taller canvas (a phone) keep its width in view and show more above and below
+    const half = Math.atan(Math.tan(cam.fov * Math.PI / 360) * Math.max(1, 16 / 9 / (w / h)));
+    VP = mul(perspective(2 * half, w / h, 0.02, 100), V);
     items = [];
     const fl = v.floor ?? 6;
     if (fl) items.push({ p: {}, mesh: mesh('box'), M: scaled(frame([cam0.target[0], -0.005, cam0.target[2]], [0, 0, 0]), [fl, 0.01, fl]), N: normals(I4(), [1, 1, 1]), col: floorRGB, emit: [0, 0, 0], a: 1 });
@@ -254,8 +256,9 @@ export function view3d(canvas, scene, known, hooks = {}) {
       gl.disable(gl.POLYGON_OFFSET_FILL); gl.disable(gl.STENCIL_TEST);
     }
     gl.depthMask(false); clear.forEach(put); gl.depthMask(true);
-    // labels: html over the canvas, where each part's origin lands
-    const seen = new Set();
+    // labels: html over the canvas, where each part's origin lands; kept inside it, and one that would cover an
+    // earlier one is left off (they crowd on a phone)
+    const seen = new Set(), placed = [];
     if (layer) for (const d of items.filter(x => x.label)) {
       const off = d.p.label_at || [0, 0, 0], q = apply(VP, [d.F[12] + off[0], d.F[13] + off[1], d.F[14] + off[2]]);
       let tag = labels.get(d.p);
@@ -263,8 +266,14 @@ export function view3d(canvas, scene, known, hooks = {}) {
       seen.add(d.p);
       if (q[3] <= 0) { tag.hidden = true; continue; }
       tag.hidden = false;
-      tag.textContent = fill(d.label, env);
-      tag.style.transform = `translate(${((q[0] / q[3] + 1) / 2 * w).toFixed(1)}px, ${((1 - q[1] / q[3]) / 2 * h).toFixed(1)}px) translate(-50%, -100%)`;
+      const text = fill(d.label, env);
+      if (tag.textContent !== text) tag.textContent = text;
+      const lw = tag.offsetWidth, lh = tag.offsetHeight;
+      const x = Math.min(Math.max((q[0] / q[3] + 1) / 2 * w, lw / 2 + 2), w - lw / 2 - 2), y = Math.max((1 - q[1] / q[3]) / 2 * h, lh + 2);
+      const box = [x - lw / 2, y - lh, x + lw / 2, y];
+      if (placed.some(b => b[0] < box[2] && box[0] < b[2] && b[1] < box[3] && box[1] < b[3])) { tag.hidden = true; continue; }
+      placed.push(box);
+      tag.style.transform = `translate(${box[0].toFixed(1)}px, ${box[1].toFixed(1)}px)`;
     }
     for (const [p, tag] of labels) if (!seen.has(p)) tag.hidden = true;
   }
@@ -293,10 +302,15 @@ export function view3d(canvas, scene, known, hooks = {}) {
     return best?.p || null;
   }
   let drag = null, held = null;
-  const release = () => { if (held) { hooks.onInput?.(held.press, 'up'); held = null; } };
+  let downAt = 0;
+  const release = () => {
+    if (!held) return;
+    const p = held; held = null;
+    setTimeout(() => hooks.onInput?.(p.press, 'up'), Math.max(0, 150 - (performance.now() - downAt)));   // a quick tap still lasts a scan or two
+  };
   canvas.addEventListener('pointerdown', e => {
     const p = hit(e);
-    if (p?.press) { held = p; hooks.onInput?.(p.press, 'down'); canvas.setPointerCapture(e.pointerId); e.preventDefault(); return; }
+    if (p?.press) { held = p; downAt = performance.now(); hooks.onInput?.(p.press, 'down'); canvas.setPointerCapture(e.pointerId); e.preventDefault(); return; }
     drag = { x: e.clientX, y: e.clientY, yaw: cam.yaw, pitch: cam.pitch, moved: false, p, type: e.pointerType };
   });
   canvas.addEventListener('pointermove', e => {
