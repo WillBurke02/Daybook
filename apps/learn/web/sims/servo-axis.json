@@ -81,12 +81,13 @@
   "let": {
     "rd": "ax.cmd - ax.ferr",
     "stop_at": "ax.cmd + ax.vel * ABS(ax.vel) / (2 * amax)",
-    "homed0": "0"
+    "homed0": "0",
+    "fe": "IF(AND(plc.DrvOn, ax.trip = 0), ax.ferr, 0)"
   },
   "blocks": {
     "plc": {
       "type": "plc",
-      "src": "VAR\n  State : INT := 0;      (* 0 off, 1 ready, 2 search, 3 back off, 4 creep, 5 jog +, 6 jog -, 7 move, 9 fault *)\n  Fault : INT := 0;      (* 1 + limit, 2 - limit, 3 drive tripped, 4 home switch did not clear, 5 not homed *)\n  Homed, Init, Preset, DrvOn : BOOL;\n  Pos, Tgt, StopAt, Vel, VMove : REAL;\n  Target, Speed, HoldPos, BackFrom, MoveMs : REAL;\n  HomeP, MoveP : R_TRIG;\n  MoveT : TON;\nEND_VAR\nIF NOT Init THEN Homed := PreHomed; Init := TRUE; END_IF;\nHomeP(CLK := HomeBtn);\nMoveP(CLK := MoveBtn);\nMoveT(IN := State = 7, PT := T#1h);\nPreset := FALSE;\n\n(* Enable on: hold where it is. Off: everything stops. *)\nIF NOT En THEN State := 0;\nELSIF State = 0 THEN State := 1; HoldPos := Pos;\nEND_IF;\nIF ResetBtn AND NOT Trip AND State <> 9 THEN Fault := 0; END_IF;\n\n(* a trip, or a limit switch open while moving towards it, stops the axis *)\nIF State >= 1 AND State <= 7 THEN\n  IF Trip THEN Fault := 3; State := 9;\n  ELSIF NOT LimP AND Vel > 0.5 THEN Fault := 1; State := 9;\n  ELSIF NOT LimN AND Vel < -0.5 THEN Fault := 2; State := 9;\n  END_IF;\nEND_IF;\n\nCASE State OF\n  0: Target := Pos; Speed := 1.0;\n  1: (* ready: hold the position *)\n     Target := HoldPos; Speed := VMove;\n     IF HomeP.Q THEN State := 2; Homed := FALSE; Fault := 0;\n     ELSIF JogP AND LimP THEN State := 5;\n     ELSIF JogN AND LimN THEN State := 6;\n     ELSIF MoveP.Q AND NOT Homed THEN Fault := 5;\n     ELSIF MoveP.Q THEN State := 7; Target := Tgt; Fault := 0;\n     END_IF;\n  2: (* homing: search towards the home switch at a fair speed *)\n     Target := Pos - 1000.0; Speed := 40.0;\n     IF HomeSw THEN State := 3; BackFrom := Pos; END_IF;\n  3: (* stop, and back off until the switch clears *)\n     Target := Pos + 1000.0; Speed := 10.0;\n     IF NOT HomeSw THEN State := 4; END_IF;\n     IF Pos - BackFrom > 15.0 THEN Fault := 4; State := 9; END_IF;\n  4: (* creep back from the same side; where the switch makes is 0 *)\n     Target := Pos - 1000.0; Speed := 5.0;\n     IF HomeSw THEN Preset := TRUE; Target := 0.0; HoldPos := 0.0; Homed := TRUE; State := 1; END_IF;\n  5: (* jog +: to the software limit once homed *)\n     IF Homed THEN Target := 300.0; ELSE Target := Pos + 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogP THEN State := 1; HoldPos := StopAt; END_IF;\n  6: (* jog - *)\n     IF Homed THEN Target := 0.0; ELSE Target := Pos - 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogN THEN State := 1; HoldPos := StopAt; END_IF;\n  7: (* move to the target, timed *)\n     Target := Tgt; Speed := VMove; MoveMs := MoveT.ET;\n     IF Done THEN State := 1; HoldPos := Tgt; END_IF;\n  9: (* stopped on a fault: Reset clears it once the cause has gone *)\n     Target := Pos; Speed := 1.0;\n     IF ResetBtn AND NOT Trip THEN Fault := 0; State := 1; HoldPos := Pos; END_IF;\nEND_CASE;\nDrvOn := State >= 1 AND State <= 7;",
+      "src": "VAR\n  State : INT := 0;   (* 0 off, 1 ready, 2-4 homing, 5-6 jog, 7 move, 9 fault *)\n  Fault : INT := 0;   (* 1 +limit, 2 -limit, 3 drive trip, 4 home switch, 5 not homed *)\n  Homed, Init, Preset, DrvOn, Cleared : BOOL;\n  Pos, Tgt, StopAt, Vel, VMove : REAL;\n  Target, Speed, HoldPos, BackFrom, MoveMs : REAL;\n  HomeP, MoveP : R_TRIG;\n  MoveT : TON;\nEND_VAR\nIF NOT Init THEN Homed := PreHomed; Init := TRUE; END_IF;\nHomeP(CLK := HomeBtn);\nMoveP(CLK := MoveBtn);\nMoveT(IN := State = 7, PT := T#1h);\nPreset := FALSE;\n\n(* Enable on: hold where it is. Off: everything stops. *)\nIF NOT En THEN State := 0;\nELSIF State = 0 THEN State := 1; HoldPos := Pos;\nEND_IF;\nIF ResetBtn AND NOT Trip AND State <> 9 THEN Fault := 0; END_IF;\n\n(* a trip, or a limit switch open while moving towards it, stops the axis *)\nIF State >= 1 AND State <= 7 THEN\n  IF Trip THEN Fault := 3; State := 9;\n  ELSIF NOT LimP AND Vel > 0.5 THEN Fault := 1; State := 9;\n  ELSIF NOT LimN AND Vel < -0.5 THEN Fault := 2; State := 9;\n  END_IF;\nEND_IF;\n\nCASE State OF\n  0: Target := Pos; Speed := 1.0;\n  1: (* ready: hold the position *)\n     Target := HoldPos; Speed := VMove;\n     IF HomeP.Q THEN State := 2; Homed := FALSE; Fault := 0;\n     ELSIF JogP AND LimP THEN State := 5;\n     ELSIF JogN AND LimN THEN State := 6;\n     ELSIF MoveP.Q AND NOT Homed THEN Fault := 5;\n     ELSIF MoveP.Q THEN State := 7; Target := Tgt; Fault := 0;\n     END_IF;\n  2: (* homing: search towards the home switch at a fair speed *)\n     Target := Pos - 1000.0; Speed := 40.0;\n     IF HomeSw THEN State := 3; BackFrom := Pos; Cleared := FALSE; END_IF;\n  3: (* stop, and back off until the switch clears, and 4 mm more *)\n     Target := Pos + 1000.0; Speed := 10.0;\n     IF NOT HomeSw AND NOT Cleared THEN Cleared := TRUE; BackFrom := Pos; END_IF;\n     IF Cleared AND Pos - BackFrom > 4.0 THEN State := 4; END_IF;\n     IF NOT Cleared AND Pos - BackFrom > 15.0 THEN Fault := 4; State := 9; END_IF;\n  4: (* creep back from the same side; where the switch makes is 0 *)\n     Target := Pos - 1000.0; Speed := 5.0;\n     IF HomeSw THEN Preset := TRUE; Target := 0.0; HoldPos := 0.0; Homed := TRUE; State := 1; END_IF;\n  5: (* jog +: to the software limit once homed *)\n     IF Homed THEN Target := 300.0; ELSE Target := Pos + 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogP THEN State := 1; HoldPos := StopAt; END_IF;\n  6: (* jog - *)\n     IF Homed THEN Target := 0.0; ELSE Target := Pos - 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogN THEN State := 1; HoldPos := StopAt; END_IF;\n  7: (* move to the target, timed *)\n     Target := Tgt; Speed := VMove; MoveMs := MoveT.ET;\n     IF Done THEN State := 1; HoldPos := Tgt; END_IF;\n  9: (* stopped on a fault: Reset clears it once the cause has gone *)\n     Target := Pos; Speed := 1.0;\n     IF ResetBtn AND NOT Trip THEN Fault := 0; State := 1; HoldPos := Pos; END_IF;\nEND_CASE;\nDrvOn := State >= 1 AND State <= 7;",
       "inputs": {
         "En": "enable",
         "HomeBtn": "home",
@@ -188,7 +189,51 @@
       }
     }
   },
-  "script": [],
+  "script": [
+    {
+      "at": 0.3,
+      "say": "Power on. The encoder is incremental, so the position reads 0 wherever the carriage happens to be: here about 90 mm along. It does not know where it is."
+    },
+    {
+      "at": 1.0,
+      "set": {
+        "enable": 1
+      },
+      "say": "Enable: the drive holds the carriage where it is. It is not homed yet, so the PLC would refuse a Move."
+    },
+    {
+      "at": 2.0,
+      "press": "home",
+      "say": "Home: it searches towards the home switch at 40 mm/s. The reading goes below 0: it still counts from where it powered up."
+    },
+    {
+      "at": 4.4,
+      "say": "The home switch makes. It stops, and backs off at 10 mm/s until the switch clears, and a little more."
+    },
+    {
+      "at": 5.0,
+      "say": "Now it creeps back at 5 mm/s, always from the same side, so the switch's edge is found the same way every time."
+    },
+    {
+      "at": 6.0,
+      "say": "The switch makes again: that place is set to 0. Homed. The software limits (0 to 300 mm) now mean something."
+    },
+    {
+      "at": 7.0,
+      "press": "move",
+      "say": "Move to 150 mm: up to 200 mm/s and down again, a trapezoid, in about 1 s. With feedforward on, the following error stays tiny."
+    },
+    {
+      "at": 9.0,
+      "press": "jogn",
+      "for": 1.5,
+      "say": "Jog −, held for 1.5 s: it runs at 50 mm/s while the button is held."
+    },
+    {
+      "at": 10.7,
+      "say": "Let go: it ramps to a stop at about 75 mm and holds there. The screw is drawn turning 20 times slower than it really does."
+    }
+  ],
   "show": [
     {
       "read": "Position",
@@ -204,7 +249,7 @@
     },
     {
       "read": "Following error",
-      "value": "ax.ferr",
+      "value": "fe",
       "unit": "mm",
       "dp": 2
     },
@@ -260,7 +305,7 @@
         "label": "position (mm)"
       },
       {
-        "value": "ax.ferr * 10",
+        "value": "fe * 10",
         "label": "following error (mm × 10)"
       }
     ]
@@ -268,478 +313,16 @@
   "view": {
     "camera": {
       "target": [
-        0.2,
-        0.79,
-        0.0
+        0.23,
+        0.765,
+        0.04
       ],
-      "yaw": 24,
-      "pitch": 26,
-      "dist": 0.95
+      "yaw": 6,
+      "pitch": 28,
+      "dist": 0.64
     },
     "floor": 5,
     "parts": [
-      {
-        "id": "bench",
-        "parts": [
-          {
-            "shape": "box",
-            "size": [
-              0.8,
-              0.03,
-              0.34
-            ],
-            "at": [
-              0.22,
-              0.735,
-              0
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.035,
-              0.72,
-              0.035
-            ],
-            "at": [
-              -0.15,
-              0.36,
-              -0.14
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.035,
-              0.72,
-              0.035
-            ],
-            "at": [
-              -0.15,
-              0.36,
-              0.14
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.035,
-              0.72,
-              0.035
-            ],
-            "at": [
-              0.59,
-              0.36,
-              -0.14
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.035,
-              0.72,
-              0.035
-            ],
-            "at": [
-              0.59,
-              0.36,
-              0.14
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.74,
-              0.025,
-              0.025
-            ],
-            "at": [
-              0.22,
-              0.12,
-              0.14
-            ],
-            "color": "frame"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.74,
-              0.025,
-              0.025
-            ],
-            "at": [
-              0.22,
-              0.12,
-              -0.14
-            ],
-            "color": "frame"
-          }
-        ]
-      },
-      {
-        "id": "base",
-        "parts": [
-          {
-            "shape": "box",
-            "size": [
-              0.54,
-              0.02,
-              0.15
-            ],
-            "at": [
-              0.165,
-              0.76,
-              0
-            ],
-            "color": "steel"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.47,
-              0.015,
-              0.016
-            ],
-            "at": [
-              0.15,
-              0.7775,
-              0.05
-            ],
-            "color": "grey"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.47,
-              0.015,
-              0.016
-            ],
-            "at": [
-              0.15,
-              0.7775,
-              -0.05
-            ],
-            "color": "grey"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.008,
-              0.02,
-              0.02
-            ],
-            "at": [
-              -0.069,
-              0.7895,
-              0.05
-            ],
-            "color": "rubber"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.008,
-              0.02,
-              0.02
-            ],
-            "at": [
-              -0.069,
-              0.7895,
-              -0.05
-            ],
-            "color": "rubber"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.008,
-              0.02,
-              0.02
-            ],
-            "at": [
-              0.369,
-              0.7895,
-              0.05
-            ],
-            "color": "rubber"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.008,
-              0.02,
-              0.02
-            ],
-            "at": [
-              0.369,
-              0.7895,
-              -0.05
-            ],
-            "color": "rubber",
-            "label": "End stop",
-            "label_at": [
-              0,
-              0.03,
-              0
-            ]
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.0015,
-              0.002,
-              0.012
-            ],
-            "at": [
-              0,
-              0.771,
-              0.066
-            ],
-            "color": "black",
-            "repeat": {
-              "n": 7,
-              "step": [
-                0.05,
-                0,
-                0
-              ],
-              "wrap": 0.35
-            }
-          }
-        ]
-      },
-      {
-        "id": "screw",
-        "parts": [
-          {
-            "shape": "box",
-            "size": [
-              0.025,
-              0.05,
-              0.05
-            ],
-            "at": [
-              -0.085,
-              0.795,
-              0
-            ],
-            "color": "dark"
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.025,
-              0.05,
-              0.05
-            ],
-            "at": [
-              0.385,
-              0.795,
-              0
-            ],
-            "color": "dark"
-          },
-          {
-            "shape": "cyl",
-            "size": [
-              0.012,
-              0.47,
-              0.012
-            ],
-            "at": [
-              0.15,
-              0.8,
-              0
-            ],
-            "rot": [
-              0,
-              0,
-              90
-            ],
-            "color": "steel",
-            "turn": {
-              "y": "ax.x / 10 / 20 * 360"
-            },
-            "parts": [
-              {
-                "shape": "box",
-                "size": [
-                  0.003,
-                  0.47,
-                  0.004
-                ],
-                "at": [
-                  0.0055,
-                  0,
-                  0
-                ],
-                "color": "dark"
-              }
-            ],
-            "label": "Ball screw, 10 mm lead (drawn 20× slower)",
-            "label_at": [
-              0.08,
-              0.06,
-              -0.02
-            ]
-          },
-          {
-            "shape": "cyl",
-            "size": [
-              0.0135,
-              0.0025,
-              0.0135
-            ],
-            "at": [
-              -0.07,
-              0.8,
-              0
-            ],
-            "rot": [
-              0,
-              0,
-              90
-            ],
-            "color": "grey",
-            "repeat": {
-              "n": 44,
-              "step": [
-                0.01,
-                0,
-                0
-              ],
-              "wrap": 0.44,
-              "shift": "ax.x / 1000 / 20"
-            }
-          }
-        ]
-      },
-      {
-        "id": "motor",
-        "parts": [
-          {
-            "shape": "cyl",
-            "size": [
-              0.024,
-              0.016,
-              0.024
-            ],
-            "at": [
-              0.405,
-              0.8,
-              0
-            ],
-            "rot": [
-              0,
-              0,
-              90
-            ],
-            "color": "brass",
-            "turn": {
-              "y": "ax.x / 10 / 20 * 360"
-            },
-            "parts": [
-              {
-                "shape": "box",
-                "size": [
-                  0.004,
-                  0.017,
-                  0.006
-                ],
-                "at": [
-                  0.011,
-                  0,
-                  0
-                ],
-                "color": "dark"
-              }
-            ]
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.01,
-              0.07,
-              0.07
-            ],
-            "at": [
-              0.418,
-              0.8,
-              0
-            ],
-            "color": "dark"
-          },
-          {
-            "shape": "cyl",
-            "size": [
-              0.064,
-              0.1,
-              0.064
-            ],
-            "at": [
-              0.473,
-              0.8,
-              0
-            ],
-            "rot": [
-              0,
-              0,
-              90
-            ],
-            "color": "motor",
-            "label": "Servo motor",
-            "label_at": [
-              0,
-              0.06,
-              0
-            ]
-          },
-          {
-            "shape": "cyl",
-            "size": [
-              0.054,
-              0.032,
-              0.054
-            ],
-            "at": [
-              0.539,
-              0.8,
-              0
-            ],
-            "rot": [
-              0,
-              0,
-              90
-            ],
-            "color": "black",
-            "label": "Encoder",
-            "label_at": [
-              0.02,
-              0.0,
-              0.05
-            ]
-          },
-          {
-            "shape": "box",
-            "size": [
-              0.02,
-              0.014,
-              0.02
-            ],
-            "at": [
-              0.473,
-              0.8380000000000001,
-              0
-            ],
-            "color": "black"
-          }
-        ]
-      },
       {
         "id": "carriage",
         "move": {
@@ -842,8 +425,8 @@
             "color": "brass",
             "label": "Home switch",
             "label_at": [
-              -0.03,
-              0.04,
+              -0.07,
+              -0.01,
               0.03
             ]
           },
@@ -882,8 +465,8 @@
             "color": "red",
             "label": "− limit",
             "label_at": [
-              -0.02,
-              0.04,
+              -0.075,
+              0.03,
               0
             ]
           },
@@ -955,39 +538,266 @@
         ]
       },
       {
+        "id": "motor",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.024,
+              0.016,
+              0.024
+            ],
+            "at": [
+              0.405,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "brass",
+            "turn": {
+              "y": "ax.x / 10 / 20 * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.004,
+                  0.017,
+                  0.006
+                ],
+                "at": [
+                  0.011,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.01,
+              0.07,
+              0.07
+            ],
+            "at": [
+              0.418,
+              0.8,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.064,
+              0.1,
+              0.064
+            ],
+            "at": [
+              0.473,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "motor",
+            "label": "Servo motor",
+            "label_at": [
+              -0.01,
+              0.05,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.054,
+              0.032,
+              0.054
+            ],
+            "at": [
+              0.539,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "black",
+            "label": "Encoder",
+            "label_at": [
+              0.03,
+              0.035,
+              0.0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.014,
+              0.02
+            ],
+            "at": [
+              0.473,
+              0.8380000000000001,
+              0
+            ],
+            "color": "black"
+          }
+        ]
+      },
+      {
+        "id": "screw",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.05,
+              0.05
+            ],
+            "at": [
+              -0.085,
+              0.795,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.05,
+              0.05
+            ],
+            "at": [
+              0.385,
+              0.795,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.012,
+              0.47,
+              0.012
+            ],
+            "at": [
+              0.15,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "steel",
+            "turn": {
+              "y": "ax.x / 10 / 20 * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.003,
+                  0.47,
+                  0.004
+                ],
+                "at": [
+                  0.0055,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ],
+            "label": "Ball screw, 10 mm lead (drawn 20× slower)",
+            "label_at": [
+              0.06,
+              -0.012,
+              0.04
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.0135,
+              0.0025,
+              0.0135
+            ],
+            "at": [
+              -0.07,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "grey",
+            "repeat": {
+              "n": 44,
+              "step": [
+                0.01,
+                0,
+                0
+              ],
+              "wrap": 0.44,
+              "shift": "ax.x / 1000 / 20"
+            }
+          }
+        ]
+      },
+      {
         "id": "plc",
         "parts": [
           {
             "shape": "box",
             "size": [
-              0.12,
-              0.08,
+              0.13,
+              0.07,
               0.03
             ],
             "at": [
-              0.52,
-              0.79,
-              0.13
+              0.24,
+              0.685,
+              0.186
             ],
             "color": "grey",
             "label": "PLC inputs: Home · +Lim · −Lim",
             "label_at": [
               0,
-              0.07,
-              0
+              0.04,
+              0.02
             ]
           },
           {
             "shape": "sphere",
             "size": [
-              0.01,
-              0.01,
-              0.01
+              0.011,
+              0.011,
+              0.011
             ],
             "at": [
-              0.49,
-              0.8,
-              0.147
+              0.205,
+              0.695,
+              0.202
             ],
             "color": "green",
             "lit": "home.on"
@@ -995,14 +805,14 @@
           {
             "shape": "sphere",
             "size": [
-              0.01,
-              0.01,
-              0.01
+              0.011,
+              0.011,
+              0.011
             ],
             "at": [
-              0.52,
-              0.8,
-              0.147
+              0.24,
+              0.695,
+              0.202
             ],
             "color": "green",
             "lit": "lim_p.on"
@@ -1010,14 +820,14 @@
           {
             "shape": "sphere",
             "size": [
-              0.01,
-              0.01,
-              0.01
+              0.011,
+              0.011,
+              0.011
             ],
             "at": [
-              0.55,
-              0.8,
-              0.147
+              0.275,
+              0.695,
+              0.202
             ],
             "color": "green",
             "lit": "lim_n.on"
@@ -1025,16 +835,245 @@
           {
             "shape": "box",
             "size": [
-              0.03,
+              0.09,
               0.012,
               0.004
             ],
             "at": [
-              0.52,
-              0.772,
-              0.147
+              0.24,
+              0.67,
+              0.202
             ],
             "color": "dark"
+          }
+        ]
+      },
+      {
+        "id": "base",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.54,
+              0.02,
+              0.15
+            ],
+            "at": [
+              0.165,
+              0.76,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.47,
+              0.015,
+              0.016
+            ],
+            "at": [
+              0.15,
+              0.7775,
+              0.05
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.47,
+              0.015,
+              0.016
+            ],
+            "at": [
+              0.15,
+              0.7775,
+              -0.05
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              -0.069,
+              0.7895,
+              0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              -0.069,
+              0.7895,
+              -0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              0.369,
+              0.7895,
+              0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              0.369,
+              0.7895,
+              -0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.0015,
+              0.002,
+              0.012
+            ],
+            "at": [
+              0,
+              0.771,
+              0.066
+            ],
+            "color": "black",
+            "repeat": {
+              "n": 7,
+              "step": [
+                0.05,
+                0,
+                0
+              ],
+              "wrap": 0.35
+            }
+          }
+        ]
+      },
+      {
+        "id": "bench",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.8,
+              0.03,
+              0.34
+            ],
+            "at": [
+              0.22,
+              0.735,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              -0.15,
+              0.36,
+              -0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              -0.15,
+              0.36,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              0.59,
+              0.36,
+              -0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              0.59,
+              0.36,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.74,
+              0.025,
+              0.025
+            ],
+            "at": [
+              0.22,
+              0.12,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.74,
+              0.025,
+              0.025
+            ],
+            "at": [
+              0.22,
+              0.12,
+              -0.14
+            ],
+            "color": "frame"
           }
         ]
       }

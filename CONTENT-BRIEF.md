@@ -181,6 +181,9 @@ is never the only way in), and can be checked without a browser. **Reuse a scene
   inputs (`start`), block outputs (`vfd.f`), lets, `t`. Formulas are the spreadsheet's: `IF(a, b, c)`, `AND(a, b)`,
   `OR(a, b)`, `NOT(a)`, `a = b`, `a <> b`, `MIN`, `MAX`, `ABS`, `SQRT`, `MOD`, `PI()`, `SIN`; true is 1. Not `a AND b`.
 - `let`: named formulas worked out after the blocks: glue, and **wires a fault can cut** (`"stop_ok": "1"`, faulted to `"0"`).
+  A let may use its own name for its last value: `"seal": "AND(OR(start, seal), stop)"` is a memory,
+  `"ts": "IF(go, ts + 0.002, 0)"` a stopwatch (0.002 being the scene's `dt`).
+- `plc_label`: what the panel calls the PLC's section, when it is not a PLC (a hard-wired control circuit drawn as a ladder).
 - `faults`: `{"id": {"label": "the answer as he will read it", "why": "how you would tell, and what to check", "set": {…}}}`.
   Each must look different from the others to someone who runs and reads the machine.
 - `script`: the demo, "Watch it run": `[{"at": 1, "press": "start", "say": "Start: the PLC seals in…"}]` (`set`, `press`,
@@ -214,8 +217,18 @@ The blocks (each one's settings, defaults and units are in `blocks.js`):
 A missing block is a few lines in `blocks.js` (`in`, `out`, `step`) and a check in `tests/sim.check.mjs`
 against what the real thing does. Until then a `let` or a `lag` usually does.
 
-The library: `conveyor` (a belt on a VFD under a PLC: start/stop seal-in, a photo-eye stop, drive ramps and trips,
-faults in the eye, the stop circuit, the belt and the drive's ramp).
+The library (`apps/learn/web/sims/`; each scene's `about` says what it is, its `faults` what can go wrong):
+
+- `conveyor`: a belt on a VFD under a PLC: start/stop seal-in, a photo-eye stop, ramps and trips.
+- `drive-bench`: a 4 kW motor on a drive with a flywheel, a load brake and a brake resistor: ramps,
+  regeneration and the DC bus, OC and OV trips, stall prevention, running above base speed.
+- `motor-starter`: a DOL starter (isolator, contactor and auxiliary, class 10 overload) on a fan, its control
+  circuit drawn as a live ladder: starting current, seal-in, a jam and the overload tripping.
+- `servo-axis`: a ball-screw axis with a home switch and limits, a PLC state machine for homing, jogging and
+  moves: following error, feed-forward, profiles, a reversed encoder.
+- `sorter`: a reject station: colour sensor, a timed pneumatic pusher, edge-counted good and rejected boxes.
+- `tank-level`: a level loop: LT-101 (4–20 mA into the PLC as S7 counts), LIC-101 (PID), LV-101, LSH and LSL
+  trips, P-101: offset under P only, integral action, transmitter and scaling faults.
 
 ## Levels: our own scale (stages 1–9, the UK RQF alongside)
 

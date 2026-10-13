@@ -366,6 +366,16 @@
    "why": "Swapping A and B makes B lead where A did, so every count goes the wrong way: the motor moves forwards and the position seems to go backwards. The loop sees the error grow and pushes harder the same way, so the error grows faster: a runaway. The controller cannot know which way is right; it only sees the order of A and B. The number of pulses is unchanged. Set a following-error limit (on a Galil, ER with OE) before the first enable, then fix the wiring or reverse the count (CE)."
   },
   {
+   "id": "sim-swapped-ab",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.9,
+   "intro": "This servo axis has just been rewired, and its encoder's A and B have been swapped by mistake. Its following error limit is 5 mm.",
+   "widget": {"name": "sim", "params": {"scene": "servo-axis", "fault": "encoder-reversed", "controls": ["enable", "home", "reset"]}},
+   "predict": {"q": "What will it do when you switch Enable on?", "options": ["Run away until the following error trips the drive", "Move the right way, with the reading counting down", "Hold still: with no move asked for, nothing happens", "Run steadily the wrong way at its jog speed"], "answer": 0, "why": "With the count reversed, the drive sees the carriage go the opposite way to the way it really goes. The loop pushes to close the error, the error grows instead, so it pushes harder: positive feedback. It needs no move: the smallest drift at standstill starts it. Here the carriage lurches over 10 mm while the reading goes the other way, until the 5 mm following error limit trips the drive (FE)."},
+   "ask": {"type": "mcq", "q": "How should it be put right?", "options": ["Swap A and B back, or reverse the count in the drive", "Swap two of the motor's phases, as on a VFD", "Open the following error limit up to 20 mm", "Turn the position loop gain down until it holds"], "answer": 0, "why": "The count direction is what is wrong, so fix it at the wiring, or with the drive's (or controller's) count-direction setting, such as a Galil's CE. Swapping two phases reverses a motor on a VFD, but on a servo it upsets the commutation. A wider error limit only lets it run further before it trips. Less gain only slows the runaway down: the loop still pushes the wrong way."}
+  },
+  {
    "id": "mix-counter-rpm",
    "type": "numeric",
    "stage": "mix",

@@ -98,6 +98,29 @@
     ]
    ],
    "example": "PV = 24 bottles a crate, CV = 17: $24 - 17 = 7$ more."
+  },
+  {
+   "name": "Travel time on a belt",
+   "tex": "t = \\frac{d}{v}",
+   "match": [
+    "\\frac{d}{v}"
+   ],
+   "says": "The time a box takes to travel between two points on a belt is the distance between them divided by the belt's speed. It is the preset for a timer that waits for the box to arrive.",
+   "symbols": [
+    [
+     "t",
+     "the travel time (seconds; × 1000 for milliseconds)"
+    ],
+    [
+     "d",
+     "the distance between the two points (metres)"
+    ],
+    [
+     "v",
+     "the belt's speed (metres per second, m/s)"
+    ]
+   ],
+   "example": "A colour sensor 0.8 m before a pusher, the belt at 0.4 m/s: $t = 0.8 \\div 0.4 = 2$ s, so PT = T#2s."
   }
  ],
  "bench": [
@@ -1082,6 +1105,102 @@
    "why": "The call and the output are fine. The timer is the wrong kind: a TON delays switching on, which is exactly the fault seen. A run-on is an off-delay."
   },
   {
+   "id": "sorter-delay",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.7,
+   "q": "On a reject station, a colour sensor sees each red box {d} m before the pusher. The belt runs at {v} m/s. An on-delay times the box's trip so that the pusher fires as the box arrives. What should its preset PT be, in milliseconds?",
+   "vars": {
+    "d": {
+     "pick": [
+      0.6,
+      0.8,
+      1.0,
+      1.2,
+      1.5
+     ]
+    },
+    "v": {
+     "pick": [
+      0.25,
+      0.4,
+      0.5,
+      0.8
+     ]
+    }
+   },
+   "let": {
+    "t": "d / v"
+   },
+   "answer": "t * 1000",
+   "unit": "ms",
+   "hint": "How long does a box take to travel {d} m at {v} m/s? Time is distance divided by speed.",
+   "work": "$t = \\frac{ d }{ v } = \\frac{{d}}{{v}} = {t}$ s, which is {answer} ms: `PT := T#{answer}ms`.",
+   "why": "The belt carries the box at a steady speed, so its trip takes distance ÷ speed. Check the units: metres ÷ metres per second leaves seconds. Multiplying (distance × speed) gives no time at all. On a real machine you start from this figure, then trim it while watching a few boxes: the sensor sees the box's front edge, and the paddle takes a moment to reach it."
+  },
+  {
+   "id": "sorter-set-delay",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.4,
+   "intro": "A reject station. The colour sensor B1 sees each red box 0.8 m before the pusher; T1, an on-delay, times its trip; then valve Y1 fires the pusher. The belt has just been geared up from 0.4 to 0.5 m/s, and since then red boxes get through. T1's preset is still 2 s.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "sorter",
+     "set": {
+      "speed": 0.5,
+      "delay": 2
+     },
+     "controls": [
+      "start",
+      "stop",
+      "reset",
+      "delay"
+     ],
+     "plc": "open"
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Press Start and watch a red box reach the pusher. Then set T1's preset (the travel delay) so that every red box is pushed off and no good one is. Press Reset alarm and counts, let at least three red boxes through, and check.",
+    "pass": "AND(red_rejected >= 3, red_through = 0, good_rejected = 0)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "delay": 1.6
+      }
+     },
+     {
+      "at": 0.5,
+      "press": "start"
+     }
+    ],
+    "within": 25,
+    "fails": [
+     [
+      "red_through > 0",
+      "A red box got past the pusher ({red_through} since the last reset). When the paddle comes out, is the red box in front of it yet, or already gone? Change the preset, press Reset alarm and counts, and watch again."
+     ],
+     [
+      "good_rejected > 0",
+      "A good box was pushed off ({good_rejected} since the last reset): the paddle came out with the wrong box in front of it. Change the preset, press Reset alarm and counts, and watch again."
+     ],
+     [
+      "AND(plc.Running = 0, red_rejected < 3)",
+      "The belt is not running: press Start and let some boxes through."
+     ],
+     [
+      "red_rejected < 3",
+      "No mistakes so far, but only {red_rejected} red boxes have been pushed off since the last reset. Let it run until three have, then check."
+     ]
+    ],
+    "hint": "How long does a box take to travel 0.8 m at 0.5 m/s?",
+    "why": "The preset must match the box's travel time from B1 to the pusher: $t = \\frac{d}{v} = \\frac{0.8}{0.5} = 1.6$ s, so PT = T#1600ms. At 0.4 m/s the trip took 2 s. At 0.5 m/s the box gets there sooner, so the old 2 s fires the pusher just after the red box has gone by. A faster belt needs a shorter delay, not a longer one. (Anything from about 1.2 to 1.8 s works here, because the paddle is wider than a box and stays out for a moment.) A delay set as a time must be changed whenever the belt speed is: that is why fast lines track boxes with an encoder on the belt instead."
+   }
+  },
+  {
    "id": "mix-which-timer",
    "type": "match",
    "stage": "mix",
@@ -1136,6 +1255,32 @@
    ],
    "answer": 0,
    "why": "The motor's own bit times how long it has run; when T1.Q comes on, the NOT T1.Q contact breaks the seal-in and the motor stops. A TP started by the motor would also give 10 minutes, but it would not reset if the motor was stopped and restarted early. Counting scans makes the time depend on the scan time."
+  },
+  {
+   "id": "sorter-diagnose",
+   "type": "widget",
+   "stage": "mix",
+   "level": 5.6,
+   "intro": "A reject station on a PLC. B1 sees red boxes; T1 times each one's trip to the pusher; Y1 fires the pusher, and reed switch B2 says the rod is out (T3 raises an alarm if it is not out within 1 s). Counter C1 counts boxes out of the end (PE2), C2 boxes into the reject chute (PE3). The line says it is \"not sorting right\". Press Start and watch at least two red boxes go through. Read the lamps, T1's ET, the counts and the PLC's tags.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "sorter"
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "delay-short",
+     "delay-long",
+     "colour-dead",
+     "no-air",
+     "b2-dead",
+     "pe2-dead"
+    ],
+    "why": "Follow one red box, one step at a time. Does B1 light? Does T1 run, and to what? Does Y1 come on, and does the rod move (B2)? Is the red box in front of the paddle when it comes out? Do the counts agree with what you saw? The first step that goes wrong is where to look."
+   }
   },
   {
    "id": "check-blip",

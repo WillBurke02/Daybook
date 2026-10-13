@@ -618,6 +618,52 @@
    "hint": "Volts per hertz first, from the 230 V delta rating. Then how many hertz make 400 V?"
   },
   {
+   "id": "bench-above-base",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.5,
+   "intro": "A 4 kW, 4-pole motor (rated 1440 rpm, 26.5 Nm, 8 A) on a test bench, with no flywheel. The load brake is set to the rated torque. Press Run: at 50 Hz it turns at about 1440 rpm and draws about 8 A.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "drive-bench",
+     "set": {
+      "fly": 0,
+      "load": 100
+     },
+     "controls": [
+      "run",
+      "stop",
+      "ref",
+      "load"
+     ]
+    }
+   },
+   "predict": {
+    "q": "Then you raise the speed reference to 60 Hz, with the same load torque. What will the current do?",
+    "options": [
+     "Stay at about 8 A: the torque has not changed",
+     "Rise above 8 A: each amp now makes less torque",
+     "Fall below 8 A: the motor is running faster"
+    ],
+    "answer": 1,
+    "why": "Above 50 Hz the drive is already at its full voltage, so V/f falls and the flux with it: field weakening. The torque comes from the flux and the current together, so with less flux the same torque needs more current. Here it goes well over the rated 8 A, and the motor heat climbs."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "The machine must run at 60 Hz with this full rated torque, all day. What is the right fix?",
+    "options": [
+     "Raise the drive's current limit to allow more current",
+     "Turn up the boost",
+     "Set the drive's output to 480 V at 60 Hz",
+     "Fit a bigger motor, or gear it to run nearer 50 Hz"
+    ],
+    "answer": 3,
+    "hint": "Above base speed, what does a motor hold steady: its torque or its power?",
+    "why": "Above base speed a motor can give its rated **power**, not its rated torque: at 60 Hz, about $\\frac{50}{60}$ of rated torque at rated current. Full torque at 60 Hz is 1.2 times the power, so it needs a bigger motor, or gearing so that this one turns nearer its 50 Hz speed. A higher current limit only lets it overheat. Boost acts at low frequency, not here. A drive on a 400 V supply cannot make 480 V."
+   }
+  },
+  {
    "id": "mix-volts",
    "type": "numeric",
    "stage": "mix",

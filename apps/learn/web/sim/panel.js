@@ -8,6 +8,7 @@
 // scene.show = [ {lamp: 'Running', on: formula, color: 'green'} | {read: 'Frequency', value: formula, unit: 'Hz', dp: 1}
 //   | {meter: 'Overload', value: formula, max: 100, unit: '%'} ]
 // scene.trend = { span: 10 (s), y: [lo, hi] (or worked out), lines: [{value: formula, label: 'f (Hz)'}] }
+// scene.plc_label: what the PLC's section is called (a hard-wired circuit drawn as a ladder is not a PLC)
 import { el } from '../core/dom.js';
 import { s, slider, choose, plot, path, sig, put } from '../widgets/kit.js';
 import { formula, set } from './engine.js';
@@ -117,7 +118,7 @@ export function panel(get, opts = {}) {
         el('div', {}, el('strong', {}, 'Outputs '), outs.map(tag).join('  ')),
         o.err ? el('div', { class: 'err' }, `STOP: ${o.err}`) : el('div', { class: 'muted' }, `scan ${o._m.scans}`));
     };
-    plcBox = el('details', { class: 'small s3plc calc', open: opts.plc === 'open' }, el('summary', { class: 'muted' }, plcSpec.ladder ? 'The PLC: its ladder, live' : 'The PLC: its program and tags'), pic, tags);
+    plcBox = el('details', { class: 'small s3plc calc', open: opts.plc === 'open' }, el('summary', { class: 'muted' }, scene.plc_label || (plcSpec.ladder ? 'The PLC: its ladder, live' : 'The PLC: its program and tags')), pic, tags);
   }
 
   const readBox = reads.length ? el('div', { class: 'wread num small s3read' }, reads.map(r => r.el)) : null;

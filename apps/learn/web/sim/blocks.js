@@ -202,10 +202,10 @@ export const BLOCKS = {
       o._v = toward(o._v, want, i.amax * dt);
       if (Math.abs(o._v * dt) >= Math.abs(d) && Math.sign(o._v) !== -Math.sign(d)) { o.cmd = i.target; o._v = 0; }   // there this step
       else o.cmd += o._v * dt;
-      const vref = i.ff * o._v + i.kp * (o.cmd - fb);
+      o.ferr = o.cmd - fb;                                                  // the error the loop acts on this step
+      const vref = i.ff * o._v + i.kp * o.ferr;
       o.vel += (vref - i.load - o.vel) * Math.min(1, i.kv * dt);
       o.x += o.vel * dt; o.pos = o.x - o._off;
-      o.ferr = o.cmd - (i.invert ? 2 * i.pos0 - o.pos : o.pos);
       o.done = Math.abs(i.target - o.cmd) < 1e-6 && Math.abs(o.ferr) < 0.05 && Math.abs(o.vel) < 1 ? 1 : 0;
       if (Math.abs(o.ferr) > i.maxerr) { o.trip = 1; o.fault = 'FE'; }
     },

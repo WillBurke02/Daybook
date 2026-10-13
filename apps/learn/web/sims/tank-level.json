@@ -40,7 +40,7 @@
       "min": 0.5,
       "max": 20,
       "step": 0.5,
-      "value": 4,
+      "value": 5,
       "hidden": true
     },
     "ti": {
@@ -48,7 +48,7 @@
       "min": 0,
       "max": 120,
       "step": 5,
-      "value": 30,
+      "value": 15,
       "unit": "s",
       "hidden": true
     },
@@ -176,8 +176,103 @@
       "y0": 1
     }
   },
-  "faults": {},
-  "script": [],
+  "faults": {
+    "tx-open": {
+      "label": "LT-101's signal is lost: an open circuit in its loop (0 mA)",
+      "why": "The LT-101 fault lamp is on, the current reads 0 mA and the raw value is −32768, the analogue card's underflow value. A 4–20 mA signal never goes below 4 mA while it works, so 0 mA can only mean a broken loop: a cut wire, a loose terminal or no supply. The PLC sees it is under 3.6 mA and stops trusting the level: it puts LIC-101 in Manual with LV-101 shut, and the pump empties the tank down to LSL-101. Without that check, the controller would take its −2.37 m for a very empty tank and open the valve wide. Check the loop with a meter: the supply, the cable, the terminals.",
+      "set": {
+        "tx.fail": 1
+      }
+    },
+    "scale-wrong": {
+      "label": "The PLC scales LT-101 for 0–1 m, but the transmitter is ranged 0–2 m",
+      "why": "The PLC's level reads half of what is in the tank. LIC-101 keeps filling to reach its set point, the water climbs past 1.7 m, and LSH-101 trips the inlet while the PLC still says 0.85 m, below the set point. The current is right for the water: 17.6 mA is 85% of 0–2 m, which is 1.7 m. It is the PLC's numbers that are wrong. Check the range set in the PLC against the range on the transmitter's data plate or in its configuration.",
+      "set": {
+        "span": 1
+      }
+    },
+    "valve-stuck": {
+      "label": "LV-101 is stuck: it does not move, whatever the output",
+      "why": "While nothing changes it looks healthy. Change the set point or the demand: LIC-101's output swings up to 100% (or down to 0%), but LV-101 stays at 30% open and the level drifts away from the set point. The controller is doing its job; the valve is not following it. Check the air supply, the signal reaching the valve and its travel: a seized stem or a tight gland.",
+      "set": {
+        "valve_ok": "0"
+      }
+    },
+    "action-wrong": {
+      "label": "LIC-101's action is set the wrong way: direct instead of reverse",
+      "why": "The output moves the wrong way. As the level falls below the set point the output goes down, not up, so the valve shuts, the level falls faster and the loop runs away until a switch stops it: LSL-101 stopping the pump, or LSH-101 shutting the inlet if it ran away upwards. Raise the set point and the output goes down. With the valve on the inlet the controller must be reverse acting: level up, output down. Check the action in the controller's settings.",
+      "set": {
+        "action": 1
+      }
+    },
+    "lsh-stuck": {
+      "label": "LSH-101 is stuck: it never trips",
+      "why": "In normal running nothing shows: the level never gets near 1.7 m. Test it. In Manual, open the valve and let the tank fill (watch it): at 1.7 m LSH-101 should light its LED and the high-level lamp, and the PLC should shut LV-101. Here nothing happens, and the tank fills to the top and overflows. A trip can fail without anyone knowing until it is needed, which is why trips are proof-tested on a schedule. Check that the float moves freely, then the switch and its wiring.",
+      "set": {
+        "lsh.stuck": 1
+      }
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "set": {
+        "auto": 0
+      },
+      "say": "LIC-101 to Manual. The output holds at 30%: LV-101 lets in 6 L/s and P-101 takes 6 L/s out, so the level stays at 1.0 m. (The speed control above hurries any of this along.)"
+    },
+    {
+      "at": 4,
+      "set": {
+        "man": 60
+      },
+      "say": "Manual output to 60%: LV-101 opens and lets in 12 L/s against 6 L/s out. The level climbs about 3 cm a second, and nothing will stop it but you."
+    },
+    {
+      "at": 10,
+      "set": {
+        "man": 30
+      },
+      "say": "Back to 30%: in and out balance again, and the level stays where it got to, about 1.2 m. With a pump taking the water out, the tank does not find its own level: it only fills or empties."
+    },
+    {
+      "at": 14,
+      "set": {
+        "auto": 1
+      },
+      "say": "Auto. The change is bumpless: the output starts from 30%. The level is above the set point, so LIC-101 closes LV-101 a little and, over about 20 s, brings the level back down towards 1.0 m."
+    },
+    {
+      "at": 38,
+      "set": {
+        "sp": 1.4
+      },
+      "say": "Set point up to 1.4 m. The error jumps, so the output jumps (that is P); LV-101 opens wide, and the level rises and settles on 1.4 m."
+    },
+    {
+      "at": 58,
+      "set": {
+        "demand": 10
+      },
+      "say": "The demand rises to 10 L/s. The level dips; LIC-101 opens LV-101 to about 50%, and the integral brings the level back to 1.4 m."
+    },
+    {
+      "at": 84,
+      "set": {
+        "auto": 0,
+        "man": 100
+      },
+      "say": "A trip test. Manual, output 100%: the tank fills fast. At 1.7 m LSH-101 trips and the PLC shuts LV-101, whatever the output says. The high-level lamp stays on until Reset."
+    },
+    {
+      "at": 98,
+      "set": {
+        "man": 50
+      },
+      "press": "reset",
+      "say": "The level is back under 1.7 m, so Reset clears the trip, and LV-101 opens to the manual output, 50%: 10 L/s in, 10 L/s out. Switch to Auto to hand it back to LIC-101."
+    }
+  ],
   "show": [
     {
       "lamp": "Auto",
@@ -268,7 +363,7 @@
     "span": 60,
     "y": [
       0,
-      100
+      110
     ],
     "lines": [
       {
@@ -288,13 +383,13 @@
   "view": {
     "camera": {
       "target": [
-        0,
-        1.2,
+        0.05,
+        1.15,
         0
       ],
-      "yaw": 18,
+      "yaw": 16,
       "pitch": 14,
-      "dist": 5.2
+      "dist": 4.7
     },
     "floor": 7,
     "parts": [
@@ -412,7 +507,7 @@
               0
             ],
             "color": "glass",
-            "alpha": 0.22,
+            "alpha": 0.12,
             "shadow": false
           }
         ]
@@ -483,19 +578,19 @@
           {
             "shape": "box",
             "size": [
-              0.035,
-              0.006,
+              0.05,
+              0.007,
               0.006
             ],
             "at": [
-              -0.13,
+              0.053,
               0.4,
-              0.218
+              0.249
             ],
             "color": "dark",
             "rot": [
               0,
-              -30,
+              12,
               0
             ],
             "repeat": {
@@ -510,19 +605,19 @@
           {
             "shape": "box",
             "size": [
-              0.08,
-              0.01,
+              0.11,
+              0.012,
               0.006
             ],
             "at": [
-              -0.135,
+              0.053,
               0.4,
-              0.22
+              0.249
             ],
             "color": "dark",
             "rot": [
               0,
-              -30,
+              12,
               0
             ],
             "repeat": {
@@ -1150,14 +1245,14 @@
               0.035
             ],
             "at": [
-              0,
+              -0.178,
               0.52,
-              0.31
+              0.254
             ],
             "color": "steel",
             "rot": [
               90,
-              0,
+              -35,
               0
             ]
           },
@@ -1169,11 +1264,16 @@
               0.07
             ],
             "at": [
-              0,
+              -0.235,
               0.52,
-              0.41000000000000003
+              0.336
             ],
-            "color": "grey"
+            "color": "grey",
+            "rot": [
+              0,
+              -35,
+              0
+            ]
           },
           {
             "shape": "cyl",
@@ -1183,37 +1283,18 @@
               0.1
             ],
             "at": [
-              0,
+              -0.235,
               0.61,
-              0.41000000000000003
+              0.336
             ],
             "color": "blue"
-          },
-          {
-            "shape": "cyl",
-            "size": [
-              0.02,
-              0.06,
-              0.02
-            ],
-            "at": [
-              0.065,
-              0.52,
-              0.41000000000000003
-            ],
-            "color": "cable",
-            "rot": [
-              0,
-              0,
-              90
-            ]
           }
         ],
         "label": "LT-101 {tx.mA:1} mA",
         "label_at": [
-          0,
-          0.72,
-          0.41000000000000003
+          -0.5349999999999999,
+          0.8200000000000001,
+          0.336
         ]
       },
       {
@@ -1255,13 +1336,13 @@
           {
             "shape": "sphere",
             "size": [
-              0.03,
-              0.03,
-              0.03
+              0.05,
+              0.05,
+              0.05
             ],
             "at": [
               0.38,
-              2.165,
+              2.17,
               0
             ],
             "color": "red",
@@ -1331,13 +1412,13 @@
           {
             "shape": "sphere",
             "size": [
-              0.03,
-              0.03,
-              0.03
+              0.05,
+              0.05,
+              0.05
             ],
             "at": [
               0.38,
-              0.665,
+              0.6700000000000002,
               0
             ],
             "color": "amber",

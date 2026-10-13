@@ -625,6 +625,47 @@
    "why": "STO stops the amplifier making torque, at once: a **category 0** stop. It does not brake or hold. A horizontal axis coasts to a stop; a vertical one falls, so it needs a holding brake, itself controlled safely (Safe Brake Control, for example). STO does not lock the shaft, and it does not isolate the motor: the wiring can still be live, so isolate before working on it."
   },
   {
+   "id": "sim-fe-no-ff",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.3,
+   "intro": "A servo axis, already homed at 0. Its drive's velocity feedforward is off, so the position loop is P-only, with a position loop gain $K_v$ of 20 /s. The top speed is 100 mm/s, and the following error limit has been opened up to 20 mm for this test. Answer first; then move it to 300 mm and watch the following error.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "servo-axis",
+     "set": {
+      "enable": 1,
+      "homed0": "1",
+      "ax.x0": 0,
+      "ff": 0,
+      "kp": 20,
+      "vmax": 100,
+      "maxerr": 20,
+      "tgt": 300
+     },
+     "controls": [
+      "move",
+      "tgt",
+      "kp",
+      "vmax",
+      "reset"
+     ]
+    }
+   },
+   "hide": true,
+   "ask": {
+    "type": "numeric",
+    "q": "What following error will it show while it runs at its top speed, in mm? If you change the gain or the speed, answer for your settings.",
+    "answer": "vmax / kp",
+    "unit": "mm",
+    "tolerance": 0.02,
+    "hint": "A P-only loop asks for a speed of $K_v$ times the error. What error asks for the top speed?",
+    "work": "$e = \\frac{ v }{K_v} = \\frac{{vmax}}{{kp}} = {answer}$ mm",
+    "why": "A P-only position loop turns error into speed: it asks for $K_v$ × the error. To ask for {vmax} mm/s it has to be {answer} mm behind, the whole time it runs at that speed. That is how P works, not a fault. Double $K_v$ and the error halves, until the axis starts to ring. Feedforward is the better cure: it sends the speed straight to the drive, so the loop need not lag at all; with it back on, this axis follows within a few thousandths of a millimetre."
+   }
+  },
+  {
    "id": "mix-kt-ke",
    "type": "numeric",
    "stage": "mix",

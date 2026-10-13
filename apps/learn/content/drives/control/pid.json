@@ -1023,6 +1023,106 @@
    "hint": "Two facts about the settled loop: PV = $K_p \\times e$ (plant gain 1), and PV = $1 - e$. Set them equal."
   },
   {
+   "id": "tank-p-only",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.2,
+   "intro": "A real loop: LIC-101 holds the level in a small tank by moving the inlet valve LV-101, while the pump P-101 takes water out at the demand you set. It has **P only**, with $K_p$ = 5: each 1% of level error (2 cm on this 0–2 m transmitter) opens the valve 5% more. At 6 L/s the valve must sit 30% open, so the level has settled 12 cm under its 1.0 m set point: that is the error P needs to hold 30%.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "tank-level",
+     "set": {
+      "ti": 0,
+      "tk.level0": 0.88
+     },
+     "controls": [
+      "demand"
+     ],
+     "plc": false
+    }
+   },
+   "predict": {
+    "q": "You raise the demand from 6 L/s to 10 L/s. Where does the level settle?",
+    "options": [
+     "Lower, further below the set point",
+     "Back on the set point, after a dip",
+     "Higher, above the set point",
+     "Nowhere: it falls until the tank is empty"
+    ],
+    "answer": 0,
+    "why": "To let in 10 L/s the valve must sit at 50%. P alone opens the valve only as far as the error tells it, so the error grows until $K_p e$ is 50%: the level settles lower, and stays there. That leftover error is the **offset**, and it grows with the load."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "Set the demand you like (10 L/s, say) and let it settle. Read the controller's output. With P only, $u = K_p e$, and $K_p$ = 5. How big must the error be to give that output, in cm? (1% of the range is 2 cm.)",
+    "answer": "lic.out / kp * 2",
+    "unit": "cm",
+    "abs": 1,
+    "work": "Your output read {lic.out:1}%. From $u = K_p e$, the error is $e = u \\div K_p$ = {lic.out:1} ÷ {kp}, in % of the range; times 2 cm for each 1%: {answer:1} cm. At 10 L/s that is 50 ÷ 5 = 10%, so 20 cm.",
+    "why": "P makes its output from the error now and nothing else, so a steady output needs a steady error: $e = u \\div K_p$. Check it on the machine: the gap between the set point and the level is the same. More demand needs more output, so more offset. A bigger $K_p$ shrinks it but never to nothing (and too much makes the loop swing); integral action removes it. Many controllers add a fixed bias, set so there is no offset at one load; the offset still comes back whenever the load moves away from it.",
+    "hint": "Turn $u = K_p e$ round to give $e$, then change % of the range into cm."
+   }
+  },
+  {
+   "id": "tank-add-integral",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.5,
+   "intro": "The same tank, still on P only ($K_p$ = 5, no integral): the level sits 12 cm under its 1.0 m set point, the error P needs to hold the valve 30% open. Now you can set the integral time $T_i$ as well as the gain. ($T_i$ = 0 means no integral.)",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "tank-level",
+     "set": {
+      "ti": 0,
+      "tk.level0": 0.88
+     },
+     "controls": [
+      "auto",
+      "sp",
+      "kp",
+      "ti"
+     ],
+     "plc": false
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Get rid of the offset: bring the level to its set point and hold it there, within ±2 cm, in Auto.",
+    "pass": "AND(auto = 1, ti > 0, ABS(sp - plc.Level) < 0.02, held.y < 0.02)",
+    "solution": [
+     {
+      "at": 0.5,
+      "set": {
+       "ti": 15
+      }
+     }
+    ],
+    "within": 80,
+    "fails": [
+     [
+      "auto = 0",
+      "LIC-101 is in Manual, so nothing is controlling the level. Switch it to Auto."
+     ],
+     [
+      "ti = 0",
+      "Still P only: the level is {plc.Level:2} m against {sp:2} m. More gain shrinks that gap but never closes it. Give it an integral time."
+     ],
+     [
+      "ABS(sp - plc.Level) >= 0.02",
+      "Not there yet: the level is {plc.Level:2} m against {sp:2} m. Give it time; if it keeps swinging, make Ti longer."
+     ],
+     [
+      "held.y >= 0.02",
+      "It has only just got there, or it is still swinging. Let it settle for a little longer, then check again."
+     ]
+    ],
+    "hint": "Which term keeps pushing for as long as any error is left?",
+    "why": "Integral action adds up the error over time. While the level is below the set point, its share of the output keeps growing and the valve opens a little more, until the error is gone. Then the integral alone holds the 30% the valve needs, with no error at all. $T_i$ of 10 to 15 s settles it in under a minute; 3 s overshoots by several cm and swings first; 100 s creeps up over minutes. More $K_p$ alone only shrinks the offset: it is still about 3 cm at $K_p$ = 20, the top of the slider."
+   }
+  },
+  {
    "id": "mix-rate-or-sum",
    "type": "mcq",
    "stage": "mix",
@@ -1098,6 +1198,31 @@
    "answer": 0,
    "why": "The integral does not know the valve cannot open any further, so its running total keeps growing. When the PV finally gets there, all that stored-up output has to unwind, and the PV overshoots. PLC PID blocks normally include anti-wind-up (they stop or limit the integral at the output limits): make sure the output limits are set to match the valve or drive.",
    "hint": "I adds up the error. What happens to a running total while the error cannot shrink?"
+  },
+  {
+   "id": "tank-loop-faults",
+   "type": "widget",
+   "stage": "mix",
+   "level": 6.6,
+   "intro": "This tank's level loop has been reported as \"not controlling right\". Run it as you would on site: watch it settle, then change the set point and the demand. Compare the controller's output with the valve, and the PLC's level with LT-101's current (0–2 m on 4–20 mA, so 12 mA is 1.0 m).",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "tank-level",
+     "plc": false
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "action-wrong",
+     "valve-stuck",
+     "scale-wrong",
+     "none"
+    ],
+    "why": "Split the loop and test each link in turn. Does the PLC's level agree with the transmitter's current? Does the output move the right way for the error (level low, output up)? Does the valve follow the output? The fault is in the first link that does not."
+   }
   },
   {
    "id": "check-offset",

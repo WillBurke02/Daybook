@@ -525,6 +525,38 @@
    }
   },
   {
+   "id": "sorter-count-edges",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.8,
+   "intro": "The reject station counts boxes leaving the end with an up-counter on photo-eye PE2: `C1(CU := EndEye, R := Reset, PV := 9999);`. A box is 0.2 m long and the belt runs at 0.4 m/s, so each box keeps PE2 on for 0.5 s. The PLC scans every 10 ms. Press Start and watch PE2's lamp and Good out (C1).",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "sorter",
+     "plc": "open"
+    }
+   },
+   "predict": {
+    "q": "As one box passes PE2, how much will C1's count go up?",
+    "options": [
+     "By 1",
+     "By about 50, one a scan",
+     "By 2: as it arrives and as it leaves"
+    ],
+    "answer": 0,
+    "why": "A CTU counts the rising edge of CU: the one scan where PE2 goes from 0 to 1. The other 49 or so scans with PE2 on add nothing, and nor does the box leaving the beam (a falling edge)."
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "Someone replaces the counter with `IF EndEye THEN Good := Good + 1; END_IF;`. By how much would Good go up as one box passes PE2?",
+    "answer": "0.2 / speed / 0.01",
+    "hint": "How long is a box in the beam, and how many 10 ms scans fit into that time?",
+    "work": "The box is in the beam for $0.2 \\div 0.4 = 0.5$ s, which is $500 \\div 10 = 50$ scans. The IF adds 1 on each of them.",
+    "why": "An IF on a plain contact runs on every scan the contact is on, and a slower belt would add even more for each box. A CTU, or an R_TRIG in front of the addition, acts only on the rising edge: 1 a box, however long it stays in the beam."
+   }
+  },
+  {
    "id": "mix-ctu-edge",
    "type": "mcq",
    "stage": "mix",
@@ -579,6 +611,50 @@
    ],
    "answer": 0,
    "why": "A pulse timer starts on the rising edge of IN and gives exactly PT, whatever IN does next: an edge and a time in one block. An R_TRIG alone gives one scan of horn, far too short to hear. A TON would sound only after 2 s, and for as long as the guard stayed open."
+  },
+  {
+   "id": "sorter-startup-edge",
+   "type": "widget",
+   "stage": "mix",
+   "level": 5.6,
+   "intro": "The reject station was switched off with a red box standing right under the colour sensor B1. Now the PLC is back on and the belt waits for Start. Its program sets Seen, and so starts T1, on B1's rising edge: `E1(CLK := Colour); Seen := (E1.Q OR Seen) AND Running AND NOT T1.Q;`.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "sorter",
+     "set": {
+      "belt.preload": [
+       2.0,
+       1.4,
+       0.8,
+       0.2
+      ]
+     },
+     "plc": "open"
+    }
+   },
+   "predict": {
+    "q": "B1's lamp is already lit. What will happen to that red box when you press Start?",
+    "options": [
+     "The pusher knocks it off as usual",
+     "It rides on past the pusher",
+     "The pusher fires at once"
+    ],
+    "answer": 1,
+    "why": "Seen needs a rising edge of B1, and after Start there is none: B1 is already on, and it stays on as the box moves off. So T1 never starts for that box, and it goes off the end."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "The next red box is pushed off as usual. Why was the first one missed?",
+    "options": [
+     "Its edge came before Start, while Running was 0",
+     "B1 cannot see a box that is standing still",
+     "T1 does not time while the belt is stopped",
+     "E1 does not work until the belt has moved"
+    ],
+    "answer": 0,
+    "why": "An edge is a change. E1 did see this one, on the PLC's first scan (its memory starts at 0), but `AND Running` threw it away because the belt was stopped. After Start, B1 just stayed on until the box had passed: no change, so no edge, and Seen was never set. A box already in front of a sensor at start-up is a classic miss for anything triggered on an edge: clear the belt before an automatic start, or handle a sensor that is already on at start-up on purpose."
+   }
   },
   {
    "id": "check-count-held",

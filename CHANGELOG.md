@@ -32,6 +32,18 @@
     and decibels), Electronics (transistors as switches, digital logic, PWM, ADC and DAC) and
     Drives (braking and regeneration, parameter sets and fault finding, inertia matching,
     homing and limits). Track 4 (A-level pure) now has every stop written.
+  - **Machines to run in lessons** (the `sim` widget): a simulation engine, a plain WebGL 3D
+    view (no library) and a panel with a real control for every input, so a lesson can put a
+    PLC, a drive, a motor, sensors or a whole small line in front of you and let you work it.
+    A scene is plain JSON; a card reuses one and changes only what it needs. Two new questions:
+    **goal** (make it do something: checked by a formula, three goes, Show me plays the
+    author's solution) and **diagnose** (one of the scene's faults, picked afresh each review).
+    The content check builds every scene, runs every fault and proves every goal can be met.
+    Six scenes: a conveyor on a VFD under a PLC, a drive test bench (flywheel, load brake, brake
+    resistor), a DOL motor starter with its control circuit as a live ladder, a servo axis with
+    homing and limits, a reject sorter (colour sensor, timed pusher, counters) and a tank level
+    loop (4–20 mA, S7 counts, PID, trips). 26 cards in 13 lessons use them, across drives, PLC and
+    instrumentation lessons. How to write more: the Machines section of CONTENT-BRIEF.md.
   - **Learning record** (CPD) by day, as CSV.
   - **The workbench**: calculator and whiteboard as tabs in one docked panel (a sheet on a
     phone), 36 px labelled tools, the card's numbers as buttons, sums kept with the card, units

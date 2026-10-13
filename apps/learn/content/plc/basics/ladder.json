@@ -623,6 +623,39 @@
    "why": "Stop_OK sits only in the Start leg, so once Pump is 1 the `OR Pump` keeps it 1 whatever Stop does. The stop condition has to be in series with the whole branch, which in ST means ANDed with the bracket."
   },
   {
+   "id": "starter-diagnose",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.5,
+   "intro": "A direct-on-line starter for a fan. Its control circuit is relays, not a PLC, but it is the same seal-in: K1's own auxiliary contact (13–14) holds it in, and Stop, overload F2's 95–96 contact and isolator Q1 are in series with K1's coil. The ladder draws that circuit, with the power flowing live. The fan has been reported as \"not right\". Run it as the operator would: Start, Stop, Reset F2. Watch the lamps, K1 in the cabinet and the ladder.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "motor-starter",
+     "controls": [
+      "q1",
+      "start",
+      "stop",
+      "reset"
+     ],
+     "plc": "open",
+     "trend": false
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "aux-failed",
+     "stop-wire",
+     "f2-tripped",
+     "coil-open",
+     "none"
+    ],
+    "why": "Read the ladder against the machine. If K1's rung is made but nothing moves, the logic is doing its job and the fault is in the contactor. If the rung is not made, find which contact in series is open. A motor that runs only while Start is held has lost its seal-in: look at the holding contact."
+   }
+  },
+  {
    "id": "mix-double-coil",
    "type": "mcq",
    "stage": "mix",
@@ -666,6 +699,58 @@
    ],
    "answer": 0,
    "why": "A retained set bit is still 1 when the PLC runs again, so the output comes back on with nobody pressing anything. A seal-in rung starts at 0 and waits for Start. That is why motors are usually sealed in, and why BS EN 60204-1 asks for no dangerous automatic restart."
+  },
+  {
+   "id": "mix-overload-reset",
+   "type": "widget",
+   "stage": "mix",
+   "level": 5.0,
+   "intro": "The same fan starter, with its ladder. The fan jammed and stopped, and H2 (Tripped) is lit. The jam has been cleared.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "motor-starter",
+     "fault": "f2-tripped",
+     "controls": [
+      "start",
+      "stop",
+      "reset"
+     ],
+     "plc": "open",
+     "trend": false
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Get the fan running again, at full speed.",
+    "pass": "AND(plc.K1 = 1, m.n > 1400)",
+    "solution": [
+     {
+      "at": 1,
+      "press": "reset"
+     },
+     {
+      "at": 1.5,
+      "press": "start"
+     }
+    ],
+    "fails": [
+     [
+      "f2.trip",
+      "F2 is still tripped (H2 is lit): its 95–96 contact, F2_OK in the ladder, is open in series with K1's coil. Reset it first."
+     ],
+     [
+      "plc.K1 = 0",
+      "F2 is reset, but K1 has not pulled in. What dropped out when F2 tripped, and what puts it back in?"
+     ],
+     [
+      "m.n <= 1400",
+      "It is starting: wait for it to reach full speed, then check."
+     ]
+    ],
+    "hint": "Find the open contact in K1's rung first. Then ask what else dropped out when it opened.",
+    "why": "F2's 95–96 contact (F2_OK) is in series with K1's coil, like Stop_OK. When F2 tripped it opened, K1 dropped out, and so did K1's seal-in contact (K1_Aux). Reset closes 95–96 again, but nothing holds K1 in any more, so the fan waits for Start: the same as after Stop or a power cut. That is deliberate: a fan that restarted by itself on reset could catch the hand of whoever cleared the jam. On a real job, find out why it tripped before you reset it."
+   }
   },
   {
    "id": "check-seal-release",

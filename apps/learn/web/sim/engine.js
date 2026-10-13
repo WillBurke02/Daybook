@@ -11,7 +11,8 @@
 //     "view": {…3D, see view.js}, "show": [readouts], "trend": {…} }
 // Every block setting is a number or a formula over the scene's names: the inputs (start), each block's
 // outputs (vfd.f, m1.n), the lets, and t (seconds). Blocks run in the order written, once a step; one that reads
-// a block further down gets last step's value. Formulas are the numeric cards' own: IF(a > 1, 2, 3), AND(a, b),
+// a block further down gets last step's value. A let may use its own name: it reads its last value, so
+// "seal": "AND(OR(start, seal), stop)" is a memory, and "ts": "IF(go, ts + 0.002, 0)" a stopwatch. Formulas are the numeric cards' own: IF(a > 1, 2, 3), AND(a, b),
 // a = b, a <> b, MIN, MAX, ABS, SQRT, SIN, MOD, PI(); true is 1 and false 0.
 import { parse } from '../core/formula.js';
 import { BLOCKS } from './blocks.js';

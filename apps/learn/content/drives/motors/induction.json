@@ -486,6 +486,48 @@
    "why": "The rotor runs a few per cent below its field, so the synchronous speed is the next one **above** the nameplate speed. Taking the one below would mean the rotor outruns its field, which a motor cannot do; taking one further up would mean a slip of 30% or more, far too much for a motor at full load."
   },
   {
+   "id": "dol-start",
+   "type": "widget",
+   "stage": "learn",
+   "level": 5.0,
+   "intro": "A 4 kW fan motor started **direct on line** (DOL): contactor K1 switches it straight onto the 400 V supply. Its nameplate full-load current is 8.1 A. The trend draws its current and its speed.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "motor-starter",
+     "controls": [
+      "start",
+      "stop"
+     ],
+     "plc": false
+    }
+   },
+   "predict": {
+    "q": "Before you press Start: what will the current do while the fan speeds up?",
+    "options": [
+     "Jump to several times 8.1 A at once, then fall as it speeds up",
+     "Rise slowly from 0 to 8.1 A as it speeds up",
+     "Go straight to 8.1 A and stay there",
+     "Start small and peak once it reaches full speed"
+    ],
+    "answer": 0,
+    "why": "At standstill the slip is 100%, so the current induced in the rotor, and the current the motor draws from the supply, is at its largest. It falls as the rotor catches up and the slip shrinks."
+   },
+   "ask": {
+    "type": "mcq",
+    "q": "Press Start and watch the trend. Why is the current so high at the moment it starts?",
+    "options": [
+     "The rotor is still, so the field sweeps past its bars at full speed",
+     "The fan needs its greatest torque at standstill",
+     "K1's contacts bounce as they close",
+     "The windings are cold, so their resistance is low"
+    ],
+    "answer": 0,
+    "hint": "What is the slip while the rotor is not turning? And what does more slip do to the current induced in the bars?",
+    "why": "With the rotor still the slip is 100%: the field sweeps past the bars at the full 1500 rpm, against about 55 rpm once the fan runs at 1445 rpm. That induces a far bigger current in the cage, and the stator draws it from the supply, like a transformer with its secondary shorted. So this motor draws about 6 times its full-load current (most real ones 6 to 8 times), falling as it speeds up. It is not the load: a fan needs almost no torque at standstill, because its torque rises with the speed squared. Cold windings and contact bounce make little difference."
+   }
+  },
+  {
    "id": "p-pole-pairs",
    "type": "numeric",
    "stage": "practise",
@@ -652,6 +694,33 @@
    "why": "The motor starts with its locked-rotor torque, dips to its pull-up torque, climbs to the breakdown peak, then drops steeply. It runs on that steep part, a few per cent below synchronous speed, where the torque would be zero."
   },
   {
+   "id": "p-start-current",
+   "type": "widget",
+   "stage": "practise",
+   "level": 4.8,
+   "intro": "The same 4 kW fan motor, started direct on line. Its nameplate full-load current is 8.1 A. Press Start and watch the current line on the trend.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "motor-starter",
+     "controls": [
+      "start",
+      "stop"
+     ],
+     "plc": false
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "At the moment it starts, about how many times its full-load current does the motor draw?",
+    "answer": "ipk / m.Ir",
+    "unit": "×",
+    "tolerance": 0.1,
+    "hint": "Read the top of the current line, then divide by 8.1 A. The answer box takes a sum, such as 45 / 8.1.",
+    "why": "The current peaked at about {ipk:0} A as K1 closed: {ipk:0} ÷ 8.1 is about {answer:1} times the full-load current. It falls to about 7.5 A once the fan is up to speed. Real motors draw 6 to 8 times on a DOL start, so the supply, the cables, the contactor and the overload must all carry that for a few seconds. Dividing the running current (7.5 A) by 8.1 gives under 1: that is the load, not the start."
+   }
+  },
+  {
    "id": "mix-gearbox",
    "type": "numeric",
    "stage": "mix",
@@ -724,6 +793,74 @@
     "abs": 1,
     "hint": "Synchronous speed from the frequency, then take the rotor speed off it.",
     "why": "At {f} Hz: $n_s = {ns}$ rpm and the rotor turns at {n:0} rpm, a slip speed of {answer:0} rpm. With volts per hertz held steady, the slip **speed** for a given torque stays about the same at any frequency, so the slip **percentage** grows as the frequency falls: {slip:2}% here, against about 4% at 50 Hz. Taking the same % off at every frequency is the tempting mistake."
+   }
+  },
+  {
+   "id": "mix-overload-set",
+   "type": "widget",
+   "stage": "mix",
+   "level": 6.0,
+   "intro": "F2 is a **thermal overload relay**: it warms with the motor's current and opens K1's coil circuit if the current stays too high for too long, as on a jam. Its dial sets the current it protects. Someone has set it to 5 A, and the fan trips out every few minutes with nothing wrong.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "motor-starter",
+     "set": {
+      "f2set": 5
+     },
+     "controls": [
+      "start",
+      "stop",
+      "reset",
+      "jam",
+      "f2set"
+     ],
+     "plc": false
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Set F2 right for this motor. Then start the fan, jam it, and show that F2 trips before the motor overheats (its heat stays under 150%).",
+    "pass": "AND(f2set >= 7.9, f2set <= 8.5, f2.trip = 1, m.heat < 150)",
+    "within": 25,
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "f2set": 8.1
+      }
+     },
+     {
+      "at": 0.5,
+      "press": "start"
+     },
+     {
+      "at": 6,
+      "set": {
+       "jam": 1
+      }
+     }
+    ],
+    "fails": [
+     [
+      "f2set < 7.9",
+      "F2 is set below the motor's full-load current, so it trips on a normal day's running. Read the current off the motor's nameplate."
+     ],
+     [
+      "f2set > 8.5",
+      "F2 is set above the motor's full-load current: on a jam the windings get too hot before it trips. Read the current off the motor's nameplate."
+     ],
+     [
+      "m.heat >= 150",
+      "The motor's windings went past 150% before F2 tripped. Untick the jam, reset F2 and try again with F2 set right."
+     ],
+     [
+      "f2.trip = 0",
+      "F2 is set right. Now prove it: start the fan, let it run up, then tick Jam the fan and wait for F2 to trip."
+     ]
+    ],
+    "hint": "Which current on the motor's nameplate can it carry all day? Not the starting current, and not what it happens to draw today.",
+    "why": "Set an overload to the motor's **full-load current** off the nameplate: 8.1 A here. Then it carries the fan's 7.5 A all day, rides through the 49 A start (from cold, a class 10 relay takes 4 to 10 s to trip even at 7.2 times its setting, and this fan is up to speed in 3 s), and trips within seconds of a stall, before the windings overheat. At 5 A it trips on normal running after a few minutes. Set high, at 16 A say, it lets a stalled motor's windings pass 150% before it trips. The starting current is never the setting: an overload set there would barely protect the motor at all."
    }
   },
   {

@@ -867,6 +867,48 @@
    "why": "Each step needs the one before. The check comes before $t_{const}$: if the ramps need more than the whole move, $t_{const}$ would come out as a minus number, and you need the triangle rules instead."
   },
   {
+   "id": "sim-move-time",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.0,
+   "intro": "A servo axis, homed and sitting at 0. Its top speed is set to 100 mm/s and its acceleration (and deceleration) to 200 mm/s². The PLC times every move, from Move until the axis is in position.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "servo-axis",
+     "set": {
+      "enable": 1,
+      "homed0": "1",
+      "ax.x0": 0,
+      "vmax": 100,
+      "amax": 200,
+      "tgt": 150
+     },
+     "controls": [
+      "move",
+      "tgt",
+      "vmax",
+      "amax"
+     ]
+    }
+   },
+   "hide": true,
+   "ask": {
+    "type": "numeric",
+    "q": "How long will the move from 0 to the target take, in seconds? Work it out, answer, then press Move and read the timer.",
+    "let": {
+     "need": "vmax^2 / amax",
+     "trap": "tgt / vmax + vmax / amax",
+     "tri": "2 * SQRT(tgt / amax)"
+    },
+    "answer": "IF(tgt >= vmax^2 / amax, tgt / vmax + vmax / amax, 2 * SQRT(tgt / amax))",
+    "unit": "s",
+    "hint": "Does it reach full speed? The two ramps need $\\frac{v^2}{a}$ of the move between them.",
+    "work": "The ramps need $\\frac{v^2}{a} = {need}$ mm; the move is {tgt} mm. If they fit (a trapezoid): $\\frac{D}{v} + \\frac{v}{a} = {trap}$ s. If not (a triangle): $2\\sqrt{\\frac{D}{a}} = {tri}$ s. Here: {answer} s",
+    "why": "As it was set: the two ramps need 50 mm, and the move is 150 mm, so it reaches 100 mm/s. Each ramp takes $\\frac{v}{a}$ = 0.5 s; the 100 mm between them takes 1 s at full speed; 2 s in all, the same as $\\frac{D}{v} + \\frac{v}{a} = 1.5 + 0.5$. Distance ÷ top speed alone (1.5 s) forgets the ramps. The machine's timer agrees to within a few hundredths of a second: it runs until the axis has settled in position, and it counts in 10 ms scans."
+   }
+  },
+  {
    "id": "mix-shape",
    "type": "numeric",
    "stage": "mix",
@@ -962,6 +1004,48 @@
    ],
    "answer": 1,
    "why": "Distance while speeding up is the ramp triangle: $d_{acc} = \\frac{v^2}{2a} = \\frac{160\\,000}{1600} = 100$ mm. 0.5 is $\\frac{v}{a}$: the **time** in seconds, not a distance. 200 mm is the top speed times that 0.5 s, as if it did 400 mm/s the whole way (it averages half), or $\\frac{v^2}{a}$, both ramps. 0.25 forgets to square the speed."
+  },
+  {
+   "id": "sim-short-move",
+   "type": "widget",
+   "stage": "mix",
+   "level": 6.4,
+   "intro": "The same axis, homed at 0, now set to a top speed of 200 mm/s and an acceleration of 200 mm/s². The target is 50 mm.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "servo-axis",
+     "set": {
+      "enable": 1,
+      "homed0": "1",
+      "ax.x0": 0,
+      "vmax": 200,
+      "amax": 200,
+      "tgt": 50
+     },
+     "controls": [
+      "move",
+      "tgt",
+      "vmax",
+      "amax"
+     ]
+    }
+   },
+   "hide": true,
+   "ask": {
+    "type": "numeric",
+    "q": "How long will the move from 0 to the target take, in seconds? Then press Move and read the timer.",
+    "let": {
+     "need": "vmax^2 / amax",
+     "trap": "tgt / vmax + vmax / amax",
+     "tri": "2 * SQRT(tgt / amax)"
+    },
+    "answer": "IF(tgt >= vmax^2 / amax, tgt / vmax + vmax / amax, 2 * SQRT(tgt / amax))",
+    "unit": "s",
+    "hint": "Check first: do the two ramps, $\\frac{v^2}{a}$ between them, fit in the move?",
+    "work": "The ramps need $\\frac{v^2}{a} = {need}$ mm; the move is {tgt} mm. If they fit (a trapezoid): $\\frac{D}{v} + \\frac{v}{a} = {trap}$ s. If not (a triangle): $2\\sqrt{\\frac{D}{a}} = {tri}$ s. Here: {answer} s",
+    "why": "As it was set: to reach 200 mm/s and stop again needs $\\frac{200^2}{200} = 200$ mm, and the move is only 50 mm. So it never reaches the top speed: a triangle. It peaks at $\\sqrt{aD} = \\sqrt{200 \\times 50} = 100$ mm/s and takes $2\\sqrt{\\frac{50}{200}} = 1$ s. The trapezoid shortcut gives $0.25 + 1 = 1.25$ s, which is wrong because it assumes the axis reaches 200 mm/s. Turn the top speed down to 100 mm/s and the move takes no longer: only more acceleration would help."
+   }
   },
   {
    "id": "check-conveyor",

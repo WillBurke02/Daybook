@@ -165,6 +165,10 @@ calendar with a dot for each entry, tags, search and print (a day or a range).
   in, pictures too; anything else is counted and left out. Imports live in
   `data/courses/`, so an update never touches them; importing the same file again
   updates it and keeps your progress. Any course downloads as a pack from Courses.
+- **Machines to run**: a conveyor, a drive test bench, a motor starter, a servo axis, a
+  sorter and a tank level loop, simulated in real time and drawn in 3D, with a PLC you can
+  watch scan (its ladder live). Cards ask you to make the machine do something, or to find
+  the fault in it: a different fault each time the card comes back.
 - **More ways in**: widget cards that ask you to predict before you can touch the
   controls; "explain the step" cards (your words, then the model answer and its
   key points); "spot the mistake" cards; bench tasks at the end of a lesson,
@@ -201,7 +205,11 @@ random numbers and every code card's solution against its tests.
 Widgets (in `apps/learn/web/widgets/`): `ascan` (pulse-echo A-scan with gain
 and a gate), `impedance`, `pid`, `grapher`, `plc` (the scan cycle, in
 Structured Text), `ladder` (rungs with power flow), `circuit`, `motor`,
-`encoder`, `profile`, `timer`, `fraction`.
+`encoder`, `profile`, `timer`, `fraction`, and `sim`: a machine from
+`apps/learn/web/sims/` (blocks wired by formulas, a 3D view, a panel, faults),
+which a card can ask a `goal` or a `diagnose` of. `node tests/sim.check.mjs`
+checks the blocks against the real thing; `node tests/sim-look.mjs <scene>`
+takes a picture of one.
 
 Sixteen subjects are outlined (236 lessons). Written so far: Maths foundations,
 Ohm's and Kirchhoff's laws, pulse-echo and acoustic impedance, the PLC basics
