@@ -883,6 +883,11 @@ with tempfile.TemporaryDirectory() as t2:
     _db.back_up(live, elsewhere, label="again")
     assert len(os.listdir(elsewhere)) == _db.KEEP_BIG, os.listdir(elsewhere)
     _db.BIG = was
+    # a backup folder that cannot be written (the stick not mounted, owned by root): the copy goes beside the data
+    blocked = os.path.join(t2, "a-file-not-a-folder")
+    open(blocked, "w").close()
+    beside = _db.back_up(live, os.path.join(blocked, "daybook"))
+    assert os.path.dirname(beside) == _db.backup_folder(live) and os.path.exists(beside), beside
 
     with open(live, "r+b") as f:
         f.seek(8192)

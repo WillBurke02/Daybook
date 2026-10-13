@@ -12,6 +12,7 @@ the app's migrations run, so an app's first migration can fill in its settings.
 import json
 import os
 import sqlite3
+import sys
 from datetime import datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -172,7 +173,20 @@ def back_up(path, backup_dir=None, label=None):
     A database past BIG (Log, full of photos and voice notes) is copied once a
     week instead, and only KEEP_BIG copies are kept."""
     folder = backup_folder(path, backup_dir)
-    os.makedirs(folder, exist_ok=True)
+    try:
+        os.makedirs(folder, exist_ok=True)
+        ok = os.access(folder, os.W_OK)
+    except OSError:
+        ok = False
+    if not ok:
+        if not backup_dir:
+            raise Stop(f"Cannot write backups to {folder}: check who owns it.")
+        # the backup stick unplugged, unmounted or owned by root: still a copy before anything else, beside the data
+        here = backup_folder(path)
+        print(f"Cannot write backups to {folder} (is the stick mounted, and owned by this user?); "
+              f"copying to {here} until it can.", file=sys.stderr)
+        folder = here
+        os.makedirs(folder, exist_ok=True)
     stem = os.path.basename(path)
     now = datetime.now()
     suffix = f"{now:%Y-%m-%d}" + (f"_{now:%H%M%S}_{label}" if label else "")
