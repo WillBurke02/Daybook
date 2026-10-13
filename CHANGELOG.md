@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.4 — 13 October 2026
+
+- **Tags in Log**: typing # offers the tags already in use, most used first, under the box
+  (and under the diary and each entry); #si narrows them to #site and #siemens. A tap, or Tab,
+  finishes the word, and a tag already in the text is not offered again.
+- **Rename a tag**: Log → Tags → Rename fixes a typo (#sit) in every entry at once. A name already
+  in use merges the two (#TS-247 into #ts247). Undo puts every entry back.
+
 ## 4.0.3 — 13 October 2026
 
 - **Suggest a change**: Help → Suggest a change, on any page, writes down what you would change,

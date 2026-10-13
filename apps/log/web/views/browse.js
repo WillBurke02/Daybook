@@ -1,7 +1,7 @@
 // Looking back: the timeline (days newest first), the month with dots on the
 // days that have anything logged, and the tags.
 import { api } from '../api.js';
-import { el, table } from '../core/dom.js';
+import { el, table, dialog, flash } from '../core/dom.js';
 import { today, dayLong, addMonths, monthLong, lastDay, dateUK } from '../core/format.js';
 import { calendar } from '../ui/calendar.js';
 
@@ -53,11 +53,28 @@ export const month = { title: 'Calendar', layout: [{ use: 'log.month', w: 8 }, {
                            onPick: d => ctx.go('day', { d }) }),
       el('p', { class: 'note' }, `${days.length} day${days.length === 1 ? '' : 's'} logged this month. A dot for each entry, up to five.`));
   } },
-  'log.tags': { title: 'Tags', w: 4, deps: ['entry'], async render(body) {
+  'log.tags': { title: 'Tags', w: 4, deps: ['entry'], async render(body, ctx) {
     const rows = await api.view('v_tag', { order: 'n', desc: 1 });
+    // a typo (#sit) or two names for one thing (#ts247, #TS-247): rename it, onto a tag in use to merge them
+    const rename = r => {
+      const to = el('input', { value: r.tag, 'aria-label': 'New name', autocapitalize: 'off' });
+      dialog(`Rename #${r.tag}`, el('div', { class: 'stack' }, el('label', {}, 'New name ', to),
+        el('p', { class: 'note' }, `Changes #${r.tag} in the text of its ${r.n} entr${r.n === 1 ? 'y' : 'ies'}. A name already in use joins the two.`)),
+        [{ label: 'Rename', fn: async () => {
+          if (to.value.trim().replace(/^#/, '').toLowerCase() === r.tag) return;
+          try {
+            const got = await api.renameTag(r.tag, to.value);
+            const redraw = () => { ctx.changed('entry'); ctx.refresh(); };       // the others, then this one
+            flash(`Renamed in ${got.entries} entr${got.entries === 1 ? 'y' : 'ies'}`, { label: 'Undo', fn: async () => { await api.undo(); redraw(); } });
+            redraw();
+          } catch (e) { flash(e.message); return false; }
+        } }]);
+      setTimeout(() => to.select());
+    };
     body.append(table([
       { k: 'tag', label: 'Tag', render: r => el('a', { href: `#/timeline?tag=${encodeURIComponent(r.tag)}` }, '#' + r.tag) },
-      { k: 'n', label: 'Entries', n: true }, { k: 'last_day', label: 'Last', fmt: dateUK }],
+      { k: 'n', label: 'Entries', n: true }, { k: 'last_day', label: 'Last', fmt: dateUK },
+      { k: 'rename', label: '', render: r => el('button', { class: 'btn plain sm', type: 'button', onclick: () => rename(r) }, 'Rename') }],
       rows, { empty: 'No tags yet. Type a word with # in front, such as #site, in any entry.' }));
   } },
 } };

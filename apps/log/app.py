@@ -216,6 +216,21 @@ def route(db, method, p, query, body, ctx):
         db.commit()
         return 200, {"ok": True, "ids": ids}
 
+    if p == ["tag", "rename"] and method == "POST":       # #sit → #site in every entry; to a tag in use, the two become one
+        old, new = (body.get("from") or "").lower().lstrip("#"), (body.get("to") or "").strip().lstrip("#")
+        if not TAG.fullmatch("#" + new):
+            raise Err(400, "a tag is letters, digits, - and _, starting with a letter or digit")
+        hit = re.compile(rf"#{re.escape(old)}(?![\w-])", re.I)
+        rows = [dict(r) for r in db.execute("SELECT id, text, tags FROM entry WHERE tags LIKE ?", (f"% {old} %",))]
+        for r in rows:
+            text = hit.sub("#" + new, r["text"])
+            db.execute("UPDATE entry SET text = ?, tags = ? WHERE id = ?", (text, tags_of(text), r["id"]))
+        n = len(rows)
+        _db.log_change(db, "edit", "entry", f"Renamed #{old} to #{new} in {n} entr{'y' if n == 1 else 'ies'}", rows=n,
+                       detail={"undo": [{"op": "restore", "table": "entry", "rows": rows}]})
+        db.commit()
+        return 200, {"ok": True, "entries": n}
+
     if p[:1] == ["clip"] and len(p) == 3 and p[2] == "thumb" and method == "POST":     # a video's picture, made in the browser
         thumb = body.get("thumb")
         if thumb is not None and not str(thumb).startswith("data:image/jpeg;base64,"):

@@ -116,7 +116,21 @@ assert pr["entries"][2]["voices"] == 1
 found = {g["kind"]: g["rows"] for g in R("GET", "search", q={"q": ["plc site"]})}
 assert found["entry"][0]["text"].startswith("Swapped") and found["entry"][0]["thumb"] == JPEG
 assert R("GET", "search", q={"q": ["siemens"]})[0]["rows"][0]["id"] == e2, "tags are searched"
-print("ok — timeline, calendar, tags, print, search")
+# renaming a tag rewrites it in every entry (any case, never part of a longer tag); renaming onto one in use merges them
+db.execute("INSERT INTO entry (day, kind, text, tags) VALUES ('2026-09-11', 'work', 'At #SITE and #site-b', ?)", (log.tags_of("At #SITE and #site-b"),))
+assert R("POST", "tag/rename", {"from": "#site", "to": "Plant"})["entries"] == 3
+tags = {r["tag"]: r["n"] for r in R("GET", "v/v_tag")}
+assert tags == {"plant": 3, "site-b": 1, "ts247": 1, "siemens": 1}, tags
+assert one("SELECT text FROM entry WHERE day = '2026-09-11'")[0] == "At #Plant and #site-b"
+assert R("POST", "tag/rename", {"from": "ts247", "to": "plant"})["entries"] == 1, "onto a tag in use: merged"
+tags = {r["tag"]: r["n"] for r in R("GET", "v/v_tag")}
+assert tags == {"plant": 3, "site-b": 1, "siemens": 1}, tags          # the #ts247 entry was #site too
+refused(lambda: R("POST", "tag/rename", {"from": "plant", "to": "two words"}), "a tag with a space")
+R("POST", "undo", {}); R("POST", "undo", {})
+assert {r["tag"]: r["n"] for r in R("GET", "v/v_tag")} == {"site": 3, "site-b": 1, "ts247": 1, "siemens": 1}, "undo puts both back"
+assert one("SELECT text FROM entry WHERE day = '2026-09-11'")[0] == "At #SITE and #site-b"
+db.execute("DELETE FROM entry WHERE day = '2026-09-11'"); db.commit()
+print("ok — timeline, calendar, tags, rename, print, search")
 
 # === the phone's share sheet ===========================================================
 PNG = b"\x89PNG\r\n\x1a\n" + b"\0" * 64

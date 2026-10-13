@@ -14,7 +14,41 @@ const dayOf = ctx => /^\d{4}-\d{2}-\d{2}$/.test(ctx.params.d || '') ? ctx.params
 const tagLinks = tags => (tags || '').trim().split(/\s+/).filter(Boolean)
   .map(t => el('a', { class: 'chip', href: `#/timeline?tag=${encodeURIComponent(t)}` }, '#' + t));
 let cache = null;                                        // the panels on one page share one fetch of the day
-const changed = ctx => { cache = null; ctx.reload(); };
+const changed = ctx => { cache = null; tagList = null; ctx.reload(); };
+
+// ---- #tags: the ones in use, offered as a # is typed ------------------------------------
+let tagList = null;                                      // most used first; fetched again after a change
+const tagsInUse = () => tagList ??= api.view('v_tag', { order: 'n', desc: 1 }).then(r => r.map(t => t.tag)).catch(() => []);
+
+/** The row under a box that offers #site and #siemens as #si is typed: a tap (or Tab) finishes the word. */
+export function tagAssist(box) {
+  const strip = el('div', { class: 'tagassist', hidden: true, 'aria-label': 'Tags in use' });
+  let w = null;
+  const pick = t => {
+    const at = box.selectionStart;
+    box.setRangeText(t + ' ', at - w.length, at, 'end');
+    strip.hidden = true;
+    box.focus();
+    box.dispatchEvent(new Event('input'));               // the draft keeps it
+  };
+  const offer = async () => {
+    const at = box.selectionStart;
+    w = /(?:^|[^\w#])#([\w-]*)$/.exec(box.value.slice(0, at))?.[1] ?? null;
+    if (w == null) { strip.hidden = true; return; }
+    const has = new Set([...(box.value.slice(0, at - w.length - 1) + ' ' + box.value.slice(at)).matchAll(/#([\w-]+)/g)].map(m => m[1].toLowerCase()));
+    const got = (await tagsInUse()).filter(t => t.startsWith(w.toLowerCase()) && t !== w.toLowerCase() && !has.has(t)).slice(0, 8);
+    strip.hidden = !got.length;
+    // pointerdown is held back so the box keeps its focus (an entry is not saved half-typed); the click picks
+    const keep = e => e.preventDefault();
+    strip.replaceChildren(...got.map(t => el('button', { type: 'button', class: 'chip', tabindex: -1,
+      onpointerdown: keep, onmousedown: keep, onclick: () => pick(t) }, '#' + t)));
+  };
+  box.addEventListener('input', offer);
+  box.addEventListener('keydown', e => { if (e.key === 'Tab' && !strip.hidden) { e.preventDefault(); strip.firstChild.dispatchEvent(new MouseEvent('click')); }
+                                         if (e.key === 'Escape') strip.hidden = true; });
+  box.addEventListener('blur', () => { strip.hidden = true; });
+  return strip;
+}
 
 // ---- the quick add ----------------------------------------------------------------
 
@@ -87,7 +121,7 @@ export async function quickBar(ctx) {
     } catch (e) { flash(e.message); }
   };
   text.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); add(); } });
-  const bar = el('div', { class: 'quickadd' }, text,
+  const bar = el('div', { class: 'quickadd' }, text, tagAssist(text),
     el('div', { class: 'row mid' }, kinds, at,
       el('button', { class: 'icon', type: 'button', onclick: () => shoot.click(), title: 'Take a photo', 'aria-label': 'Take a photo' }, icon('cam')), shoot,
       el('button', { class: 'icon', type: 'button', onclick: () => pick.click(), title: 'Add photos and videos', 'aria-label': 'Add photos and videos' }, icon('plus')), pick,
@@ -163,7 +197,7 @@ function workEntry(e, ctx) {
   text.addEventListener('change', () => save({ text: text.value.trim() || null }));
   const box = el('article', { class: 'entry', id: `e${e.id}` },
     el('div', { class: 'when' }, at),
-    el('div', { class: 'what' }, text, attachments(e, ctx), el('div', { class: 'row mid' }, tagLinks(e.tags),
+    el('div', { class: 'what' }, text, tagAssist(text), attachments(e, ctx), el('div', { class: 'row mid' }, tagLinks(e.tags),
       el('span', { class: 'actions row mid' }, addMedia(e, ctx),
         el('button', { class: 'icon del', type: 'button', title: 'Delete entry', 'aria-label': 'Delete entry', onclick: async () => {
           await api.remove('entry', e.id);
@@ -207,7 +241,7 @@ export const panels = {
         flash('Saved'); changed(ctx);
       } catch (x) { flash(x.message); }
     });
-    body.append(text, diary ? el('div', { class: 'row mid' }, tagLinks(diary.tags), addMedia(diary, ctx)) : null,
+    body.append(text, tagAssist(text), diary ? el('div', { class: 'row mid' }, tagLinks(diary.tags), addMedia(diary, ctx)) : null,
       diary ? attachments(diary, ctx) : null);
     if (diary && String(diary.id) === ctx.params.e) lightUp(text);
   } },
