@@ -547,7 +547,7 @@ pre.out { font: 400 11.5px/1.5 var(--mono); background: var(--ground); border: 1
   .pagehead h1 { font-size: 23px; }
 }
 @media (max-width: 600px) {
-  .workbench.sheet { bottom: calc(60px + env(safe-area-inset-bottom)); height: 50vh; }   /* above the apps along the bottom */
+
   .appbar .apps, .appbar .mark { display: none; }
   .appbar .here { display: block; }
   main { padding: 14px 12px 90px; }
@@ -1269,9 +1269,23 @@ li.lcardrow.here { box-shadow: 0 0 0 2px var(--accent); }
 .workbench { position: fixed; z-index: 70; top: 70px; right: 0; bottom: 0; width: var(--dock); display: flex; flex-direction: column;
              background: var(--raised); border-left: 1px solid var(--rule); box-shadow: -6px 0 20px rgba(0,0,0,.08); container-type: size; }
 .workbench[hidden] { display: none; }
-.workbench.sheet { top: auto; left: 0; width: auto; height: 55vh; border-left: 0; border-top: 1px solid var(--rule); box-shadow: 0 -6px 20px rgba(0,0,0,.1); }
+.workbench.sheet { top: auto; left: 0; width: auto; height: var(--sheet, 50vh); padding-bottom: env(safe-area-inset-bottom);
+                   border-left: 0; border-top: 1px solid var(--rule); border-radius: 14px 14px 0 0; box-shadow: 0 -6px 20px rgba(0,0,0,.12); }
 body.docked main { margin-right: var(--dock); }                         /* the page makes room: the tools never cover the card */
-body.sheeted main { padding-bottom: calc(55vh + 20px); }
+/* on a phone the sheet takes the place of the apps along the bottom, and the card goes up above it */
+body.sheeted main { padding-bottom: calc(var(--sheet, 50vh) + 24px); }
+body.sheeted .tabbar { display: none; }
+.lcard { scroll-margin-top: calc(var(--hdr) + 8px); }
+.workbench.sheet .wb-head { touch-action: none; cursor: ns-resize; padding: 14px 10px 8px; position: relative; border-radius: 14px 14px 0 0; }
+.wb-grip { display: none; }
+.workbench.sheet .wb-grip { display: block; position: absolute; left: 50%; top: 5px; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--rule); }
+.workbench.sheet .wb-tabs kbd { display: none; }
+.workbench.sheet .wb-tabs button { padding: 6px 12px; }
+.workbench.sheet .wb-qbox { display: none; }                   /* the card itself is in view above */
+.workbench.sheet > .wb { gap: 6px; padding: 8px; }
+.workbench.sheet .wb-tools { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }   /* one row each, swiped sideways: the drawing gets the room */
+.workbench.sheet .wb-tools > * { flex: none; }
+.workbench.sheet .wb-canvas { min-height: 120px; }
 .wb-head { padding: 8px 10px; gap: 6px; border-bottom: 1px solid var(--rule-soft); background: var(--panel-2); }
 .wb-tabs { display: flex; gap: 4px; }
 .wb-tabs button { min-height: 36px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 8px; background: var(--raised); color: var(--ink); font: 600 14px var(--sans); cursor: pointer; }

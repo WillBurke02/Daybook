@@ -18,7 +18,9 @@ const current = () => document.querySelector('.lcard.current') || [...document.q
 const store = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch { return null; } };
 
 const WIDE = 1000;                               // narrower than this, the workbench is a sheet along the bottom
-let wb = null, watch = null;
+let wb = null, watch = null, shownFor = null;
+const sheet = () => innerWidth < WIDE;
+const asks = c => c && !c.classList.contains('t-concept');
 
 /** Open the workbench on a tool, or close it if that tool is already showing. */
 export function toggle(name) {
@@ -26,21 +28,46 @@ export function toggle(name) {
   open(name);
 }
 
+// Open, it follows you: it steps aside on a card that only explains (a concept) and comes back on the next
+// question, and once you leave the cards altogether (the lesson list, Today) it closes.
 function open(name) {
   wb ||= make();
-  wb.box.hidden = false;
+  show(true);
   pick(name);
-  layout();
   clearInterval(watch);
-  watch = setInterval(() => { if (!wb.box.hidden) for (const t of Object.values(wb.tools)) t.follow(); }, 600);   // the card changes under us
+  watch = setInterval(() => {
+    const c = current();
+    if (!c) return close();
+    if (!asks(c)) return show(false);
+    show(true);
+    for (const t of Object.values(wb.tools)) t.follow();     // the card changes under us
+    if (c !== shownFor) { shownFor = c; pushUp(c); }
+  }, 400);
+  shownFor = current();
+  pushUp(shownFor);
+}
+
+function show(on) {
+  if (wb.box.hidden !== on) return;
+  if (!on) wb.tools.board.save();
+  wb.box.hidden = !on;
+  layout();
+  if (on) wb.tools[wb.tab]?.shown?.();
 }
 
 function close() {
-  if (!wb || wb.box.hidden) return;
-  wb.tools.board.save();
+  if (!wb) return;
   clearInterval(watch);
+  if (wb.box.hidden) return;
+  wb.tools.board.save();
   wb.box.hidden = true;
   layout();
+}
+
+/** On a phone the sheet takes the bottom of the screen: the card goes up, under the top bar, to sit above it. */
+function pushUp(c) {
+  if (!c || !sheet() || !wb || wb.box.hidden) return;
+  requestAnimationFrame(() => c.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
 }
 
 function pick(name) {
@@ -54,10 +81,21 @@ function make() {
   const tools = { calc: calculator(), board: board() };
   const tabs = el('div', { class: 'wb-tabs', role: 'tablist' }, [['calc', 'Calculator', 'Alt+C'], ['board', 'Whiteboard', 'Alt+W']].map(([k, label, key]) =>
     el('button', { type: 'button', role: 'tab', 'data-k': k, onclick: () => pick(k) }, label, el('kbd', {}, key))));
-  const box = el('section', { class: 'workbench', hidden: true, 'aria-label': 'Calculator and whiteboard' },
-    el('header', { class: 'row mid wb-head' }, tabs, el('span', { class: 'spacer' }),
-      el('button', { class: 'btn plain sm', type: 'button', title: 'Close (Esc)', onclick: close }, 'Close')),
-    tools.calc.box, tools.board.box);
+  // on a phone, the bar along the top of the sheet is its handle: drag it up or down for more card or more room
+  const grip = el('span', { class: 'wb-grip', 'aria-hidden': 'true' });
+  const head = el('header', { class: 'row mid wb-head' }, grip, tabs, el('span', { class: 'spacer' }),
+    el('button', { class: 'btn plain sm', type: 'button', title: 'Close (Esc)', 'aria-label': 'Close the calculator and whiteboard', onclick: close }, 'Close'));
+  const box = el('section', { class: 'workbench', hidden: true, 'aria-label': 'Calculator and whiteboard' }, head, tools.calc.box, tools.board.box);
+  head.addEventListener('pointerdown', e => {
+    if (!sheet() || e.target.closest('button')) return;
+    e.preventDefault();
+    head.setPointerCapture(e.pointerId);
+    const move = ev => setSheet((innerHeight - ev.clientY) / innerHeight);
+    const up = () => { head.removeEventListener('pointermove', move); store('learn.sheet', String(sheetSize)); shownFor && pushUp(shownFor); };
+    head.addEventListener('pointermove', move);
+    head.addEventListener('pointerup', up, { once: true });
+    head.addEventListener('pointercancel', up, { once: true });
+  });
   box.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
   document.body.append(box);
   addEventListener('beforeunload', () => tools.board.save());
@@ -65,11 +103,17 @@ function make() {
 }
 
 /** Docked at the right on a wide screen, with the page narrowed to make room; a sheet along the bottom on a narrow one. */
+let sheetSize = Math.min(0.8, Math.max(0.3, +store('learn.sheet') || 0.5));
+function setSheet(f) {
+  sheetSize = Math.min(0.8, Math.max(0.3, f));
+  document.body.style.setProperty('--sheet', `${Math.round(sheetSize * innerHeight)}px`);
+}
 function layout() {
-  const on = !!wb && !wb.box.hidden, wide = innerWidth >= WIDE;
+  const on = !!wb && !wb.box.hidden, wide = !sheet();
   document.body.classList.toggle('docked', on && wide);
   document.body.classList.toggle('sheeted', on && !wide);
   document.body.style.setProperty('--dock', `${Math.min(480, Math.round(innerWidth * 0.4))}px`);
+  setSheet(sheetSize);
   wb?.box.classList.toggle('sheet', !wide);
 }
 globalThis.addEventListener?.('resize', () => { if (wb) layout(); });
