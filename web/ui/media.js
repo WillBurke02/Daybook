@@ -2,19 +2,29 @@
 // Used by Log (photos, voice) and Money (receipts).
 import { el, flash, dialog } from '../core/dom.js';
 
-async function jpeg(file, max, q) {
-  const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
-  const s = Math.min(1, max / Math.max(bmp.width, bmp.height));
-  const c = el('canvas', { width: Math.round(bmp.width * s), height: Math.round(bmp.height * s) });
+/** A canvas of src at most max px on its long side, on white (a see-through PNG goes on white, not black). */
+function scaled(src, max) {
+  const s = Math.min(1, max / Math.max(src.width, src.height));
+  const c = el('canvas', { width: Math.round(src.width * s), height: Math.round(src.height * s) });
   const g = c.getContext('2d');
-  g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);      // see-through PNGs go on white, not black
-  g.drawImage(bmp, 0, 0, c.width, c.height);
-  bmp.close();
-  return c.toDataURL('image/jpeg', q);
+  g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+  g.drawImage(src, 0, 0, c.width, c.height);
+  return c;
 }
+/** A canvas as a JPEG data URL, encoded off the main thread where the browser can (toBlob), so the page does not stall. */
+const jpeg = (c, q) => new Promise((ok, bad) => c.toBlob(b => {
+  if (!b) return bad(new Error('the picture could not be made smaller'));
+  const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = () => bad(r.error); r.readAsDataURL(b);
+}, 'image/jpeg', q));
 
 // ponytail: 1600px JPEG keeps a phone photo near 300 KB; the original stays wherever you took it.
-export const shrink = async file => ({ image: await jpeg(file, 1600, 0.85), thumb: await jpeg(file, 240, 0.7) });
+/** A photo read once (a phone's 12 MP photo is the slow part), then made 1600px and, from that, a 240px thumbnail. */
+export async function shrink(file) {
+  const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+  const big = scaled(bmp, 1600);
+  bmp.close();
+  return { image: await jpeg(big, 0.85), thumb: await jpeg(scaled(big, 240), 0.7) };
+}
 
 /** A data URL (from the inbox) back into something shrink() takes. */
 export const blobOf = async url => (await fetch(url)).blob();
@@ -61,15 +71,36 @@ export function videoInfo(file) {
   });
 }
 
-/** Send a video to an entry: base is the app's own path ('/log/'). Returns its id. */
-export async function uploadClip(base, entryId, file, info = {}) {
-  const r = await fetch(`${base}clip/${entryId}${info.duration ? `?duration=${info.duration.toFixed(1)}` : ''}`, {
-    method: 'POST', body: file, headers: { 'Content-Type': file.type || 'video/mp4', 'X-Daybook': '1' } });
-  const out = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(out.error || `the video did not upload (${r.status})`);
+/** Send a video to an entry: base is the app's own path ('/log/'). Returns its id. progress(0…1) as it goes
+ *  (XMLHttpRequest, because fetch cannot say how much of an upload has gone). */
+export async function uploadClip(base, entryId, file, info = {}, progress = () => {}) {
+  const out = await new Promise((ok, bad) => {
+    const x = new XMLHttpRequest();
+    x.open('POST', `${base}clip/${entryId}${info.duration ? `?duration=${info.duration.toFixed(1)}` : ''}`);
+    x.setRequestHeader('Content-Type', file.type || 'video/mp4');
+    x.setRequestHeader('X-Daybook', '1');
+    x.upload.onprogress = e => { if (e.lengthComputable) progress(e.loaded / e.total); };
+    x.onload = () => {
+      let j = {};
+      try { j = JSON.parse(x.responseText); } catch { /* not JSON: the status says enough */ }
+      if (x.status >= 200 && x.status < 300) ok(j); else bad(new Error(j.error || `the video did not upload (${x.status})`));
+    };
+    x.onerror = () => bad(new Error('the video did not upload: the connection dropped. Try again.'));
+    x.send(file);
+  });
   if (info.thumb) await fetch(`${base}api/clip/${out.id}/thumb`, { method: 'POST', body: JSON.stringify({ thumb: info.thumb }),
     headers: { 'Content-Type': 'application/json', 'X-Daybook': '1' } }).catch(() => {});
   return out.id;
+}
+
+/** A note that stays while something is sent, with how far it has got: busy('Uploading video 1 of 2', 0.45).
+ *  busy() takes it away. (A flash fades; an upload can take a minute.) */
+let busyBox = null;
+export function busy(msg, frac) {
+  if (msg == null) { busyBox?.remove(); busyBox = null; return; }
+  busyBox ??= document.body.appendChild(el('div', { class: 'busy', role: 'status' }, el('span'), el('progress', { max: 1 })));
+  busyBox.firstChild.textContent = msg;
+  if (frac == null) busyBox.lastChild.removeAttribute('value'); else busyBox.lastChild.value = frac;
 }
 
 /** A video on an entry: its picture with ▶; opens a player (the Pi sends it in pieces as it plays). */

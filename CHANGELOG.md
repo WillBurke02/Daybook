@@ -1,5 +1,15 @@
 # Changes
 
+## 4.0.5 — 13 October 2026
+
+- **Photos and videos from a phone**: picked photos and videos show at once as grey tiles, and
+  each turns into its picture as it is ready, instead of nothing happening for seconds. Each photo
+  is read once, not twice, and made smaller without freezing the page.
+- **Sending**: Add shows Sending… and cannot be pressed twice, so one tap is one entry.
+  A video upload shows how far it has got (Uploading video 1 of 2 · 45%) until it is done,
+  where before a note faded after three seconds.
+- **iPhone**: tapping a text box no longer zooms the page in and leaves it zoomed. Pinch to zoom still works.
+
 ## 4.0.4 — 13 October 2026
 
 - **Tags in Log**: typing # offers the tags already in use, most used first, under the box

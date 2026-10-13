@@ -6,8 +6,8 @@ import { el, flash, seg } from '../core/dom.js';
 import { icon } from '../core/pages.js';
 import { today, addDays, dayLong, dow, toTime, hhmm, span } from '../core/format.js';
 import { state } from '../core/state.js';
-import { shrinkAll, pictureInput, recorder, voicePlayer, viewImage, blobOf, shrink, mediaIn, isVideo, videoInfo, uploadClip,
-  videoTile, CLIP_MAX } from '../ui/media.js';
+import { pictureInput, recorder, voicePlayer, viewImage, blobOf, shrink, mediaIn, isVideo, videoInfo, uploadClip,
+  videoTile, busy, CLIP_MAX } from '../ui/media.js';
 
 const now = () => new Date().toTimeString().slice(0, 5);
 const dayOf = ctx => /^\d{4}-\d{2}-\d{2}$/.test(ctx.params.d || '') ? ctx.params.d : today();
@@ -60,25 +60,29 @@ const DRAFT = 'log.draft';
 const draft = v => { try { return v === undefined ? localStorage.getItem(DRAFT) || '' : v ? localStorage.setItem(DRAFT, v) : localStorage.removeItem(DRAFT); } catch { return ''; } };
 addEventListener('beforeunload', e => { if (pending.photos.length || pending.voice || pending.videos.length) e.preventDefault(); });
 
-/** Photos (shrunk here) and videos (as they are, with a picture of their first frame), from a picker, a paste or a drop. */
-async function sortMedia(files) {
-  const photos = await shrinkAll(files.filter(f => !isVideo(f))), videos = [];
-  for (const f of files.filter(isVideo)) {
-    if (f.size > CLIP_MAX) { flash(`${f.name || 'That video'} is ${Math.round(f.size / 2 ** 20)} MB: videos up to ${CLIP_MAX / 2 ** 20} MB. Trim it on the phone first.`); continue; }
-    videos.push({ file: f, ...(await videoInfo(f)) });
+/** Photos (shrunk here) and videos (as they are, with a picture of their first frame), from a picker, a paste or a drop,
+ *  one at a time: got('photos' | 'videos', it) as each is ready, so it shows at once; got(null) for one left out. */
+async function prepare(files, got) {
+  for (const f of files) {
+    try {
+      if (!isVideo(f)) { got('photos', await shrink(f)); continue; }
+      if (f.size > CLIP_MAX) { flash(`${f.name || 'That video'} is ${Math.round(f.size / 2 ** 20)} MB: videos up to ${CLIP_MAX / 2 ** 20} MB. Trim it on the phone first.`); got(null); continue; }
+      got('videos', { file: f, ...(await videoInfo(f)) });
+    } catch { flash(`Can't read ${f.name || 'that picture'}. Save it as JPEG or PNG and try again.`); got(null); }
   }
-  return { photos, videos };
 }
 
-/** Each video up to the Pi in turn, saying how far it has got. */
+/** Each video up to the Pi in turn, with how far it has got. */
 async function sendVideos(entryId, videos) {
-  let n = 0;
-  for (const v of videos) {
-    flash(`Uploading video ${++n} of ${videos.length} (${Math.round(v.file.size / 2 ** 20)} MB)…`);
-    try { await uploadClip(BASE, entryId, v.file, v); }
-    catch (e) { flash(e.message); return false; }
-  }
-  return true;
+  try {
+    for (const [i, v] of videos.entries()) {
+      const mb = Math.round(v.file.size / 2 ** 20), what = `Uploading video ${i + 1} of ${videos.length}${mb ? ` (${mb} MB)` : ''}`;
+      busy(what, 0);
+      await uploadClip(BASE, entryId, v.file, v, f => busy(`${what} · ${Math.round(f * 100)}%`, f));
+    }
+    return true;
+  } catch (e) { flash(e.message); return false; }
+  finally { busy(); }
 }
 
 export async function quickBar(ctx) {
@@ -93,32 +97,47 @@ export async function quickBar(ctx) {
   let kind = 'work';
   const kinds = seg([{ v: 'work', label: 'Work' }, { v: 'day', label: 'Diary' }], kind, v => { kind = v; });
   const shown = el('span', { class: 'pending' });
+  // a grey tile for each one still being made ready, so a pick shows at once; gen drops those still coming after ×
+  let waiting = 0, gen = 0, preparing = Promise.resolve();
   const show = () => shown.replaceChildren(...[...pending.photos.map(p => el('img', { src: p.thumb, alt: 'Photo to add' })),
     ...pending.videos.map(v => el('span', { class: 'pvid' }, v.thumb ? el('img', { src: v.thumb, alt: 'Video to add' }) : 'video', el('b', {}, '▶'))),
+    ...Array.from({ length: waiting }, () => el('span', { class: 'prep', role: 'img', 'aria-label': 'Getting it ready' })),
     pending.voice ? el('span', { class: 'chip' }, `voice ${Math.round(pending.voice.duration_s)}s`) : null,
     pending.photos.length || pending.voice || pending.videos.length ? el('button', { class: 'icon del', type: 'button', title: 'Drop these',
-      onclick: () => { pending = { photos: [], voice: null, videos: [] }; show(); } }, '×') : null].filter(Boolean));   // null would print "null"
-  const takeMedia = async files => {
-    const got = await sortMedia(files);
-    pending.photos.push(...got.photos); pending.videos.push(...got.videos);
-    show(); text.focus({ preventScroll: true });
+      onclick: () => { pending = { photos: [], voice: null, videos: [] }; gen++; waiting = 0; show(); } }, '×') : null].filter(Boolean));   // null would print "null"
+  const takeMedia = files => {
+    const mine = gen;
+    waiting += files.length; show();
+    preparing = preparing.then(() => prepare(files, (k, x) => {
+      if (mine !== gen) return;
+      if (k) pending[k].push(x);
+      waiting--; show();
+    }));
+    text.focus({ preventScroll: true });
   };
   // the camera takes a photo there and then; + picks photos and videos already on the phone (or files on a PC)
   const shoot = pictureInput(takeMedia, { multiple: false });
   const pick = pictureInput(takeMedia, { camera: false, accept: 'image/*,video/*' });
+  const addBtn = el('button', { class: 'btn', type: 'button', onclick: () => add() }, 'Add');
   const add = async () => {
-    if (!text.value.trim() && !pending.photos.length && !pending.voice && !pending.videos.length) return flash('Write something, or add a photo, a video or a voice note');
+    if (addBtn.disabled) return;                          // one tap, one entry
+    addBtn.disabled = true;
     try {
-      const videos = pending.videos;
-      const r = await api.quick({ text: text.value, kind, day: forDay, at: toTime(at.value) || null,
-                                  photos: pending.photos, voice: pending.voice, videos: videos.length });
+      if (waiting) { addBtn.textContent = 'Getting ready…'; await preparing; }
+      if (!text.value.trim() && !pending.photos.length && !pending.voice && !pending.videos.length) return flash('Write something, or add a photo, a video or a voice note');
+      addBtn.textContent = 'Sending…';
+      const { photos, videos, voice } = pending;
+      if (photos.length) busy(`Sending ${photos.length} photo${photos.length === 1 ? '' : 's'}…`);
+      const r = await api.quick({ text: text.value, kind, day: forDay, at: toTime(at.value) || null, photos, voice, videos: videos.length });
+      busy();
       pending = { photos: [], voice: null, videos: [] };
-      draft('');
+      draft(''); text.value = '';
       show();
       if (videos.length && !await sendVideos(r.id, videos)) return changed(ctx);
       flash(`Added to ${forDay === today() ? 'today' : dayLong(forDay)}`, { label: 'Undo', fn: async () => { await api.undo(); changed(ctx); } });
       changed(ctx);
-    } catch (e) { flash(e.message); }
+    } catch (e) { busy(); flash(e.message); }
+    finally { addBtn.disabled = false; addBtn.textContent = 'Add'; }
   };
   text.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); add(); } });
   const bar = el('div', { class: 'quickadd' }, text, tagAssist(text),
@@ -128,7 +147,7 @@ export async function quickBar(ctx) {
       recorder(v => { pending.voice = v; show(); }), shown,
       el('span', { class: 'spacer' }),
       el('span', { class: 'muted small hint' }, 'Ctrl+Enter adds · paste or drop a picture'),
-      el('button', { class: 'btn', type: 'button', onclick: add }, 'Add')));
+      addBtn));
   // a pasted screenshot or a dropped photo joins what is about to be added
   bar.addEventListener('paste', e => { const f = mediaIn(e.clipboardData); if (f.length) { e.preventDefault(); takeMedia(f); } });
   document.body.ondragover = e => { if ([...e.dataTransfer.types].includes('Files')) { e.preventDefault(); bar.classList.add('drop'); } };
@@ -177,9 +196,16 @@ function attachments(e, ctx) {
 function addMedia(e, ctx) {
   const put = async body => { try { await api.attach(e.id, body); changed(ctx); } catch (x) { flash(x.message); } };
   const pick = pictureInput(async files => {
-    const { photos, videos } = await sortMedia(files);
-    if (photos.length) await put({ photos });
-    if (videos.length && await sendVideos(e.id, videos)) { flash('Added'); changed(ctx); }
+    const got = { photos: [], videos: [] };
+    let left = files.length;
+    busy(`Getting ${left} ready…`);
+    await prepare(files, (k, x) => { if (k) got[k].push(x); if (--left) busy(`Getting ${left} ready…`); });
+    try {
+      if (got.photos.length) { busy(`Sending ${got.photos.length} photo${got.photos.length === 1 ? '' : 's'}…`); await api.attach(e.id, { photos: got.photos }); }
+    } catch (x) { flash(x.message); return; }
+    finally { busy(); }
+    if (got.videos.length) await sendVideos(e.id, got.videos);
+    if (got.photos.length || got.videos.length) { flash('Added'); changed(ctx); }
   }, { camera: false, accept: 'image/*,video/*' });
   return el('span', { class: 'row mid addmedia' },
     el('button', { class: 'btn plain sm', type: 'button', onclick: () => pick.click() }, '+ Photo or video'), pick,

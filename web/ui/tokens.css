@@ -562,6 +562,7 @@ pre.out { font: 400 11.5px/1.5 var(--mono); background: var(--ground); border: 1
   .tabbar .appic { width: 26px; height: 26px; filter: grayscale(1); opacity: .55; }
   .tabbar a.on { color: var(--ink); font-weight: 700; } .tabbar a.on .appic { filter: none; opacity: 1; }
   .flash { bottom: 84px; }
+  .busy { bottom: 128px; }
   .drawer { top: var(--bar-h); }
 }
 /* what goes to one column goes by the panel's own width, wherever the panel sits */
@@ -804,6 +805,13 @@ body[data-app="log"] main.narrow .grid { gap: 6px; }
 .quickadd.drop { outline: 3px dashed var(--accent); outline-offset: 2px; }
 .pending { display: inline-flex; gap: 4px; align-items: center; }
 .pending img { height: 34px; border-radius: 3px; border: 1px solid var(--rule); }
+.pending .prep { width: 34px; height: 34px; border-radius: 3px; background: var(--rule); animation: prep 1s ease-in-out infinite alternate; }
+@keyframes prep { to { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .pending .prep { animation: none; } }
+.busy { position: fixed; left: 50%; transform: translateX(-50%); z-index: 61; bottom: 62px; width: min(360px, 90vw);
+        background: var(--ink); color: var(--ground); padding: 8px 14px; border-radius: 6px; font: 500 13px var(--sans);
+        box-shadow: 0 6px 22px rgba(0,0,0,.25); display: grid; gap: 6px; }
+.busy progress { width: 100%; height: 6px; accent-color: var(--accent-soft); }
 .pending .pvid { position: relative; display: inline-flex; align-items: center; font-size: 12px; }
 .pending .pvid b, .entry .vid .play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff;
   text-shadow: 0 0 4px #000; font-size: 15px; pointer-events: none; }

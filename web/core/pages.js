@@ -5,6 +5,11 @@ import { el, flash, table } from './dom.js';
 import { money, signed, dateUK } from './format.js';
 import { state } from './state.js';
 
+// An iPhone zooms into any text box under 16px when it is tapped, and stays zoomed. maximum-scale stops that;
+// iOS still lets you pinch to zoom. Only there: Android does not zoom on a tap, and maximum-scale would stop its pinch.
+if (/iPhone|iPad|iPod/.test(globalThis.navigator?.userAgent) || (globalThis.navigator?.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+  document.querySelector('meta[name=viewport]')?.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1');
+
 // Line icons, drawn at 18 px in currentColor.
 const ICONS = {
   search: '<path d="M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4"/>',
