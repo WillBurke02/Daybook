@@ -18,10 +18,14 @@ name as well as by socket: Tailscale Serve connects from 127.0.0.1 too.
 """
 import email.parser
 import email.policy
+import gzip
+import hashlib
 import ipaddress
 import json
 import mimetypes
 import os
+import posixpath
+import re
 import sqlite3
 import threading
 import time
@@ -94,16 +98,23 @@ class Handler(BaseHTTPRequestHandler):
             super().log_message(fmt, *a)
 
     # --- plumbing ------------------------------------------------------------
-    def _send(self, code, payload, ctype="application/json", extra=None):
+    def _send(self, code, payload, ctype="application/json", extra=None, gz_key=None):
         if isinstance(payload, _api.File):
             extra = list(extra or []) + [
                 ("Content-Disposition", f'attachment; filename="{payload.name}"')]
             ctype, payload = payload.ctype, payload.data
         data = (payload if isinstance(payload, (bytes, bytearray))
                 else json.dumps(payload, default=str).encode())
+        zipped = False
+        if len(data) > 1400 and ZIPPABLE.match(ctype) and "gzip" in (self.headers.get("Accept-Encoding") or ""):
+            data, zipped = gz(data, gz_key), True     # a Pi's link is the slow part: a quarter of the bytes
         self.send_response(code)
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(data)))
+        if zipped:
+            self.send_header("Content-Encoding", "gzip")
+        if ZIPPABLE.match(ctype):
+            self.send_header("Vary", "Accept-Encoding")
         if not any(k == "Cache-Control" for k, _ in (extra or [])):
             self.send_header("Cache-Control", "no-store")
         if self._renew and not any(k == "Set-Cookie" for k, _ in (extra or [])):
@@ -157,6 +168,11 @@ class Handler(BaseHTTPRequestHandler):
         self._renew = None                    # a kept-alive connection reuses this handler: nothing carried over
         url = urlparse(self.path)
         path = unquote(url.path)
+        # /_v/<version>/learn/app.js is /learn/app.js, kept by the browser for good: a page names its files
+        # under the version of the code (page_html), so an update gives new names and nothing stale is used
+        self._immutable = path.startswith("/_v/")
+        if self._immutable:
+            path = "/" + (path.split("/", 3) + [""])[3]
         query = parse_qs(url.query, keep_blank_values=True)       # ?parent_id= means IS NULL: keep it
         try:
             # DNS rebinding: trust the header we were sent, not the socket.
@@ -349,40 +365,171 @@ class Handler(BaseHTTPRequestHandler):
         """An app's page is its own files laid over the shared ones: /money/core/api.js
         is web/core/api.js, /money/views/hours.js is apps/money/web/views/hours.js.
         Home, at /, is web/home over web."""
-        head, _, rest = path.lstrip("/").partition("/")
-        name = _suite.door(head)
-        if name:
-            layers, rel = [os.path.join(ROOT, "apps", name, "web"), WEB], rest or "index.html"
-            if rel == "manifest.json" and head != name:
-                rel = f"manifest.{head}.json"          # a door installs as its own app, with its own icon
-        elif path == "/login":
-            layers, rel = [WEB], "login.html"
-        else:
-            layers, rel = [os.path.join(WEB, "home"), WEB], path.lstrip("/") or "index.html"
-        for base in layers:
-            full = os.path.realpath(os.path.join(base, rel))
-            if full.startswith(os.path.realpath(base) + os.sep) and os.path.isfile(full):
-                break
-        else:
+        full, prefix = locate(path)
+        if not full:
             return self._send(404, {"error": "not found"})
+        if full.endswith(".html"):
+            return self._page(full, prefix)
         ctype = mimetypes.guess_type(full)[0] or "application/octet-stream"
-        if "/assets/" in full:
+        st = os.stat(full)
+        if self._immutable:
+            extra = [("Cache-Control", "public, max-age=31536000, immutable")]
+        elif "/assets/" in full:
             extra = [("Cache-Control", "max-age=604800")]
-        else:                                   # the browser keeps the page's files and asks if they changed:
-            st = os.stat(full)                  # a 304 instead of the file, so switching app is quick
+        else:                                   # the browser keeps the file and asks if it changed: a 304 instead
             tag = f'"{st.st_mtime_ns:x}-{st.st_size:x}"'
             extra = [("Cache-Control", "no-cache"), ("ETag", tag)]
             if self.headers.get("If-None-Match") == tag:
                 return self._send(304, b"", ctype, extra=extra)
         with open(full, "rb") as f:
             data = f.read()
-        self._send(200, data, ctype, extra=extra)
+        self._send(200, data, ctype, extra=extra, gz_key=(full, st.st_mtime_ns, st.st_size))
+
+    def _page(self, full, prefix):
+        """A page, its files named under the code's version, the theme in use already on it (no flash of
+        the default on the way in), and every module it will import listed up front (no waterfall)."""
+        with open(full, encoding="utf-8") as f:
+            html = page_html(f.read(), prefix, static_version(), theme_now())
+        data = html.encode()
+        tag = '"' + hashlib.sha1(data).hexdigest()[:20] + '"'
+        extra = [("Cache-Control", "no-cache"), ("ETag", tag)]
+        if self.headers.get("If-None-Match") == tag:
+            return self._send(304, b"", "text/html; charset=utf-8", extra=extra)
+        self._send(200, data, "text/html; charset=utf-8", extra=extra)
 
     def do_GET(self):    self._handle("GET")
     def do_HEAD(self):   self._handle("HEAD")
     def do_POST(self):   self._handle("POST")
     def do_PATCH(self):  self._handle("PATCH")
     def do_DELETE(self): self._handle("DELETE")
+
+
+# --- pages and their files -------------------------------------------------------
+
+ZIPPABLE = re.compile(r"text/|application/(json|javascript|manifest)|image/svg")
+_gz = {}
+
+
+def gz(data, key=None):
+    """Gzip, a static file's kept (they do not change until the code does)."""
+    if key is None:
+        return gzip.compress(data, 5)
+    if key not in _gz:
+        if len(_gz) > 2000:
+            _gz.clear()
+        _gz[key] = gzip.compress(data, 9)
+    return _gz[key]
+
+
+def locate(path):
+    """A URL path to the file that answers it, and the page prefix its relative names hang from:
+    (full path, '/learn/') or (None, None). An app's files lie over the shared ones."""
+    head, _, rest = path.lstrip("/").partition("/")
+    name = _suite.door(head)
+    if name:
+        layers, rel, prefix = [os.path.join(ROOT, "apps", name, "web"), WEB], rest or "index.html", f"/{head}/"
+        if rel == "manifest.json" and head != name:
+            rel = f"manifest.{head}.json"          # a door installs as its own app, with its own icon
+    elif path == "/login":
+        layers, rel, prefix = [WEB], "login.html", "/"
+    else:
+        layers, rel, prefix = [os.path.join(WEB, "home"), WEB], path.lstrip("/") or "index.html", "/"
+    for base in layers:
+        full = os.path.realpath(os.path.join(base, rel))
+        if full.startswith(os.path.realpath(base) + os.sep) and os.path.isfile(full):
+            return full, prefix
+    return None, None
+
+
+_ver = {"at": -1e9, "v": ""}
+
+
+def static_version():
+    """A short tag that changes whenever any page file does (an update, or an edit while writing them).
+    Worked out at most every few seconds; pictures (media) are left out, being many and named by the pages."""
+    now = time.monotonic()
+    if now - _ver["at"] > 3:
+        h = hashlib.sha1()
+        for base in [WEB] + [os.path.join(ROOT, "apps", n, "web") for n in sorted(SUITE.apps)]:
+            for dp, dirs, files in os.walk(base):
+                dirs[:] = sorted(d for d in dirs if d != "media")
+                for f in sorted(files):
+                    st = os.stat(os.path.join(dp, f))
+                    h.update(f"{dp}/{f}:{st.st_mtime_ns}:{st.st_size};".encode())
+        _ver.update(at=now, v=h.hexdigest()[:10])
+    return _ver["v"]
+
+
+IMPORT = re.compile(r"""(?:\bfrom|^\s*import)\s*['"]([^'"]+)['"]""", re.M)
+_graphs = {}
+
+
+def module_graph(entries, ver):
+    """Every module the entries import, at any depth, as URL paths (resolved through the app's layers)."""
+    key = (ver, tuple(entries))
+    if key not in _graphs:
+        seen, todo = [], list(entries)
+        while todo:
+            url = todo.pop(0)
+            if url in seen:
+                continue
+            full, _ = locate(url)
+            if not full or not full.endswith(".js"):
+                continue
+            seen.append(url)
+            with open(full, encoding="utf-8") as f:
+                for spec in IMPORT.findall(f.read()):
+                    if spec.startswith("."):
+                        todo.append(posixpath.normpath(posixpath.join(posixpath.dirname(url), spec)))
+        if len(_graphs) > 50:
+            _graphs.clear()
+        _graphs[key] = seen
+    return _graphs[key]
+
+
+def theme_now():
+    """The theme in use: (its name for data-mode, or None for Auto; dark or not; the CSS of the made ones; ground)."""
+    s = _suite.store()
+    try:
+        mode = _db.settings(s).get("mode", "system")
+        themes = [dict(r) for r in s.execute("SELECT * FROM theme ORDER BY name")]
+    finally:
+        s.close()
+    slug = lambda n: "t-" + re.sub(r"[^a-z0-9]+", "-", str(n).lower())
+    css, dark, ground = [], False, {"dusk": "#1b2224", "ink": "#0d1213"}.get(mode)
+    for t in themes:
+        try:
+            v = json.loads(t.get("vars") or "{}")
+        except ValueError:
+            v = {}
+        decl = "".join(f"{k}:{x};" for k, x in v.items() if str(k).startswith("--"))
+        css.append(f':root[data-mode="{slug(t["name"])}"]{{color-scheme:{t.get("scheme") or "light"};{decl}}}')
+        if slug(t["name"]) == mode:
+            dark, ground = t.get("scheme") == "dark", v.get("--ground") or ground
+    known = mode in ("paper", "dusk", "ink") or any(slug(t["name"]) == mode for t in themes)
+    return (mode if known and mode != "system" else None, dark, re.sub(r"[<>]", "", "\n".join(css)), ground)
+
+
+def page_html(html, prefix, ver, theme):
+    """A page as sent: its scripts and styles under /_v/<ver>/ (so kept for good), its modules preloaded,
+    and the theme on <html> before anything paints."""
+    v = f"/_v/{ver}"
+    page = lambda u: u if u.startswith("/") else posixpath.normpath(posixpath.join(prefix, u))
+    own = re.compile(r'(src|href)="((?!#|[a-z]+:|//|/_v/|/api/)[^"]+\.(?:js|css))"')
+    html = own.sub(lambda m: f'{m[1]}="{v}{page(m[2])}"', html)
+    entries = [page(u) for u in re.findall(r"""import[^'"]*?from\s*'(\.[^']+)'""", html)]
+    entries += [u[len(v):] for u in re.findall(r'<script type="module" src="([^"]+)"', html)]
+    html = re.sub(r"""(from\s*)'(\.[^']+)'""", lambda m: f"{m[1]}'{v}{page(m[2])}'", html)
+    mode, dark, css, ground = theme
+    head = "".join(f'<link rel="modulepreload" href="{v}{u}">' for u in module_graph(entries, ver))
+    if css:
+        head += f'<style id="themes">{css}</style>'
+    if ground:
+        html = re.sub(r'<meta name="theme-color"[^>]*>\n?', "", html)
+        head += f'<meta name="theme-color" content="{ground}">'
+    attrs = (f' data-mode="{mode}"' if mode else "") + (' class="dark"' if dark else "")
+    html = html.replace('<html lang="en-GB">', f'<html lang="en-GB"{attrs}>', 1)
+    return html.replace("</head>", head + "\n</head>", 1)
 
 
 def suite_meta():

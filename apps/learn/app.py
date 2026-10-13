@@ -346,13 +346,27 @@ def recent_rate(db, n=20):
     return sum(rows) / len(rows) if len(rows) >= 8 else None
 
 
-def frontier(db, subject_id):
+def lesson_rows(db, by=None):
+    """Every written lesson, by subject, in course order: one pass over v_lesson, which costs the same for
+    one subject as for all of them (the filter cannot reach inside its GROUP BY). by: skilltree.lessons(db),
+    if it is to hand, saves even that."""
+    out = {}
+    rows = sorted((l for l in by.values() if l["cards"]), key=lambda l: (l["unit_sort"], l["sort"])) if by is not None \
+        else db.execute("SELECT * FROM v_lesson WHERE cards > 0 ORDER BY unit_sort, sort")
+    for r in rows:
+        out.setdefault(r["subject_id"], []).append(r)
+    return out
+
+
+def frontier(db, subject_id, rows=None):
     """The lessons to learn next in a subject, in course order: written, not learned, not placed
-    as known, and no more than 0.7 above your level there once you have one."""
+    as known, and no more than 0.7 above your level there once you have one. rows: lesson_rows(db),
+    when asking for several subjects."""
     k = db.execute("SELECT theta FROM skill WHERE scope = ?", (subject_id,)).fetchone()
     top = _level.level(k["theta"]) + 0.7 if k else None
     out = []
-    for r in db.execute("SELECT * FROM v_lesson WHERE subject_id = ? AND cards > 0 ORDER BY unit_sort, sort", (subject_id,)):
+    for r in (rows.get(subject_id, []) if rows is not None else
+              db.execute("SELECT * FROM v_lesson WHERE subject_id = ? AND cards > 0 ORDER BY unit_sort, sort", (subject_id,))):
         if r["learned"] or r["placed"] == "known":
             continue
         if top is not None and r["level"] is not None and r["level"] > top:
@@ -373,14 +387,20 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
     ex = set(exclude)
     rate = recent_rate(db)
     pools = {}
+    # each kind for every subject in one query (v_card is worked out whole however it is filtered), then shared out
+    group = lambda rows: {k: [r for r in rows if r["subject_id"] == k] for k in subs}
+    due_all = group([r for r in db.execute(CARD_SQL + "WHERE v.asks AND v.due IS NOT NULL AND v.due <= ? ORDER BY v.due", (now,))
+                     if r["id"] not in ex])
+    practice_all = group([r for r in db.execute(CARD_SQL + "WHERE c.type = 'numeric' AND v.reps > 0") if r["id"] not in ex])
+    weak_all = {}
+    for r in db.execute("SELECT x.subject_id, u.scope, u.theta - s.theta FROM skill u JOIN unit x ON x.id = u.scope "
+                        "JOIN skill s ON s.scope = x.subject_id"):
+        weak_all.setdefault(r[0], {})[r[1]] = r[2]
     for s in subs:
-        due = [r for r in db.execute(CARD_SQL + "WHERE v.subject_id = ? AND v.asks AND v.due IS NOT NULL AND v.due <= ? "
-                                                "ORDER BY v.due", (s, now)) if r["id"] not in ex]
+        due = due_all[s]
         new = []                                          # filled below, from one lesson only
-        weak = {r[0]: r[1] for r in db.execute("SELECT u.scope, u.theta - s.theta FROM skill u JOIN unit x ON x.id = u.scope "
-                                               "JOIN skill s ON s.scope = x.subject_id WHERE x.subject_id = ?", (s,))}
-        practice = sorted((r for r in db.execute(CARD_SQL + "WHERE v.subject_id = ? AND c.type = 'numeric' AND v.reps > 0", (s,))
-                           if r["id"] not in ex), key=lambda r: (weak.get(r["unit_id"], 0), rng.random()))
+        weak = weak_all.get(s, {})
+        practice = sorted(practice_all[s], key=lambda r: (weak.get(r["unit_id"], 0), rng.random()))
         pools[s] = {"review": [r for r in due if not r["struggle"]], "struggle": [r for r in due if r["struggle"]],
                     "new": new, "practice": practice}
     # New cards come from one lesson at a time, in its order, so an idea sits next to its question:
@@ -388,16 +408,18 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
     unseen = lambda lid: [r for r in db.execute(CARD_SQL + "WHERE c.lesson_id = ? AND v.reps IS NULL AND v.last_seen IS NULL "
                                                            "AND c.source <> 'mistake' AND COALESCE(v.stage, '') <> 'calibrate' "
                                                            "ORDER BY c.sort", (lid,)) if r["id"] not in ex]
-    here = continue_at(db, _tree.goal_track(db))
+    by = _tree.lessons(db)
+    here = continue_at(db, _tree.goal_track(db, by), by)
     weight = lambda s: float(weights.get(s, 1) or 0)
+    written = lesson_rows(db, by)
     for lid in ([here["id"]] if here and here["subject_id"] in subs and weight(here["subject_id"]) > 0 else []) + \
-               [les["id"] for s in sorted(subs, key=lambda s: -weight(s)) for les in frontier(db, s)]:
+               [les["id"] for s in sorted(subs, key=lambda s: -weight(s)) for les in frontier(db, s, written)]:
         rows = unseen(lid)
         if rows and rows[0]["subject_id"] in pools:
             pools[rows[0]["subject_id"]]["new"] = rows
             break
     if "mine" in pools:                                # your own flash cards are no lesson: they always join
-        pools["mine"]["new"] += [r for les in frontier(db, "mine") for r in unseen(les["id"])]
+        pools["mine"]["new"] += [r for les in frontier(db, "mine", written) for r in unseen(les["id"])]
     out, k = [], at
     while len(out) < n:
         live = [s for s in subs if any(pools[s].values())]
@@ -849,39 +871,41 @@ def plan(db):
     is_day = str((date.today().weekday() + 1) % 7) == str(s.get("comeback_day", "0"))
     _st, on, _w = _settings(db)
     subs = on or [r[0] for r in db.execute("SELECT id FROM subject WHERE id <> 'mine' ORDER BY sort")]
-    nxt = []
+    by = _tree.lessons(db)                             # v_lesson once, for everything below
+    nxt, rows = [], lesson_rows(db, by)
     for sid in subs:
-        f = frontier(db, sid)
+        f = frontier(db, sid, rows)
         if f:
             nxt.append({k: f[0][k] for k in ("id", "title", "subject", "subject_id", "level", "minutes", "pos", "cards", "opened")})
     lv = [dict(r, **_level.describe(r["theta"], r["sd"])) for r in db.execute("SELECT * FROM v_skill WHERE kind = 'subject'")]
-    by = _tree.lessons(db)
     goal = _tree.goal_track(db, by)
     fading = [x for t in _tree.tracks(db, by) for x in t["stops"] if x["fading"]]
     return {**t, "struggles": struggles, "struggles_due": struggles_due, "comeback": week, "comeback_today": is_day,
             "next": nxt, "levels": lv, "week": _tree.week(db), "rhythm": _tree.rhythm(db), "goal": goal,
-            "continue": continue_at(db, goal), "fading": list({x["id"]: x for x in fading}.values()),
+            "continue": continue_at(db, goal, by), "fading": list({x["id"]: x for x in fading}.values()),
             "skills": dict(zip(("learned", "proven"), db.execute(
                 "SELECT COUNT(learned), COUNT(CASE WHEN learned IS NOT NULL THEN proven END) FROM lesson_state").fetchone())),
             "fresh": not db.execute("SELECT 1 FROM answer LIMIT 1").fetchone()}
 
 
-def continue_at(db, goal=None):
+def continue_at(db, goal=None, by=None):
     """Where Continue goes: the next stop on your goal's track, else the lesson you were last in,
-    else the first lesson to learn; with the part you are at and how long it takes."""
+    else the first lesson to learn; with the part you are at and how long it takes.
+    by: skilltree.lessons(db), if it is to hand (one pass over v_lesson instead of several)."""
+    by = by if by is not None else _tree.lessons(db)
     lid = goal["next"]["id"] if goal and goal["next"] else None
     if not lid:
-        r = db.execute("SELECT v.id FROM v_lesson v JOIN lesson_state s ON s.lesson_id = v.id WHERE v.cards > 0 "
-                       "AND v.learned IS NULL AND s.seen IS NOT NULL ORDER BY s.seen DESC LIMIT 1").fetchone()
-        lid = r[0] if r else None
+        last = max((l for l in by.values() if l["cards"] and not l["learned"] and l["opened"]), key=lambda l: l["opened"], default=None)
+        lid = last["id"] if last else None
     if not lid:
         _st, on, _w = _settings(db)
+        rows = lesson_rows(db, by)
         for sid in on or [r[0] for r in db.execute("SELECT id FROM subject WHERE id <> 'mine' ORDER BY sort")]:
-            f = frontier(db, sid)
+            f = frontier(db, sid, rows)
             if f:
                 lid = f[0]["id"]
                 break
-    les = db.execute("SELECT * FROM v_lesson WHERE id = ?", (lid,)).fetchone() if lid else None
+    les = by.get(lid) if lid else None
     if not les:
         return None
     ps = parts(lesson_cards(db, lid), les["minutes"])

@@ -32,7 +32,11 @@ def lessons(db):
                       "going" if l["opened"] or l["seen"] else
                       "needs" if needs else "ready")
     for l in by.values():
-        l["unlocks"] = [m["id"] for m in by.values() if l["id"] in m["pre"]]
+        l["unlocks"] = []
+    for m in by.values():
+        for p in m["pre"]:
+            if p in by:
+                by[p]["unlocks"].append(m["id"])
     return by
 
 

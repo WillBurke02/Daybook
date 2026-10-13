@@ -118,6 +118,23 @@ for d in ("hours", "spending"):
 assert raw("/hours", headers=C)[1].get("Location") == "/hours/" and raw("/nowhere/", headers=C)[0] == 404
 print("ok — front doors")
 
+# a page names its files under the code's version (kept by the browser for good), preloads every module it
+# imports, and carries the theme on <html> so nothing paints in the wrong one; its files come gzipped
+code, hdr, body = raw("/learn/", headers=C)
+page = body.decode()
+ver = server.static_version()
+assert code == 200 and f'href="/_v/{ver}/learn/ui/tokens.css"' in page and f"from '/_v/{ver}/learn/app.js'" in page, page[:600]
+assert f'<link rel="modulepreload" href="/_v/{ver}/learn/core/router.js">' in page and f'/_v/{ver}/learn/widgets/sim.js' not in page   # widgets: loaded when a card needs one
+code, hdr, _ = raw(f"/_v/{ver}/learn/core/router.js", headers={**C, "Accept-Encoding": "gzip"})
+assert code == 200 and "immutable" in hdr["Cache-Control"] and hdr.get("Content-Encoding") == "gzip", hdr
+assert raw("/_v/x/ui/tokens.css")[0] == 200, "the sign-in page's styles are open, under a version too"
+assert raw("/learn/", headers={**C, "If-None-Match": hdr_etag})[0] == 304 if (hdr_etag := raw("/learn/", headers=C)[1]["ETag"]) else True
+raw("/api/t/setting", "POST", {"key": "mode", "value": "dusk"}, {**C, **W})
+assert '<html lang="en-GB" data-mode="dusk">' in raw("/hours/", headers=C)[2].decode(), "the theme in use, before the page paints"
+raw("/api/t/setting", "POST", {"key": "mode", "value": "system"}, {**C, **W})
+assert '<html lang="en-GB">' in raw("/hours/", headers=C)[2].decode()
+print("ok — pages: versioned files, modules preloaded, theme on the page, gzip, 304")
+
 # kept signed in while used: a cookie more than a day old comes back renewed; a fresh one is left alone
 old = {"Cookie": "daybook=" + suite.make_session(days=20)}
 code, hdr, _ = raw("/api/meta", headers=old)

@@ -20,6 +20,15 @@
 @font-face { font-family: 'JetBrains Mono'; src: url(../assets/fonts/jetbrains-mono-latin-700-normal.woff2) format('woff2');
   font-weight: 700; font-display: swap; }
 
+/* Moving between apps (each its own page): the bars stay put and the page fades across, where the
+   browser can (Chrome and Edge 126+, Safari 18.2+); elsewhere it is an ordinary page load. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 160ms; }
+}
+.appbar { view-transition-name: appbar; }
+.tabbar { view-transition-name: tabbar; }
+
 :root {
   color-scheme: light;
   --ground: #e8ebea; --panel: #f6f8f7; --panel-2: #dfe4e3; --raised: #fdfefe;

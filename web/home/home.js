@@ -93,12 +93,14 @@ async function setup() {
   const box = $('.setupbox'), p = prefs();
   if (p.setup === 'hidden') return box.replaceChildren();
   const has = (app, t) => appApi(app).table(t, { limit: 1 }).then(r => r.length > 0).catch(() => null);   // null: app not here
+  // asked all at once: one round trip to the Pi, not four
+  const [pay, accounts, shifts, answers] = await Promise.all([has('money', 'pay_rate'), has('money', 'account'), has('money', 'shift'), has('learn', 'answer')]);
   const steps = [
     ['Set your own password', 'then the phone and the Pi can open Daybook', !state.meta.password_default, '/admin'],
-    ['Add your pay', 'salary from a date: payslip checks and overtime come from it', await has('money', 'pay_rate'), '/hours/#/pay?panel=pay.rates'],
-    ['Add your bank accounts', 'then import a statement from each', await has('money', 'account'), '/spending/#/settings?panel=settings.accounts'],
-    ['Log some hours', 'or import them from Clockify', await has('money', 'shift'), '/hours/#/hours?add=today'],
-    ['Find your level in Learn', 'about 10 minutes a subject, so lessons start where you are', await has('learn', 'answer'), '/learn/#/calibrate'],
+    ['Add your pay', 'salary from a date: payslip checks and overtime come from it', pay, '/hours/#/pay?panel=pay.rates'],
+    ['Add your bank accounts', 'then import a statement from each', accounts, '/spending/#/settings?panel=settings.accounts'],
+    ['Log some hours', 'or import them from Clockify', shifts, '/hours/#/hours?add=today'],
+    ['Find your level in Learn', 'about 10 minutes a subject, so lessons start where you are', answers, '/learn/#/calibrate'],
   ].filter(x => x[2] !== null);
   const done = steps.filter(x => x[2]).length;
   if (done === steps.length) return box.replaceChildren();

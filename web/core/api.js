@@ -20,9 +20,17 @@ export const qs = q => {
   return s ? '?' + s : '';
 };
 
+// The same GET asked for twice at once (two panels wanting the same rows) goes to the server once;
+// each caller gets its own copy, so one changing what it got cannot touch the other's.
+const inflight = new Map();
+function once(url) {
+  if (!inflight.has(url)) inflight.set(url, req(url).finally(() => inflight.delete(url)));
+  return inflight.get(url).then(x => structuredClone(x));
+}
+
 /** The generic calls every app's API answers, at base (for example '/log/api/'). */
 export function client(base) {
-  const get = path => req(base + path);
+  const get = path => once(base + path);
   const send = (path, body, method = 'POST') =>
     req(base + path, { method, headers: HEAD, body: body === undefined ? undefined : JSON.stringify(body) });
   return {
