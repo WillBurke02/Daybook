@@ -123,7 +123,7 @@ Ids: lower case words and dashes, unique in the lesson, and **forever** (progres
 - `match`: `{q, pairs: [["term", "meaning"], ... 3+], why?}`.
 - `flash`: `{front, back}` (self-rated).
 - `code`: Structured Text with `___` blanks; see scan-cycle.json. `{q, code, inputs, outputs, solution: [one per blank], tests: [{name, steps: [{set, scans?, expect?}]}], why, blank_size?}`. Tests scan every 100 ms. The interpreter (`apps/learn/web/st.js`) knows BOOL, INT family, REAL, TIME (T#2s), IF/CASE/FOR/WHILE, TON TOF TP CTU CTD R_TRIG F_TRIG SR RS.
-- `widget`: `{intro, widget: {name, params}, ask: {type: "mcq" | "numeric", ...}, predict?}`. A numeric ask's `answer` can use what the widget reports (names in its REPORTS), e.g. `"answer": "q_on"`, so the question is about whatever he set. No vars on widget asks.
+- `widget`: `{intro, widget: {name, params}, ask: {type: "mcq" | "numeric" | "goal" | "diagnose", ...}, predict?}` (goal and diagnose need a machine: see Machines below). A numeric ask's `answer` can use what the widget reports (names in its REPORTS), e.g. `"answer": "q_on"`, so the question is about whatever he set. No vars on widget asks.
   - `hide: true`: the widget's readings (what it works out, not the settings) stay hidden until the ask is answered. Use it whenever a reading *is* the answer (a circuit's current when the ask is the current); the widget marks those readings with the class `calc`.
   - `predict` (**predict, then see**): `{q, options: [2–5], answer?, why?}`. The controls stay locked until he commits to a guess about what will happen ("if you make $R_2$ bigger, the supply current…"); afterwards the card says whether he was right and gives `why`. Guessing first, even wrongly, makes what he then sees stick. Put it on the widget card where the lesson's key cause-and-effect first shows. Leave `answer` out for an open "what do you expect?".
 - `explain` (**explain the step**): `{q, context?, model, points?}`. After a worked example: "Why does step 2 divide by the total?" He types his answer (not marked), then sees `model` (≤ 120 words) and ticks the `points` (2–6) his made, and rates himself. `context` repeats the step so the card stands alone. One per procedure lesson, straight after the worked example.
@@ -135,6 +135,86 @@ A fenced block (a paragraph that starts with ``` and ends with ```, no blank lin
 monospaced with its spaces kept: use it for ladder rungs and code listings, e.g.
 "```\n|--[ Start ]--+--[/Stop ]--( Motor )--|\n|--[ Motor ]--+\n```".
 Ladder notation: `[ A ]` normally open contact, `[/A ]` normally closed, `( Q )` coil, `(S)`/`(R)` set/reset coils, `[P]`/`[N]` edge contacts.
+
+## Machines: the `sim` widget (3D, PLC, drives, motors, sensors)
+
+A machine is a **scene**: plain JSON in `apps/learn/web/sims/<name>.json`, run by `apps/learn/web/sim/`
+(engine.js the machine, blocks.js its parts, view.js the 3D, panel.js the controls). It draws in 3D
+(WebGL, no library), runs in real time, has a real button, switch or slider for every input (the 3D
+is never the only way in), and can be checked without a browser. **Reuse a scene before writing one.**
+
+**A new interactive card, the quick way:**
+
+1. Pick a scene (the library is listed at the end of this section) and change only what the card needs:
+   `"widget": {"name": "sim", "params": {"scene": "conveyor", "set": {"accel": 0.05, "m1.J": 0.05}, "fault": "eye-dead", "controls": ["start", "stop", "accel"], "show": [...], "trend": false, "plc": "open", "camera": {"yaw": 60}}}`
+   - `set`: a block's setting (`"vfd.accel": 2`), an input's starting value (`"ref": 30`), a let (`"stop_ok": "0"`), a list (`"belt.preload": []`).
+   - `controls`: the inputs to show. A scene's `hidden` inputs (a drive's parameters, say) appear only when listed.
+   - `plc`: `"open"` shows the PLC's program (or live ladder) and tags open; `false` leaves it off. `trend: false` drops the chart.
+2. Ask something of it:
+   - **goal**, make it do something: `{"type": "goal", "q", "pass", "solution", "fails"?, "hint"?, "why"}`.
+     `pass` is a formula over the machine's values, tested when he presses Check (three goes):
+     `"AND(vfd.f >= 49.5, vfd.trip = 0)"`. `solution` is a script that does it:
+     `[{"at": 0.2, "set": {"accel": 2}}, {"at": 0.5, "press": "reset"}, {"at": 1, "press": "start"}]`; the check runs it
+     and fails the card unless `pass` is false at the start and comes true within `within` seconds (default 10 after
+     the last step). `fails`: `[["vfd.trip", "The drive has tripped ({vfd.fault}): reset it…"], …]`, the first true one
+     is said after a wrong Check, so wrong is informative. Show me starts again and plays the solution (and counts as not done).
+   - **diagnose**, find the fault: `{"type": "diagnose", "q"?, "faults": ["eye-dead", "stop-wire", "none"], "why"?}`
+     (2 to 6). One is put in at random each time the card comes round, so every review is a fresh job. The options
+     are the faults' labels; the answer shows the scene's `why` for the fault, then the card's.
+   - **mcq / numeric**: a numeric `answer` may use the machine's values by name (`"answer": "m1.n"`), read when
+     he checks. `hide: true` keeps the readouts, valued labels, trend and PLC hidden until answered.
+     `predict` works as on any widget card.
+   - A `concept` card can carry a machine too, to explore; its script plays as "Watch it run".
+3. `node tests/content.check.mjs`: it builds every machine, runs every fault and every goal's solution, and checks every name.
+4. Look at it: `node tests/sim-look.mjs <scene> out.png script` (Playwright, with a Daybook running on port 8799)
+   screenshots the scene after its demo; `press:start,wait:3` instead of `script` drives it.
+
+**Writing a scene** (when none fits). One machine, plainly drawn, that several lessons can use:
+
+- `title`, `about` (a sentence or two), `dt` (seconds a step; 0.002).
+- `inputs`: `{"start": {"button": "Start", "color": "green"}, "stop": {"button": "Stop", "nc": 1, "color": "red"},
+  "estop": {"latch": "E-stop", "nc": 1}, "auto": {"switch": "Auto"}, "ref": {"slider": "Speed", "min": 0, "max": 50,
+  "step": 1, "value": 30, "unit": "Hz"}, "mode": {"select": "Mode", "options": [[0, "Off"], [1, "Hand"]], "value": 0}}`.
+  A push-button is 1 only while held (`nc`: 1 at rest); add `"hidden": true` for parameters cards reveal.
+- `blocks`, run in the order written, each step. Every setting is a number or a **formula** over the scene's names:
+  inputs (`start`), block outputs (`vfd.f`), lets, `t`. Formulas are the spreadsheet's: `IF(a, b, c)`, `AND(a, b)`,
+  `OR(a, b)`, `NOT(a)`, `a = b`, `a <> b`, `MIN`, `MAX`, `ABS`, `SQRT`, `MOD`, `PI()`, `SIN`; true is 1. Not `a AND b`.
+- `let`: named formulas worked out after the blocks: glue, and **wires a fault can cut** (`"stop_ok": "1"`, faulted to `"0"`).
+- `faults`: `{"id": {"label": "the answer as he will read it", "why": "how you would tell, and what to check", "set": {…}}}`.
+  Each must look different from the others to someone who runs and reads the machine.
+- `script`: the demo, "Watch it run": `[{"at": 1, "press": "start", "say": "Start: the PLC seals in…"}]` (`set`, `press`,
+  `for` how long a press is held, `say` the caption). One step of cause and effect a line.
+- `show` (lamps, readings, meters), `trend` (lines over the last `span` seconds): see `apps/learn/web/sim/panel.js`.
+- `view`: the 3D, see `apps/learn/web/sim/view.js`. Metres, y up, the floor at y = 0. Shapes `box`, `cyl` (stands along
+  y: `rot` [90, 0, 0] lays it along z, [0, 0, 90] along x), `cone`, `sphere`; `move`/`turn`/`scale`/`show`/`lit`/`shade`
+  formulas animate them; `repeat` for belt cleats and chains; `each` draws a conveyor's items; `label` with live
+  `{values}`; `press`/`toggle` make a part a button. Keep it plain: a dozen to fifty parts, named colours, labels for
+  what the lesson names.
+
+The blocks (each one's settings, defaults and units are in `blocks.js`):
+
+| type | settings | outputs |
+|---|---|---|
+| `plc` | `src` (ST) or `ladder` (rungs, as the ladder widget's), `inputs` {Tag: formula}, `outputs` [names], `scan_ms` | every variable as `plc.Name`, a block's as `plc.T1.ET`, `plc.err` |
+| `drive` | `run rev ref reset sto motor` (block id) `fmax fmin accel decel ilim stall brake coast hold` | `f on running at bus trip fault` ("OC", "OV") `I brk` |
+| `motor` | `f on load` (opposes motion) `pull` (steady) `kw rpm poles J tk lrt lrc Ir` | `n` (rpm) `fn T I P slip turns Tr Ir` |
+| `overload` | `I set class reset auto` | `trip heat nc no` |
+| `axis` (mm) | `target enable vmax amax kp kv ff maxerr invert reset pos0 load` | `pos vel cmd ferr done trip fault` ("FE") |
+| `conveyor` | `rpm ratio dia length every add size pattern stop eject eject_at slip preload` | `v pos items n out rejects last` |
+| `eye` | `belt` (block id) `at dark kind stuck` | `on blocked` |
+| `sensor` | `x at range above below nc stuck` | `on hit` |
+| `encoder` | `turns ppr invert` | `count A B` |
+| `cylinder` | `extend retract stroke speed back air stick` | `pos ext ret moving` |
+| `tank` | `inflow outflow` (L/s) `area height level0` | `level pct vol over empty` |
+| `tx` (4–20 mA) | `pv lo hi fail tau` | `mA pct raw` (S7 counts) |
+| `pid` | `pv sp kp ti td lo hi auto man direct` | `out err p i d` |
+| `lag` | `x tau gain dead y0` | `y` |
+
+A missing block is a few lines in `blocks.js` (`in`, `out`, `step`) and a check in `tests/sim.check.mjs`
+against what the real thing does. Until then a `let` or a `lag` usually does.
+
+The library: `conveyor` (a belt on a VFD under a PLC: start/stop seal-in, a photo-eye stop, drive ramps and trips,
+faults in the eye, the stop circuit, the belt and the drive's ramp).
 
 ## Levels: our own scale (stages 1–9, the UK RQF alongside)
 

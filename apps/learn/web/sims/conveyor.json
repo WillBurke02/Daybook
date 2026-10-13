@@ -1,0 +1,898 @@
+{
+  "title": "A conveyor on a drive, run by a PLC",
+  "about": "Start and Stop at the control station seal in the PLC's Running bit. It sends Run to the drive, which ramps the motor up; the gearbox and drum turn the belt. A box arriving at photo-eye PE1 drops Run, so the belt waits until the box is lifted off. A drive trip drops Running.",
+  "dt": 0.002,
+  "inputs": {
+    "start": {
+      "button": "Start",
+      "color": "green"
+    },
+    "stop": {
+      "button": "Stop",
+      "nc": 1,
+      "color": "red"
+    },
+    "reset": {
+      "button": "Reset drive",
+      "color": "blue"
+    },
+    "take": {
+      "button": "Lift the box off"
+    },
+    "feed": {
+      "switch": "Boxes arriving",
+      "value": 1
+    },
+    "ref": {
+      "slider": "Speed reference",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "value": 50,
+      "unit": "Hz"
+    },
+    "accel": {
+      "slider": "Acceleration time",
+      "min": 0.05,
+      "max": 5,
+      "step": 0.05,
+      "value": 1.5,
+      "unit": "s",
+      "hidden": true
+    },
+    "decel": {
+      "slider": "Deceleration time",
+      "min": 0.1,
+      "max": 5,
+      "step": 0.1,
+      "value": 0.5,
+      "unit": "s",
+      "hidden": true
+    },
+    "stall": {
+      "select": "Stall prevention",
+      "options": [
+        [
+          1,
+          "On"
+        ],
+        [
+          0,
+          "Off"
+        ]
+      ],
+      "value": 1,
+      "hidden": true
+    }
+  },
+  "let": {
+    "stop_ok": "1",
+    "box_at_eye": "eye.blocked"
+  },
+  "blocks": {
+    "plc": {
+      "type": "plc",
+      "src": "VAR Running : BOOL; END_VAR\n(* Start and Stop seal in Running; a drive fault drops it out *)\nRunning := (Start OR Running) AND Stop AND NOT Fault;\n(* the belt runs while Running, except while a box waits at the eye *)\nRun := Running AND NOT Eye;\nLamp := Running;",
+      "inputs": {
+        "Start": "start",
+        "Stop": "AND(stop, stop_ok)",
+        "Eye": "eye.on",
+        "Fault": "vfd.trip"
+      },
+      "outputs": [
+        "Run",
+        "Lamp"
+      ]
+    },
+    "vfd": {
+      "type": "drive",
+      "run": "plc.Run",
+      "ref": "ref",
+      "reset": "reset",
+      "motor": "m1",
+      "accel": "accel",
+      "decel": "decel",
+      "stall": "stall"
+    },
+    "m1": {
+      "type": "motor",
+      "f": "vfd.f",
+      "on": "vfd.on",
+      "kw": 0.75,
+      "rpm": 1395,
+      "J": 0.004,
+      "load": "1.2 + 0.4 * belt.n"
+    },
+    "belt": {
+      "type": "conveyor",
+      "rpm": "m1.n",
+      "ratio": 20,
+      "dia": 0.1,
+      "length": 2.4,
+      "every": "IF(feed, 3, 0)",
+      "size": 0.2,
+      "eject": "take",
+      "eject_at": 2.0,
+      "preload": [
+        0.7
+      ]
+    },
+    "eye": {
+      "type": "eye",
+      "belt": "belt",
+      "at": 2.0
+    }
+  },
+  "faults": {
+    "eye-stuck-on": {
+      "label": "PE1 is stuck on: it says there is a box when there is none",
+      "why": "Running is on and the drive is ready, but Run never comes on. PE1's own LED is lit with the beam clear: the PLC sees a box that is not there.",
+      "set": {
+        "eye.stuck": 1
+      }
+    },
+    "eye-dead": {
+      "label": "PE1 is dead: it never sees a box",
+      "why": "Boxes run straight past the eye and off the end. PE1's LED never lights, even with a box in the beam: no supply, a dead sensor or a broken signal wire.",
+      "set": {
+        "eye.stuck": 0
+      }
+    },
+    "stop-wire": {
+      "label": "The Stop circuit is open (a broken wire or a loose terminal)",
+      "why": "Stop is normally closed so that a broken wire stops the machine rather than leaving it unstoppable. With the circuit open, the PLC's Stop input is 0 and Start cannot seal in: Running flickers on only while Start is held, if at all.",
+      "set": {
+        "stop_ok": "0"
+      }
+    },
+    "belt-slip": {
+      "label": "The belt is slipping on the drive drum",
+      "why": "The drive and motor run at full speed and the current is normal, but the boxes creep along at a fraction of the speed they should: the drum turns and the belt does not keep up. Check the belt's tension.",
+      "set": {
+        "belt.slip": 0.6
+      }
+    },
+    "ramp-too-short": {
+      "label": "The drive's acceleration time is far too short (it trips on overcurrent)",
+      "why": "Every start, the drive trips (OC) almost at once: the ramp asks for more torque, and so more current, than the motor can give, and stall prevention is off. A longer acceleration time, or current limit on, cures it.",
+      "set": {
+        "accel": 0.05,
+        "stall": 0,
+        "m1.J": 0.05
+      }
+    }
+  },
+  "script": [
+    {
+      "at": 0.3,
+      "say": "A box is on the belt and more are coming on at the far end. Start is pressed…"
+    },
+    {
+      "at": 1.0,
+      "press": "start",
+      "say": "Start: the PLC seals in Running and sends Run to the drive, which ramps the motor up over 1.5 s."
+    },
+    {
+      "at": 3.0,
+      "say": "The drum turns at about 70 rpm through the 20:1 gearbox; the belt carries the box towards PE1."
+    },
+    {
+      "at": 4.6,
+      "say": "The box breaks PE1's beam: Run drops, the drive ramps down in 0.5 s and the box stops at the pick point."
+    },
+    {
+      "at": 8,
+      "press": "take",
+      "say": "The box is lifted off: the beam is clear, Run comes back on and the belt starts again."
+    },
+    {
+      "at": 13,
+      "press": "stop",
+      "say": "Stop: Running drops, the drive ramps down, the belt stops. Running stays off until Start is pressed again."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Running",
+      "on": "plc.Lamp",
+      "color": "green"
+    },
+    {
+      "lamp": "Drive fault",
+      "on": "vfd.trip",
+      "color": "red"
+    },
+    {
+      "lamp": "PE1",
+      "on": "eye.on",
+      "color": "amber"
+    },
+    {
+      "read": "Drive",
+      "value": "vfd.f",
+      "unit": "Hz",
+      "dp": 1
+    },
+    {
+      "read": "Motor",
+      "value": "m1.n",
+      "unit": "rpm",
+      "dp": 0
+    },
+    {
+      "read": "Current",
+      "value": "m1.I",
+      "unit": "A",
+      "dp": 2
+    },
+    {
+      "read": "Belt",
+      "value": "belt.v",
+      "unit": "m/s",
+      "dp": 2
+    },
+    {
+      "read": "Fault",
+      "value": "vfd.fault"
+    }
+  ],
+  "trend": {
+    "span": 10,
+    "y": [
+      0,
+      55
+    ],
+    "lines": [
+      {
+        "value": "vfd.f",
+        "label": "f (Hz)"
+      },
+      {
+        "value": "m1.n / 30",
+        "label": "speed (rpm ÷ 30)"
+      },
+      {
+        "value": "m1.I * 10",
+        "label": "current (A × 10)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        1.0,
+        0.6,
+        0
+      ],
+      "yaw": 28,
+      "pitch": 24,
+      "dist": 3.7
+    },
+    "floor": 7,
+    "parts": [
+      {
+        "id": "frame",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              2.6,
+              0.1,
+              0.04
+            ],
+            "at": [
+              1.2,
+              0.76,
+              0.23
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              2.6,
+              0.1,
+              0.04
+            ],
+            "at": [
+              1.2,
+              0.76,
+              -0.23
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.72,
+              0.05
+            ],
+            "at": [
+              0.1,
+              0.36,
+              0.2
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.72,
+              0.05
+            ],
+            "at": [
+              0.1,
+              0.36,
+              -0.2
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.72,
+              0.05
+            ],
+            "at": [
+              2.3,
+              0.36,
+              0.2
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.72,
+              0.05
+            ],
+            "at": [
+              2.3,
+              0.36,
+              -0.2
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.04,
+              0.45
+            ],
+            "at": [
+              0.1,
+              0.25,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.04,
+              0.45
+            ],
+            "at": [
+              2.3,
+              0.25,
+              0
+            ],
+            "color": "frame"
+          }
+        ]
+      },
+      {
+        "id": "belt",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              2.4,
+              0.012,
+              0.4
+            ],
+            "at": [
+              1.2,
+              0.8,
+              0
+            ],
+            "color": "belt"
+          },
+          {
+            "shape": "box",
+            "size": [
+              2.4,
+              0.012,
+              0.38
+            ],
+            "at": [
+              1.2,
+              0.7,
+              0
+            ],
+            "color": "belt"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.006,
+              0.4
+            ],
+            "at": [
+              0,
+              0.809,
+              0
+            ],
+            "color": "dark",
+            "repeat": {
+              "n": 16,
+              "step": [
+                0.15,
+                0,
+                0
+              ],
+              "wrap": 2.4,
+              "shift": "belt.pos"
+            }
+          }
+        ]
+      },
+      {
+        "id": "drums",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.42,
+              0.1
+            ],
+            "at": [
+              0,
+              0.75,
+              0
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "steel",
+            "turn": {
+              "z": "-belt.pos / (PI() * 0.1) * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.012,
+                  0.43,
+                  0.02
+                ],
+                "at": [
+                  0.047,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.42,
+              0.1
+            ],
+            "at": [
+              2.4,
+              0.75,
+              0
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "steel",
+            "turn": {
+              "z": "-belt.pos / (PI() * 0.1) * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.012,
+                  0.43,
+                  0.02
+                ],
+                "at": [
+                  0.047,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "drive",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.16,
+              0.12
+            ],
+            "at": [
+              2.4,
+              0.75,
+              0.31
+            ],
+            "color": "motor",
+            "label": "Gearbox 20:1",
+            "label_at": [
+              0,
+              0.1,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.15,
+              0.26,
+              0.15
+            ],
+            "at": [
+              2.4,
+              0.75,
+              0.5
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "motor",
+            "label": "M1 {m1.n:0} rpm",
+            "label_at": [
+              0,
+              0.1,
+              0.05
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.13,
+              0.04,
+              0.13
+            ],
+            "at": [
+              2.4,
+              0.75,
+              0.65
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.06,
+              0.08
+            ],
+            "at": [
+              2.4,
+              0.84,
+              0.5
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.14,
+              0.22,
+              0.06
+            ],
+            "at": [
+              2.12,
+              0.45,
+              0.255
+            ],
+            "color": "dark",
+            "label": "VFD {vfd.f:1} Hz",
+            "label_at": [
+              0,
+              -0.15,
+              0.05
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.09,
+              0.04,
+              0.005
+            ],
+            "at": [
+              2.12,
+              0.51,
+              0.287
+            ],
+            "color": "green",
+            "lit": "vfd.on"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.09,
+              0.03,
+              0.005
+            ],
+            "at": [
+              2.12,
+              0.46,
+              0.287
+            ],
+            "color": "red",
+            "lit": "vfd.trip"
+          }
+        ]
+      },
+      {
+        "id": "items",
+        "shape": "box",
+        "each": "belt.items",
+        "size": [
+          0.2,
+          0.14,
+          0.24
+        ],
+        "at": [
+          0,
+          0.877,
+          0
+        ],
+        "move": {
+          "x": "item.x"
+        },
+        "color": [
+          "box",
+          "red"
+        ],
+        "shade": "item.k"
+      },
+      {
+        "id": "pe1",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.2,
+              0.03
+            ],
+            "at": [
+              2.0,
+              0.83,
+              0.28
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.045,
+              0.07,
+              0.05
+            ],
+            "at": [
+              2.0,
+              0.89,
+              0.27
+            ],
+            "color": "yellow",
+            "label": "PE1",
+            "label_at": [
+              0,
+              0.07,
+              0
+            ]
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.016,
+              0.016,
+              0.016
+            ],
+            "at": [
+              2.0,
+              0.93,
+              0.27
+            ],
+            "color": "amber",
+            "lit": "eye.on"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.2,
+              0.03
+            ],
+            "at": [
+              2.0,
+              0.83,
+              -0.28
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.045,
+              0.06,
+              0.012
+            ],
+            "at": [
+              2.0,
+              0.89,
+              -0.264
+            ],
+            "color": "red"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.005,
+              0.52,
+              0.005
+            ],
+            "at": [
+              2.0,
+              0.89,
+              0
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "red",
+            "lit": "1 - eye.blocked",
+            "alpha": 0.7
+          }
+        ]
+      },
+      {
+        "id": "station",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.05,
+              1.0,
+              0.05
+            ],
+            "at": [
+              -0.45,
+              0.5,
+              0.55
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.26,
+              0.34,
+              0.12
+            ],
+            "at": [
+              -0.45,
+              1.12,
+              0.55
+            ],
+            "color": "grey",
+            "label": "Start (green) · Stop (red)",
+            "label_at": [
+              0,
+              0.22,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.055,
+              0.03,
+              0.055
+            ],
+            "at": [
+              -0.51,
+              1.2,
+              0.625
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "green",
+            "press": "start"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.055,
+              0.03,
+              0.055
+            ],
+            "at": [
+              -0.39,
+              1.2,
+              0.625
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "red",
+            "press": "stop"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.045,
+              0.045,
+              0.045
+            ],
+            "at": [
+              -0.51,
+              1.06,
+              0.615
+            ],
+            "color": "green",
+            "lit": "plc.Lamp"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.045,
+              0.045,
+              0.045
+            ],
+            "at": [
+              -0.39,
+              1.06,
+              0.615
+            ],
+            "color": "red",
+            "lit": "vfd.trip"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -41,8 +41,8 @@ export function compute(card, values) {
   return values;
 }
 
-/** '{v} m/s' with the numbers in. {name:2} gives two decimal places. Unknown names are left as they are. */
-export const fill = (text, values) => String(text ?? '').replace(/\{(\w+)(?::(\d))?\}/g, (m, k, dp) =>
+/** '{v} m/s' with the numbers in. {name:2} gives two decimal places; {vfd.f} a simulation's reading. Unknown names are left as they are. */
+export const fill = (text, values) => String(text ?? '').replace(/\{(\w+(?:\.\w+)*)(?::(\d))?\}/g, (m, k, dp) =>
   k in values ? (typeof values[k] === 'number' ? fmt(values[k], dp == null ? undefined : +dp) : String(values[k])) : m);
 
 const SI = { p: -12, n: -9, u: -6, 'µ': -6, 'μ': -6, m: -3, k: 3, M: 6, G: 9 };

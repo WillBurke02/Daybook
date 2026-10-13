@@ -41,6 +41,28 @@ for (const f of readdirSync(join(ROOT, 'apps/learn/web/widgets'))) {
   WIDGETS[f.replace(/\.js$/, '')] = m.REPORTS || [];
 }
 
+// ---- the machines (the sim widget's scenes): each builds, runs, and every fault and view formula works ----
+const sim = await load('apps/learn/web/sim/engine.js');
+const { merge } = await load('apps/learn/web/widgets/sim.js');
+const SIMS = {};
+for (const f of readdirSync(join(ROOT, 'apps/learn/web/sims'))) {
+  const name = f.replace(/\.json$/, '');
+  try { SIMS[name] = JSON.parse(readFileSync(join(ROOT, 'apps/learn/web/sims', f), 'utf8')); } catch (e) { bad(`sims/${f}`, e.message); continue; }
+  if (!/^[a-z0-9-]+$/.test(name)) bad(`sims/${f}`, 'a scene is named in lower case words and dashes');
+  if (!SIMS[name].title) bad(`sims/${f}`, 'a scene has a title');
+  for (const p of sim.check(SIMS[name])) bad(`sims/${f}`, p);
+}
+/** A card's machine: the scene with the card's changes, built. Null (and a problem) if it will not. */
+function machineOf(at, w) {
+  const p = w.params || {}, base = typeof p.scene === 'string' ? SIMS[p.scene] : p.scene;
+  if (!base) { bad(at, `there is no scene ${p.scene} in apps/learn/web/sims`); return null; }
+  const scene = merge(base, p);
+  if (typeof p.scene !== 'string') for (const x of sim.check(scene)) bad(at, x);
+  for (const k of p.controls || []) if (!scene.inputs?.[k]) bad(at, `controls: ${k} is not one of the scene's inputs`);
+  try { return { scene, built: sim.build(scene, { fault: p.fault, set: p.set }), opts: { fault: p.fault, set: p.set } }; }
+  catch (e) { bad(at, e.message); return null; }
+}
+
 // ---- the names in a formula ----
 const ids = ast => !ast || typeof ast !== 'object' ? [] : ast.k === 'id' ? [ast.v] : Object.values(ast).flatMap(ids);
 
@@ -100,7 +122,20 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
     if (c.type === 'concept' && !c.html && (c.body || '').split(/\s+/).length > 150) bad(at, 'a concept is short: 120 words or so');
     if (c.more && c.more.split(/\s+/).length > 180) bad(at, 'more (explain it another way) is 150 words or so');
     const q = c.type === 'widget' ? { ...c.ask } : c;
-    const reported = c.type === 'widget' ? WIDGETS[c.widget?.name] || [] : [];
+    const m = c.widget?.name === 'sim' ? machineOf(at, c.widget) : null;
+    const reported = c.type === 'widget' ? m ? Object.keys(m.built.env) : WIDGETS[c.widget?.name] || [] : [];
+    if ((q.type === 'goal' || q.type === 'diagnose') && !(c.type === 'widget' && c.widget?.name === 'sim')) bad(at, `a ${q.type} question goes on a widget card with a machine (the sim widget)`);
+    else if (q.type === 'goal' && m) {
+      if (!q.q || !q.pass || !Array.isArray(q.solution) || !q.why) bad(at, 'a goal: what to do (q), the formula that says it is done (pass), a solution (a script) and why');
+      else {
+        try { const r = sim.solves(m.scene, m.opts, q); if (!r.ok) bad(at, `goal: ${r.why}`); } catch (e) { bad(at, `goal: ${e.message}`); }
+        for (const [f, say] of q.fails || []) { try { sim.formula(f, m.built.known); } catch (e) { bad(at, `goal fails: ${e.message}`); } if (!say) bad(at, 'goal fails: [formula, what to say]'); }
+      }
+    } else if (q.type === 'diagnose' && m) {
+      if (!(Array.isArray(q.faults) && q.faults.length >= 2 && q.faults.length <= 6)) bad(at, 'diagnose: 2 to 6 faults to choose from ("none" may be one)');
+      for (const f of q.faults || []) if (f !== 'none' && !m.scene.faults?.[f]) bad(at, `diagnose: the scene has no fault ${f}`);
+      if (c.widget.params?.fault) bad(at, 'diagnose picks the fault itself: leave fault out of the widget params');
+    }
     if (q.type === 'mcq') {
       if (!Array.isArray(q.options) || q.options.length < 3 || q.options.length > 5) bad(at, 'an mcq has 3 to 5 options');
       if (!(q.answer >= 0 && q.answer < (q.options || []).length)) bad(at, 'the answer is not one of the options');

@@ -128,74 +128,87 @@ function draw(n, g, x, y, w, power, value, edges) {
 
 const ms = t => t >= 1000 ? `${+(t / 1000).toFixed(1)} s` : `${t} ms`;
 
+/** The rungs parsed, and the edge blocks toST made matched to their contacts in the same order. Throws on a bad rung. */
+const shapes = new WeakMap();
+function shape(rungs) {
+  if (shapes.has(rungs)) return shapes.get(rungs);
+  const trees = rungs.map(r => r.logic ? parse(r.logic) : null), edges = new Map();
+  let k = 0;
+  const walk = n => { if (!n) return; if (n.k === 'c') { if (n.edge) edges.set(n, `_${n.edge}${++k}`); } else n.items.forEach(walk); };
+  trees.forEach(walk);
+  const logicCols = Math.max(2, ...trees.map(t => t ? cols(t) : 1));
+  const width = 20 + logicCols * CW + Math.max(COIL, ...rungs.map(r => (r.timer || r.counter) ? BOXW + (r.out ? COIL : 0) : COIL)) + 20;
+  const out = { trees, edges, logicCols, width };
+  shapes.set(rungs, out);
+  return out;
+}
+
+/** The ladder drawn with power flowing: value(name) is a tag's value now (a block's, for a timer or counter). */
+export function diagram(rungs, value) {
+  const { trees, edges, logicCols, width } = shape(rungs);
+  const svg = s('svg', { viewBox: `0 0 ${width} ${rungs.reduce((a, r, i) => a + (trees[i] ? rows(trees[i]) : 1) * ROW + (r.note ? 16 : 0), 0) + 12}`,
+                         class: 'ladsvg', role: 'img', 'aria-label': 'Ladder diagram' });
+  let y = 8;
+  rungs.forEach((r, i) => {
+    const t = trees[i], h = (t ? rows(t) : 1) * ROW;
+    if (r.note) { svg.append(s('text', { x: 16, y: y + 10, class: 'note' }, r.note)); y += 16; }
+    const mid = y + 28, g = s('g', {});
+    g.append(s('text', { x: 2, y: mid + 4, class: 'num' }, String(i + 1)));
+    const left = 16, logicEnd = left + logicCols * CW;
+    const power = t ? draw(t, g, left, mid, logicCols * CW, true, value, edges) : true;
+    if (!t) g.append(s('line', { class: 'wire on', x1: left, y1: mid, x2: logicEnd, y2: mid }));
+    let x = logicEnd, into = power;
+    const blk = r.timer || r.counter;
+    if (blk) {
+      const fb = value(blk.name) || {};
+      const lines = r.timer ? [`${blk.type || 'TON'} ${blk.name}`, `PT ${String(blk.pt).replace(/^T#/i, '')}`, `ET ${ms(fb.ET || 0)}`]
+        : [`${blk.type || 'CTU'} ${blk.name}`, `PV ${blk.pv}`, `CV ${fb.CV ?? 0}${blk.reset ? `  R: ${blk.reset}` : ''}`];
+      g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: x + 8, y2: mid }),
+        s('rect', { class: 'fb' + (fb.Q ? ' done' : ''), x: x + 8, y: mid - 24, width: BOXW - 16, height: 48, rx: 3 }),
+        ...lines.map((l, k) => s('text', { x: x + 14, y: mid - 10 + k * 14, class: k ? 'fbv' : 'fbn' }, l)));
+      x += BOXW - 8;
+      into = !!fb.Q;
+      g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: x + 8, y2: mid }));
+      x += 8;
+    }
+    const right = width - 10;
+    if (r.out) {
+      const cx = right - COIL / 2, on = !!value(r.out);
+      g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: cx - 12, y2: mid }),
+        s('g', { class: 'coil' + (on ? ' on' : '') },
+          s('path', { d: `M${cx - 6} ${mid - 11} A 12 12 0 0 0 ${cx - 6} ${mid + 11}` }),
+          s('path', { d: `M${cx + 6} ${mid - 11} A 12 12 0 0 1 ${cx + 6} ${mid + 11}` }),
+          r.coil ? s('text', { x: cx, y: mid + 4, 'text-anchor': 'middle', class: 'edge' }, { set: 'S', reset: 'R', not: '/' }[r.coil]) : null),
+        s('text', { x: cx, y: mid - 17, 'text-anchor': 'middle', class: 'tag' + (on ? ' true' : '') }, r.out),
+        s('line', { class: 'wire', x1: cx + 12, y1: mid, x2: right, y2: mid }));
+    } else g.append(s('line', { class: 'wire', x1: x, y1: mid, x2: right, y2: mid }));
+    g.append(s('line', { class: 'rail', x1: left, y1: y, x2: left, y2: y + h }), s('line', { class: 'rail', x1: right, y1: y, x2: right, y2: y + h }));
+    svg.append(g);
+    y += h;
+  });
+  return svg;
+}
+
+/** A tag's value from a PLC's variables, names ignoring case, a block's fields as T1.Q. */
+export const tagOf = vars => name => {
+  const [head, ...rest] = name.split('.');
+  let v = vars[Object.keys(vars).find(x => x.toLowerCase() === head.toLowerCase())];
+  for (const r of rest) v = v?.[Object.keys(v).find(x => x.toLowerCase() === r.toLowerCase())];
+  return v;
+};
+
 export function mount(box, p, report) {
   const rungs = p.rungs || [], ins = p.inputs || [], outs = p.outputs || [], held = new Set(p.buttons || []), dt = p.scan_ms || 100;
   const err = el('p', { class: 'err', hidden: true });
-  let trees, src, m;
-  const edges = new Map();
-  try {
-    trees = rungs.map(r => r.logic ? parse(r.logic) : null);
-    src = toST(rungs);
-    // the edge blocks toST made, matched to their contacts in the same order
-    let k = 0;
-    const walk = n => { if (!n) return; if (n.k === 'c') { if (n.edge) edges.set(n, `_${n.edge}${++k}`); } else n.items.forEach(walk); };
-    trees.forEach(walk);
-  } catch (e) { err.textContent = e.message; err.hidden = false; box.append(err); return; }
+  let src, m;
+  try { shape(rungs); src = toST(rungs); } catch (e) { err.textContent = e.message; err.hidden = false; box.append(err); return; }
   const physical = Object.fromEntries(ins.map(n => [n, false]));
   const lamps = Object.fromEntries(outs.map(n => [n, el('span', { class: 'lamp' })]));
   const pic = el('div', { class: 'ladder' }), status = el('span', { class: 'num small muted' });
   const reset = () => { m = machine(compile(src), { inputs: ins, outputs: outs }); show(); };
-  const value = name => {
-    if (!m) return false;
-    const [head, ...rest] = name.split('.');
-    let v = m.vars[Object.keys(m.vars).find(x => x.toLowerCase() === head.toLowerCase())];
-    for (const r of rest) v = v?.[Object.keys(v).find(x => x.toLowerCase() === r.toLowerCase())];
-    return v;
-  };
-  const logicCols = Math.max(2, ...trees.map(t => t ? cols(t) : 1));
-  const width = 20 + logicCols * CW + Math.max(COIL, ...rungs.map(r => (r.timer || r.counter) ? BOXW + (r.out ? COIL : 0) : COIL)) + 20;
+  const value = name => m ? tagOf(m.vars)(name) : false;
   const show = () => {
-    const svg = s('svg', { viewBox: `0 0 ${width} ${rungs.reduce((a, r, i) => a + (trees[i] ? rows(trees[i]) : 1) * ROW + (r.note ? 16 : 0), 0) + 12}`,
-                           class: 'ladsvg', role: 'img', 'aria-label': 'Ladder diagram' });
-    let y = 8;
-    rungs.forEach((r, i) => {
-      const t = trees[i], h = (t ? rows(t) : 1) * ROW;
-      if (r.note) { svg.append(s('text', { x: 16, y: y + 10, class: 'note' }, r.note)); y += 16; }
-      const mid = y + 28, g = s('g', {});
-      g.append(s('text', { x: 2, y: mid + 4, class: 'num' }, String(i + 1)));
-      const left = 16, logicEnd = left + logicCols * CW;
-      const power = t ? draw(t, g, left, mid, logicCols * CW, true, value, edges) : true;
-      if (!t) g.append(s('line', { class: 'wire on', x1: left, y1: mid, x2: logicEnd, y2: mid }));
-      let x = logicEnd, into = power;
-      const blk = r.timer || r.counter;
-      if (blk) {
-        const fb = value(blk.name) || {};
-        const lines = r.timer ? [`${blk.type || 'TON'} ${blk.name}`, `PT ${String(blk.pt).replace(/^T#/i, '')}`, `ET ${ms(fb.ET || 0)}`]
-          : [`${blk.type || 'CTU'} ${blk.name}`, `PV ${blk.pv}`, `CV ${fb.CV ?? 0}${blk.reset ? `  R: ${blk.reset}` : ''}`];
-        g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: x + 8, y2: mid }),
-          s('rect', { class: 'fb' + (fb.Q ? ' done' : ''), x: x + 8, y: mid - 24, width: BOXW - 16, height: 48, rx: 3 }),
-          ...lines.map((l, k) => s('text', { x: x + 14, y: mid - 10 + k * 14, class: k ? 'fbv' : 'fbn' }, l)));
-        x += BOXW - 8;
-        into = !!fb.Q;
-        g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: x + 8, y2: mid }));
-        x += 8;
-      }
-      const right = width - 10;
-      if (r.out) {
-        const cx = right - COIL / 2, on = !!value(r.out);
-        g.append(s('line', { class: 'wire' + (into ? ' on' : ''), x1: x, y1: mid, x2: cx - 12, y2: mid }),
-          s('g', { class: 'coil' + (on ? ' on' : '') },
-            s('path', { d: `M${cx - 6} ${mid - 11} A 12 12 0 0 0 ${cx - 6} ${mid + 11}` }),
-            s('path', { d: `M${cx + 6} ${mid - 11} A 12 12 0 0 1 ${cx + 6} ${mid + 11}` }),
-            r.coil ? s('text', { x: cx, y: mid + 4, 'text-anchor': 'middle', class: 'edge' }, { set: 'S', reset: 'R', not: '/' }[r.coil]) : null),
-          s('text', { x: cx, y: mid - 17, 'text-anchor': 'middle', class: 'tag' + (on ? ' true' : '') }, r.out),
-          s('line', { class: 'wire', x1: cx + 12, y1: mid, x2: right, y2: mid }));
-      } else g.append(s('line', { class: 'wire', x1: x, y1: mid, x2: right, y2: mid }));
-      g.append(s('line', { class: 'rail', x1: left, y1: y, x2: left, y2: y + h }), s('line', { class: 'rail', x1: right, y1: y, x2: right, y2: y + h }));
-      svg.append(g);
-      y += h;
-    });
-    put(pic, svg);
+    put(pic, diagram(rungs, value));
     for (const n of outs) lamps[n].classList.toggle('on', !!value(n));
     status.textContent = m ? `scan ${m.scans} · ${(m.time / 1000).toFixed(1)} s` : '';
     report({ scans: m?.scans || 0, time: m?.time || 0, ...Object.fromEntries(outs.map(n => [n, value(n) ? 1 : 0])) });

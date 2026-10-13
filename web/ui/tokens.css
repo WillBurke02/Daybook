@@ -986,6 +986,36 @@ svg.wplot { width: 100%; height: auto; display: block; background: var(--raised)
 .plc .phases li.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .plc .images { display: grid; gap: 2px; }
 .plc + .row { margin-top: 8px; }
+/* a lesson's machine (the sim widget): the 3D view, its labels, the run bar, the panel */
+.s3stage { position: relative; }
+.s3stage canvas { width: 100%; aspect-ratio: 16 / 9; max-height: 62vh; display: block; border: 1px solid var(--rule); border-radius: 6px; background: var(--raised); touch-action: pan-y; cursor: grab; }
+.s3stage canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.s3labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.s3label { position: absolute; left: 0; top: 0; font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; white-space: nowrap;
+  color: var(--ink); background: color-mix(in srgb, var(--raised) 82%, transparent); border: 1px solid var(--rule-soft); }
+.s3cam { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; }
+.s3cam .btn { min-width: 30px; padding-inline: 6px; background: color-mix(in srgb, var(--raised) 85%, transparent); }
+.s3bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+.s3bar select { width: auto; }
+.s3say { min-height: 1.45em; margin: 6px 0; color: var(--ink-2); font-size: 13.5px; }
+.s3panel { display: grid; gap: 8px; }
+.s3buttons { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.s3push { touch-action: none; user-select: none; -webkit-user-select: none; }
+.s3push[data-c]::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.s3push[data-c=green] { --c: #2fa35a; } .s3push[data-c=red] { --c: #d6402f; } .s3push[data-c=blue] { --c: #2f6fd6; }
+.s3push[data-c=amber], .s3push[data-c=yellow] { --c: #f2a900; } .s3push[data-c=white] { --c: var(--ink-3); }
+.s3push.held { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.s3read { gap: 4px 16px; align-items: center; }
+.s3read meter { width: 90px; vertical-align: middle; }
+.lamp.green.on { background: #2fa35a; box-shadow: 0 0 10px #2fa35a; border-color: #1f7a41; }
+.lamp.red.on { background: #e5483a; box-shadow: 0 0 10px #e5483a; border-color: #a8352a; }
+.lamp.blue.on { background: #3f7fe0; box-shadow: 0 0 10px #3f7fe0; border-color: #2a5bb0; }
+.s3trend .trace.k1 { stroke: var(--s2); } .s3trend .trace.k2 { stroke: var(--s1); } .s3trend .trace.k3 { stroke: var(--s5); }
+.s3trend .legend text { font-size: 10.5px; } .s3trend .legend .k0 { fill: var(--accent); } .s3trend .legend .k1 { fill: var(--s2); }
+.s3trend .legend .k2 { fill: var(--s1); } .s3trend .legend .k3 { fill: var(--s5); }
+.s3plc .ladder { overflow-x: auto; }
+.s3fail { color: var(--debit); margin: 6px 0; }
+.s3plc pre.st { margin: 6px 0; }
 @media (max-width: 600px) {
   .plc { grid-template-columns: 1fr 1fr; } .plc .col.grow { grid-column: 1 / -1; order: -1; }
   .lcard { padding: 12px; } .feed .slide { padding: 12px 10px; } .feedtop .keys { display: none; }

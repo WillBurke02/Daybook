@@ -62,7 +62,7 @@ const widgets = {};
 export async function mountWidget(box, spec, report) {
   if (!spec?.name) return null;
   widgets[spec.name] ??= import(`./widgets/${spec.name}.js`);
-  try { return (await widgets[spec.name]).mount(box, spec.params || {}, report); }
+  try { return await (await widgets[spec.name]).mount(box, spec.params || {}, report); }
   catch (e) { add(box, el('p', { class: 'err' }, `The ${spec.name} widget could not start: ${e.message}`)); return null; }
 }
 
@@ -303,7 +303,10 @@ const TYPES = {
     // hide: the widget's readings (what it works out) stay hidden until you have answered, where they would give it away
     if (c.hide) { w.classList.add('hiding'); add(face, el('p', { class: 'muted small' }, 'Its readings show once you have answered.')); }
     add(face, w);
-    mountWidget(w, c.widget, r => Object.assign(seen, r));
+    // diagnose: one of its faults, picked afresh each time the card comes round, is put in before the machine starts
+    const fault = inner.type === 'diagnose' ? inner.faults[Math.floor(Math.random() * inner.faults.length)] : null;
+    // (and the scene's own demo is left off: it is narrated for the machine as it should be, not as the card sets it)
+    const machine = mountWidget(w, MACHINE[inner.type] ? { ...c.widget, params: { ...c.widget.params, fault: fault ?? c.widget.params?.fault, demo: false } } : c.widget, r => Object.assign(seen, r));
     // then a question about it: an mcq, or a numeric whose answer may use what the widget reports (its names
     // are the report's keys). The values are read when you check, so they are the widget's as you left it.
     add(face, ask);
@@ -320,7 +323,7 @@ const TYPES = {
       get: (_, k) => now()[k], has: (_, k) => k in now(),
       ownKeys: () => Reflect.ownKeys(now()), getOwnPropertyDescriptor: () => ({ enumerable: true, configurable: true }),
     });
-    const keys = TYPES[inner.type](inner, ask, told, live);
+    const keys = (MACHINE[inner.type] || TYPES[inner.type])(inner, ask, told, live, machine, fault);
     return e => predicted == null ? guess.keys(e) : keys?.(e);
   },
 
@@ -433,6 +436,62 @@ const TYPES = {
 
 const WHY = { review: 'Review', new: 'New', practice: 'Practice', lesson: '', warmup: 'Warm-up', refresher: 'Refresher',
               struggle: 'Coming back', calibrate: '', checkpoint: 'Checkpoint', testout: 'Test out', comeback: 'Comeback', again: 'Again' };
+// ---- what a widget card can ask of a machine (the sim widget) -------------------------------------------
+// Each gets the widget's handle (a promise): {faults, test(formula), restart(script)}.
+
+const MACHINE = {
+  // Make it do something. Checked by a formula over the machine's values when you say you have: three goes.
+  // fails: [[formula, what to say]] for the ways it is likely to be wrong. Show me plays the author's solution.
+  goal(c, face, done, values, machine) {
+    add(face, rich(c.q, values));
+    const said = el('p', { class: 'small s3fail', hidden: true, role: 'status' });
+    let tries = 0, over = false;
+    const finish = out => { over = true; check.disabled = true; done({ mistake: { front: plain(c.q, values), back: c.why || '' }, ...out }); };
+    const check = el('button', { class: 'btn', type: 'button', onclick: async () => {
+      const m = await machine;
+      if (!m || over) return;
+      if (m.test(c.pass)) { said.hidden = true; return finish({ correct: tries < 3, rating: ratingFor(tries < 3), why: c.why }); }
+      tries++;
+      said.hidden = false;
+      said.replaceChildren(...inline(fill((c.fails || []).find(([f]) => m.test(f))?.[1] || 'Not yet: it is not doing that.', m.sim.env)));
+      if (tries >= 3) finish({ correct: false, rating: 'again', why: c.why, answer: 'Three goes without it. Show me runs the way to do it.' });
+      else check.textContent = `Check again (${3 - tries} left)`;
+    } }, 'Check');
+    const show = el('button', { class: 'btn plain', type: 'button', title: 'Start the machine again and watch it done', onclick: async () => {
+      const m = await machine;
+      if (!m) return;
+      m.restart(c.solution);
+      if (!over) finish({ correct: false, rating: 'again', why: c.why, answer: 'Shown: the machine is running the way to do it.' });
+    } }, 'Show me');
+    add(face, said, el('div', { class: 'row' }, check, show));
+    return e => { if (e.key === 'Enter' && !over) { check.click(); return true; } };
+  },
+
+  // Find the fault: the machine has one of these (or none), picked at random; run it, watch it, say which.
+  diagnose(c, face, done, values, machine, fault) {
+    add(face, rich(c.q || 'Something may be wrong with this machine. Run it, watch it and read it, then say what is wrong.', values));
+    const opts = el('div', { class: 'options' }, el('p', { class: 'muted small' }, 'Starting the machine…'));
+    add(face, opts);
+    let answered = false, ids = [], m = null;
+    const label = id => id === 'none' ? 'Nothing is wrong: it works as it should' : m.faults[id]?.label || id;
+    const pick = k => {
+      if (answered || !m) return;
+      answered = true;
+      const correct = ids[k] === fault;
+      opts.querySelectorAll('button').forEach((b, i) => { b.disabled = true; if (ids[i] === fault) b.classList.add('right'); else if (i === k) b.classList.add('wrong'); });
+      const why = [fault === 'none' ? 'Nothing was wrong this time: everything it did is what it should do.' : m.faults[fault]?.why, c.why].filter(Boolean).join('\n\n');
+      done({ correct, rating: ratingFor(correct), answer: label(fault), why, mistake: { front: plain(c.q || 'Find the fault', values), back: `${label(fault)}\n\n${why}` } });
+    };
+    machine.then(api => {
+      if (!api) return;
+      m = api;
+      ids = shuffle(c.faults);
+      opts.replaceChildren(...ids.map((id, i) => el('button', { class: 'opt', type: 'button', onclick: () => pick(i) }, el('span', { class: 'num muted' }, `${i + 1}`), rich(label(id)))));
+    });
+    return e => { const n = '123456789'.indexOf(e.key); if (n >= 0 && n < ids.length) { pick(n); return true; } };
+  },
+};
+
 const SURE = [[0, 'Guess'], [1, 'Think so'], [2, 'Sure']];
 // the kinds of card whose answer is marked, not self-rated: "how sure?" is asked of these
 const MARKED = new Set(['mcq', 'numeric', 'order', 'match', 'code', 'widget', 'spot']);

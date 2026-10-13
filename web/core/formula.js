@@ -228,7 +228,10 @@ export function parse(src) {
         expect(')');
         return { k: 'call', name, args };
       }
-      return { k: 'id', v: k.v };
+      // a dotted name, vfd.f: a block's output in a lesson's simulation (no column has a dot outside [ ])
+      let v = k.v;
+      while (peek()?.v === '.' && t[i + 1]?.t === 'id') { next(); v += '.' + next().v; }
+      return { k: 'id', v };
     }
     throw new Error(`Unexpected "${k.v}"`);
   };
