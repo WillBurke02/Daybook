@@ -198,7 +198,8 @@ def session_ok(value):
 
 
 def token(name, reset=False):
-    """A random key kept in suite.db: 'cal' for the calendar feed, 'capture' for the phone."""
+    """A random key kept in suite.db: 'cal' for the calendar feed, 'capture' for the phone's
+    Shortcut, 'widget' for its home-screen widget."""
     if reset:
         db = store()
         db.execute("DELETE FROM secret WHERE key = ?", (name,))

@@ -3,7 +3,8 @@
     /                     Home                 /login        the sign-in page
     /<app>/               that app's pages     /<app>/api/…  that app's endpoints
     /api/…                the suite: sign-in, themes, keys
-    /cal/<token>.ics      the calendar feed, the only thing open without signing in
+    /cal/<token>.ics      the calendar feed     } open without signing in,
+    /widget/<token>.json  the phone's widget    } each by its own key
 
 Everything else needs the sign-in cookie. Three more things guard the door,
 because a server on this machine is still reachable from any web page you have
@@ -184,6 +185,8 @@ class Handler(BaseHTTPRequestHandler):
                                   "text/html; charset=utf-8")
             if path.startswith("/cal/"):
                 return self._calendar(path, query)
+            if path.startswith("/widget/"):
+                return self._widget(path)
             if path in ("/login", "/api/login", "/api/logout") or path.startswith(("/assets/", "/ui/tokens.css")) \
                     or path.endswith("/manifest.json"):
                 pass                                  # open: the sign-in page and what it needs
@@ -247,6 +250,9 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, {"ok": True}, extra=[("Set-Cookie", self._cookie("", 0))])
         if p == ["meta"] and method == "GET":
             return self._send(200, suite_meta())
+        if p == ["changelog"] and method == "GET":     # Help → What's new
+            with open(os.path.join(ROOT, "CHANGELOG.md"), encoding="utf-8") as f:
+                return self._send(200, {"text": f.read()})
         if p == ["password"] and method == "POST":
             if not _suite.password_ok((body or {}).get("old", "")):
                 return self._send(403, {"error": "current password is wrong"})
@@ -267,7 +273,7 @@ class Handler(BaseHTTPRequestHandler):
                     return self._send(200, {"installed": _update.update(data=SUITE.data)})
             except ValueError as e:
                 return self._send(400, {"error": str(e)})
-        if p[:1] == ["token"] and len(p) == 2 and p[1] in ("cal", "capture"):
+        if p[:1] == ["token"] and len(p) == 2 and p[1] in ("cal", "capture", "widget"):
             return self._send(200, {"token": _suite.token(p[1], reset=method == "POST")})
         db = _suite.store()
         try:
@@ -394,6 +400,13 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(404, {"error": "not found"})
         extra = [("Content-Disposition", 'attachment; filename="daybook.ics"')] if query.get("download") else None
         return self._send(200, calendar_feed().encode(), "text/calendar; charset=utf-8", extra)
+
+    # --- the phone's home-screen widget ----------------------------------------
+    def _widget(self, path):
+        """Each app's Home figures, read-only, by the widget's own key (Scriptable on an iPhone)."""
+        if not _suite.token_ok("widget", path[len("/widget/"):].removesuffix(".json")):
+            return self._send(404, {"error": "not found"})
+        return self._send(200, widget(), extra=[("Cache-Control", "no-store")])
 
     # --- files -----------------------------------------------------------------
     def _static(self, path):
@@ -579,6 +592,24 @@ def suite_meta():
             "themes": themes, "settings": {"default_mode": settings.get("mode", "system"), "home": settings.get("home", "")},
             "password_default": _suite.password_is_default(),
             "suite_version": _db.APP_VERSION}
+
+
+def widget():
+    """{version, apps: [{app, title, figures: [{label, value, sub}]}]}: what Home shows, figures only."""
+    out = []
+    for name, app in SUITE.apps.items():
+        if not hasattr(app, "home"):
+            continue
+        db = _db.connect(_suite.path(name))
+        try:
+            figs = (app.home(db) or {}).get("figures", [])
+        except sqlite3.Error:
+            figs = []                          # one app failing leaves the others on the widget
+        finally:
+            db.close()
+        out.append({"app": name, "title": app.TITLE,
+                    "figures": [{k: f.get(k) for k in ("label", "value", "sub")} for f in figs]})
+    return {"version": _db.APP_VERSION, "apps": out}
 
 
 # --- the calendar feed -------------------------------------------------------------

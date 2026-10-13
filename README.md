@@ -386,7 +386,11 @@ signed in while you use it (the sign-in renews itself; 30 days unused and it ask
   `https://pi.tailXXXX.ts.net/log/api/quick`, method POST, headers
   `Authorization: Bearer <key>` and `X-Daybook: 1`, request body JSON with a
   `text` field (Dictate Text or Ask for Input before it). The key is in Admin →
-  Calendar feed and phone; it opens that one door and nothing else.
+  Calendar feed and phone, with the steps filled in; it opens that one door and nothing else.
+- **iPhone widget**: Admin → Calendar feed and phone → Phone widget → **Copy script**, paste it
+  into a new script in Scriptable (free), and add a Scriptable widget to the Home Screen.
+  It shows Home's figures (safe to spend, payday, hours this week, Learn due, today's
+  Log), read-only by its own key; its Parameter `money`, `learn` or `log` shows one app.
 - **Calendar**: Admin gives a private address to subscribe to (bills with
   amounts, paydays, days off, bank holidays, and Learn's daily review if it is
   switched on). The phone's own calendar and Outlook can reach a Tailscale

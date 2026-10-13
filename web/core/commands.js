@@ -1,7 +1,7 @@
 // What the menus do: the menu button on the bar (File, Edit, View, Go, Help),
 // the right-click menu, and the keys. The router hands over what it knows (shell),
 // including the app, whose own File items come first.
-import { api, APP } from './api.js';
+import { api, suite, APP } from './api.js';
 import { el, flash, dialog, download } from './dom.js';
 import { state, GRAINS, step } from './state.js';
 import { today, toNumber } from './format.js';
@@ -147,6 +147,7 @@ const MENUS = () => [
   ] },
   { label: 'Help', items: () => [
     { label: 'Keyboard shortcuts', key: '?', fn: shortcuts },
+    { label: `What’s new in ${state.meta.version}`, fn: whatsNew },
     { label: `About ${app.app.title}`, fn: about },
   ] },
 ];
@@ -159,6 +160,32 @@ function shortcuts() {
     ['Esc', 'Close a menu or box'], ['?', 'This list'],
     ['Right-click', 'Things to do with what is under the pointer'], ['Shift+right-click', 'The browser’s own menu'],
   ].map(([k, v]) => el('tr', {}, el('td', { class: 'num', style: 'width:150px' }, k), el('td', {}, v))))));
+}
+
+/** CHANGELOG.md: each version a section, the newest open. Bullets, their nested bullets, and paragraphs. */
+export async function whatsNew() {
+  const { text } = await suite.get('changelog');
+  const inline = t => t.split(/(\*\*[^*]+\*\*|`[^`]+`)/).map(x =>
+    x.startsWith('**') ? el('strong', {}, x.slice(2, -2)) : x.startsWith('`') ? el('code', {}, x.slice(1, -1)) : x);
+  const sections = text.split(/^## /m).slice(1).map((sec, i) => {
+    const [head, ...lines] = sec.split('\n'), blocks = [];
+    let cur = null;
+    for (const line of lines) {
+      const li = line.match(/^(\s*)- (.*)/);
+      if (!line.trim()) cur = null;
+      else if (li) blocks.push(cur = { li: true, deep: li[1].length > 0, text: li[2] });
+      else if (cur) cur.text += ' ' + line.trim();      // a bullet's or paragraph's next line
+      else blocks.push(cur = { text: line.trim() });
+    }
+    const body = [];
+    for (const b of blocks) {
+      if (!b.li) { body.push(el('p', {}, inline(b.text))); continue; }
+      if (body.at(-1)?.tagName !== 'UL') body.push(el('ul', {}));
+      body.at(-1).append(el('li', { class: b.deep ? 'deep' : null }, inline(b.text)));
+    }
+    return el('details', { open: i === 0 }, el('summary', {}, el('strong', {}, head.trim())), body);
+  });
+  dialog('What’s new', el('div', { class: 'changelog' }, sections));
 }
 
 function about() {

@@ -207,6 +207,17 @@ assert new != tok and raw(f"/cal/{tok}.ics")[0] == 404 and raw(f"/cal/{new}.ics"
 assert server._fold("SUMMARY:" + "é" * 60).count("\r\n ") == 1 and server._ics_text("a,b;c\nd") == "a\\,b\\;c\\nd"
 print("ok — calendar feed")
 
+# === the phone's widget: Home's figures, read-only, by its own key ===================
+wk = json.loads(raw("/api/token/widget", headers=C)[2])["token"]
+assert raw("/widget/wrong.json")[0] == 404 and raw(f"/widget/{tok}.json")[0] == 404, "the calendar's key is not the widget's"
+code, hdr, body = raw(f"/widget/{wk}.json")
+fig = json.loads(body)
+assert code == 200 and fig["version"] == _db.APP_VERSION and hdr["Cache-Control"] == "no-store", (code, hdr)
+money = next(a for a in fig["apps"] if a["app"] == "money")
+assert any(f["label"] == "Payday" for f in money["figures"]) and set(money["figures"][0]) == {"label", "value", "sub"}, money
+assert raw("/api/changelog")[0] == 401 and json.loads(raw("/api/changelog", headers=C)[2])["text"].startswith("# Changes")
+print("ok — widget, changelog")
+
 # === the phone: a share-sheet form post, and the capture key for a Shortcut =========
 if "log" in SUITE.apps:
     B = "----daybook"

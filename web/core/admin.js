@@ -547,6 +547,40 @@ function version() {
 // --- keys: the calendar feed and the phone ------------------------------------------
 // Neither can sign in, so each has a key of its own. Reset makes the old one stop working.
 
+/** The iPhone widget, for the Scriptable app: Home's figures, an app to a column. */
+const widgetScript = url => `// Daybook on the Home Screen (Scriptable). Its Parameter money, learn or log shows just that app.
+const URL = ${JSON.stringify(url)}, OPEN = ${JSON.stringify(location.origin + '/')};
+const only = (args.widgetParameter || '').trim().toLowerCase();
+const size = config.widgetFamily || 'medium';
+const w = new ListWidget();
+w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
+w.url = OPEN + (only ? only + '/' : '');
+try {
+  const d = await new Request(URL).loadJSON();
+  const row = w.addStack();
+  d.apps.filter(a => !only || a.app === only).slice(0, size === 'small' ? 1 : 3).forEach((a, i) => {
+    if (i) row.addSpacer();
+    const col = row.addStack();
+    col.layoutVertically();
+    const t = col.addText(a.title.toUpperCase());
+    t.font = Font.semiboldSystemFont(10); t.textOpacity = 0.6;
+    for (const f of a.figures.slice(0, size === 'large' ? 6 : 3)) {
+      col.addSpacer(4);
+      const v = col.addText(f.value || '–');
+      v.font = Font.semiboldSystemFont(15); v.lineLimit = 1; v.minimumScaleFactor = 0.6;
+      const l = col.addText(f.label);
+      l.font = Font.systemFont(10); l.textOpacity = 0.7; l.lineLimit = 1;
+    }
+  });
+} catch (e) {
+  w.addText('Daybook not reached').font = Font.semiboldSystemFont(13);
+  const n = w.addText('Is Tailscale on?');
+  n.font = Font.systemFont(11); n.textOpacity = 0.6;
+}
+if (config.runsInWidget) Script.setWidget(w); else await w.presentMedium();
+Script.complete();
+`;
+
 function keys() {
   const box = el('div', { class: 'stack' });
   const copy = async text => { try { await navigator.clipboard.writeText(text); flash('Copied'); } catch { flash('Select it and copy by hand'); } };
@@ -555,8 +589,9 @@ function keys() {
     el('button', { class: 'btn plain sm', onclick: () => copy(value) }, 'Copy'),
     el('button', { class: 'btn plain sm', onclick: reset }, 'Reset'), extra);
   const draw = async () => {
-    const [cal, cap] = await Promise.all([suite.token('cal'), suite.token('capture')]);
-    const feed = `${location.origin}/cal/${cal.token}.ics`;
+    const [cal, cap, wid] = await Promise.all([suite.token('cal'), suite.token('capture'), suite.token('widget')]);
+    const feed = `${location.origin}/cal/${cal.token}.ics`, figures = `${location.origin}/widget/${wid.token}.json`;
+    const quick = `${location.origin}/log/api/quick`;
     const reset = name => () => dialog('Make a new key?', el('p', {}, 'The old one stops working at once: anything using it must be given the new one.'),
       [{ label: 'Make a new key', cls: 'btn danger', fn: async () => { await suite.token(name, true); draw(); } }]);
     box.replaceChildren(
@@ -565,9 +600,20 @@ function keys() {
         'bank holidays, and the daily review if Learn has it switched on. Anyone with the address can read those, so keep it to yourself. ',
         'A calendar that fetches from the cloud (Google Calendar) cannot reach a Tailscale address; the phone’s own calendar and Outlook on the PC can.'),
       row('Phone capture key', cap.token, reset('capture')),
-      el('p', { class: 'note' }, 'For an iPhone Shortcut that adds to Log: POST JSON {"text": "…"} to ',
-        el('code', {}, `${location.origin}/log/api/quick`), ' with the headers ', el('code', {}, 'Authorization: Bearer <this key>'),
-        ' and ', el('code', {}, 'X-Daybook: 1'), '. The key opens nothing else.'));
+      el('div', { class: 'note' }, 'An iPhone Shortcut that adds to Log, made in the Shortcuts app (+ for a new one):',
+        el('ol', {},
+          el('li', {}, 'Add ', el('strong', {}, 'Dictate Text'), ' (or ', el('strong', {}, 'Ask for Input'), ' to type).'),
+          el('li', {}, 'Add ', el('strong', {}, 'Get Contents of URL'), ': the URL ', el('code', {}, quick), '; Method POST; Headers ',
+            el('code', {}, 'Authorization'), ' = ', el('code', {}, `Bearer ${cap.token}`), ' and ', el('code', {}, 'X-Daybook'), ' = ',
+            el('code', {}, '1'), '; Request Body JSON, with a Text field ', el('code', {}, 'text'), ' set to the Dictated Text.'),
+          el('li', {}, 'Name it Log. Put it on the Home Screen or the Action button, or say “Hey Siri, Log”.')),
+        'The key adds to Log and opens nothing else.'),
+      row('Phone widget', figures, reset('widget'),
+        el('button', { class: 'btn plain sm', onclick: () => copy(widgetScript(figures)) }, 'Copy script')),
+      el('p', { class: 'note' }, 'A home-screen widget on an iPhone: get Scriptable (free, App Store), make a new script, paste the ',
+        'copied script, and name it Daybook. Long-press the Home Screen, + , Scriptable, and choose Daybook. ',
+        'Its Parameter (long-press the widget, Edit Widget) set to money, learn or log shows just that app. ',
+        'It shows Home’s figures and can change nothing; the phone needs Tailscale on to reach it.'));
   };
   draw();
   return panel('Calendar feed and phone', 6, box);

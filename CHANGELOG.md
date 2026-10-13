@@ -1,5 +1,15 @@
 # Changes
 
+## 4.0.2 — 13 October 2026
+
+- **What's new**: Help → What's new shows this list, newest first. The first time Daybook
+  opens after an update it says so, with a button to see what changed.
+- **iPhone widget**: Admin → Calendar feed and phone → Phone widget → Copy script, for the
+  Scriptable app: Home's figures on the Home Screen (safe to spend, payday, hours this week,
+  last payslip, Learn due and streak, today's Log). Read-only, by its own key; tapping it opens
+  Daybook.
+- **Log Shortcut**: Admin spells out the Shortcut's steps with your key filled in.
+
 ## 4.0.1 — 13 October 2026
 
 - **Menus**: tapping File, Edit or another menu no longer lights up Help as well. On a phone a

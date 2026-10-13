@@ -14,7 +14,7 @@ import { state, loadMeta, period, step, GRAINS } from './state.js';
 import { today } from './format.js';
 import { register, renderPage } from './layout.js';
 import { applyText, watchText } from './text.js';
-import { install, openMenu } from './commands.js';
+import { install, openMenu, whatsNew } from './commands.js';
 import { themeCSS, applyMode, useTheme, modes } from './theme.js';
 import { searchPage, changesPage, appbar, tabbar, banner, icon } from './pages.js';
 import { sidebar } from './nav.js';
@@ -178,6 +178,12 @@ export async function start(theApp) {
   try { await loadMeta(); } catch (e) {
     main().append(el('p', { class: 'err' }, 'Cannot reach the Daybook server: ' + e.message)); return;
   }
+  // the first time after an update, once: say so, with what changed
+  try {
+    const seen = localStorage.getItem('daybook.version');
+    if (seen && seen !== state.meta.version) flash(`Daybook is now ${state.meta.version}`, { label: 'What’s new', fn: whatsNew });
+    localStorage.setItem('daybook.version', state.meta.version);
+  } catch { /* no storage: no notice */ }
   appbar($('.appbar'), state.meta.doors, APP, { find: `Search ${app.title}…`, undo: true, custom: 'Customise' });
   tabbar($('.tabbar'), state.meta.doors, APP);
   if (app.period) periodBox = makePeriod();
