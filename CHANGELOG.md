@@ -44,6 +44,19 @@
     homing and limits, a reject sorter (colour sensor, timed pusher, counters) and a tank level
     loop (4–20 mA, S7 counts, PID, trips). 26 cards in 13 lessons use them, across drives, PLC and
     instrumentation lessons. How to write more: the Machines section of CONTENT-BRIEF.md.
+  - **Quicker and smoother on the Pi**: a page names its files under the code's version, so
+    the browser keeps them and opening an app again asks only for its data (about 1.5 s to
+    0.4 s on a phone link); every module is listed up front and replies are gzipped. The theme
+    is on the page as it arrives (no flash of the default), and moving between apps fades
+    across with the bars held still. Learn's Today and feed are 4 to 8 times quicker.
+  - **Log: + adds photos and videos** from the phone's library (the camera still takes a photo
+    there and then). Videos up to 60 MB, kept as they came and played from the Pi in pieces;
+    deleting an entry keeps its videos 30 days so Undo brings them back.
+  - **Learn on a phone**: the calculator and whiteboard sheet pushes the question up instead of
+    covering it, can be dragged taller or shorter, gives the board its room, steps aside on an
+    explanation and closes when you leave the cards.
+  - **Hours on a phone**: + Hours is a small form with your usual times; it will not add a shift
+    that overlaps one already there.
   - **Learning record** (CPD) by day, as CSV.
   - **The workbench**: calculator and whiteboard as tabs in one docked panel (a sheet on a
     phone), 36 px labelled tools, the card's numbers as buttons, sums kept with the card, units
