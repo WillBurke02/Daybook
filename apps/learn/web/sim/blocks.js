@@ -217,11 +217,13 @@ export const BLOCKS = {
    *  Items (size m long) come on every so many seconds of running (every), or one each time add rises; kinds come
    *  from pattern in turn. They fall off the end (out counts them) or, with stop 1, queue against an end stop.
    *  eject (a formula, the pusher out) at eject_at knocks an item off (rejects). slip 0.3 is a belt slipping 30%.
- *  preload: [0.5, 1.2] puts items on the belt at those places to begin with. */
+ *  preload: [0.5, 1.2] puts items on the belt at those places to begin with.
+ *  out1 and rej1 count the items of kind 1 or more (the ones to reject) that went off the end and were knocked
+ *  off: for a sorter, out1 is a bad one let through and rejects − rej1 a good one thrown away. */
   conveyor: {
     in: { rpm: 0, ratio: 1, dia: 0.1, length: 2, every: 0, add: 0, size: 0.2, pattern: [0], stop: 0, eject: 0, eject_at: 1, slip: 0, preload: [] },
     text: ['pattern', 'preload'],
-    out: { v: 0, pos: 0, items: [], n: 0, out: 0, rejects: 0, last: -1, _a: 0, _acc: 0, _made: 0 },
+    out: { v: 0, pos: 0, items: [], n: 0, out: 0, rejects: 0, last: -1, out1: 0, rej1: 0, _a: 0, _acc: 0, _made: 0 },
     start(o, i) {
       const pat = i.pattern?.length ? i.pattern : [0];
       o.items = (i.preload || []).map(x => ({ x, k: pat[o._made++ % pat.length], id: o._made, s: i.size }));
@@ -242,10 +244,10 @@ export const BLOCKS = {
       let limit = i.stop ? i.length - i.size / 2 : Infinity;
       for (const it of o.items) { it.x = Math.max(i.size / 2, Math.min(it.x + o.v * dt, limit)); limit = it.x - i.size; }
       const off = o.items.filter(it => it.x > i.length + i.size / 2);
-      if (off.length) { o.out += off.length; o.last = off.at(-1).k; o.items = o.items.filter(it => !off.includes(it)); }
+      if (off.length) { o.out += off.length; o.out1 += off.filter(it => it.k >= 1).length; o.last = off.at(-1).k; o.items = o.items.filter(it => !off.includes(it)); }
       if (i.eject) {
         const hit = o.items.find(it => Math.abs(it.x - i.eject_at) < i.size / 2);
-        if (hit) { o.rejects++; o.items = o.items.filter(it => it !== hit); }
+        if (hit) { o.rejects++; if (hit.k >= 1) o.rej1++; o.items = o.items.filter(it => it !== hit); }
       }
       o.n = o.items.length;
     },

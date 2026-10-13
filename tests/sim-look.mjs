@@ -1,4 +1,4 @@
-// node tests/sim-look.mjs <scene> [out.png] [script|press:start,wait:3,…] — a picture of a machine, for whoever
+// node tests/sim-look.mjs <scene> [out.png] [script|press:start,wait:3,…] (FAULT=<id> for a fault) — a picture of a machine, for whoever
 // writes one: it mounts the scene in a real browser, optionally plays its demo script (or presses and waits),
 // screenshots it and prints the page's errors and the machine's main readings.
 // Needs Playwright and a Daybook running: python3 demo.py /tmp/demo && python3 daybook.py serve --data /tmp/demo --port 8799
@@ -20,11 +20,11 @@ await p.keyboard.press('Enter');
 await p.waitForTimeout(700);
 await p.goto(`${base}/learn/`);
 await p.waitForTimeout(600);
-const ok = await p.evaluate(async scene => {
+const ok = await p.evaluate(async ([scene, fault]) => {
   document.body.innerHTML = '<main style="max-width:860px;margin:16px auto;padding:0 16px"><div class="widget" id="w"></div></main>';
-  try { window.api = await (await import('/learn/widgets/sim.js')).mount(document.getElementById('w'), { scene, plc: 'open' }, () => {}); return true; }
+  try { window.api = await (await import('/learn/widgets/sim.js')).mount(document.getElementById('w'), { scene, fault, plc: 'open' }, () => {}); return true; }
   catch (e) { return e.message; }
-}, name);
+}, [name, process.env.FAULT || null]);
 if (ok !== true) errs.push(`mount: ${ok}`);
 for (const step of plan === 'script' ? [] : plan.split(',').filter(Boolean)) {
   const [verb, arg = ''] = step.split(':');
@@ -33,7 +33,7 @@ for (const step of plan === 'script' ? [] : plan.split(',').filter(Boolean)) {
   if (verb === 'set') await p.evaluate(([k, v]) => { api.sim.env[k] = +v; }, arg.split('='));
 }
 if (plan === 'script') {
-  await p.evaluate(() => api.restart(api.scene.script));
+  await p.evaluate(() => api.restart(api.scene.script));   // (the fault, if one is set, stays in)
   await p.waitForTimeout(1000 * Math.max(3, ...(await p.evaluate(() => (api.scene.script || []).map(e => (e.at || 0) + 1)))));
 }
 await p.waitForTimeout(400);

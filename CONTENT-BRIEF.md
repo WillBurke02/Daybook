@@ -166,8 +166,9 @@ is never the only way in), and can be checked without a browser. **Reuse a scene
      `predict` works as on any widget card.
    - A `concept` card can carry a machine too, to explore; its script plays as "Watch it run".
 3. `node tests/content.check.mjs`: it builds every machine, runs every fault and every goal's solution, and checks every name.
-4. Look at it: `node tests/sim-look.mjs <scene> out.png script` (Playwright, with a Daybook running on port 8799)
-   screenshots the scene after its demo; `press:start,wait:3` instead of `script` drives it.
+4. Look at it: `node tests/sim-look.mjs <scene> out.png script` (Playwright, with a Daybook running on port 8799;
+   `BASE=http://127.0.0.1:<port>` for another) screenshots the scene after its demo; `press:start,wait:3` instead of
+   `script` drives it; `FAULT=<id>` puts a fault in first.
 
 **Writing a scene** (when none fits). One machine, plainly drawn, that several lessons can use:
 
@@ -200,7 +201,7 @@ The blocks (each one's settings, defaults and units are in `blocks.js`):
 | `motor` | `f on load` (opposes motion) `pull` (steady) `kw rpm poles J tk lrt lrc Ir tau` | `n` (rpm) `fn T I P slip turns Tr Ir heat` (% of rated rise) |
 | `overload` | `I set class reset auto` | `trip heat nc no` |
 | `axis` (mm) | `target enable vmax amax kp kv ff maxerr invert reset pos0 x0 preset load` | `pos` (as the controller reads it) `x` (where it really is) `vel cmd ferr done trip fault` ("FE") `homed` |
-| `conveyor` | `rpm ratio dia length every add size pattern stop eject eject_at slip preload` | `v pos items n out rejects last` |
+| `conveyor` | `rpm ratio dia length every add size pattern stop eject eject_at slip preload` | `v pos items n out rejects last out1 rej1` |
 | `eye` | `belt` (block id) `at dark kind stuck` | `on blocked` |
 | `sensor` | `x at range above below nc stuck` | `on hit` |
 | `encoder` | `turns ppr invert` | `count A B` |
