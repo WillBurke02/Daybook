@@ -1,0 +1,1642 @@
+{
+  "title": "A tank level loop: transmitter, PLC and control valve",
+  "about": "Water comes in through control valve LV-101 and the pump P-101 takes it out at the demand you set. LT-101 (0 to 2 m, 4 to 20 mA) feeds the PLC, which scales it to metres; LIC-101, the level controller in the PLC, moves LV-101 to hold the set point. LSH-101 at 1.7 m shuts the inlet (latched until Reset); LSL-101 at 0.2 m stops the pump. The tank is small (0.5 m across) so the level moves quickly.",
+  "dt": 0.01,
+  "inputs": {
+    "auto": {
+      "switch": "Auto (LIC-101)",
+      "value": 1
+    },
+    "sp": {
+      "slider": "Set point",
+      "min": 0.4,
+      "max": 1.5,
+      "step": 0.05,
+      "value": 1.0,
+      "unit": "m"
+    },
+    "man": {
+      "slider": "Manual output",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "value": 30,
+      "unit": "%"
+    },
+    "demand": {
+      "slider": "Outlet demand (P-101)",
+      "min": 0,
+      "max": 16,
+      "step": 0.5,
+      "value": 6,
+      "unit": "L/s"
+    },
+    "reset": {
+      "button": "Reset trips",
+      "color": "blue"
+    },
+    "kp": {
+      "slider": "Gain Kp",
+      "min": 0.5,
+      "max": 20,
+      "step": 0.5,
+      "value": 4,
+      "hidden": true
+    },
+    "ti": {
+      "slider": "Integral time Ti (0 = off)",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "value": 30,
+      "unit": "s",
+      "hidden": true
+    },
+    "td": {
+      "slider": "Derivative time Td",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "value": 0,
+      "unit": "s",
+      "hidden": true
+    },
+    "action": {
+      "select": "Controller action",
+      "options": [
+        [
+          0,
+          "Reverse: level up, valve closes"
+        ],
+        [
+          1,
+          "Direct: level up, valve opens"
+        ]
+      ],
+      "value": 0,
+      "hidden": true
+    },
+    "span": {
+      "select": "LT-101 range set in the PLC",
+      "options": [
+        [
+          2,
+          "0 to 2 m"
+        ],
+        [
+          1,
+          "0 to 1 m"
+        ],
+        [
+          2.5,
+          "0 to 2.5 m"
+        ]
+      ],
+      "value": 2,
+      "hidden": true
+    }
+  },
+  "let": {
+    "valve_ok": "1",
+    "q_in": "lv.y * 0.2",
+    "q_out": "IF(AND(plc.Pump, tk.level > 0), demand * (1 + 0.03 * SIN(0.5 * t)), 0)"
+  },
+  "blocks": {
+    "tx": {
+      "type": "tx",
+      "pv": "tk.level",
+      "lo": 0,
+      "hi": 2.0,
+      "tau": 0.5
+    },
+    "lsh": {
+      "type": "sensor",
+      "x": "tk.level",
+      "above": 1.7,
+      "nc": 1
+    },
+    "lsl": {
+      "type": "sensor",
+      "x": "tk.level",
+      "below": 0.2,
+      "nc": 1
+    },
+    "plc": {
+      "type": "plc",
+      "src": "VAR Raw : INT; Span, Sp, PidOut, Pct, Level, SpPct, Valve : REAL;\n    AutoSw, Auto, LSH, LSL, Reset, LtFault, HighTrip, LowTrip, Pump : BOOL;\n    LowOK : TON; END_VAR\n(* LT-101 in: 4 mA is 0 counts, 20 mA is 27648. Under 3.6 mA or over 21 mA the signal has failed *)\nLtFault := Raw < -691 OR Raw > 29376;\n(* counts to % of the range, then to metres over the range set here (Span) *)\nPct := Raw * 100.0 / 27648.0;\nLevel := Pct * Span / 100.0;\nSpPct := Sp * 100.0 / Span;\n(* LSH-101 and LSL-101 are closed while the level is safe, so a broken wire trips too *)\nIF NOT LSH THEN HighTrip := TRUE; END_IF;\nIF Reset AND LSH THEN HighTrip := FALSE; END_IF;\nLowOK(IN := LSL, PT := T#5s);\nIF NOT LSL THEN LowTrip := TRUE; ELSIF LowOK.Q THEN LowTrip := FALSE; END_IF;\nPump := NOT LowTrip;\n(* LIC-101 runs in Auto unless LT-101 has failed: then Manual, valve shut *)\nAuto := AutoSw AND NOT LtFault;\nIF HighTrip THEN Valve := 0.0; ELSE Valve := PidOut; END_IF;",
+      "inputs": {
+        "Raw": "tx.raw",
+        "Span": "span",
+        "Sp": "sp",
+        "LSH": "lsh.on",
+        "LSL": "lsl.on",
+        "Reset": "reset",
+        "AutoSw": "auto",
+        "PidOut": "lic.out"
+      },
+      "outputs": [
+        "Valve",
+        "Pump",
+        "Auto",
+        "HighTrip",
+        "LowTrip",
+        "LtFault"
+      ],
+      "scan_ms": 10
+    },
+    "lic": {
+      "type": "pid",
+      "pv": "plc.Pct",
+      "sp": "plc.SpPct",
+      "kp": "kp",
+      "ti": "ti",
+      "td": "td",
+      "direct": "action",
+      "auto": "AND(plc.Auto, t > 0.05)",
+      "man": "IF(plc.LtFault, 0, man)"
+    },
+    "lv": {
+      "type": "lag",
+      "x": "IF(valve_ok, plc.Valve, lv.y)",
+      "tau": 1.5,
+      "y0": 30
+    },
+    "tk": {
+      "type": "tank",
+      "inflow": "lv.y * 0.2",
+      "outflow": "q_out",
+      "area": 0.2,
+      "height": 2.0,
+      "level0": 1.0
+    },
+    "held": {
+      "type": "lag",
+      "x": "ABS(sp - plc.Level)",
+      "tau": 10,
+      "y0": 1
+    }
+  },
+  "faults": {},
+  "script": [],
+  "show": [
+    {
+      "lamp": "Auto",
+      "on": "plc.Auto",
+      "color": "green"
+    },
+    {
+      "lamp": "High level (LSH-101)",
+      "on": "plc.HighTrip",
+      "color": "red"
+    },
+    {
+      "lamp": "Low level (LSL-101)",
+      "on": "plc.LowTrip",
+      "color": "amber"
+    },
+    {
+      "lamp": "LT-101 fault",
+      "on": "plc.LtFault",
+      "color": "red"
+    },
+    {
+      "lamp": "P-101 running",
+      "on": "plc.Pump",
+      "color": "green"
+    },
+    {
+      "lamp": "Overflowing",
+      "on": "tk.over",
+      "color": "red"
+    },
+    {
+      "read": "Level (PLC)",
+      "value": "plc.Level",
+      "unit": "m",
+      "dp": 2
+    },
+    {
+      "read": "Level",
+      "value": "plc.Pct",
+      "unit": "% of range",
+      "dp": 1
+    },
+    {
+      "read": "LT-101",
+      "value": "tx.mA",
+      "unit": "mA",
+      "dp": 2
+    },
+    {
+      "read": "Raw",
+      "value": "tx.raw",
+      "unit": "counts",
+      "dp": 0
+    },
+    {
+      "read": "Set point",
+      "value": "sp",
+      "unit": "m",
+      "dp": 2
+    },
+    {
+      "read": "Output",
+      "value": "lic.out",
+      "unit": "%",
+      "dp": 1
+    },
+    {
+      "read": "LV-101",
+      "value": "lv.y",
+      "unit": "% open",
+      "dp": 1
+    },
+    {
+      "read": "In",
+      "value": "q_in",
+      "unit": "L/s",
+      "dp": 1
+    },
+    {
+      "read": "Out",
+      "value": "q_out",
+      "unit": "L/s",
+      "dp": 1
+    }
+  ],
+  "trend": {
+    "span": 60,
+    "y": [
+      0,
+      100
+    ],
+    "lines": [
+      {
+        "value": "plc.Pct",
+        "label": "level (%)"
+      },
+      {
+        "value": "plc.SpPct",
+        "label": "set point (%)"
+      },
+      {
+        "value": "lic.out",
+        "label": "output (%)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0,
+        1.2,
+        0
+      ],
+      "yaw": 18,
+      "pitch": 14,
+      "dist": 5.2
+    },
+    "floor": 7,
+    "parts": [
+      {
+        "id": "tank",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.4,
+              0.05
+            ],
+            "at": [
+              -0.17,
+              0.2,
+              -0.17
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.4,
+              0.05
+            ],
+            "at": [
+              -0.17,
+              0.2,
+              0.17
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.4,
+              0.05
+            ],
+            "at": [
+              0.17,
+              0.2,
+              -0.17
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.4,
+              0.05
+            ],
+            "at": [
+              0.17,
+              0.2,
+              0.17
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.53,
+              0.04,
+              0.53
+            ],
+            "at": [
+              0,
+              0.38,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.53,
+              0.04,
+              0.53
+            ],
+            "at": [
+              0,
+              2.42,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.535,
+              0.025,
+              0.535
+            ],
+            "at": [
+              0,
+              1.4,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.5,
+              2.0,
+              0.5
+            ],
+            "at": [
+              0,
+              1.4,
+              0
+            ],
+            "color": "glass",
+            "alpha": 0.22,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "id": "water",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.48,
+              2.0,
+              0.48
+            ],
+            "at": [
+              0,
+              0.4,
+              0
+            ],
+            "color": "water",
+            "move": {
+              "y": "tk.level / 2"
+            },
+            "scale": {
+              "y": "tk.level / 2.0"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.48,
+              0.004,
+              0.48
+            ],
+            "at": [
+              0,
+              0.4,
+              0
+            ],
+            "color": "#8cc4f2",
+            "move": {
+              "y": "tk.level"
+            },
+            "show": "tk.level > 0.01"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.56,
+              0.35,
+              0.56
+            ],
+            "at": [
+              0,
+              2.3,
+              0
+            ],
+            "color": "water",
+            "alpha": 0.45,
+            "show": "tk.over",
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "id": "gauge",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.006,
+              0.006
+            ],
+            "at": [
+              -0.13,
+              0.4,
+              0.218
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              -30,
+              0
+            ],
+            "repeat": {
+              "n": 9,
+              "step": [
+                0,
+                0.25,
+                0
+              ]
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.01,
+              0.006
+            ],
+            "at": [
+              -0.135,
+              0.4,
+              0.22
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              -30,
+              0
+            ],
+            "repeat": {
+              "n": 3,
+              "step": [
+                0,
+                1.0,
+                0
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "inlet",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.08,
+              1.15,
+              0.08
+            ],
+            "at": [
+              -1.4749999999999999,
+              1.0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.14,
+              0.03,
+              0.14
+            ],
+            "at": [
+              -2.05,
+              1.0,
+              0
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.1,
+              0.1,
+              0.1
+            ],
+            "at": [
+              -0.9,
+              1.0,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.08,
+              1.25,
+              0.08
+            ],
+            "at": [
+              -0.9,
+              1.625,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.1,
+              0.1,
+              0.1
+            ],
+            "at": [
+              -0.9,
+              2.25,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.08,
+              0.72,
+              0.08
+            ],
+            "at": [
+              -0.54,
+              2.25,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              1,
+              1,
+              1
+            ],
+            "at": [
+              -0.17,
+              0,
+              0
+            ],
+            "color": "water",
+            "show": "lv.y > 0.5",
+            "move": {
+              "y": "(2.22 + 0.4 + tk.level) / 2"
+            },
+            "scale": {
+              "x": "0.012 + 0.045 * lv.y / 100",
+              "z": "0.012 + 0.045 * lv.y / 100",
+              "y": "MAX(0.001, 1.8200000000000003 - tk.level)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "lv101",
+        "parts": [
+          {
+            "shape": "sphere",
+            "size": [
+              0.17,
+              0.17,
+              0.17
+            ],
+            "at": [
+              -1.45,
+              1.0,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.16,
+              0.03,
+              0.16
+            ],
+            "at": [
+              -1.56,
+              1.0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.16,
+              0.03,
+              0.16
+            ],
+            "at": [
+              -1.3399999999999999,
+              1.0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.06,
+              0.07
+            ],
+            "at": [
+              -1.45,
+              1.1,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.2,
+              0.02
+            ],
+            "at": [
+              -1.5,
+              1.23,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.2,
+              0.02
+            ],
+            "at": [
+              -1.4,
+              1.23,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.018,
+              0.2,
+              0.018
+            ],
+            "at": [
+              -1.45,
+              1.23,
+              0
+            ],
+            "color": "white",
+            "move": {
+              "y": "0.06 * lv.y / 100"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.012,
+              0.03
+            ],
+            "at": [
+              -1.45,
+              1.17,
+              0.0
+            ],
+            "color": "orange",
+            "move": {
+              "y": "0.06 * lv.y / 100"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.09,
+              0.02
+            ],
+            "at": [
+              -1.415,
+              1.2,
+              0.012
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.32,
+              0.05,
+              0.32
+            ],
+            "at": [
+              -1.45,
+              1.355,
+              0
+            ],
+            "color": "blue"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.32,
+              0.07,
+              0.32
+            ],
+            "at": [
+              -1.45,
+              1.415,
+              0
+            ],
+            "color": "blue"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.04,
+              0.05,
+              0.04
+            ],
+            "at": [
+              -1.45,
+              1.47,
+              0
+            ],
+            "color": "brass"
+          }
+        ],
+        "label": "LV-101 {lv.y:0}% open",
+        "label_at": [
+          -1.45,
+          1.55,
+          0
+        ]
+      },
+      {
+        "id": "outlet",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.23,
+              0.07
+            ],
+            "at": [
+              0,
+              0.28500000000000003,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.085,
+              0.085,
+              0.085
+            ],
+            "at": [
+              0,
+              0.17,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.68,
+              0.07
+            ],
+            "at": [
+              0.34,
+              0.17,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p101",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.75,
+              0.05,
+              0.32
+            ],
+            "at": [
+              1.08,
+              0.025,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.24,
+              0.1,
+              0.24
+            ],
+            "at": [
+              0.8,
+              0.17,
+              0
+            ],
+            "color": "red",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.12000000000000001,
+              0.12
+            ],
+            "at": [
+              0.8,
+              0.11000000000000001,
+              0
+            ],
+            "color": "red"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.12,
+              0.07
+            ],
+            "at": [
+              0.91,
+              0.17,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.09,
+              0.07,
+              0.09
+            ],
+            "at": [
+              1.0,
+              0.17,
+              0
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "turn": {
+              "x": "IF(plc.Pump, t * 500, 0)"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.02,
+                  0.071,
+                  0.095
+                ],
+                "at": [
+                  0,
+                  0,
+                  0
+                ],
+                "color": "yellow"
+              }
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.2,
+              0.3,
+              0.2
+            ],
+            "at": [
+              1.2000000000000002,
+              0.17,
+              0
+            ],
+            "color": "motor",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.18,
+              0.05,
+              0.18
+            ],
+            "at": [
+              1.375,
+              0.17,
+              0
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.06,
+              0.08
+            ],
+            "at": [
+              1.2000000000000002,
+              0.29000000000000004,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.035,
+              0.035,
+              0.035
+            ],
+            "at": [
+              1.2000000000000002,
+              0.335,
+              0
+            ],
+            "color": "green",
+            "lit": "plc.Pump"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.06,
+              0.45,
+              0.06
+            ],
+            "at": [
+              0.8,
+              0.495,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.075,
+              0.075,
+              0.075
+            ],
+            "at": [
+              0.8,
+              0.7200000000000001,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.06,
+              0.9,
+              0.06
+            ],
+            "at": [
+              0.8,
+              0.7200000000000001,
+              -0.45
+            ],
+            "color": "steel",
+            "rot": [
+              90,
+              0,
+              0
+            ]
+          }
+        ],
+        "label": "P-101 {q_out:1} L/s",
+        "label_at": [
+          1.2000000000000002,
+          0.41000000000000003,
+          0
+        ]
+      },
+      {
+        "id": "lt101",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.035,
+              0.14,
+              0.035
+            ],
+            "at": [
+              0,
+              0.52,
+              0.31
+            ],
+            "color": "steel",
+            "rot": [
+              90,
+              0,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.09,
+              0.07
+            ],
+            "at": [
+              0,
+              0.52,
+              0.41000000000000003
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.07,
+              0.1
+            ],
+            "at": [
+              0,
+              0.61,
+              0.41000000000000003
+            ],
+            "color": "blue"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.02,
+              0.06,
+              0.02
+            ],
+            "at": [
+              0.065,
+              0.52,
+              0.41000000000000003
+            ],
+            "color": "cable",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          }
+        ],
+        "label": "LT-101 {tx.mA:1} mA",
+        "label_at": [
+          0,
+          0.72,
+          0.41000000000000003
+        ]
+      },
+      {
+        "id": "lsh101",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.045,
+              0.1,
+              0.045
+            ],
+            "at": [
+              0.29,
+              2.1,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.09,
+              0.1,
+              0.09
+            ],
+            "at": [
+              0.38,
+              2.1,
+              0
+            ],
+            "color": "yellow"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.03,
+              0.03,
+              0.03
+            ],
+            "at": [
+              0.38,
+              2.165,
+              0
+            ],
+            "color": "red",
+            "lit": "1 - lsh.on"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.07,
+              0.07,
+              0.07
+            ],
+            "at": [
+              0.18,
+              2.1,
+              0
+            ],
+            "color": "white",
+            "move": {
+              "y": "(1 - lsh.on) * 0.04"
+            }
+          }
+        ],
+        "label": "LSH-101",
+        "label_at": [
+          0.55,
+          2.12,
+          0
+        ]
+      },
+      {
+        "id": "lsl101",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.045,
+              0.1,
+              0.045
+            ],
+            "at": [
+              0.29,
+              0.6000000000000001,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.09,
+              0.1,
+              0.09
+            ],
+            "at": [
+              0.38,
+              0.6000000000000001,
+              0
+            ],
+            "color": "yellow"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.03,
+              0.03,
+              0.03
+            ],
+            "at": [
+              0.38,
+              0.665,
+              0
+            ],
+            "color": "amber",
+            "lit": "1 - lsl.on"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.07,
+              0.07,
+              0.07
+            ],
+            "at": [
+              0.18,
+              0.6000000000000001,
+              0
+            ],
+            "color": "white",
+            "move": {
+              "y": "(1 - lsl.on) * -0.04"
+            }
+          }
+        ],
+        "label": "LSL-101",
+        "label_at": [
+          0.55,
+          0.6200000000000001,
+          0
+        ]
+      },
+      {
+        "id": "panel",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.95,
+              0.05
+            ],
+            "at": [
+              1.55,
+              0.475,
+              0.25
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.95,
+              0.05
+            ],
+            "at": [
+              1.95,
+              0.475,
+              0.25
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.6,
+              0.7,
+              0.25
+            ],
+            "at": [
+              1.75,
+              1.25,
+              0.25
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.4,
+              0.26,
+              0.01
+            ],
+            "at": [
+              1.75,
+              1.4,
+              0.38
+            ],
+            "color": "black"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.2,
+              0.004
+            ],
+            "at": [
+              1.63,
+              1.3,
+              0.386
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.2,
+              0.004
+            ],
+            "at": [
+              1.63,
+              1.2,
+              0.388
+            ],
+            "color": "water",
+            "lit": "1",
+            "move": {
+              "y": "0.1 * MAX(0.005, MIN(1, plc.Level / 2))"
+            },
+            "scale": {
+              "y": "MAX(0.005, MIN(1, plc.Level / 2))"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.006,
+              0.004
+            ],
+            "at": [
+              1.63,
+              1.2,
+              0.39
+            ],
+            "color": "orange",
+            "lit": "1",
+            "move": {
+              "y": "0.2 * MIN(1, sp / 2)"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.2,
+              0.03,
+              0.004
+            ],
+            "at": [
+              1.81,
+              1.47,
+              0.386
+            ],
+            "color": "green",
+            "lit": "plc.Auto"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.2,
+              0.1,
+              0.004
+            ],
+            "at": [
+              1.81,
+              1.37,
+              0.386
+            ],
+            "color": "#1d3b5c",
+            "lit": "1"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "at": [
+              1.57,
+              1.19,
+              0.38
+            ],
+            "color": "green",
+            "lit": "plc.Auto"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "at": [
+              1.69,
+              1.19,
+              0.38
+            ],
+            "color": "red",
+            "lit": "plc.HighTrip"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "at": [
+              1.81,
+              1.19,
+              0.38
+            ],
+            "color": "amber",
+            "lit": "plc.LowTrip"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.05,
+              0.05,
+              0.05
+            ],
+            "at": [
+              1.93,
+              1.19,
+              0.38
+            ],
+            "color": "orange",
+            "lit": "plc.LtFault"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.03,
+              0.07
+            ],
+            "at": [
+              1.65,
+              1.03,
+              0.38
+            ],
+            "color": "black",
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "toggle": "auto",
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.012,
+                  0.05,
+                  0.04
+                ],
+                "at": [
+                  0,
+                  0,
+                  0.015
+                ],
+                "color": "white",
+                "turn": {
+                  "z": "IF(auto, -45, 45)"
+                }
+              }
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.06,
+              0.03,
+              0.06
+            ],
+            "at": [
+              1.85,
+              1.03,
+              0.38
+            ],
+            "color": "blue",
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "press": "reset"
+          }
+        ],
+        "label": "PLC: LIC-101 PV {plc.Level:2} m, SP {sp:2} m, out {lic.out:0}%",
+        "label_at": [
+          1.75,
+          1.7,
+          0.25
+        ]
+      }
+    ]
+  }
+}

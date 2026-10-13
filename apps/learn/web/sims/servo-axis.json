@@ -1,0 +1,1043 @@
+{
+  "title": "A servo axis: ball screw, homing and limits",
+  "about": "A servo motor with an incremental encoder turns a ball screw (10 mm a turn) that drives the carriage along its rails, from 0 to 300 mm. At power-up the position reads 0 wherever the carriage is, so the PLC homes it: a search towards the home switch, a back-off, and a slow creep back to the switch, where the position is set to 0. Jog moves it while held; Move goes to the target. The limit switches are wired normally closed: open means hit. The screw is drawn turning 20 times slower than it really does, so it does not blur.",
+  "dt": 0.002,
+  "inputs": {
+    "enable": {
+      "switch": "Enable"
+    },
+    "home": {
+      "button": "Home",
+      "color": "blue"
+    },
+    "jogn": {
+      "button": "Jog −"
+    },
+    "jogp": {
+      "button": "Jog +"
+    },
+    "move": {
+      "button": "Move",
+      "color": "green"
+    },
+    "reset": {
+      "button": "Reset",
+      "color": "amber"
+    },
+    "tgt": {
+      "slider": "Target",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "value": 150,
+      "unit": "mm"
+    },
+    "vmax": {
+      "slider": "Top speed vmax",
+      "min": 20,
+      "max": 400,
+      "step": 10,
+      "value": 200,
+      "unit": "mm/s",
+      "hidden": true
+    },
+    "amax": {
+      "slider": "Acceleration amax",
+      "min": 100,
+      "max": 5000,
+      "step": 100,
+      "value": 1000,
+      "unit": "mm/s²",
+      "hidden": true
+    },
+    "kp": {
+      "slider": "Position loop gain Kv",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "value": 30,
+      "unit": "/s",
+      "hidden": true
+    },
+    "ff": {
+      "slider": "Velocity feedforward",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "value": 1,
+      "unit": "× (1 = 100%)",
+      "hidden": true
+    },
+    "maxerr": {
+      "slider": "Following error limit",
+      "min": 0.5,
+      "max": 20,
+      "step": 0.5,
+      "value": 5,
+      "unit": "mm",
+      "hidden": true
+    }
+  },
+  "let": {
+    "rd": "ax.cmd - ax.ferr",
+    "stop_at": "ax.cmd + ax.vel * ABS(ax.vel) / (2 * amax)",
+    "homed0": "0"
+  },
+  "blocks": {
+    "plc": {
+      "type": "plc",
+      "src": "VAR\n  State : INT := 0;      (* 0 off, 1 ready, 2 search, 3 back off, 4 creep, 5 jog +, 6 jog -, 7 move, 9 fault *)\n  Fault : INT := 0;      (* 1 + limit, 2 - limit, 3 drive tripped, 4 home switch did not clear, 5 not homed *)\n  Homed, Init, Preset, DrvOn : BOOL;\n  Pos, Tgt, StopAt, Vel, VMove : REAL;\n  Target, Speed, HoldPos, BackFrom, MoveMs : REAL;\n  HomeP, MoveP : R_TRIG;\n  MoveT : TON;\nEND_VAR\nIF NOT Init THEN Homed := PreHomed; Init := TRUE; END_IF;\nHomeP(CLK := HomeBtn);\nMoveP(CLK := MoveBtn);\nMoveT(IN := State = 7, PT := T#1h);\nPreset := FALSE;\n\n(* Enable on: hold where it is. Off: everything stops. *)\nIF NOT En THEN State := 0;\nELSIF State = 0 THEN State := 1; HoldPos := Pos;\nEND_IF;\nIF ResetBtn AND NOT Trip AND State <> 9 THEN Fault := 0; END_IF;\n\n(* a trip, or a limit switch open while moving towards it, stops the axis *)\nIF State >= 1 AND State <= 7 THEN\n  IF Trip THEN Fault := 3; State := 9;\n  ELSIF NOT LimP AND Vel > 0.5 THEN Fault := 1; State := 9;\n  ELSIF NOT LimN AND Vel < -0.5 THEN Fault := 2; State := 9;\n  END_IF;\nEND_IF;\n\nCASE State OF\n  0: Target := Pos; Speed := 1.0;\n  1: (* ready: hold the position *)\n     Target := HoldPos; Speed := VMove;\n     IF HomeP.Q THEN State := 2; Homed := FALSE; Fault := 0;\n     ELSIF JogP AND LimP THEN State := 5;\n     ELSIF JogN AND LimN THEN State := 6;\n     ELSIF MoveP.Q AND NOT Homed THEN Fault := 5;\n     ELSIF MoveP.Q THEN State := 7; Target := Tgt; Fault := 0;\n     END_IF;\n  2: (* homing: search towards the home switch at a fair speed *)\n     Target := Pos - 1000.0; Speed := 40.0;\n     IF HomeSw THEN State := 3; BackFrom := Pos; END_IF;\n  3: (* stop, and back off until the switch clears *)\n     Target := Pos + 1000.0; Speed := 10.0;\n     IF NOT HomeSw THEN State := 4; END_IF;\n     IF Pos - BackFrom > 15.0 THEN Fault := 4; State := 9; END_IF;\n  4: (* creep back from the same side; where the switch makes is 0 *)\n     Target := Pos - 1000.0; Speed := 5.0;\n     IF HomeSw THEN Preset := TRUE; Target := 0.0; HoldPos := 0.0; Homed := TRUE; State := 1; END_IF;\n  5: (* jog +: to the software limit once homed *)\n     IF Homed THEN Target := 300.0; ELSE Target := Pos + 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogP THEN State := 1; HoldPos := StopAt; END_IF;\n  6: (* jog - *)\n     IF Homed THEN Target := 0.0; ELSE Target := Pos - 1000.0; END_IF;\n     Speed := 50.0;\n     IF NOT JogN THEN State := 1; HoldPos := StopAt; END_IF;\n  7: (* move to the target, timed *)\n     Target := Tgt; Speed := VMove; MoveMs := MoveT.ET;\n     IF Done THEN State := 1; HoldPos := Tgt; END_IF;\n  9: (* stopped on a fault: Reset clears it once the cause has gone *)\n     Target := Pos; Speed := 1.0;\n     IF ResetBtn AND NOT Trip THEN Fault := 0; State := 1; HoldPos := Pos; END_IF;\nEND_CASE;\nDrvOn := State >= 1 AND State <= 7;",
+      "inputs": {
+        "En": "enable",
+        "HomeBtn": "home",
+        "JogP": "jogp",
+        "JogN": "jogn",
+        "MoveBtn": "move",
+        "ResetBtn": "reset",
+        "HomeSw": "home.on",
+        "LimP": "lim_p.on",
+        "LimN": "lim_n.on",
+        "Trip": "ax.trip",
+        "Done": "ax.done",
+        "Pos": "rd",
+        "Tgt": "tgt",
+        "StopAt": "stop_at",
+        "Vel": "ax.vel",
+        "VMove": "vmax",
+        "PreHomed": "homed0"
+      },
+      "outputs": [
+        "DrvOn",
+        "Target",
+        "Speed",
+        "Preset",
+        "Homed",
+        "State",
+        "Fault"
+      ]
+    },
+    "ax": {
+      "type": "axis",
+      "enable": "plc.DrvOn",
+      "target": "plc.Target",
+      "vmax": "MIN(vmax, MAX(plc.Speed, 1))",
+      "amax": "amax",
+      "kp": "kp",
+      "kv": 300,
+      "ff": "ff",
+      "maxerr": "maxerr",
+      "reset": "reset",
+      "preset": "plc.Preset",
+      "pos0": 0,
+      "x0": 90,
+      "load": 0.05
+    },
+    "home": {
+      "type": "sensor",
+      "x": "ax.x",
+      "at": -4,
+      "range": 4
+    },
+    "lim_n": {
+      "type": "sensor",
+      "x": "ax.x",
+      "below": -15,
+      "nc": 1
+    },
+    "lim_p": {
+      "type": "sensor",
+      "x": "ax.x",
+      "above": 315,
+      "nc": 1
+    }
+  },
+  "faults": {
+    "encoder-reversed": {
+      "label": "The encoder counts backwards (A and B swapped)",
+      "why": "The moment the drive is enabled, the carriage jerks and the drive trips on following error (FE). The position reading moves the opposite way to the carriage, so every correction makes the error bigger: a runaway, stopped only by the following-error limit. Check the encoder wiring (A and B) or the drive's count direction. Do not open the error limit up to make it go away.",
+      "set": {
+        "ax.invert": 1
+      }
+    },
+    "home-dead": {
+      "label": "The home switch never makes (dead sensor or broken wire)",
+      "why": "Homing searches towards home at 40 mm/s, runs straight past the switch and stops on the − limit switch, never homed. The home switch's LED (and its PLC input) never lights, even with the flag in front of it. Check its supply, its wire and the gap to the flag.",
+      "set": {
+        "home.stuck": 0
+      }
+    },
+    "home-stuck": {
+      "label": "The home switch is stuck on",
+      "why": "The home switch's LED is lit wherever the carriage is. Homing \"finds\" it at once, backs off to let it clear, and it never does: after 15 mm the PLC gives up with \"home switch did not clear\". Check for swarf or a bracket in front of the sensor, or a shorted signal wire.",
+      "set": {
+        "home.stuck": 1
+      }
+    },
+    "limit-wire": {
+      "label": "The + limit switch circuit is open (a broken wire)",
+      "why": "The + limit lamp is lit with the carriage nowhere near it, and the PLC's +Lim input LED is off. Jog + does nothing, and homing stops with a + limit fault as soon as it tries to back off (in the + direction). Limit switches are wired normally closed, so a broken wire looks like a limit and stops the axis: fail-safe. Check the wire and the switch.",
+      "set": {
+        "lim_p.stuck": 0
+      }
+    },
+    "ff-off": {
+      "label": "Velocity feedforward has been turned off",
+      "why": "It homes and jogs, but every full-speed Move trips on following error (FE) part way. Without feedforward the position loop must lag to ask for any speed: e = v ÷ Kv = 200 ÷ 30 ≈ 6.7 mm, over the 5 mm limit; at the 50 mm/s jog it is only about 1.7 mm, so slow moves get away with it. Check the drive's feedforward (and gain); opening up the error limit only hides it.",
+      "set": {
+        "ff": 0
+      }
+    }
+  },
+  "script": [],
+  "show": [
+    {
+      "read": "Position",
+      "value": "rd",
+      "unit": "mm",
+      "dp": 2
+    },
+    {
+      "read": "Command",
+      "value": "ax.cmd",
+      "unit": "mm",
+      "dp": 2
+    },
+    {
+      "read": "Following error",
+      "value": "ax.ferr",
+      "unit": "mm",
+      "dp": 2
+    },
+    {
+      "read": "State",
+      "value": "IF(plc.State = 0, \"Off\", IF(plc.State = 1, \"Ready\", IF(plc.State = 2, \"Homing: search\", IF(plc.State = 3, \"Homing: back off\", IF(plc.State = 4, \"Homing: creep\", IF(plc.State = 5, \"Jog +\", IF(plc.State = 6, \"Jog −\", IF(plc.State = 7, \"Moving\", \"Stopped: fault\"))))))))"
+    },
+    {
+      "lamp": "Drive on",
+      "on": "plc.DrvOn",
+      "color": "green"
+    },
+    {
+      "lamp": "Homed",
+      "on": "plc.Homed",
+      "color": "green"
+    },
+    {
+      "lamp": "Home switch",
+      "on": "home.on",
+      "color": "amber"
+    },
+    {
+      "lamp": "− limit",
+      "on": "NOT(lim_n.on)",
+      "color": "red"
+    },
+    {
+      "lamp": "+ limit",
+      "on": "NOT(lim_p.on)",
+      "color": "red"
+    },
+    {
+      "read": "Fault",
+      "value": "IF(ax.trip, \"FE: following error (drive tripped)\", IF(plc.Fault = 1, \"+ limit switch\", IF(plc.Fault = 2, \"− limit switch\", IF(plc.Fault = 3, \"drive tripped\", IF(plc.Fault = 4, \"home switch did not clear\", IF(plc.Fault = 5, \"not homed: Move refused\", \"none\"))))))"
+    },
+    {
+      "read": "Last move took",
+      "value": "plc.MoveMs / 1000",
+      "unit": "s",
+      "dp": 2
+    }
+  ],
+  "trend": {
+    "span": 8,
+    "lines": [
+      {
+        "value": "ax.cmd",
+        "label": "command (mm)"
+      },
+      {
+        "value": "rd",
+        "label": "position (mm)"
+      },
+      {
+        "value": "ax.ferr * 10",
+        "label": "following error (mm × 10)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0.2,
+        0.79,
+        0.0
+      ],
+      "yaw": 24,
+      "pitch": 26,
+      "dist": 0.95
+    },
+    "floor": 5,
+    "parts": [
+      {
+        "id": "bench",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.8,
+              0.03,
+              0.34
+            ],
+            "at": [
+              0.22,
+              0.735,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              -0.15,
+              0.36,
+              -0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              -0.15,
+              0.36,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              0.59,
+              0.36,
+              -0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.035,
+              0.72,
+              0.035
+            ],
+            "at": [
+              0.59,
+              0.36,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.74,
+              0.025,
+              0.025
+            ],
+            "at": [
+              0.22,
+              0.12,
+              0.14
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.74,
+              0.025,
+              0.025
+            ],
+            "at": [
+              0.22,
+              0.12,
+              -0.14
+            ],
+            "color": "frame"
+          }
+        ]
+      },
+      {
+        "id": "base",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.54,
+              0.02,
+              0.15
+            ],
+            "at": [
+              0.165,
+              0.76,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.47,
+              0.015,
+              0.016
+            ],
+            "at": [
+              0.15,
+              0.7775,
+              0.05
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.47,
+              0.015,
+              0.016
+            ],
+            "at": [
+              0.15,
+              0.7775,
+              -0.05
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              -0.069,
+              0.7895,
+              0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              -0.069,
+              0.7895,
+              -0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              0.369,
+              0.7895,
+              0.05
+            ],
+            "color": "rubber"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.02
+            ],
+            "at": [
+              0.369,
+              0.7895,
+              -0.05
+            ],
+            "color": "rubber",
+            "label": "End stop",
+            "label_at": [
+              0,
+              0.03,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.0015,
+              0.002,
+              0.012
+            ],
+            "at": [
+              0,
+              0.771,
+              0.066
+            ],
+            "color": "black",
+            "repeat": {
+              "n": 7,
+              "step": [
+                0.05,
+                0,
+                0
+              ],
+              "wrap": 0.35
+            }
+          }
+        ]
+      },
+      {
+        "id": "screw",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.05,
+              0.05
+            ],
+            "at": [
+              -0.085,
+              0.795,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.05,
+              0.05
+            ],
+            "at": [
+              0.385,
+              0.795,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.012,
+              0.47,
+              0.012
+            ],
+            "at": [
+              0.15,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "steel",
+            "turn": {
+              "y": "ax.x / 10 / 20 * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.003,
+                  0.47,
+                  0.004
+                ],
+                "at": [
+                  0.0055,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ],
+            "label": "Ball screw, 10 mm lead (drawn 20× slower)",
+            "label_at": [
+              0.08,
+              0.06,
+              -0.02
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.0135,
+              0.0025,
+              0.0135
+            ],
+            "at": [
+              -0.07,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "grey",
+            "repeat": {
+              "n": 44,
+              "step": [
+                0.01,
+                0,
+                0
+              ],
+              "wrap": 0.44,
+              "shift": "ax.x / 1000 / 20"
+            }
+          }
+        ]
+      },
+      {
+        "id": "motor",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.024,
+              0.016,
+              0.024
+            ],
+            "at": [
+              0.405,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "brass",
+            "turn": {
+              "y": "ax.x / 10 / 20 * 360"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.004,
+                  0.017,
+                  0.006
+                ],
+                "at": [
+                  0.011,
+                  0,
+                  0
+                ],
+                "color": "dark"
+              }
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.01,
+              0.07,
+              0.07
+            ],
+            "at": [
+              0.418,
+              0.8,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.064,
+              0.1,
+              0.064
+            ],
+            "at": [
+              0.473,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "motor",
+            "label": "Servo motor",
+            "label_at": [
+              0,
+              0.06,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.054,
+              0.032,
+              0.054
+            ],
+            "at": [
+              0.539,
+              0.8,
+              0
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "black",
+            "label": "Encoder",
+            "label_at": [
+              0.02,
+              0.0,
+              0.05
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.014,
+              0.02
+            ],
+            "at": [
+              0.473,
+              0.8380000000000001,
+              0
+            ],
+            "color": "black"
+          }
+        ]
+      },
+      {
+        "id": "carriage",
+        "move": {
+          "x": "ax.x / 1000"
+        },
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.035,
+              0.13
+            ],
+            "at": [
+              0,
+              0.8025,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.008,
+              0.14
+            ],
+            "at": [
+              0,
+              0.824,
+              0
+            ],
+            "color": "steel",
+            "label": "Carriage {rd:1} mm",
+            "label_at": [
+              0,
+              0.03,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.003,
+              0.012,
+              0.004
+            ],
+            "at": [
+              0,
+              0.78,
+              0.068
+            ],
+            "color": "red"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.02,
+              0.003
+            ],
+            "at": [
+              -0.03,
+              0.78,
+              0.0725
+            ],
+            "color": "yellow"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.02,
+              0.012
+            ],
+            "at": [
+              -0.034,
+              0.76,
+              0.085
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.012,
+              0.03,
+              0.012
+            ],
+            "at": [
+              -0.034,
+              0.78,
+              0.085
+            ],
+            "color": "brass",
+            "label": "Home switch",
+            "label_at": [
+              -0.03,
+              0.04,
+              0.03
+            ]
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.008,
+              0.008,
+              0.008
+            ],
+            "at": [
+              -0.034,
+              0.797,
+              0.085
+            ],
+            "color": "amber",
+            "lit": "home.on"
+          }
+        ]
+      },
+      {
+        "id": "limits",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.016,
+              0.03,
+              0.02
+            ],
+            "at": [
+              -0.06,
+              0.785,
+              -0.082
+            ],
+            "color": "red",
+            "label": "− limit",
+            "label_at": [
+              -0.02,
+              0.04,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.006,
+              0.006,
+              0.02
+            ],
+            "at": [
+              -0.051,
+              0.792,
+              -0.072
+            ],
+            "color": "black"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.016,
+              0.03,
+              0.02
+            ],
+            "at": [
+              0.36,
+              0.785,
+              -0.082
+            ],
+            "color": "red",
+            "label": "+ limit",
+            "label_at": [
+              0.0,
+              0.04,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.006,
+              0.006,
+              0.02
+            ],
+            "at": [
+              0.351,
+              0.792,
+              -0.072
+            ],
+            "color": "black"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.008,
+              0.004
+            ],
+            "at": [
+              0,
+              0.792,
+              -0.068
+            ],
+            "color": "dark",
+            "move": {
+              "x": "ax.x / 1000"
+            }
+          }
+        ]
+      },
+      {
+        "id": "plc",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.12,
+              0.08,
+              0.03
+            ],
+            "at": [
+              0.52,
+              0.79,
+              0.13
+            ],
+            "color": "grey",
+            "label": "PLC inputs: Home · +Lim · −Lim",
+            "label_at": [
+              0,
+              0.07,
+              0
+            ]
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.01,
+              0.01,
+              0.01
+            ],
+            "at": [
+              0.49,
+              0.8,
+              0.147
+            ],
+            "color": "green",
+            "lit": "home.on"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.01,
+              0.01,
+              0.01
+            ],
+            "at": [
+              0.52,
+              0.8,
+              0.147
+            ],
+            "color": "green",
+            "lit": "lim_p.on"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.01,
+              0.01,
+              0.01
+            ],
+            "at": [
+              0.55,
+              0.8,
+              0.147
+            ],
+            "color": "green",
+            "lit": "lim_n.on"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.012,
+              0.004
+            ],
+            "at": [
+              0.52,
+              0.772,
+              0.147
+            ],
+            "color": "dark"
+          }
+        ]
+      }
+    ]
+  }
+}

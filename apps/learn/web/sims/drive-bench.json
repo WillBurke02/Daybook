@@ -1,0 +1,1407 @@
+{
+  "title": "A motor on a test bench, on a drive",
+  "about": "A 4 kW, 4-pole induction motor (1440 rpm, 8 A) on a drive, run from the drive's keypad. It turns a flywheel (none, small or large) and a load brake on one shaft. Slowing the flywheel makes the motor a generator: the energy comes back to the drive's DC bus, and the brake chopper dumps it in the brake resistor. The bench will not start while the shaft is still turning (it has no flying start): after a trip, the load brake stops a coasting flywheel. The shaft is drawn 25 times slower than it turns, and the motor heats about 20 times faster than a real one, so you can see both.",
+  "dt": 0.002,
+  "inputs": {
+    "run": {
+      "button": "Run",
+      "color": "green"
+    },
+    "stop": {
+      "button": "Stop",
+      "color": "red"
+    },
+    "reset": {
+      "button": "Reset fault",
+      "color": "blue"
+    },
+    "rev": {
+      "switch": "Reverse"
+    },
+    "res": {
+      "switch": "Brake resistor connected",
+      "value": 1
+    },
+    "ref": {
+      "slider": "Speed reference",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "value": 50,
+      "unit": "Hz"
+    },
+    "load": {
+      "slider": "Load brake",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "value": 0,
+      "unit": "% of rated torque"
+    },
+    "fly": {
+      "select": "Flywheel",
+      "options": [
+        [
+          0,
+          "None"
+        ],
+        [
+          1,
+          "Small: 0.1 kg·m²"
+        ],
+        [
+          2,
+          "Large: 0.5 kg·m²"
+        ]
+      ],
+      "value": 2
+    },
+    "accel": {
+      "slider": "Acceleration time (0 to 60 Hz)",
+      "min": 0.2,
+      "max": 20,
+      "step": 0.1,
+      "value": 5,
+      "unit": "s",
+      "hidden": true
+    },
+    "decel": {
+      "slider": "Deceleration time (60 Hz to 0)",
+      "min": 0.2,
+      "max": 20,
+      "step": 0.1,
+      "value": 3,
+      "unit": "s",
+      "hidden": true
+    },
+    "stall": {
+      "select": "Stall prevention",
+      "options": [
+        [
+          1,
+          "On"
+        ],
+        [
+          0,
+          "Off"
+        ]
+      ],
+      "value": 1,
+      "hidden": true
+    }
+  },
+  "let": {
+    "turning": "ABS(m1.n) >= 30",
+    "running": "AND(OR(AND(run, NOT(turning)), running), NOT(stop), NOT(vfd.trip))",
+    "brake_r": "100",
+    "drag": "0",
+    "res_w": "IF(AND(vfd.brk, res), vfd.bus ^ 2 / brake_r, 0)",
+    "brake_nm": "m1.Tr * (load / 100 + drag)",
+    "slip": "IF(ABS(vfd.f) >= 1, m1.slip, 0)",
+    "t_run": "IF(running, t, t_run)",
+    "t_turn": "IF(OR(running, ABS(m1.n) > 10), t, t_turn)",
+    "stop_s": "t_turn - t_run",
+    "n_stop": "IF(running, ABS(m1.n), n_stop)"
+  },
+  "blocks": {
+    "vfd": {
+      "type": "drive",
+      "run": "running",
+      "rev": "rev",
+      "ref": "ref",
+      "reset": "reset",
+      "motor": "m1",
+      "fmax": 60,
+      "accel": "accel",
+      "decel": "decel",
+      "stall": "stall",
+      "brake": "IF(res, brake_r, 0)"
+    },
+    "m1": {
+      "type": "motor",
+      "f": "vfd.f",
+      "on": "vfd.on",
+      "kw": 4,
+      "rpm": 1440,
+      "poles": 4,
+      "J": "0.012 + IF(fly = 1, 0.1, IF(fly = 2, 0.5, 0))",
+      "load": "brake_nm",
+      "tau": 60
+    },
+    "chop": {
+      "type": "lag",
+      "x": "vfd.brk",
+      "tau": 0.1
+    },
+    "pw": {
+      "type": "lag",
+      "x": "res_w",
+      "tau": 0.1
+    },
+    "rhot": {
+      "type": "lag",
+      "x": "res_w",
+      "tau": 360,
+      "gain": 0.8
+    }
+  },
+  "faults": {
+    "res-open": {
+      "label": "The brake resistor is open circuit (a broken element or a loose wire)",
+      "why": "It runs well, but a moment after Stop it trips on OV and the flywheel coasts on. The Brake chopper lamp lights, so the drive is switching the resistor in, but the resistor never glows or warms and the bus carries on up to 800 V: no current flows in it. Isolate, wait for the bus to discharge and prove it dead, then measure the resistor and its wiring with a meter: it should read about 100 Ω. Check its thermal switch too.",
+      "set": {
+        "brake_r": "1000000"
+      }
+    },
+    "decel-short": {
+      "label": "The deceleration time is far too short, with stall prevention off",
+      "why": "It runs well, but the moment Stop is pressed it trips on OC, and the flywheel coasts on. The ramp drops the frequency far faster than the flywheel can slow, so the slip, the braking torque and the current shoot up, and with stall prevention off the drive trips rather than easing off. The resistor never gets a chance. Read the deceleration time: here it is 0.5 s. About 3 s suits this flywheel.",
+      "set": {
+        "decel": 0.5,
+        "stall": 0
+      }
+    },
+    "accel-short": {
+      "label": "The acceleration time is far too short, with stall prevention off",
+      "why": "It trips on OC a fraction of a second after Run, before the flywheel has got going. The ramp asks for far more torque, and so current, than the motor can give, and with stall prevention (the current limit) off the drive trips instead of holding the ramp. Read the acceleration time: lengthen it, or turn stall prevention back on.",
+      "set": {
+        "accel": 0.2,
+        "stall": 0
+      }
+    },
+    "brake-drag": {
+      "label": "The load brake is binding: it drags with the load set to 0",
+      "why": "No trip, and it reaches 50 Hz, but with the load brake at 0 the motor runs at about 1450 rpm instead of nearly 1500, draws about 7 A instead of 3 A and gives about 21 Nm: the slip, torque and current of a heavy load. The motor heat climbs and the caliper shows clamped. Something is loading the shaft: here the brake. Isolate, check that the caliper releases, and turn the shaft by hand.",
+      "set": {
+        "drag": "0.8"
+      }
+    },
+    "ilim-low": {
+      "label": "The drive's current limit is set far too low",
+      "why": "No trip, but it takes about 7 s to reach 50 Hz instead of about 4, with the current flat at about 5 A all the way. Start it with the load brake on and it never gets going. The drive holds its ramp whenever the current is over its limit, and the limit is below what the motor needs. Read the current limit: about 150% of the motor's rated current is usual.",
+      "set": {
+        "vfd.ilim": 0.6
+      }
+    }
+  },
+  "script": [
+    {
+      "at": 0.3,
+      "say": "The bench: a 4 kW motor, the large flywheel (0.5 kg·m²) and a load brake, on a drive set to 50 Hz. Run is pressed…"
+    },
+    {
+      "at": 1.0,
+      "press": "run",
+      "say": "Run: the drive ramps the frequency up. The motor follows just behind, drawing about 6 A to speed the flywheel up."
+    },
+    {
+      "at": 6.0,
+      "say": "At 50 Hz with no load the speed is nearly 1500 rpm: the slip is tiny and the current (about 3 A) is mostly magnetising."
+    },
+    {
+      "at": 8.0,
+      "set": {
+        "load": 100
+      },
+      "say": "The load brake goes on, at the rated torque (26.5 Nm): the speed drops to about 1440 rpm, the slip grows to 4%, the current rises to about 8 A."
+    },
+    {
+      "at": 12.0,
+      "set": {
+        "load": 0
+      },
+      "say": "The load comes off: back to nearly 1500 rpm and about 3 A."
+    },
+    {
+      "at": 14.0,
+      "press": "stop",
+      "say": "Stop: the drive ramps down faster than the flywheel would coast. The flywheel drives the motor, the torque and slip go negative: it is a generator."
+    },
+    {
+      "at": 15.0,
+      "say": "The energy comes back to the DC bus. It rises from 565 V to 750 V, where the chopper switches the resistor across it: the resistor glows."
+    },
+    {
+      "at": 17.5,
+      "say": "Stopped, in under 3 s. The flywheel's energy is now heat in the resistor, and the bus is back to 565 V."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Run",
+      "on": "vfd.on",
+      "color": "green"
+    },
+    {
+      "lamp": "Fault",
+      "on": "vfd.trip",
+      "color": "red"
+    },
+    {
+      "lamp": "Brake chopper",
+      "on": "chop.y > 0.03",
+      "color": "amber"
+    },
+    {
+      "lamp": "Shaft turning: Run locked",
+      "on": "AND(turning, NOT(running))",
+      "color": "amber"
+    },
+    {
+      "read": "Frequency",
+      "value": "vfd.f",
+      "unit": "Hz",
+      "dp": 1
+    },
+    {
+      "read": "Speed",
+      "value": "m1.n",
+      "unit": "rpm",
+      "dp": 0
+    },
+    {
+      "read": "Slip",
+      "value": "slip",
+      "unit": "%",
+      "dp": 1
+    },
+    {
+      "read": "Torque",
+      "value": "m1.T",
+      "unit": "Nm",
+      "dp": 1
+    },
+    {
+      "read": "Current",
+      "value": "m1.I",
+      "unit": "A",
+      "dp": 1
+    },
+    {
+      "read": "DC bus",
+      "value": "vfd.bus",
+      "unit": "V",
+      "dp": 0
+    },
+    {
+      "read": "Fault",
+      "value": "vfd.fault"
+    },
+    {
+      "read": "Last stop took",
+      "value": "stop_s",
+      "unit": "s",
+      "dp": 1
+    },
+    {
+      "read": "Resistor",
+      "value": "20 + rhot.y",
+      "unit": "°C",
+      "dp": 0
+    },
+    {
+      "meter": "Motor heat",
+      "value": "m1.heat",
+      "max": 150,
+      "high": 110,
+      "unit": "%",
+      "dp": 0
+    }
+  ],
+  "trend": {
+    "span": 12,
+    "y": [
+      0,
+      62
+    ],
+    "lines": [
+      {
+        "value": "ABS(vfd.f)",
+        "label": "f (Hz)"
+      },
+      {
+        "value": "ABS(m1.n) / 30",
+        "label": "speed (rpm ÷ 30)"
+      },
+      {
+        "value": "m1.I * 3",
+        "label": "current (A × 3)"
+      },
+      {
+        "value": "vfd.bus / 20",
+        "label": "DC bus (V ÷ 20)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0.5,
+        1.05,
+        -0.05
+      ],
+      "yaw": 22,
+      "pitch": 22,
+      "dist": 2.5
+    },
+    "floor": 6,
+    "parts": [
+      {
+        "id": "bench",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              1.6,
+              0.03,
+              0.62
+            ],
+            "at": [
+              0.55,
+              0.815,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              1.6,
+              0.06,
+              0.04
+            ],
+            "at": [
+              0.55,
+              0.77,
+              0.29
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              1.6,
+              0.06,
+              0.04
+            ],
+            "at": [
+              0.55,
+              0.77,
+              -0.29
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.7999999999999999,
+              0.05
+            ],
+            "at": [
+              -0.2,
+              0.39999999999999997,
+              0.27
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.7999999999999999,
+              0.05
+            ],
+            "at": [
+              -0.2,
+              0.39999999999999997,
+              -0.27
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.7999999999999999,
+              0.05
+            ],
+            "at": [
+              1.3,
+              0.39999999999999997,
+              0.27
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.7999999999999999,
+              0.05
+            ],
+            "at": [
+              1.3,
+              0.39999999999999997,
+              -0.27
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.04,
+              0.54
+            ],
+            "at": [
+              -0.2,
+              0.15,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.04,
+              0.54
+            ],
+            "at": [
+              1.3,
+              0.15,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              1.5,
+              0.04,
+              0.05
+            ],
+            "at": [
+              0.55,
+              0.15,
+              -0.27
+            ],
+            "color": "dark"
+          }
+        ]
+      },
+      {
+        "id": "panel",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.75,
+              0.05
+            ],
+            "at": [
+              -0.15,
+              1.205,
+              -0.28
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.75,
+              0.05
+            ],
+            "at": [
+              0.75,
+              1.205,
+              -0.28
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.86,
+              0.62,
+              0.015
+            ],
+            "at": [
+              0.3,
+              1.25,
+              -0.29
+            ],
+            "color": "grey"
+          }
+        ]
+      },
+      {
+        "id": "drive",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.32,
+              0.16
+            ],
+            "at": [
+              0.05,
+              1.26,
+              -0.2
+            ],
+            "color": "dark",
+            "label": "Drive {vfd.f:1} Hz · bus {vfd.bus:0} V",
+            "label_at": [
+              0,
+              0.2,
+              0.08
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.11,
+              0.05,
+              0.004
+            ],
+            "at": [
+              0.05,
+              1.35,
+              -0.11900000000000001
+            ],
+            "color": [
+              "green",
+              "red"
+            ],
+            "shade": "vfd.trip",
+            "lit": "OR(vfd.on, vfd.trip)"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.022,
+              0.012,
+              0.022
+            ],
+            "at": [
+              0.015,
+              1.28,
+              -0.116
+            ],
+            "color": "green",
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "press": "run"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.022,
+              0.012,
+              0.022
+            ],
+            "at": [
+              0.05,
+              1.28,
+              -0.116
+            ],
+            "color": "red",
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "press": "stop"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.022,
+              0.012,
+              0.022
+            ],
+            "at": [
+              0.085,
+              1.28,
+              -0.116
+            ],
+            "color": "blue",
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "press": "reset"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.014,
+              0.014,
+              0.014
+            ],
+            "at": [
+              0.1,
+              1.395,
+              -0.11900000000000001
+            ],
+            "color": "amber",
+            "lit": "vfd.brk"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.12,
+              0.08,
+              0.004
+            ],
+            "at": [
+              0.05,
+              1.17,
+              -0.11900000000000001
+            ],
+            "color": "black"
+          }
+        ]
+      },
+      {
+        "id": "resistor",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.36,
+              0.05,
+              0.07
+            ],
+            "at": [
+              0.45,
+              1.43,
+              -0.245
+            ],
+            "color": "orange",
+            "lit": "pw.y > 200",
+            "label": "Brake resistor 100 Ω",
+            "label_at": [
+              0,
+              0.06,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.004,
+              0.08,
+              0.08
+            ],
+            "at": [
+              0.28,
+              1.43,
+              -0.245
+            ],
+            "color": "brass",
+            "repeat": {
+              "n": 18,
+              "step": [
+                0.02,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.02,
+              0.02
+            ],
+            "at": [
+              0.25,
+              1.43,
+              -0.245
+            ],
+            "color": "dark"
+          }
+        ]
+      },
+      {
+        "id": "cables",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.018,
+              0.12,
+              0.018
+            ],
+            "at": [
+              0.05,
+              1.04,
+              -0.2
+            ],
+            "color": "cable"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.018,
+              0.26,
+              0.018
+            ],
+            "at": [
+              0.18,
+              0.98,
+              -0.2
+            ],
+            "color": "cable",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.018,
+              0.25,
+              0.018
+            ],
+            "at": [
+              0.21,
+              1.24,
+              -0.13
+            ],
+            "color": "cable",
+            "rot": [
+              90,
+              0,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.014,
+              0.27,
+              0.014
+            ],
+            "at": [
+              0.25,
+              1.2999999999999998,
+              -0.265
+            ],
+            "color": "cable"
+          }
+        ]
+      },
+      {
+        "id": "motor",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.3,
+              0.14,
+              0.22
+            ],
+            "at": [
+              0.19,
+              0.8999999999999999,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.04,
+              0.24
+            ],
+            "at": [
+              0.08,
+              0.9750000000000001,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.04,
+              0.24
+            ],
+            "at": [
+              0.3,
+              0.9750000000000001,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.22,
+              0.33999999999999997,
+              0.22
+            ],
+            "at": [
+              0.19,
+              1.08,
+              0
+            ],
+            "color": "motor",
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "label": "M1 4 kW · {m1.n:0} rpm",
+            "label_at": [
+              0,
+              0.2,
+              0
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.238,
+              0.008,
+              0.238
+            ],
+            "at": [
+              0.05,
+              1.08,
+              0
+            ],
+            "color": "motor",
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "repeat": {
+              "n": 8,
+              "step": [
+                0.036,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.205,
+              0.11,
+              0.205
+            ],
+            "at": [
+              -0.035,
+              1.08,
+              0
+            ],
+            "color": "motor",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.17,
+              0.004,
+              0.17
+            ],
+            "at": [
+              -0.092,
+              1.08,
+              0
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.2,
+              0.025,
+              0.2
+            ],
+            "at": [
+              0.372,
+              1.08,
+              0
+            ],
+            "color": "motor",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.12,
+              0.08,
+              0.12
+            ],
+            "at": [
+              0.2,
+              1.23,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.13,
+              0.012,
+              0.13
+            ],
+            "at": [
+              0.2,
+              1.2750000000000001,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.03,
+              0.03,
+              0.03
+            ],
+            "at": [
+              0.2,
+              1.23,
+              -0.07
+            ],
+            "color": "dark",
+            "rot": [
+              90,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bearing-0.58",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.23000000000000012,
+              0.14
+            ],
+            "at": [
+              0.58,
+              0.9450000000000001,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.02,
+              0.2
+            ],
+            "at": [
+              0.58,
+              0.84,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.075,
+              0.11
+            ],
+            "at": [
+              0.58,
+              1.08,
+              0
+            ],
+            "color": "frame",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bearing-1.0",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.23000000000000012,
+              0.14
+            ],
+            "at": [
+              1.0,
+              0.9450000000000001,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.02,
+              0.2
+            ],
+            "at": [
+              1.0,
+              0.84,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.075,
+              0.11
+            ],
+            "at": [
+              1.0,
+              1.08,
+              0
+            ],
+            "color": "frame",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          }
+        ]
+      },
+      {
+        "id": "caliper",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.3500000000000001,
+              0.04
+            ],
+            "at": [
+              1.17,
+              1.005,
+              -0.09
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.075,
+              0.07
+            ],
+            "at": [
+              1.17,
+              1.1900000000000002,
+              0
+            ],
+            "color": [
+              "grey",
+              "red"
+            ],
+            "shade": "brake_nm > 0.5",
+            "label": "Load brake {load:0}%",
+            "label_at": [
+              0,
+              0.09,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.04,
+              0.12
+            ],
+            "at": [
+              1.17,
+              1.21,
+              -0.04
+            ],
+            "color": "grey"
+          }
+        ]
+      },
+      {
+        "id": "rotor",
+        "at": [
+          0,
+          1.08,
+          0
+        ],
+        "turn": {
+          "x": "m1.turns * 360 / 25"
+        },
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.028,
+              0.12,
+              0.028
+            ],
+            "at": [
+              0.43,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.09,
+              0.075,
+              0.09
+            ],
+            "at": [
+              0.515,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.092,
+              0.02,
+              0.092
+            ],
+            "at": [
+              0.515,
+              0,
+              0
+            ],
+            "color": "rubber",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.075,
+              0.012,
+              0.012
+            ],
+            "at": [
+              0.515,
+              0.045,
+              0
+            ],
+            "color": "yellow"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.04,
+              0.74,
+              0.04
+            ],
+            "at": [
+              0.92,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.34,
+              0.05,
+              0.34
+            ],
+            "at": [
+              0.79,
+              0,
+              0
+            ],
+            "color": "dark",
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "scale": {
+              "x": "IF(fly = 2, 1, IF(fly = 1, 0.71, 0))",
+              "y": "IF(fly = 2, 1, 0.8)",
+              "z": "IF(fly = 2, 1, IF(fly = 1, 0.71, 0))"
+            },
+            "label": "Flywheel {m1.n:0} rpm (drawn 25× slower)",
+            "label_at": [
+              0,
+              0.26,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.3,
+              0.035
+            ],
+            "at": [
+              0.8160000000000001,
+              0,
+              0
+            ],
+            "color": "yellow",
+            "show": "fly = 2"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.21,
+              0.035
+            ],
+            "at": [
+              0.811,
+              0,
+              0
+            ],
+            "color": "yellow",
+            "show": "fly = 1"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.07,
+              0.1
+            ],
+            "at": [
+              0.79,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.25,
+              0.012,
+              0.25
+            ],
+            "at": [
+              1.17,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.014,
+              0.2,
+              0.03
+            ],
+            "at": [
+              1.178,
+              0,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.07,
+              0.05,
+              0.07
+            ],
+            "at": [
+              1.19,
+              0,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              0,
+              0,
+              90
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
