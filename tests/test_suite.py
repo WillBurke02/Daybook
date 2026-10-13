@@ -21,6 +21,10 @@ sys.path.insert(0, ROOT)
 from core import db as _db, server, suite          # noqa: E402
 from core.suite import SUITE                         # noqa: E402
 
+# every change bumps the version, and CHANGELOG.md's top heading says what it changed
+top = next(l for l in open(os.path.join(ROOT, "CHANGELOG.md"), encoding="utf-8") if l.startswith("## "))
+assert top.split()[1] == _db.APP_VERSION, f"CHANGELOG.md starts at {top.strip()!r}; core/db.py says {_db.APP_VERSION}"
+
 tmp = tempfile.TemporaryDirectory()
 suite.setup(os.path.join(tmp.name, "data"))
 suite.open_all()

@@ -1,6 +1,11 @@
 # Changes
 
-## 4.0 — in progress (not released)
+## 4.0.1 — 13 October 2026
+
+- **Menus**: tapping File, Edit or another menu no longer lights up Help as well. On a phone a
+  submenu opens in place, with a ‹ row to go back.
+
+## 4.0.0 — 13 October 2026
 
 - **Phase 2: easy learning** (the plan doc "Daybook review and plan"):
   - **Lesson text is verbatim** (SPEC.md §1): a lesson keeps its author's words; Daybook adds
