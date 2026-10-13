@@ -228,14 +228,15 @@ def install_service(a, subprocess):
     for cmd in steps:
         try:
             ok = subprocess.run(cmd, capture_output=True, text=True, timeout=60).returncode == 0
-        except OSError:
+        except (OSError, subprocess.TimeoutExpired):     # tailscale serve waits, unanswered, while HTTPS is off
             ok = False
         if not ok:
             print(f"Could not run: sudo {' '.join(cmd)}  (run it yourself)")
     print(f"Wrote {dest}: Daybook starts with the Pi, as {user}, data in {data}.")
     if name:
-        print(f"Open https://{name}/ on the PC and the phone (HTTPS must be on once in the Tailscale admin "
-              f"console, under DNS).\nOn the PC: python daybook.py install --url https://{name}")
+        print(f"Open https://{name}/ on the PC and the phone: each must be signed in to Tailscale, with MagicDNS\n"
+              f"and HTTPS on in the Tailscale admin console, under DNS. Check: tailscale serve status\n"
+              f"On the PC (Daybook 4.0 or later): python daybook.py install --url https://{name}")
     else:
         print("Tailscale is not running here: install it (curl -fsSL https://tailscale.com/install.sh | sh),\n"
               "sudo tailscale up, then run this again so Daybook answers to the Pi's Tailscale name.")
