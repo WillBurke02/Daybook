@@ -108,6 +108,22 @@ def _secret(key, make=None):
     return v
 
 
+def secret(key):
+    """A value kept in suite.db's secret table (never in an app's database, never synced), or None."""
+    return _secret(key)
+
+
+def keep_secret(key, value):
+    """Keep a value given, such as a GitHub token; None or '' forgets it."""
+    db = store()
+    if value:
+        db.execute("INSERT OR REPLACE INTO secret (key, value) VALUES (?, ?)", (key, value))
+    else:
+        db.execute("DELETE FROM secret WHERE key = ?", (key,))
+    db.commit()
+    db.close()
+
+
 # --- which file each app opens ------------------------------------------------------
 
 def path(name):

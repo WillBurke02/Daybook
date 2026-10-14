@@ -19,6 +19,7 @@ const whenOf = r => `${dow(r.slice(0, 10))} ${r.slice(8, 10)}/${r.slice(5, 7)}${
 const remindChip = e => e.remind ? el('a', { class: 'chip rem' + (e.reminded ? ' done' : ''), href: `#/day?d=${e.remind.slice(0, 10)}`,
   title: e.reminded ? 'Reminder, done' : 'Reminder: on that day in Log, and in the calendar feed' }, `Reminder ${whenOf(e.remind)}`) : null;
 let cache = null;                                        // the panels on one page share one fetch of the day
+let githubAsked = false;                                 // one background fetch from GitHub at a time
 const changed = ctx => { cache = null; tagList = null; ctx.reload(); };
 
 // ---- #tags: the ones in use, offered as a # is typed ------------------------------------
@@ -332,6 +333,22 @@ export const panels = {
     lightUp(body.querySelector(`#e${CSS.escape(ctx.params.e || '')}`));      // arrived from Home or search: that entry
   } },
 
+  // what you did on GitHub that day (Admin → GitHub): commits, pull requests, issues; there only when there is some
+  'log.github': { title: 'GitHub', w: 12, deps: ['entry'], async render(body, ctx) {
+    const d = dayOf(ctx), got = await load(d), rows = got.github || [];
+    body.closest('.panel').hidden = !rows.length && !state.editing;
+    ctx.aside.append(rows.length ? el('span', { class: 'muted num' }, `${rows.length}`) : null);
+    body.append(el('ul', { class: 'ghlist' }, rows.map(r => el('li', {},
+      el('span', { class: 'num muted' }, r.at || ''),
+      el('span', { class: 'muted small' }, r.repo.split('/')[1] || r.repo),
+      el('a', { href: r.url, target: '_blank', rel: 'noopener' }, r.text)))));
+    // fetched in the background when a quarter of an hour old; drawn again if there was anything new
+    if (got.github_stale && !githubAsked) {
+      githubAsked = true;
+      api.githubPull().then(r => { if (r.added) changed(ctx); }).catch(() => {}).finally(() => setTimeout(() => { githubAsked = false; }, 60000));
+    }
+  } },
+
   // Money's shifts that day, read through Money's own API; left out if Money is not installed.
   'log.shifts': { title: 'Hours', w: 4, async render(body, ctx) {
     if (!state.meta.apps.some(a => a.name === 'money')) { body.append(el('p', { class: 'note' }, 'Money is not installed.')); return; }
@@ -355,4 +372,4 @@ function lightUp(x) {
 }
 
 export const page = { title: 'Day', narrow: true, quick: false,
-  layout: [{ use: 'log.remind', w: 12 }, { use: 'log.diary' }, { use: 'log.work', w: 12 }, { use: 'log.shifts', w: 12 }], panels };
+  layout: [{ use: 'log.remind', w: 12 }, { use: 'log.diary' }, { use: 'log.work', w: 12 }, { use: 'log.github', w: 12 }, { use: 'log.shifts', w: 12 }], panels };

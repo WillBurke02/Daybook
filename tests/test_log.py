@@ -4,6 +4,7 @@ Entries and the diary, tags, photos and voice notes (and what the database
 refuses), undo, the day, the timeline, printing, search, the phone's share sheet
 and its inbox, and the Home card.
 """
+import base64
 import os
 import sqlite3
 import sys
@@ -162,6 +163,47 @@ r = one("SELECT remind, reminded FROM entry WHERE id = ?", rid)
 assert r["remind"] == (date.fromisoformat(T) + __import__("datetime").timedelta(days=1)).isoformat() and r["reminded"] is None
 db.execute("DELETE FROM entry WHERE id = ?", (rid,)); db.commit()
 print("ok — reminders")
+
+# === GitHub: activity on each day, and Log as Markdown in a repository (a fake GitHub here) ========
+from apps.log import github as gh                        # noqa: E402
+EV = [{"id": "1", "type": "PushEvent", "created_at": "2026-10-14T09:40:00Z", "repo": {"name": "me/daybook"},
+       "payload": {"ref": "refs/heads/main", "commits": [{"sha": "abc", "message": "Fix the menu\n\nlonger", "distinct": True},
+                                                       {"sha": "def", "message": "Merge", "distinct": False}]}},
+      {"id": "2", "type": "PushEvent", "created_at": "2026-10-14T10:00:00Z", "repo": {"name": "me/daybook"},
+       "payload": {"ref": "refs/heads/main", "size": 3, "head": "f00"}},
+      {"id": "3", "type": "PullRequestEvent", "created_at": "2026-10-14T11:00:00Z", "repo": {"name": "me/daybook"},
+       "payload": {"action": "closed", "pull_request": {"number": 7, "title": "Reminders", "merged": True, "html_url": "u7"}}},
+      {"id": "4", "type": "WatchEvent", "created_at": "2026-10-14T12:00:00Z", "repo": {"name": "x/y"}, "payload": {}}]
+got = [r for ev in EV for r in gh.rows_of(ev)]
+assert [(r[0], r[4], r[5]) for r in got] == [("abc", "commit", "Fix the menu"), ("2", "commit", "Pushed 3 commits to main"),
+                                             ("3", "pr", "Merged pull request #7: Reminders")], got
+puts, remote = [], {}
+def fake(token, method, path, body=None):
+    assert token == "t0k"
+    if path.startswith("/users/me/events"):
+        return EV if "page=1" in path else []
+    if method == "GET":
+        return {"sha": remote[path.split("/contents/")[1].split("?")[0]]} if path.split("/contents/")[1].split("?")[0] in remote else None
+    name = path.split("/contents/")[1]
+    if name in remote and body.get("sha") != remote[name]:
+        raise ValueError("GitHub said 409 Conflict")
+    remote[name] = f"sha-{len(puts)}"
+    puts.append((name, base64.b64decode(body["content"]).decode()))
+    return {"content": {"sha": remote[name]}}
+gh._gh = fake
+assert gh.pull(db, "me", "t0k") == 3 and gh.pull(db, "me", "t0k") == 0, "each kept once"
+day = R("GET", "day", q={"d": ["2026-10-14"]})
+assert [g["text"] for g in day["github"]][0] == "Fix the menu" and len(day["github"]) == 3
+md = gh.month_md(db, "2026-09")
+assert md.startswith("# Log, September 2026\n\n## ") and "**Diary.**" in md and "\n- **" in md, md[:300]
+n = gh.backup(db, "t0k", "me/log")
+assert n == len(puts) and "log/tags.md" in remote and any(k.startswith("log/2026/2026-09") for k in remote), remote
+assert gh.backup(db, "t0k", "me/log") == 0, "nothing changed: nothing sent"
+remote["log/tags.md"] = "edited-on-github"                 # changed there since: asked for its sha, sent again
+db.execute("INSERT INTO entry (day, kind, text, tags) VALUES ('2026-09-02', 'work', 'More #site', ' site ')"); db.commit()
+assert gh.backup(db, "t0k", "me/log") == 2 and "More #site" in puts[-2][1] + puts[-1][1]
+db.execute("DELETE FROM entry WHERE day = '2026-09-02' AND text = 'More #site'"); db.execute("DELETE FROM gh_event"); db.commit()
+print("ok — GitHub activity and Markdown backup")
 
 # === the phone's share sheet ===========================================================
 PNG = b"\x89PNG\r\n\x1a\n" + b"\0" * 64

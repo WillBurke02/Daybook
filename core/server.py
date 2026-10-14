@@ -28,6 +28,7 @@ import os
 import posixpath
 import re
 import sqlite3
+import sys
 import threading
 import time
 from datetime import date, datetime, timedelta, timezone
@@ -70,6 +71,15 @@ def daily_copies():
     def copy():
         for p in [_suite.store_path(), *map(_suite.path, SUITE.apps)]:
             _db.back_up(p, SUITE.backup_dir)
+        for name, app in SUITE.apps.items():      # then each app's own once-a-day (Log: GitHub)
+            if hasattr(app, "daily"):
+                db = _db.connect(_suite.path(name))
+                try:
+                    app.daily(db)
+                except Exception as e:            # one app failing leaves the rest, and the server, alone
+                    print(f"daily {name}: {e}", file=sys.stderr)
+                finally:
+                    db.close()
     t = threading.Thread(target=copy, daemon=True)
     t.start()
     return t

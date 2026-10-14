@@ -230,7 +230,17 @@ sid = json.loads(raw("/api/t/suggestion", "POST", {"text": "Bigger buttons", "ap
 got = json.loads(raw("/api/t/suggestion", headers=C)[2])
 assert [g["text"] for g in got] == ["Bigger buttons"] and got[0]["created"] and not got[0]["done"], got
 assert raw("/api/t/suggestion", "POST", {"text": "  "}, CW)[0] >= 400, "an empty suggestion is refused"
-print("ok — widget, changelog, suggestions")
+# GitHub for Log: the token goes to suite.db's secrets, never back out, never into log.db
+if "log" in SUITE.apps:
+    assert raw("/log/api/github", "POST", {"user": "me", "repo": "bad repo", "token": "t"}, CW)[0] == 400
+    assert raw("/log/api/github", "POST", {"user": "@me", "repo": "https://github.com/me/log", "token": "ghp_secret"}, CW)[0] == 200
+    g = json.loads(raw("/log/api/github", headers=C)[2])
+    assert g["user"] == "me" and g["repo"] == "me/log" and g["token"] is True and "ghp_secret" not in json.dumps(g), g
+    assert suite.secret("github") == "ghp_secret" and b"ghp_secret" not in open(suite.path("log"), "rb").read()
+    assert "ghp_secret" not in raw("/log/api/meta", headers=C)[2].decode()
+    raw("/log/api/github", "POST", {"user": "me", "repo": "me/log", "token": ""}, CW)
+    assert suite.secret("github") is None and json.loads(raw("/log/api/github", headers=C)[2])["token"] is False
+print("ok — widget, changelog, suggestions, GitHub settings")
 
 # === the phone: a share-sheet form post, and the capture key for a Shortcut =========
 if "log" in SUITE.apps:

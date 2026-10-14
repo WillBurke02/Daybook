@@ -1,5 +1,16 @@
 # Changes
 
+## 4.0.12 — 14 October 2026
+
+- **GitHub in Log**: Admin → GitHub takes your username, a token and, if you like, a private
+  repository. Your commits, pull requests, issues and releases then show on each day in Log (the day
+  page fetches anything new in the background, a quarter of an hour apart at most), and are kept,
+  though GitHub itself forgets after 90 days.
+- **Log backed up to GitHub**: once a day (and with Back up now) Log goes to that repository as
+  Markdown, a file a month (`log/2026/2026-10.md`: a heading a day, the diary, the entries by time,
+  how many photos) and `log/tags.md` with what each tag stands for. Only months that changed are
+  sent. Photos stay in Daybook. The token is kept in suite.db only, never in log.db or the sync files.
+
 ## 4.0.11 — 14 October 2026
 
 - **Share to Log on iPhone**: the phone capture key now also opens `/log/share`, so a Shortcut in

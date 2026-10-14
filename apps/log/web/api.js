@@ -11,5 +11,9 @@ export const api = {
   print:    (from, to) => get(`print${qs({ from, to })}`),
   renameTag: (from, to) => send('tag/rename', { from, to }),
   photos:   q => get(`photos${qs(q)}`),
+  github:   () => get('github'),
+  githubSave: b => send('github', b),
+  githubPull: () => send('github/pull', {}),
+  githubBackup: () => send('github/backup', {}),
   media:    id => core.table('attachment', { id }).then(([a]) => a?.data),
 };

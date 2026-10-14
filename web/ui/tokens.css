@@ -657,6 +657,10 @@ dialog { width: min(760px, 94vw); }
 .tagnote { margin: 0 0 12px; padding: 8px 12px; border-radius: var(--r); background: var(--accent-soft); white-space: pre-wrap; }
 .chip.rem.done { color: var(--ink-3); border-color: var(--rule); text-decoration: line-through; }
 .reminders { list-style: none; margin: 0; padding: 0; }
+.ghlist { list-style: none; margin: 0; padding: 0; }
+.ghlist li { display: grid; grid-template-columns: 44px auto 1fr; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule-soft); }
+.ghlist li:last-child { border-bottom: 0; }
+.ghlist a { color: inherit; }
 .reminders li { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--rule-soft); }
 .reminders li:last-child { border-bottom: 0; }
 .reminders li a { flex: 1; color: inherit; text-decoration: none; }

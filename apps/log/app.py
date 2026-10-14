@@ -232,6 +232,66 @@ def share(db, fields, files):
     return f"/log/#/day?d={date.today().isoformat()}"
 
 
+# --- GitHub: your activity on each day, and Log backed up as Markdown (github.py) --------------------
+
+def _github_cfg(db, need_repo=False):
+    from core import suite as _suite              # the token is the suite's, in suite.db: never in log.db, never synced
+    st = _db.settings(db)
+    user, repo, token = st.get("github_user"), st.get("github_repo"), _suite.secret("github")
+    if not user or not token or (need_repo and not repo):
+        raise Err(400, "set up GitHub first: Admin → GitHub" + (", with a repository to back up to" if need_repo else ""))
+    return user, repo, token
+
+
+def _github(db, method, p, body):
+    from . import github
+    from core import suite as _suite
+    st = _db.settings(db)
+    if p == [] and method == "GET":
+        return 200, {"user": st.get("github_user"), "repo": st.get("github_repo"), "token": bool(_suite.secret("github")),
+                     "pulled": st.get("github_pulled"), "backed_up": st.get("github_backed_up"),
+                     "events": db.execute("SELECT COUNT(*) FROM gh_event").fetchone()[0]}
+    if p == [] and method == "POST":
+        repo = (body.get("repo") or "").strip().removeprefix("https://github.com/").strip("/")
+        if repo and not re.fullmatch(r"[\w.-]+/[\w.-]+", repo):
+            raise Err(400, "the repository is owner/name, such as willburke02/daybook-log")
+        for k, v in (("github_user", (body.get("user") or "").strip().lstrip("@")), ("github_repo", repo)):
+            db.execute("INSERT OR REPLACE INTO setting (key, value) VALUES (?, ?)", (k, v))
+        if repo != st.get("github_repo"):
+            db.execute("DELETE FROM setting WHERE key = 'github_sent'")      # a new repository gets every file
+        db.commit()
+        if "token" in body:
+            _suite.keep_secret("github", (body.get("token") or "").strip())
+            db.execute("INSERT OR REPLACE INTO setting (key, value) VALUES ('github_on', ?)", ("1" if (body.get("token") or "").strip() else "",))
+            db.commit()
+        return 200, {"ok": True}
+    try:
+        if p == ["pull"] and method == "POST":
+            user, _, token = _github_cfg(db)
+            return 200, {"added": github.pull(db, user, token)}
+        if p == ["backup"] and method == "POST":
+            _, repo, token = _github_cfg(db, need_repo=True)
+            return 200, {"files": github.backup(db, token, repo)}
+    except ValueError as e:
+        raise Err(400, str(e))
+    raise Err(404, "no such endpoint")
+
+
+def daily(db):
+    """Once a day on a server left running (the Pi): fetch your GitHub activity, and back Log up there."""
+    from . import github
+    try:
+        user, repo, token = _github_cfg(db)
+    except Err:
+        return
+    try:
+        github.pull(db, user, token)
+        if repo:
+            github.backup(db, token, repo)
+    except ValueError:
+        pass                                      # GitHub not reached: tomorrow, or the buttons in Admin
+
+
 # --- what the suite asks of every app -------------------------------------------------
 
 def calendar(db, frm, to):
@@ -351,9 +411,16 @@ def route(db, method, p, query, body, ctx):
         rem = [dict(r, what=said(r["text"])) for r in db.execute(
             "SELECT id, day, text, remind, reminded FROM entry WHERE remind IS NOT NULL AND (substr(remind, 1, 10) = ? "
             "OR (? = ? AND reminded IS NULL AND substr(remind, 1, 10) < ?)) ORDER BY remind", (d, d, today, d))]
+        st = _db.settings(db)
+        gh = [dict(r) for r in db.execute("SELECT * FROM gh_event WHERE day = ? ORDER BY at, rowid", (d,))]
+        stale = st.get("github_on") == "1" and (st.get("github_pulled") or "") < (datetime.now() - timedelta(minutes=15)).strftime("%Y-%m-%d %H:%M")
         return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1], "reminders": rem,
+                     "github": gh, "github_stale": stale,
                      "tag_notes": dict(db.execute("SELECT tag, note FROM tag_note").fetchall()),   # ponytail: all of them; a handful
                      "inbox": [dict(r) for r in db.execute("SELECT i.* FROM inbox i")]}
+
+    if p[:1] == ["github"]:
+        return _github(db, method, p[1:], body)
 
     if p == ["photos"] and method == "GET":         # every photo and video, newest first; one tag's, if asked
         tag = (g("tag") or "").lower().lstrip("#")

@@ -1,7 +1,7 @@
 // Admin: the suite's password, themes and keys, then this app's databases,
 // page structure, columns, raw data, and the tools that can break things —
 // each of which takes a backup first.
-import { api, suite } from './api.js';
+import { api, suite, appApi } from './api.js';
 import { el, flash, table, select, download, toCSV, dialog } from './dom.js';
 import { dateUK } from './format.js';
 import { state, loadMeta, label } from './state.js';
@@ -21,7 +21,7 @@ export async function render(main, { reload, app, pages: all }) {
   main.querySelector('.pagehead')?.set(`Admin`, `Every app, then ${app.title}’s own`);
   if (state.meta.password_default) main.querySelector('.pagehead .ctl')?.append(el('span', { class: 'chip bad' }, 'Still using the default password'));
   main.append(g);
-  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), suggestions(), keys(), sync(), version(), themes(),
+  g.append(el('h2', { class: 'admin-h' }, 'Every app'), password(), suggestions(), keys(), github(), sync(), version(), themes(),
            el('h2', { class: 'admin-h' }, app.title), databases(), pages(reload), columns(reload),
            data(), sql(reload), views(reload), backups(reload), health());
 }
@@ -444,6 +444,42 @@ function password() {
       } catch (e) { flash(e.message); }
     } }, 'Change')),
     el('p', { class: 'note' }, 'One password opens every app. Changing it signs every other device out.'));
+}
+
+// --- GitHub, for Log: your activity on each day, and Log backed up as Markdown to a private repository ---
+function github() {
+  if (!state.meta.apps.some(a => a.name === 'log')) return null;
+  const log = appApi('log'), box = el('div', { class: 'stack' });
+  const draw = async () => {
+    let g;
+    try { g = await log.get('github'); } catch (e) { return box.replaceChildren(el('p', { class: 'note deb' }, e.message)); }
+    const user = el('input', { value: g.user || '', autocapitalize: 'off', autocomplete: 'off', 'aria-label': 'GitHub username' });
+    const token = el('input', { type: 'password', autocomplete: 'off', 'aria-label': 'Token', placeholder: g.token ? 'kept (type to replace)' : 'github_pat_…' });
+    const repo = el('input', { value: g.repo || '', autocapitalize: 'off', 'aria-label': 'Repository to back up to', placeholder: 'you/daybook-log (private)' });
+    const out = el('p', { class: 'note', 'aria-live': 'polite' });
+    const run = (what, fn) => async e => {
+      e.target.disabled = true; out.textContent = `${what}…`;
+      try { out.textContent = await fn(); } catch (x) { out.textContent = x.message; }
+      e.target.disabled = false;
+    };
+    box.replaceChildren(
+      el('p', { class: 'note' }, 'Your commits, pull requests and issues show on each day in Log, and Log is backed up to a private repository ',
+        'as Markdown (a file a month, and your tags), once a day. A fine-grained token with read access to your repositories, ',
+        'and Contents read and write on the backup repository. If private work does not show, a classic token with the repo scope does. ',
+        'The token is kept in suite.db only.'),
+      el('label', {}, 'Username ', user), el('label', {}, 'Token ', token), el('label', {}, 'Back up to ', repo),
+      el('div', { class: 'row' },
+        el('button', { class: 'btn sm', onclick: run('Saving', async () => {
+          await log.send('github', { user: user.value, repo: repo.value, ...(token.value ? { token: token.value } : {}) }); draw(); return 'Saved';
+        }) }, 'Save'),
+        g.user && g.token ? el('button', { class: 'btn plain sm', onclick: run('Asking GitHub', async () => `${(await log.send('github/pull', {})).added} new from GitHub`) }, 'Fetch activity now') : null,
+        g.repo && g.token ? el('button', { class: 'btn plain sm', onclick: run('Backing up', async () => `${(await log.send('github/backup', {})).files} file(s) sent to ${g.repo}`) }, 'Back up now') : null,
+        g.token ? el('button', { class: 'btn plain sm', onclick: run('Forgetting', async () => { await log.send('github', { user: g.user, repo: g.repo, token: '' }); draw(); return 'Token forgotten'; }) }, 'Forget the token') : null),
+      out,
+      el('p', { class: 'note' }, [g.pulled ? `Activity fetched ${g.pulled} (${g.events} kept)` : '', g.backed_up ? `backed up ${g.backed_up}` : ''].filter(Boolean).join('; ')));
+  };
+  draw();
+  return panel('GitHub', 6, box);
 }
 
 // --- sync: the same data on more than one computer ----------------------------------
