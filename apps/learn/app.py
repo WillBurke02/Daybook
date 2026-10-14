@@ -296,6 +296,15 @@ def home(db):
                      + ([{"label": f"Continue: {last['title']}", "href": f"#/lesson?id={last['id']}"}] if last else [])}
 
 
+def day(db, d):
+    """Home's view of a day: today, the review, at its time, if any cards are due."""
+    if d != date.today().isoformat():
+        return []
+    due = today_counts(db)["due"]
+    return [{"kind": "review", "at": _db.settings(db).get("review_time") or "19:00", "text": "Learn review",
+             "sub": f"{due} due", "href": "#/review"}] if due else []
+
+
 def calendar(db, frm, to):
     """A daily 'review in Learn' in the calendar feed at its time, with an alert, when switched on (Learn → Settings)."""
     s = _db.settings(db)

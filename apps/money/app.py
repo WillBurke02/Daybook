@@ -387,6 +387,20 @@ def calendar(db, frm, to):
     return out
 
 
+def day(db, d):
+    """Home's view of a day: shifts at their times; the calendar's bills (ticked off: paid), payday and days off."""
+    out = [{"kind": "shift", "at": s["start"], "end": s["end"], "hours": s["hours"], "text": s["project"] or "Shift",
+            "href": f"#/hours?p=week:{d}"} for s in db.execute("SELECT * FROM v_shift WHERE date = ? ORDER BY start", (d,))]
+    for e in calendar(db, d, d):
+        kind = e["uid"].split("-")[0]
+        it = {"kind": {"reminder": "bill", "payday": "payday"}.get(kind, "off"), "text": e["title"],
+              "href": {"reminder": "#/reminders", "payday": "#/pay"}.get(kind, "#/holidays")}
+        if kind == "reminder":
+            it["tick"] = {"table": "reminder", "row": {"id": int(e["uid"].split("-")[1]), "done_through": d}}
+        out.append(it)
+    return out
+
+
 def check(db):
     """Everything `daybook.py check` reports."""
     q = lambda sql: [dict(r) for r in db.execute(sql)]

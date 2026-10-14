@@ -260,6 +260,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, {"ok": True}, extra=[("Set-Cookie", self._cookie("", 0))])
         if p == ["meta"] and method == "GET":
             return self._send(200, suite_meta())
+        if p == ["days"] and method == "GET":          # Home: each app's view of some days
+            return self._send(200, days_of(query.get("from", [""])[0], query.get("to", [""])[0]))
         if p == ["changelog"] and method == "GET":     # Help → What's new
             with open(os.path.join(ROOT, "CHANGELOG.md"), encoding="utf-8") as f:
                 return self._send(200, {"text": f.read()})
@@ -610,6 +612,29 @@ def suite_meta():
             "themes": themes, "settings": {"default_mode": settings.get("mode", "system"), "home": settings.get("home", "")},
             "password_default": _suite.password_is_default(),
             "suite_version": _db.APP_VERSION}
+
+
+def days_of(frm, to):
+    """{date: [item]} from every app's day(db, d) hook, a fortnight at most: shifts, bills, entries, reminders…
+    Each item says which app it is from; one app failing leaves the others."""
+    try:
+        a, b = date.fromisoformat(frm), date.fromisoformat(to)
+    except ValueError:
+        a = b = date.today()
+    ds = [(a + timedelta(days=i)).isoformat() for i in range(max(0, min((b - a).days, 13)) + 1)]
+    out = {d: [] for d in ds}
+    for name, app in SUITE.apps.items():
+        if not hasattr(app, "day"):
+            continue
+        db = _db.connect(_suite.path(name))
+        try:
+            for d in ds:
+                out[d] += [dict(it, app=name) for it in app.day(db, d)]
+        except sqlite3.Error:
+            pass
+        finally:
+            db.close()
+    return {"days": out}
 
 
 def widget():

@@ -106,6 +106,13 @@ type, leave it. **Undo** reverses the last change; Change history any earlier on
   once, however often the file is imported; dividends and interest are shown,
   not recorded (the valuations already count them).
 
+## Home
+
+Three ways to see the day, picked with the switch at the top (a phone and a computer each keep
+their own): **Today** (a briefing: the day in a line, the figures, what is to do, ticked off there,
+the Log box, so far today), **Tiles** (every figure and list as a tile, arranged with Arrange), and
+**Timeline** (the week along the top, the day as a line of hours with your shift down the side).
+
 ## Log
 
 The day page has the diary (one a day) and the work entries in time order.

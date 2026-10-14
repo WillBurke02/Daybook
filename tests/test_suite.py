@@ -247,7 +247,13 @@ if "log" in SUITE.apps:
     assert "ghp_secret" not in raw("/log/api/meta", headers=C)[2].decode()
     raw("/log/api/github", "POST", {"user": "me", "repo": "me/log", "token": ""}, CW)
     assert suite.secret("github") is None and json.loads(raw("/log/api/github", headers=C)[2])["token"] is False
-print("ok — widget, changelog, suggestions, GitHub settings")
+# Home's days: each app's view of each day, a fortnight at most, every item saying its app
+T = date.today().isoformat()
+dd = json.loads(raw(f"/api/days?from={T}&to=2999-01-01", headers=C)[2])["days"]
+assert list(dd)[0] == T and len(dd) == 14 and all("app" in i and "kind" in i and "text" in i for d in dd.values() for i in d), list(dd)[:2]
+if "log" in SUITE.apps:
+    assert any(i["app"] == "log" and i["kind"] == "entry" for i in dd[T]), dd[T]
+print("ok — widget, changelog, suggestions, GitHub settings, days")
 
 # === the phone: a share-sheet form post, and the capture key for a Shortcut =========
 if "log" in SUITE.apps:

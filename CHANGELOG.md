@@ -1,5 +1,22 @@
 # Changes
 
+## 4.0.15 — 14 October 2026
+
+- **Home, three ways**: a switch at the top of Home picks how it looks, and a phone and a computer
+  each keep their own choice (also under the menu, Home shows).
+  - **Today**: the day in a line (your shift, payday this week, how much there is to do), every
+    app's figures, a Today list of reminders, bills due and Learn's review that you tick off right
+    there, the box to add to Log, so far today (entries, photos, commits), the week's hours as bars,
+    Learn's ring, on this day a year ago, and the bills coming up.
+  - **Tiles**: each figure, list, the Log box, Learn's ring, latest photos, GitHub today and on this
+    day as a tile. Arrange moves them earlier or later, makes one wide, or hides one, and works on
+    a phone.
+  - **Timeline**: the week along the top (hours, payday or a reminder under each day); tap a day to
+    see it as a line of hours, with your shift as a band down the side, everything else at its time,
+    a line for now, and payday, bills and days off along the top.
+- Each app now tells Home about a day (shifts, bills, payday, days off, entries, reminders, commits,
+  the review), and Log's Home card carries on this day and the latest photos.
+
 ## 4.0.14 — 14 October 2026
 
 - **Works with no signal**: Daybook now keeps a copy of itself on the phone (a service worker).

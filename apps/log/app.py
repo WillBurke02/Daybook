@@ -305,6 +305,30 @@ def calendar(db, frm, to):
     return out
 
 
+def day(db, d):
+    """Home's view of a day: the diary and entries (with a photo), its reminders (today, also earlier ones
+    not ticked off), and GitHub's activity."""
+    out = []
+    for e in db.execute("SELECT * FROM v_entry WHERE day = ? ORDER BY kind = 'work', COALESCE(at, '99:99'), id", (d,)):
+        text = (e["text"] or "").strip().split("\n")[0][:160]
+        if e["kind"] == "day" and not text:
+            continue
+        out.append({"kind": "diary" if e["kind"] == "day" else "entry", "at": e["at"], "thumb": e["thumb"],
+                    "text": said(text) if REMIND.search(text) else text or ", ".join(
+                        f"{n} {w}{'s' if n != 1 else ''}" for n, w in ((e["photos"], "photo"), (e["videos"], "video"), (e["voices"], "voice note")) if n),
+                    "href": f"#/day?d={d}&e={e['id']}"})
+    today = date.today().isoformat()
+    for r in db.execute("SELECT id, day, text, remind, reminded FROM entry WHERE remind IS NOT NULL AND (substr(remind, 1, 10) = ? "
+                        "OR (? = ? AND reminded IS NULL AND substr(remind, 1, 10) < ?)) ORDER BY remind", (d, d, today, d)):
+        out.append({"kind": "reminder", "at": r["remind"][11:] or None, "text": said(r["text"]), "done": bool(r["reminded"]),
+                    "late": r["remind"][:10] < d, "href": f"#/day?d={r['day']}&e={r['id']}",
+                    "tick": {"table": "entry", "row": {"id": r["id"], "reminded": "@now"}},
+                    "untick": {"table": "entry", "row": {"id": r["id"], "reminded": None}}})
+    out += [{"kind": "github", "at": g["at"], "text": g["text"], "sub": g["repo"].split("/")[-1], "url": g["url"]}
+            for g in db.execute("SELECT * FROM gh_event WHERE day = ? ORDER BY at", (d,))]
+    return out
+
+
 def home(db):
     today = date.today().isoformat()
     n = db.execute("SELECT COUNT(*) FROM entry WHERE day = ? AND (kind = 'work' OR TRIM(COALESCE(text,'')) <> '')",
@@ -319,7 +343,19 @@ def home(db):
             "items": [{"when": f"{r['day'][8:]}/{r['day'][5:7]}" + (f" {r['at']}" if r["at"] else ""),
                        "text": (r["text"] or "").split("\n")[0][:90], "href": f"#/day?d={r['day']}&e={r['id']}"} for r in recent],
             "quick": {"placeholder": "Add to today's log (Ctrl+Enter)", "post": "quick", "done": "Added to today"},
+            "memory": _memory(db, today),
+            "photos": [{"thumb": r["thumb"], "href": f"#/day?d={r['day']}&e={r['id']}"} for r in db.execute(
+                "SELECT a.thumb, e.day, e.id FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE a.type = 'photo' "
+                "AND a.thumb IS NOT NULL ORDER BY e.day DESC, a.id DESC LIMIT 8")],
             "links": [{"label": "Today", "href": "#/day"}, {"label": "Timeline", "href": "#/timeline"}]}
+
+
+def _memory(db, today):
+    """On this day: the latest entry from the same day of an earlier year, if there is one."""
+    r = db.execute("SELECT * FROM v_entry WHERE substr(day, 6) = ? AND day < ? AND TRIM(COALESCE(text, '')) <> '' "
+                   "ORDER BY day DESC, kind = 'work', id LIMIT 1", (today[5:], today)).fetchone()
+    return {"when": f"{r['day'][8:]}/{r['day'][5:7]}/{r['day'][:4]}", "year": r["day"][:4], "text": (r["text"] or "").split("\n")[0][:200],
+            "thumb": r["thumb"], "href": f"#/day?d={r['day']}&e={r['id']}"} if r else None
 
 
 def inspect(count, span):
