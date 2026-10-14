@@ -274,7 +274,7 @@ const load = d => {
 
 export const panels = {
   // what an entry asked to be reminded of (!fri), on its day; today, also any earlier not yet ticked off
-  'log.remind': { title: 'Reminders', w: 12, deps: ['entry'], async render(body, ctx) {
+  'log.remind': { title: 'Reminders', w: 12, deps: ['entry'], quiet: true, async render(body, ctx) {
     const d = dayOf(ctx), rows = (await load(d)).reminders || [];
     body.closest('.panel').hidden = !rows.length && !state.editing;          // there only when there is one
     const tick = r => async () => {
@@ -293,22 +293,28 @@ export const panels = {
 
   'log.diary': { title: 'Diary', w: 12, deps: ['entry', 'attachment'], async render(body, ctx) {
     const d = dayOf(ctx);
-    const got = await load(d);
-    tagNotes = got.tag_notes || {};
-    const diary = got.entries.find(e => e.kind === 'day');
+    // the page's head first, before the day is fetched, so nothing below it moves when it arrives
     const long = new Date(d + 'T12:00:00Z').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
     ctx.pageTitle(long, `${d === today() ? 'Today · ' : d === addDays(today(), -1) ? 'Yesterday · ' : ''}${d.slice(0, 4)}`);
     const jump = el('input', { type: 'date', class: 'sm', value: d, 'aria-label': 'Go to a day',
       onchange: e => e.target.value && ctx.go('day', { d: e.target.value }) });
+    // its room kept from the start (invisible until the day says when), so the row does not wrap later
+    const last = el('button', { class: 'link small', type: 'button', title: 'The last day with anything logged', style: 'visibility:hidden' }, 'Last logged: Mon 00/00');
     ctx.pageHead.querySelector('.ctl').replaceChildren(...[
-      got.prev ? el('button', { class: 'link small', type: 'button', onclick: () => ctx.go('day', { d: got.prev }), title: 'The last day with anything logged' },
-        `Last logged: ${dow(got.prev)} ${got.prev.slice(8)}/${got.prev.slice(5, 7)}`) : null,
       el('span', { class: 'daynav' },
         el('button', { class: 'icon', type: 'button', title: 'The day before  [', 'aria-label': 'The day before', onclick: () => ctx.go('day', { d: addDays(d, -1) }) }, icon('left')),
         jump,
         el('button', { class: 'icon', type: 'button', title: 'The day after  ]', 'aria-label': 'The day after', onclick: () => ctx.go('day', { d: addDays(d, 1) }) }, icon('right'))),
       d !== today() ? el('button', { class: 'btn plain sm', type: 'button', onclick: () => ctx.go('day', {}) }, 'Today') : null,
-      el('a', { class: 'icon', href: `#/print?from=${d}&to=${d}`, title: 'Print this day', 'aria-label': 'Print this day' }, icon('print'))].filter(Boolean));
+      el('a', { class: 'icon', href: `#/print?from=${d}&to=${d}`, title: 'Print this day', 'aria-label': 'Print this day' }, icon('print')), last].filter(Boolean));
+    const got = await load(d);
+    tagNotes = got.tag_notes || {};
+    const diary = got.entries.find(e => e.kind === 'day');
+    if (got.prev) {
+      last.textContent = `Last logged: ${dow(got.prev)} ${got.prev.slice(8)}/${got.prev.slice(5, 7)}`;
+      last.onclick = () => ctx.go('day', { d: got.prev });
+      last.style.visibility = '';
+    }
     const text = el('textarea', { class: 'diary', rows: 2, placeholder: 'How the day went. #tags work here too.', 'aria-label': 'Diary' });
     text.value = diary?.text || '';
     text.addEventListener('change', async () => {
@@ -334,7 +340,7 @@ export const panels = {
   } },
 
   // what you did on GitHub that day (Admin → GitHub): commits, pull requests, issues; there only when there is some
-  'log.github': { title: 'GitHub', w: 12, deps: ['entry'], async render(body, ctx) {
+  'log.github': { title: 'GitHub', w: 12, deps: ['entry'], quiet: true, async render(body, ctx) {
     const d = dayOf(ctx), got = await load(d), rows = got.github || [];
     body.closest('.panel').hidden = !rows.length && !state.editing;
     ctx.aside.append(rows.length ? el('span', { class: 'muted num' }, `${rows.length}`) : null);

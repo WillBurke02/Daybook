@@ -1,5 +1,19 @@
 # Changes
 
+## 4.0.13 — 14 October 2026
+
+- **Pages stop jumping on a phone**: each panel remembers how tall it was and keeps that room while
+  its figures load, so panels arriving one by one no longer push the page about (Spending's At a
+  glance used to shove everything down as it arrived). Measured on a slowed-down phone, from the
+  second visit on, no app's page moves as it loads; before, Log's moved most of a screen.
+- **Log's day**: its date and buttons draw before the day's entries are fetched, so the box below
+  stays put; Reminders and GitHub appear only when there is something, and keep their place if there
+  was last time.
+- **Taps feel like taps**: no grey flash, no wait for a possible double tap, a button dims while
+  pressed, and nothing stays lit after a tap (hover styles now only on a mouse).
+- **Fonts**: one stylesheet for every app, its fonts fetched with the page, and text never changes
+  size once drawn. Tab labels stay on one line.
+
 ## 4.0.12 — 14 October 2026
 
 - **GitHub in Log**: Admin → GitHub takes your username, a token and, if you like, a private

@@ -226,6 +226,7 @@ function frame(page, c, base, working, index) {
                                    + (c.font ? `;font-family:${c.font}` : '') },
     el('header', {}, editControls(page, c, working, base, () => ctx.refresh()), h2, aside), body);
   p.cfg = c;
+
   p.refresh = () => ctx.refresh();
   if (state.editing && state.meta.admin) {
     const move = mover(p, working);
@@ -274,7 +275,18 @@ function frame(page, c, base, working, index) {
       body.append(el('p', { class: 'err' }, e.message));
     }
   };
-  p.ready = run();
+  // First draw: the height this panel had last time (on this size of screen), held until its content is in,
+  // so panels arriving one by one do not push the page about. ponytail: a day with more in it still grows.
+  // A quiet panel (Log's reminders) is out of sight until its render says it has something, unless it had
+  // something last time: never there, then gone; never gone, then there.
+  const tall = `ph:${innerWidth < 600 ? 'p' : 'w'}:${page}:${c.id}`, was = !c.h && +readVal(tall);
+  if (was) body.style.minHeight = was + 'px';
+  if (REGISTRY[c.use]?.quiet && !state.editing && !was) p.hidden = true;
+  p.ready = run().then(() => requestAnimationFrame(() => {
+    if (c.h) return;
+    body.style.minHeight = '';
+    writeVal(tall, p.hidden ? '0' : String(body.offsetHeight));
+  }));
   return p;
 }
 

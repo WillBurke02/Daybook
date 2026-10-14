@@ -127,7 +127,11 @@ print("ok — front doors")
 code, hdr, body = raw("/learn/", headers=C)
 page = body.decode()
 ver = server.static_version()
-assert code == 200 and f'href="/_v/{ver}/learn/ui/tokens.css"' in page and f"from '/_v/{ver}/learn/app.js'" in page, page[:600]
+assert code == 200 and f'href="/_v/{ver}/ui/tokens.css"' in page and f"from '/_v/{ver}/learn/app.js'" in page, page[:600]
+# one stylesheet for every app, so its fonts are fetched once; the ones the first paint needs, with the page
+assert f'<link rel="preload" href="/_v/{ver}/assets/fonts/archivo-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>' in page
+font = raw(f"/_v/{ver}/assets/fonts/archivo-latin-500-normal.woff2")
+assert font[0] == 200 and "immutable" in font[1]["Cache-Control"], font[1]
 assert f'<link rel="modulepreload" href="/_v/{ver}/learn/core/router.js">' in page and f'/_v/{ver}/learn/widgets/sim.js' not in page   # widgets: loaded when a card needs one
 code, hdr, _ = raw(f"/_v/{ver}/learn/core/router.js", headers={**C, "Accept-Encoding": "gzip"})
 assert code == 200 and "immutable" in hdr["Cache-Control"] and hdr.get("Content-Encoding") == "gzip", hdr

@@ -571,6 +571,9 @@ def theme_now():
     return (mode if known and mode != "system" else None, dark, re.sub(r"[<>]", "", "\n".join(css)), ground)
 
 
+FONTS = ("archivo-latin-500-normal", "archivo-latin-700-normal", "jetbrains-mono-latin-500-normal")
+
+
 def page_html(html, prefix, ver, theme):
     """A page as sent: its scripts and styles under /_v/<ver>/ (so kept for good), its modules preloaded,
     and the theme on <html> before anything paints."""
@@ -583,6 +586,8 @@ def page_html(html, prefix, ver, theme):
     html = re.sub(r"""(from\s*)'(\.[^']+)'""", lambda m: f"{m[1]}'{v}{page(m[2])}'", html)
     mode, dark, css, ground = theme
     head = "".join(f'<link rel="modulepreload" href="{v}{u}">' for u in module_graph(entries, ver))
+    # the fonts the first paint uses, fetched with the page, so text does not change size once it has drawn
+    head += "".join(f'<link rel="preload" href="{v}/assets/fonts/{f}.woff2" as="font" type="font/woff2" crossorigin>' for f in FONTS)
     if css:
         head += f'<style id="themes">{css}</style>'
     if ground:
