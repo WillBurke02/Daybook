@@ -5,6 +5,10 @@ import { el, flash, table } from './dom.js';
 import { money, signed, dateUK } from './format.js';
 import { state } from './state.js';
 
+// The offline layer (web/sw.js): pages open with what they last showed when the Pi cannot be reached.
+// It needs HTTPS (Tailscale gives it) or this computer.
+if (globalThis.navigator?.serviceWorker && globalThis.isSecureContext) navigator.serviceWorker.register('/sw.js').catch(() => {});
+
 // An iPhone zooms into any text box under 16px when it is tapped, and stays zoomed. maximum-scale stops that;
 // iOS still lets you pinch to zoom. Only there: Android does not zoom on a tap, and maximum-scale would stop its pinch.
 if (/iPhone|iPad|iPod/.test(globalThis.navigator?.userAgent) || (globalThis.navigator?.platform === 'MacIntel' && navigator.maxTouchPoints > 1))

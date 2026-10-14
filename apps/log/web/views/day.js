@@ -6,6 +6,7 @@ import { el, flash, seg, dialog } from '../core/dom.js';
 import { icon } from '../core/pages.js';
 import { today, addDays, dayLong, dow, toTime, hhmm, span } from '../core/format.js';
 import { state } from '../core/state.js';
+import { hold, held, flush, unreachable } from '../core/outbox.js';
 import { pictureInput, recorder, voicePlayer, viewImage, blobOf, shrink, mediaIn, isVideo, videoInfo, uploadClip,
   videoTile, busy, CLIP_MAX } from '../ui/media.js';
 
@@ -91,7 +92,25 @@ async function sendVideos(entryId, videos) {
   finally { busy(); }
 }
 
+// ---- written with no way to the Pi: kept on this phone (core/outbox.js), sent on the next visit or once back online ----
+let lastCtx = null;
+const keptNote = el('span', { class: 'muted small kept' });
+const showKept = () => held('log').then(xs => { keptNote.textContent = xs.length ? `${xs.length} kept on this phone, to send` : ''; });
+let sending = false;                                     // one send at a time: a render and coming back online can meet
+async function sendKept() {
+  if (sending) return;
+  sending = true;
+  const n = await flush('log', async it => {
+    const r = await api.quick(it.body);
+    if (it.videos?.length) await sendVideos(r.id, it.videos);
+  }, (it, e) => flash(`An entry kept on this phone was refused: ${e.message}`)).catch(() => 0).finally(() => { sending = false; });
+  showKept();
+  if (n) { flash(`Sent ${n} entr${n === 1 ? 'y' : 'ies'} kept on this phone`); if (lastCtx) changed(lastCtx); }
+}
+addEventListener('online', sendKept);
+
 export async function quickBar(ctx) {
+  lastCtx = ctx;
   const onDayPage = !location.hash || location.hash.startsWith('#/day');
   const forDay = onDayPage ? dayOf(ctx) : today();
   const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened? #tags, !fri for a reminder' : `Add to ${dayLong(forDay)}`,
@@ -142,7 +161,19 @@ export async function quickBar(ctx) {
       if (videos.length && !await sendVideos(r.id, videos)) return changed(ctx);
       flash(`Added to ${forDay === today() ? 'today' : dayLong(forDay)}`, { label: 'Undo', fn: async () => { await api.undo(); changed(ctx); } });
       changed(ctx);
-    } catch (e) { busy(); flash(e.message); }
+    } catch (e) {
+      busy();
+      if (!unreachable(e)) return flash(e.message);
+      // no way to the Pi: kept here, as written (its day and time fixed now), and sent later
+      const { photos, videos, voice } = pending;
+      try {
+        await hold({ app: 'log', body: { text: text.value, kind, day: forDay, at: toTime(at.value) || null, photos, voice, videos: videos.length }, videos });
+        pending = { photos: [], voice: null, videos: [] };
+        draft(''); text.value = '';
+        show(); showKept();
+        flash('Daybook cannot be reached: kept on this phone, and sent when it can be');
+      } catch { flash('Daybook cannot be reached, and this phone could not keep it: try again shortly'); }
+    }
     finally { addBtn.disabled = false; addBtn.textContent = 'Add'; }
   };
   text.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); add(); } });
@@ -152,6 +183,7 @@ export async function quickBar(ctx) {
       el('button', { class: 'icon', type: 'button', onclick: () => pick.click(), title: 'Add photos and videos', 'aria-label': 'Add photos and videos' }, icon('plus')), pick,
       recorder(v => { pending.voice = v; show(); }), shown,
       el('span', { class: 'spacer' }),
+      keptNote,
       el('span', { class: 'muted small hint' }, 'Ctrl+Enter adds · paste or drop a picture'),
       addBtn));
   // a pasted screenshot or a dropped photo joins what is about to be added
@@ -161,6 +193,8 @@ export async function quickBar(ctx) {
   document.body.ondrop = e => { bar.classList.remove('drop'); const f = mediaIn(e.dataTransfer); if (f.length) { e.preventDefault(); takeMedia(f); } };
   show();
   fileInbox(ctx);
+  showKept();
+  if (navigator.onLine !== false) sendKept();
   // opened to write (the Log icon, Ctrl+Alt+L): the box is ready to type in, with a mouse and keyboard;
   // a phone waits for a tap, so the keyboard does not cover the day
   if (onDayPage && matchMedia('(pointer: fine)').matches) setTimeout(() => text.focus({ preventScroll: true }));   // once it is on the page

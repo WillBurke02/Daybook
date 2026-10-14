@@ -381,6 +381,8 @@ of `/log/`, `/hours/`, `/spending/` and `/learn/` use **Add to Home screen**: an
 icon each. A note to Log is then tap the icon, tap the box, type, Add. You stay
 signed in while you use it (the sign-in renews itself; 30 days unused and it asks again).
 
+- **No signal**: pages open with what they showed last time (a bar says so), and Log keeps what you
+  add on the phone and sends it when the Pi can be reached again.
 - **Android**: once Log is on the home screen, it is in the **share sheet**:
   share a photo or text to it and it is filed in today's log (a photo that
   arrives on its own waits in the inbox at the top of the day).

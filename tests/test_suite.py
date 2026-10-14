@@ -128,6 +128,9 @@ code, hdr, body = raw("/learn/", headers=C)
 page = body.decode()
 ver = server.static_version()
 assert code == 200 and f'href="/_v/{ver}/ui/tokens.css"' in page and f"from '/_v/{ver}/learn/app.js'" in page, page[:600]
+# the offline layer is open (a phone signed out still gets it) and never kept for long, so a new one is picked up
+sw = raw("/sw.js")
+assert sw[0] == 200 and "javascript" in sw[1]["Content-Type"] and "immutable" not in sw[1].get("Cache-Control", ""), sw[1]
 # one stylesheet for every app, so its fonts are fetched once; the ones the first paint needs, with the page
 assert f'<link rel="preload" href="/_v/{ver}/assets/fonts/archivo-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>' in page
 font = raw(f"/_v/{ver}/assets/fonts/archivo-latin-500-normal.woff2")

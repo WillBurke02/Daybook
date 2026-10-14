@@ -1,5 +1,15 @@
 # Changes
 
+## 4.0.14 — 14 October 2026
+
+- **Works with no signal**: Daybook now keeps a copy of itself on the phone (a service worker).
+  With the Pi out of reach (no signal, Tailscale off), a page opens straight away with what it showed
+  last time, and a bar says so; tap it to try again. On a slow signal a page waits two seconds at
+  most before showing what it kept. Scripts, styles and fonts come from the phone.
+- **Log keeps what you add offline**: an entry (with its photos, voice note and videos) written with
+  no way to the Pi is kept on the phone, as written, and sent by itself on the next visit or as soon
+  as the phone is back online. The box says how many are waiting.
+
 ## 4.0.13 — 14 October 2026
 
 - **Pages stop jumping on a phone**: each panel remembers how tall it was and keeps that room while

@@ -197,7 +197,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._calendar(path, query)
             if path.startswith("/widget/"):
                 return self._widget(path)
-            if path in ("/login", "/api/login", "/api/logout") or path.startswith(("/assets/", "/ui/tokens.css")) \
+            if path in ("/login", "/api/login", "/api/logout", "/sw.js") or path.startswith(("/assets/", "/ui/tokens.css")) \
                     or path.endswith("/manifest.json"):
                 pass                                  # open: the sign-in page and what it needs
             elif not self._signed_in() and not self._capture_ok(path):

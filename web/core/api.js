@@ -5,8 +5,22 @@ const HEAD = { 'content-type': 'application/json', 'X-Daybook': '1' };
 export const APP = location.pathname.match(/^\/([a-z]+)\//)?.[1] || null;
 const BASE = APP ? `/${APP}/api/` : '/api/';
 
+// The offline layer (web/sw.js) answers with what it kept when the Pi cannot be reached: say so, once a page.
+let noted = false;
+function offline(when) {
+  if (noted || typeof document === 'undefined') return;
+  noted = true;
+  const t = new Date(when), at = isNaN(t) ? '' : ` from ${t.toLocaleString('en-GB', { weekday: 'short', hour: '2-digit', minute: '2-digit' })}`;
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'offline'; b.setAttribute('role', 'status');
+  b.textContent = `Daybook cannot be reached: this is what the phone kept${at}. Log keeps what you add and sends it later. Tap to try again.`;
+  b.onclick = () => location.reload();
+  document.body.prepend(b);
+}
+
 async function req(url, opts = {}) {
   const r = await fetch(url, opts);
+  if (r.headers.get('X-Daybook-Kept')) offline(r.headers.get('X-Daybook-Kept'));
   if (r.status === 401) { location.href = '/login?next=' + encodeURIComponent(location.pathname + location.hash); }
   const body = await r.json().catch(() => ({ error: r.statusText }));
   if (!r.ok) throw new Error(body.error || r.statusText);
