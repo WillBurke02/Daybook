@@ -1,12 +1,12 @@
 """Log: a diary of the day and the work day, with photos and voice notes.
 
-Log keeps no reminders: it is for logging the day. Bills and anything else that
-comes round live in Money.
+An entry can carry one reminder (!fri, !tomorrow 9:00): it shows on its day and in the
+calendar feed. Bills and anything else that comes round live in Money.
 """
 import base64
 import os
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from core import db as _db
 from core.api import Err
@@ -44,9 +44,68 @@ def tags_of(text):
     return f" {' '.join(found)} " if found else None
 
 
+DAYS = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
+REMIND = re.compile(r"(?<![\w!])!(today|tomorrow|tmrw|monday|tuesday|wednesday|thursday|friday|saturday|sunday"
+                    r"|mon|tues|tue|wed|thurs|thu|fri|sat|sun|\d{1,2}/\d{1,2}(?:/\d{2,4})?|\d{1,3}[dw])"
+                    r"(?:\s+(\d{1,2}(?::\d{2})?\s*[ap]m|\d{1,2}:\d{2}))?(?![\w/])", re.I)
+
+
+def remind_of(text, day):
+    """'Order bearings !fri 9am', written on Wed 2026-10-14 -> '2026-10-16 09:00'. When is from the entry's
+    own day: !fri is the next Friday after it, !16/10 the next 16 October from it, !3d three days on,
+    !2w a fortnight. ponytail: the first ! in the text only; one reminder an entry."""
+    m = REMIND.search(text or "")
+    if not m:
+        return None
+    w, t = m.group(1).lower(), m.group(2)
+    base = date.fromisoformat(day)
+    if w == "today":
+        d = base
+    elif w in ("tomorrow", "tmrw"):
+        d = base + timedelta(days=1)
+    elif w[:3] in DAYS and not w[0].isdigit():
+        d = base + timedelta(days=(DAYS.index(w[:3]) - base.weekday() - 1) % 7 + 1)
+    elif w[-1] in "dw":
+        d = base + timedelta(days=int(w[:-1]) * (7 if w[-1] == "w" else 1))
+    else:
+        parts = [int(x) for x in w.split("/")]
+        y = parts[2] if len(parts) == 3 else base.year
+        y += 2000 if y < 100 else 0
+        try:
+            d = date(y, parts[1], parts[0])
+            if len(parts) == 2 and d < base:
+                d = date(y + 1, parts[1], parts[0])
+        except ValueError:
+            return None                              # !31/02 is not a day
+    if not t:
+        return d.isoformat()
+    hm = re.match(r"(\d{1,2})(?::(\d{2}))?\s*([ap]m)?", t.lower())
+    h, mi = int(hm.group(1)), int(hm.group(2) or 0)
+    h = h % 12 + (12 if hm.group(3) == "pm" else 0) if hm.group(3) else h
+    return f"{d.isoformat()} {h:02d}:{mi:02d}" if h < 24 and mi < 60 else d.isoformat()
+
+
+def said(text):
+    """An entry's first line without its !reminder: what a reminder says."""
+    return re.sub(r"\s{2,}", " ", REMIND.sub("", (text or "").strip().split("\n")[0])).strip() or "Reminder"
+
+
+def derived(db, text, day, eid=None):
+    """What an entry's text decides: its tags, its reminder (ticked off again only if the reminder changes)."""
+    out = {"tags": tags_of(text), "remind": remind_of(text, day)}
+    if eid is not None:
+        was = db.execute("SELECT remind FROM entry WHERE id = ?", (eid,)).fetchone()
+        if was and was[0] != out["remind"]:
+            out["reminded"] = None
+    return out
+
+
 def before_write(db, name, row):
     if name == "entry" and "text" in row:
-        row["tags"] = tags_of(row["text"])
+        day = row.get("day")
+        if not day and row.get("id"):                # an edit sends only what changed: the day is in the row
+            day = (db.execute("SELECT day FROM entry WHERE id = ?", (row["id"],)).fetchone() or [None])[0]
+        row.update(derived(db, row["text"], day or date.today().isoformat(), row.get("id")))
     if name == "entry" and row.get("id"):
         row["updated"] = datetime.now().strftime("%Y-%m-%d %H:%M")
 
@@ -61,7 +120,7 @@ def sync_merge(db, name, mine, theirs):
         text = a if len(a) >= len(b) else b
     else:
         text = "\n\n".join(sorted((a, b)))
-    return {"text": text, "tags": tags_of(text)}
+    return {"text": text, "tags": tags_of(text), "remind": remind_of(text, mine["day"])}
 
 
 # --- adding ------------------------------------------------------------------------
@@ -84,11 +143,12 @@ def add(db, text=None, kind="work", day=None, at=None, photos=(), voice=None, lo
         undo.append({"op": "restore", "table": "entry", "rows": [dict(diary)]})
         if text:
             joined = ((diary["text"] or "").rstrip() + "\n\n" + (f"{at} " if at else "") + text).strip()
-            db.execute("UPDATE entry SET text = ?, tags = ?, updated = ? WHERE id = ?",
-                       (joined, tags_of(joined), datetime.now().strftime("%Y-%m-%d %H:%M"), eid))
+            d = derived(db, joined, day, eid)
+            db.execute("UPDATE entry SET text = ?, updated = ?, " + ", ".join(f"{k} = ?" for k in d) + " WHERE id = ?",
+                       (joined, datetime.now().strftime("%Y-%m-%d %H:%M"), *d.values(), eid))
     else:
-        eid = db.execute("INSERT INTO entry (day, at, kind, text, tags) VALUES (?,?,?,?,?)",
-                         (day, None if kind == "day" else at, kind, text, tags_of(text))).lastrowid
+        eid = db.execute("INSERT INTO entry (day, at, kind, text, tags, remind) VALUES (?,?,?,?,?,?)",
+                         (day, None if kind == "day" else at, kind, text, tags_of(text), remind_of(text, day))).lastrowid
         undo.append({"op": "remove", "table": "entry", "pk": "id", "ids": [eid]})
     ids = []
     for p in photos:
@@ -151,8 +211,9 @@ def share(db, fields, files):
     pics = [(m, d) for m, d in files if m.startswith("image/") and len(d) <= SHARE_MAX]
     if not text and not pics:
         return "/log/#/day"
-    eid = db.execute("INSERT INTO entry (day, at, kind, text, tags) VALUES (?,?,?,?,?)",
-                     (date.today().isoformat(), datetime.now().strftime("%H:%M"), "work", text or None, tags_of(text))).lastrowid
+    eid = db.execute("INSERT INTO entry (day, at, kind, text, tags, remind) VALUES (?,?,?,?,?,?)",
+                     (date.today().isoformat(), datetime.now().strftime("%H:%M"), "work", text or None, tags_of(text),
+                      remind_of(text, date.today().isoformat()))).lastrowid
     for m, d in pics:
         db.execute("INSERT INTO inbox (entry_id, mime, data) VALUES (?,?,?)",
                    (eid, m, f"data:{m};base64,{base64.b64encode(d).decode()}"))
@@ -164,13 +225,27 @@ def share(db, fields, files):
 
 # --- what the suite asks of every app -------------------------------------------------
 
+def calendar(db, frm, to):
+    """Reminders written in entries and not yet ticked off: at their time with an alert, or all day with one at 09:00."""
+    out = []
+    for r in db.execute("SELECT id, text, remind FROM entry WHERE remind IS NOT NULL AND reminded IS NULL "
+                        "AND substr(remind, 1, 10) BETWEEN ? AND ?", (frm, to)):
+        d, _, at = r["remind"].partition(" ")
+        out.append({"uid": f"remind-{r['id']}", "date": d, "title": said(r["text"]),
+                    **({"at": at, "alarm": "PT0S"} if at else {"alarm": "PT9H"})})
+    return out
+
+
 def home(db):
     today = date.today().isoformat()
     n = db.execute("SELECT COUNT(*) FROM entry WHERE day = ? AND (kind = 'work' OR TRIM(COALESCE(text,'')) <> '')",
                    (today,)).fetchone()[0]
+    due = db.execute("SELECT COUNT(*) FROM entry WHERE remind IS NOT NULL AND reminded IS NULL AND substr(remind, 1, 10) <= ?",
+                     (today,)).fetchone()[0]
     recent = db.execute("SELECT id, day, at, kind, text FROM entry WHERE TRIM(COALESCE(text,'')) <> '' "
                         "ORDER BY day DESC, COALESCE(at, '99') DESC, id DESC LIMIT 3").fetchall()
-    return {"figures": [{"label": "Today", "value": str(n), "sub": "entries" if n != 1 else "entry", "href": "#/day"}],
+    return {"figures": [{"label": "Today", "value": str(n), "sub": "entries" if n != 1 else "entry", "href": "#/day"}]
+                       + ([{"label": "Reminders", "value": str(due), "sub": "to do", "href": "#/day"}] if due else []),
             "items_title": "Latest", "items_empty": "Nothing logged yet.",
             "items": [{"when": f"{r['day'][8:]}/{r['day'][5:7]}" + (f" {r['at']}" if r["at"] else ""),
                        "text": (r["text"] or "").split("\n")[0][:90], "href": f"#/day?d={r['day']}&e={r['id']}"} for r in recent],
@@ -253,7 +328,12 @@ def route(db, method, p, query, body, ctx):
             e["attachments"] = [a for a in atts if a["entry_id"] == e["id"]] + [c for c in clips if c["entry_id"] == e["id"]]
         near = db.execute("SELECT (SELECT MAX(day) FROM entry WHERE day < ?), (SELECT MIN(day) FROM entry WHERE day > ?)",
                           (d, d)).fetchone()
-        return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1],
+        # the day's reminders; today also those from earlier days not yet ticked off
+        today = date.today().isoformat()
+        rem = [dict(r, what=said(r["text"])) for r in db.execute(
+            "SELECT id, day, text, remind, reminded FROM entry WHERE remind IS NOT NULL AND (substr(remind, 1, 10) = ? "
+            "OR (? = ? AND reminded IS NULL AND substr(remind, 1, 10) < ?)) ORDER BY remind", (d, d, today, d))]
+        return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1], "reminders": rem,
                      "inbox": [dict(r) for r in db.execute("SELECT i.* FROM inbox i")]}
 
     if p == ["timeline"] and method == "GET":

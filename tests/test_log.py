@@ -132,6 +132,25 @@ assert one("SELECT text FROM entry WHERE day = '2026-09-11'")[0] == "At #SITE an
 db.execute("DELETE FROM entry WHERE day = '2026-09-11'"); db.commit()
 print("ok — timeline, calendar, tags, rename, print, search")
 
+# === reminders: !fri in an entry, from the entry's own day =========================================
+assert log.remind_of("Order bearings !fri 9am", "2026-10-14") == "2026-10-16 09:00"
+assert log.remind_of("!16/10", "2026-10-20") == "2027-10-16" and log.remind_of("Done! fri", "2026-10-14") is None
+T = date.today().isoformat()
+rid = log.add(db, "Check the pump seal on M3 !today 07:30 #site", day=T)
+assert one("SELECT remind, reminded FROM entry WHERE id = ?", rid)[:] == (f"{T} 07:30", None)
+rem = R("GET", "day", q={"d": [T]})["reminders"]
+assert [(r["id"], r["what"]) for r in rem] == [(rid, "Check the pump seal on M3 #site")], rem
+ev = [e for e in log.calendar(db, T, T) if e["uid"] == f"remind-{rid}"]
+assert ev == [{"uid": f"remind-{rid}", "date": T, "title": "Check the pump seal on M3 #site", "at": "07:30", "alarm": "PT0S"}], ev
+assert any(f["label"] == "Reminders" for f in log.home(db)["figures"])
+R("POST", "t/entry", {"id": rid, "reminded": f"{T} 08:00"})                       # ticked off: out of the feed
+assert not [e for e in log.calendar(db, T, T) if e["uid"] == f"remind-{rid}"]
+R("POST", "t/entry", {"id": rid, "text": "Check the pump seal on M3 !tomorrow"})   # a new when: to do again
+r = one("SELECT remind, reminded FROM entry WHERE id = ?", rid)
+assert r["remind"] == (date.fromisoformat(T) + __import__("datetime").timedelta(days=1)).isoformat() and r["reminded"] is None
+db.execute("DELETE FROM entry WHERE id = ?", (rid,)); db.commit()
+print("ok — reminders")
+
 # === the phone's share sheet ===========================================================
 PNG = b"\x89PNG\r\n\x1a\n" + b"\0" * 64
 where = log.share(db, {"title": "From the gallery", "text": "Panel #site"}, [("image/png", PNG), ("text/plain", b"x")])

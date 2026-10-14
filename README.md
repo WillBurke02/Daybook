@@ -109,7 +109,8 @@ type, leave it. **Undo** reverses the last change; Change history any earlier on
 ## Log
 
 The day page has the diary (one a day) and the work entries in time order.
-Type in the box at the top of any page; `#words` are tags. Photos are shrunk to
+Type in the box at the top of any page; `#words` are tags, and `!fri`, `!tomorrow 9:00`,
+`!16/10` or `!3d` makes the entry a reminder on that day (in Log and, with an alert, the calendar feed). Photos are shrunk to
 1600 px; paste a screenshot with Ctrl+V or drop a file. Voice notes record in
 the browser. The day also shows that day's shifts from Money. Timeline, a
 calendar with a dot for each entry, tags, search and print (a day or a range).

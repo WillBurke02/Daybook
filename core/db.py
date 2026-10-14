@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 BASE = os.path.join(HERE, "base.sql")
-APP_VERSION = "4.0.6"   # bump with every change, and add its CHANGELOG.md heading
+APP_VERSION = "4.0.7"   # bump with every change, and add its CHANGELOG.md heading
 KEEP_BACKUPS = 30
 BIG = 200 * 1024 * 1024   # past this, a database is copied weekly, and fewer copies are kept
 KEEP_BIG = 8

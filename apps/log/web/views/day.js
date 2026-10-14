@@ -13,6 +13,10 @@ const now = () => new Date().toTimeString().slice(0, 5);
 const dayOf = ctx => /^\d{4}-\d{2}-\d{2}$/.test(ctx.params.d || '') ? ctx.params.d : today();
 const tagLinks = tags => (tags || '').trim().split(/\s+/).filter(Boolean)
   .map(t => el('a', { class: 'chip', href: `#/timeline?tag=${encodeURIComponent(t)}` }, '#' + t));
+// when an entry's !fri falls: on its own day's Reminders
+const whenOf = r => `${dow(r.slice(0, 10))} ${r.slice(8, 10)}/${r.slice(5, 7)}${r.length > 10 ? ' ' + r.slice(11) : ''}`;
+const remindChip = e => e.remind ? el('a', { class: 'chip rem' + (e.reminded ? ' done' : ''), href: `#/day?d=${e.remind.slice(0, 10)}`,
+  title: e.reminded ? 'Reminder, done' : 'Reminder: on that day in Log, and in the calendar feed' }, `Reminder ${whenOf(e.remind)}`) : null;
 let cache = null;                                        // the panels on one page share one fetch of the day
 const changed = ctx => { cache = null; tagList = null; ctx.reload(); };
 
@@ -88,7 +92,7 @@ async function sendVideos(entryId, videos) {
 export async function quickBar(ctx) {
   const onDayPage = !location.hash || location.hash.startsWith('#/day');
   const forDay = onDayPage ? dayOf(ctx) : today();
-  const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened? #tags work' : `Add to ${dayLong(forDay)}`,
+  const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened? #tags, !fri for a reminder' : `Add to ${dayLong(forDay)}`,
                                 'aria-label': 'Log text' });
   text.value = draft();
   text.addEventListener('input', () => draft(text.value));
@@ -223,7 +227,7 @@ function workEntry(e, ctx) {
   text.addEventListener('change', () => save({ text: text.value.trim() || null }));
   const box = el('article', { class: 'entry', id: `e${e.id}` },
     el('div', { class: 'when' }, at),
-    el('div', { class: 'what' }, text, tagAssist(text), attachments(e, ctx), el('div', { class: 'row mid' }, tagLinks(e.tags),
+    el('div', { class: 'what' }, text, tagAssist(text), attachments(e, ctx), el('div', { class: 'row mid' }, tagLinks(e.tags), remindChip(e),
       el('span', { class: 'actions row mid' }, addMedia(e, ctx),
         el('button', { class: 'icon del', type: 'button', title: 'Delete entry', 'aria-label': 'Delete entry', onclick: async () => {
           await api.remove('entry', e.id);
@@ -242,6 +246,24 @@ const load = d => {
 };
 
 export const panels = {
+  // what an entry asked to be reminded of (!fri), on its day; today, also any earlier not yet ticked off
+  'log.remind': { title: 'Reminders', w: 12, deps: ['entry'], async render(body, ctx) {
+    const d = dayOf(ctx), rows = (await load(d)).reminders || [];
+    body.closest('.panel').hidden = !rows.length && !state.editing;          // there only when there is one
+    const tick = r => async () => {
+      try { await api.save('entry', { id: r.id, reminded: r.reminded ? null : new Date().toISOString().slice(0, 16).replace('T', ' ') }); changed(ctx); }
+      catch (e) { flash(e.message); }
+    };
+    body.append(el('ul', { class: 'reminders' }, rows.map(r => {
+      const late = r.remind.slice(0, 10) < d;
+      return el('li', { class: r.reminded ? 'done' : late ? 'late' : null },
+        el('button', { class: 'tick', type: 'button', 'aria-pressed': String(!!r.reminded), title: r.reminded ? 'Not done after all' : 'Done',
+          'aria-label': `${r.what}: ${r.reminded ? 'done' : 'not done'}`, onclick: tick(r) }, r.reminded ? '✓' : ''),
+        el('a', { href: `#/day?d=${r.day}&e=${r.id}`, title: 'The entry it is in' }, r.what),
+        el('span', { class: 'muted small num' }, late ? `since ${whenOf(r.remind)}` : r.remind.slice(11)));
+    })));
+  } },
+
   'log.diary': { title: 'Diary', w: 12, deps: ['entry', 'attachment'], async render(body, ctx) {
     const d = dayOf(ctx);
     const got = await load(d);
@@ -267,7 +289,7 @@ export const panels = {
         flash('Saved'); changed(ctx);
       } catch (x) { flash(x.message); }
     });
-    body.append(text, tagAssist(text), diary ? el('div', { class: 'row mid' }, tagLinks(diary.tags), addMedia(diary, ctx)) : null,
+    body.append(text, tagAssist(text), diary ? el('div', { class: 'row mid' }, tagLinks(diary.tags), remindChip(diary), addMedia(diary, ctx)) : null,
       diary ? attachments(diary, ctx) : null);
     if (diary && String(diary.id) === ctx.params.e) lightUp(text);
   } },
@@ -305,4 +327,4 @@ function lightUp(x) {
 }
 
 export const page = { title: 'Day', narrow: true, quick: false,
-  layout: [{ use: 'log.diary' }, { use: 'log.work', w: 12 }, { use: 'log.shifts', w: 12 }], panels };
+  layout: [{ use: 'log.remind', w: 12 }, { use: 'log.diary' }, { use: 'log.work', w: 12 }, { use: 'log.shifts', w: 12 }], panels };

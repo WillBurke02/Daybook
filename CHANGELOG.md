@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.7 — 14 October 2026
+
+- **Reminders in Log**: write `!fri`, `!tomorrow 9:00`, `!16/10`, `!3d` or `!2w 2pm` in an entry and it
+  becomes a reminder, counted from the entry's own day. It shows at the top of that day in Log
+  (today also keeps any earlier one not yet ticked off), as a chip on the entry, on Home, and in the
+  calendar feed with an alert at its time (9:00 if it has none). Tick it off and it leaves the feed;
+  change the date in the text and it is to do again.
+
 ## 4.0.6 — 14 October 2026
 
 - **Calendar alerts**: the calendar feed now carries alerts. A bill alerts at 9:00 the day before,

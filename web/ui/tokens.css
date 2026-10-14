@@ -644,6 +644,17 @@ dialog { width: min(760px, 94vw); }
 .changelog details { margin-bottom: 6px; }
 .suggs { list-style: none; margin: 0; padding: 0; }
 .tagassist { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.chip.rem { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.chip.rem.done { color: var(--ink-3); border-color: var(--rule); text-decoration: line-through; }
+.reminders { list-style: none; margin: 0; padding: 0; }
+.reminders li { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--rule-soft); }
+.reminders li:last-child { border-bottom: 0; }
+.reminders li a { flex: 1; color: inherit; text-decoration: none; }
+.reminders li.done a { text-decoration: line-through; color: var(--ink-3); }
+.reminders li.late .num { color: var(--flag); }
+.reminders .tick { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1.5px solid var(--ink-2); background: none;
+                   color: var(--accent); font-weight: 700; display: grid; place-items: center; padding: 0; }
+.reminders li.done .tick { border-color: var(--accent); }
 .tagassist[hidden] { display: none; }
 .tagassist .chip { cursor: pointer; padding: 4px 10px; font-size: 13px; }
 .suggs li { padding: 8px 0; border-bottom: 1px solid var(--rule-soft); white-space: pre-wrap; }
