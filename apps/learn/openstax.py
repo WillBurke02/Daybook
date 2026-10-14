@@ -341,6 +341,22 @@ def text(html):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html or "")).replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"').strip()
 
 
+def place(cards, added):
+    """What Daybook adds to a lesson from a book (context, questions, machines), kept through a fresh import:
+    each added card goes after the book's card it names ("after"), else before the lesson's last check, in order."""
+    out = list(cards)
+    end = len(out)
+    while end and out[end - 1].get("stage") == "check":
+        end -= 1
+    for c in added:
+        at = next((i + 1 for i, x in enumerate(out) if x["id"] == c.get("after")), None)
+        if at is None:
+            at = end
+        end += at <= end
+        out.insert(at, c)
+    return out
+
+
 def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
     """Do every import the plan lists. Lessons: written to their file (cards, goals, sources, the original).
     Originals: the page, and a link to it added to the lesson's reading list."""
@@ -370,14 +386,7 @@ def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
         old = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
         if old and not old.get("imported"):
             raise ValueError(f"{lesson_id} is written already: list it under originals, not lessons")
-        # what Daybook adds to a lesson from a book (context, questions, machines) is kept through a fresh import:
-        # each added card goes after the book's card it names ("after"), else before the check
-        added = [c for c in old.get("cards", []) if c.get("added")]
-        for c in added:
-            at = next((i + 1 for i, x in enumerate(cards) if x["id"] == c.get("after")), None)
-            if at is None:
-                at = next((i for i, x in enumerate(cards) if x.get("stage") == "check"), len(cards))
-            cards.insert(at, c)
+        cards = place(cards, [c for c in old.get("cards", []) if c.get("added")])
         words = sum(len((c.get("body") or c.get("front", "") + " " + c.get("back", "")).split()) for c in cards)
         lesson = {**{k: v for k, v in old.items() if k in ("title", "level", "prereq", "tags", "summary")},
                   "id": lesson_id, "imported": {"from": "openstax", "sections": [f"{s.book.slug} {s.number}" for s in secs]},

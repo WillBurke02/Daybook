@@ -187,6 +187,60 @@
    "id": "ox2-8"
   },
   {
+   "id": "add-ut-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "An ultrasonic flaw detector uses a 5 MHz probe on steel, where sound travels at 5920 m/s. What is the wavelength, and when does the echo from the far side of a 25 mm plate come back?",
+   "steps": [
+    {
+     "ask": "$\\lambda = v / f$",
+     "show": "$5920 \\div 5\\,000\\,000 = 0.00118$ m, 1.18 mm"
+    },
+    {
+     "ask": "The smallest flaw it shows is roughly half a wavelength",
+     "show": "about 0.6 mm"
+    },
+    {
+     "ask": "There and back: $t = 2d / v$",
+     "show": "$2 \\times 0.025 \\div 5920 = 8.4 \\times 10^{-6}$ s, 8.4 µs"
+    }
+   ],
+   "why": "The same wave equation as the book's sound in air, $v = f\\lambda$, at a million times the frequency. A higher frequency gives a shorter wavelength and finds smaller flaws, but fades faster in coarse-grained metal.",
+   "added": true
+  },
+  {
+   "id": "add-lambda-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Sound travels at {v} m/s in a material, and the probe's frequency is {f} MHz. What is the wavelength, in mm?",
+   "vars": {
+    "v": {
+     "pick": [
+      1480,
+      2730,
+      3240,
+      5920,
+      6320
+     ]
+    },
+    "f": {
+     "pick": [
+      1,
+      2.25,
+      5,
+      10
+     ]
+    }
+   },
+   "answer": "v / (f * 1000)",
+   "unit": "mm",
+   "work": "${v} \\div ({f} \\times 10^6)$ m $= {answer:3}$ mm",
+   "why": "$\\lambda = v / f$: m/s over Hz gives metres; × 1000 for mm.",
+   "hint": "MHz is a million hertz.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "Show that the speed of sound in 20.0ºC air is 343 m/s, as claimed in the text.",

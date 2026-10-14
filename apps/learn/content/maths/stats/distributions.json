@@ -273,6 +273,37 @@
    "id": "ox3-6"
   },
   {
+   "id": "add-cpk-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "Shafts are turned to 25.00 ± 0.03 mm. Measured, they average 25.01 mm with a standard deviation of 0.008 mm, and the diameters are normally distributed. What share are out of tolerance?",
+   "steps": [
+    {
+     "ask": "The top limit, in standard deviations from the mean: $z = (x - \\mu)/\\sigma$",
+     "show": "$(25.03 - 25.01) \\div 0.008 = 2.5$"
+    },
+    {
+     "ask": "The bottom limit",
+     "show": "$(24.97 - 25.01) \\div 0.008 = -5.0$"
+    },
+    {
+     "ask": "The share above $z = 2.5$ (tables, or the book's normalcdf)",
+     "show": "0.0062, so 0.62%"
+    },
+    {
+     "ask": "The share below $z = -5.0$",
+     "show": "about 0.00003%: nothing to speak of"
+    },
+    {
+     "ask": "Out of tolerance in all",
+     "show": "about 0.6%: six in a thousand, all oversize"
+    }
+   ],
+   "why": "Off centre by 0.01 mm, nearly every reject comes from one side. Centred at 25.00, both limits would be 3.75σ away and only about 0.02% would be out. The capability index $C_{pk}$ is this distance to the nearer limit in units of 3σ: $2.5 \\div 3 = 0.83$ here, where 1.33 is a common minimum.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "Find the probability that it takes at least eight minutes to find a parking space. 0.0001 0.9270 0.1862 0.0668",

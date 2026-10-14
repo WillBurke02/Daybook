@@ -7,7 +7,7 @@
    "college-physics-2e 9.4"
   ]
  },
- "minutes": 33,
+ "minutes": 34,
  "goals": [
   "State the second condition that is necessary to achieve equilibrium.",
   "Explain torque and the factors on which it depends.",
@@ -175,6 +175,186 @@
    "html": "<ul><li>Statics can be applied to a variety of situations, ranging from raising a drawbridge to bad posture and back strain. We have discussed the problem-solving strategies specifically useful for statics. Statics is a special case of Newton’s laws, both the general problem-solving strategies and the special strategies for Newton’s laws, discussed in Problem-Solving Strategies, still apply.</li></ul>",
    "body": "Statics can be applied to a variety of situations, ranging from raising a drawbridge to bad posture and back strain. We have discussed the problem-solving strategies specifically useful for statics. Statics is a special case of Newton’s laws, both the general problem-solving strategies and the special strategies for Newton’s laws, discussed in Problem-Solving Strategies, still apply.",
    "id": "ox2-6"
+  },
+  {
+   "id": "add-balance-watch",
+   "type": "concept",
+   "stage": "learn",
+   "title": "A beam to balance",
+   "body": "The book's second condition, to try: a beam on a pivot with masses on it. Move them and watch the moments: it settles level only when the clockwise and anticlockwise moments are equal.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "balance"
+    }
+   },
+   "added": true
+  },
+  {
+   "id": "add-balance-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "4 kg sits 0.6 m left of the pivot. Put the 3 kg on the right where it balances.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "balance",
+     "set": {
+      "m1": 4,
+      "d1": 0.6,
+      "m2": 3,
+      "d2": 0.3
+     },
+     "controls": [
+      "d2"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Bring the beam level.",
+    "pass": "AND(ABS(net) < 0.2, level)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "d2": 0.8
+      }
+     }
+    ],
+    "fails": [
+     [
+      "net < -0.2",
+      "The left still wins: {Macw:1} N·m against {Mcw:1}. Move the 3 kg out."
+     ],
+     [
+      "net > 0.2",
+      "Now the right wins: {Mcw:1} N·m against {Macw:1}. Bring it in."
+     ]
+    ],
+    "hint": "Moments balance: $4 \\times 0.6 = 3 \\times d$.",
+    "why": "$4 \\times 9.81 \\times 0.6 = 23.5$ N·m anticlockwise needs 23.5 N·m clockwise: $d = 23.5 \\div (3 \\times 9.81) = 0.8$ m. The $g$ is on both sides, so kg × m will do."
+   },
+   "added": true
+  },
+  {
+   "id": "add-beam-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "Now the pivot is 0.3 m right of the beam's centre, so the 2 kg beam's own weight turns it anticlockwise. With nothing on the left, what mass at 0.6 m on the right brings it level?",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "balance",
+     "set": {
+      "m1": 0,
+      "piv": 0.3,
+      "m2": 0,
+      "d2": 0.6
+     },
+     "controls": [
+      "m2"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Bring the beam level.",
+    "pass": "AND(ABS(net) < 0.2, level)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "m2": 1
+      }
+     }
+    ],
+    "fails": [
+     [
+      "net < -0.2",
+      "The beam's weight still wins: {Macw:1} N·m against {Mcw:1}."
+     ],
+     [
+      "net > 0.2",
+      "Too much: {Mcw:1} N·m against {Macw:1}."
+     ]
+    ],
+    "hint": "A uniform beam's weight acts at its centre.",
+    "why": "The beam's weight acts at its centre, 0.3 m left of the pivot: $2 \\times 9.81 \\times 0.3 = 5.9$ N·m anticlockwise. At 0.6 m that takes $5.9 \\div (9.81 \\times 0.6) = 1$ kg."
+   },
+   "added": true
+  },
+  {
+   "id": "add-beam-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A uniform 4.0 m beam weighing 600 N rests on a support at each end. A 1500 N load hangs 1.0 m from the left end. How much does each support carry?",
+   "steps": [
+    {
+     "ask": "Moments about the left support, clockwise",
+     "show": "$1500 \\times 1.0 + 600 \\times 2.0 = 2700$ N·m"
+    },
+    {
+     "ask": "The right support's anticlockwise moment must match: $R_B \\times 4.0$",
+     "show": "$R_B = 2700 \\div 4.0 = 675$ N"
+    },
+    {
+     "ask": "Forces up equal forces down",
+     "show": "$R_A = 1500 + 600 - 675 = 1425$ N"
+    }
+   ],
+   "why": "Taking moments about one support leaves its own force out (no distance, no moment), so one equation gives the other support's force; then up equals down. Forgetting the beam's own weight, at its middle, is the usual slip.",
+   "added": true
+  },
+  {
+   "id": "add-beam-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A uniform {span} m beam weighing {w} N rests on a support at each end. A {p} N load sits {a:2} m from the left end. How much does the right support carry?",
+   "vars": {
+    "span": {
+     "pick": [
+      2,
+      3,
+      4,
+      5,
+      6
+     ]
+    },
+    "w": {
+     "pick": [
+      200,
+      400,
+      600
+     ]
+    },
+    "p": {
+     "pick": [
+      500,
+      1000,
+      1500,
+      2500
+     ]
+    },
+    "fr": {
+     "pick": [
+      0.25,
+      0.4,
+      0.6,
+      0.75
+     ]
+    }
+   },
+   "let": {
+    "a": "span * fr"
+   },
+   "answer": "(p * a + w * span / 2) / span",
+   "unit": "N",
+   "work": "Moments about the left support: $({p} \\times {a:2} + {w} \\times {span} / 2) \\div {span} = {answer:1}$ N",
+   "why": "About the left support: the load and the beam's weight (at the middle) against the right support's force times the span.",
+   "hint": "Take moments about the left support.",
+   "added": true
   }
  ]
 }

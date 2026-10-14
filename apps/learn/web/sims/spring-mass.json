@@ -1,0 +1,1053 @@
+{
+  "title": "A mass on a spring, with a damper, on a shaker",
+  "about": "A mass sits on a coil spring beside a damper (a dashpot). The shaker underneath moves the spring's foot up and down at the amplitude and frequency you set. Pull the mass down and let go to see it ring at its natural frequency; run the shaker to see it follow, resonate, or stay still. The readouts work the natural frequency and the damping ratio out from the settings, and measure what it actually does.",
+  "dt": 0.002,
+  "inputs": {
+    "m": {
+      "slider": "Mass",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "value": 2,
+      "unit": "kg"
+    },
+    "k": {
+      "slider": "Spring stiffness",
+      "min": 300,
+      "max": 2000,
+      "step": 50,
+      "value": 800,
+      "unit": "N/m"
+    },
+    "c": {
+      "slider": "Damping",
+      "min": 0,
+      "max": 120,
+      "step": 1,
+      "value": 4,
+      "unit": "N·s/m"
+    },
+    "amp": {
+      "slider": "Shaker amplitude",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "value": 0,
+      "unit": "mm"
+    },
+    "fd": {
+      "slider": "Shaker frequency",
+      "min": 0.2,
+      "max": 8,
+      "step": 0.05,
+      "value": 2,
+      "unit": "Hz"
+    },
+    "pull": {
+      "button": "Pull down 40 mm and let go",
+      "color": "blue"
+    }
+  },
+  "let": {
+    "spring": "1",
+    "damper": "1",
+    "rub": "0",
+    "k_eff": "k * spring",
+    "c_eff": "c * damper",
+    "ph": "MOD(ph + 2 * PI() * fd * 0.002, 2 * PI())",
+    "base": "amp / 1000 * SIN(ph)",
+    "vb": "amp / 1000 * 2 * PI() * fd * COS(ph)",
+    "fnf": "-k_eff * (x - base) - c_eff * (v - vb) - m * 9.81",
+    "acc": "(fnf - rub * v / (ABS(v) + 0.0005)) / m",
+    "v": "IF(OR(t = 0, pull, AND(ABS(v) < 0.002, ABS(fnf) <= rub)), 0, v + 0.002 * acc)",
+    "x": "IF(t = 0, -m * 9.81 / k_eff, IF(pull, -m * 9.81 / k_eff - 0.04, x + 0.002 * v))",
+    "rest": "-m * 9.81 / k_eff",
+    "pdx": "dx",
+    "dx": "(x - rest) * 1000",
+    "per": "IF(AND(dx > 0.5, pdx <= 0.5), t - tc, per)",
+    "tc": "IF(AND(dx > 0.5, pdx <= 0.5), t, tc)",
+    "fm": "IF(per > 0, 1 / per, 0)",
+    "ms": "ms + (dx * dx - ms) * 0.002",
+    "ax": "SQRT(2 * ms)",
+    "fn": "SQRT(k / m) / (2 * PI())",
+    "zeta": "c / (2 * SQRT(k * m))",
+    "sag": "m * 9.81 / k_eff * 1000"
+  },
+  "faults": {
+    "damper-empty": {
+      "label": "The damper has lost its oil",
+      "set": {
+        "damper": "0.04"
+      },
+      "why": "Pull it and let go: it rings on for many cycles where the damping ratio from the settings says it should die in a few, and on the shaker at resonance it swings much further. The measured frequency matches the natural frequency and the sag is right, so the spring and mass are as drawn: it is the damping that is missing."
+    },
+    "spring-soft": {
+      "label": "A softer spring than the drawing's is fitted",
+      "set": {
+        "spring": "0.5"
+      },
+      "why": "The measured frequency is about 0.7 of the natural frequency worked out from the settings, and the mass sits twice as low (twice the static sag). With the mass as stated, a lower frequency and a bigger sag both mean a softer spring: $k = (2\\pi f)^2 m$ from what you measure gives half the drawing's stiffness."
+    },
+    "rubbing": {
+      "label": "The mass rubs on a guide (dry friction)",
+      "set": {
+        "rub": "3"
+      },
+      "why": "Pull it and let go: the swings shrink by the same amount each cycle, so their tops make a straight line on the trend, not the curve viscous damping gives, and it stops dead a little off its rest position. A damper's force grows with speed; dry friction is the same force whatever the speed."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "press": "pull",
+      "for": 1,
+      "say": "Pulled down 40 mm and let go: it bounces at its natural frequency, √(k/m)/2π = 3.2 Hz here, and the damper takes a little energy out each cycle (ζ = 0.05)."
+    },
+    {
+      "at": 5,
+      "set": {
+        "c": 25
+      },
+      "press": "pull",
+      "for": 1,
+      "say": "Damping 25 N·s/m, ζ = 0.31: pulled again, the swing dies in a cycle or two."
+    },
+    {
+      "at": 9,
+      "set": {
+        "c": 4,
+        "amp": 2,
+        "fd": 1
+      },
+      "say": "Shaker on: 2 mm at 1 Hz, well below the natural frequency. The mass just follows the shaker."
+    },
+    {
+      "at": 15,
+      "set": {
+        "fd": 3.2
+      },
+      "say": "3.2 Hz, at the natural frequency: resonance. With so little damping the swing builds up to about ten times the shaker's."
+    },
+    {
+      "at": 25,
+      "set": {
+        "fd": 6
+      },
+      "say": "6 Hz, well above the natural frequency: the mass moves less than half as far as the shaker. Anti-vibration mounts work this way: a natural frequency well below the running speed."
+    }
+  ],
+  "show": [
+    {
+      "read": "Natural frequency (from the settings)",
+      "value": "fn",
+      "unit": "Hz",
+      "dp": 2
+    },
+    {
+      "read": "Damping ratio ζ (from the settings)",
+      "value": "zeta",
+      "dp": 3
+    },
+    {
+      "read": "Measured frequency",
+      "value": "fm",
+      "unit": "Hz",
+      "dp": 2
+    },
+    {
+      "read": "Amplitude",
+      "value": "ax",
+      "unit": "mm",
+      "dp": 1
+    },
+    {
+      "read": "Movement from rest",
+      "value": "dx",
+      "unit": "mm",
+      "dp": 1
+    },
+    {
+      "read": "Static sag",
+      "value": "sag",
+      "unit": "mm",
+      "dp": 1
+    }
+  ],
+  "trend": {
+    "span": 6,
+    "y": [
+      -50,
+      50
+    ],
+    "lines": [
+      {
+        "value": "dx",
+        "label": "mass (mm)"
+      },
+      {
+        "value": "base * 1000",
+        "label": "shaker (mm)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0,
+        0.42,
+        0
+      ],
+      "yaw": 28,
+      "pitch": 14,
+      "dist": 1.55
+    },
+    "floor": 2,
+    "parts": [
+      {
+        "id": "shaker",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.5,
+              0.04,
+              0.36
+            ],
+            "at": [
+              0,
+              0.02,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.26,
+              0.11,
+              0.26
+            ],
+            "at": [
+              0,
+              0.095,
+              0
+            ],
+            "color": "motor"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.22,
+              0.02,
+              0.22
+            ],
+            "at": [
+              0,
+              0.17,
+              0
+            ],
+            "color": "steel",
+            "move": {
+              "y": "base"
+            },
+            "label": "Shaker {fd:2} Hz, {amp:1} mm",
+            "label_at": [
+              0.18,
+              -0.08,
+              0.12
+            ]
+          }
+        ]
+      },
+      {
+        "id": "spring",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.0417 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.125 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.2083 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.2917 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.375 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.4583 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.5417 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.625 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.7083 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.7917 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              -7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.875 * (0.40 + x - base)"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.11,
+              0.008,
+              0.11
+            ],
+            "at": [
+              0,
+              0.18,
+              0
+            ],
+            "color": "steel",
+            "rot": [
+              7,
+              0,
+              0
+            ],
+            "move": {
+              "y": "base + 0.9583 * (0.40 + x - base)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "damper",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.045,
+              0.22,
+              0.045
+            ],
+            "at": [
+              0.14,
+              0.29,
+              0
+            ],
+            "color": "dark",
+            "move": {
+              "y": "base"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.06,
+              0.012,
+              0.04
+            ],
+            "at": [
+              0.12,
+              0.185,
+              0
+            ],
+            "color": "steel",
+            "move": {
+              "y": "base"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.014,
+              0.25,
+              0.014
+            ],
+            "at": [
+              0.14,
+              0.455,
+              0
+            ],
+            "color": "steel",
+            "move": {
+              "y": "x"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.012,
+              0.04
+            ],
+            "at": [
+              0.115,
+              0.574,
+              0
+            ],
+            "color": "steel",
+            "move": {
+              "y": "x"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mass",
+        "shape": "box",
+        "size": [
+          0.18,
+          0.1,
+          0.18
+        ],
+        "at": [
+          0,
+          0.63,
+          0
+        ],
+        "color": "blue",
+        "move": {
+          "y": "x"
+        },
+        "label": "{m:1} kg",
+        "label_at": [
+          0,
+          0.08,
+          0
+        ]
+      },
+      {
+        "id": "pointer",
+        "shape": "box",
+        "size": [
+          0.05,
+          0.004,
+          0.006
+        ],
+        "at": [
+          -0.13,
+          0.63,
+          -0.09
+        ],
+        "color": "red",
+        "move": {
+          "y": "x"
+        }
+      },
+      {
+        "id": "scale",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.3,
+              0.004
+            ],
+            "at": [
+              -0.21,
+              0.555,
+              -0.092
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.43,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.44,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.45,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.46,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.47,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.48,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.49,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.5,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.51,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.52,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.53,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.54,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.55,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.56,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.57,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.58,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.59,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.6,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.61,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.62,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.63,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.64,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.65,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.66,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.2,
+              0.67,
+              -0.09
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.003,
+              0.004
+            ],
+            "at": [
+              -0.19,
+              0.68,
+              -0.09
+            ],
+            "color": "dark"
+          }
+        ]
+      },
+      {
+        "id": "button",
+        "shape": "box",
+        "size": [
+          0.06,
+          0.03,
+          0.06
+        ],
+        "at": [
+          0.2,
+          0.055,
+          0.12
+        ],
+        "color": "blue",
+        "press": "pull",
+        "label": "Pull",
+        "label_at": [
+          0,
+          0.04,
+          0
+        ]
+      }
+    ]
+  }
+}

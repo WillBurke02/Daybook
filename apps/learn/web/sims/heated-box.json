@@ -1,0 +1,550 @@
+{
+  "title": "An enclosure warming up: walls, a fan and a thermostat",
+  "about": "A sealed steel enclosure with heat inside (drives and power supplies), in a room. Heat leaves through the walls, about 5.5 W for each square metre and each degree of difference, and the filter fan blows warm air out when the thermostat calls. Its heat capacity is kept small, so it warms in minutes rather than hours: run it at 5×.",
+  "dt": 0.05,
+  "inputs": {
+    "P": {
+      "slider": "Heat inside",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "value": 200,
+      "unit": "W"
+    },
+    "ta": {
+      "slider": "Room temperature",
+      "min": 0,
+      "max": 45,
+      "step": 1,
+      "value": 25,
+      "unit": "°C"
+    },
+    "mode": {
+      "select": "Fan",
+      "options": [
+        [
+          0,
+          "Off"
+        ],
+        [
+          1,
+          "Thermostat"
+        ],
+        [
+          2,
+          "On"
+        ]
+      ],
+      "value": 1
+    },
+    "tset": {
+      "slider": "Thermostat",
+      "min": 25,
+      "max": 45,
+      "step": 1,
+      "value": 35,
+      "unit": "°C"
+    },
+    "flow": {
+      "slider": "Fan flow",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "value": 100,
+      "unit": "m³/h",
+      "hidden": true
+    },
+    "area": {
+      "slider": "Enclosure surface",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "value": 2.4,
+      "unit": "m²",
+      "hidden": true
+    }
+  },
+  "let": {
+    "fan_ok": "1",
+    "filter": "1",
+    "stat": "1",
+    "call": "IF(mode = 2, 1, IF(mode = 0, 0, AND(stat, IF(temp > tset + 1, 1, IF(temp < tset - 1, 0, call)))))",
+    "fan": "AND(call, fan_ok)",
+    "Gw": "5.5 * area",
+    "Ga": "IF(fan, flow * filter / 3, 0)",
+    "G": "Gw + Ga",
+    "temp": "IF(t = 0, ta, temp + 0.05 * (P - G * (temp - ta)) / 1500)",
+    "heading": "ta + P / G",
+    "qw": "Gw * (temp - ta)",
+    "qa": "Ga * (temp - ta)",
+    "spin": "MOD(spin + IF(fan, 13, 0), 360)"
+  },
+  "faults": {
+    "fan-dead": {
+      "label": "The fan has failed",
+      "set": {
+        "fan_ok": "0"
+      },
+      "why": "The thermostat calls (its lamp is on) but the fan does not turn and no heat goes out with the air: the temperature climbs as though there were no fan. Check the fan's supply at its terminals, then the fan."
+    },
+    "stat-stuck": {
+      "label": "The thermostat never closes",
+      "set": {
+        "stat": "0"
+      },
+      "why": "The temperature goes past the thermostat's setting and its lamp never comes on, so the fan is never asked. Switch the fan to On and it runs and cools: the fan is fine, and the fault is the thermostat or its wiring."
+    },
+    "filter-blocked": {
+      "label": "The fan's filter is blocked",
+      "set": {
+        "filter": "0.2"
+      },
+      "why": "The thermostat calls and the fan turns, but little air gets through: the heat going out with the air is a fifth of what the fan's rating gives, and the temperature still climbs, only more slowly. Look at the filter mats."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "set": {
+        "mode": 0
+      },
+      "say": "Fan off. 200 W inside, 25 °C outside. The walls lose 5.5 W/m²K × 2.4 m² = 13.2 W for every degree inside is above the room, so it heads for 25 + 200 ÷ 13.2 = 40 °C, slowing as it gets there."
+    },
+    {
+      "at": 150,
+      "set": {
+        "mode": 1
+      },
+      "say": "Thermostat at 35 °C: the fan starts at 36 °C and stops at 34 °C. With it running, 100 m³/h takes another 33 W/K, so the box cools quickly, and the cycle repeats."
+    },
+    {
+      "at": 260,
+      "set": {
+        "P": 400
+      },
+      "say": "Twice the heat: the fan runs for longer each time and the gaps between are shorter."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Thermostat calling",
+      "on": "call",
+      "color": "amber"
+    },
+    {
+      "lamp": "Fan running",
+      "on": "fan",
+      "color": "green"
+    },
+    {
+      "lamp": "Over 40 °C",
+      "on": "temp > 40",
+      "color": "red"
+    },
+    {
+      "read": "Inside",
+      "value": "temp",
+      "unit": "°C",
+      "dp": 1
+    },
+    {
+      "read": "Heading for",
+      "value": "heading",
+      "unit": "°C",
+      "dp": 1
+    },
+    {
+      "read": "Heat out through the walls",
+      "value": "qw",
+      "unit": "W",
+      "dp": 0
+    },
+    {
+      "read": "Heat out with the air",
+      "value": "qa",
+      "unit": "W",
+      "dp": 0
+    }
+  ],
+  "trend": {
+    "span": 400,
+    "y": [
+      0,
+      60
+    ],
+    "lines": [
+      {
+        "value": "temp",
+        "label": "inside (°C)"
+      },
+      {
+        "value": "tset",
+        "label": "thermostat (°C)"
+      },
+      {
+        "value": "ta",
+        "label": "room (°C)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0.1,
+        0.7,
+        0
+      ],
+      "yaw": 30,
+      "pitch": 14,
+      "dist": 3.0
+    },
+    "floor": 3,
+    "parts": [
+      {
+        "id": "plinth",
+        "shape": "box",
+        "size": [
+          0.84,
+          0.1,
+          0.44
+        ],
+        "at": [
+          0,
+          0.05,
+          0
+        ],
+        "color": "dark"
+      },
+      {
+        "id": "back",
+        "shape": "box",
+        "size": [
+          0.8,
+          1.2,
+          0.02
+        ],
+        "at": [
+          0,
+          0.7,
+          -0.19
+        ],
+        "color": "grey"
+      },
+      {
+        "id": "plate",
+        "shape": "box",
+        "size": [
+          0.7,
+          1.1,
+          0.01
+        ],
+        "at": [
+          0,
+          0.7,
+          -0.17
+        ],
+        "color": "#c9a86a"
+      },
+      {
+        "id": "drive",
+        "shape": "box",
+        "size": [
+          0.22,
+          0.38,
+          0.18
+        ],
+        "at": [
+          -0.15,
+          0.55,
+          -0.07
+        ],
+        "color": [
+          "dark",
+          "red"
+        ],
+        "shade": "temp > 40",
+        "label": "Drive {P:0} W",
+        "label_at": [
+          0,
+          0.26,
+          0.1
+        ]
+      },
+      {
+        "id": "psu",
+        "shape": "box",
+        "size": [
+          0.12,
+          0.14,
+          0.12
+        ],
+        "at": [
+          0.16,
+          0.95,
+          -0.1
+        ],
+        "color": "steel"
+      },
+      {
+        "id": "rail",
+        "shape": "box",
+        "size": [
+          0.6,
+          0.035,
+          0.02
+        ],
+        "at": [
+          0,
+          1.15,
+          -0.15
+        ],
+        "color": "steel"
+      },
+      {
+        "id": "breakers",
+        "shape": "box",
+        "size": [
+          0.018,
+          0.09,
+          0.07
+        ],
+        "at": [
+          -0.25,
+          1.15,
+          -0.11
+        ],
+        "color": "white",
+        "repeat": {
+          "n": 8,
+          "step": [
+            0.02,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "id": "case",
+        "shape": "box",
+        "size": [
+          0.8,
+          1.2,
+          0.4
+        ],
+        "at": [
+          0,
+          0.7,
+          0
+        ],
+        "color": "glass",
+        "alpha": 0.22,
+        "shadow": false,
+        "label": "Inside {temp:1} °C",
+        "label_at": [
+          0,
+          0.68,
+          0.2
+        ]
+      },
+      {
+        "id": "fan",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.24,
+              0.24
+            ],
+            "at": [
+              0.415,
+              1.0,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "at": [
+              0.435,
+              1.0,
+              0
+            ],
+            "turn": {
+              "x": "spin"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.006,
+                  0.17,
+                  0.045
+                ],
+                "rot": [
+                  0,
+                  0,
+                  0
+                ],
+                "color": "grey"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.006,
+                  0.17,
+                  0.045
+                ],
+                "rot": [
+                  60,
+                  0,
+                  0
+                ],
+                "color": "grey"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.006,
+                  0.17,
+                  0.045
+                ],
+                "rot": [
+                  120,
+                  0,
+                  0
+                ],
+                "color": "grey"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "filter",
+        "shape": "box",
+        "size": [
+          0.03,
+          0.24,
+          0.24
+        ],
+        "at": [
+          -0.415,
+          0.35,
+          0
+        ],
+        "color": [
+          "grey",
+          "wood"
+        ],
+        "shade": "filter < 1"
+      },
+      {
+        "id": "stat",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.1,
+              0.04
+            ],
+            "at": [
+              0.28,
+              0.4,
+              -0.15
+            ],
+            "color": "white",
+            "label": "{tset:0} °C",
+            "label_at": [
+              0,
+              0.08,
+              0.03
+            ]
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.025,
+              0.025,
+              0.025
+            ],
+            "at": [
+              0.28,
+              0.43,
+              -0.125
+            ],
+            "color": "amber",
+            "lit": "call"
+          }
+        ]
+      },
+      {
+        "id": "thermometer",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              1.0,
+              0.03
+            ],
+            "at": [
+              -0.6,
+              0.6,
+              0.15
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              1.0,
+              0.035
+            ],
+            "at": [
+              -0.6,
+              0.1,
+              0.15
+            ],
+            "color": "red",
+            "move": {
+              "y": "MAX(0, temp) / 120"
+            },
+            "scale": {
+              "y": "MAX(0.001, temp) / 60"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.004,
+              0.036
+            ],
+            "at": [
+              -0.6,
+              0.1,
+              0.15
+            ],
+            "color": "dark",
+            "repeat": {
+              "n": 7,
+              "step": [
+                0,
+                0.1667,
+                0
+              ]
+            }
+          }
+        ],
+        "label": "{ta:0} °C room",
+        "label_at": [
+          -0.6,
+          1.2,
+          0.15
+        ]
+      }
+    ]
+  }
+}

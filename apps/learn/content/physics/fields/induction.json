@@ -297,12 +297,182 @@
    "id": "ox4-7"
   },
   {
+   "id": "add-gen-watch",
+   "type": "concept",
+   "stage": "learn",
+   "after": "ox4-7",
+   "title": "A generator to run",
+   "body": "The generator from the section before, to run: a square coil turning between two poles, its ends out through slip rings. Press Watch it run, then change one thing at a time and watch the peak: $\\varepsilon_0 = NAB\\omega$.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "generator",
+     "speed": 0.25
+    }
+   },
+   "added": true
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Section Summary",
    "html": "<ul><li>An electric generator rotates a coil in a magnetic field, inducing an emfgiven as a function of time by\n      <div class=\"eq\"><math><mrow><mrow><mrow><mrow><mrow><mtext>emf</mtext><mo stretchy=\"false\">=</mo><mstyle><mrow><mtext>NAB</mtext></mrow></mstyle></mrow><mi>ω</mi><mspace width=\"0.25em\"></mspace><mtext>sin</mtext><mspace width=\"0.25em\"></mspace><mi>ωt</mi></mrow></mrow><mrow><mtext>,</mtext></mrow></mrow></mrow></math></div>\nwhere <math><mrow><mrow><mi>A</mi></mrow></mrow></math> is the area of an <math><mrow><mrow><mi>N</mi></mrow></mrow></math>-turn coil rotated at a constant angular velocity <math><mrow><mrow><mi>ω</mi></mrow></mrow></math> in a uniform magnetic field <math><mrow><mrow><mi>B</mi></mrow></mrow></math>.</li><li>The peak emf <math><mrow><mrow><msub><mtext>emf</mtext><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> of a generator is\n          <div class=\"eq\"><math><mrow><mrow><mrow><mrow><mrow><msub><mtext>emf</mtext><mrow><mn>0</mn></mrow></msub><mo stretchy=\"false\">=</mo><mstyle><mrow><mtext>NAB</mtext></mrow></mstyle></mrow><mi>ω</mi></mrow></mrow><mrow><mtext>.</mtext></mrow></mrow></mrow></math></div> \n    </li></ul>",
    "body": "An electric generator rotates a coil in a magnetic field, inducing an emfgiven as a function of time by emf = NAB ω sin ωt , where A is the area of an N -turn coil rotated at a constant angular velocity ω in a uniform magnetic field B . The peak emf emf 0 of a generator is emf 0 = NAB ω .",
    "id": "ox4-8"
+  },
+  {
+   "id": "add-gen-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "Make the generator give **230 V rms at 50 Hz**, as the mains, with the lamp connected. Work it out before you touch it: the speed from the frequency, then the peak from the RMS, then $NAB$.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "generator",
+     "controls": [
+      "rpm",
+      "N",
+      "B",
+      "side"
+     ],
+     "speed": 0.25
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "230 V rms at 50 Hz.",
+    "pass": "AND(ABS(f - 50) < 0.6, ABS(rms - 230) < 10)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "rpm": 3000,
+       "N": 130,
+       "B": 0.2,
+       "side": 0.2
+      }
+     }
+    ],
+    "fails": [
+     [
+      "ABS(f - 50) >= 0.6",
+      "The frequency is {f:1} Hz: one turn of the coil is one cycle, so 50 Hz needs 50 turns a second."
+     ],
+     [
+      "rms < 220",
+      "{rms:1} V rms is short: more turns, more field or a bigger coil."
+     ],
+     [
+      "rms > 240",
+      "{rms:1} V rms is too much: fewer turns, less field or a smaller coil."
+     ]
+    ],
+    "hint": "One cycle a turn: 50 Hz is 3000 rpm. The peak is $\\sqrt{2}$ times the RMS, and $\\omega = 2\\pi f$.",
+    "why": "50 Hz is 50 turns a second, 3000 rpm. The peak is $230\\sqrt{2} = 325$ V and $\\omega = 2\\pi \\times 50 = 314$ rad/s, so $NAB = 325 \\div 314 = 1.04$ T·m². With a 0.2 m coil (0.04 m²), $NB = 26$: 130 turns at 0.2 T, say, or 260 at 0.1 T."
+   },
+   "added": true
+  },
+  {
+   "id": "add-gen-diag",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "This generator is not giving what it should. Run it, read it, and find out why.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "generator",
+     "controls": [
+      "rpm",
+      "N",
+      "B",
+      "side",
+      "load"
+     ],
+     "speed": 0.25
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "brush-lifted",
+     "weak-magnet",
+     "shorted-turns",
+     "none"
+    ],
+    "why": "Work out $NAB\\omega$ from the settings and compare it with the scope's peak, at more than one speed; then look at what else is different, such as the coil's temperature."
+   },
+   "added": true
+  },
+  {
+   "id": "add-gen-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A generator coil has 200 turns, each 0.15 m by 0.10 m, and turns at 1500 rpm in a field of 0.40 T. What is its peak EMF, and what is the EMF 5 ms after the coil faces the poles?",
+   "steps": [
+    {
+     "ask": "The area",
+     "show": "$A = 0.15 \\times 0.10 = 0.015$ m²"
+    },
+    {
+     "ask": "The angular speed: $\\omega = 2\\pi n / 60$",
+     "show": "$\\omega = 2\\pi \\times 1500 \\div 60 = 157$ rad/s"
+    },
+    {
+     "ask": "The peak: $\\varepsilon_0 = NAB\\omega$",
+     "show": "$200 \\times 0.015 \\times 0.40 \\times 157 = 188$ V"
+    },
+    {
+     "ask": "Facing the poles is $\\theta = 0$. Then $\\varepsilon = \\varepsilon_0 \\sin \\omega t$, 5 ms later",
+     "show": "$\\omega t = 157 \\times 0.005 = 0.785$ rad (45°), so $\\varepsilon = 188 \\times 0.707 = 133$ V"
+    }
+   ],
+   "why": "The peak comes when the coil's sides cut straight across the field, a quarter-turn after it faces the poles. At 1500 rpm a quarter-turn takes 10 ms, so 5 ms is halfway: 45°. Leaving ω in rpm, or taking the sine of 0.785 in degrees, are the usual slips.",
+   "added": true
+  },
+  {
+   "id": "add-gen-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A coil of {n} turns, each {a} m², turns at {rpm} rpm in a field of {b} T. What is its peak EMF?",
+   "vars": {
+    "n": {
+     "pick": [
+      50,
+      100,
+      200,
+      500
+     ]
+    },
+    "a": {
+     "pick": [
+      0.01,
+      0.02,
+      0.05
+     ]
+    },
+    "rpm": {
+     "pick": [
+      600,
+      1500,
+      3000
+     ]
+    },
+    "b": {
+     "pick": [
+      0.1,
+      0.2,
+      0.5
+     ]
+    }
+   },
+   "answer": "n * a * b * rpm * 2 * PI() / 60",
+   "unit": "V",
+   "work": "$\\omega = 2\\pi \\times {rpm} \\div 60$, then ${n} \\times {a} \\times {b} \\times \\omega = {answer:1}$ V",
+   "why": "$\\varepsilon_0 = NAB\\omega$, with ω in radians a second.",
+   "hint": "Turn rpm into rad/s first.",
+   "added": true
   },
   {
    "type": "flash",

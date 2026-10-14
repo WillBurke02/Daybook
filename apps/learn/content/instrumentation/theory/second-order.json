@@ -85,6 +85,71 @@
    "id": "ox1-7"
   },
   {
+   "id": "add-crit-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "The book's critically damped oscillator, on a rig: 2 kg on an 800 N/m spring. Set the damping so a pull comes back to rest as fast as it can without overshooting.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "spring-mass",
+     "controls": [
+      "c",
+      "pull"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Critical damping.",
+    "pass": "AND(c >= 76, c <= 84)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "c": 80
+      }
+     }
+    ],
+    "fails": [
+     [
+      "c < 76",
+      "Pull it: it still overshoots. Underdamped."
+     ],
+     [
+      "c > 84",
+      "Pull it: it creeps back. Overdamped."
+     ]
+    ],
+    "hint": "Critical damping is $b = \\sqrt{4mk}$; the book's $b$ is this rig's damping, in N·s/m.",
+    "why": "$\\sqrt{4 \\times 2 \\times 800} = 80$ N·s/m. Pull it at 40, 80 and 120 to see all three of the book's cases."
+   },
+   "added": true
+  },
+  {
+   "id": "add-os-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A level loop's step response overshoots by 16%, and its swings come 20 s apart. Treated as second order, what are its damping ratio and natural frequency?",
+   "steps": [
+    {
+     "ask": "The damping from the overshoot: $\\zeta = \\frac{-\\ln OS}{\\sqrt{\\pi^2 + \\ln^2 OS}}$",
+     "show": "$\\ln 0.16 = -1.83$, so $\\zeta = 1.83 \\div \\sqrt{9.87 + 3.36} = 0.50$"
+    },
+    {
+     "ask": "The damped frequency, from the swings",
+     "show": "$f_d = 1 \\div 20 = 0.05$ Hz, $\\omega_d = 0.314$ rad/s"
+    },
+    {
+     "ask": "Take the damping back out: $\\omega_n = \\omega_d / \\sqrt{1 - \\zeta^2}$",
+     "show": "$0.314 \\div 0.866 = 0.363$ rad/s, 0.058 Hz"
+    }
+   ],
+   "why": "The book's underdamped oscillator, read from a trend: the overshoot gives the damping alone, and the time between swings gives the damped frequency, a little slower than the natural one. 16% overshoot is a damping ratio of a half, a common tuning target for loops.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "Give an example of a damped harmonic oscillator. (They are more common than undamped or simple harmonic oscillators.)",

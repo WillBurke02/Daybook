@@ -331,6 +331,83 @@
    "id": "ox3-12"
   },
   {
+   "id": "add-flywheel-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A steel flywheel is a solid disc of 40 kg, 0.40 m across. A motor drives it with a steady 12 N·m. How long does it take to reach 1500 rpm, and how much energy does it then hold?",
+   "steps": [
+    {
+     "ask": "Its moment of inertia: $I = \\tfrac{1}{2} M R^2$",
+     "show": "$0.5 \\times 40 \\times 0.20^2 = 0.80$ kg·m²"
+    },
+    {
+     "ask": "The angular acceleration: $\\alpha = \\tau / I$",
+     "show": "$12 \\div 0.80 = 15$ rad/s²"
+    },
+    {
+     "ask": "1500 rpm in rad/s",
+     "show": "$1500 \\times 2\\pi \\div 60 = 157$ rad/s"
+    },
+    {
+     "ask": "The time: $t = \\omega / \\alpha$",
+     "show": "$157 \\div 15 = 10.5$ s"
+    },
+    {
+     "ask": "The energy: $KE = \\tfrac{1}{2} I \\omega^2$",
+     "show": "$0.5 \\times 0.80 \\times 157^2 = 9.9$ kJ"
+    }
+   ],
+   "why": "The radius is half the 0.40 m, and ω must be in rad/s: the two usual slips. The same sums size a drive's acceleration ramp: too short a ramp asks for more torque than the motor has, and the drive trips on overcurrent.",
+   "added": true
+  },
+  {
+   "id": "add-flywheel-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A solid disc of {m} kg and {dia} mm across is driven with {tq} N·m. How long does it take to reach {n} rpm from rest?",
+   "vars": {
+    "m": {
+     "pick": [
+      10,
+      20,
+      40
+     ]
+    },
+    "dia": {
+     "pick": [
+      200,
+      300,
+      400
+     ]
+    },
+    "tq": {
+     "pick": [
+      5,
+      10,
+      20
+     ]
+    },
+    "n": {
+     "pick": [
+      1000,
+      1500,
+      3000
+     ]
+    }
+   },
+   "let": {
+    "inertia": "0.5 * m * (dia / 2000)^2",
+    "w": "n * 2 * PI() / 60"
+   },
+   "answer": "w / (tq / inertia)",
+   "unit": "s",
+   "work": "$I = 0.5 \\times {m} \\times ({dia}/2000)^2 = {inertia:4}$ kg·m²; $\\omega = {w:1}$ rad/s; $t = \\omega I / \\tau = {answer:2}$ s",
+   "why": "$t = \\omega / \\alpha$ and $\\alpha = \\tau / I$.",
+   "hint": "The radius in metres is the diameter in mm ÷ 2000.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "A bus contains a 1500 kg flywheel (a disk that has a 0.600 m radius) and has a total mass of 10,000 kg. (a) Calculate the angular velocity the flywheel must have to contain enough energy to take the bus from rest to a speed of 20.0 m/s, assuming 90.0% of the rotational kinetic energy can be transformed into translational energy. (b) How high a hill can the bus climb with this stored energy and still have a speed of 3.00 m/s at the top of the hill? Explicitly show how you follow the steps in the Problem-Solving Strategy for Rotational Energy.",

@@ -268,7 +268,7 @@ function imported(les, where) {
   if (!(Array.isArray(les.sources) && les.sources.length && les.sources.every(x => /CC BY-NC-SA 4\.0/.test(x) && /Imported as published/.test(x))))
     bad(where, 'an import credits each section, its licence (CC BY-NC-SA 4.0) and says it is as published');
   if (!(les.resources || []).length || !les.resources.every(r => original(r.url))) bad(where, 'an import links each section as published (The original)');
-  for (const c of les.cards) {
+  for (const c of les.cards.filter(c => !c.added)) {          // Daybook's own cards (added) are checked as written ones are
     const at = `${les.id}/${c.id}`, html = [c.html, c.front_html, c.back_html].filter(Boolean).join('');
     if (c.type === 'concept' && !c.html) bad(at, 'an imported reading card keeps its original (html)');
     if (c.type === 'flash' && !(c.front_html && c.back_html)) bad(at, 'an imported exercise keeps its original question and answer');

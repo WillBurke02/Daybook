@@ -340,6 +340,53 @@
    "id": "ox3-8"
   },
   {
+   "id": "add-redundant-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A guard is watched by two independent sensors, and either one stops the machine. Each misses a demand once in 1000. Each also gives a false trip on 1% of days. How often do both miss the same demand, and on what share of days is there at least one false trip?",
+   "steps": [
+    {
+     "ask": "Both miss: independent events, so multiply",
+     "show": "$0.001 \\times 0.001 = 10^{-6}$, once in a million"
+    },
+    {
+     "ask": "No false trip from either: both 'not', multiplied",
+     "show": "$(1 - 0.01)^2 = 0.9801$"
+    },
+    {
+     "ask": "At least one false trip: one minus none",
+     "show": "$1 - 0.9801 = 0.0199$, about 2% of days"
+    }
+   ],
+   "why": "Two channels make a miss a thousand times rarer but nearly double the nuisance trips. The multiplying holds only while the failures really are independent; a shared cause (one power supply, the same dirt on both lenses) is why safety standards count common-cause failures separately.",
+   "added": true
+  },
+  {
+   "id": "add-and-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Two independent pumps each have a {p}% chance of failing in a year. What is the chance, in %, that both fail?",
+   "vars": {
+    "p": {
+     "pick": [
+      1,
+      2,
+      5,
+      10,
+      20
+     ]
+    }
+   },
+   "answer": "(p / 100)^2 * 100",
+   "unit": "%",
+   "abs": 0.001,
+   "work": "${p}\\% \\times {p}\\% = {answer:3}\\%$",
+   "why": "Independent events: P(A AND B) = P(A) × P(B).",
+   "hint": "As fractions first, then back to a percentage.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "According to the 2019 U.S. Census, approximately 331,449,281 people live in the United States. Of these people, 67,800,000 speak a language other than English at home. Of those who speak another language at home, 61.6% speak Spanish. Let: E = speaks English at home; E′ = speaks another language at home; S = speaks Spanish; Finish each probability statement by matching the correct answer. Probability Statements Answers a. P ( E ′ ) = i. 0.7954 b. P ( E ) = ii. 0.616 c. P ( S ∩ E ′ ) = iii. 0.2046 d. P ( S | E ′ ) = iv. 0.1260",

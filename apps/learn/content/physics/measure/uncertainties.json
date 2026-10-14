@@ -138,6 +138,88 @@
    "id": "ox1-14"
   },
   {
+   "id": "add-meter",
+   "type": "concept",
+   "stage": "learn",
+   "title": "On the job: a reading and its uncertainty",
+   "body": "A calibration certificate gives each reading with its uncertainty: 10.002 V ± 0.003 V. A meter's datasheet gives its accuracy as a percentage of the reading plus a few counts of the last digit: ±(0.5% + 2 digits) on the 20 V range means a reading of 12.00 V could be out by $12.00 \\times 0.005 + 0.02 = 0.08$ V either way.\n\nThe book's rule carries on from there: when you **multiply or divide** measurements, add their **percentage** uncertainties.",
+   "added": true
+  },
+  {
+   "id": "add-r-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A resistor is measured with a voltmeter and an ammeter: $V$ = 12.0 ± 0.1 V and $I$ = 2.50 ± 0.05 A. What is its resistance, and how sure can you be of it?",
+   "steps": [
+    {
+     "ask": "The resistance: $R = V/I$",
+     "show": "$R = 12.0 \\div 2.50 = 4.80$ Ω"
+    },
+    {
+     "ask": "The percentage uncertainty in $V$",
+     "show": "$0.1 \\div 12.0 \\times 100 = 0.83\\%$"
+    },
+    {
+     "ask": "The percentage uncertainty in $I$",
+     "show": "$0.05 \\div 2.50 \\times 100 = 2.0\\%$"
+    },
+    {
+     "ask": "Dividing, so add the percentages",
+     "show": "$0.83 + 2.0 = 2.8\\%$"
+    },
+    {
+     "ask": "Back to ohms",
+     "show": "$4.80 \\times 0.028 = 0.14$ Ω, so $R = 4.80 \\pm 0.14$ Ω"
+    }
+   ],
+   "why": "Dividing (or multiplying) adds percentage uncertainties, not absolute ones: 0.1 V and 0.05 A are in different units and cannot be added. The ammeter's 2% is most of it, so a better ammeter would help more than a better voltmeter.",
+   "added": true
+  },
+  {
+   "id": "add-r-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "$V$ = {v} ± {dv} V and $I$ = {i} ± {di} A. What is the percentage uncertainty in $R = V/I$?",
+   "vars": {
+    "v": {
+     "pick": [
+      6.0,
+      9.0,
+      12.0,
+      24.0
+     ]
+    },
+    "dv": {
+     "pick": [
+      0.1,
+      0.2
+     ]
+    },
+    "i": {
+     "pick": [
+      0.5,
+      1.2,
+      2.5,
+      4.0
+     ]
+    },
+    "di": {
+     "pick": [
+      0.02,
+      0.05
+     ]
+    }
+   },
+   "answer": "dv / v * 100 + di / i * 100",
+   "unit": "%",
+   "tolerance": 0.03,
+   "work": "${dv} \\div {v} \\times 100$ + ${di} \\div {i} \\times 100$ = {answer:2}%",
+   "why": "The percentage uncertainties of the two readings add, because $R$ is one divided by the other.",
+   "hint": "Each as a percentage of its own reading, then add.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "If a marathon runner averages 9.5 mi/h, how long does it take him or her to run a 26.22-mi marathon?",

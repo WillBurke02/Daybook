@@ -1,5 +1,16 @@
 # Changes
 
+## 4.0.19 — 15 October 2026
+
+- **Five new machines to run in 3D**: a mass on a spring and damper on a shaker, a generator (a coil turning
+  between two poles, with its sine wave on the trend), a control panel warming up with a thermostat fan, a
+  ball launcher with a target, and a beam balanced on a pivot. Each has faults to find or a goal to meet.
+- **More to the imported lessons**: 22 of them gain context from the job and longer questions worked in
+  steps (a starter motor and its battery, a hoist's motor size, fan sizing for a panel, a venturi flowmeter,
+  mesh currents by matrices, shafts out of tolerance, two sensors on one guard), with fresh-number
+  questions to follow. Cards that are not from the book say Added.
+- Machine trends are sampled as the machine runs, so fast waves (50 Hz) draw as waves.
+
 ## 4.0.18 — 15 October 2026
 
 - **25 more lessons from OpenStax**, word for word with a link to each section as published: measurements

@@ -1,0 +1,340 @@
+{
+  "title": "A beam balanced on a pivot",
+  "about": "A 2 m beam of 2 kg rests on a pivot, with masses standing on it. Each mass's distance is measured from the pivot: the left one turns the beam anticlockwise, the right ones clockwise. The beam settles level when the moments balance and tips towards the side with more, against a gentle spring that stops it at 12°. Move the pivot off the beam's centre and the beam's own weight has a moment too.",
+  "dt": 0.002,
+  "inputs": {
+    "m1": {
+      "slider": "Left mass",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "value": 4,
+      "unit": "kg"
+    },
+    "d1": {
+      "slider": "Left mass, distance",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "value": 0.5,
+      "unit": "m"
+    },
+    "m2": {
+      "slider": "Right mass",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "value": 2,
+      "unit": "kg"
+    },
+    "d2": {
+      "slider": "Right mass, distance",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "value": 0.5,
+      "unit": "m"
+    },
+    "m3": {
+      "slider": "Second right mass",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "value": 0,
+      "unit": "kg",
+      "hidden": true
+    },
+    "d3": {
+      "slider": "Second right mass, distance",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "value": 0.8,
+      "unit": "m",
+      "hidden": true
+    },
+    "piv": {
+      "slider": "Pivot, right of the beam's centre",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.05,
+      "value": 0,
+      "unit": "m",
+      "hidden": true
+    }
+  },
+  "let": {
+    "Macw": "9.81 * (m1 * d1 + 2 * piv)",
+    "Mcw": "9.81 * (m2 * d2 + m3 * d3)",
+    "net": "Mcw - Macw",
+    "J": "2 * 4 / 12 + 2 * piv * piv + m1 * d1 * d1 + m2 * d2 * d2 + m3 * d3 * d3 + 0.05",
+    "w": "IF(OR(AND(ang >= 12, net > 0), AND(ang <= -12, net < 0)), 0, w + 0.002 * (DEGREES((net - 0.3 * ang) / J) - 4 * w))",
+    "ang": "MAX(-12, MIN(12, ang + 0.002 * w))",
+    "level": "ABS(ang) < 0.5"
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "say": "4 kg at 0.5 m on the left: 4 × 9.81 × 0.5 = 19.6 N·m anticlockwise. 2 kg at 0.5 m on the right: 9.8 N·m clockwise. The left side goes down."
+    },
+    {
+      "at": 3,
+      "set": {
+        "d2": 1
+      },
+      "say": "The 2 kg moved out to 1 m: 2 × 9.81 × 1 = 19.6 N·m. The moments balance and the beam comes level. Half the mass, twice the distance."
+    },
+    {
+      "at": 6,
+      "set": {
+        "m2": 4,
+        "d2": 0.5
+      },
+      "say": "4 kg at 0.5 m on each side: level again. What matters is mass times distance, not either alone."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Level",
+      "on": "level",
+      "color": "green"
+    },
+    {
+      "read": "Anticlockwise moments",
+      "value": "Macw",
+      "unit": "N·m",
+      "dp": 2
+    },
+    {
+      "read": "Clockwise moments",
+      "value": "Mcw",
+      "unit": "N·m",
+      "dp": 2
+    },
+    {
+      "read": "Net, clockwise",
+      "value": "net",
+      "unit": "N·m",
+      "dp": 2
+    },
+    {
+      "read": "Tilt",
+      "value": "ang",
+      "unit": "°",
+      "dp": 1
+    }
+  ],
+  "view": {
+    "camera": {
+      "target": [
+        0,
+        0.55,
+        0
+      ],
+      "yaw": 8,
+      "pitch": 12,
+      "dist": 3.4
+    },
+    "floor": 4,
+    "parts": [
+      {
+        "id": "stand",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.6,
+              0.05,
+              0.5
+            ],
+            "at": [
+              0,
+              0.025,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cone",
+            "size": [
+              0.26,
+              0.47,
+              0.26
+            ],
+            "at": [
+              0,
+              0.285,
+              0
+            ],
+            "color": "frame"
+          }
+        ]
+      },
+      {
+        "id": "beam",
+        "at": [
+          0,
+          0.55,
+          0
+        ],
+        "turn": {
+          "z": "-ang"
+        },
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              2.0,
+              0.06,
+              0.14
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "wood",
+            "move": {
+              "x": "-piv"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.008,
+              0.062,
+              0.142
+            ],
+            "at": [
+              -1.0,
+              0,
+              0
+            ],
+            "color": "dark",
+            "move": {
+              "x": "-piv"
+            },
+            "repeat": {
+              "n": 21,
+              "step": [
+                0.1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.065,
+              0.145
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "red",
+            "label": "pivot",
+            "label_at": [
+              0,
+              -0.2,
+              0.1
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.16,
+              0.16
+            ],
+            "at": [
+              0,
+              0.03,
+              0
+            ],
+            "color": "blue",
+            "show": "m1 > 0",
+            "move": {
+              "x": "-d1",
+              "y": "0.08 * POWER(m1 / 4, 1 / 3)"
+            },
+            "scale": {
+              "x": "POWER(m1 / 4, 1 / 3)",
+              "y": "POWER(m1 / 4, 1 / 3)",
+              "z": "POWER(m1 / 4, 1 / 3)"
+            },
+            "label": "{m1:1} kg at {d1:2} m",
+            "label_at": [
+              0,
+              0.3,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.16,
+              0.16
+            ],
+            "at": [
+              0,
+              0.03,
+              0
+            ],
+            "color": "orange",
+            "show": "m2 > 0",
+            "move": {
+              "x": "d2",
+              "y": "0.08 * POWER(m2 / 4, 1 / 3)"
+            },
+            "scale": {
+              "x": "POWER(m2 / 4, 1 / 3)",
+              "y": "POWER(m2 / 4, 1 / 3)",
+              "z": "POWER(m2 / 4, 1 / 3)"
+            },
+            "label": "{m2:1} kg at {d2:2} m",
+            "label_at": [
+              0,
+              0.3,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.16,
+              0.16
+            ],
+            "at": [
+              0,
+              0.03,
+              0
+            ],
+            "color": "amber",
+            "show": "m3 > 0",
+            "move": {
+              "x": "d3",
+              "y": "0.08 * POWER(m3 / 4, 1 / 3)"
+            },
+            "scale": {
+              "x": "POWER(m3 / 4, 1 / 3)",
+              "y": "POWER(m3 / 4, 1 / 3)",
+              "z": "POWER(m3 / 4, 1 / 3)"
+            },
+            "label": "{m3:1} kg at {d3:2} m",
+            "label_at": [
+              0,
+              0.3,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

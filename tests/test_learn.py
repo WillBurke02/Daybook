@@ -363,3 +363,10 @@ assert tuple(db.execute("SELECT floor, correct FROM answer WHERE card_id = ? ORD
 les = R("GET", "lesson", q={"id": ["electronics.dc.ohm-kirchhoff"]})["lesson"]
 assert les["bench"] and les["bench"][0]["check"], "the lesson carries its bench task"
 print("ok — explain (self-rated), spot the mistake (marked), bench tasks")
+
+# === a fresh import keeps Daybook's added cards where they were ======================
+from apps.learn.openstax import place      # noqa: E402
+book = [{"id": i, "stage": st} for i, st in [("a", "learn"), ("b", "check"), ("c", "learn"), ("d", "check"), ("e", "check")]]
+got = [c["id"] for c in place(book, [{"id": "x"}, {"id": "y", "after": "a"}, {"id": "z"}])]
+assert got == ["a", "y", "b", "c", "x", "z", "d", "e"], got
+print("ok — imported lessons keep their added cards in place")

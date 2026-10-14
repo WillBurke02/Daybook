@@ -296,6 +296,79 @@
    "id": "ox3-9"
   },
   {
+   "id": "add-hoist-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A hoist lifts 500 kg through 6.0 m in 12 s. Its gearbox is 85% efficient and its motor 90%. What power does the motor draw from the supply?",
+   "steps": [
+    {
+     "ask": "The work done on the load: $W = mgh$",
+     "show": "$500 \\times 9.81 \\times 6.0 = 29.4$ kJ"
+    },
+    {
+     "ask": "The power into the load: $P = W/t$",
+     "show": "$29\\,400 \\div 12 = 2.45$ kW"
+    },
+    {
+     "ask": "Back through the gearbox",
+     "show": "$2.45 \\div 0.85 = 2.88$ kW at the motor's shaft"
+    },
+    {
+     "ask": "Back through the motor",
+     "show": "$2.88 \\div 0.90 = 3.20$ kW from the supply"
+    }
+   ],
+   "why": "Each stage passes on only its efficiency's share, so going back towards the supply you divide. Multiplying by 0.85 and 0.90 instead gives 1.9 kW, a motor too small for the job.",
+   "added": true
+  },
+  {
+   "id": "add-hoist-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A lift raises {m} kg by {h} m in {secs} s. The drive train is {eff}% efficient overall. What power does it draw, in kW?",
+   "vars": {
+    "m": {
+     "pick": [
+      200,
+      500,
+      800,
+      1000
+     ]
+    },
+    "h": {
+     "pick": [
+      3,
+      4.5,
+      6,
+      10
+     ]
+    },
+    "secs": {
+     "pick": [
+      8,
+      10,
+      15,
+      20
+     ]
+    },
+    "eff": {
+     "pick": [
+      60,
+      70,
+      75,
+      80
+     ]
+    }
+   },
+   "answer": "m * 9.81 * h / secs / (eff / 100) / 1000",
+   "unit": "kW",
+   "work": "${m} \\times 9.81 \\times {h} \\div {secs} \\div {eff}\\% = {answer:2}$ kW",
+   "why": "Useful power $mgh/t$, divided by the efficiency for what goes in.",
+   "hint": "$P = mgh / t$ first.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "(a) How long will it take an 850-kg car with a useful power output of 40.0 hp (1 hp = 746 W) to reach a speed of 15.0 m/s, neglecting friction? (b) How long will this acceleration take if the car also climbs a 3.00-m-high hill in the process?",

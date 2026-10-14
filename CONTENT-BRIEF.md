@@ -106,6 +106,11 @@ Kinds: **procedure** (a method you carry out: all stages, example chain required
 
 Ids: lower case words and dashes, unique in the lesson, and **forever** (progress hangs off them).
 
+**A lesson imported from a book** (`imported` in its file) is the book's words. Daybook's own cards in it
+(context, longer questions, machines) carry `"added": true`, and `"after": "<a book card's id>"` to sit after
+that card; without it they go before the lesson's last check. A fresh import keeps them, and the card shows
+an Added chip.
+
 - `concept`: `{title, body, widget?, more?}`. body ≤ 120 words; `more` ≤ 150 words (see Explaining).
 - `mcq`: `{q, options: [3–5 strings], answer: <index>, why, hint?}`. Put the right answer anywhere (they are shuffled on screen, but vary it anyway). Distractors are real mistakes people make. **The right option must not give itself away**: keep all options alike in length and detail (a bare claim each), and put the reasoning in `why`. The check fails a right option much longer than every wrong one.
 - `numeric`: `{q, vars, let?, answer, unit?, tolerance? | abs?, work, why, hint?}`
@@ -229,6 +234,14 @@ The library (`apps/learn/web/sims/`; each scene's `about` says what it is, its `
 - `sorter`: a reject station: colour sensor, a timed pneumatic pusher, edge-counted good and rejected boxes.
 - `tank-level`: a level loop: LT-101 (4–20 mA into the PLC as S7 counts), LIC-101 (PID), LV-101, LSH and LSL
   trips, P-101: offset under P only, integral action, transmitter and scaling faults.
+- `spring-mass`: a mass on a spring and damper on a shaker: natural frequency, damping ratio, resonance and
+  isolation, a pull-and-release test; faults: no oil in the damper, a softer spring, dry friction.
+- `generator`: a coil turning between two poles, slip rings and a lamp: ε = NABω sin ωt on a fast trend;
+  faults: a lifted brush, a weak magnet, shorted turns.
+- `heated-box`: an enclosure with heat inside, its walls (5.5 W/m²K), a filter fan and a thermostat: first-order
+  heating, fan sizing; faults: a dead fan, a thermostat that never closes, a blocked filter.
+- `launcher`: a ball fired at an angle and speed, from the ground or a platform, at a target: projectiles.
+- `balance`: a beam on a pivot with masses on it (and the beam's own weight once the pivot moves): moments.
 
 ## Levels: our own scale (stages 1–9, the UK RQF alongside)
 

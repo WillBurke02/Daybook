@@ -1,0 +1,576 @@
+{
+  "title": "A ball launcher and a target",
+  "about": "A launcher fires a ball at the angle and speed you set, from the ground or from a platform. No air resistance, g = 9.81 m/s². The target is at the distance its slider says; a ball landing within 0.3 m of its centre is a hit.",
+  "dt": 0.002,
+  "inputs": {
+    "ang": {
+      "slider": "Angle",
+      "min": 5,
+      "max": 85,
+      "step": 1,
+      "value": 45,
+      "unit": "°"
+    },
+    "v": {
+      "slider": "Launch speed",
+      "min": 2,
+      "max": 12,
+      "step": 0.5,
+      "value": 8,
+      "unit": "m/s"
+    },
+    "fire": {
+      "button": "Fire",
+      "color": "green"
+    },
+    "D": {
+      "slider": "Target distance",
+      "min": 2,
+      "max": 15,
+      "step": 0.5,
+      "value": 6,
+      "unit": "m"
+    },
+    "h": {
+      "slider": "Launch height",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "value": 0,
+      "unit": "m",
+      "hidden": true
+    }
+  },
+  "let": {
+    "launch": "AND(fire, NOT(pf))",
+    "pf": "fire",
+    "vx": "IF(launch, v * COS(RADIANS(ang)), vx)",
+    "vy": "IF(launch, v * SIN(RADIANS(ang)), IF(fly, vy - 9.81 * 0.002, 0))",
+    "x": "IF(launch, 0, IF(fly, x + vx * 0.002, x))",
+    "y": "IF(OR(t = 0, launch), h, IF(fly, y + (vy + 9.81 * 0.001) * 0.002, IF(shots = 0, h, y)))",
+    "fly": "IF(launch, 1, IF(AND(fly, y <= 0), 0, fly))",
+    "tf": "IF(launch, 0, IF(fly, tf + 0.002, tf))",
+    "top": "IF(launch, h, MAX(top, y))",
+    "shots": "IF(launch, shots + 1, shots)",
+    "hit": "IF(launch, 0, IF(AND(NOT(fly), shots > 0, ABS(x - D) <= 0.3), 1, hit))",
+    "yb": "MAX(0, y)"
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "press": "fire",
+      "say": "45°, 8 m/s: it lands v²sin2θ/g = 6.5 m away after 1.15 s, having risen 1.6 m."
+    },
+    {
+      "at": 2.5,
+      "set": {
+        "ang": 30
+      },
+      "press": "fire",
+      "say": "30°: a flatter, quicker shot to 5.65 m."
+    },
+    {
+      "at": 4.5,
+      "set": {
+        "ang": 60
+      },
+      "press": "fire",
+      "say": "60°: the same 5.65 m, higher and longer in the air (1.41 s). Angles that add up to 90° give the same range."
+    },
+    {
+      "at": 7,
+      "set": {
+        "ang": 45,
+        "h": 2
+      },
+      "press": "fire",
+      "say": "From 2 m up at 45°: about 8.1 m. It has further to fall, so longer to travel."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Hit",
+      "on": "hit",
+      "color": "green"
+    },
+    {
+      "read": "Distance",
+      "value": "x",
+      "unit": "m",
+      "dp": 2
+    },
+    {
+      "read": "Height",
+      "value": "yb",
+      "unit": "m",
+      "dp": 2
+    },
+    {
+      "read": "Time in the air",
+      "value": "tf",
+      "unit": "s",
+      "dp": 2
+    },
+    {
+      "read": "Highest point",
+      "value": "top",
+      "unit": "m",
+      "dp": 2
+    }
+  ],
+  "trend": {
+    "span": 4,
+    "y": [
+      0,
+      8
+    ],
+    "lines": [
+      {
+        "value": "yb",
+        "label": "height (m)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        7,
+        1.4,
+        0
+      ],
+      "yaw": 0,
+      "pitch": 10,
+      "dist": 12.5
+    },
+    "floor": 30,
+    "parts": [
+      {
+        "id": "platform",
+        "shape": "box",
+        "size": [
+          1.2,
+          1,
+          1.2
+        ],
+        "at": [
+          0,
+          0,
+          0
+        ],
+        "color": "frame",
+        "show": "h > 0",
+        "move": {
+          "y": "h / 2"
+        },
+        "scale": {
+          "y": "h"
+        }
+      },
+      {
+        "id": "launcher",
+        "at": [
+          0,
+          0.3,
+          0
+        ],
+        "move": {
+          "y": "h"
+        },
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.7,
+              0.3,
+              0.7
+            ],
+            "at": [
+              0,
+              -0.15,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "turn": {
+              "z": "ang"
+            },
+            "parts": [
+              {
+                "shape": "cyl",
+                "size": [
+                  0.42,
+                  1.4,
+                  0.42
+                ],
+                "at": [
+                  0.5,
+                  0,
+                  0
+                ],
+                "rot": [
+                  0,
+                  0,
+                  90
+                ],
+                "color": "green"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ball",
+        "shape": "sphere",
+        "size": [
+          0.4,
+          0.4,
+          0.4
+        ],
+        "at": [
+          0,
+          0.2,
+          0
+        ],
+        "color": "orange",
+        "move": {
+          "x": "x",
+          "y": "yb"
+        },
+        "label": "{x:1} m",
+        "label_at": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      {
+        "id": "target",
+        "move": {
+          "x": "D"
+        },
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.6,
+              0.02,
+              0.6
+            ],
+            "at": [
+              0,
+              0.01,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.4,
+              0.03,
+              0.4
+            ],
+            "at": [
+              0,
+              0.012,
+              0
+            ],
+            "color": "red"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.16,
+              0.04,
+              0.16
+            ],
+            "at": [
+              0,
+              0.014,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.04,
+              1.4,
+              0.04
+            ],
+            "at": [
+              0,
+              0.7,
+              -0.5
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.9,
+              0.5,
+              0.03
+            ],
+            "at": [
+              0.45,
+              1.2,
+              -0.5
+            ],
+            "color": [
+              "red",
+              "green"
+            ],
+            "shade": "hit"
+          }
+        ],
+        "label": "Target {D:1} m",
+        "label_at": [
+          0,
+          1.7,
+          -0.5
+        ]
+      },
+      {
+        "id": "marks",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              1,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              2,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              3,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              4,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.8
+            ],
+            "at": [
+              5,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              6,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              7,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              8,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              9,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.8
+            ],
+            "at": [
+              10,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              11,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              12,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              13,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.4
+            ],
+            "at": [
+              14,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.01,
+              0.8
+            ],
+            "at": [
+              15,
+              0.005,
+              0
+            ],
+            "color": "white"
+          },
+          {
+            "at": [
+              5,
+              0.01,
+              0.6
+            ],
+            "label": "5 m"
+          },
+          {
+            "at": [
+              10,
+              0.01,
+              0.6
+            ],
+            "label": "10 m"
+          },
+          {
+            "at": [
+              15,
+              0.01,
+              0.6
+            ],
+            "label": "15 m"
+          }
+        ]
+      }
+    ]
+  }
+}

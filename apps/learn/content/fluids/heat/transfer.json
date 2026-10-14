@@ -8,7 +8,7 @@
    "college-physics-2e 14.7"
   ]
  },
- "minutes": 71,
+ "minutes": 72,
  "goals": [
   "Calculate thermal conductivity.",
   "Observe conduction of heat in collisions.",
@@ -342,6 +342,162 @@
    "html": "<ul><li>Radiation is the rate of heat transfer through the emission or absorption of electromagnetic waves.</li><li>The rate of heat transfer depends on the surface area and the fourth power of the absolute temperature:\n    <div class=\"eq\"><math><mrow><mrow><mrow><mrow><mfrac><mi>Q</mi><mi>t</mi></mfrac><mo stretchy=\"false\">=</mo><mi>σ</mi></mrow><mi></mi><mi>e</mi><mi></mi><mi>A</mi><mi></mi><msup><mi>T</mi><mrow><mn>4</mn></mrow></msup><mtext>,</mtext></mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><mrow><mrow><mi>σ</mi><mo stretchy=\"false\">=</mo><mn>5</mn><mtext>.67</mtext><mo stretchy=\"false\">×</mo><msup><mtext>10</mtext><mrow><mrow><mo stretchy=\"false\">−</mo><mn>8</mn></mrow></mrow></msup></mrow><mspace width=\"0.25em\"></mspace><mrow><mrow><mtext>J/s</mtext><mo stretchy=\"false\">⋅</mo><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow><mo stretchy=\"false\">⋅</mo><msup><mtext>K</mtext><mrow><mn>4</mn></mrow></msup></mrow></mrow></mrow></mrow></math> is the Stefan-Boltzmann constant and <math><mrow><mrow><mi>e</mi></mrow></mrow></math> is the emissivity of the body. For a black body, <math><mrow><mrow><mrow><mi>e</mi><mo stretchy=\"false\">=</mo><mn>1</mn></mrow></mrow></mrow></math> whereas a shiny white or perfect reflector has <math><mrow><mrow><mrow><mi>e</mi><mo stretchy=\"false\">=</mo><mn>0</mn></mrow></mrow></mrow></math>, with real objects having values of <math><mrow><mrow><mi>e</mi></mrow></mrow></math> between 1 and 0. The net rate of heat transfer by radiation is</p><div class=\"eq\"><math>\n      \n        <mrow>\n\n            <mrow>\n              <mrow>\n                <mrow>\n                  <mfrac>\n                    <msub>\n                      <mi>Q</mi>\n\n                        <mrow>\n                          <mtext>net</mtext>\n                        </mrow>\n\n                    </msub>\n                    <mi>t</mi>\n                  </mfrac>\n                  <mo stretchy=\"false\">=</mo>\n                  <mi>σ</mi>\n                </mrow>\n                <mi></mi>\n                <mi>e</mi>\n                <mi></mi>\n                <mi>A</mi>\n                <mi></mi>\n                <mfenced open=\"(\" close=\")\">\n                  <mrow>\n                    <msubsup>\n                      <mi>T</mi>\n\n                        <mrow>\n                          <mn>2</mn>\n                        </mrow>\n\n\n                        <mrow>\n                          <mn>4</mn>\n                        </mrow>\n\n                    </msubsup>\n                    <mo stretchy=\"false\">−</mo>\n                    <msubsup>\n                      <mi>T</mi>\n\n                        <mrow>\n                          <mn>1</mn>\n                        </mrow>\n\n\n                        <mrow>\n                          <mn>4</mn>\n                        </mrow>\n\n                    </msubsup>\n                  </mrow>\n                </mfenced>\n              </mrow>\n            </mrow>\n\n          <mrow></mrow>\n        </mrow>\n        \n      \n    </math>\n</div><p>where <math><mrow><mrow><msub><mi>T</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the temperature of an object surrounded by an environment with uniform temperature <math><mrow><mrow><msub><mi>T</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><mi>e</mi></mrow></mrow></math> is the emissivity of the <em>object</em>.</p></li></ul>",
    "body": "Radiation is the rate of heat transfer through the emission or absorption of electromagnetic waves. The rate of heat transfer depends on the surface area and the fourth power of the absolute temperature: Q t = σ e A T 4 , where σ = 5 .67 × 10 − 8 J/s ⋅ m 2 ⋅ K 4 is the Stefan-Boltzmann constant and e is the emissivity of the body. For a black body, e = 1 whereas a shiny white or perfect reflector has e = 0 , with real objects having values of e between 1 and 0. The net rate of heat transfer by radiation is Q net t = σ e A T 2 4 − T 1 4 where T 1 is the temperature of an object surrounded by an environment with uniform temperature T 2 and e is the emissivity of the object .",
    "id": "ox3-12"
+  },
+  {
+   "id": "add-box-watch",
+   "type": "concept",
+   "stage": "learn",
+   "title": "An enclosure to run",
+   "body": "The three methods meet in a control panel. Heat from the drives conducts through the steel walls and leaves them by convection and radiation; a fan swaps the warm air for the room's. For a sealed steel enclosure, makers lump all three into one figure: about 5.5 W for each m² of surface and each degree of difference. Run it at 5×.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "heated-box",
+     "speed": 5
+    }
+   },
+   "added": true
+  },
+  {
+   "id": "add-box-diag",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "An enclosure that runs hot: 300 W inside, a 30 °C room, the thermostat set to 35 °C. Find out why. (Run it at 5×.)",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "heated-box",
+     "set": {
+      "P": 300,
+      "ta": 30
+     },
+     "controls": [
+      "mode",
+      "tset"
+     ],
+     "speed": 5
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "Why does it run hot?",
+    "faults": [
+     "fan-dead",
+     "stat-stuck",
+     "filter-blocked",
+     "none"
+    ],
+    "why": "Three things to look at: does the thermostat call (its lamp), does the fan turn when it does, and does heat go out with the air when it turns. Switching the fan to On by hand splits the thermostat from the fan."
+   },
+   "added": true
+  },
+  {
+   "id": "add-box-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "A drive panel with 400 W of losses stands in a 35 °C room, and the drive must stay below 45 °C. The fan is on. Set its flow so the panel stays below 45 °C. (Run it at 5×.)",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "heated-box",
+     "set": {
+      "P": 400,
+      "ta": 35,
+      "mode": 2,
+      "flow": 40
+     },
+     "controls": [
+      "flow"
+     ],
+     "speed": 5
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Below 45 °C, for good.",
+    "pass": "AND(t > 300, heading < 45, temp < 45)",
+    "within": 600,
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "flow": 100
+      }
+     }
+    ],
+    "fails": [
+     [
+      "heading >= 45",
+      "It is heading for {heading:1} °C: more air."
+     ],
+     [
+      "t <= 300",
+      "Let it run for five minutes (at 5×, one minute) to show it holds."
+     ]
+    ],
+    "hint": "At 45 °C the box is 10 K above the room, and it must shed 400 W: 40 W/K in all. The walls give 5.5 × 2.4.",
+    "why": "Needed: 400 W ÷ 10 K = 40 W/K. The walls give 5.5 × 2.4 = 13.2 W/K, so the air must take the other 26.8 W/K. Air carries about ⅓ W/K for each m³/h (1.2 kg/m³ × 1005 J/kg·K ÷ 3600 s), so at least 26.8 × 3 = 80 m³/h. A fan's catalogue flow is with clean filters and nothing in the way, so choose one well above that."
+   },
+   "added": true
+  },
+  {
+   "id": "add-box-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A sealed steel enclosure has 1.8 m² of free surface and holds 250 W of drives. The room reaches 30 °C and the inside must stay below 40 °C. Is a sealed box enough, and if not, how much air must a fan move?",
+   "steps": [
+    {
+     "ask": "What the walls shed at 10 K: $5.5\\,A\\,\\Delta T$",
+     "show": "$5.5 \\times 1.8 \\times 10 = 99$ W: short of 250 W"
+    },
+    {
+     "ask": "What the fan must take away",
+     "show": "$250 - 99 = 151$ W"
+    },
+    {
+     "ask": "Air takes about ⅓ W/K for each m³/h, so $Q \\approx 3P / \\Delta T$",
+     "show": "$3 \\times 151 \\div 10 = 45$ m³/h, before any margin for dirty filters"
+    }
+   ],
+   "why": "The fan can only bring the inside down towards the room's temperature: if the room can be hotter than the inside must be, a fan cannot do it and the panel needs a cooling unit.",
+   "added": true
+  },
+  {
+   "id": "add-cond-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Using the book's table, how much heat is conducted through a {d} mm aluminium plate of {a} m², with its faces {dt} °C apart?",
+   "vars": {
+    "d": {
+     "pick": [
+      2,
+      3,
+      5,
+      10
+     ]
+    },
+    "a": {
+     "pick": [
+      0.1,
+      0.25,
+      0.5
+     ]
+    },
+    "dt": {
+     "pick": [
+      1,
+      2,
+      5
+     ]
+    }
+   },
+   "answer": "220 * a * dt / (d / 1000)",
+   "unit": "W",
+   "work": "$Q/t = kA\\Delta T / d = 220 \\times {a} \\times {dt} \\div ({d}/1000) = {answer:0}$ W",
+   "why": "$Q/t = kA(T_2 - T_1)/d$, with $k$ = 220 for aluminium and $d$ in metres. Metal conducts so well that the plate is rarely what limits the heat flow: the air on each side is.",
+   "hint": "The thickness in metres.",
+   "added": true
   },
   {
    "type": "flash",

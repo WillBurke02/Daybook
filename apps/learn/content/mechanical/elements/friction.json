@@ -115,6 +115,76 @@
    "id": "ox1-11"
   },
   {
+   "id": "add-ramp-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A 25 kg box is pushed up a 15° ramp at a steady speed. The coefficient of kinetic friction is 0.30. What force along the ramp does it take?",
+   "steps": [
+    {
+     "ask": "Its weight",
+     "show": "$25 \\times 9.81 = 245$ N"
+    },
+    {
+     "ask": "The normal force: $mg \\cos\\theta$",
+     "show": "$245 \\times \\cos 15° = 237$ N"
+    },
+    {
+     "ask": "Kinetic friction: $\\mu_k N$",
+     "show": "$0.30 \\times 237 = 71.1$ N, down the ramp"
+    },
+    {
+     "ask": "The weight's pull down the ramp: $mg \\sin\\theta$",
+     "show": "$245 \\times \\sin 15° = 63.5$ N"
+    },
+    {
+     "ask": "Steady speed: the forces balance",
+     "show": "$71.1 + 63.5 = 135$ N"
+    }
+   ],
+   "why": "On a slope the normal force is less than the weight, so friction is less too; but gravity now also pulls back down the slope. Going up, both oppose the push; coming down, gravity helps.",
+   "added": true
+  },
+  {
+   "id": "add-ramp-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A {m} kg load slides up a {th}° ramp at a steady speed, with $\\mu_k$ = {mu}. What push along the ramp does it need?",
+   "vars": {
+    "m": {
+     "pick": [
+      10,
+      25,
+      40,
+      60
+     ]
+    },
+    "th": {
+     "pick": [
+      5,
+      10,
+      15,
+      20,
+      30
+     ]
+    },
+    "mu": {
+     "pick": [
+      0.1,
+      0.2,
+      0.3,
+      0.5
+     ]
+    }
+   },
+   "answer": "m * 9.81 * (SIN(RADIANS(th)) + mu * COS(RADIANS(th)))",
+   "unit": "N",
+   "work": "${m} \\times 9.81 \\times (\\sin {th}° + {mu} \\cos {th}°) = {answer:1}$ N",
+   "why": "Friction $\\mu_k mg\\cos\\theta$ plus the weight's part along the slope, $mg\\sin\\theta$.",
+   "hint": "Two forces oppose the push.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "Calculate the deceleration of a snow boarder going up a 5.0º , slope assuming the coefficient of friction for waxed wood on wet snow. The result of the exercise may be useful, but be careful to consider the fact that the snow boarder is going uphill. Explicitly show how you follow the steps in Problem-Solving Strategies.",

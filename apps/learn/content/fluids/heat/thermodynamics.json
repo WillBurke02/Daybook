@@ -252,6 +252,68 @@
    "id": "ox2-11"
   },
   {
+   "id": "add-motor-heat-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A 7.5 kW motor runs at full load with an efficiency of 91%. How much heat does it give off, and what does that waste cost over a year of 4000 hours at 25p a kWh?",
+   "steps": [
+    {
+     "ask": "The electrical power in: $P_{in} = P_{out} / \\eta$",
+     "show": "$7.5 \\div 0.91 = 8.24$ kW"
+    },
+    {
+     "ask": "The first law: what does not leave as work leaves as heat",
+     "show": "$8.24 - 7.5 = 0.74$ kW of heat"
+    },
+    {
+     "ask": "The energy over the year",
+     "show": "$0.74 \\times 4000 = 2970$ kWh"
+    },
+    {
+     "ask": "Its cost",
+     "show": "2970 × £0.25 = about £740"
+    }
+   ],
+   "why": "Energy in = work out + heat out: the book's first law, kept as a ledger. It is also why a motor's losses are the heat a cooling fan must carry away, and why a couple of points of efficiency matter on a machine that runs all day.",
+   "added": true
+  },
+  {
+   "id": "add-loss-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A {p} kW load is driven through a drive and motor that are {e}% efficient together. How much heat do they give off, in kW?",
+   "vars": {
+    "p": {
+     "pick": [
+      1.5,
+      4,
+      7.5,
+      15,
+      30
+     ]
+    },
+    "e": {
+     "pick": [
+      85,
+      88,
+      90,
+      93,
+      95
+     ]
+    }
+   },
+   "answer": "p / (e / 100) - p",
+   "unit": "kW",
+   "work": "In: ${p} \\div {e}\\% = {pin:2}$ kW; heat: ${pin:2} - {p} = {answer:2}$ kW",
+   "let": {
+    "pin": "p / (e / 100)"
+   },
+   "why": "Divide by the efficiency for the power in; the difference is heat.",
+   "hint": "Power in first.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "(a) What is the work output of a cyclical heat engine having a 22.0% efficiency and 6 . 00 × 10 9 J of heat transfer into the engine? (b) How much heat transfer occurs to the environment?",

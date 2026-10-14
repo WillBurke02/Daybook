@@ -545,6 +545,7 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
   const box = el('article', { class: `lcard t-${c.type}`, data: { id: item.id } },
     el('div', { class: 'meta muted small' }, [item.subject, item.lesson].filter(Boolean).join(' · '),
       WHY[item.why] ? el('span', { class: 'chip' }, WHY[item.why]) : null,
+      c.added ? el('span', { class: 'chip', title: 'Not in the book: added for context or practice' }, 'Added') : null,
       JSON.stringify(c).replace(/\\\\\$/g, '').includes('$') ? el('button', { class: 'link small fhelpbtn', type: 'button', title: 'What this formula means, letter by letter',
         onclick: () => formulaHelp(mathsOf(c, values), item.id.split('/')[0]) }, 'Formula help') : null,
       el('button', { class: 'link small', type: 'button', title: 'A whiteboard beside the card (W)', onclick: () => toggle('board') }, 'Whiteboard'),

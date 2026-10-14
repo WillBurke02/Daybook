@@ -163,6 +163,75 @@
    "id": "ox1-17"
   },
   {
+   "id": "add-starter",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A car battery has an EMF of 12.6 V and an internal resistance of 0.020 Ω. The starter motor draws 150 A. What is the terminal voltage, and where does the power go?",
+   "steps": [
+    {
+     "ask": "The voltage lost inside the battery: $Ir$",
+     "show": "$150 \\times 0.020 = 3.0$ V"
+    },
+    {
+     "ask": "The terminal voltage: $V = \\varepsilon - Ir$",
+     "show": "$12.6 - 3.0 = 9.6$ V"
+    },
+    {
+     "ask": "The power turned to heat inside the battery: $I^2 r$",
+     "show": "$150^2 \\times 0.020 = 450$ W"
+    },
+    {
+     "ask": "The power the motor gets: $VI$",
+     "show": "$9.6 \\times 150 = 1440$ W"
+    }
+   ],
+   "why": "At 150 A the internal resistance takes 3 V of the 12.6 V, and 450 W warms the battery. An old or cold battery has more internal resistance: a meter still reads 12.6 V across it, since the meter draws almost no current and $Ir$ is almost nothing, but it cannot turn the engine over.",
+   "added": true
+  },
+  {
+   "id": "add-ir-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "With nothing connected, a supply reads {e} V. With a {rl} Ω load across it, it reads {vt2:2} V. What is its internal resistance?",
+   "vars": {
+    "e": {
+     "pick": [
+      9,
+      12,
+      24
+     ]
+    },
+    "rl": {
+     "pick": [
+      2,
+      4,
+      6,
+      10
+     ]
+    },
+    "r": {
+     "pick": [
+      0.1,
+      0.2,
+      0.5
+     ]
+    }
+   },
+   "let": {
+    "vt2": "ROUND(e * rl / (rl + r), 2)",
+    "cur": "vt2 / rl",
+    "lost": "e - vt2"
+   },
+   "answer": "lost / cur",
+   "unit": "Ω",
+   "tolerance": 0.03,
+   "work": "Current: ${vt2:2} \\div {rl} = {cur:3}$ A. Lost inside: ${e} - {vt2:2} = {lost:2}$ V. So $r = {lost:2} \\div {cur:3} = {answer:3}$ Ω.",
+   "why": "With no load there is no current and no $Ir$, so the reading is the EMF. With the load, the volts missing are $Ir$: divide them by the current.",
+   "hint": "Find the current from the load first.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "An automobile starter motor has an equivalent resistance of 0 . 0500 Ω and is supplied by a 12.0-V battery with a 0 . 0100-Ω internal resistance. (a) What is the current to the motor? (b) What voltage is applied to it? (c) What power is supplied to the motor? (d) Repeat these calculations for when the battery connections are corroded and add 0 . 0900 Ω to the circuit. (Significant problems are caused by even small amounts of unwanted resistance in low-voltage, high-current applications.)",

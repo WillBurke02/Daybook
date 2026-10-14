@@ -391,6 +391,56 @@
    "id": "ox3-15"
   },
   {
+   "id": "add-venturi-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "Water (1000 kg/m³) flows at 2.0 L/s along a 50 mm bore pipe into a venturi meter whose throat is 25 mm across. How fast does it go in the pipe and in the throat, and what pressure difference does the meter read?",
+   "steps": [
+    {
+     "ask": "The flow in m³/s, and the pipe's area",
+     "show": "$Q = 0.002$ m³/s; $A_1 = \\pi \\times 0.025^2 = 1.96 \\times 10^{-3}$ m²"
+    },
+    {
+     "ask": "The speed in the pipe: $v = Q/A$",
+     "show": "$v_1 = 0.002 \\div 0.00196 = 1.02$ m/s"
+    },
+    {
+     "ask": "In the throat: half the diameter, a quarter of the area",
+     "show": "$v_2 = 4 \\times 1.02 = 4.07$ m/s"
+    },
+    {
+     "ask": "Bernoulli, both at the same height: $\\Delta P = \\tfrac{1}{2}\\rho (v_2^2 - v_1^2)$",
+     "show": "$0.5 \\times 1000 \\times (16.6 - 1.04) = 7.8$ kPa"
+    }
+   ],
+   "why": "Continuity gives four times the speed in a quarter of the area; Bernoulli says the speeding up costs pressure. A flowmeter runs this backwards: it measures ΔP and works out Q, which goes as $\\sqrt{\\Delta P}$, so a quarter of the flow gives a sixteenth of the ΔP. That is why these meters read poorly at low flows.",
+   "added": true
+  },
+  {
+   "id": "add-dp-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Water flows at {v1} m/s along a pipe that narrows to half its diameter, on the level. What is the drop in pressure, in kPa?",
+   "vars": {
+    "v1": {
+     "pick": [
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5
+     ]
+    }
+   },
+   "answer": "0.5 * 1000 * ((4 * v1)^2 - v1^2) / 1000",
+   "unit": "kPa",
+   "work": "$v_2 = 4 \\times {v1}$; $\\tfrac{1}{2} \\times 1000 \\times ((4 \\times {v1})^2 - {v1}^2) = {answer:2}$ kPa",
+   "why": "Half the diameter is a quarter of the area: four times the speed. Then $\\Delta P = \\tfrac{1}{2}\\rho(v_2^2 - v_1^2)$.",
+   "hint": "Continuity first: what is the speed in the narrow part?",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "A layer of oil 1.50 mm thick is placed between two microscope slides. Researchers find that a force of 5 . 50 × 10 − 4 N is required to glide one over the other at a speed of 1.00 cm/s when their contact area is 6 . 00 cm 2 . What is the oil’s viscosity? What type of oil might it be?",

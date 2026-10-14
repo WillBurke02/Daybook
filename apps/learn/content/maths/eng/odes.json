@@ -612,6 +612,107 @@
    "id": "ox3-29"
   },
   {
+   "id": "add-heat-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "An enclosure with heat capacity $C$ holds a steady heat source $P$ and loses $G(T - T_a)$ through its walls: $C\\frac{dT}{dt} = P - G(T - T_a)$. Starting at room temperature, how does it warm, and how long until it is 95% of the way?",
+   "steps": [
+    {
+     "ask": "Put $u = T - T_a$: a first-order linear equation",
+     "show": "$\\frac{du}{dt} + \\frac{G}{C}u = \\frac{P}{C}$"
+    },
+    {
+     "ask": "Its steady state, and its time constant",
+     "show": "$u_\\infty = P/G$, and $\\tau = C/G$"
+    },
+    {
+     "ask": "Solve with $u(0) = 0$ (separable, or with an integrating factor)",
+     "show": "$u = \\frac{P}{G}\\left(1 - e^{-t/\\tau}\\right)$"
+    },
+    {
+     "ask": "95% of the way: $1 - e^{-t/\\tau} = 0.95$",
+     "show": "$t = \\tau \\ln 20 \\approx 3\\tau$"
+    }
+   ],
+   "why": "The same equation, with other letters, describes a capacitor charging through a resistor, a motor coming up to speed against friction, and a tank filling through an outlet. One time constant gets 63% of the way, three 95%, five over 99%.",
+   "added": true
+  },
+  {
+   "id": "add-heat-tau",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "The enclosure again, fan off: heat inside, 5.5 W/K for each m² of its 2.4 m² of walls, and a heat capacity of 1500 J/K.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "heated-box",
+     "set": {
+      "mode": 0
+     },
+     "controls": [
+      "P"
+     ],
+     "speed": 5
+    }
+   },
+   "ask": {
+    "type": "numeric",
+    "q": "What is its time constant, in seconds? Then run it and check: after one time constant it has gone 63% of the way to where it is heading.",
+    "answer": "1500 / (5.5 * area)",
+    "unit": "s",
+    "tolerance": 0.02,
+    "hint": "$\\tau = C/G$, with $G = 5.5 \\times 2.4$ W/K.",
+    "why": "$G = 5.5 \\times 2.4 = 13.2$ W/K, so $\\tau = 1500 \\div 13.2 = 114$ s. It does not depend on the heat: more watts raise where it is heading, not how quickly it gets most of the way there."
+   },
+   "added": true
+  },
+  {
+   "id": "add-tau-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "Something warms from {t0} °C towards {tinf} °C with a time constant of {tau} s. What temperature has it reached after {secs} s?",
+   "vars": {
+    "t0": {
+     "pick": [
+      15,
+      20,
+      25
+     ]
+    },
+    "tinf": {
+     "pick": [
+      40,
+      60,
+      80
+     ]
+    },
+    "tau": {
+     "pick": [
+      60,
+      120,
+      300
+     ]
+    },
+    "secs": {
+     "pick": [
+      30,
+      60,
+      120,
+      300,
+      600
+     ]
+    }
+   },
+   "answer": "tinf - (tinf - t0) * EXP(-secs / tau)",
+   "unit": "°C",
+   "abs": 0.2,
+   "work": "${tinf} - ({tinf} - {t0}) e^{-{secs}/{tau}} = {answer:1}$ °C",
+   "why": "$T = T_\\infty - (T_\\infty - T_0)e^{-t/\\tau}$: the gap to the end shrinks by $e$ each time constant.",
+   "hint": "Work out the gap that is left.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "For the following problems, determine how parameter a affects the solution. Solve the generic equation y ′ = a x + y . How does varying a change the behavior?",

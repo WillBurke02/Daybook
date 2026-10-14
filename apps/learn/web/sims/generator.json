@@ -1,0 +1,608 @@
+{
+  "title": "A generator: a coil turning in a magnetic field",
+  "about": "A square coil turns on a shaft between the poles of a magnet. Its ends come out through two slip rings and brushes to a lamp. As the coil turns, the flux through it rises and falls and an EMF is induced: ε = NABω sin ωt. Set the speed, the turns, the field and the coil's size.",
+  "dt": 0.0005,
+  "inputs": {
+    "rpm": {
+      "slider": "Speed",
+      "min": 300,
+      "max": 3600,
+      "step": 60,
+      "value": 600,
+      "unit": "rpm"
+    },
+    "N": {
+      "slider": "Turns on the coil",
+      "min": 10,
+      "max": 400,
+      "step": 10,
+      "value": 100
+    },
+    "B": {
+      "slider": "Field B",
+      "min": 0.05,
+      "max": 1,
+      "step": 0.05,
+      "value": 0.3,
+      "unit": "T"
+    },
+    "side": {
+      "slider": "Coil side",
+      "min": 0.1,
+      "max": 0.3,
+      "step": 0.01,
+      "value": 0.2,
+      "unit": "m"
+    },
+    "load": {
+      "switch": "Lamp connected",
+      "value": 1
+    }
+  },
+  "let": {
+    "brush": "1",
+    "magnet": "1",
+    "coil": "1",
+    "w": "rpm * 2 * PI() / 60",
+    "f": "rpm / 60",
+    "th": "MOD(th + w * 0.0005, 2 * PI())",
+    "peak": "N * coil * B * magnet * side * side * w",
+    "emf": "peak * SIN(th)",
+    "v_out": "emf * brush",
+    "vpk": "MAX(ABS(v_out), vpk * 0.9995)",
+    "rms": "peak * brush / SQRT(2)",
+    "flux": "B * magnet * side * side * COS(th) * 1000",
+    "tc": "IF(t = 0, 20, tc + 0.0005 * (20 + IF(coil < 1, 0.03 * rpm, 0) - tc) / 4)",
+    "bright": "AND(load, rms > 3)"
+  },
+  "faults": {
+    "brush-lifted": {
+      "label": "A brush has lifted off its slip ring",
+      "set": {
+        "brush": "0"
+      },
+      "why": "The coil turns but there is no output at all, at any speed or setting: an open circuit between the coil and the lamp. The brushes and slip rings are the only sliding contacts in the circuit, so look at them first."
+    },
+    "weak-magnet": {
+      "label": "The magnet is weaker than it should be",
+      "set": {
+        "magnet": "0.6"
+      },
+      "why": "The output is a clean sine at the right frequency, but its peak is short of NABω by the same fraction (about 0.6) at every speed and every number of turns, and the coil stays cool. Something that scales the flux: a weakened magnet or a bigger air gap."
+    },
+    "shorted-turns": {
+      "label": "Half the coil's turns are shorted together",
+      "set": {
+        "coil": "0.5"
+      },
+      "why": "The peak is half of NABω at every speed, and the coil gets hot even with the lamp off: the shorted turns carry a big circulating current of their own. A weak magnet would also lower the voltage, but would not heat the coil."
+    }
+  },
+  "script": [
+    {
+      "at": 0.3,
+      "say": "600 rpm (10 Hz), 100 turns, 0.3 T, a 0.2 m square coil. The EMF is biggest when the coil's sides cut straight across the field, and zero as it faces the poles: ε₀ = NABω = 100 × 0.3 × 0.04 × 62.8 = 75 V."
+    },
+    {
+      "at": 1.5,
+      "set": {
+        "rpm": 1200
+      },
+      "say": "Twice the speed: twice the frequency (20 Hz) and twice the peak, 151 V. Faster cutting, more volts."
+    },
+    {
+      "at": 3,
+      "set": {
+        "N": 200
+      },
+      "say": "Twice the turns: twice the voltage again (302 V), at the same frequency."
+    },
+    {
+      "at": 4.5,
+      "set": {
+        "B": 0.15
+      },
+      "say": "Half the field: half the voltage (151 V)."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Lamp lit",
+      "on": "bright",
+      "color": "amber"
+    },
+    {
+      "read": "Frequency",
+      "value": "f",
+      "unit": "Hz",
+      "dp": 1
+    },
+    {
+      "read": "Peak voltage (scope)",
+      "value": "vpk",
+      "unit": "V",
+      "dp": 2
+    },
+    {
+      "read": "RMS voltage",
+      "value": "rms",
+      "unit": "V",
+      "dp": 2
+    },
+    {
+      "read": "Flux through one turn",
+      "value": "flux",
+      "unit": "mWb",
+      "dp": 3
+    },
+    {
+      "read": "Coil temperature",
+      "value": "tc",
+      "unit": "°C",
+      "dp": 0
+    }
+  ],
+  "trend": {
+    "span": 0.25,
+    "lines": [
+      {
+        "value": "v_out",
+        "label": "EMF (V)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0.08,
+        0.45,
+        0.25
+      ],
+      "yaw": 24,
+      "pitch": 38,
+      "dist": 1.75
+    },
+    "floor": 3,
+    "parts": [
+      {
+        "id": "magnet",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.82,
+              0.08,
+              0.36
+            ],
+            "at": [
+              0,
+              0.04,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.5,
+              0.36
+            ],
+            "at": [
+              -0.37,
+              0.29,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.5,
+              0.36
+            ],
+            "at": [
+              0.37,
+              0.29,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.3,
+              0.3
+            ],
+            "at": [
+              -0.25,
+              0.5,
+              0
+            ],
+            "color": "red",
+            "alpha": 0.45,
+            "shadow": false,
+            "label": "N",
+            "label_at": [
+              0,
+              0.24,
+              0
+            ]
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.16,
+              0.3,
+              0.3
+            ],
+            "at": [
+              0.25,
+              0.5,
+              0
+            ],
+            "color": "blue",
+            "alpha": 0.45,
+            "shadow": false,
+            "label": "S",
+            "label_at": [
+              0,
+              0.24,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rotor",
+        "at": [
+          0,
+          0.5,
+          0
+        ],
+        "turn": {
+          "z": "DEGREES(th)"
+        },
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.05,
+              2
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "copper",
+            "move": {
+              "y": "side / 2"
+            },
+            "scale": {
+              "z": "side / 2"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.05,
+              2
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "copper",
+            "move": {
+              "y": "-side / 2"
+            },
+            "scale": {
+              "z": "side / 2"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              2,
+              0.05
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "copper",
+            "move": {
+              "z": "side / 2"
+            },
+            "scale": {
+              "y": "side / 2"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              2,
+              0.05
+            ],
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "color": "copper",
+            "move": {
+              "z": "-side / 2"
+            },
+            "scale": {
+              "y": "side / 2"
+            }
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.025,
+              1.2,
+              0.025
+            ],
+            "at": [
+              0,
+              0,
+              0.2
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.08,
+              0.03,
+              0.08
+            ],
+            "at": [
+              0,
+              0,
+              0.5
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "copper"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.08,
+              0.03,
+              0.08
+            ],
+            "at": [
+              0,
+              0,
+              0.56
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "brass"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.22,
+              0.04,
+              0.22
+            ],
+            "at": [
+              0,
+              0,
+              -0.26
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.08,
+              0.042
+            ],
+            "at": [
+              0,
+              0.08,
+              -0.26
+            ],
+            "color": "dark"
+          }
+        ]
+      },
+      {
+        "id": "brushes",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.06,
+              0.02
+            ],
+            "at": [
+              0,
+              0.57,
+              0.5
+            ],
+            "color": "black",
+            "move": {
+              "y": "IF(brush, 0, 0.006)"
+            }
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.03,
+              0.06,
+              0.02
+            ],
+            "at": [
+              0,
+              0.57,
+              0.56
+            ],
+            "color": "black"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.012,
+              0.25
+            ],
+            "at": [
+              0,
+              0.61,
+              0.645
+            ],
+            "color": "cable"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.012,
+              0.012,
+              0.19
+            ],
+            "at": [
+              0,
+              0.63,
+              0.665
+            ],
+            "color": "cable"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.45,
+              0.012,
+              0.012
+            ],
+            "at": [
+              0.225,
+              0.61,
+              0.77
+            ],
+            "color": "cable"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.45,
+              0.012,
+              0.012
+            ],
+            "at": [
+              0.225,
+              0.63,
+              0.76
+            ],
+            "color": "cable"
+          }
+        ]
+      },
+      {
+        "id": "lamp",
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.04,
+              0.6,
+              0.04
+            ],
+            "at": [
+              0.45,
+              0.3,
+              0.77
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "sphere",
+            "size": [
+              0.11,
+              0.13,
+              0.11
+            ],
+            "at": [
+              0.45,
+              0.66,
+              0.77
+            ],
+            "color": "amber",
+            "lit": "bright",
+            "label": "{rms:1} V rms",
+            "label_at": [
+              0,
+              0.12,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stand",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.5,
+              0.05
+            ],
+            "at": [
+              0,
+              0.25,
+              0.68
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              0.5,
+              0.05
+            ],
+            "at": [
+              0,
+              0.25,
+              -0.42
+            ],
+            "color": "frame"
+          }
+        ]
+      }
+    ]
+  }
+}

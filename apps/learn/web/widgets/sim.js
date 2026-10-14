@@ -90,7 +90,7 @@ export async function mount(box, p, report) {
     if (!box.isConnected) return stop();
     if (last != null && !paused) {
       acc = Math.min(acc + Math.min(0.1, (now - last) / 1000) * speed, 0.5);
-      while (acc >= sim.dt) { step(sim); acc -= sim.dt; }
+      while (acc >= sim.dt) { step(sim); pan.sample(sim.env); acc -= sim.dt; }
     }
     last = now;
     view?.draw(sim.env);

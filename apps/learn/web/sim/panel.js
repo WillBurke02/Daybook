@@ -88,9 +88,15 @@ export function panel(get, opts = {}) {
   // ---- a trend: the last span seconds of chosen values ----
   const tr = scene.trend, lines = (tr?.lines || []).map(l => ({ ...l, f: formula(l.value, known) }));
   const trendBox = tr && lines.length ? el('div', { class: 'wscreen calc s3trend' }) : null, hist = [];
+  // sampled as the machine steps (400 points a span), so a fast wave is drawn as a wave, not a zigzag
+  const sample = e => {
+    const h = hist.at(-1);
+    if (h && e.t >= h[0] && e.t - h[0] < (tr.span || 10) / 400) return;
+    hist.push([e.t, ...lines.map(l => +l.f(e) || 0)]);
+  };
   const drawTrend = e => {
     const span = tr.span || 10;
-    hist.push([e.t, ...lines.map(l => +l.f(e) || 0)]);
+    sample(e);
     while (hist.length && hist[0][0] < e.t - span - 0.5) hist.shift();
     if (hist.length && hist.at(-1)[0] < hist[0][0]) hist.splice(0, hist.length - 1);    // after a reset, time starts again
     let [lo, hi] = tr.y || [Math.min(0, ...hist.flatMap(h => h.slice(1))), Math.max(1e-9, ...hist.flatMap(h => h.slice(1)))];
@@ -136,6 +142,7 @@ export function panel(get, opts = {}) {
       if (drawPlc && (plcBox.open || n % 5 === 0)) drawPlc();
       n++;
     },
+    sample(e) { if (trendBox) sample(e); },
     clear() { hist.length = 0; },
   };
 }

@@ -257,6 +257,37 @@
    "id": "ox3-7"
   },
   {
+   "id": "add-cycle-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A machine's cycle time has averaged 42.0 s with a standard deviation of 1.5 s. After a change, 36 cycles average 41.4 s. At the 5% level, is it faster?",
+   "steps": [
+    {
+     "ask": "The hypotheses",
+     "show": "$H_0$: μ = 42.0 s; $H_a$: μ < 42.0 s (a left-tailed test)"
+    },
+    {
+     "ask": "The standard error of the mean: $\\sigma / \\sqrt{n}$",
+     "show": "$1.5 \\div 6 = 0.25$ s"
+    },
+    {
+     "ask": "How far below, in standard errors: $z$",
+     "show": "$(41.4 - 42.0) \\div 0.25 = -2.4$"
+    },
+    {
+     "ask": "The p-value: the area below $z = -2.4$",
+     "show": "0.0082"
+    },
+    {
+     "ask": "The decision",
+     "show": "0.0082 < 0.05: reject $H_0$. The change made it faster, by about 0.6 s a cycle."
+    }
+   ],
+   "why": "0.6 s is less than half a standard deviation of one cycle, so single cycles could never show it; the mean of 36 can, because its spread is six times smaller. That is the book's sampling distribution at work.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "In words, define the random variable for this test.",

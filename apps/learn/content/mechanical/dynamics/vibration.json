@@ -248,12 +248,155 @@
    "id": "ox3-4"
   },
   {
+   "id": "add-spring-watch",
+   "type": "concept",
+   "stage": "learn",
+   "after": "ox3-4",
+   "title": "A mass on a spring, on a shaker",
+   "body": "The book's oscillator and its forced oscillations, on a rig: a mass on a spring and damper, shaken from below. Pull it and let go to see its natural frequency; run the shaker below, at and above it to see the book's resonance curve, one point at a time.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "spring-mass"
+    }
+   },
+   "added": true
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Section Summary",
    "html": "<ul><li>A system’s natural frequency is the frequency at which the system will oscillate if not affected by driving or damping forces.</li><li>A periodic force driving a harmonic oscillator at its natural frequency produces resonance. The system is said to resonate.</li><li>The less damping a system has, the higher the amplitude of the forced oscillations near resonance. The more damping a system has, the broader response it has to varying driving frequencies.</li></ul>",
    "body": "A system’s natural frequency is the frequency at which the system will oscillate if not affected by driving or damping forces. A periodic force driving a harmonic oscillator at its natural frequency produces resonance. The system is said to resonate. The less damping a system has, the higher the amplitude of the forced oscillations near resonance. The more damping a system has, the broader response it has to varying driving frequencies.",
    "id": "ox3-5"
+  },
+  {
+   "id": "add-spring-diag",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "A test rig. Its drawing says 2 kg on an 800 N/m spring with a light damper, but something is not as drawn. Pull it, shake it, read it.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "spring-mass",
+     "controls": [
+      "pull",
+      "amp",
+      "fd"
+     ]
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is not as drawn?",
+    "faults": [
+     "damper-empty",
+     "spring-soft",
+     "rubbing",
+     "none"
+    ],
+    "why": "Compare the measured frequency with the one the settings give, and the sag with $mg/k$; then pull it and watch how the swings die: by the same fraction each cycle (a damper), by the same amount each cycle (friction), or hardly at all."
+   },
+   "added": true
+  },
+  {
+   "id": "add-spring-goal",
+   "type": "widget",
+   "stage": "practise",
+   "intro": "The shaker runs at 3.2 Hz and 2 mm, right on this mount's natural frequency, and the mass swings about 20 mm. Change the mass and the spring (the shaker stays as it is) so that the mass moves less than 1 mm.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "spring-mass",
+     "set": {
+      "amp": 2,
+      "fd": 3.2
+     },
+     "controls": [
+      "m",
+      "k"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Under 1 mm.",
+    "pass": "AND(t > 12, ax < 1)",
+    "within": 40,
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "m": 3,
+       "k": 300
+      }
+     }
+    ],
+    "fails": [
+     [
+      "ax > 5",
+      "Still {ax:1} mm: near resonance. Move the natural frequency ({fn:2} Hz) well away from 3.2 Hz."
+     ],
+     [
+      "ax >= 1",
+      "{ax:1} mm: better, not under 1 mm yet. The natural frequency is {fn:2} Hz."
+     ]
+    ],
+    "hint": "A mount isolates only when the shaking is well above its natural frequency: above $\\sqrt{2}$ times it, and the further the better.",
+    "why": "3 kg on 300 N/m gives $f_n = \\sqrt{300/3} \\div 2\\pi = 1.6$ Hz, half the shaker's: the mass moves about a third as far as the shaker. A stiffer spring moves $f_n$ above 3.2 Hz and out of resonance, but a stiff mount can never move less than the shaker does."
+   },
+   "added": true
+  },
+  {
+   "id": "add-mount-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A motor running at 1480 rpm sits on rubber mounts that squash 2.0 mm under its weight. Do they stop its shaking reaching the floor?",
+   "steps": [
+    {
+     "ask": "The mounts' natural frequency, from their sag: $f_n = \\frac{1}{2\\pi}\\sqrt{g/\\delta}$",
+     "show": "$\\frac{1}{2\\pi}\\sqrt{9.81 \\div 0.002} = 11.1$ Hz"
+    },
+    {
+     "ask": "The shaking: once a turn",
+     "show": "$1480 \\div 60 = 24.7$ Hz"
+    },
+    {
+     "ask": "The ratio of the two",
+     "show": "$24.7 \\div 11.1 = 2.2$, above $\\sqrt{2}$: they isolate"
+    },
+    {
+     "ask": "How much gets through, with little damping: $T \\approx 1 / (r^2 - 1)$",
+     "show": "$1 \\div (2.2^2 - 1) = 0.26$: about a quarter"
+    }
+   ],
+   "why": "$\\sqrt{k/m}$ and $\\sqrt{g/\\delta}$ are the same, since the sag is $\\delta = mg/k$: a mount's sag under its load gives its natural frequency without knowing $k$ or $m$. Softer mounts (more sag) isolate better, until the machine rocks about on them.",
+   "added": true
+  },
+  {
+   "id": "add-sag-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A machine's mounts squash {d} mm under its weight. What is their natural frequency?",
+   "vars": {
+    "d": {
+     "pick": [
+      0.5,
+      1,
+      2,
+      3,
+      5,
+      10
+     ]
+    }
+   },
+   "answer": "SQRT(9.81 / (d / 1000)) / (2 * PI())",
+   "unit": "Hz",
+   "work": "$\\frac{1}{2\\pi}\\sqrt{9.81 \\div {d}/1000} = {answer:2}$ Hz",
+   "why": "$f_n = \\frac{1}{2\\pi}\\sqrt{g/\\delta}$, the sag in metres.",
+   "hint": "The sag in metres.",
+   "added": true
   },
   {
    "type": "flash",

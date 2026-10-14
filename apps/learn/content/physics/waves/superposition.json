@@ -243,6 +243,29 @@
    "id": "ox2-11"
   },
   {
+   "id": "add-beats-steps",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "Two extract fans stand side by side, one at 1480 rpm and one at 1460 rpm. Each shakes the roof once a turn. How often does the shaking swell and fade?",
+   "steps": [
+    {
+     "ask": "Each fan's frequency",
+     "show": "$1480 \\div 60 = 24.67$ Hz and $1460 \\div 60 = 24.33$ Hz"
+    },
+    {
+     "ask": "The beat frequency: $f_B = |f_1 - f_2|$",
+     "show": "$24.67 - 24.33 = 0.33$ Hz"
+    },
+    {
+     "ask": "The time between swells",
+     "show": "$1 \\div 0.33 = 3$ s"
+    }
+   ],
+   "why": "The two shakes drift in and out of step: in step they add (constructive), half a beat later they cancel (destructive). A slow rise and fall like this, heard or felt near two machines at almost the same speed, is beats; it goes away if one machine changes speed.",
+   "added": true
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "What length should an oboe have to produce a fundamental frequency of 110 Hz on a day when the speed of sound is 343 m/s? It is open at both ends.",
