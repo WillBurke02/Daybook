@@ -1,5 +1,12 @@
 # Changes
 
+## 4.0.6 — 14 October 2026
+
+- **Calendar alerts**: the calendar feed now carries alerts. A bill alerts at 9:00 the day before,
+  payday at 8:00 on the day, and Learn's daily review at the time you choose (Learn → Settings,
+  beside the reminder; 19:00 unless changed), now a timed event rather than all day.
+  On an iPhone, turn off Remove Alerts on the Daybook subscription (Admin says where).
+
 ## 4.0.5 — 13 October 2026
 
 - **Photos and videos from a phone**: picked photos and videos show at once as grey tiles, and

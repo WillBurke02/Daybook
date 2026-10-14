@@ -158,6 +158,8 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
     el('option', { value: 'cards', selected: kind === 'cards' }, 'cards'), el('option', { value: 'minutes', selected: kind === 'minutes' }, 'minutes'));
   const remind = el('input', { type: 'checkbox', checked: setting('review_reminder', '0') === '1',
     onchange: e => saveSetting('review_reminder', e.target.checked ? '1' : '0', ctx) });
+  const remindAt = el('input', { type: 'time', class: 'sm', value: setting('review_time', '19:00'), 'aria-label': 'Review time',
+    onchange: e => e.target.value && saveSetting('review_time', e.target.value, ctx) });
 
   const rows = subjects.map(s => {
     const box = el('input', { type: 'checkbox', checked: isOn(s.id), 'aria-label': `${s.title} in the feed` });
@@ -179,7 +181,7 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
   });
   body.append(
     el('div', { class: 'row mid' }, el('span', {}, 'Daily goal'), goal, kindSel,
-      el('label', { class: 'c' }, remind, 'A daily “review in Learn” in the calendar feed')),
+      el('label', { class: 'c' }, remind, 'A daily “review in Learn” in the calendar feed, with an alert at '), remindAt),
     el('table', { class: 'g lsubjects' }, el('thead', {}, el('tr', {}, el('th', {}, 'In the feed'), el('th', { class: 'n' }, 'Written'), el('th', { class: 'n' }, 'Weight'))),
       el('tbody', {}, rows.map(r => r.tr))),
     el('p', { class: 'note' }, 'The feed takes turns between the subjects that are on, in proportion to their weights: due reviews first, ',

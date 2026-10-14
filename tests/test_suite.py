@@ -204,6 +204,16 @@ assert len(uids) == len(set(uids)), "UIDs are unique"
 assert "attachment" in raw(f"/cal/{tok}.ics?download=1")[1].get("Content-Disposition", "")
 new = json.loads(raw("/api/token/cal", "POST", {}, CW)[2])["token"]
 assert new != tok and raw(f"/cal/{tok}.ics")[0] == 404 and raw(f"/cal/{new}.ics")[0] == 200, "reset ends the old key"
+# alerts: payday at 08:00 on the day; Learn's review at its own time, as a timed event
+pay = ics[ics.index("SUMMARY:Payday"):]
+assert pay.index("TRIGGER:PT8H") < pay.index("END:VEVENT"), "payday has its alert"
+if "learn" in SUITE.apps:
+    lc = _db.connect(suite.path("learn"))
+    lc.executemany("INSERT OR REPLACE INTO setting (key, value) VALUES (?, ?)", [("review_reminder", "1"), ("review_time", "07:45")])
+    lc.commit(); lc.close()
+    ics2 = raw(f"/cal/{new}.ics")[2].decode()
+    rev = ics2[ics2.index(f"DTSTART:{date.today():%Y%m%d}T074500"):]
+    assert rev.index("SUMMARY:Learn: review") < rev.index("TRIGGER:PT0S") < rev.index("END:VEVENT"), rev[:300]
 assert server._fold("SUMMARY:" + "é" * 60).count("\r\n ") == 1 and server._ics_text("a,b;c\nd") == "a\\,b\\;c\\nd"
 print("ok — calendar feed")
 

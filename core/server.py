@@ -631,8 +631,8 @@ def _fold(line):
 
 
 def calendar_feed(today=None):
-    """Every app's events from a month back to a year ahead, as all-day events
-    with UIDs that stay the same from one fetch to the next."""
+    """Every app's events from a month back to a year ahead, all-day or (with "at") at a time,
+    each with an alert if it has an "alarm", and UIDs that stay the same from one fetch to the next."""
     today = today or date.today()
     frm, to = (today - timedelta(days=31)).isoformat(), (today + timedelta(days=366)).isoformat()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -649,12 +649,19 @@ def calendar_feed(today=None):
         finally:
             db.close()
         for e in events:
-            end = date.fromisoformat(e.get("end") or e["date"]) + timedelta(days=1)
-            lines += ["BEGIN:VEVENT", f"UID:{name}-{e['uid']}@daybook", f"DTSTAMP:{stamp}",
-                      f"DTSTART;VALUE=DATE:{e['date'].replace('-', '')}", f"DTEND;VALUE=DATE:{end:%Y%m%d}",
-                      f"SUMMARY:{_ics_text(e['title'])}"]
+            lines += ["BEGIN:VEVENT", f"UID:{name}-{e['uid']}@daybook", f"DTSTAMP:{stamp}"]
+            if e.get("at"):                    # at a time of day: half an hour, in the phone's own time zone
+                start = datetime.fromisoformat(f"{e['date']}T{e['at']}")
+                lines += [f"DTSTART:{start:%Y%m%dT%H%M%S}", f"DTEND:{start + timedelta(minutes=30):%Y%m%dT%H%M%S}"]
+            else:
+                end = date.fromisoformat(e.get("end") or e["date"]) + timedelta(days=1)
+                lines += [f"DTSTART;VALUE=DATE:{e['date'].replace('-', '')}", f"DTEND;VALUE=DATE:{end:%Y%m%d}"]
+            lines.append(f"SUMMARY:{_ics_text(e['title'])}")
             if e.get("note"):
                 lines.append(f"DESCRIPTION:{_ics_text(e['note'])}")
+            if e.get("alarm"):                 # from the event's start: -PT15H is 09:00 the day before an all-day one
+                lines += ["BEGIN:VALARM", "ACTION:DISPLAY", f"DESCRIPTION:{_ics_text(e['title'])}",
+                          f"TRIGGER:{e['alarm']}", "END:VALARM"]
             lines.append("END:VEVENT")
     lines.append("END:VCALENDAR")
     return "\r\n".join(_fold(x) for x in lines) + "\r\n"

@@ -297,16 +297,18 @@ def home(db):
 
 
 def calendar(db, frm, to):
-    """A daily 'review in Learn' in the calendar feed, when switched on (Learn → Settings)."""
-    if _db.settings(db).get("review_reminder") != "1":
+    """A daily 'review in Learn' in the calendar feed at its time, with an alert, when switched on (Learn → Settings)."""
+    s = _db.settings(db)
+    if s.get("review_reminder") != "1":
         return []
+    at = s.get("review_time") or "19:00"
     today = date.today()
     start = max(date.fromisoformat(frm), today)
     end = min(date.fromisoformat(to), today + timedelta(days=60))
     due = today_counts(db)["due"]
     out, d = [], start
     while d <= end:
-        out.append({"uid": f"review-{d}", "date": d.isoformat(),
+        out.append({"uid": f"review-{d}", "date": d.isoformat(), "at": at, "alarm": "PT0S",
                     "title": f"Learn: review ({due} due)" if d == today else "Learn: review"})
         d += timedelta(days=1)
     return out

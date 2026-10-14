@@ -368,7 +368,8 @@ def calendar(db, frm, to):
                 break
             if d >= frm and (not r["next_due"] or d >= r["next_due"]):
                 amount = f" £{r['amount']:,.2f}" if r["amount"] else ""
-                out.append({"uid": f"reminder-{r['id']}-{d}", "date": d, "title": f"{r['title']}{amount}", "note": r["note"]})
+                out.append({"uid": f"reminder-{r['id']}-{d}", "date": d, "title": f"{r['title']}{amount}", "note": r["note"],
+                            "alarm": "-PT15H"})          # 09:00 the day before
             if r["every"] == "once":
                 break
     day = int(_db.settings(db).get("payday", 17) or 17)
@@ -376,7 +377,7 @@ def calendar(db, frm, to):
     while f"{y}-{m:02d}" <= to[:7]:
         d = f"{y}-{m:02d}-{min(day, 28):02d}"
         if frm <= d <= to:
-            out.append({"uid": f"payday-{d}", "date": d, "title": "Payday"})
+            out.append({"uid": f"payday-{d}", "date": d, "title": "Payday", "alarm": "PT8H"})   # 08:00 on the day
         y, m = (y + 1, 1) if m == 12 else (y, m + 1)
     for r in db.execute("SELECT id, from_date, to_date, kind, note FROM leave WHERE to_date >= ? AND from_date <= ?", (frm, to)):
         out.append({"uid": f"leave-{r['id']}", "date": r["from_date"], "end": r["to_date"],
