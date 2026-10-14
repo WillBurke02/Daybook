@@ -9,7 +9,7 @@
    "precalculus-2e 4.6"
   ]
  },
- "minutes": 174,
+ "minutes": 175,
  "goals": [
   "Evaluate exponential functions.",
   "Find the equation of an exponential function.",
@@ -618,11 +618,20 @@
   {
    "type": "flash",
    "stage": "check",
+   "front": "Is x = 0 in the domain of the function f ( x ) = log ( x ) ? If so, what is the value of the function when x = 0 ? Verify the result.",
+   "back": "No, the function has no defined value for x = 0. To verify, suppose x = 0 is in the domain of the function f ( x ) = log ( x ) . Then there is some number n such that n = log ( 0 ) . Rewriting as an exponential equation gives: 10 n = 0 , which is impossible since no such real number n exists. Therefore, x = 0 is not the domain of the function f ( x ) = log ( x ) .",
+   "front_html": "\n<p>Is <math>\n<mrow><mi>x</mi><mo>=</mo><mn>0</mn>\n</mrow>\n</math> in the domain of the function <math>\n<mrow><mi>f</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>=</mo><mi>log</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>?</mo>\n</mrow>\n</math> If so, what is the value of the function when <math>\n<mrow><mi>x</mi><mo>=</mo><mn>0</mn><mo>?</mo>\n</mrow>\n</math> Verify the result.</p>\n",
+   "back_html": "\n<p>No, the function has no defined value for <math>\n<mrow><mi>x</mi><mo>=</mo><mn>0.</mn>\n</mrow>\n</math> To verify, suppose <math>\n<mrow><mi>x</mi><mo>=</mo><mn>0</mn>\n</mrow>\n</math> is in the domain of the function <math>\n<mrow><mi>f</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>=</mo><mi>log</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>.</mo>\n</mrow>\n</math> Then there is some number <math>\n<mrow><mi>n</mi>\n</mrow>\n</math> such that <math>\n<mrow><mi>n</mi><mo>=</mo><mi>log</mi><mo stretchy=\"false\">(</mo><mn>0</mn><mo stretchy=\"false\">)</mo><mo>.</mo>\n</mrow>\n</math> Rewriting as an exponential equation gives: <math>\n<mrow><msup>\n<mrow>\n<mn>10</mn>\n</mrow>\n<mi>n</mi>\n</msup>\n<mo>=</mo><mn>0</mn><mo>,</mo>\n</mrow>\n</math> which is impossible since no such real number <math>\n<mrow><mi>n</mi>\n</mrow>\n</math> exists. Therefore, <math>\n<mrow><mi>x</mi><mo>=</mo><mn>0</mn>\n</mrow>\n</math> is <em>not</em> the domain of the function <math>\n<mrow><mi>f</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>=</mo><mi>log</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo><mo>.</mo>\n</mrow>\n</math> </p>",
+   "id": "ox2-28"
+  },
+  {
+   "type": "flash",
+   "stage": "check",
    "front": "Is there a number x such that ln x = 2 ? If so, what is that number? Verify the result.",
    "back": "Yes. Suppose there exists a real number x such that ln x = 2. Rewriting as an exponential equation gives x = e 2 , which is a real number. To verify, let x = e 2 . Then, by definition, ln ( x ) = ln ( e 2 ) = 2.",
    "front_html": "\n<p>Is there a number <math>\n<mrow><mi>x</mi>\n</mrow>\n</math> such that <math>\n<mrow><mi>ln</mi><mi>x</mi><mo>=</mo><mn>2</mn><mo>?</mo>\n</mrow>\n</math> If so, what is that number? Verify the result.</p>\n",
    "back_html": "\n<p>Yes. Suppose there exists a real number <math>\n<mrow><mi>x</mi>\n</mrow>\n</math> such that <math>\n<mrow><mi>ln</mi><mi>x</mi><mo>=</mo><mn>2.</mn>\n</mrow>\n</math> Rewriting as an exponential equation gives <math>\n<mrow><mi>x</mi><mo>=</mo><msup>\n<mi>e</mi>\n<mn>2</mn>\n</msup>\n<mo>,</mo>\n</mrow>\n</math> which is a real number. To verify, let <math>\n<mrow><mi>x</mi><mo>=</mo><msup>\n<mi>e</mi>\n<mn>2</mn>\n</msup>\n<mo>.</mo>\n</mrow>\n</math> Then, by definition, <math>\n<mrow><mi>ln</mi><mrow><mo>(</mo>\n<mi>x</mi>\n<mo>)</mo></mrow><mo>=</mo><mi>ln</mi><mrow><mo>(</mo>\n<mrow>\n<msup>\n<mi>e</mi>\n<mn>2</mn>\n</msup>\n\n</mrow>\n<mo>)</mo></mrow><mo>=</mo><mn>2.</mn>\n</mrow>\n</math> </p>",
-   "id": "ox2-28"
+   "id": "ox2-29"
   },
   {
    "type": "flash",
@@ -631,15 +640,6 @@
    "back": "No; ln ( 1 ) = 0 , so ln ( e 1.725 ) ln ( 1 ) is undefined.",
    "front_html": "\n<p>Is the following true: <math>\n<mrow><mfrac>\n<mrow>\n<mi>ln</mi><mrow><mo>(</mo>\n<mrow>\n<msup>\n<mi>e</mi>\n<mrow>\n<mn>1.725</mn>\n</mrow>\n</msup>\n\n</mrow>\n<mo>)</mo></mrow>\n</mrow>\n<mrow>\n<mi>ln</mi><mrow><mo>(</mo>\n<mn>1</mn>\n<mo>)</mo></mrow>\n</mrow>\n</mfrac>\n<mo>=</mo><mn>1.725</mn><mo>?</mo>\n</mrow>\n</math> Verify the result.</p>\n",
    "back_html": "\n<p>No; <math>\n<mrow><mi>ln</mi><mrow><mo>(</mo>\n<mn>1</mn>\n<mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>,</mo>\n</mrow>\n</math> so <math>\n<mrow><mfrac>\n<mrow>\n<mi>ln</mi><mrow><mo>(</mo>\n<mrow>\n<msup>\n<mi>e</mi>\n<mrow>\n<mn>1.725</mn>\n</mrow>\n</msup>\n\n</mrow>\n<mo>)</mo></mrow>\n</mrow>\n<mrow>\n<mi>ln</mi><mrow><mo>(</mo>\n<mn>1</mn>\n<mo>)</mo></mrow>\n</mrow>\n</mfrac>\n\n</mrow>\n</math> is undefined.</p>",
-   "id": "ox2-29"
-  },
-  {
-   "type": "flash",
-   "stage": "check",
-   "front": "Refer to the previous exercise. Suppose the light meter on a camera indicates an E I of − 2 , and the desired exposure time is 16 seconds. What should the f-stop setting be?",
-   "back": "2",
-   "front_html": "\n<p>Refer to the previous exercise. Suppose the light meter on a camera indicates an <math>\n<mrow><mi>E</mi><mi>I</mi>\n</mrow>\n</math> of <math>\n<mrow><mo>−</mo><mn>2</mn><mo>,</mo>\n</mrow>\n</math> and the desired exposure time is 16 seconds. What should the f-stop setting be?</p>",
-   "back_html": "\n<p> <math>\n<mn>2</mn>\n</math> </p>\n",
    "id": "ox2-30"
   },
   {
@@ -907,9 +907,9 @@
   {
    "type": "flash",
    "stage": "check",
-   "front": "log 1 2 ( 4.7 )",
+   "front": "For the following exercises, use the change-of-base formula to evaluate each expression as a quotient of natural logs. Use a calculator to approximate each to five decimal places. log 1 2 ( 4.7 )",
    "back": "− 2.23266",
-   "front_html": "\n<p> <math>\n<mrow>\n<msub>\n<mrow>\n<mi>log</mi>\n</mrow>\n<mrow>\n<mfrac>\n<mn>1</mn>\n<mn>2</mn>\n</mfrac>\n\n</mrow>\n</msub>\n<mrow><mo>(</mo>\n<mrow>\n<mn>4.7</mn>\n</mrow>\n<mo>)</mo></mrow>\n</mrow>\n</math> </p>\n",
+   "front_html": "<p>For the following exercises, use the change-of-base formula to evaluate each expression as a quotient of natural logs. Use a calculator to approximate each to five decimal places.</p>\n<p> <math>\n<mrow>\n<msub>\n<mrow>\n<mi>log</mi>\n</mrow>\n<mrow>\n<mfrac>\n<mn>1</mn>\n<mn>2</mn>\n</mfrac>\n\n</mrow>\n</msub>\n<mrow><mo>(</mo>\n<mrow>\n<mn>4.7</mn>\n</mrow>\n<mo>)</mo></mrow>\n</mrow>\n</math> </p>\n",
    "back_html": "\n<p> <math>\n<mrow>\n<mo>−</mo><mn>2.23266</mn>\n</mrow>\n</math> </p>\n",
    "id": "ox3-33"
   },
@@ -1254,9 +1254,9 @@
   {
    "type": "flash",
    "stage": "check",
-   "front": "The magnitude M of an earthquake is represented by the equation M = 2 3 log ( E E 0 ) where E is the amount of energy released by the earthquake in joules and E 0 = 10 4.4 is the assigned minimal measure released by an earthquake. To the nearest hundredth, what would the magnitude be of an earthquake releasing 1.4 ⋅ 10 13 joules of energy?",
+   "front": "For the following exercises, use a calculator to solve the equation. Unless indicated otherwise, round all answers to the nearest ten-thousandth. The magnitude M of an earthquake is represented by the equation M = 2 3 log ( E E 0 ) where E is the amount of energy released by the earthquake in joules and E 0 = 10 4.4 is the assigned minimal measure released by an earthquake. To the nearest hundredth, what would the magnitude be of an earthquake releasing 1.4 ⋅ 10 13 joules of energy?",
    "back": "about 5.83",
-   "front_html": "\n<p>The magnitude <em>M </em>of an earthquake is represented by the equation <math>\n<mrow>\n<mi>M</mi><mo>=</mo><mfrac>\n<mn>2</mn>\n<mn>3</mn>\n</mfrac>\n<mi>log</mi><mrow><mo>(</mo>\n<mrow>\n<mfrac>\n<mi>E</mi>\n<mrow>\n<msub>\n<mi>E</mi>\n<mn>0</mn>\n</msub>\n\n</mrow>\n</mfrac>\n\n</mrow>\n<mo>)</mo></mrow></mrow>\n</math> where <math>\n<mrow>\n<mi>E</mi></mrow>\n</math> is the amount of energy released by the earthquake in joules and <math>\n<mrow>\n<msub>\n<mi>E</mi>\n<mn>0</mn>\n</msub>\n<mo>=</mo><msup>\n<mrow>\n<mn>10</mn>\n</mrow>\n<mrow>\n<mn>4.4</mn>\n</mrow>\n</msup>\n</mrow>\n</math> is the assigned minimal measure released by an earthquake. To the nearest hundredth, what would the magnitude be of an earthquake releasing <math>\n<mrow>\n<mn>1.4</mn><mo>⋅</mo><msup>\n<mrow>\n<mn>10</mn>\n</mrow>\n<mrow>\n<mn>13</mn>\n</mrow>\n</msup>\n</mrow>\n</math> joules of energy?</p>\n",
+   "front_html": "<p>For the following exercises, use a calculator to solve the equation. Unless indicated otherwise, round all answers to the nearest ten-thousandth.</p>\n<p>The magnitude <em>M </em>of an earthquake is represented by the equation <math>\n<mrow>\n<mi>M</mi><mo>=</mo><mfrac>\n<mn>2</mn>\n<mn>3</mn>\n</mfrac>\n<mi>log</mi><mrow><mo>(</mo>\n<mrow>\n<mfrac>\n<mi>E</mi>\n<mrow>\n<msub>\n<mi>E</mi>\n<mn>0</mn>\n</msub>\n\n</mrow>\n</mfrac>\n\n</mrow>\n<mo>)</mo></mrow></mrow>\n</math> where <math>\n<mrow>\n<mi>E</mi></mrow>\n</math> is the amount of energy released by the earthquake in joules and <math>\n<mrow>\n<msub>\n<mi>E</mi>\n<mn>0</mn>\n</msub>\n<mo>=</mo><msup>\n<mrow>\n<mn>10</mn>\n</mrow>\n<mrow>\n<mn>4.4</mn>\n</mrow>\n</msup>\n</mrow>\n</math> is the assigned minimal measure released by an earthquake. To the nearest hundredth, what would the magnitude be of an earthquake releasing <math>\n<mrow>\n<mn>1.4</mn><mo>⋅</mo><msup>\n<mrow>\n<mn>10</mn>\n</mrow>\n<mrow>\n<mn>13</mn>\n</mrow>\n</msup>\n</mrow>\n</math> joules of energy?</p>\n",
    "back_html": "\n<p>about <math>\n<mrow>\n<mn>5.83</mn>\n</mrow>\n</math> </p>\n",
    "id": "ox4-40"
   },

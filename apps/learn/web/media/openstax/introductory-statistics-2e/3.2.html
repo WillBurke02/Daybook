@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.2 Independent and Mutually Exclusive Events · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 3.2 Independent and Mutually Exclusive Events. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/3-2-independent-and-mutually-exclusive-events</p>
+<h1>3.2 Independent and Mutually Exclusive Events</h1>
+
+<p>Independent and mutually exclusive do <strong>not</strong> mean the same thing.</p>
+
+<div class="section">
+<h3>Independent Events</h3>
+<p>Two events are independent if the following are true:</p>
+<ul><li><em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>)</li><li><em>P</em>(<em>B</em>|<em>A</em>) = <em>P</em>(<em>B</em>)</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>)</li></ul>
+
+<p>Two events <em>A</em> and <em>B</em> are <strong>independent events</strong> if the knowledge that one occurred does not affect the chance the other occurs. For example, the outcomes of two roles of a fair die are independent events. The outcome of the first roll does not change the probability for the outcome of the second roll. To show two events are independent, you must show <strong>only one</strong> of the above conditions. If two events are NOT independent, then we say that they are <strong>dependent events</strong>.</p>
+
+<p>Sampling may be done <strong>with</strong> <strong>replacement</strong> or <strong>without replacement</strong>.</p>
+<ul><li><strong>With replacement</strong>: If each member of a population is replaced after it is picked, then that member has the possibility of being chosen more than once. When sampling is done with replacement, then events are considered to be independent, meaning the result of the first pick will not change the probabilities for the second pick.</li><li><strong>Without replacement</strong>: When sampling is done without replacement, each member of a population may be chosen only once. In this case, the probabilities for the second pick are affected by the result of the first pick. The events are considered to be dependent or not independent.</li></ul>
+<p>If it is not known whether <em>A</em> and <em>B</em> are independent or dependent, <strong>assume they are dependent until you can show otherwise</strong>.</p>
+
+<div class="example">
+<p>You have a fair, well-shuffled deck of 52 cards. It consists of four suits. The suits are clubs, diamonds, hearts and spades. There are 13 cards in each suit consisting of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, <em>J</em> (jack), <em>Q</em> (queen), <em>K</em> (king) of that suit.</p>
+<p>a. Sampling with replacement:
+<br>Suppose you pick three cards with replacement. The first card you pick out of the 52 cards is the <em>Q</em> of spades. You put this card back, reshuffle the cards and pick a second card from the 52-card deck. It is the ten of clubs. You put this card back, reshuffle the cards and pick a third card from the 52-card deck. This time, the card is the <em>Q</em> of spades again. Your picks are {<em>Q</em> of spades, ten of clubs, <em>Q</em> of spades}. You have picked the <em>Q</em> of spades twice. You pick each card from the 52-card deck.</p>
+
+<p>b. Sampling without replacement:
+<br>Suppose you pick three cards without replacement. The first card you pick out of the 52 cards is the <em>K</em> of hearts. You put this card aside and pick the second card from the 51 cards remaining in the deck. It is the three of diamonds. You put this card aside and pick the third card from the remaining 50 cards in the deck. The third card is the <em>J</em> of spades. Your picks are {<em>K</em> of hearts, three of diamonds, <em>J</em> of spades}. Because you have picked the cards without replacement, you cannot pick the same card twice.</p>
+</div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>You have a fair, well-shuffled deck of 52 cards. It consists of four suits. The suits are clubs, diamonds, hearts and spades. There are 13 cards in each suit consisting of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, <em>J</em> (jack), <em>Q</em> (queen), <em>K</em> (king) of that suit. Three cards are picked at random.</p>
+<ol><li>Suppose you know that the picked cards are <em>Q</em> of spades, <em>K</em> of hearts and <em>Q</em> of spades. Can you decide if the sampling was with or without replacement?</li><li>Suppose you know that the picked cards are <em>Q</em> of spades, <em>K</em> of hearts, and <em>J</em> of spades. Can you decide if the sampling was with or without replacement?</li></ol>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<p>You have a fair, well-shuffled deck of 52 cards. It consists of four suits. The suits are clubs, diamonds, hearts, and spades. There are 13 cards in each suit consisting of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, <em>J</em> (jack), <em>Q</em> (queen), and <em>K</em> (king) of that suit. <em>S</em> = spades, <em>H</em> = Hearts, <em>D</em> = Diamonds, <em>C</em> = Clubs.</p><ol><li>Suppose you pick four cards, but do not put any cards back into the deck. Your cards are <em>QS</em>, 1<em>D</em>, 1<em>C</em>, <em>QD</em>.</li><li>Suppose you pick four cards and put each card back before you pick the next card. Your cards are <em>KH</em>, 7<em>D</em>, 6<em>D</em>, <em>KH</em>.</li></ol><p>Which of a. or b. did you sample with replacement and which did you sample without replacement?</p></div>
+<div class="solution">
+
+<p>a. Without replacement; b. With replacement</p></div>
+</div>
+</div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>You have a fair, well-shuffled deck of 52 cards. It consists of four suits. The suits are clubs, diamonds, hearts, and spades. There are 13 cards in each suit consisting of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, <em>J</em> (jack), <em>Q</em> (queen), and <em>K</em> (king) of that suit. <em>S</em> = spades, <em>H</em> = Hearts, <em>D</em> = Diamonds, <em>C</em> = Clubs. Suppose that you sample four cards without replacement. Which of the following outcomes are possible? Answer the same question for sampling with replacement.</p><ol><li><em>QS</em>, 1<em>D</em>, 1<em>C</em>, <em>QD</em></li><li><em>KH</em>, 7<em>D</em>, 6<em>D</em>, <em>KH</em></li><li><em>QS</em>, 7<em>D</em>, 6<em>D</em>, <em>KS</em></li></ol></div>
+</div>
+</div>
+</div>
+
+<div class="section">
+<h3>Mutually Exclusive Events</h3>
+<p><em>A</em> and <em>B</em> are <strong>mutually exclusive</strong> events if they cannot occur at the same time. This means that <em>A</em> and <em>B</em> do not share any outcomes and <em>P</em>(<em>A</em> AND <em>B</em>) = 0.</p><p>For example, suppose the sample space <em>S</em> = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. Let <em>A</em> = {1, 2, 3, 4, 5}, <em>B</em> = {4, 5, 6, 7, 8}, and <em>C</em> = {7, 9}. <em>A</em> AND <em>B</em> = {4, 5}. <em>P</em>(<em>A</em> AND <em>B</em>) = <math><mrow><mfrac><mn>2</mn><mrow><mn>10</mn></mrow></mfrac></mrow></math> and is not equal to zero. Therefore, <em>A</em> and <em>B</em> are not mutually exclusive. <em>A</em> and <em>C</em> do not have any numbers in common so <em>P</em>(<em>A</em> AND <em>C</em>) = 0. Therefore, <em>A</em> and <em>C</em> are mutually exclusive.</p>
+<p>If it is not known whether <em>A</em> and <em>B</em> are mutually exclusive, <strong>assume they are not until you can show otherwise</strong>. The following examples illustrate these definitions and terms.</p>
+
+<div class="example">
+<p>Flip two fair coins. (This is an experiment.)</p>
+<p>The sample space is {<em>HH</em>, <em>HT</em>, <em>TH</em>, <em>TT</em>} where <em>T</em> = tails and <em>H</em> = heads. The outcomes are <em>HH</em>, <em>HT</em>, <em>TH</em>, and <em>TT</em>. The outcomes HT and TH are different. The <em>HT</em> means that the first coin showed heads and the second coin showed tails. The <em>TH</em> means that the first coin showed tails and the second coin showed heads.</p>
+
+<ul><li>Let <em>A</em> = the event of getting <strong>at most one tail</strong>. (At most one tail means zero or one tail.) Then <em>A</em> can be written as {<em>HH</em>, <em>HT</em>, <em>TH</em>}. The outcome <em>HH</em> shows zero tails. <em>HT</em> and <em>TH</em> each show one tail.</li><li>Let <em>B</em> = the event of getting all tails. <em>B</em> can be written as {<em>TT</em>}. <em>B</em> is the <strong>complement</strong> of <em>A</em>, so <em>B</em> = <em>A′</em>. Also, <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = 1.</li><li>The probabilities for <em>A</em> and for <em>B</em> are <em>P</em>(<em>A</em>) = <math><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac></mrow></math> and <em>P</em>(<em>B</em>) = <math><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></math>.</li><li>Let <em>C</em> = the event of getting all heads. <em>C</em> = {<em>HH</em>}. Since <em>B</em> = {<em>TT</em>}, <em>P</em>(<em>B</em> AND <em>C</em>) = 0. <em>B</em> and <em>C</em> are mutually exclusive. (<em>B</em> and <em>C</em> have no members in common because you cannot have all tails and all heads at the same time.)</li><li>Let <em>D</em> = event of getting <strong>more than one</strong> tail. <em>D</em> = {<em>TT</em>}. <em>P</em>(<em>D</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math></li><li>Let <em>E</em> = event of getting a head on the first roll. (This implies you can get either a head or tail on the second roll.) <em>E</em> = {<em>HT</em>, <em>HH</em>}. <em>P</em>(<em>E</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math></li><li>Find the probability of getting <strong>at least one</strong> (one or two) tail in two flips. Let <em>F</em> = event of getting at least one tail in two flips. <em>F</em> = {<em>HT</em>, <em>TH</em>, <em>TT</em>}. <em>P</em>(<em>F</em>) = <math><mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math></li></ul></div>
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Draw two cards from a standard 52-card deck with replacement. Find the probability of getting at least one black card.</p></div>
+</div>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<p>Flip two fair coins. Find the probabilities of the events.</p>
+<ol><li>Let <em>F</em> = the event of getting at most one tail (zero or one tail).</li><li>Let <em>G</em> = the event of getting two faces that are the same.</li><li>Let <em>H</em> = the event of getting a head on the first flip followed by a head or tail on the second flip.</li><li>Are <em>F</em> and <em>G</em> mutually exclusive?</li><li>Let <em>J</em> = the event of getting all tails. Are <em>J</em> and <em>H</em> mutually exclusive?</li></ol></div>
+<div class="solution">
+<p>Look at the sample space in the example.</p>
+<ol><li>Zero (0) or one (1) tails occur when the outcomes <em>HH</em>, <em>TH</em>, <em>HT</em> show up. <em>P</em>(<em>F</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math></li><li>Two faces are the same if <em>HH</em> or <em>TT</em> show up. <em>P</em>(<em>G</em>) = <math><mrow><mfrac><mn>2</mn><mn>4</mn></mfrac></mrow></math></li><li>A head on the first flip followed by a head or tail on the second flip occurs when <em>HH</em> or <em>HT</em> show up. <em>P</em>(<em>H</em>) = <math><mrow><mfrac><mn>2</mn><mn>4</mn></mfrac></mrow></math></li><li><em>F</em> and <em>G</em> share <em>HH</em> so <em>P</em>(<em>F</em> AND <em>G</em>) is not equal to zero (0). <em>F</em> and <em>G</em> are not mutually exclusive.</li><li>Getting all tails occurs when tails shows up on both coins (<em>TT</em>). <em>H</em>’s outcomes are <em>HH</em> and <em>HT</em>.</li></ol><p><em>J</em> and <em>H</em> have nothing in common so <em>P</em>(<em>J</em> AND <em>H</em>) = 0. <em>J</em> and <em>H</em> are mutually exclusive.</p></div>
+</div></div>
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A box has two balls, one white and one red. We select one ball, put it back in the box, and select a second ball (sampling with replacement). Find the probability of the following events:</p><ol><li>Let <em>F</em> = the event of getting the white ball twice.</li><li>Let <em>G</em> = the event of getting two balls of different colors.</li><li>Let <em>H</em> = the event of getting white on the first pick.</li><li>Are <em>F</em> and <em>G</em> mutually exclusive?</li><li>Are <em>G</em> and <em>H</em> mutually exclusive?</li></ol>
+</div>
+</div>
+</div>
+<div class="example"><p>Roll one fair, six-sided die. The sample space is {1, 2, 3, 4, 5, 6}. Let event <em>A</em> = a face is odd. Then <em>A</em> = {1, 3, 5}. Let event <em>B</em> = a face is even. Then <em>B</em> = {2, 4, 6}.</p>
+<ul><li>Find the complement of <em>A</em>, <em>A′</em>. The complement of <em>A</em>, <em>A′</em>, is <em>B</em> because <em>A</em> and <em>B</em> together make up the sample space. <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = 1. Also, <em>P</em>(<em>A</em>) = <math><mrow><mfrac><mn>3</mn><mn>6</mn></mfrac></mrow></math> and <em>P</em>(<em>B</em>) = <math><mrow><mfrac><mn>3</mn><mn>6</mn></mfrac></mrow></math>.</li><li>Let event <em>C</em> = odd faces larger than two. Then <em>C</em> = {3, 5}. Let event <em>D</em> = all even faces smaller than five. Then <em>D</em> = {2, 4}. <em>P</em>(<em>C</em> AND <em>D</em>) = 0 because you cannot have an odd and even face at the same time. Therefore, <em>C</em> and <em>D</em> are mutually exclusive events.</li><li>Let event <em>E</em> = all faces less than five. <em>E</em> = {1, 2, 3, 4}.</li></ul>
+<div class="exercise"><div class="problem">
+<p>Are <em>C</em> and <em>E</em> mutually exclusive events? (Answer yes or no.) Why or why not?</p>
+</div>
+<div class="solution">
+
+<p>No. <em>C</em> = {3, 5} and <em>E</em> = {1, 2, 3, 4}. <em>P</em>(<em>C</em> AND <em>E</em>) = <math><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac></mrow></math>. To be mutually exclusive, <em>P</em>(<em>C</em> AND <em>E</em>) must be zero.</p>
+</div>
+</div><ul><li>Find <em>P</em>(<em>C</em>|<em>A</em>). This is a conditional probability. Recall that the event <em>C</em> is {3, 5} and event <em>A</em> is {1, 3, 5}. To find <em>P</em>(<em>C</em>|<em>A</em>), find the probability of <em>C</em> using the sample space <em>A</em>. You have reduced the sample space from the original sample space {1, 2, 3, 4, 5, 6} to {1, 3, 5}. So, <em>P</em>(<em>C</em>|<em>A</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>3</mn>
+  </mfrac>
+</mrow>
+</math>.
+</li></ul></div><div class="note statistics try"><h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Let event <em>A</em> = learning Spanish. Let event <em>B</em> = learning German. Then <em>A</em> AND <em>B</em> = learning Spanish and German. Suppose <em>P</em>(<em>A</em>) = 0.4 and <em>P</em>(<em>B</em>) = 0.2. <em>P</em>(<em>A</em> AND <em>B</em>) = 0.08. Are events <em>A</em> and <em>B</em> independent? Hint: You must show ONE of the following:</p><ul><li><em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>)</li><li><em>P</em>(<em>B</em>|<em>A</em>) = <em>P</em>(<em>B</em>)</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>)</li></ul></div>
+<div class="solution">
+
+<p><em>P</em>(<em>A</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mtext> AND </mtext><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+  <mtext> = </mtext><mfrac>
+   <mrow>
+    <mn>0.</mn><mtext>08</mtext>
+   </mrow>
+   <mrow>
+    <mn>0.2</mn>
+   </mrow>
+  </mfrac>
+  <mtext> = 0</mtext><mtext>.4 = </mtext><mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo>
+ </mrow>
+</math></p><p>The events are independent because <em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>).</p>
+</div>
+</div>
+</div><div class="example">
+<p>Let event <em>G</em> = taking a math class. Let event <em>H</em> = taking a science class. Then, <em>G</em> AND <em>H</em> = taking a math class and a science class. Suppose <em>P</em>(<em>G</em>) = 0.6, <em>P</em>(<em>H</em>) = 0.5, and <em>P</em>(<em>G</em> AND <em>H</em>) = 0.3. Are <em>G</em> and <em>H</em> independent?</p><p>If <em>G</em> and <em>H</em> are independent, then you must show <strong>ONE</strong> of the following:</p><ul><li><em>P</em>(<em>G</em>|<em>H</em>) = <em>P</em>(<em>G</em>)</li><li><em>P</em>(<em>H</em>|<em>G</em>) = <em>P</em>(<em>H</em>)</li><li><em>P</em>(<em>G</em> AND <em>H</em>) = <em>P</em>(<em>G</em>)<em>P</em>(<em>H</em>)</li></ul><div class="note">
+<h5>NOTE</h5>
+<p><strong>The choice you make depends on the information you have.</strong> You could choose any of the methods here because you have the necessary information.</p></div>
+
+<div class="exercise"><div class="problem">
+   <p>a. Show that <em>P</em>(<em>G</em>|<em>H</em>) = <em>P</em>(<em>G</em>).</p>
+  </div>
+<div class="solution">
+ <p><em>P</em>(<em>G</em>|<em>H</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>G</mi><mtext> AND </mtext><mi>H</mi><mtext>)</mtext>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>H</mi><mtext>)</mtext>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mtext>0</mtext><mtext>.3</mtext>
+   </mrow>
+   <mrow>
+    <mtext>0</mtext><mtext>.5</mtext>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math> = 0.6 = <em>P</em>(<em>G</em>)</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+   <p>b. Show <em>P</em>(<em>G</em> AND <em>H</em>) = <em>P</em>(<em>G</em>)<em>P</em>(<em>H</em>).</p></div>
+<div class="solution">
+ <p><em>P</em>(<em>G</em>)<em>P</em>(<em>H</em>) = (0.6)(0.5) = 0.3 = <em>P</em>(<em>G</em> AND <em>H</em>)</p>
+</div>
+</div>
+<p>Since <em>G</em> and <em>H</em> are independent, knowing that a person is taking a science class does not change the chance that they are taking a math class. If the two events had not been independent (that is, they are dependent) then knowing that a person is taking a science class would change the chance they are taking math. For practice, show that <em>P</em>(<em>H</em>|<em>G</em>) = <em>P</em>(<em>H</em>) to show that <em>G</em> and <em>H</em> are independent events.</p></div>
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise"><div class="problem">
+<p>In a bag, there are six red marbles and four green marbles. The red marbles are marked with the numbers 1, 2, 3, 4, 5, and 6. The green marbles are marked with the numbers 1, 2, 3, and 4.</p>
+<ul><li><em>R</em> = a red marble</li><li><em>G</em> = a  green marble</li><li><em>O</em> = an odd-numbered marble</li><li>The sample space is <em>S</em> = {<em>R</em>1, <em>R</em>2, <em>R</em>3, <em>R</em>4, <em>R</em>5, <em>R</em>6, <em>G</em>1, <em>G</em>2, <em>G</em>3, <em>G</em>4}.</li></ul>
+<p><em>S</em> has ten outcomes. What is <em>P</em>(<em>G</em> AND <em>O</em>)?</p>
+</div>
+</div></div>
+<div class="example">
+<div class="exercise"><div class="problem">
+<p>Let event <em>C</em> = taking an English class. Let event <em>D</em> = taking a speech class.</p><p>Suppose <em>P</em>(<em>C</em>) = 0.75, <em>P</em>(<em>D</em>) = 0.3, <em>P</em>(<em>C</em>|<em>D</em>) = 0.75 and <em>P</em>(<em>C</em> AND <em>D</em>) = 0.225.</p><p>Justify your answers to the following questions numerically.</p><ol><li>Are <em>C</em> and <em>D</em> independent?</li><li>Are <em>C</em> and <em>D</em> mutually exclusive?</li><li>What is <em>P</em>(<em>D</em>|<em>C</em>)?</li></ol>
+</div>
+<div class="solution">
+<ol><li>Yes, because <em>P</em>(<em>C</em>|<em>D</em>) = <em>P</em>(<em>C</em>).</li><li>No, because <em>P</em>(<em>C</em> AND <em>D</em>) is not equal to zero.</li><li><em>P</em>(<em>D</em>|<em>C</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>C</mi><mtext> AND </mtext><mi>D</mi><mtext>)</mtext>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>C</mi><mtext>)</mtext>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math> = <math><mrow>
+  <mfrac>
+   <mrow>
+    <mtext>0</mtext><mtext>.225</mtext>
+   </mrow>
+   <mrow>
+    <mn>0.75</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math> = 0.3</li></ol></div>
+</div></div>
+<div class="note statistics try"><h4>Try It</h4>
+<div class="exercise"><div class="problem">
+<p>A student goes to the library. Let events <em>B</em> = the student checks out a book and <em>D</em> = the student checks out a DVD. Suppose that <em>P</em>(<em>B</em>) = 0.40, <em>P</em>(<em>D</em>) = 0.30 and <em>P</em>(<em>B</em> AND <em>D</em>) = 0.20.</p><ol><li>Find <em>P</em>(<em>B</em>|<em>D</em>).</li><li>Find <em>P</em>(<em>D</em>|<em>B</em>).</li><li>Are <em>B</em> and <em>D</em> independent?</li><li>Are <em>B</em> and <em>D</em> mutually exclusive?</li></ol>
+</div>
+</div></div><div class="example">
+<p>In a box there are three red cards and five blue cards. The red cards are marked with the numbers 1, 2, and 3, and the blue cards are marked with the numbers 1, 2, 3, 4, and 5. The cards are well-shuffled. You reach into the box (you cannot see into it) and draw one card.</p><p>Let <em>R</em> = red card is drawn, <em>B</em> = blue card is drawn, <em>E</em> = even-numbered card is drawn.</p><p>The sample space <em>S</em> = <em>R</em>1, <em>R</em>2, <em>R</em>3, <em>B</em>1, <em>B</em>2, <em>B</em>3, <em>B</em>4, <em>B</em>5. <em>S</em> has eight outcomes.</p><ul><li><em>P</em>(<em>R</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>8</mn>
+  </mfrac>
+ </mrow>
+</math>. <em>P</em>(<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>5</mn>
+   <mn>8</mn>
+  </mfrac>
+ </mrow>
+</math>. <em>P</em>(<em>R</em> AND <em>B</em>) = 0. (You cannot draw one card that is both red and blue.)</li><li><em>P</em>(<em>E</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>8</mn>
+  </mfrac>
+ </mrow>
+</math>. (There are three even-numbered cards, <em>R</em>2, <em>B</em>2, and <em>B</em>4.)</li><li><em>P</em>(<em>E</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>5</mn>
+  </mfrac>
+ </mrow>
+</math>. (There are five blue cards: <em>B</em>1, <em>B</em>2, <em>B</em>3, <em>B</em>4, and <em>B</em>5. Out of the blue cards, there are two even cards; <em>B</em>2 and <em>B</em>4.)</li><li><em>P</em>(<em>B</em>|<em>E</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>3</mn>
+  </mfrac>
+ </mrow>
+</math>. (There are three even-numbered cards: <em>R</em>2, <em>B</em>2, and <em>B</em>4. Out of the even-numbered cards, to are blue; <em>B</em>2 and <em>B</em>4.)</li><li>The events <em>R</em> and <em>B</em> are mutually exclusive because <em>P</em>(<em>R</em> AND <em>B</em>) = 0.</li><li>Let <em>G</em> = card with a number greater than 3. <em>G</em> = {<em>B</em>4, <em>B</em>5}. <em>P</em>(<em>G</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>8</mn>
+  </mfrac>
+ </mrow>
+</math>. Let <em>H</em> = blue card numbered between one and four, inclusive. <em>H</em> = {<em>B</em>1, <em>B</em>2, <em>B</em>3, <em>B</em>4}. <em>P</em>(<em>G</em>|<em>H</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math>. (The only card in <em>H</em> that has a number greater than three is <em>B</em>4.) Since <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>8</mn>
+  </mfrac>
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math>, <em>P</em>(<em>G</em>) = <em>P</em>(<em>G</em>|<em>H</em>), which means that <em>G</em> and <em>H</em> are independent.</li></ul></div>
+<div class="note statistics try"><h4>Try It</h4>
+<div class="exercise"><div class="problem">
+<p>In a basketball arena,</p>
+<ul><li>70% of the fans are rooting for the home team.</li><li>25% of the fans are wearing blue.</li><li>20% of the fans are wearing blue and are rooting for the away team.</li><li>Of the fans rooting for the away team, 67% are wearing blue.</li></ul>
+<p>Let <em>A</em> be the event that a fan is rooting for the away team.
+<br>Let <em>B</em> be the event that a fan is wearing blue.
+<br>Are the events of rooting for the away team and wearing blue independent? Are they mutually exclusive?</p>
+</div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise"><div class="problem"><p>In a particular college class, 60% of the students are women. Fifty percent of all students in the class have long hair. Forty-five percent of the students are women and have long hair. Of the women students, 75% have long hair. Let <em>W</em> be the event that a student is a women. Let <em>L</em> be the event that a student has long hair. One student is picked randomly. Are the events of being a woman and having long hair independent?</p>
+<ul><li>The following probabilities are given in this example:</li><li><em>P</em>(<em>W</em>) = 0.60; <em>P</em>(<em>L</em>) = 0.50</li><li><em>P</em>(<em>W</em> AND <em>L</em>) = 0.45</li><li><em>P</em>(<em>L</em>|<em>W</em>) = 0.75</li></ul>
+<div class="note">
+<h7>NOTE</h7>
+<p><strong>The choice you make depends on the information you have.</strong> You could use the first or last condition on the list for this example. You do not know <em>P</em>(<em>W</em>|<em>L</em>) yet, so you cannot use the second condition.</p></div></div>
+<div class="solution">
+<p>&gt;Check whether <em>P</em>(<em>W</em> AND <em>L</em>) = <em>P</em>(<em>W</em>)<em>P</em>(<em>L</em>). We are given that <em>P</em>(<em>W</em> AND <em>L</em>) = 0.45, but <em>P</em>(<em>W</em>)<em>P</em>(<em>L</em>) = (0.60)(0.50) = 0.30. The events of being a woman and having long hair are not independent because <em>P</em>(<em>W</em> AND <em>L</em>) does not equal <em>P</em>(<em>W</em>)<em>P</em>(<em>L</em>).</p>
+<p>Check whether <em>P</em>(<em>L</em>|<em>W</em>) equals <em>P</em>(<em>L</em>). We are given that <em>P</em>(<em>L</em>|<em>W</em>) = 0.75, but <em>P</em>(<em>L</em>) = 0.50; they are not equal. The events of being a woman and having long hair are not independent.</p>
+</div>
+<p>
+<p>
+The events of being a woman and having long hair are not independent; knowing that a student is a woman changes the probability that a student has long hair.</p>
+</p>
+</div>
+</div>
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Mark is deciding which route to take to work. His choices are <em>I</em> = the Interstate and <em>F</em> = Fifth Street.</p><ul><li><em>P</em>(<em>I</em>) = 0.44 and <em>P</em>(<em>F</em>) = 0.56</li><li><em>P</em>(<em>I</em> AND <em>F</em>) = 0 because Mark will take only one route to work.</li></ul><p>What is the probability of <em>P</em>(<em>I</em> OR <em>F</em>)?</p></div>
+</div>
+</div>
+<div class="example"><div class="exercise">
+<div class="problem">
+<ol><li>Toss one fair coin (the coin has two sides, <em>H</em> and <em>T</em>). The outcomes are ________. Count the outcomes. There are ____ outcomes.</li><li>Toss one fair, six-sided die (the die has 1, 2, 3, 4, 5 or 6 dots on a side). The outcomes are ________________. Count the outcomes. There are ___ outcomes.</li><li>Multiply the two numbers of outcomes. The answer is _______.</li><li>If you flip one fair coin and follow it with the toss of one fair, six-sided die, the answer in part c. is the number of outcomes (size of the sample space). What are the outcomes? (Hint: Two of the outcomes are <em>H</em>1 and <em>T</em>6.)</li><li>Event <em>A</em> = heads (<em>H</em>) on the coin followed by an even number (2, 4, 6) on the die.
+<br><em>A</em> = {_________________}. Find <em>P</em>(<em>A</em>).</li><li>Event <em>B</em> = heads on the coin followed by a three on the die. <em>B</em> = {________}. Find <em>P</em>(<em>B</em>).</li><li>Are <em>A</em> and <em>B</em> mutually exclusive? (Hint: What is <em>P</em>(<em>A</em> AND <em>B</em>)? If <em>P</em>(<em>A</em> AND <em>B</em>) = 0, then <em>A</em> and <em>B</em> are mutually exclusive.)</li><li>Are <em>A</em> and <em>B</em> independent? (Hint: Is <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>)? If <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>), then <em>A</em> and <em>B</em> are independent. If not, then they are dependent).</li></ol></div>
+<div class="solution">
+<ol><li><em>H</em> and <em>T</em>; 2</li><li>1, 2, 3, 4, 5, 6; 6</li><li>2(6) = 12</li><li><em>T</em>1, <em>T</em>2, <em>T</em>3, <em>T</em>4, <em>T</em>5, <em>T</em>6, <em>H</em>1, <em>H</em>2, <em>H</em>3, <em>H</em>4, <em>H</em>5, <em>H</em>6</li><li><em>A</em> = {<em>H</em>2, <em>H</em>4, <em>H</em>6}; <em>P</em>(<em>A</em>) = <math><mrow>
+  <mfrac>
+   <mtext>3</mtext>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></li><li><em>B</em> = {<em>H</em>3}; <em>P</em>(<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mtext>1</mtext>
+   <mrow>
+    <mn>12</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></li><li>Yes, because <em>P</em>(<em>A</em> AND <em>B</em>) = 0</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = 0.<em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>) = <math><mfrac><mn>3</mn><mn>12</mn></mfrac><mo>·</mo><mfrac><mn>1</mn><mn>12</mn></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>48</mn></mfrac></math>. <em>P</em>(<em>A</em> AND <em>B</em>) does not equal <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>), so <em>A</em> and <em>B</em> are dependent.</li></ol></div>
+</div></div>
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A box has two balls, one white and one red. We select one ball, put it back in the box, and select a second ball (sampling with replacement). Let <em>T</em> be the event of getting the white ball twice, <em>F</em> the event of picking the white ball first, <em>S</em> the event of picking the white ball in the second drawing.</p>
+<ol><li>Compute <em>P</em>(<em>T</em>).</li><li>Compute <em>P</em>(<em>T</em>|<em>F</em>).</li><li>Are <em>T</em> and <em>F</em> independent?.</li><li>Are <em>F</em> and <em>S</em> mutually exclusive?</li><li>Are <em>F</em> and <em>S</em> independent?</li></ol></div>
+</div></div>
+</div>
+
+<div class="section references">
+<h3>References</h3>
+<p>Lopez, Shane, Preety Sidhu. “U.S. Teachers Love Their Lives, but Struggle in the Workplace.” Gallup Wellbeing, 2013. http://www.gallup.com/poll/161516/teachers-love-lives-struggle-workplace.aspx (accessed May 2, 2013).</p>
+<p>Data from Gallup. Available online at www.gallup.com/ (accessed May 2, 2013).</p>
+</div>
+
+<div class="section summary">
+<h3>Chapter Review</h3>
+<p>Two events <em>A</em> and <em>B</em> are independent if the knowledge that one occurred does not affect the chance the other occurs. If two events are not independent, then we say that they are dependent.</p>
+
+<p>In sampling with replacement, each member of a population is replaced after it is picked, so that member has the possibility of being chosen more than once, and the events are considered to be independent. In sampling without replacement, each member of a population may be chosen only once, and the events are considered not to be independent. When events do not share outcomes, they are mutually exclusive of each other.</p></div>
+
+<div class="section formula-review">
+<h3>Formula Review</h3>
+<p>If <em>A</em> and <em>B</em> are independent, <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>), <em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>) and <em>P</em>(<em>B</em>|<em>A</em>) = <em>P</em>(<em>B</em>).</p>
+<p>If <em>A</em> and <em>B</em> are mutually exclusive, <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) and <em>P</em>(<em>A</em> AND <em>B</em>) = 0.</p>
+</div>
+
+<div class="section practice">
+<div class="exercise">
+<div class="problem">
+  <p><em>E</em> and <em>F</em> are mutually exclusive events. <em>P</em>(<em>E</em>) =  0.4; <em>P</em>(<em>F</em>) = 0.5. Find <em>P</em>(<em>E</em>∣<em>F</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p><em>J</em> and <em>K</em> are independent events. <em>P</em>(<em>J</em>|<em>K</em>) = 0.3. Find <em>P</em>(<em>J</em>).</p>
+</div>
+<div class="solution">
+<p><em>P</em>(<em>J</em>) = 0.3</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p><em>U</em> and <em>V</em> are mutually exclusive events. <em>P</em>(<em>U</em>) = 0.26; <em>P</em>(<em>V</em>) = 0.37. Find:</p>
+<ol><li><em>P</em>(<em>U</em> AND <em>V</em>) =</li><li><em>P</em>(<em>U</em>|<em>V</em>) =</li><li><em>P</em>(<em>U</em> OR <em>V</em>) =</li></ol>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p><em>Q</em> and <em>R</em> are independent events. <em>P</em>(<em>Q</em>) = 0.4 and <em>P</em>(<em>Q</em> AND <em>R</em>) = 0.1. Find <em>P</em>(<em>R</em>).</p></div>
+<div class="solution">
+<p><em>P</em>(<em>Q</em> AND <em>R</em>) = <em>P</em>(<em>Q</em>)<em>P</em>(<em>R</em>)</p><p>0.1 = (0.4)<em>P</em>(<em>R</em>)</p><p><em>P</em>(<em>R</em>) = 0.25</p>
+</div>
+</div>
+</div>
+
+<div class="section free-response"><h3>Homework</h3><p><em>Use the following information to answer the next 12 exercises.</em> The graph shown is based on more than 170,000 interviews done by Gallup that took place from January through December in a certain year. The sample consists of employed Americans 18 years of age or older. The Emotional Health Index Scores are the sample space. We randomly sample one Emotional Health Index Score.</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C03_RWP_001.png" alt="emotional health index score"></figure>
+<div class="exercise"><div class="problem"><p>Find the probability that the selected occupation has an Emotional Health Index Score of 82.7.</p></div></div>
+<div class="exercise"><div class="problem"><p>Find the probability that the selected occupation has an Emotional Health Index Score of 81.0.</p></div></div>
+<div class="exercise"><div class="problem"><p>Find the probability that the selected occupation has an Emotional Health Index Score more than 81.</p></div></div>
+<div class="exercise"><div class="problem"><p>Find the probability that the selected occupation has an Emotional Health Index Score between 80.5 and 82.</p></div></div>
+<div class="exercise"><div class="problem"><p>If we know an occupation has an Emotional Health Index Score of 81.5 or more, what is the probability that it is 82.7?</p></div></div>
+<div class="exercise"><div class="problem"><p>What is the probability that an occupation has an Emotional Health Index Score of 80.7 or 82.7?</p></div></div>
+<div class="exercise"><div class="problem"><p>What is the probability that an occupation has an Emotional Health Index Score less than 80.2 given that it is already less than 81?</p></div></div>
+<div class="exercise"><div class="problem"><p>What occupation has the highest Emotional Health Index Score?</p></div></div>
+<div class="exercise"><div class="problem"><p>What occupation has the lowest Emotional Health Index Score?</p></div></div>
+<div class="exercise"><div class="problem"><p>What is the range of the data?</p></div></div>
+<div class="exercise"><div class="problem"><p>Compute the average EHIS.</p></div></div>
+<div class="exercise"><div class="problem"><p>If all occupations are equally likely for a certain individual, what is the probability that they will have an occupation with lower than average EHIS?</p></div></div>
+</div><div class="section bring-together-homework">
+<h3>Bringing It Together</h3>
+<div class="exercise"><div class="problem">
+<p>A previous year, the weights of the members of the <strong>San Francisco 49ers</strong> and the <strong>Dallas Cowboys</strong> were published in the San Jose Mercury News. The factual data are compiled into the table.
+    </p><table><tr><th>Shirt#</th><th>≤ 210</th><th>211–250</th><th>251–290</th><th>290≤</th></tr><tr><td>1–33</td><td>21</td><td>5</td><td>0</td><td>0</td></tr><tr><td>34–66</td><td>6</td><td>18</td><td>7</td><td>4</td></tr><tr><td>66–99</td><td>6</td><td>12</td><td>22</td><td>5</td></tr></table>
+<p>For the following, suppose that you randomly select one player from the 49ers or Cowboys.</p>
+<p>If having a shirt number from one to 33 and weighing at most 210 pounds were independent events, then what should be true about <em>P</em>(Shirt# 1–33|≤ 210 pounds)?</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>The probability that a person develops cancer is 0.4567. The probability that a person has at least one false positive test result (meaning the test comes back for cancer when the person does not have it) is 0.51. Some of the following questions do not have enough information for you to answer them. Write “not enough information” for those answers. Let <em>C</em> = a person develops cancer and <em>P</em> = a person has at least one false positive.
+<ol><li><em>P</em>(<em>C</em>) = ______</li><li><em>P</em>(<em>P</em>|<em>C</em>) = ______</li><li><em>P</em>(<em>P</em>|<em>C&#x27;</em>) = ______</li><li>If a test comes up positive, based upon numerical values, can you assume that a male has cancer? Justify numerically and explain why or why not.</li></ol></p></div>
+<div class="solution">
+<ol><li><em>P</em>(<em>C</em>) = 0.4567</li><li>not enough information</li><li>not enough information</li><li>No, because over half (0.51) of men have at least one false positive text</li></ol>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+  <p>Given events <em>G</em> and <em>H</em>: <em>P</em>(<em>G</em>) = 0.43; <em>P</em>(<em>H</em>) = 0.26; <em>P</em>(<em>H</em> AND <em>G</em>) = 0.14</p><ol><li>Find <em>P</em>(<em>H</em> OR <em>G</em>).</li><li>Find the probability of the complement of event (<em>H</em> AND <em>G</em>).</li><li>Find the probability of the complement of event (<em>H</em> OR <em>G</em>).</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+  <p>Given events <em>J</em> and <em>K</em>: <em>P</em>(<em>J</em>) = 0.18; <em>P</em>(<em>K</em>) = 0.37; <em>P</em>(<em>J</em> OR <em>K</em>) = 0.45</p>
+<ol><li>Find <em>P</em>(<em>J</em> AND <em>K</em>).</li><li>Find the probability of the complement of event (<em>J</em> AND <em>K</em>).</li><li>Find the probability of the complement of event (<em>J</em> OR <em>K</em>).</li></ol></div>
+<div class="solution">
+  <ol><li><em>P</em>(<em>J</em> OR <em>K</em>) = <em>P</em>(<em>J</em>) + <em>P</em>(<em>K</em>) − <em>P</em>(<em>J</em> AND <em>K</em>); 0.45 = 0.18 + 0.37 - <em>P</em>(<em>J</em> AND <em>K</em>); solve to find <em>P</em>(<em>J</em> AND <em>K</em>) = 0.10</li><li><em>P</em>(NOT (<em>J</em> AND <em>K</em>)) = 1 - <em>P</em>(<em>J</em> AND <em>K</em>) = 1 - 0.10 = 0.90</li><li><em>P</em>(NOT (<em>J</em> OR <em>K</em>)) = 1 - <em>P</em>(<em>J</em> OR <em>K</em>) = 1 - 0.45 = 0.55</li></ol></div>
+</div>
+</div>
+ <h2>Key terms</h2>
+<p><strong>Dependent Events</strong> If two events are NOT independent, then we say that they are dependent.</p>
+<p><strong>Conditional Probability of One Event Given Another Event</strong> <em>P</em>(<em>A</em>|<em>B</em>) is the probability that event <em>A</em> will occur given that the event <em>B</em> has already occurred.</p>
+
+</body></html>

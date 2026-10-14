@@ -1,0 +1,1777 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.4 Projectile Motion · College Physics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, College Physics 2e, Urone, Hinrichs, section 3.4 Projectile Motion. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/college-physics-2e/pages/3-4-projectile-motion</p>
+<h1>3.4 Projectile Motion</h1>
+  <div class="section learning-objectives"><h3>Learning Objectives</h3>
+  <p>By the end of this section, you will be able to:</p>
+  <ul><li>Identify and explain the properties of a projectile, such as acceleration due to gravity, range, maximum height, and trajectory.</li><li>Determine the location and velocity of a projectile at different points in its trajectory.</li><li>Apply the principle of independence of motion to solve projectile motion problems.</li></ul>
+  </div>
+    <p><strong>Projectile motion</strong> is the <strong>motion</strong> of an object thrown or projected into the air, subject to only the acceleration of gravity. The object is called a <strong>projectile</strong>, and its path is called its <strong>trajectory</strong>. The motion of falling objects, as covered in Problem-Solving Basics for One-Dimensional Kinematics, is a simple one-dimensional type of projectile motion in which there is no horizontal movement. In this section, we consider two-dimensional projectile motion, such as that of a football or other object for which <strong>air resistance</strong> <em>is negligible</em>.</p><p>The most important fact to remember here is that <em>motions along perpendicular axes are independent</em> and thus can be analyzed separately. This fact was discussed in Kinematics in Two Dimensions: An Introduction, where vertical and horizontal motions were seen to be independent. The key to analyzing two-dimensional projectile motion is to break it into two motions, one along the horizontal axis and the other along the vertical. (This choice of axes is the most sensible, because acceleration due to gravity is vertical—thus, there will be no acceleration along the horizontal axis when air resistance is negligible.) As is customary, we call the horizontal axis the <em>x</em>-axis and the vertical axis the <em>y</em>-axis. the figure illustrates the notation for displacement, where <math><mrow><mi mathvariant="bold">s</mi></mrow></math> is defined to be the total displacement and <math><mrow><mi mathvariant="bold">x</mi></mrow></math> and <math><mrow><mi mathvariant="bold">y</mi></mrow></math> are its components along the horizontal and vertical axes, respectively. The magnitudes of these vectors are <em>s</em>, <em>x</em>, and <em>y</em>. (Note that in the last section we used the notation <math><mrow><mi mathvariant="bold">A</mi></mrow></math> to represent a vector with components <math><mrow><msub><mi mathvariant="bold">A</mi><mrow><mi>x</mi></mrow></msub></mrow></math> and <math><mrow><msub><mi mathvariant="bold">A</mi><mrow><mi>y</mi></mrow></msub></mrow></math>. If we continued this format, we would call displacement <math><mrow><mi mathvariant="bold">s</mi></mrow></math> with components <math><mrow><msub><mi mathvariant="bold">s</mi><mrow><mi>x</mi></mrow></msub></mrow></math> and <math><mrow><msub><mi mathvariant="bold">s</mi><mrow><mi>y</mi></mrow></msub></mrow></math>. However, to simplify the notation, we will simply represent the component vectors as <math><mrow><mi mathvariant="bold">x</mi></mrow></math> and <math><mrow><mi mathvariant="bold">y</mi></mrow></math>.)</p><p>Of course, to describe motion we must deal with velocity and acceleration, as well as with displacement. We must find their components along the <em>x</em>- and <em>y</em>-axes, too. We will assume all forces except gravity (such as air resistance and friction, for example) are negligible. The components of acceleration are then very simple:
+
+<math><mrow><mrow><mrow><mrow><msub><mi>a</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mo>–</mo><mi>g</mi></mrow><mo stretchy="false">=</mo><mo>–</mo><mn>9.80 m</mn><msup><mtext>/s</mtext><mn>2</mn></msup></mrow></mrow></mrow></math>. (Note that this definition assumes that the upwards direction is defined as the positive direction. If you arrange the coordinate system instead such that the downwards direction is positive, then acceleration due to gravity takes a positive value.) Because gravity is vertical,
+
+<math><mrow><mrow><msub><mi>a</mi><mrow><mi>x</mi></mrow></msub><mo>=</mo><mn>0</mn></mrow></mrow></math>. Both accelerations are constant, so the kinematic equations can be used.</p><div class="note"><h3>Review of Kinematic Equations (constant <math><mrow><mrow><mrow><mi>a</mi></mrow></mrow></mrow></math>)</h3>
+
+    <div class="eq"><math display="block">
+                
+                  <mrow>
+                        <mrow>
+                            <mi>x</mi>
+                            <mo stretchy="false">=</mo>
+                          <msub>
+                            <mi>x</mi>
+                            <mn>0</mn>
+                          </msub>
+                          <mrow>
+                            <mo stretchy="false">+</mo>
+                          </mrow>
+                          <mover accent="true">
+                            <mi>v</mi>
+                            <mo stretchy="true">-</mo>
+                          </mover>
+                          <mi>t</mi>
+                        </mrow>
+                      </mrow>
+                
+              </math> </div><div class="eq"><math display="block">
+                
+                          <mrow>
+                            <mover accent="true">
+                              <mi>v</mi>
+                              <mo stretchy="true">-</mo>
+                            </mover>
+                            <mo stretchy="false">=</mo>
+                   
+                          <mfrac>
+                            <mrow>
+                              <msub>
+                                <mi>v</mi>
+                                    <mn>0</mn>
+                              </msub>
+                              <mo stretchy="false">+</mo>
+                              <mi>v</mi>
+                            </mrow>
+                            <mn>2</mn>
+                          </mfrac>
+                  </mrow>
+                
+              </math>
+</div><div class="eq"><math display="block">
+                
+                        <mrow>
+                          <mi>v</mi>
+                          <mo stretchy="false">=</mo>
+                          <mrow>
+                            <msub>
+                              <mi>v</mi>
+                                  <mn>0</mn>
+                            </msub>
+                            <mo stretchy="false">+</mo>
+                            <mstyle>
+                              <mrow>
+                                <mtext>at</mtext>
+                              </mrow>
+                            </mstyle>
+                          </mrow>
+                        </mrow>
+                
+              </math>
+</div><div class="eq"><math display="block">
+                
+                          <mrow>
+                            <mi>x</mi>
+                            <mo stretchy="false">=</mo>
+                            <mrow>
+                              <msub>
+                                <mi>x</mi>
+                                    <mn>0</mn>
+                              </msub>
+                              <mo stretchy="false">+</mo>
+                              <msub>
+                                <mi>v</mi>
+                                    <mn>0</mn>
+                              </msub>
+                            </mrow>
+                          </mrow>
+                          <mrow>
+                            <mi>t</mi>
+                            <mo stretchy="false">+</mo>
+                            <mfrac>
+                              <mn>1</mn>
+                              <mn>2</mn>
+                            </mfrac>
+                          </mrow>
+                            <mrow>
+                              <msup>
+                                <mtext>at</mtext>
+                                    <mn>2</mn>
+</msup>           </mrow>
+                
+              </math> </div><div class="eq"><math display="block">
+                
+                          <mrow>
+                            <msup>
+                              <mi>v</mi>
+                                  <mn>2</mn>
+                            </msup>
+                            <mo stretchy="false">=</mo>
+                            <mrow>
+                              <msubsup>
+                                <mi>v</mi>
+                                 <mn>0</mn>
+                                 <mn>2</mn>
+                              </msubsup>
+                              <mo stretchy="false">+</mo>
+                              <mn>2</mn><mi>a</mi>
+                            </mrow>
+                          </mrow>
+                          <mo stretchy="false">(</mo>
+                          <mrow>
+                            <mi>x</mi>
+                            <mo stretchy="false">−</mo>
+                            <msub>
+                              <mi>x</mi>
+                                  <mn>0</mn>
+                            </msub>
+                          <mo stretchy="false">)</mo>
+                    <mtext>.</mtext>
+                  </mrow>
+                
+              </math>
+</div></div><figure><img src="Figure_03_04_01.jpg" alt="A soccer player is kicking a soccer ball. The ball travels in a projectile motion and reaches a point whose vertical distance is y and horizontal distance is x. The displacement between the kicking point and the final point is s. The angle made by this displacement vector with x axis is theta."><figcaption>The total displacement <math><mrow><mi mathvariant="bold">s</mi></mrow></math> of a soccer ball at a point along its path. The vector <math><mrow><mrow><mi mathvariant="bold">s</mi></mrow></mrow></math> has components <math><mrow><mrow><mi mathvariant="bold">x</mi></mrow></mrow></math> and <math><mrow><mrow><mi mathvariant="bold">y</mi></mrow></mrow></math> along the horizontal and vertical axes. Its magnitude is <math><mrow><mrow><mi>s</mi></mrow></mrow></math>, and it makes an angle <math><mrow><mrow><mi>θ</mi></mrow></mrow></math> with the horizontal.</figcaption></figure><p>Given these assumptions, the following steps are then used to analyze projectile motion:</p>
+
+<p><em><strong>Step 1.</strong></em>     <em>Resolve or break the motion into horizontal and vertical components along the x- and y-axes.</em> These axes are perpendicular, so
+
+<math><mrow><mrow><mrow><mrow><msub><mi>A</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mi>A</mi></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></math> and
+
+<math><mrow><mrow><mrow><mrow><msub><mi>A</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mi>A</mi></mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></math> are used. The magnitude of the components of displacement
+
+<math><mrow><mrow><mi mathvariant="bold">s</mi></mrow></mrow></math> along these axes are <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and
+
+<math><mrow><mrow><mi>y.</mi></mrow></mrow></math> The magnitudes of the components of the velocity <math><mrow><mrow><mi mathvariant="bold">v</mi></mrow></mrow></math> are
+
+<math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mi>v</mi></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></math> and
+
+<math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mi>v</mi></mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ,</mi></mrow></mrow></mrow></math> where
+
+<math><mrow><mrow><mi>v</mi></mrow><mrow></mrow></mrow></math> is the magnitude of the velocity and <math><mrow><mrow><mi>θ</mi></mrow><mrow></mrow></mrow></math> is its direction, as shown in the figure. Initial values are denoted with a subscript 0, as usual.</p><p><em><strong>Step 2.</strong></em>  <em>Treat the motion as two independent one-dimensional motions, one horizontal and the other vertical.</em> The kinematic equations for horizontal and vertical motion take the following forms:
+</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mtext>Horizontal Motion</mtext>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>a</mi>
+
+                        <mrow>
+                          <mi>x</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mn>0</mn>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+          </mrow>        
+      </math>
+</div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>x</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>x</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <msub>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>x</mi>
+                          </mrow>
+
+                      </msub>
+                    </mrow>
+                  </mrow>
+                  <mi>t</mi>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+        
+      </math>
+</div><div class="eq"><math><mrow><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>x</mi></mrow></msub></mrow><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mo stretchy="false">=</mo><mtext>velocity is a constant.</mtext></mrow></mrow></mrow></math>
+</div><div class="eq"><math>
+<mtable>
+ <mtr>
+<mtd>
+
+                  <mtext>Vertical Motion</mtext> </mtd>
+</mtr><mtr>
+<mtd>
+                  <mo stretchy="false"> </mo>
+                  <mo stretchy="false">(</mo>
+                  <mtext>assuming positive is up</mtext>
+</mtd></mtr><mtr><mtd>
+                  <mo stretchy="false"> </mo>
+                  <mrow>
+                    <mrow>
+                      <msub>
+                        <mi>a</mi>
+
+                          <mrow>
+                            <mi>y</mi>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">=</mo>
+                      <mrow>
+                        <mo stretchy="false">−</mo>
+                        <mi>g</mi>
+                      </mrow>
+                    </mrow>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <mrow>
+                        <mo stretchy="false">−</mo>
+                        <mn>9.</mn>
+                      </mrow>
+
+                      <mtext>80</mtext>
+                    </mrow>
+                  </mrow>
+                  <mo stretchy="false"> </mo>
+                  <msup>
+                    <mtext>m/s</mtext>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                  </msup>
+                  <mo stretchy="false">)</mo>
+</mtd></mtr></mtable>
+      </math></div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                  <mi>t</mi>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>        
+      </math>
+</div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <msub>
+                    <mi>v</mi>
+
+                      <mrow>
+                        <mi>y</mi>
+                      </mrow>
+
+                  </msub>
+                  <mo stretchy="false">=</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">−</mo>
+                    <mstyle>
+                      <mrow>
+                        <mtext>gt</mtext>
+                      </mrow>
+                    </mstyle>
+                  </mrow>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+        
+      </math>
+</div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <msub>
+                        <mi>v</mi>
+
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                      </msub>
+                    </mrow>
+                  </mrow>
+                  <mrow>
+                    <mi>t</mi>
+                    <mo stretchy="false">−</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+
+                    <mrow>
+                      <msup>
+                        <mi>gt</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                    </mrow>
+
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+      </math>
+</div><div class="eq"><math><mrow><mrow><mrow><mrow><msubsup><mi>v</mi><mrow><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">=</mo><mrow><msubsup><mi>v</mi>
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">−</mo><mn>2</mn><mi>g</mi></mrow></mrow><mo stretchy="false">(</mo><mrow><mi>y</mi><mo stretchy="false">−</mo><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mo stretchy="false">)</mo><mtext>.</mtext></mrow></mrow></mrow></math></div><p><em><strong>Step 3.</strong></em>  <em> Solve for the unknowns in the two separate motions—one horizontal and one vertical.</em> Note that the only common variable between the motions is time <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math>. The problem solving procedures here are the same as for one-dimensional <strong>kinematics</strong> and are illustrated in the solved examples below.</p><p><em><strong>Step 4.</strong></em>  <em>Recombine the two motions to find the total displacement</em> <math><mrow><mrow><mtext mathvariant="bold">s</mtext></mrow></mrow></math><em> and velocity </em><math><mrow><mrow><mtext mathvariant="bold">v</mtext></mrow><mrow></mrow></mrow></math>. Because the <em>x</em> - and <em>y</em> -motions are perpendicular, we determine these vectors by using the techniques outlined in the Vector Addition and Subtraction: Analytical Methods and employing <math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>A</mi>
+                  <mo stretchy="false">=</mo>
+                  <msqrt>
+                    <mrow>
+                      <msubsup>
+                        <mi>A</mi>
+
+                          <mrow>
+                            <mi>x</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                      <mo stretchy="false">+</mo>
+                      <msubsup>
+                        <mi>A</mi>
+
+                          <mrow>
+                            <mi>y</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                    </mrow>
+                  </msqrt>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+        and <math><mrow><mrow><mrow><mrow><mi>θ</mi><mo stretchy="false">=</mo><msup><mtext>tan</mtext><mrow><mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msup></mrow><mo stretchy="false">(</mo><mrow><msub><mi>A</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">/</mo><msub><mi>A</mi><mrow><mi>x</mi></mrow></msub></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow></math> in the following form, where <math><mrow><mrow><mi>θ</mi></mrow><mrow></mrow></mrow></math> is the direction of the displacement <math><mrow><mrow><mi mathvariant="bold">s</mi></mrow></mrow></math> and <math><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is the direction of the velocity <math><mrow><mrow><mi mathvariant="bold">v</mi></mrow><mrow></mrow></mrow></math>:
+</p><p><h2>Total displacement and velocity</h2></p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>s</mi>
+                  <mo stretchy="false">=</mo>
+                  <msqrt>
+                    <mrow>
+                      <msup>
+                        <mi>x</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                      <mo stretchy="false">+</mo>
+                      <msup>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                    </mrow>
+                  </msqrt>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math></div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>θ</mi>
+                    <mo stretchy="false">=</mo>
+                    <msup>
+                      <mtext>tan</mtext>
+
+                        <mrow>
+                          <mrow>
+                            <mo stretchy="false">−</mo>
+                            <mn>1</mn>
+                          </mrow>
+                        </mrow>
+
+                    </msup>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">/</mo>
+                    <mi>x</mi>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+</div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>v</mi>
+                  <mo stretchy="false">=</mo>
+                  <msqrt>
+                    <mrow>
+                      <msubsup>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>x</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                      <mo stretchy="false">+</mo>
+                      <msubsup>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>y</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                    </mrow>
+                  </msqrt>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+</div><div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub><mo stretchy="false">=</mo><msup><mtext>tan</mtext><mrow><mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msup></mrow><mo stretchy="false">(</mo><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">/</mo><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mo stretchy="false">)</mo><mtext>.</mtext></mrow></mrow></mrow></math></div><figure><img src="Figure_03_04_02.jpg" alt="In part a the figure shows projectile motion of a ball with initial velocity of v zero at an angle of theta zero with the horizontal x axis. The horizontal component v x and the vertical component v y at various positions of ball in the projectile path is shown. In part b only the horizontal velocity component v sub x is shown whose magnitude is constant at various positions in the path. In part c only vertical velocity component v sub y is shown. The vertical velocity component v sub y is upwards till it reaches the maximum point and then its direction changes to downwards. In part d resultant v of horizontal velocity component v sub x and downward vertical velocity component v sub y is found which makes an angle theta with the horizontal x axis. The direction of resultant velocity v is towards south east."><figcaption>(a) We analyze two-dimensional projectile motion by breaking it into two independent one-dimensional motions along the vertical and horizontal axes. (b) The horizontal motion is simple, because <math><mrow><mrow><mrow><msub><mi>a</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is thus constant. (c) The velocity in the vertical direction begins to decrease as the object rises; at its highest point, the vertical velocity is zero. As the object falls towards the Earth again, the vertical velocity increases again in magnitude but points in the opposite direction to the initial vertical velocity. (d) The <em>x</em> - and <em>y</em> -motions are recombined to give the total velocity at any given point on the trajectory.</figcaption></figure><div class="example">
+    <h3>A Fireworks Projectile Explodes High and Away</h3>
+    <p>During a fireworks display, a shell is shot into the air with an initial speed of 70.0 m/s at an angle of <math><mrow><mn>75.0º</mn></mrow></math> above the horizontal, as illustrated in the figure. The fuse is timed to ignite the shell just as it reaches its highest point above the ground. (a) Calculate the height at which the shell explodes. (b) How much time passed between the launch of the shell and the explosion? (c) What is the horizontal displacement of the shell when it explodes?</p><p><h3>Strategy</h3></p><p>Because air resistance is negligible for the unexploded shell, the analysis method outlined above can be used. The motion can be broken into horizontal and vertical motions in which  <math><mrow><mrow><mrow><msub><mi>a</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math> and
+
+<math><mrow><mrow><mrow><msub><mi>a</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mo>–</mo><mi>g</mi></mrow></mrow></mrow></math>. We can then define
+
+<math><mrow><mrow><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> to be zero and solve for the desired quantities.</p><p><h3>Solution for (a)</h3></p><p>By “height” we mean the altitude or vertical position <math><mrow><mrow><mi>y</mi></mrow></mrow></math> above the starting point. The highest point in any trajectory, called the apex, is reached when <math><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>. Since we know the initial and final velocities as well as the initial position, we use the following equation to find <math><mrow><mrow><mi>y</mi></mrow></mrow></math>:
+
+</p><div class="eq"><math><mrow><mrow><mrow><mrow><msubsup><mi>v</mi><mrow><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">=</mo><mrow><msubsup><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">−</mo><mn>2</mn><mi>g</mi></mrow></mrow><mo stretchy="false">(</mo><mrow><mi>y</mi><mo stretchy="false">−</mo><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mo stretchy="false">)</mo><mtext>.</mtext></mrow></mrow></mrow></math></div><figure><img src="Figure_03_04_03a.jpg" alt="The x y graph shows the trajectory of fireworks shell. The initial velocity of the shell v zero is at angle theta zero equal to seventy five degrees with the horizontal x axis. The fuse is set to explode the shell at the highest point of the trajectory which is at a height h equal to two hundred thirty three meters and at a horizontal distance x equal to one hundred twenty five meters from the origin."><figcaption>The trajectory of a fireworks shell. The fuse is set to explode the shell at the highest point in its trajectory, which is found to be at a height of 233 m and 125 m away horizontally.</figcaption></figure><p>Because <math><mrow><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub></mrow><mrow></mrow></mrow></math> are both zero, the equation simplifies to</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><mn>0</mn><mo stretchy="false">=</mo><mrow><msubsup><mi>v</mi>
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">−</mo><mn>2</mn></mrow></mrow><mstyle><mrow><mtext>gy.</mtext></mrow></mstyle></mrow></mrow></mrow></math></div><p>Solving for <math><mrow><mrow><mi>y</mi></mrow></mrow></math> gives</p>
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mfrac>
+                      <msubsup>
+                        <mi>v</mi>
+
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                     <mrow> <mn>2</mn><mi>g</mi></mrow>
+                    </mfrac>
+                  </mrow>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>Now we must find
+
+<math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow><mrow></mrow></mrow></math>, the component of the initial velocity in the <em>y</em>-direction. It is given by
+
+<math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mn>0</mn></msub></mrow><mrow><mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></mrow></mrow></math>, where
+
+<math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow></mrow></math> is the initial velocity of 70.0 m/s, and
+
+<math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>75.0º</mn></mrow><mrow></mrow></mrow></math> is the initial angle. Thus,</p><div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><mtext>70.0 m/s</mtext><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mtext>sin 75º</mtext><mrow><mo stretchy="false">)</mo><mo stretchy="false">=</mo><mtext>67.6 m/s.</mtext></mrow></mrow></mrow></mrow></math></div><p>and <math><mrow><mrow><mi>y</mi></mrow></mrow></math> is</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>y</mi>
+                  <mo stretchy="false">=</mo>
+                  <mfrac>
+                    <mrow>
+                      <mo stretchy="false">(</mo>
+                      <mtext>67</mtext>
+                      <mtext>.6 m/s</mtext>
+                      <msup>
+                        <mo stretchy="false">)</mo>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                    </mrow>
+                    <mrow>
+                      <mn>2</mn>
+                      <mo stretchy="false">(</mo>
+                      <mn>9</mn>
+                      <mtext>.</mtext>
+                      <mtext>80 m</mtext>
+                      <msup>
+                        <mtext>/s</mtext>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                      <mo stretchy="false">)</mo>
+                    </mrow>
+                  </mfrac>
+                </mrow>
+
+              </mrow>
+            <mo>,</mo>
+                   </mrow>
+
+          
+        
+      </math>
+    </div><p>so that</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mtext>233</mtext></mrow><mo stretchy="false"> </mo><mtext> m.</mtext></mrow></mrow></mrow></math></div><p><h3>Discussion for (a)</h3></p><p>Note that because up is positive, the initial velocity is positive, as is the maximum height, but the acceleration due to gravity is negative. Note also that the maximum height depends only on the vertical component of the initial velocity, so that any projectile with a 67.6 m/s initial vertical component of velocity will reach a maximum height of 233 m (neglecting air resistance). The numbers in this example are reasonable for large fireworks displays, the shells of which do reach such heights before exploding. In practice, air resistance is not completely negligible, and so the initial velocity would have to be somewhat larger than that given to reach the same height.</p><p><h3>Solution for (b)</h3></p><p>As in many physics problems, there is more than one way to solve for the time to the highest point. In this case, the easiest method is to use <math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></mrow><mo stretchy="false">(</mo><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub><mo stretchy="false">+</mo><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub></mrow><mo stretchy="false">)</mo><mi>t</mi></mrow></mrow></mrow></math>. Because <math><mrow><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is zero, this equation reduces to simply</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                  <mi>t</mi>
+                </mrow>
+              </mrow>
+            <mtext>.</mtext>
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>Note that the final vertical velocity, <math><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub></mrow><mrow></mrow></mrow></math>, at the highest point is zero. Thus,</p>
+    <div class="eq"><math>
+        
+          <mrow>
+            <mrow>
+              <mtable columnalign="left">
+                <mtr><mtd>                            <mi>t</mi></mtd>
+<mtd>                            <mo stretchy="false">=</mo></mtd>
+<mtd>
+                  <mrow>
+
+                      <mrow>
+                        <mrow>
+                          <mrow>
+
+
+                            <mfrac>
+<mrow>
+                              <mn>2</mn>
+<mi>y</mi>
+
+</mrow>
+                              <mrow>
+                                <mo stretchy="false">(</mo>
+                                <mrow>
+                                  <msub>
+                                    <mi>v</mi>
+
+                                      <mrow>
+                                        <mn>0y</mn>
+                                      </mrow>
+
+                                  </msub>
+                                  <mo stretchy="false">+</mo>
+                                  <msub>
+                                    <mi>v</mi>
+
+                                      <mrow>
+                                        <mi>y</mi>
+                                      </mrow>
+
+                                  </msub>
+                                </mrow>
+                                <mo stretchy="false">)</mo>
+                              </mrow>
+                            </mfrac>
+                          </mrow>
+                          <mo stretchy="false">=</mo>
+                          <mfrac>
+                            <mrow>
+                              <mrow>
+                                <mn>2</mn>
+                                <mo stretchy="false">(</mo>
+                                <mtext>233 m</mtext>
+                              </mrow>
+                               <mo stretchy="false">)</mo>
+                            </mrow>
+                            <mrow>
+                              <mo stretchy="false">(</mo>
+                              <mtext>67.6 m/s</mtext>
+
+                              <mo stretchy="false">)</mo>
+                            </mrow>
+                          </mfrac>
+                        </mrow>
+                      </mrow>
+
+                    <mrow></mrow>
+                  </mrow></mtd>
+                </mtr>
+                <mtr><mtd></mtd>
+<mtd><mo>=</mo></mtd>
+<mtd>
+                  <mrow>
+
+                    <mtext>6.90 s</mtext><mtext>.</mtext>
+                  </mrow></mtd>
+                </mtr>
+              </mtable>
+            </mrow>
+          </mrow>        
+      </math>
+    </div><p><h3>Discussion for (b)</h3></p><p>This time is also reasonable for large fireworks. When you are able to see the launch of fireworks, you will notice several seconds pass before the shell explodes. (Another way of finding the time is by using <math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">+</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow></mrow><mrow><mi>t</mi><mo stretchy="false">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mstyle><mtext>gt</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></mrow></math>, and solving the quadratic equation for <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math>.)</p><p><h3>Solution for (c)</h3></p><p>Because air resistance is negligible, <math><mrow><mrow><mrow><msub><mi>a</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math> and the horizontal velocity is constant, as discussed above. The horizontal displacement is horizontal velocity multiplied by time as given by <math><mrow><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">=</mo><mrow><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">+</mo><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow></mrow><mi>t</mi></mrow></mrow></mrow></math>, where <math><mrow><mrow><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is equal to zero:</p><div class="eq"><math><mrow><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mi>t</mi><mtext>,</mtext></mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is the <em>x</em>-component of the velocity, which is given by <math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mtext>.</mtext></mrow></mrow></mrow></math> Now,</p><div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><mtext>70</mtext><mtext>.</mtext><mn>0 m/s</mn><mtext></mtext><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mtext>cos 75.0º</mtext><mrow><mo stretchy="false">)</mo><mo stretchy="false">=</mo><mtext>18</mtext></mrow><mtext>.</mtext><mn>1 m/s.</mn></mrow></mrow></mrow></math></div><p>The time <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> for both motions is the same, and so <math><mrow><mrow><mi>x</mi></mrow><mrow></mrow></mrow></math> is</p><div class="eq"><math><mrow><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><mtext>18</mtext><mtext>.</mtext><mn>1 m/s</mn><mtext></mtext><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>6</mn><mtext>.</mtext><mtext>90 s</mtext><mtext></mtext><mrow><mo stretchy="false">)</mo><mo stretchy="false">=</mo><mtext>125 m.</mtext></mrow><mtext></mtext></mrow></mrow></mrow></math></div><p><h3>Discussion for (c)</h3></p><p>The horizontal motion is a constant velocity in the absence of air resistance. The horizontal displacement found here could be useful in keeping the fireworks fragments from falling on spectators. Once the shell explodes, air resistance has a major effect, and many fragments will land directly below.</p></div>
+    <p>In solving part (a) of the preceding example, the expression we found for <math><mrow><mrow><mi>y</mi></mrow></mrow></math> is valid for any projectile motion where air resistance is negligible. Call the maximum height <math><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mi>h</mi></mrow></mrow></mrow></math>; then,</p>
+
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>h</mi>
+                    <mo stretchy="false">=</mo>
+                    <mfrac>
+                      <msubsup>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+<mi>y</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+<mrow>
+                      <mn>2</mn>
+<mi>g</mi>
+</mrow>
+                    </mfrac>
+                  </mrow>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>This equation defines the <em>maximum height of a projectile</em> and depends only on the vertical component of the initial velocity.</p>
+    <div class="note"><h3>Defining a Coordinate System</h3>
+
+    <p>It is important to set up a coordinate system when analyzing projectile motion. One part of defining the coordinate system is to define an origin for the <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and <math><mrow><mrow><mi>y</mi></mrow></mrow></math> positions. Often, it is convenient to choose the initial position of the object as the origin such that <math><mrow><mrow><mrow><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math> and <math><mrow><mrow><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>. It is also important to define the positive and negative directions in the <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and <math><mrow><mrow><mi>y</mi></mrow></mrow></math> directions. Typically, we define the positive vertical direction as upwards, and the positive horizontal direction is usually the direction of the object’s motion. When this is the case, the vertical acceleration, <math><mrow><msub><mi>a</mi><mi>y</mi></msub><mo>=</mo><mo>–</mo><mi>g</mi></mrow></math>, takes a negative value (since it is directed downwards towards the Earth). However, it is occasionally useful to define the coordinates differently. For example, if you are analyzing the motion of a ball thrown downwards from the top of a cliff, it may make sense to define the positive direction downwards since the motion of the ball is solely in the downwards direction. If this is the case, <math><mrow><msub><mi>a</mi><mi>y</mi></msub><mo>=</mo><mi>g</mi></mrow></math> takes a positive value.</p>
+    </div><div class="example">
+    <h3>Calculating Projectile Motion: Hot Rock Projectile</h3>
+    <p>Kilauea in Hawaii is the world’s most continuously active volcano. Very active volcanoes characteristically eject red-hot rocks and lava rather than smoke and ash. Suppose a large rock is ejected from the volcano with a speed of 25.0 m/s and at an angle <math><mrow><mrow><mrow><mtext>35.0º</mtext></mrow></mrow></mrow></math> above the horizontal, as shown in the figure. The rock strikes the side of the volcano at an altitude 20.0 m lower than its starting point. (a) Calculate the time it takes the rock to follow this path. (b) What are the magnitude and direction of the rock’s velocity at impact?</p><figure><img src="Figure_03_04_04a.jpg" alt="The trajectory of a rock ejected from a volcano is shown. The initial velocity of rock v zero is equal to twenty five meters per second and it makes an angle of thirty five degrees with the horizontal x axis. The figure shows rock falling down a height of twenty meters below the volcano level. The velocity at this point is v which makes an angle of theta with horizontal x axis. The direction of v is south east."><figcaption>The trajectory of a rock ejected from the Kilauea volcano.</figcaption></figure><p><h3>Strategy</h3></p><p>Again, resolving this two-dimensional motion into two independent one-dimensional motions will allow us to solve for the desired quantities. The time a projectile is in the air is governed by its vertical motion alone. We will solve for <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> first. While the rock is rising and falling vertically, the horizontal motion continues at a constant velocity. This example asks for the final velocity. Thus, the vertical and horizontal results will be recombined to obtain <math><mrow><mrow><mi>v</mi></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub></mrow><mrow></mrow></mrow></math> at the final time <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> determined in the first part of the example.</p><p><h3>Solution for (a)</h3></p><p>While the rock is in the air, it rises and then falls to a final position 20.0 m lower than its starting altitude. We can find the time for this by using</p><div class="eq"><math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">+</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow></mrow><mrow><mi>t</mi><mo stretchy="false">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mstyle><mtext>gt</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow>
+<mtext>.</mtext></mrow></mrow></mrow></math></div><p>If we take the initial position <math><mrow><mrow><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> to be zero, then the final position is <math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><mo stretchy="false">−</mo><mtext>20</mtext></mrow></mrow><mtext>.0  m</mtext><mtext>.</mtext></mrow></mrow></mrow></math> Now the initial vertical velocity is the vertical component of the initial velocity, found from  <math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow></mrow></mrow></math> = (<math><mrow><mrow><mrow><mtext>25</mtext><mtext>.</mtext><mtext>0 m/s</mtext></mrow></mrow></mrow></math>)(<math><mrow><mrow><mrow><mtext>sin 35.0º</mtext></mrow></mrow></mrow></math>) = <math><mrow><mrow><mrow><mtext>14</mtext><mtext>.</mtext><mtext>3 m/s</mtext></mrow></mrow></mrow></math>. Substituting known values yields</p><div class="eq"><math><mrow><mrow><mrow><mrow><mo stretchy="false">−</mo><mtext>20</mtext></mrow><mtext>.</mtext><mn>0 m</mn><mrow><mtext></mtext><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><mtext>14</mtext><mtext>.</mtext><mn>3 m/s</mn><mtext></mtext><mo stretchy="false">)</mo><mrow><mi>t</mi><mo stretchy="false">−</mo><mfenced open="(" close=")"><mrow><mn>4</mn><mtext>.</mtext><mtext>90 m/s</mtext><msup><mtext></mtext><mrow><mn>2</mn></mrow></msup></mrow></mfenced></mrow><msup><mi>t</mi><mrow><mn>2</mn></mrow></msup></mrow>
+<mtext>.</mtext></mrow><mrow></mrow></mrow></math></div><p>Rearranging terms gives a quadratic equation in <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math>:</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mfenced open="(" close=")"><mrow><mn>4</mn><mtext>.</mtext><mtext>90 m/s</mtext><msup><mtext></mtext><mrow><mn>2</mn></mrow></msup></mrow></mfenced><mrow><msup><mi>t</mi><mrow><mn>2</mn></mrow></msup><mo stretchy="false">−</mo><mfenced open="(" close=")"><mrow><mtext>14</mtext><mtext>.</mtext><mtext>3 m/s</mtext></mrow></mfenced></mrow><mrow><mrow><mi>t</mi><mo stretchy="false">−</mo><mfenced open="(" close=")"><mrow><mtext>20.0 m</mtext></mrow></mfenced></mrow><mo stretchy="false">=</mo><mn>0.</mn></mrow></mrow></mrow></mrow></math></div><p>This expression is a quadratic equation of the form
+<math>
+
+<mrow><mrow><mrow><mrow><mrow>
+<msup>
+<mstyle>
+<mi>at</mi></mstyle><mn>2</mn>
+</msup>
+<mo stretchy="false">+</mo>
+
+<mstyle><mi>bt</mi></mstyle>
+<mo stretchy="false">+</mo>
+<mi>c</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+</mrow></mrow></mrow></mrow></mrow>
+
+
+</math>, where the constants are
+
+<math>
+<mrow><mrow>
+<mi>a</mi><mo>=</mo><mn>4.90</mn>
+</mrow></mrow></math>,
+
+<math>
+<mrow><mrow>
+<mi>b</mi><mo>=</mo><mo>–</mo><mn>14.3</mn>
+</mrow></mrow></math>, and
+
+<math>
+<mrow><mrow>
+<mi>c</mi><mo>=</mo><mo>–</mo><mn>20.0.</mn>
+</mrow></mrow></math> Its solutions are given by the quadratic formula:</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>t</mi>
+                    <mo stretchy="false">=</mo>
+                    <mfrac>
+                      <mrow>
+                        <mrow>
+                          <mo stretchy="false">−</mo>
+                          <mi>b</mi>
+                        </mrow>
+                        <mo stretchy="false">±</mo>
+                        <msqrt>
+                          <mrow>
+                            <mrow>
+                              <msup>
+                                <mi>b</mi>
+
+                                  <mrow>
+                                    <mn>2</mn>
+                                  </mrow>
+
+                              </msup>
+                              <mo stretchy="false">−</mo>
+                              <mn>4</mn>
+                            </mrow>
+                            <mstyle>
+                              <mrow>
+                                <mtext>ac</mtext>
+                              </mrow>
+                            </mstyle>
+                          </mrow>
+                        </msqrt>
+                      </mrow>
+                      <mrow><mtext>2</mtext><mtext>a</mtext></mrow>
+                    </mfrac>
+                  </mrow>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>This equation yields two solutions:
+
+<math><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mn>3.96</mn></mrow></mrow></mrow></math> and
+
+
+<math><mrow><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mo>–</mo><mn>1.03</mn></mrow></mrow></mrow></mrow></math>. (It is left as an exercise for the reader to verify these solutions.) The time is
+
+<math><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mn>3.96</mn><mspace width="0.25em"></mspace><mtext>s</mtext></mrow></mrow></mrow></math> or
+
+<math><mrow><mrow><mrow><mo>–</mo><mn>1.03</mn><mspace width="0.25em"></mspace><mtext>s</mtext></mrow></mrow></mrow></math>. The negative value of time implies an event before the start of motion, and so we discard it. Thus,</p><div class="eq"><math><mrow><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mn>3</mn></mrow><mtext>.</mtext><mtext>96 s</mtext><mtext>.</mtext></mrow></mrow></mrow></math></div><p><h3>Discussion for (a)</h3></p><p>The time for projectile motion is completely determined by the vertical motion. So any projectile that has an initial vertical velocity of 14.3 m/s and lands 20.0 m below its starting altitude will spend 3.96 s in the air.</p><p><h3>Solution for (b)</h3></p><p>From the information now in hand, we can find the final horizontal and vertical velocities <math><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub></mrow><mrow></mrow></mrow></math> and combine them to find the total velocity <math><mrow><mrow><mi>v</mi></mrow><mrow></mrow></mrow></math> and the angle <math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> it makes with the horizontal. Of course, <math><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is constant so we can solve for it at any horizontal location. In this case, we chose the starting point since we know both the initial velocity and initial angle. Therefore:</p><div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><mtext>25</mtext><mtext>.</mtext><mn>0 m/s</mn><mtext></mtext><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mtext>cos 35º</mtext><mrow><mo stretchy="false">)</mo><mo stretchy="false">=</mo><mtext>20</mtext></mrow><mtext>.</mtext><mn>5 m/s.</mn><mtext></mtext></mrow></mrow></mrow></math></div><p>The final vertical velocity is given by the following equation:</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub><mo stretchy="false">−</mo><mstyle><mrow><mtext>gt,</mtext></mrow></mstyle></mrow></mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0y</mn></mrow></msub></mrow><mrow></mrow></mrow></math> was found in part (a) to be <math><mrow><mrow><mrow><mtext>14</mtext><mtext>.</mtext><mtext>3 m/s</mtext></mrow></mrow></mrow></math>. Thus,</p>
+
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mtext>14</mtext>
+                  </mrow>
+                  <mtext>.</mtext>
+                  <mn>3 m/s</mn>
+                  <mrow>
+                    <mtext></mtext>
+                    <mo stretchy="false">−</mo>
+                    <mo stretchy="false">(</mo>
+                  </mrow>
+                  <mn>9</mn>
+                  <mtext>.</mtext>
+                  <mtext>80 m/s</mtext>
+                  <msup>
+                    <mtext></mtext>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                  </msup>
+                  <mo stretchy="false">)</mo>
+                  <mo stretchy="false">(</mo>
+                  <mn>3</mn>
+                  <mtext>.</mtext>
+                  <mtext>96 s</mtext>
+                  <mtext></mtext>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>so that</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mrow><mo stretchy="false">−</mo><mtext>24</mtext></mrow></mrow><mtext>.</mtext><mn>5 m/s.</mn><mtext></mtext></mrow></mrow></mrow></math></div><p>To find the magnitude of the final velocity <math><mrow><mrow><mi>v</mi></mrow><mrow></mrow></mrow></math> we combine its perpendicular components, using the following equation:</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><mi>v</mi><mo stretchy="false">=</mo><msqrt><mrow><msubsup><mi>v</mi><mrow><mi>x</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">+</mo><msubsup><mi>v</mi><mrow><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup></mrow></msqrt></mrow><mo stretchy="false">=</mo><msqrt><mrow><mo stretchy="false">(</mo><mtext>20</mtext><mtext>.</mtext><mn>5 m/s</mn><mtext></mtext><mrow><mrow><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo stretchy="false">+</mo><mo stretchy="false">(</mo></mrow><mo stretchy="false">−</mo><mtext>24</mtext></mrow><mtext>.</mtext><mn>5 m/s</mn><mtext></mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup></mrow></msqrt><mtext>,</mtext></mrow></mrow></mrow></math></div><p>which gives</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><mi>v</mi><mo stretchy="false">=</mo><mtext>31</mtext></mrow><mtext>.</mtext><mn>9 m/s.</mn><mtext></mtext></mrow></mrow></mrow></math></div><p>The direction <math><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is found from the equation:</p>
+
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>θ</mi>
+
+                        <mrow>
+                          <mi>v</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <msup>
+                      <mtext>tan</mtext>
+
+                        <mrow>
+                          <mrow>
+                            <mo stretchy="false">−</mo>
+                            <mn>1</mn>
+                          </mrow>
+                        </mrow>
+
+                    </msup>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">/</mo>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>x</mi>
+                        </mrow>
+
+                    </msub>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>so that</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub><mo stretchy="false">=</mo><msup><mtext>tan</mtext><mrow><mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msup></mrow><mrow><mo stretchy="false">(</mo><mo stretchy="false">−</mo><mtext>24</mtext></mrow><mtext>.</mtext><mrow><mn>5</mn><mo stretchy="false">/</mo><mtext>20</mtext></mrow><mtext>.</mtext><mn>5</mn><mrow><mo stretchy="false">)</mo><mo stretchy="false">=</mo><msup><mtext>tan</mtext><mrow><mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msup></mrow><mrow><mo stretchy="false">(</mo><mo stretchy="false">−</mo><mn>1</mn></mrow><mtext>.</mtext><mtext>19</mtext><mo stretchy="false">)</mo><mtext>.</mtext></mrow></mrow></mrow></math></div><p>Thus,</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>θ</mi><mrow><mi>v</mi></mrow></msub><mo stretchy="false">=</mo><mrow><mo stretchy="false">−</mo><mtext>50</mtext></mrow></mrow><mtext>.</mtext><mn>1</mn><mrow><mo stretchy="false">º</mo><mtext>.</mtext></mrow></mrow></mrow></mrow></math></div><p><h3>Discussion for (b)</h3></p><p>The negative angle means that the velocity is <math><mrow><mrow><mrow><mtext>50</mtext><mtext>.</mtext><mn>1º</mn></mrow></mrow></mrow></math> below the horizontal. This result is consistent with the fact that the final vertical velocity is negative and hence downward—as you would expect because the final altitude is 20.0 m lower than the initial altitude. (See the figure.)</p></div>
+    <p>One of the most important things illustrated by projectile motion is that vertical and horizontal motions are independent of each other. Galileo was the first person to fully comprehend this characteristic. He used it to predict the range of a projectile. On level ground, we define <strong>range</strong> to be the horizontal distance <math><mrow><mrow><mi>R</mi></mrow><mrow></mrow></mrow></math> traveled by a projectile. Galileo and many others were interested in the range of projectiles primarily for military purposes—such as aiming cannons. However, investigating the range of projectiles can shed light on other interesting phenomena, such as the orbits of satellites around the Earth. Let us consider projectile range further.</p><figure><img src="Figure_03_04_05a.jpg" alt="Part a of the figure shows three different trajectories of projectiles on level ground. In each case the projectiles makes an angle of forty five degrees with the horizontal axis. The first projectile of initial velocity thirty meters per second travels a horizontal distance of R equal to ninety one point eight meters. The second projectile of initial velocity forty meters per second travels a horizontal distance of R equal to one hundred sixty three meters. The third projectile of initial velocity fifty meters per second travels a horizontal distance of R equal to two hundred fifty five meters."><figcaption>Trajectories of projectiles on level ground. (a) The greater the initial speed <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math>, the greater the range for a given initial angle. (b) The effect of initial angle <math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> on the range of a projectile with a given initial speed. Note that the range is the same for <math><mrow><mrow><mrow><mtext>15º</mtext></mrow></mrow></mrow></math> and <math><mrow><mrow><mtext>75º</mtext></mrow><mrow></mrow></mrow></math>, although the maximum heights of those paths are different.</figcaption></figure><p>How does the initial velocity of a projectile affect its range? Obviously, the greater the initial speed <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math>, the greater the range, as shown in the figure(a). The initial angle <math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> also has a dramatic effect on the range, as illustrated in the figure(b). For a fixed initial speed, such as might be produced by a cannon, the maximum range is obtained with <math><mrow><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub><mo stretchy="false">=</mo><mtext>45º</mtext></mrow></mrow></mrow></math>. This is true only for conditions neglecting air resistance. If air resistance is considered, the maximum angle is approximately <math><mrow><mrow><mtext>38º</mtext></mrow><mrow></mrow></mrow></math>. Interestingly, for every initial angle except <math><mrow><mrow><mtext>45º</mtext></mrow><mrow></mrow></mrow></math>, there are two angles that give the same range—the sum of those angles is <math><mrow><mrow><mtext>90º</mtext></mrow><mrow></mrow></mrow></math>. The range also depends on the value of the acceleration of gravity <math><mrow><mrow><mi>g</mi></mrow><mrow></mrow></mrow></math>. The lunar astronaut Alan Shepard was able to drive a golf ball a great distance on the Moon because gravity is weaker there. The range <math><mrow><mrow><mi>R</mi></mrow><mrow></mrow></mrow></math> of a projectile on <em>level ground</em> for which air resistance is negligible is given by </p><div class="eq"><math><mrow><mrow><mrow><mi>R</mi><mo stretchy="false">=</mo><mfrac><mrow><msubsup><mi>v</mi><mrow><mn>0</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><msub><mrow><mn>2</mn><mi>θ</mi></mrow><mrow><mn>0</mn></mrow></msub></mrow><mi>g</mi></mfrac></mrow></mrow><mtext>,</mtext><mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the initial speed and <math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the initial angle relative to the horizontal. The proof of this equation is left as an end-of-chapter problem (hints are given), but it does fit the major features of projectile range as described.</p>
+    <p>When we speak of the range of a projectile on level ground, we assume that <math><mrow><mrow><mi>R</mi></mrow><mrow></mrow></mrow></math> is very small compared with the circumference of the Earth. If, however, the range is large, the Earth curves away below the projectile and acceleration of gravity changes direction along the path. The range is larger than predicted by the range equation given above because the projectile has farther to fall than it would on level ground. (See the figure.) If the initial speed is great enough, the projectile goes into orbit.  This possibility was recognized centuries before it could be accomplished. When an object is in orbit, the Earth curves away from underneath the object at the same rate as it falls. The object thus falls continuously but never hits the surface. These and other aspects of orbital motion, such as the rotation of the Earth, will be covered analytically and in greater depth later in this text.</p><p>Once again we see that thinking about one topic, such as the range of a projectile, can lead us to others, such as the Earth orbits. In  Addition of Velocities, we will examine the addition of velocities, which is another important aspect of two-dimensional kinematics and will also yield insights beyond the immediate topic.</p><figure><img src="Figure_03_04_06a.jpg" alt="A figure of the Earth is shown and on top of it a very high tower is placed. A projectile satellite is launched from this very high tower with initial velocity of v zero in the horizontal direction. Several trajectories are shown with increasing range. A circular trajectory is shown indicating the satellite achieved its orbit and it is revolving around the Earth."><figcaption>Hypothetical projectile to satellite. From this theoretical tower, a projectile is launched from a very high tower to avoid air resistance. With increasing initial speed, the range increases and becomes longer than it would be on level ground because the Earth curves away underneath its path. With a large enough initial speed, orbit is achieved.</figcaption></figure>
+ <div class="note interactive"><h3>Projectile Motion</h3>
+<p>Blast a Buick out of a cannon! Learn about projectile motion by firing various objects. Set the angle, initial speed, and mass. Add air resistance. Make a game out of <a href="https://openstax.org/l/28prjctilemtion" target="_blank" rel="noopener noreferrer">this simulation</a> by trying to hit a target.</p>
+</div>
+<div class="section ap-test-prep">
+  <h3>Test Prep for AP Courses</h3>
+  <div class="exercise">
+  <div class="problem"><p>In an experiment, a student launches a ball with an initial horizontal velocity of 5.00 meters/sec at an elevation 2.00 meters above ground. Draw and clearly label with appropriate values and units a graph of the ball&#x27;s horizontal velocity vs. time and the ball&#x27;s vertical velocity vs. time. The graph should cover the motion from the instant after the ball is launched until the instant before it hits the ground. Assume the downward direction is negative for this problem.</p></div>
+  
+  </div>
+  </div>
+<div class="section section-summary">
+<h3>Summary</h3><ul><li>Projectile motion is the motion of an object through the air that is subject only to the acceleration of gravity.</li><li>To solve projectile motion problems, perform the following steps:
+      <ol><li>Determine a coordinate system. Then, resolve the position and/or velocity of the object in the horizontal and vertical components. The components of position <math><mrow><mrow><mi mathvariant="bold">s</mi></mrow></mrow></math> are given by the quantities <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and <math><mrow><mrow><mi>y</mi></mrow></mrow></math>, and the components of the velocity <math><mrow><mrow><mi mathvariant="bold">v</mi></mrow><mrow></mrow></mrow></math> are given by <math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><mi>v</mi></mrow><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></math> and <math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">=</mo><mi>v</mi></mrow><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ</mi></mrow></mrow></mrow></math>, where <math><mrow><mrow><mi>v</mi></mrow><mrow></mrow></mrow></math> is the magnitude of the velocity and <math><mrow><mrow><mi>θ</mi></mrow><mrow></mrow></mrow></math> is its direction.</li><li>Analyze the motion of the projectile in the horizontal direction using the following equations:
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mtext>Horizontal motion </mtext>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>a</mi>
+
+                        <mrow>
+                          <mi>x</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mn>0</mn>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math></div>
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>x</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>x</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <msub>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>x</mi>
+                          </mrow>
+
+                      </msub>
+                    </mrow>
+                  </mrow>
+                  <mi>t</mi>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math> </div>
+    <div class="eq"><math><mrow><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mrow><mn>0</mn><mi>x</mi></mrow></mrow></msub></mrow><mo stretchy="false">=</mo>
+
+<msub>
+<mtext mathvariant="bold">v</mtext>
+<mrow>
+<mtext>x</mtext>
+</mrow>
+</msub>
+
+
+</mrow><mo stretchy="false">=</mo><mtext>velocity is a constant.</mtext></mrow></mrow></mrow></math></div></li><li>Analyze the motion of the projectile in the vertical direction using the following equations:
+    <div class="eq"><math>
+<mtable>
+ <mtr>
+<mtd>
+
+                  <mtext>Vertical Motion</mtext> </mtd>
+</mtr><mtr>
+<mtd>
+                  <mo stretchy="false"> </mo>
+                  <mo stretchy="false">(</mo>
+                  <mtext>assuming positive is up</mtext>
+</mtd></mtr><mtr><mtd>
+                  <mo stretchy="false"> </mo>
+                  <mrow>
+                    <mrow>
+                      <msub>
+                        <mi>a</mi>
+
+                          <mrow>
+                            <mi>y</mi>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">=</mo>
+                      <mrow>
+                        <mo stretchy="false">−</mo>
+                        <mi>g</mi>
+                      </mrow>
+                    </mrow>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <mrow>
+                        <mo stretchy="false">−</mo>
+                        <mn>9.</mn>
+                      </mrow>
+
+                      <mtext>80</mtext>
+                    </mrow>
+                  </mrow>
+                  <mo stretchy="false"> </mo>
+                  <msup>
+                    <mtext>m/s</mtext>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                  </msup>
+                  <mo stretchy="false">)</mo>
+</mtd></mtr></mtable>
+      </math></div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>0</mn><mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                  <mi>t</mi>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <msub>
+                    <mi>v</mi>
+
+                      <mrow>
+                        <mi>y</mi>
+                      </mrow>
+
+                  </msub>
+                  <mo stretchy="false">=</mo>
+                  <mrow>
+                    <msub>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>0</mn>
+<mi>y</mi>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">−</mo>
+                    <mstyle>
+                      <mrow>
+                        <mtext>gt</mtext>
+                      </mrow>
+                    </mstyle>
+                  </mrow>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div>
+    <div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <msub>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mn>0</mn>
+<mi>y</mi>
+                          </mrow>
+
+                      </msub>
+                    </mrow>
+                  </mrow>
+                  <mrow>
+                    <mi>t</mi>
+                    <mo stretchy="false">−</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+
+                    <mrow>
+                      <msup>
+                        <mstyle><mtext>gt</mtext></mstyle>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                    </mrow>
+
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div>
+<div class="eq"><math><mrow><mrow><mrow><mrow><msubsup><mi>v</mi><mrow><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">=</mo><mrow><msubsup><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">−</mo><mn>2</mn><mi>g</mi></mrow></mrow><mo stretchy="false">(</mo><mrow><mi>y</mi><mo stretchy="false">−</mo><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mo stretchy="false">)</mo></mrow></mrow><mo>.</mo><mrow></mrow></mrow></math></div>
+        </li><li>Recombine the horizontal and vertical components of location and/or velocity using the following equations:
+    <div class="eq">
+      <math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>s</mi>
+                  <mo stretchy="false">=</mo>
+                  <msqrt>
+                    <mrow>
+                      <msup>
+                        <mi>x</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                      <mo stretchy="false">+</mo>
+                      <msup>
+                        <mi>y</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msup>
+                    </mrow>
+                  </msqrt>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div>
+    <div class="eq">
+      <math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>θ</mi>
+                    <mo stretchy="false">=</mo>
+                    <msup>
+                      <mtext>tan</mtext>
+
+                        <mrow>
+                          <mrow>
+                            <mo stretchy="false">−</mo>
+                            <mn>1</mn>
+                          </mrow>
+                        </mrow>
+
+                    </msup>
+                  </mrow>
+                  <mo stretchy="false">(</mo>
+                  <mrow>
+                    <mi>y</mi>
+                    <mo stretchy="false">/</mo>
+                    <mi>x</mi>
+                  </mrow>
+                  <mo stretchy="false">)</mo>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div>
+    <div class="eq">
+      <math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mi>v</mi>
+                  <mo stretchy="false">=</mo>
+                  <msqrt>
+                    <mrow>
+                      <msubsup>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>x</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                      <mo stretchy="false">+</mo>
+                      <msubsup>
+                        <mi>v</mi>
+
+                          <mrow>
+                            <mi>y</mi>
+                          </mrow>
+
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msubsup>
+                    </mrow>
+                  </msqrt>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div>
+    <div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>θ</mi><mrow><mtext>v</mtext></mrow></msub><mo stretchy="false">=</mo><msup><mtext>tan</mtext><mrow><mrow><mo stretchy="false">−</mo><mn>1</mn></mrow></mrow></msup></mrow><mo stretchy="false">(</mo><mrow><msub><mi>v</mi><mrow><mi>y</mi></mrow></msub><mo stretchy="false">/</mo><msub><mi>v</mi><mrow><mi>x</mi></mrow></msub></mrow><mo stretchy="false">)</mo></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li></ol></li><li>The maximum height <math><mrow><mrow><mi>h</mi></mrow><mrow></mrow></mrow></math> of a projectile launched with initial vertical velocity <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow><mrow></mrow></mrow></math> is given by
+  <div class="eq"><math><mrow><mrow><mrow><mi>h</mi><mo stretchy="false">=</mo><mfrac><msubsup><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mrow><mn>2</mn><mi>g</mi></mrow></mfrac></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li><li>The maximum horizontal distance traveled by a projectile is called the <strong>range</strong>. The range <math><mrow><mrow><mi>R</mi></mrow><mrow></mrow></mrow></math> of a projectile on level ground launched at an angle <math><mrow><mrow><msub><mi>θ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> above the horizontal with initial speed <math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is given by
+  <div class="eq"><math><mrow><mrow><mrow><mi>R</mi><mo stretchy="false">=</mo><mfrac><mrow><msubsup><mi>v</mi><mrow><mn>0</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><msub><mrow><mn>2</mn><mi>θ</mi></mrow><mrow><mn>0</mn></mrow></msub></mrow><mi>g</mi></mfrac></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li></ul></div>
+    <div class="section conceptual-questions"><h3>Conceptual Questions</h3><div class="exercise">
+        <div class="problem"><p>Answer the following questions for projectile motion on level ground assuming negligible air resistance (the initial angle being neither <math><mrow><mrow><mtext>0º</mtext></mrow><mrow></mrow></mrow></math> nor <math><mrow><mrow><mtext>90º</mtext></mrow><mrow></mrow></mrow></math>): (a) Is the velocity ever zero? (b) When is the velocity a minimum? A maximum? (c) Can the velocity ever be the same as the initial velocity at a time other than at <math><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>? (d) Can the speed ever be the same as the initial speed at a time other than at <math><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>?
+        </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem"><p>Answer the following questions for projectile motion on level ground assuming negligible air resistance (the initial angle being neither <math><mrow><mrow><mtext>0º</mtext></mrow><mrow></mrow></mrow></math> nor <math><mrow><mrow><mtext>90º</mtext></mrow><mrow></mrow></mrow></math>): (a) Is the acceleration ever zero? (b) Is the acceleration ever in the same direction as a component of velocity? (c) Is the acceleration ever opposite in direction to a component of velocity?
+        </p></div>
+      </div>
+      <div class="exercise">
+        <div class="problem"><p>For a fixed initial speed, the range of a projectile is determined by the angle at which it is fired. For all but the maximum, there are two angles that give the same range. Considering factors that might affect the ability of an archer to hit a target, such as wind, explain why the smaller angle (closer to the horizontal) is preferable. When would it be necessary for the archer to use the larger angle? Why does the punter in a football game use the higher trajectory?</p></div></div>
+      <div class="exercise"><div class="problem"><p>During a lecture demonstration, a professor places two coins on the edge of a table. She then flicks one of the coins horizontally off the table, simultaneously nudging the other over the edge. Describe the subsequent motion of the two coins, in particular discussing whether they hit the floor at the same time.
+        </p></div>
+        </div>
+    </div>
+   <div class="section problems-exercises"><h3>Problems &amp; Exercises</h3><div class="exercise">      <div class="problem"><p>A projectile is launched at ground level with an initial speed of 50.0 m/s at an angle of <math><mrow><mn>30.0º</mn></mrow></math> above the horizontal. It strikes a target above the ground 3.00 seconds later. What are the <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and <math><mrow><mrow><mi>y</mi></mrow></mrow></math> distances from where the projectile was launched to where it lands?</p></div>
+  <div class="solution">
+ <p><math>
+
+<mtable columnalign="left">
+ <mtr>
+  <mtd><mi>x</mi></mtd>
+  <mtd><mo stretchy="false">=</mo></mtd>
+  <mtd><mtext>1.30 m</mtext><mo stretchy="false">×</mo><msup><mn>10</mn><mn>2</mn></msup>
+  </mtd>
+ </mtr>
+
+ <mtr>
+  <mtd><mi>y</mi></mtd>
+  <mtd><mo stretchy="false">=</mo></mtd>
+  <mtd><mtext>30</mtext><mtext>.9 m.</mtext>
+  </mtd>
+ </mtr>
+
+</mtable>
+</math></p></div>
+</div>
+      <div class="exercise"><div class="problem"><p>A ball is kicked with an initial velocity of 16 m/s in the horizontal direction and 12 m/s in the vertical direction. (a) At what speed does the ball hit the ground? (b) For how long does the ball remain in the air? (c)What maximum height is attained by the ball?
+      </p></div></div>
+          <div class="exercise">  <div class="problem"><p>A ball is thrown horizontally from the top of a 60.0-m building and lands 100.0 m from the base of the building. Ignore air resistance. (a) How long is the ball in the air? (b) What must have been the initial horizontal component of the velocity? (c) What is the vertical component of the velocity just before the ball hits the ground? (d) What is the velocity (including both the horizontal and vertical components) of the ball just before it hits the ground?</p></div>
+            <div class="solution">
+              <p>(a) 3.50 s</p>
+              <p>(b) 28.6  m/s (c) 34.3 m/s</p><p>(d) 44.7 m/s,  <math><mrow><mn>50.2º</mn></mrow></math> below horizontal</p></div>
+          </div>
+      <div class="exercise"><div class="problem"><p>(a) A daredevil is attempting to jump his motorcycle over a line of buses parked end to end by driving up a <math><mrow><mrow><mtext>32º</mtext></mrow><mrow></mrow></mrow></math> ramp at a speed of <math><mrow><mrow><mrow><mtext>40</mtext><mtext>.</mtext><mtext>0 m/s </mtext><mo stretchy="false">(</mo><mtext>144 km/h</mtext><mo stretchy="false">)</mo></mrow></mrow></mrow></math>. How many buses can he clear if the top of the takeoff ramp is at the same height as the bus tops and the buses are 20.0 m long? (b) Discuss what your answer implies about the margin of error in this act—that is, consider how much greater the range is than the horizontal distance he must travel to miss the end of the last bus. (Neglect air resistance.)
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>An archer shoots an arrow at a 75.0 m distant target; the bull’s-eye of the target is at same height as the release height of the arrow. (a) At what angle must the arrow be released to hit the bull’s-eye if its initial speed is 35.0 m/s? In this part of the problem, explicitly show how you follow the steps involved in solving projectile motion problems. (b) There is a large tree halfway between the archer and the target with an overhanging horizontal branch 3.50 m above the release height of the arrow. Will the arrow go over or under the branch?</p></div>
+        <div class="solution">
+      <p>(a) <math><mrow><mrow><mrow><mtext>18</mtext><mtext>.</mtext><mtext>4º</mtext></mrow></mrow></mrow></math></p><p>(b) The arrow will go over the branch.</p></div>
+      </div>
+     <div class="exercise"><div class="problem"><p>A rugby player passes the ball 7.00 m across the field, where it is caught at the same height as it left his hand. (a) At what angle was the ball thrown if its initial speed was 12.0 m/s, assuming that the smaller of the two possible angles was used? (b) What other angle gives the same range, and why would it not be used? (c) How long did this pass take?</p></div>
+     </div>
+      <div class="exercise"><div class="problem"><p>Verify the ranges for the projectiles in the figure(a) for <math><mrow><mrow><mrow><mrow><mi>θ</mi><mo stretchy="false">=</mo><mtext>45º</mtext></mrow></mrow></mrow></mrow></math> and the given initial velocities.</p></div><div class="solution">
+      <p><math><mrow><mtable><mtr><mtd><mi>R</mi><mo stretchy="false">=</mo><mfrac><msubsup><mi>v</mi><mn>0</mn><mn>2</mn></msubsup>
+<mrow>
+<mtext>sin</mtext>
+<msub>
+ <mn>2θ</mn>
+ <mn>0</mn>
+</msub><mi>g</mi></mrow></mfrac></mtd></mtr>
+<mtr><mtd><mtext>For</mtext><mspace width="0.25em"></mspace><mrow><mi>θ</mi><mo stretchy="false">=</mo><mtext>45º</mtext></mrow><mo>,</mo></mtd><mtd><mrow>
+
+<mi>R</mi><mo stretchy="false">=</mo>
+<mfrac>
+<msubsup><mi>v</mi><mn>0</mn><mn>2</mn></msubsup><mi>g</mi></mfrac></mrow></mtd></mtr></mtable></mrow></math></p><p><math><mrow><mrow><mi>R</mi><mo>=</mo><mn>91.8</mn><mspace width="0.25em"></mspace><mtext> m</mtext></mrow><mrow></mrow></mrow></math> for
+
+<math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>30</mn><mspace width="0.25em"></mspace><mtext> m/s</mtext></mrow><mrow></mrow></mrow></math>;
+
+<math><mrow><mrow><mi>R</mi><mo>=</mo><mn>163</mn><mspace width="0.25em"></mspace><mtext> m</mtext></mrow><mrow></mrow></mrow></math>
+
+ for
+<math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>40</mn><mspace width="0.25em"></mspace><mtext> m/s</mtext></mrow><mrow></mrow></mrow></math>;
+
+<math><mrow><mrow><mi>R</mi><mo>=</mo><mn>255</mn><mspace width="0.25em"></mspace><mtext>m</mtext></mrow><mrow></mrow></mrow></math> for
+
+<math><mrow><mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>50</mn><mspace width="0.25em"></mspace><mtext> m/s</mtext></mrow><mrow></mrow></mrow></math>.</p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>Verify the ranges shown for the projectiles in the figure(b) for an initial velocity of 50 m/s at the given initial angles.
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>The cannon on a battleship can fire a shell a maximum distance of 32.0 km. (a) Calculate the initial velocity of the shell. (b) What maximum height does it reach? (At its highest, the shell is above 60% of the atmosphere—but air resistance is not really negligible as assumed to make this problem easier.) (c) The ocean is not flat, because the Earth is curved. Assume that the radius of the Earth is <math><mrow><mrow><mrow><mn>6</mn><mtext>.</mtext><mrow><mtext>37</mtext><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>3</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><mtext> km</mtext></mrow></mrow></mrow></math>. How many meters lower will its surface be 32.0 km from the ship along a horizontal line parallel to the surface at the ship? Does your answer imply that error introduced by the assumption of a flat Earth in projectile motion is significant here?</p></div>
+        <div class="solution">
+      <p>(a) 560 m/s</p><p>(b) <math><mrow><mrow><mrow><mn>8</mn><mtext>.</mtext><mrow><mtext>00 </mtext><mo stretchy="false">×</mo><msup><mtext> 10</mtext><mrow><mn>3</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><mtext> m</mtext></mrow></mrow></mrow></math></p><p>(c) 80.0 m. This error is not significant because it is only 1% of the answer in part (b).</p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>An arrow is shot from a height of 1.5 m toward a cliff of height <math><mrow><mrow><mi>H</mi></mrow><mrow></mrow></mrow></math>. It is shot with a velocity of 30 m/s at an angle of <math><mrow><mrow><mtext>60º</mtext></mrow><mrow></mrow></mrow></math> above the horizontal. It lands on the top edge of the cliff 4.0 s later. (a) What is the height of the cliff? (b) What is the maximum height reached by the arrow along its trajectory? (c) What is the arrow’s impact speed just before hitting the cliff?
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>In the standing broad jump, one squats and then pushes off with the legs to see how far one can jump. Suppose the extension of the legs from the crouch position is 0.600 m and the acceleration achieved from this position is 1.25 times the acceleration due to gravity, <math><mrow><mrow><mi>g</mi></mrow><mrow></mrow></mrow></math>. How far can they jump? State your assumptions. (Increased range can be achieved by swinging the arms in the direction of the jump.)</p></div>
+      <div class="solution">
+        <p>1.50 m, assuming launch angle of  <math><mrow><mn>45º</mn></mrow></math></p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>The world long jump record is 8.95 m (Mike Powell, USA, 1991). Treated as a projectile, what is the maximum range obtainable by a person if he has a take-off speed of 9.5 m/s? State your assumptions.
+      </p></div>
+      </div>
+     <div class="exercise"><div class="problem"><p>Serving at a speed of 170 km/h, a tennis player hits the ball at a height of 2.5 m and an angle <math><mrow><mrow><mi>θ</mi></mrow><mrow></mrow></mrow></math> below the horizontal. The base line is 11.9 m from the net, which is 0.91 m high. What is the angle <math><mrow><mrow><mi>θ</mi></mrow><mrow></mrow></mrow></math> such that the ball just crosses the net? Will the ball land in the service box, whose service line is 6.40 m from the net?</p></div>
+      <div class="solution">
+      <p><math><mrow><mrow><mi>θ</mi><mo>=</mo><mn>6.1º</mn></mrow><mrow></mrow></mrow></math></p><p>yes, the ball lands at 5.3 m from the net</p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>A football quarterback is moving straight backward at a speed of 2.00 m/s when he throws a pass to a player 18.0 m straight downfield. (a) If the ball is thrown at an angle of <math><mrow><mrow><mtext>25º</mtext></mrow><mrow></mrow></mrow></math> relative to the ground and is caught at the same height as it is released, what is its initial speed relative to the ground? (b) How long does it take to get to the receiver? (c) What is its maximum height above its point of release?
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>Gun sights are adjusted to aim high to compensate for the effect of gravity, effectively making the gun accurate only for a specific range. (a) If a gun is sighted to hit targets that are at the same height as the gun and 100.0 m away, how low will the bullet hit if aimed directly at a target 150.0 m away? The muzzle velocity of the bullet is 275 m/s. (b) Discuss qualitatively how a larger muzzle velocity would affect this problem and what would be the effect of air resistance.</p></div>
+        <div class="solution">
+      <p>(a) −0.486 m</p>
+      <p>(b) The larger the muzzle velocity, the smaller the deviation in the vertical direction, because the time of flight would be smaller. Air resistance would have the effect of decreasing the time of flight, therefore increasing the vertical deviation.</p>
+      </div>
+      </div>
+      <div class="exercise"><div class="problem"><p>An eagle is flying horizontally at a speed of 3.00 m/s when the fish in her talons wiggles loose and falls into the lake 5.00 m below. Calculate the velocity of the fish relative to the water when it hits the water.
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>An owl is carrying a mouse to the chicks in its nest. Its position at that time is 4.00 m west and 12.0 m above the center of the 30.0 cm diameter nest. The owl is flying east at 3.50 m/s at an angle 30.0º below the horizontal when it accidentally drops the mouse. Is the owl lucky enough to have the mouse hit the nest? To answer this question, calculate the horizontal position of the mouse when it has fallen 12.0 m.</p></div>
+        <div class="solution">
+        <p>4.23 m. No, the owl is not lucky; he misses the nest.</p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>Suppose a soccer player kicks the ball from a distance 30 m toward the goal. Find the initial speed of the ball if it just passes over the goal, 2.4 m above the ground, given the initial direction to be <math><mrow><mrow><mtext>40º</mtext></mrow><mrow></mrow></mrow></math> above the horizontal.
+      </p></div>
+      </div>
+      <div class="exercise"><div class="problem"><p>Can a goalkeeper at her/ his goal kick a soccer ball into the opponent’s goal without the ball touching the ground? The distance will be about 95 m. A goalkeeper can give the ball a speed of 30 m/s.</p></div>
+      <div class="solution">
+        <p>No, the maximum range (neglecting air resistance) is about 92 m. </p></div>
+      </div>
+     <div class="exercise"><div class="problem"><p>The free throw line in basketball is 4.57 m (15 ft) from the basket, which is 3.05 m (10 ft) above the floor. A player standing on the free throw line throws the ball with an initial speed of 8.15 m/s, releasing it at a height of 2.44 m (8 ft) above the floor. At what angle above the horizontal must the ball be thrown to exactly hit the basket? Note that most players will use a large initial angle rather than a flat shot because it allows for a larger margin of error. Explicitly show how you follow the steps involved in solving projectile motion problems.</p></div>
+     </div>
+      <div class="exercise"><div class="problem"><p>In 2007, Michael Carter (U.S.) set a world record in the shot put with a throw of 24.77 m. What was the initial speed of the shot if he released it at a height of 2.10 m and threw it at an angle of <math><mrow><mrow><mrow><mn>38.0º</mn></mrow></mrow></mrow></math> above the horizontal? (Although the maximum distance for a projectile on level ground is achieved at <math><mrow><mrow><mrow><mtext>45º</mtext></mrow></mrow></mrow></math> when air resistance is neglected, the actual angle to achieve maximum range is smaller; thus, <math><mrow><mrow><mrow><mtext>38º</mtext></mrow></mrow></mrow></math> will give a longer range than <math><mrow><mrow><mrow><mtext>45º</mtext></mrow></mrow></mrow></math> in the shot put.)</p></div>
+        <div class="solution">
+<p>15.0 m/s</p></div>
+      </div>
+          <div class="exercise"><div class="problem"><p>A basketball player is running at <math><mrow><mrow><mrow><mn>5</mn><mtext>.</mtext><mtext>00 m/s</mtext></mrow></mrow></mrow></math> directly toward the basket when he jumps into the air to dunk the ball. He maintains his horizontal velocity. (a) What vertical velocity does he need to rise 0.750 m above the floor? (b) How far from the basket (measured in the horizontal direction) must he start his jump to reach his maximum height at the same time as he reaches the basket?
+          </p></div>
+          </div>
+      <div class="exercise">
+        <div class="problem"><p>A football player punts the ball at a <math><mrow><mrow><mrow><mn>45.0º</mn></mrow></mrow></mrow></math> angle. Without an effect from the wind, the ball would travel 60.0 m horizontally. (a) What is the initial speed of the ball? (b) When the ball is near its maximum height it experiences a brief gust of wind that reduces its horizontal velocity by 1.50 m/s. What distance does the ball travel horizontally?</p></div>
+      <div class="solution">
+      <p>(a) 24.2 m/s
+</p><p>(b) The ball travels a total of 57.4 m with the brief gust of wind.</p></div>
+      </div>
+<div class="exercise">
+  <div class="problem"><p>Prove that the trajectory of a projectile is parabolic, having the form <math><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><mstyle><mrow><mtext>ax</mtext></mrow></mstyle><mo stretchy="false">+</mo><mrow><msup><mstyle><mtext>bx</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></mrow></mrow></math>. To obtain this expression, solve the equation
+
+<math><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>x</mi></mrow></msub><mi>t</mi></mrow></mrow></mrow></math> for
+
+<math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> and substitute it into the expression for
+
+<math><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow><mi>t</mi><mo>–</mo><mo stretchy="false">(</mo><mrow><mn>1</mn><mo stretchy="false">/</mo><mn>2</mn></mrow><mo stretchy="false">)</mo><mrow><msup><mstyle><mtext>gt</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></mrow></math> (These equations describe the <math><mrow><mrow><mi>x</mi></mrow></mrow></math> and <math><mrow><mrow><mi>y</mi></mrow></mrow></math> positions of a projectile that starts at the origin.) You should obtain an equation of the form <math><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">=</mo><mrow><mstyle><mrow><mtext>ax</mtext></mrow></mstyle><mo stretchy="false">+</mo><mrow><msup><mstyle><mtext>bx</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></mrow></mrow></math> where <math><mrow><mrow><mi>a</mi></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><mi>b</mi></mrow><mrow></mrow></mrow></math> are constants.
+</p></div>
+</div>
+<div class="exercise"><div class="problem"><p>Derive <math><mrow><mrow><mrow><mi>R</mi><mo stretchy="false">=</mo><mfrac><mrow><msubsup><mi>v</mi><mrow><mn>0</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><msub><mn>2θ</mn><mrow><mn>0</mn></mrow></msub></mrow><mi>g</mi></mfrac></mrow></mrow></mrow></math> for the range of a projectile on level ground by finding the time <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> at which <math><mrow><mrow><mi>y</mi></mrow></mrow></math> becomes zero and substituting this value of <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> into the expression for <math><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">−</mo><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow></mrow></mrow></math>, noting that <math><mrow><mrow><mrow><mi>R</mi><mo stretchy="false">=</mo><mrow><mi>x</mi><mo stretchy="false">−</mo><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow></mrow></mrow></mrow></math></p></div>
+<div class="solution">
+<p><math><mrow><mrow><mrow><mrow><mrow><mrow><mi>y</mi><mo stretchy="false">−</mo><msub><mi>y</mi><mrow><mn>0</mn></mrow></msub></mrow><mo stretchy="false">=</mo><mn>0</mn></mrow><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>y</mi></mrow></msub></mrow><mrow><mi>t</mi><mo stretchy="false">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mstyle><mi>gt</mi></mstyle><mn>2</mn></msup><mo stretchy="false">=</mo><mo stretchy="false">(</mo>
+
+</mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ</mi><mo stretchy="false">)</mo><mrow><mi>t</mi><mo stretchy="false">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mstyle><mi>gt</mi></mstyle><mn>2</mn></msup></mrow></mrow></mrow></mrow></math>,</p><p>so that <math><mrow><mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mfrac><mrow><mn>2</mn><mo stretchy="false">(</mo><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mspace width="0.25em"></mspace>
+<mtext>sin</mtext><mspace width="0.25em"></mspace>
+<mi>θ</mi><mo stretchy="false">)</mo></mrow><mi>g</mi></mfrac></mrow></mrow></mrow></math></p><p><math><mrow><mrow><mrow><mrow><mrow><mi>x</mi><mo stretchy="false">−</mo><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>0</mn><mi>x</mi></mrow></msub></mrow><mrow><mi>t</mi><mo stretchy="false">=</mo><mo stretchy="false">(</mo></mrow><msub><mi>v</mi><mrow><mn>0</mn></mrow></msub><mspace width="0.25em"></mspace>
+<mtext>cos</mtext><mspace width="0.25em"></mspace>
+<mi>θ</mi><mo stretchy="false">)</mo><mrow><mi>t</mi><mo stretchy="false">=</mo><mi>R</mi></mrow><mi>,</mi></mrow></mrow></mrow></math> and substituting for <math><mrow><mrow><mi>t</mi></mrow><mrow></mrow></mrow></math> gives:</p><p><math>
+        
+          <mrow>
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <mi>R</mi>
+                    <mo stretchy="false">=</mo>
+                    <msub>
+<mstyle>
+                      <mi>v</mi> </mstyle>
+                          <mn>0</mn>
+                    </msub>
+                  </mrow><mspace width="0.25em"></mspace>
+                  <mtext>cos</mtext><mspace width="0.25em"></mspace>
+                  <mi>θ</mi>
+                  <mrow>
+                    <mfenced open="(" close=")">
+                      <mfrac>
+
+                        <mrow>
+                          <msub>
+<mrow>
+                            <mn>2</mn>
+<mi>v</mi>
+</mrow>
+                                <mn>0</mn>
+                          </msub><mspace width="0.25em"></mspace>
+                          <mtext>sin</mtext><mspace width="0.25em"></mspace>
+                          <mi>θ</mi>
+                        </mrow>
+                        <mi>g</mi>
+                      </mfrac>
+                    </mfenced>
+                    <mo stretchy="false">=</mo>
+                    <mfrac>
+                      <mrow>
+                        <msubsup>
+<mrow>
+                          <mn>2</mn> <mi>v</mi>
+</mrow>
+                          <mn>0</mn>
+                          <mn>2</mn>
+
+                        </msubsup><mspace width="0.25em"></mspace>
+                        <mtext>sin</mtext><mspace width="0.25em"></mspace>
+                        <mi>θ</mi><mspace width="0.25em"></mspace>
+                        <mtext>cos</mtext><mspace width="0.25em"></mspace>
+                        <mi>θ</mi>
+                      </mrow>
+                      <mi>g</mi>
+                    </mfrac>
+                  </mrow>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </p><p>since <math><mrow><mrow><mrow><mn>2</mn><mspace width="0.25em"></mspace><mtext>sin</mtext><mspace width="0.25em"></mspace><mi>θ</mi><mspace width="0.25em"></mspace><mtext>cos</mtext><mspace width="0.25em"></mspace><mrow><mi>θ</mi><mo stretchy="false">=</mo><mtext>sin</mtext><mspace width="0.25em"></mspace></mrow><mn>2θ</mn><mi>,</mi></mrow></mrow></mrow></math> the range is:</p><p><math><mrow><mrow><mrow><mi>R</mi><mo stretchy="false">=</mo><mfrac><mrow>
+<msup>
+<msub>
+<mi>v</mi>
+
+
+<mn>0</mn></msub>
+<mrow>
+<mn>2</mn>
+</mrow>
+</msup><mspace width="0.25em"></mspace>
+<mtext>sin</mtext><mspace width="0.25em"></mspace><mn>2θ</mn></mrow><mi>g</mi></mfrac></mrow></mrow></mrow></math>.</p></div></div>
+
+
+
+
+
+
+<div class="exercise"><div class="problem"><p><h5>Unreasonable Results</h5> (a) Find the maximum range of a super cannon that has a muzzle velocity of 4.0 km/s. (b) What is unreasonable about the range you found? (c) Is the premise unreasonable or is the available equation inapplicable? Explain your answer. (d) If such a muzzle velocity could be obtained, discuss the effects of air resistance, thinning air with altitude, and the curvature of the Earth on the range of the super cannon.
+</p></div>
+</div>
+ <div class="exercise"><div class="problem"><p><h5>Construct Your Own Problem</h5>  Consider a ball tossed over a fence. Construct a problem in which you calculate the ball’s needed initial velocity to just clear the fence. Among the things to determine are; the height of the fence, the distance to the fence from the point of release of the ball, and the height at which the ball is released. You should also consider whether it is possible to choose the initial speed for the ball and just calculate the angle at which it is thrown. Also examine the possibility of multiple solutions given the distances and heights you have chosen.
+ </p></div>
+</div></div>
+ <h2>Key terms</h2>
+      <p><strong>air resistance</strong> a frictional force that slows the motion of objects as they travel through the air; when solving basic physics problems, air resistance is assumed to be zero</p>
+
+<p><strong>kinematics</strong> the study of motion without regard to mass or force</p>
+
+<p><strong>motion</strong> displacement of an object as a function of time</p>
+
+<p><strong>projectile</strong> an object that travels through the air and experiences only acceleration due to gravity</p>
+
+      <p><strong>projectile motion</strong> the motion of an object that is subject only to the acceleration of gravity</p>
+      <p><strong>range</strong> the maximum horizontal distance that a projectile travels</p>
+      <p><strong>trajectory</strong> the path of a projectile through the air</p>
+    
+</body></html>

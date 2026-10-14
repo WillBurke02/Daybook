@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12.2 Bernoulli’s Equation · College Physics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, College Physics 2e, Urone, Hinrichs, section 12.2 Bernoulli’s Equation. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/college-physics-2e/pages/12-2-bernoulli-s-equation</p>
+<h1>12.2 Bernoulli’s Equation</h1>
+  <div class="section learning-objectives"><h3>Learning Objectives</h3>
+  <p>By the end of this section, you will be able to:</p>
+  <ul><li>Explain the terms in Bernoulli’s equation.</li><li>Explain how Bernoulli’s equation is related to conservation of energy.</li><li>Explain how to derive Bernoulli’s principle from Bernoulli’s equation.</li><li>Calculate with Bernoulli’s principle.</li><li>List some applications of Bernoulli’s principle.</li></ul>
+  </div>
+<p>When a fluid flows into a narrower channel, its speed increases. That means its kinetic energy also increases. Where does that change in kinetic energy come from? The increased kinetic energy comes from the net work done on the fluid to push it into the channel and the work done on the fluid by the gravitational force, if the fluid changes vertical position. Recall the work-energy theorem,</p>
+
+<div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>W</mi><mrow><mrow><mtext>net</mtext></mrow></mrow></msub><mo stretchy="false">=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><mrow><msup><mstyle><mtext>mv</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow><mo stretchy="false">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow>
+
+<msubsup><mstyle><mtext>mv</mtext></mstyle><mn>0</mn><mn>2</mn></msubsup></mrow></mrow><mtext>.</mtext></mrow></mrow></math></div><p>There is a pressure difference when the channel narrows. This pressure difference results in a net force on the fluid: recall that pressure times area equals force. The net work done increases the fluid’s kinetic energy. As a result, the <em>pressure will drop in a rapidly-moving fluid</em>, whether or not the fluid is confined to a tube.</p>
+<p>There are a number of common examples of pressure dropping in rapidly-moving fluids. Shower curtains have a disagreeable habit of bulging into the shower stall when the shower is on. The high-velocity stream of water and air creates a region of lower pressure inside the shower, and standard atmospheric pressure on the other side. The pressure difference results in a net force inward pushing the curtain in. You may also have noticed that when passing a truck on the highway, your car tends to veer toward it. The reason is the same—the high velocity of the air between the car and the truck creates a region of lower pressure, and the vehicles are pushed together by greater pressure on the outside. (See the figure.) This effect was observed as far back as the mid-1800s, when it was found that trains passing in opposite directions tipped precariously toward one another.</p>
+
+
+<figure><img src="Figure_13_02_01a.jpg" alt="An overhead view of a car passing by a truck on a highway toward left is shown. The air passing through the vehicles is shown using lines along the length of both the vehicles. The lines representing the air movement has a velocity v one outside the area between the vehicles and velocity v two between the vehicles. v two is shown to be greater than v one with the help of a longer arrow toward right. The pressure between the car and the truck is represented by P i and the pressure at the other ends of both the vehicles is represented as P zero. The pressure P i is shown to be less than P zero by shorter length of the arrow. The direction of P i is shown as pushing the car and truck apart, and the direction of P zero is shown as pushing the car and truck toward each other."><figcaption>An overhead view of a car passing a truck on a highway. Air passing between the vehicles flows in a narrower channel and must increase its speed (<math><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is greater than <math><mrow><mrow><msub><mi>v</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math>), causing the pressure between them to drop (<math><mrow><mrow><msub><mi>P</mi><mrow><mtext>i</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> is less than <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>o</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>). Greater pressure on the outside pushes the car and truck together.</figcaption></figure><div class="note"><h3>Making Connections: Take-Home Investigation with a Sheet of Paper</h3>
+
+<p>Hold the short edge of a sheet of paper parallel to your mouth with one hand on each side of your mouth. The page should slant downward over your hands. Blow over the top of the page. Describe what happens and explain the reason for this behavior.</p>
+</div><div class="section">
+<h3>Bernoulli’s Equation</h3>
+<p>The relationship between pressure and velocity in fluids is described quantitatively by <strong>Bernoulli’s equation</strong>, named after its discoverer, the Swiss scientist Daniel Bernoulli (1700–1782). Bernoulli’s equation states that for an incompressible, frictionless fluid, the following sum is constant:</p>
+
+<div class="eq"><math><mrow><mrow><mrow><mrow><mi>P</mi><mo stretchy="false">+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mi>ρv</mi><mrow><mn>2</mn></mrow></msup><mo stretchy="false">+</mo><mi>ρ</mi></mrow><mrow><mstyle><mrow><mtext>gh</mtext></mrow></mstyle><mo stretchy="false">=</mo><mtext>constant,</mtext></mrow></mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><mi>P</mi></mrow></mrow></math> is the absolute pressure, <math><mrow><mrow><mi>ρ</mi></mrow></mrow></math> is the fluid density, <math><mrow><mrow><mi>v</mi></mrow></mrow></math> is the velocity of the fluid, <math><mrow><mrow><mi>h</mi></mrow></mrow></math> is the height above some reference point, and <math><mrow><mrow><mi>g</mi></mrow></mrow></math> is the acceleration due to gravity. If we follow a small volume of fluid along its path, various quantities in the sum may change, but the total remains constant. Let the subscripts 1 and 2 refer to any two points along the path that the bit of fluid follows; Bernoulli’s equation becomes</p>
+
+<div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>P</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>1</mn>
+                      </mrow>
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow>
+                      </msubsup>
+                    <mo stretchy="false">+</mo>
+                    <mi>ρ</mi>
+                  <mrow>
+                    <mstyle>
+                      <mrow>
+                        <msub>
+                          <mi>gh</mi>
+
+                            <mrow>
+                              <mn>1</mn>
+                            </mrow>
+
+                        </msub>
+                      </mrow>
+                    </mstyle>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow>
+</msubsup>
+                  <mrow>
+                    <mo stretchy="false">+</mo>
+                    <mi>ρ</mi>
+                  </mrow>
+                  <mstyle>
+                    <mrow>
+                      <msub>
+                        <mi>gh</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                    </mrow>
+                  </mstyle>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>Bernoulli’s equation is a form of the conservation of energy principle. Note that the second and third terms are the kinetic and potential energy with <math><mrow><mrow><mi>m</mi></mrow></mrow></math> replaced by <math><mrow><mrow><mi>ρ</mi></mrow></mrow></math>. In fact, each term in the equation has units of energy per unit volume. We can prove this for the second term by substituting <math><mrow><mrow><mrow><mi>ρ</mi><mo stretchy="false">=</mo><mrow><mi>m</mi><mo stretchy="false">/</mo><mi>V</mi></mrow></mrow></mrow></mrow></math>  into it and gathering terms:</p><div class="eq"><math><mrow><mrow><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><mrow><msup><mi>ρv</mi><mrow><mn>2</mn></mrow></msup><mo stretchy="false">=</mo><mfrac><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow><msup><mstyle><mtext>mv</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow><mi>V</mi></mfrac></mrow><mo stretchy="false">=</mo><mfrac><mtext>KE</mtext><mi>V</mi></mfrac></mrow></mrow></mrow><mtext>.</mtext><mrow></mrow></mrow></math></div><p>So <math><mrow><mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>ρv</mi><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math> is the kinetic energy per unit volume. Making the same substitution into the third term in the equation, we find</p>
+
+<div class="eq"><math><mrow><mrow><mrow><mi>ρ</mi><mrow><mrow><mstyle><mrow><mi>gh</mi></mrow></mstyle><mo stretchy="false">=</mo><mfrac><mstyle><mrow><mi>mgh</mi></mrow></mstyle><mi>V</mi></mfrac></mrow><mo stretchy="false">=</mo><mfrac><msub><mtext>PE</mtext><mrow><mtext>g</mtext></mrow></msub><mi>V</mi></mfrac></mrow></mrow></mrow><mo>,</mo><mrow></mrow></mrow></math></div><p>so <math><mrow><mrow><mrow><mi>ρ</mi> <mstyle><mrow><mtext>gh</mtext></mrow></mstyle></mrow></mrow></mrow></math> is the gravitational potential energy per unit volume. Note that pressure <math><mrow><mrow><mi>P</mi></mrow></mrow></math> has units of energy per unit volume, too. Since <em><math><mrow><mrow><mrow><mi>P</mi><mo stretchy="false">=</mo><mrow><mi>F</mi><mo stretchy="false">/</mo><mi>A</mi></mrow></mrow></mrow></mrow></math></em>, its units are <math><mrow><mrow><msup><mtext>N/m</mtext><mrow><mn>2</mn></mrow></msup></mrow><mrow></mrow></mrow></math>. If we multiply these by m/m, we obtain <math><mrow><mrow><mrow><mrow><mtext>N</mtext><mo stretchy="false">⋅</mo><msup><mtext>m/m</mtext><mrow><mn>3</mn></mrow></msup></mrow><mo stretchy="false">=</mo><msup><mtext>J/m</mtext><mrow><mn>3</mn></mrow></msup></mrow></mrow></mrow></math>, or energy per unit volume. Bernoulli’s equation is, in fact, just a convenient statement of conservation of energy for an incompressible fluid in the absence of friction.</p><div class="note">
+<h4>Making Connections: Conservation of Energy</h4>
+<p>Conservation of energy applied to fluid flow produces Bernoulli’s equation. The net work done by the fluid’s pressure results in changes in the fluid’s <math><mrow><mrow><mtext>KE</mtext></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mtext>PE</mtext><mrow><mtext>g</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> per unit volume. If other forms of energy are involved in fluid flow, Bernoulli’s equation can be modified to take these forms into account. Such forms of energy include thermal energy dissipated because of fluid viscosity.</p>
+</div>
+
+<p>The general form of Bernoulli’s equation has three terms in it, and it is broadly applicable. To understand it better, we will look at a number of specific situations that simplify and illustrate its use and meaning.</p>
+</div>
+
+<div class="section">
+<h3>Bernoulli’s Equation for Static Fluids</h3>
+<p>Let us first consider the very simple situation where the fluid is static—that is, <math><mrow><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">=</mo><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>. Bernoulli’s equation in that case is</p>
+
+    <div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">+</mo><mi>ρ</mi></mrow><mrow><mrow><msub><mi>gh</mi><mrow><mn>1</mn></mrow></msub></mrow><mo stretchy="false">=</mo><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">+</mo><mi>ρ</mi></mrow></mrow><mrow><msub><mi>gh</mi><mrow><mn>2</mn></mrow></msub></mrow></mrow></mrow><mtext>.</mtext><mrow></mrow></mrow></math></div><p>We can further simplify the equation by taking <math><mrow><mrow><mrow><msub><mi>h</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math> (we can always choose some height to be zero, just as we often have done for other situations involving the gravitational force, and take all other heights to be relative to this). In that case, we get</p><div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">=</mo><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">+</mo><mi>ρ</mi></mrow></mrow><mstyle><mrow><msub><mi>gh</mi><mrow><mn>1</mn></mrow></msub></mrow></mstyle></mrow></mrow><mtext>.</mtext><mrow></mrow></mrow></math></div><p>This equation tells us that, in static fluids, pressure increases with depth. As we go from point 1 to point 2 in the fluid, the depth increases by <math><mrow><mrow><msub><mi>h</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math>, and consequently, <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is greater than <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> by an amount <math><mrow><mrow><mrow><mi>ρ</mi><mstyle><mrow><msub><mi>gh</mi><mrow><mn>1</mn></mrow></msub></mrow></mstyle></mrow></mrow></mrow></math>. In the very simplest case,
+
+<math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is zero at the top of the fluid, and we get the familiar relationship
+
+<math><mrow><mrow><mrow><mrow><mi>P</mi><mo stretchy="false">=</mo><mi>ρ</mi></mrow><mstyle><mrow><mi>gh</mi></mrow></mstyle></mrow></mrow></mrow></math>. (Recall that
+
+<math><mrow><mrow><mrow><mi>P</mi><mo stretchy="false">=</mo><mi>ρgh</mi></mrow></mrow></mrow></math> and
+
+<math><mrow><mrow><mrow><mtext>Δ</mtext><mrow><msub><mtext>PE</mtext><mrow><mtext>g</mtext></mrow></msub><mo stretchy="false">=</mo><mstyle><mrow><mtext>mgh</mtext></mrow></mstyle></mrow></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math>) Bernoulli’s equation includes the fact that the pressure due to the weight of a fluid is
+
+<math><mrow><mrow><mrow><mi>ρ</mi><mstyle><mrow><mtext>gh</mtext></mrow></mstyle></mrow></mrow></mrow></math>. Although we introduce Bernoulli’s equation for fluid flow, it includes much of what we studied for static fluids in the preceding chapter.</p></div>
+
+<div class="section">
+<h3>Bernoulli’s Principle—Bernoulli’s Equation at Constant Depth</h3>
+<p>Another important situation is one in which the fluid moves but its depth is constant—that is, <math><mrow><mrow><mrow><msub><mi>h</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">=</mo><msub><mi>h</mi><mrow><mn>2</mn></mrow></msub></mrow></mrow></mrow></math>. Under that condition, Bernoulli’s equation becomes</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>P</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>1</mn>
+                      </mrow>
+
+
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow></msubsup>
+                                        <mrow>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+                    </msubsup>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>Situations in which fluid flows at a constant depth are so important that this equation is often called <strong>Bernoulli’s principle</strong>. It is Bernoulli’s equation for fluids at constant depth. (Note again that this applies to a small volume of fluid as we follow it along its path.) As we have just discussed, pressure drops as speed increases in a moving fluid. We can see this from Bernoulli’s principle. For example, if <math><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is greater than <math><mrow><mrow><msub><mi>v</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> in the equation, then <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> must be less than <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> for the equality to hold.</p>
+
+<div class="example">
+<h4>Calculating Pressure: Pressure Drops as a Fluid Speeds Up </h4>
+<p>In another section, we found that the speed of water in a hose increased from 1.96 m/s to 25.5 m/s going from the hose to the nozzle. Calculate the pressure in the hose, given that the absolute pressure in the nozzle is <math><mrow><mrow><mrow><mn>1</mn><mtext>.</mtext><mrow><mtext>01</mtext><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>5</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><msup><mtext>N/m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math> (atmospheric, as it must be) and assuming level, frictionless flow.</p><p><h4>Strategy</h4></p>
+<p>Level flow means constant depth, so Bernoulli’s principle applies. We use the subscript 1 for values in the hose and 2 for those in the nozzle. We are thus asked to find <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math>.</p>
+
+<p><h4>Solution</h4></p>
+<p>Solving Bernoulli’s principle for <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> yields</p>
+
+<div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>P</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow>
+                                        </msubsup>
+                               <mrow>
+       <mo stretchy="false">−</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>1</mn>
+                      </mrow>
+
+
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow></msubsup>
+                                      <mrow>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <mi>ρ</mi>
+                  <mo stretchy="false">(</mo>
+                  <msubsup>
+                    <mi>v</mi>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow>
+                      </msubsup>
+                  <mrow>
+                    <mo stretchy="false">−</mo>
+                                      </mrow>
+<msubsup>
+                      <mi>v</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                  </msubsup>
+                  <mo stretchy="false">)</mo>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><p>Substituting known values,</p>
+
+
+<div class="eq"><math><mrow><mrow><mtable columnalign="left"><mtr>
+<mtd><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mtd>
+<mtd><mo stretchy="false">=</mo></mtd>
+<mtd><mn>1</mn><mtext>.</mtext><mrow><mtext>01</mtext><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>5</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><msup><mtext> N/m</mtext><mrow><mn>2</mn></mrow></msup></mtd>
+</mtr><mtr>
+<mtd></mtd>
+<mtd></mtd>
+<mtd><mrow><mrow><mtext></mtext><mo stretchy="false">+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mo stretchy="false">(</mo><msup><mtext>10</mtext><mrow><mn>3</mn></mrow></msup><mspace width="0.25em"></mspace>
+<msup><mtext> kg/m</mtext><mrow><mn>3</mn></mrow></msup><mo stretchy="false">)</mo><mfenced open="[" close="]"><mrow><mo stretchy="false">(</mo><mtext>25.5 m/s</mtext><mrow><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup><mo stretchy="false">−</mo><mo stretchy="false">(</mo></mrow><mtext>1.96 m/s</mtext><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup></mrow></mfenced><mrow></mrow></mrow></mtd>
+</mtr><mtr>
+<mtd></mtd>
+<mtd><mo stretchy="false">=</mo></mtd>
+<mtd><mn>4.24</mn><mrow><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>5</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><msup><mtext> N/m</mtext><mrow><mn>2</mn></mrow></msup><mtext>.</mtext></mtd>
+</mtr></mtable><mrow></mrow></mrow></mrow></math></div><p><h4>Discussion</h4></p>
+<p>This absolute pressure in the hose is greater than in the nozzle, as expected since <math>
+ 
+  <mi>v</mi>
+ 
+</math> is greater in the nozzle. The pressure <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> in the nozzle must be atmospheric since it emerges into the atmosphere without other changes in conditions.</p></div>
+</div>
+
+<div class="section">
+<h3>Applications of Bernoulli’s Principle</h3>
+<p>There are a number of devices and situations in which fluid flows at a constant height and, thus, can be analyzed with Bernoulli’s principle.</p>
+
+<div class="section">
+<h4>Entrainment</h4>
+<p>People have long put the Bernoulli principle to work by using reduced pressure in high-velocity fluids to move things about. With a higher pressure on the outside, the high-velocity fluid forces other fluids into the stream. This process is called <em>entrainment</em>. Entrainment devices have been in use since ancient times, particularly as pumps to raise water small heights, as in draining swamps, fields, or other low-lying areas. Some other devices that use the concept of entrainment are shown in the figure.</p>
+
+
+<figure><img src="Figure_13_02_02a.jpg" alt="Part a of the figure shows a rectangular section of a cylindrical Bunsen burner as a vertical column. The natural gas is shown to enter the rectangular column from the bottom upward. The air is shown to enter though a nozzle at the left side near the bottom part of the rectangular column and rise upward. Both air and natural gas are shown to rise up together along the length of the column, shown as vertical arrows along the length pointing upward. Part b of the figure shows an atomizer that uses a squeeze bulb in the shape of a small sphere to create a jet of air that entrains drops of perfume contained in a spherical bottomed container. The air is shown to come out of the squeeze bulb and the perfume is shown to rise up from the spherical bottomed container. Part c of the figure shows a common aspirator which contains a cylindrical tube held vertically. The tube is broader on the top and narrow at the bottom. Water is shown to enter the tube from the broader region and flow toward the narrow region. Air is shown to enter the cylindrical tube from the bottom part of the broader side and also flow toward the narrow tube. Part d of the figure shows the chimney of a water heater. Water heater is shown as a rectangular box at the bottom having a cylindrical section in the middle. The cylindrical section is broader at the bottom and narrow toward the top. Hot air is shown to rise up along the vertical section of the cylindrical tube. The chimney is conical at the bottom and rectangular upward and is shown above the rectangular water heater. The hot air enters the chimney at the conical end and rises upward. Cool air is shown to enter the chimney through the area between the rectangular section of heater and chimney from the two sides and rise up along the chimney with the hot air as shown by vertical arrows."><figcaption>Examples of entrainment devices that use increased fluid speed to create low pressures, which then entrain one fluid into another. (a) A Bunsen burner uses an adjustable gas nozzle, entraining air for proper combustion. (b) An atomizer uses a squeeze bulb to create a jet of air that entrains drops of perfume. Paint sprayers and carburetors use very similar techniques to move their respective liquids. (c) A common aspirator uses a high-speed stream of water to create a region of lower pressure. Aspirators may be used as suction pumps in dental and surgical situations or for draining a flooded basement or producing a reduced pressure in a vessel. (d) The chimney of a water heater is designed to entrain air into the pipe leading through the ceiling.</figcaption></figure></div>
+
+<div class="section"><h4>Wings and Sails</h4><p>The airplane wing is a beautiful example of Bernoulli’s principle in action. the figure(a) shows the characteristic shape of a wing. The wing is tilted upward at a small angle and the upper surface is longer, causing air to flow faster over it. The pressure on top of the wing is therefore reduced, creating a net upward force or lift. (Wings can also gain lift by pushing air downward, utilizing the conservation of momentum principle. The deflected air molecules result in an upward force on the wing — Newton’s third law.) Sails also have the characteristic shape of a wing. (See the figure(b).) The pressure on the front side of the sail, <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>front</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>, is lower than the pressure on the back of the sail, <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>back</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>. This results in a forward force and even allows you to sail into the wind.</p>
+
+<div class="note"><h5>Making Connections: Take-Home Investigation with Two Strips of Paper</h5>
+
+<p>For a good illustration of Bernoulli’s principle, make two strips of paper, each about 15 cm long and 4 cm wide. Hold the small end of one strip up to your lips and let it drape over your finger. Blow across the paper. What happens? Now hold two strips of paper up to your lips, separated by your fingers. Blow between the strips. What happens?</p>
+</div></div><div class="section">
+<h4>Velocity measurement</h4>
+<p>the figure shows two devices that measure fluid velocity based on Bernoulli’s principle. The manometer in the figure(a) is connected to two tubes that are small enough not to appreciably disturb the flow. The tube facing the oncoming fluid creates a dead spot having zero velocity (<math><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">=</mo><mn>0</mn></mrow></mrow></mrow></math>) in front of it, while fluid passing the other tube has velocity <math><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math>. This means that Bernoulli’s principle as stated in <math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>P</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">+</mo>
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>                  <mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>1</mn>
+                      </mrow>
+                        <mrow>
+                          <mn>2</mn>
+                        </mrow>
+
+                    </msubsup>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+                        <mn>2</mn>
+                        <mn>2</mn>
+                  </msubsup>
+                </mrow>
+              </mrow>
+
+          </mrow>
+          
+        
+      </math>
+     becomes</p><div class="eq"><math>
+        
+          <mrow>
+
+              <mrow>
+                <mrow>
+                  <mrow>
+                    <msub>
+                      <mi>P</mi>
+
+                        <mrow>
+                          <mn>1</mn>
+                        </mrow>
+
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                      <msub>
+                        <mi>P</mi>
+
+                          <mrow>
+                            <mn>2</mn>
+                          </mrow>
+
+                      </msub>
+                      <mo stretchy="false">+</mo>
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                  </mrow>
+                  <msubsup>
+                    <mi>ρv</mi>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                      <mrow>
+                        <mn>2</mn>
+                      </mrow>
+
+                  </msubsup>
+                  <mtext>.</mtext>
+                </mrow>
+              </mrow>
+
+            <mrow></mrow>
+          </mrow>
+          
+        
+      </math>
+    </div><figure><img src="Figure_13_02_03.jpg" alt="Part a of the figure shows a picture of a wing. It is in the form of an aerofoil. One side of the wing is broader and the other end tapers. The direction of the air is shown as lines along the length of the wing. The direction of the air below the wing is shown as flowing along the length of the wing. The pressure exerted by the air given by P b is upward. The direction of the air on the top or front part of the wing is shown as flowing along the length of the wing. The pressure exerted by the air is given by P f, and it acts downward. Part b of the figure shows a boat with a sail. The direction of the sail is almost across the boat. The direction of the air in the sail is shown by lines on the front and back sides of the sail. The air currents on the front exert a pressure P front toward the sail, and air currents on the back sides of sail exert a pressure P back again toward the sail."><figcaption>(a) The Bernoulli principle helps explain lift generated by a wing. (b) Sails use the same technique to generate part of their thrust.</figcaption></figure><p>Thus pressure <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> over the second opening is reduced by <math><mrow><mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow></mrow></mrow></math>, and so the fluid in the manometer rises by <math>
+ 
+  <mi>h</mi>
+ 
+</math> on the side connected to the second opening, where</p><div class="eq"><math><mrow><mrow><mrow><mrow><mi>h</mi><mo stretchy="false">∝</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow></mrow><mtext>.</mtext><mrow></mrow></mrow></math></div><p>(Recall that the symbol <math><mrow><mrow><mtext>∝</mtext><mrow></mrow></mrow><mrow></mrow></mrow></math> means “proportional to.”) Solving for <math><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math>, we see that</p><div class="eq"><math><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">∝</mo><msqrt><mi>h</mi></msqrt></mrow></mrow><mtext>.</mtext><mrow></mrow></mrow></math></div><p>the figure(b) shows a version of this device that is in common use for measuring various fluid velocities; such devices are frequently used as air speed indicators in aircraft.</p><figure><img src="Figure_13_02_04a.jpg" alt="Part a shows a U-shaped manometer tube connected to ends of two tubes which are placed close together. Tube one is open on the end and shows a velocity v one equals zero at the end. Tube two has an opening on the side and shows a velocity v two across the opening. The level of fluid in the U-shaped tube is more on the right side than on the left. The difference in height is shown by h. Part b of the figure shows a velocity measuring device a pitot tube. Two coaxial tubes, one broader outside and other narrow inside are connected to a U-shaped tube. The U-shaped tube is also narrow at one end and broader at the other. The narrow end of the U-shaped tube is connected to the narrow inner tube and the broader end of the U-shaped tube is connected to the broader outer tube. The tube one has an opening at one of its edges and the velocity of the fluid at the end is v one equals zero. Tube two has an opening on the side and shows a velocity v two across the opening. The level of fluid in the U-shaped tube is more on the right side than on the left. The difference in height is shown by h."><figcaption>Measurement of fluid speed based on Bernoulli’s principle. (a) A manometer is connected to two tubes that are close together and small enough not to disturb the flow. Tube 1 is open at the end facing the flow. A dead spot having zero speed is created there. Tube 2 has an opening on the side, and so the fluid has a speed <math>
+ 
+  <mi>v</mi>
+ 
+</math> across the opening; thus, pressure there drops. The difference in pressure at the manometer is <math><mrow><mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow></mrow></mrow></math>, and so <math>
+ 
+  <mi>h</mi>
+ 
+</math> is proportional to <math><mrow><mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup></mrow></mrow></mrow></math>. (b) This type of velocity measuring device is a Prandtl tube, also known as a pitot tube.</figcaption></figure></div>
+</div>
+
+<div class="section ap-test-prep"><h3>Test Prep for AP Courses</h3><div class="exercise">
+  <div class="problem">      
+    <p>At what depth beneath the surface of the lake is the pressure in the water equal to twice atmospheric pressure?</p>
+    <ol><li>10 m</li><li>100 m</li><li>1000 m</li><li>10,000 m</li></ol></div>
+  <div class="solution">
+    <p>(a)</p></div>
+</div>
+
+<div class="exercise"><div class="problem">      
+    <p>A pump provides pressure to the lower end of a long pipeline that supplies water from a reservoir to a house located on a hill 150 m vertically upward from the lower end of the pipe (where the water is initially at rest before being pumped). The pipeline has a constant diameter of 3.5 cm, and the upper end of the pipeline is open to the atmosphere. What pressure must the pump provide for water to flow from the upper end of the pipeline at a rate of 5.0 m/s?</p>
+  </div>
+
+</div><div class="exercise">
+  <div class="problem">      
+    <p>According to Bernoulli&#x27;s equation, if the pressure in a given fluid is constant and the kinetic energy per unit volume of a fluid increases, which of the following is true?</p>
+<ol><li>The potential energy per unit volume of the fluid decreases.</li><li>The potential energy per unit volume of the fluid increases.</li><li>The fluid must no longer be considered incompressible.</li><li>The flow rate of the fluid increases.</li></ol></div>
+  <div class="solution">
+    <p>(a)</p></div>
+</div>
+
+<div class="exercise"><div class="problem">      
+    <p>Consider the following circumstances within a fluid, and determine the answer using Bernoulli&#x27;s equation. (a) The pressure and kinetic energy per unit volume along a fluid path increases. What must be true about the potential energy per unit volume of the fluid along the fluid path? Explain. (b) The pressure along a fluid path increases, and the kinetic energy per unit volume remains constant. What must be true about the potential energy per unit volume of the fluid along the fluid path? Explain.</p>
+  </div>
+
+</div></div> 
+<div class="section section-summary"><h3>Summary</h3><ul><li>Bernoulli’s equation states that the sum on each side of the following equation is constant, or the same at any two points in an incompressible frictionless fluid:
+<div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><msubsup><mi>ρv</mi><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">+</mo><mi>ρ</mi></mrow><mrow><mrow><msub><mi>gh</mi><mrow><mn>1</mn></mrow></msub></mrow><mo stretchy="false">=</mo><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mrow><mrow><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">+</mo><mi>ρ</mi></mrow><mrow><msub><mstyle><mtext>gh</mtext></mstyle><mrow><mn>2</mn></mrow></msub></mrow></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li><li>Bernoulli’s principle is Bernoulli’s equation applied to situations in which depth is constant. The terms involving depth (or height <em>h</em> ) subtract out, yielding
+<div class="eq"><math><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mrow><msubsup><mi>ρv</mi><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo stretchy="false">=</mo><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow></mrow><msubsup><mi>ρv</mi><mrow><mn>2</mn></mrow><mrow><mn>2</mn></mrow></msubsup><mo>.</mo></mrow></mrow></mrow></math></div></li><li>Bernoulli’s principle has many applications, including entrainment, wings and sails, and velocity measurement.</li></ul></div>
+
+<div class="section conceptual-questions"><h3>Conceptual Questions</h3><div class="exercise">
+<div class="problem">
+<p>You can squirt water a considerably greater distance by placing your thumb over the end of a garden hose and then releasing, than by leaving it completely uncovered. Explain how this works.</p>
+</div></div>
+
+<div class="exercise">
+<div class="problem">
+<p>Water is shot nearly vertically upward in a decorative fountain and the stream is observed to broaden as it rises. Conversely, a stream of water falling straight down from a faucet narrows. Explain why, and discuss whether surface tension enhances or reduces the effect in each case.</p>
+</div></div>
+
+<div class="exercise">
+<div class="problem">
+<p>Look back to the figure. Answer the following two questions. Why is <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>o</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> less than atmospheric? Why is <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>o</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> greater than <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>i</mtext></mrow></msub></mrow></mrow></math>?</p></div></div>
+
+<div class="exercise">
+<div class="problem">
+<p>Give an example of entrainment not mentioned in the text.</p>
+</div></div>
+
+<div class="exercise">
+<div class="problem">
+<p>Many entrainment devices have a constriction, called a Venturi, such as shown in the figure. How does this bolster entrainment?</p>
+</div></div>
+
+
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/media/Figure_13_02_05a.jpg" alt="Figure shows a venturi tube, a cylindrical tube broader at both the ends and narrow in the middle. The narrow part is labeled as venturi constriction. The flow of fluid is shown as horizontal arrows along the length of the tube toward the right. The flow lines are closer in the center and spread apart at both the ends. There is an opening on the top portion of the narrow section for the entrained fluid to enter."><figcaption>A tube with a narrow segment designed to enhance entrainment is called a Venturi. These are very commonly used in carburetors and aspirators.</figcaption></figure><div class="exercise"><div class="problem">
+  <p>
+Some chimney pipes have a T-shape, with a crosspiece on top that helps draw up gases whenever there is even a slight breeze. Explain how this works in terms of Bernoulli’s principle.   </p>
+</div>
+
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Is there a limit to the height to which an entrainment device can raise a fluid? Explain your answer.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Why is it preferable for airplanes to take off into the wind rather than with the wind?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Roofs are sometimes pushed off vertically during a tropical cyclone, and buildings sometimes explode outward when hit by a tornado. Use Bernoulli’s principle to explain these phenomena.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Why does a sailboat need a keel?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>It is dangerous to stand close to railroad tracks when a rapidly moving commuter train passes. Explain why atmospheric pressure would push you toward the moving train.</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What assumptions are made in Bernoulli’s equation? Are these assumptions reasonably valid in the example of water flowing in a hose?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>A perfume bottle or atomizer sprays a fluid that is in the bottle. (the figure.) How does the fluid rise up in the vertical tube in the bottle?</p>
+
+
+<p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/media/Figure_13_02_06a.jpg" alt="A perfume bottle with a spray cap."><figcaption>Atomizer: perfume bottle with tube to carry perfume up through the bottle. (credit: Antonia Foy, Flickr)</figcaption></figure></p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>If you lower the window on a car while moving, an empty plastic bag can sometimes fly out the window. Why does this happen?</p>
+</div></div>
+
+</div>
+
+<div class="section problems-exercises">
+<h3>Problems &amp; Exercises</h3>
+
+<div class="exercise"><div class="problem">
+<p>Verify that pressure has units of energy per unit volume.</p>
+</div>
+<div class="solution">
+<p><math>
+    
+     <mrow>
+      <mrow>
+       <mtable columnalign="left">
+        <mtr>
+         <mtd>
+          <mrow>
+               <mi>
+P
+               </mi></mrow></mtd>
+<mtd>
+               <mo stretchy="false">
+=
+               </mo>
+</mtd>
+<mtd>
+              <mrow>
+                <mfrac>
+                 <mrow>
+                  <mtext>
+Force
+                  </mtext>
+                 </mrow>
+                 <mrow>
+                  <mtext>
+Area
+                  </mtext>
+                 </mrow>
+                </mfrac>
+               </mrow>
+              <mi>
+,
+              </mi>
+         </mtd>
+        </mtr>
+
+        <mtr>
+         <mtd>
+              <mo stretchy="false">
+(
+              </mo>
+              <mi>
+P
+              </mi>
+                 <msub>
+                  <mo stretchy="false">
+)
+                  </mo>
+                      <mtext>
+units
+                      </mtext>
+
+                 </msub>
+</mtd>
+<mtd>
+                 <mo stretchy="false">
+=
+                 </mo>
+</mtd>
+<mtd>
+                 <msup>
+                  <mtext>
+N/m
+                  </mtext>
+                      <mn>
+2
+                      </mn>
+                 </msup>
+                <mo stretchy="false">
+=
+                </mo>
+                 <mtext>
+N
+                 </mtext>
+                 <mo stretchy="false">
+⋅
+                 </mo>
+                 <msup>
+                  <mtext>
+m/m
+                  </mtext>
+                      <mn>
+3
+                      </mn>
+                 </msup>
+               <mo stretchy="false">
+=
+               </mo>
+               <msup>
+                <mtext>
+J/m
+                </mtext>
+                    <mn>
+3
+                    </mn>
+               </msup>
+         </mtd>
+        </mtr>
+        <mtr>
+<mtd></mtd>
+<mtd><mo>=</mo></mtd>
+         <mtd>
+
+           <mtext>
+energy/volume
+           </mtext>
+         </mtd>
+        </mtr>
+       </mtable>
+      </mrow>
+     </mrow>
+    
+   </math></p></div></div><div class="exercise"><div class="problem">
+<p>Suppose you have a wind speed gauge like the pitot tube shown in the figure(b). By what factor must wind speed increase to double the value of <em><math><mrow><mrow><mi>h</mi></mrow></mrow></math></em> in the manometer? Is this independent of the moving fluid and the fluid in the manometer?</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p>If the pressure reading of your pitot tube is 15.0 mm Hg at a speed of 200 km/h, what will it be at 700 km/h at the same altitude?</p></div>
+<div class="solution">
+<p>184 mm Hg</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Calculate the maximum height to which water could be squirted with the hose in another section example if it: (a) Emerges from the nozzle. (b) Emerges with the nozzle removed, assuming the same flow rate.</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p>Every few years, winds in Boulder, Colorado, attain sustained speeds of 45.0 m/s (about 100 mi/h) when the jet stream descends during early spring. Approximately what is the force due to the Bernoulli effect on a roof having an area of <math><mrow><mrow><mrow><mtext>220</mtext><mspace width="0.25em"></mspace><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math>? Typical air density in Boulder is <math><mrow><mrow><mrow><mn>1</mn><mtext>.</mtext><mtext>14</mtext><mspace width="0.25em"></mspace><msup><mtext>kg/m</mtext><mrow><mn>3</mn></mrow></msup></mrow></mrow></mrow></math>, and the corresponding atmospheric pressure is <math><mrow><mrow><mrow><mn>8</mn><mtext>.</mtext><mrow><mtext>89</mtext><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>4</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><msup><mtext>N/m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math>. (Bernoulli’s principle as stated in the text assumes laminar flow. Using the principle here produces only an approximate result, because there is significant turbulence.)</p></div>
+<div class="solution">
+<p><math>
+
+<mrow>
+
+<mrow>
+<mrow>
+<mn>2</mn>
+<mtext>.</mtext>
+<mrow>
+<mtext>54</mtext>
+<mo stretchy="false">×</mo>
+<msup>
+<mtext>10</mtext>
+
+<mrow>
+<mn>5</mn>
+</mrow>
+
+</msup>
+</mrow><mspace width="0.25em"></mspace>
+<mtext> N</mtext>
+</mrow>
+</mrow>
+
+<mrow></mrow>
+</mrow>
+
+
+</math>
+</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>(a) Calculate the approximate force on a square meter of sail, given the horizontal velocity of the wind is 6.00 m/s parallel to its front surface and 3.50 m/s along its back surface. Take the density of air to be <math><mrow><mrow><mrow><mtext>1.29 kg</mtext><mi></mi><msup><mtext>/m</mtext><mrow><mn>3</mn></mrow></msup></mrow></mrow></mrow></math>. (The calculation, based on Bernoulli’s principle, is approximate due to the effects of turbulence.) (b) Discuss whether this force is great enough to be effective for propelling a sailboat.</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p>(a) What is the pressure drop due to the Bernoulli effect as water goes into a 3.00-cm-diameter nozzle from a 9.00-cm-diameter fire hose while carrying a flow of 40.0 L/s? (b) To what maximum height above the nozzle can this water rise? (The actual height will be significantly smaller due to air resistance.)</p></div>
+  <div class="solution">
+<p>(a) <math><mrow><mrow><mrow><mn>1</mn><mtext>.</mtext><mrow><mtext>58</mtext><mo stretchy="false">×</mo><msup><mtext>10</mtext><mrow><mn>6</mn></mrow></msup></mrow><mspace width="0.25em"></mspace><msup><mtext> N/m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math></p><p>(b) 163 m</p>
+</div>
+</div>
+<div class="exercise"><div class="problem">    <p>(a) Using Bernoulli’s equation, show that the measured fluid speed <math><mi>v</mi></math> for a pitot tube, like the one in the figure(b), is given by <math><mrow><mrow><mrow><mi>v</mi><mo stretchy="false">=</mo><msup><mfenced open="(" close=")"><mfrac><mrow><mn>2</mn><mi>ρ</mi><mo>′</mo><mi>gh</mi></mrow><mi>ρ</mi></mfrac></mfenced><mrow><mrow><mn>1</mn><mo stretchy="false">/</mo><mn>2</mn></mrow></mrow></msup></mrow></mrow><mrow></mrow><mo>,</mo></mrow></math>
+where <math><mrow><mrow><mi>h</mi></mrow></mrow></math> is the height of the manometer fluid,
+
+<math><mrow><mrow><mi>ρ</mi><mo>′</mo></mrow><mrow></mrow></mrow></math> is the density of the manometer fluid, <math><mrow><mrow><mi>ρ</mi></mrow></mrow></math> is the density of the moving fluid, and <em><math><mrow><mrow><mi>g</mi></mrow></mrow></math></em> is the acceleration due to gravity. (Note that <em><math><mrow><mrow><mi>v</mi></mrow></mrow></math></em> is indeed proportional to the square root of <em><math><mrow><mrow><mi>h</mi></mrow></mrow></math></em>, as stated in the text.) (b) Calculate <em><math><mrow><mrow><mi>v</mi></mrow></mrow></math></em> for moving air if a mercury manometer’s <em><math><mrow><mrow><mi>h</mi></mrow></mrow></math></em> is 0.200 m.</p></div></div></div>
+ <h2>Key terms</h2>
+<p><strong>Bernoulli’s equation</strong> the equation resulting from applying conservation of energy to an incompressible frictionless fluid: <em>P</em> + 1/2<em>pv</em><sup>2</sup> + <em>pgh</em> = constant , through the fluid</p>
+<p><strong>Bernoulli’s principle</strong> Bernoulli’s equation applied at constant depth: <em>P</em><sub>1</sub> + 1/2<em>pv</em><sub>1</sub><sup>2</sup> = <em>P</em><sub>2</sub> + 1/2<em>pv</em><sub>2</sub><sup>2</sup></p>
+
+</body></html>

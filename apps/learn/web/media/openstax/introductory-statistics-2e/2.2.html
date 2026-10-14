@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 Histograms, Frequency Polygons, and Time Series Graphs · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 2.2 Histograms, Frequency Polygons, and Time Series Graphs. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/2-2-histograms-frequency-polygons-and-time-series-graphs</p>
+<h1>2.2 Histograms, Frequency Polygons, and Time Series Graphs</h1>
+
+<p>For most of the work you do in this book, you will use a histogram to display the data. One advantage of a histogram is that it can readily display large data sets. A rule of thumb is to use a histogram when the data set consists of 100 values or more.</p>
+<p>A <strong>histogram</strong> consists of contiguous (adjoining) boxes. It has both a horizontal axis and a vertical axis. The horizontal axis is labeled with what the data represents (for instance, distance from your home to school). The vertical axis is labeled either <strong>frequency</strong> or <strong>relative frequency</strong> (or percent frequency or probability). The graph will have the same shape with either label. The histogram (like the stemplot) can give you the shape of the data, the center, and the spread of the data.</p><p>The relative frequency is equal to the frequency for an observed value of the data divided by the total number of data values in the sample. (Remember, frequency is defined as the number of times an answer occurs.) If:</p><ul><li><em>f</em> = frequency</li><li><em>n</em> = total number of data values (or the sum of the individual frequencies), and</li><li><em>RF</em> = relative frequency,</li></ul>
+<p>then:
+<div class="eq"><math>
+<mrow>
+<mstyle>
+<mrow>
+<mrow>
+<mstyle>
+<mrow>
+<mtext>RF</mtext>
+</mrow>
+</mstyle>
+<mo stretchy="false">=</mo>
+<mfrac>
+<mstyle>
+<mrow>
+<mi>f</mi>
+</mrow>
+</mstyle>
+<mstyle>
+<mrow>
+<mi>n</mi>
+</mrow>
+</mstyle>
+</mfrac>
+</mrow>
+</mrow>
+</mstyle>
+<mrow></mrow>
+</mrow>
+</math>
+</div></p>
+
+<p>For example, if three students in an English class of 40 students received from 90% to 100%, then, <em>f</em> = 3, <em>n</em> = 40, and <em>RF</em> = <math> <mrow><mfrac><mi>f</mi><mi>n</mi></mfrac></mrow></math> = <math><mrow><mfrac><mn>3</mn><mrow><mn>40</mn></mrow></mfrac></mrow></math> = 0.075. 7.5% of the students received 90–100%. 90–100% are quantitative measures.</p><p><strong>To construct a histogram</strong>, first decide how many <strong>bars</strong> or <strong>intervals</strong>, also called classes, represent the data. Many histograms consist of five to 15 bars or classes for clarity. The number of bars needs to be chosen. Choose a starting point for the first interval to be less than the smallest data value. A <strong>convenient starting point</strong> is a lower value carried out to one more decimal place than the value with the most decimal places. For example, if the value with the most decimal places is 6.1 and this is the smallest value, a convenient starting point is 6.05 (6.1 – 0.05 = 6.05). We say that 6.05 has more precision. If the value with the most decimal places is 2.23 and the lowest value is 1.5, a convenient starting point is 1.495 (1.5 – 0.005 = 1.495). If the value with the most decimal places is 3.234 and the lowest value is 1.0, a convenient starting point is 0.9995 (1.0 – 0.0005 = 0.9995). If all the data happen to be integers and the smallest value is two, then a convenient starting point is 1.5 (2 – 0.5 = 1.5). Also, when the starting point and other boundaries are carried to one additional decimal place, no data value will fall on a boundary. The next two examples go into detail about how to construct a histogram using continuous data and how to create a histogram using discrete data.</p><div class="example">
+<p>The following data are the heights (in inches to the nearest half inch) of 100 semiprofessional soccer players. The heights are <strong>continuous</strong> data, since height is measured.
+<br>60; 60.5; 61; 61; 61.5
+<br>63.5; 63.5; 63.5
+<br>64; 64; 64; 64; 64; 64; 64; 64.5; 64.5; 64.5; 64.5; 64.5; 64.5; 64.5; 64.5
+<br>66; 66; 66; 66; 66; 66; 66; 66; 66; 66; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 66.5; 67; 67; 67; 67; 67; 67; 67; 67; 67; 67; 67; 67; 67.5; 67.5; 67.5; 67.5; 67.5; 67.5; 67.5
+<br>68; 68; 69; 69; 69; 69; 69; 69; 69; 69; 69; 69; 69.5; 69.5; 69.5; 69.5; 69.5
+<br>70; 70; 70; 70; 70; 70; 70.5; 70.5; 70.5; 71; 71; 71
+<br>72; 72; 72; 72.5; 72.5; 73; 73.5
+<br>74
+</p><p>The smallest data value is 60. Since the data with the most decimal places has one decimal (for instance, 61.5), we want our starting point to have two decimal places. Since the numbers 0.5, 0.05, 0.005, etc. are convenient numbers, use 0.05 and subtract it from 60, the smallest value, for the convenient starting point.</p>
+<p>60 – 0.05 = 59.95 which is more precise than, say, 61.5 by one decimal place. The starting point is, then, 59.95.</p><p>The largest value is 74, so 74 + 0.05 = 74.05 is the ending value.</p><p>Next, calculate the width of each bar or class interval. To calculate this width, subtract the starting point from the ending value and divide by the number of bars (you must choose the number of bars you desire). Suppose you choose eight bars.</p>
+<div class="eq">
+<math><mtable><mtr><mtd><mn>74.05</mn><mo>-</mo><mn>59.95</mn><mo>=</mo><mn>14.1</mn></mtd></mtr><mtr><mtd><mn>14.1</mn><mo>÷</mo><mn>8</mn><mo>=</mo><mn>1.76</mn></mtd></mtr></mtable></math>
+</div>
+
+<div class="note">
+<h4>NOTE</h4>
+<p>We will round up to two and make each bar or class interval two units wide. Rounding up to two  is one way to prevent a value from falling on a boundary. Rounding to the next number is often necessary even if it goes against the standard rules of rounding. For this example, using 1.76 as the width would also work. A guideline that is followed by some for the number of bars or class intervals is to take the square root of the number of data values and then round to the nearest whole number, if necessary. For example, if there are 150 values of data, take the square root of 150 and round to 12 bars or intervals.</p></div>
+<p>The boundaries are:</p>
+<ul><li>59.95</li><li>59.95 + 2 = 61.95</li><li>61.95 + 2 = 63.95</li><li>63.95 + 2 = 65.95</li><li>65.95 + 2 = 67.95</li><li>67.95 + 2 = 69.95</li><li>69.95 + 2 = 71.95</li><li>71.95 + 2 = 73.95</li><li>73.95 + 2 = 75.95</li></ul>
+<p>The heights 60 through 61.5 inches are in the interval 59.95–61.95. The heights that are 63.5 are in the interval 61.95–63.95. The heights that are 64 through 64.5 are in the interval 63.95–65.95. The heights 66 through 67.5 are in the interval 65.95–67.95. The heights 68 through 69.5 are in the interval 67.95–69.95. The heights 70 through 71 are in the interval 69.95–71.95. The heights 72 through 73.5 are in the interval 71.95–73.95. The height 74 is in the interval 73.95–75.95.</p>
+<p>The following histogram displays the heights on the <em>x</em>-axis and relative frequency on the <em>y</em>-axis.</p>
+<figure><img src="fig-ch02_04_01.png" alt="Histogram consists of 8 bars with the y-axis in increments of 0.05 from 0-0.4 and the x-axis in intervals of 2 from 59.95-75.95."></figure>
+</div>
+
+<div class="note statistics try">
+<h3>Try It</h3>
+
+<div class="exercise">
+<div class="problem">
+<p>The following data are the shoe sizes of 50 students. The sizes are discrete data since shoe size is measured in whole and half units only. Construct a histogram and calculate the width of each bar or class interval. Suppose you choose six bars.
+<br>9; 9; 9.5; 9.5; 10; 10; 10; 10; 10; 10; 10.5; 10.5; 10.5; 10.5; 10.5; 10.5; 10.5; 10.5
+<br>11; 11; 11; 11; 11; 11; 11; 11; 11; 11; 11; 11; 11; 11.5; 11.5; 11.5; 11.5; 11.5; 11.5; 11.5
+<br>12; 12; 12; 12; 12; 12; 12; 12.5; 12.5; 12.5; 12.5; 14</p></div>
+</div>
+</div>
+
+<div class="example">
+<p>Create a histogram for the following data: the number of books bought by 50 part-time college students at ABC College. The number of books is <strong>discrete data</strong>, since books are counted.
+<br>1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1
+<br>2; 2; 2; 2; 2; 2; 2; 2; 2; 2
+<br>3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3; 3
+<br>4; 4; 4; 4; 4; 4
+<br>5; 5; 5; 5; 5
+<br>6; 6</p><p>Eleven students buy one book. Ten students buy two books. Sixteen students buy three books. Six students buy four books. Five students buy five books. Two students buy six books.</p>
+<p>Because the data are integers, subtract 0.5 from 1, the smallest data value and add 0.5 to 6, the largest data value. Then the starting point is 0.5 and the ending value is 6.5.</p>
+
+<div class="exercise"><div class="problem">
+<p>Next, calculate the width of each bar or class interval. If the data are discrete and there are not too many different values, a width that places the data values in the middle of the bar or class interval is the most convenient. Since the data consist of the numbers 1, 2, 3, 4, 5, 6, and the starting point is 0.5, a width of one places the 1 in the middle of the interval from 0.5 to 1.5, the 2 in the middle of the interval from 1.5 to 2.5, the 3 in the middle of the interval from 2.5 to 3.5, the 4 in the middle of the interval from _______ to _______, the 5 in the middle of the interval from _______ to _______, and the _______ in the middle of the interval from _______ to _______ .</p>
+</div>
+<div class="solution">
+<ul><li>3.5 to 4.5</li><li>4.5 to 5.5</li><li>6</li><li>5.5 to 6.5</li></ul>
+</div>
+</div><p>Calculate the number of bars as follows: </p>
+<div class="eq">
+<math><mtable><mtr><mtd><mn>6.5</mn><mo>-</mo><mn>0.5</mn><mo>=</mo><mn>6</mn></mtd></mtr><mtr><mtd><mn>6</mn><mo>÷</mo><mn>1</mn><mo>=</mo><mn>6</mn></mtd></mtr></mtable></math>
+</div>
+<p>where 1 is the width of a bar. Therefore, bars = 6.</p>
+<p>The following histogram displays the number of books on the <em>x</em>-axis and the frequency on the <em>y</em>-axis.</p>
+<figure><img src="fig-ch02_04_02.png" alt="Histogram consists of 6 bars with the y-axis in increments of 2 from 0 to 16 labeled Frequency and the x-axis in intervals of 1 from 0.5 to 6.5 labeled Number of Books. Interval 0.5 to 1.5, height of bar is 11. Interval 1.5 to 2.5, height is 10. Interval 2.5 to 3.5, height is 16. Interval 3.5 to 4.5, height is 6. Interval 4.5 to 5.5, height is 5. Interval 5.5 to 6.5, height is 2."></figure>
+</div>
+
+<div class="note statistics calculator">
+
+<p>Go to another section. There are calculator instructions for entering data and for creating a customized histogram. Create the histogram for the example.</p><ul><li>Press Y=. Press CLEAR to delete any equations.</li><li>Press <code>STAT 1:EDIT</code>. If <code>L1</code> has data in it, arrow up into the name <code>L1</code>, press CLEAR and then arrow down. If necessary, do the same for <code>L2</code>.</li><li>Into <code>L1</code>, enter 1, 2, 3, 4, 5, 6.</li><li>Into <code>L2</code>, enter 11, 10, 16, 6, 5, 2.</li><li>Press WINDOW. Set <code>Xmin = .5</code>, <code>Xmax = 6.5</code>, <code>Xscl = (6.5 – .5)/6</code>, <code>Ymin = –1</code>, <code>Ymax = 20</code>, <code>Yscl = 1</code>, <code>Xres = 1</code>.</li><li>Press 2<sup>nd</sup> Y=. Start by pressing <code>4:Plotsoff</code> ENTER.</li><li>Press 2<sup>nd</sup> Y=. Press <code>1:Plot1</code>. Press ENTER. Arrow down to TYPE. Arrow to the 3<sup>rd</sup> picture (histogram). Press ENTER.</li><li>Arrow down to Xlist: Enter L1 (2<sup>nd</sup> 1). Arrow down to Freq. Enter L2 (2<sup>nd</sup> 2).</li><li>Press GRAPH.</li><li>Use the TRACE key and the arrow keys to examine the histogram.</li></ul></div>
+
+<div class="note statistics try"><h3>Try It</h3>
+
+<div class="exercise"><div class="problem">
+  <p>The following data are the number of sports played by 50 student athletes. The number of sports is discrete data since sports are counted.</p>
+  <p>1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1
+  <br>2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2; 2
+  <br>3; 3; 3; 3; 3; 3; 3; 3
+  <br>20 student athletes play one sport. 22 student athletes play two sports. Eight student athletes play three sports.</p>
+<p><em>Fill in the blanks for the following sentence.</em> Since the data consist of the numbers 1, 2, 3, and the starting point is 0.5, a width of one places the 1 in the middle of the interval 0.5 to _____, the 2 in the middle of the interval from _____ to _____, and the 3 in the middle of the interval from _____ to _____.</p>
+</div>
+</div></div><div class="example">
+<div class="exercise">
+<div class="problem"><p>Using this data set, construct a histogram.</p>
+<table><tr><th>Number of Hours My Classmates Spent Playing Video Games on Weekends</th></tr><tr><td>9.95</td><td>10</td><td>2.25</td><td>16.75</td><td>0</td></tr><tr><td>19.5</td><td>22.5</td><td>7.5</td><td>15</td><td>12.75</td></tr><tr><td>5.5</td><td>11</td><td>10</td><td>20.75</td><td>17.5</td></tr><tr><td>23</td><td>21.9</td><td>24</td><td>23.75</td><td>18</td></tr><tr><td>20</td><td>15</td><td>22.9</td><td>18.8</td><td>20.5</td></tr></table>
+</div>
+
+<div class="solution">
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C02_M04_020.png" alt="This is a histogram that matches the supplied data. The x-axis consists of 5 bars in intervals of 5 from 0 to 25. The y-axis is marked in increments of 1 from 0 to 10. The x-axis shows the number of hours spent playing video games on the weekends, and the y-axis shows the number of students."></figure>
+<p>Some values in this data set fall on boundaries for the class intervals. A value is counted in a class interval if it falls on the left boundary, but not if it falls on the right boundary. Different researchers may set up histograms for the same data in different ways. There is more than one correct way to set up a histogram.</p>
+</div>
+</div>
+</div>
+
+<div class="note statistics try"><h3>Try It</h3>
+
+<div class="exercise"><div class="problem">
+<p>The following data represent the number of employees at various restaurants in New York City. Using this data, create a histogram.</p>
+<p>
+<ul><li>22</li><li>35</li><li>15</li><li>26</li><li>40</li><li>28</li><li>18</li><li>20</li><li>25</li><li>34</li><li>39</li><li>42</li><li>24</li><li>22</li><li>19</li><li>27</li><li>22</li><li>34</li><li>40</li><li>20</li><li>38</li><li>and 28</li></ul>
+<br>Use 10–19 as the first interval.
+</p>
+</div>
+</div>
+</div><div class="note statistics collab">
+<p>Count the money (bills and change) in your pocket or purse. Your instructor will record the amounts. As a class, construct a histogram displaying the data. Discuss how many intervals you think is appropriate. You may want to experiment with the number of intervals.</p>
+</div>
+
+
+<div class="section">
+<h3>Frequency Polygons</h3>
+<p><strong>Frequency polygons</strong> are analogous to line graphs, and just as line graphs make continuous data visually easy to interpret, so too do frequency polygons.</p>
+<p>To construct a frequency polygon, first examine the data and decide on the number of intervals, or class intervals, to use on the <em>x</em>-axis and <em>y</em>-axis. After choosing the appropriate ranges, begin plotting the data points. After all the points are plotted, draw line segments to connect them.</p><div class="example"><p>A frequency polygon was constructed from the frequency table below.</p>
+<table><tr><th>Frequency Distribution for Calculus Final Test Scores</th></tr><tr><th>Lower Bound</th><th>Upper Bound</th><th>Frequency</th><th>Cumulative Frequency</th></tr><tr><td>49.5</td><td>59.5</td><td>5</td><td>5</td></tr><tr><td>59.5</td><td>69.5</td><td>10</td><td>15</td></tr><tr><td>69.5</td><td>79.5</td><td>30</td><td>45</td></tr><tr><td>79.5</td><td>89.5</td><td>40</td><td>85</td></tr><tr><td>89.5</td><td>99.5</td><td>15</td><td>100</td></tr></table>
+<figure><img src="CNX_Stats_C02_M05a_001.png" alt="A frequency polygon was constructed from the frequency table below."></figure>
+<p>The first label on the <em>x</em>-axis is 44.5. This represents an interval extending from 39.5 to 49.5. Since the lowest test score is 54.5, this interval is used only to allow the graph to touch the <em>x</em>-axis. The point labeled 54.5 represents the next interval, or the first “real” interval from the table, and contains five scores. This reasoning is followed for each of the remaining intervals with the point 104.5 representing the interval from 99.5 to 109.5. Again, this interval contains no data and is only used so that the graph will touch the <em>x</em>-axis. Looking at the graph, we say that this distribution is <strong>skewed</strong> because one side of the graph does not mirror the other side.</p>
+</div>
+
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Construct a frequency polygon of U.S. Presidents’ ages at inauguration shown in the table.</p><table><tr><th>Age at Inauguration</th><th>Frequency</th></tr><tr><td>41.5–46.5</td><td>4</td></tr><tr><td>46.5–51.5</td><td>11</td></tr><tr><td>51.5–56.5</td><td>14</td></tr><tr><td>56.5–61.5</td><td>9</td></tr><tr><td>61.5–66.5</td><td>4</td></tr><tr><td>66.5–71.5</td><td>2</td></tr></table>
+
+</div>
+</div></div>
+
+<p>Frequency polygons are useful for comparing distributions. This is achieved by overlaying the frequency polygons drawn for different data sets.</p>
+
+<div class="example"><p>We will construct an overlay frequency polygon comparing the scores from the example with the students’ final numeric grade.</p>
+<table><tr><th>Frequency Distribution for Calculus Final Test Scores</th></tr><tr><th>Lower Bound</th><th>Upper Bound</th><th>Frequency</th><th>Cumulative Frequency</th></tr><tr><td>49.5</td><td>59.5</td><td>5</td><td>5</td></tr><tr><td>59.5</td><td>69.5</td><td>10</td><td>15</td></tr><tr><td>69.5</td><td>79.5</td><td>30</td><td>45</td></tr><tr><td>79.5</td><td>89.5</td><td>40</td><td>85</td></tr><tr><td>89.5</td><td>99.5</td><td>15</td><td>100</td></tr></table><table><tr><th>Frequency Distribution for Calculus Final Grades</th></tr><tr><th>Lower Bound</th><th>Upper Bound</th><th>Frequency</th><th>Cumulative Frequency</th></tr><tr><td>49.5</td><td>59.5</td><td>10</td><td>10</td></tr><tr><td>59.5</td><td>69.5</td><td>10</td><td>20</td></tr><tr><td>69.5</td><td>79.5</td><td>30</td><td>50</td></tr><tr><td>79.5</td><td>89.5</td><td>45</td><td>95</td></tr><tr><td>89.5</td><td>99.5</td><td>5</td><td>100</td></tr></table>
+<figure><img src="CNX_Stats_C02_M05a_002.png" alt="This is an overlay frequency polygon that matches the supplied data. The x-axis shows the grades, and the y-axis shows the frequency."></figure>
+</div>
+<div class="note statistics try">
+  
+  <h4>Try It</h4>
+  <div class="exercise"><div class="problem">
+  <p>We will construct an overlay frequency polygon comparing the scores from the example with the students’ final test scores in algebra.</p>
+  <table><caption></caption><tr><th><strong>Frequency Distribution for Algebra Final Test Scores</strong></th></tr><tr><th><strong>Lower Bound</strong></th><th><strong>Upper Bound</strong></th><th><strong>Frequency</strong></th><th><strong>Cumulative Frequency</strong></th></tr><tr><td>49.5</td><td>59.5</td><td>10</td><td>10</td></tr><tr><td>59.5</td><td>69.5</td><td>5</td><td>15</td></tr><tr><td>69.5</td><td>79.5</td><td>40</td><td>55</td></tr><tr><td>79.5</td><td>89.5</td><td>35</td><td>90</td></tr><tr><td>89.5</td><td>99.5</td><td>10</td><td>100</td></tr></table>
+  </div>
+  <div class="solution">
+  <p><strong>Calculus Test Scores v Algebra Test Scores</strong></p>
+  <p>Image Insert</p>
+  </div>
+  </div>
+  </div>
+</div>
+<div class="section"><h3>Constructing a Time Series Graph</h3><p>Suppose that we want to study the temperature range of a region for an entire month. Every day at noon we note the temperature and write this down in a log. A variety of statistical studies could be done with this data. We could find the mean or the median temperature for the month. We could construct a histogram displaying the number of days that temperatures reach a certain range of values. However, all of these methods ignore a portion of the data that we have collected.</p>
+<p>One feature of the data that we may want to consider is that of time. Since each date is paired with the temperature reading for the day, we don‘t have to think of the data as being random. We can instead use the times given to impose a chronological order on the data. A graph that recognizes this ordering and displays the changing temperature as the month progresses is called a time series graph.</p>
+<p>To construct a time series graph, we must look at both pieces of our <strong>paired data set</strong>. We start with a standard Cartesian coordinate system. The horizontal axis is used to plot the date or time increments, and the vertical axis is used to plot the values of the variable that we are measuring. By doing this, we make each point on the graph correspond to a date and a measured quantity. The points on the graph are typically connected by straight lines in the order in which they occur.</p>
+
+<div class="example"><div class="exercise">
+<div class="problem"><p>The following data shows the Annual Consumer Price Index, each month, for ten years. Construct a time series graph for the Annual Consumer Price Index data only.</p><table><tr><th>Year</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th></tr><tr><td><strong>1</strong></td><td>181.7</td><td>183.1</td><td>184.2</td><td>183.8</td><td>183.5</td><td>183.7</td><td>183.9</td></tr><tr><td><strong>2</strong></td><td>185.2</td><td>186.2</td><td>187.4</td><td>188.0</td><td>189.1</td><td>189.7</td><td>189.4</td></tr><tr><td><strong>3</strong></td><td>190.7</td><td>191.8</td><td>193.3</td><td>194.6</td><td>194.4</td><td>194.5</td><td>195.4</td></tr><tr><td><strong>4</strong></td><td>198.3</td><td>198.7</td><td>199.8</td><td>201.5</td><td>202.5</td><td>202.9</td><td>203.5</td></tr><tr><td><strong>5</strong></td><td>202.416</td><td>203.499</td><td>205.352</td><td>206.686</td><td>207.949</td><td>208.352</td><td>208.299</td></tr><tr><td><strong>6</strong></td><td>211.080</td><td>211.693</td><td>213.528</td><td>214.823</td><td>216.632</td><td>218.815</td><td>219.964</td></tr><tr><td><strong>7</strong></td><td>211.143</td><td>212.193</td><td>212.709</td><td>213.240</td><td>213.856</td><td>215.693</td><td>215.351</td></tr><tr><td><strong>8</strong></td><td>216.687</td><td>216.741</td><td>217.631</td><td>218.009</td><td>218.178</td><td>217.965</td><td>218.011</td></tr><tr><td><strong>9</strong></td><td>220.223</td><td>221.309</td><td>223.467</td><td>224.906</td><td>225.964</td><td>225.722</td><td>225.922</td></tr><tr><td><strong>10</strong></td><td>226.665</td><td>227.663</td><td>229.392</td><td>230.085</td><td>229.815</td><td>229.478</td><td>229.104</td></tr></table>
+
+
+<table><tr><th>Year</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Annual</th></tr><tr><td><strong>1</strong></td><td>184.6</td><td>185.2</td><td>185.0</td><td>184.5</td><td>184.3</td><td>184.0</td></tr><tr><td><strong>2</strong></td><td>189.5</td><td>189.9</td><td>190.9</td><td>191.0</td><td>190.3</td><td>188.9</td></tr><tr><td><strong>3</strong></td><td>196.4</td><td>198.8</td><td>199.2</td><td>197.6</td><td>196.8</td><td>195.3</td></tr><tr><td><strong>4</strong></td><td>203.9</td><td>202.9</td><td>201.8</td><td>201.5</td><td>201.8</td><td>201.6</td></tr><tr><td><strong>5</strong></td><td>207.917</td><td>208.490</td><td>208.936</td><td>210.177</td><td>210.036</td><td>207.342</td></tr><tr><td><strong>6</strong></td><td>219.086</td><td>218.783</td><td>216.573</td><td>212.425</td><td>210.228</td><td>215.303</td></tr><tr><td><strong>7</strong></td><td>215.834</td><td>215.969</td><td>216.177</td><td>216.330</td><td>215.949</td><td>214.537</td></tr><tr><td><strong>8</strong></td><td>218.312</td><td>218.439</td><td>218.711</td><td>218.803</td><td>219.179</td><td>218.056</td></tr><tr><td><strong>9</strong></td><td>226.545</td><td>226.889</td><td>226.421</td><td>226.230</td><td>225.672</td><td>224.939</td></tr><tr><td><strong>10</strong></td><td>230.379</td><td>231.407</td><td>231.317</td><td>230.221</td><td>229.601</td><td>229.594</td></tr></table></div>
+<div class="solution">
+<figure><img src="CNX_Stats_C02_M05a_026anno.png" alt="This is a times series graph that matches the supplied data. The x-axis shows years from 2003 to 2012, and the y-axis shows the annual CPI."></figure>
+</div>
+</div>
+
+</div>
+
+<div class="note statistics try"><h4>Try It</h4>
+
+<div class="exercise"><div class="problem">
+<p>The following table is a portion of a data set from www.worldbank.org. Use the table to construct a time series graph for CO<sub>2</sub> emissions for the United States.</p>
+
+<table><tr><th>CO2 Emissions</th></tr><tr><th>Year</th><th>Ukraine</th><th>United Kingdom</th><th>United States</th></tr><tr><td>1</td><td>352,259</td><td>540,640</td><td>5,681,664</td></tr><tr><td>2</td><td>343,121</td><td>540,409</td><td>5,790,761</td></tr><tr><td>3</td><td>339,029</td><td>541,990</td><td>5,826,394</td></tr><tr><td>4</td><td>327,797</td><td>542,045</td><td>5,737,615</td></tr><tr><td>5</td><td>328,357</td><td>528,631</td><td>5,828,697</td></tr><tr><td>6</td><td>323,657</td><td>522,247</td><td>5,656,839</td></tr><tr><td>7</td><td>272,176</td><td>474,579</td><td>5,299,563</td></tr></table>
+</div>
+
+</div></div>
+
+<div class="section"><h4>Uses of a Time Series Graph</h4><p>Time series graphs are important tools in various applications of statistics. When recording values of the same variable over an extended period of time, sometimes it is difficult to discern any trend or pattern. However, once the same data points are displayed graphically, some features jump out. Time series graphs make trends easy to spot.</p>
+</div></div>
+<div class="section"><h3>How NOT to Lie with Statistics</h3><p>It is important to remember that the very reason we develop a variety of methods to present data is to develop insights into the subject of what the observations represent. We want to get a &quot;sense&quot; of the data. Are the observations all very much alike or are they spread across a wide range of values, are they bunched at one end of the spectrum or are they distributed evenly and so on. We are trying to get a visual picture of the numerical data. Shortly we will develop formal mathematical measures of the data, but our visual graphical presentation can say much. It can, unfortunately, also say much that is distracting, confusing and simply wrong in terms of the impression the visual leaves. Many years ago Darrell Huff wrote the book <em>How to Lie with Statistics</em>. It has been through 25 plus printings and sold more than one and one-half million copies. His perspective was a harsh one and used many actual examples that were designed to mislead. He wanted to make people aware of such deception, but perhaps more importantly to educate so that others do not make the same errors inadvertently.
+</p><p>Again, the goal is to enlighten with visuals that tell the story of the data. Pie charts have a number of common problems when used to convey the message of the data. Too many pieces of the pie overwhelm the reader. More than perhaps five or six categories ought to give an idea of the relative importance of each piece. This is after all the goal of a pie chart, what subset matters most relative to the others. If there are more components than this then perhaps an alternative approach would be better or perhaps some can be consolidated into an &quot;other&quot; category. Pie charts cannot show changes over time, although we see this attempted all too often. In federal, state, and city finance documents pie charts are often presented to show the components of revenue available to the governing body for appropriation: income tax, sales tax motor vehicle taxes and so on. In and of itself this is interesting information and can be nicely done with a pie chart. The error occurs when two years are set side-by-side. Because the total revenues change year to year, but the size of the pie is fixed, no real information is provided and the relative size of each piece of the pie cannot be meaningfully compared. </p><p>Histograms can be very helpful in understanding the data. Properly presented, they can be a quick visual way to present probabilities of different categories by the simple visual of comparing relative areas in each category. Here the error, purposeful or not, is to vary the width of the categories. This of course makes comparison to the other categories impossible. It does embellish the importance of the category with the expanded width because it has a greater area, inappropriately, and thus visually &quot;says&quot; that that category has a higher probability of occurrence. </p><p>Time series graphs perhaps are the most abused. A plot of some variable across time should never be presented on axes that change part way across the page either in the vertical or horizontal dimension. Perhaps the time frame is changed from years to months. Perhaps this is to save space or because monthly data was not available for early years. In either case this confounds the presentation and destroys any value of the graph. If this is not done to purposefully confuse the reader, then it certainly is either lazy or sloppy work.</p><p>Changing the units of measurement of the axis can smooth out a drop or accentuate one. If you want to show large changes, then measure the variable in small units, penny rather than thousands of dollars. And of course to continue the fraud, be sure that the axis does not begin at zero, zero. If it begins at zero, zero, then it becomes apparent that the axis has been manipulated.</p><p>Perhaps you have a client that is concerned with the volatility of the portfolio you manage. An easy way to present the data is to use long time periods on the time series graph. Use months or better, quarters rather than daily or weekly data. If that doesn&#x27;t get the volatility down then spread the time axis relative to the rate of return or portfolio valuation axis. If you want to show &quot;quick&quot; dramatic growth, then shrink the time axis. Any positive growth will show visually &quot;high&quot; growth rates. Do note that if the growth is negative then this trick will show the portfolio is collapsing at a dramatic rate.</p><p>Again, the goal of descriptive statistics is to convey meaningful visuals that tell the story of the data. Purposeful manipulation is fraud and unethical at the worst, but even at its best, making these type of errors will lead to confusion on the part of the analysis.</p></div>
+
+<div class="section references"><h3>References</h3><p>Data on annual homicides in Detroit, 1961–73, from Gunst &amp; Mason’s book ‘Regression Analysis and its Application’, Marcel Dekker</p><p>“Timeline: Guide to the U.S. Presidents: Information on every president’s birthplace, political party, term of office, and more.” Scholastic, 2013. Available online at http://www.scholastic.com/teachers/article/timeline-guide-us-presidents (accessed April 3, 2013).</p>
+<p>“Presidents.” Fact Monster. Pearson Education, 2007. Available online at http://www.factmonster.com/ipka/A0194030.html (accessed April 3, 2013).</p>
+<p>“Food Security Statistics.” Food and Agriculture Organization of the United Nations. Available online at http://www.fao.org/economic/ess/ess-fs/en/ (accessed April 3, 2013).</p>
+<p>“Consumer Price Index.” United States Department of Labor: Bureau of Labor Statistics. Available online at http://data.bls.gov/pdq/SurveyOutputServlet (accessed April 3, 2013).</p>
+<p>“CO2 emissions (kt).” The World Bank, 2013. Available online at http://databank.worldbank.org/data/home.aspx (accessed April 3, 2013).</p>
+<p>“Births Time Series Data.” General Register Office For Scotland, 2013. Available online at http://www.gro-scotland.gov.uk/statistics/theme/vital-events/births/time-series.html (accessed April 3, 2013).</p>
+<p>“Demographics: Children under the age of 5 years underweight.” Indexmundi. Available online at http://www.indexmundi.com/g/r.aspx?t=50&amp;v=2224&amp;aml=en (accessed April 3, 2013).</p><p>Gunst, Richard, Robert Mason. <em>Regression Analysis and Its Application: A Data-Oriented Approach</em>. CRC Press: 1980.</p><p>“Overweight and Obesity: Adult Obesity Facts.” Centers for Disease Control and Prevention. Available online at http://www.cdc.gov/obesity/data/adult.html (accessed September 13, 2013).</p></div><div class="section summary">
+<h3>Chapter Review</h3>
+<p>A <strong>histogram</strong> is a graphic version of a frequency distribution. The graph consists of bars of equal width drawn adjacent to each other. The horizontal scale represents classes of quantitative data values and the vertical scale represents frequencies. The heights of the bars correspond to frequency values. Histograms are typically used for large, continuous, quantitative data sets. A frequency polygon can also be used when graphing large data sets with data points that repeat. The data usually goes on <em>y</em>-axis with the frequency being graphed on the <em>x</em>-axis. Time series graphs can be helpful when looking at large amounts of data for one variable over a period of time.</p></div>
+
+<div class="section practice">
+<div class="exercise">
+<div class="problem">
+<p>Sixty-five randomly selected car salespersons were asked the number of cars they generally sell in one week. Fourteen people answered that they generally sell three cars; nineteen generally sell four cars; twelve generally sell five cars; nine generally sell six cars; eleven generally sell seven cars. Complete the table.</p>
+<table><tr><th>Data Value (# cars)</th><th>Frequency</th><th>Relative Frequency</th><th>Cumulative Relative Frequency</th></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What does the frequency column in the table sum to? Why?</p></div>
+<div class="solution">
+<p>65</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What does the relative frequency column in the table sum to? Why?</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>What is the difference between relative frequency and frequency for each data value in the table?</p></div>
+
+<div class="solution">
+<p>The relative frequency shows the <em>proportion</em> of data points that have each value. The frequency tells the <em>number</em> of data points that have each value.</p>
+</div></div><div class="exercise">
+<div class="problem">
+
+<p>What is the difference between cumulative relative frequency and relative frequency for each data value?</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>To construct the histogram for the data in the table, determine appropriate minimum and maximum <em>x</em> and <em>y</em> values and the scaling. Sketch the histogram. Label the horizontal and vertical axes with words. Include numerical scaling.</p><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/fig-ch02_11_01.png" alt="An empty graph template for use with this question."></figure>
+</div>
+<div class="solution">
+<p>Answers will vary. One possible histogram is shown:</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C02_M03_101.png" alt="This is a histogram that matches the supplied data supplied for car sales. The x-axis shows the number of cars sold in intervals of 1 from 3 to 8, and the y-axis shows the frequency in increments of 2 from 0 to 20. The bar from 3 to 4 has height 14; the bar from 4 to 5 has height 19; the bar from 5 to 6 has height 12; the bar from 6 to 7 has height 9; the bar form 7 to 8 has height 11."></figure>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Construct a frequency polygon for the following:</p><ol><li><table><tr><th>Pulse Rates for Females</th><th>Frequency</th></tr><tr><td>60–69</td><td>12</td></tr><tr><td>70–79</td><td>14</td></tr><tr><td>80–89</td><td>11</td></tr><tr><td>90–99</td><td>1</td></tr><tr><td>100–109</td><td>1</td></tr><tr><td>110–119</td><td>0</td></tr><tr><td>120–129</td><td>1</td></tr></table></li><li><table><tr><th>Actual Speed in a 30 MPH Zone</th><th>Frequency</th></tr><tr><td>42–45</td><td>25</td></tr><tr><td>46–49</td><td>14</td></tr><tr><td>50–53</td><td>7</td></tr><tr><td>54–57</td><td>3</td></tr><tr><td>58–61</td><td>1</td></tr></table></li><li><table><tr><th>Tar (mg) in Nonfiltered Cigarettes</th><th>Frequency</th></tr><tr><td>10–13</td><td>1</td></tr><tr><td>14–17</td><td>0</td></tr><tr><td>18–21</td><td>15</td></tr><tr><td>22–25</td><td>7</td></tr><tr><td>26–29</td><td>2</td></tr></table></li></ol></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Construct a frequency polygon from the frequency distribution for the 50 highest ranked countries for depth of hunger.</p>
+<table><tr><th>Depth of Hunger</th><th>Frequency</th></tr><tr><td>230–259</td><td>21</td></tr><tr><td>260–289</td><td>13</td></tr><tr><td>290–319</td><td>5</td></tr><tr><td>320–349</td><td>7</td></tr><tr><td>350–379</td><td>1</td></tr><tr><td>380–409</td><td>1</td></tr><tr><td>410–439</td><td>1</td></tr></table>
+</div>
+<div class="solution">
+<p>Find the midpoint for each class. These will be graphed on the <em>x</em>-axis. The frequency values will be graphed on the <em>y</em>-axis values.</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C02_M05a_024anno.png" alt="This is a frequency polygon that matches the supplied data. The x-axis shows the depth of hunger, and the y-axis shows the frequency."></figure></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Use the two frequency tables to compare the life expectancy of males and females from 20 randomly selected countries. Include an overlayed frequency polygon and discuss the shapes of the distributions, the center, the spread, and any outliers. What can we conclude about the life expectancy of females compared to males?</p>
+<table><tr><th>Life Expectancy at Birth – Females</th><th>Frequency</th></tr><tr><td>49–55</td><td>3</td></tr><tr><td>56–62</td><td>3</td></tr><tr><td>63–69</td><td>1</td></tr><tr><td>70–76</td><td>3</td></tr><tr><td>77–83</td><td>8</td></tr><tr><td>84–90</td><td>2</td></tr></table>
+<table><tr><th>Life Expectancy at Birth – Males</th><th>Frequency</th></tr><tr><td>49–55</td><td>3</td></tr><tr><td>56–62</td><td>3</td></tr><tr><td>63–69</td><td>1</td></tr><tr><td>70–76</td><td>1</td></tr><tr><td>77–83</td><td>7</td></tr><tr><td>84–90</td><td>5</td></tr></table>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Construct a times series graph for (a) the number of male births, (b) the number of female births, and (c) the total number of births.</p><table><tr><td>Sex/Year</td><td>1855</td><td>1856</td><td>1857</td><td>1858</td><td>1859</td><td>1860</td><td>1861</td></tr><tr><td>Female</td><td>45,545</td><td>49,582</td><td>50,257</td><td>50,324</td><td>51,915</td><td>51,220</td><td>52,403</td></tr><tr><td>Male</td><td>47,804</td><td>52,239</td><td>53,158</td><td>53,694</td><td>54,628</td><td>54,409</td><td>54,606</td></tr><tr><td>Total</td><td>93,349</td><td>101,821</td><td>103,415</td><td>104,018</td><td>106,543</td><td>105,629</td><td>107,009</td></tr></table>
+
+<table><tr><td>Sex/Year</td><td>1862</td><td>1863</td><td>1864</td><td>1865</td><td>1866</td><td>1867</td><td>1868</td><td>1869</td></tr><tr><td>Female</td><td>51,812</td><td>53,115</td><td>54,959</td><td>54,850</td><td>55,307</td><td>55,527</td><td>56,292</td><td>55,033</td></tr><tr><td>Male</td><td>55,257</td><td>56,226</td><td>57,374</td><td>58,220</td><td>58,360</td><td>58,517</td><td>59,222</td><td>58,321</td></tr><tr><td>Total</td><td>107,069</td><td>109,341</td><td>112,333</td><td>113,070</td><td>113,667</td><td>114,044</td><td>115,514</td><td>113,354</td></tr></table>
+
+<table><tr><td>Sex/Year</td><td>1870</td><td>1871</td><td>1872</td><td>1873</td><td>1874</td><td>1875</td></tr><tr><td>Female</td><td>56,431</td><td>56,099</td><td>57,472</td><td>58,233</td><td>60,109</td><td>60,146</td></tr><tr><td>Male</td><td>58,959</td><td>60,029</td><td>61,293</td><td>61,467</td><td>63,602</td><td>63,432</td></tr><tr><td>Total</td><td>115,390</td><td>116,128</td><td>118,765</td><td>119,700</td><td>123,711</td><td>123,578</td></tr></table></div>
+
+<div class="solution">
+<figure><img src="CNX_Stats_C02_M05a_028anno.png" alt="This is a line graph that shows births in Scotland and is compiled from the data provided in tables 2.49, 2.50, and 2.51. The horizontal axis shows Years in intervals of 1 from 1855 to 1875. The vertical axis shows number of births in intervals of 5,000 from 40,000 to 130,000. A series of connected line segments show the numbers of female births over the period, increasing form 45,545 in 1855 to 60,146 in 1875. A second series of connected line segments show the numbers of male births over the period, increasing form 47,804 in 1855 to 63,432 in 1875. A third series of connected line segments show the total births over the period, increasing from 93,349 in 1855 to 123,578 in 1875."></figure>
+</div>
+</div><div class="exercise"><div class="problem">
+<p>The following data sets list full time police per 100,000 citizens along with homicides per 100,000 citizens for a city during the period from 1961 to 1973.</p><table><tr><td>Year</td><td>1961</td><td>1962</td><td>1963</td><td>1964</td><td>1965</td><td>1966</td><td>1967</td></tr><tr><td>Police</td><td>260.35</td><td>269.8</td><td>272.04</td><td>272.96</td><td>272.51</td><td>261.34</td><td>268.89</td></tr><tr><td>Homicides</td><td>8.6</td><td>8.9</td><td>8.52</td><td>8.89</td><td>13.07</td><td>14.57</td><td>21.36</td></tr></table>
+
+<table><tr><td>Year</td><td>1968</td><td>1969</td><td>1970</td><td>1971</td><td>1972</td><td>1973</td></tr><tr><td>Police</td><td>295.99</td><td>319.87</td><td>341.43</td><td>356.59</td><td>376.69</td><td>390.19</td></tr><tr><td>Homicides</td><td>28.03</td><td>31.49</td><td>37.39</td><td>46.26</td><td>47.24</td><td>52.33</td></tr></table>
+
+<ol><li>Construct a double time series graph using a common <em>x</em>-axis for both sets of data.</li><li>Which variable increased the fastest? Explain.</li><li>Did the city&#x27;s increase in police officers have an impact on the murder rate? Explain.</li></ol>
+</div>
+</div>
+</div>
+
+<div class="section free-response">
+<h3>Homework</h3>
+<div class="exercise">
+<div class="problem">
+<p>Suppose that three book publishers were interested in the number of fiction paperbacks adult consumers purchase per month. Each publisher conducted a survey. In the survey, adult consumers were asked the number of fiction paperbacks they had purchased the previous month. The results are as follows:</p><table><caption>Publisher A</caption><tr><th># of books</th><th>Freq.</th><th>Rel. Freq.</th></tr><tr><td>0</td><td>10</td><td></td></tr><tr><td>1</td><td>12</td><td></td></tr><tr><td>2</td><td>16</td><td></td></tr><tr><td>3</td><td>12</td><td></td></tr><tr><td>4</td><td>8</td><td></td></tr><tr><td>5</td><td>6</td><td></td></tr><tr><td>6</td><td>2</td><td></td></tr><tr><td>8</td><td>2</td><td></td></tr></table>
+<table><caption>Publisher B</caption><tr><th># of books</th><th>Freq.</th><th>Rel. Freq.</th></tr><tr><td>0</td><td>18</td><td></td></tr><tr><td>1</td><td>24</td><td></td></tr><tr><td>2</td><td>24</td><td></td></tr><tr><td>3</td><td>22</td><td></td></tr><tr><td>4</td><td>15</td><td></td></tr><tr><td>5</td><td>10</td><td></td></tr><tr><td>7</td><td>5</td><td></td></tr><tr><td>9</td><td>1</td><td></td></tr></table>
+
+<table><caption>Publisher C</caption><tr><th># of books</th><th>Freq.</th><th>Rel. Freq.</th></tr><tr><td>0–1</td><td>20</td><td></td></tr><tr><td>2–3</td><td>35</td><td></td></tr><tr><td>4–5</td><td>12</td><td></td></tr><tr><td>6–7</td><td>2</td><td></td></tr><tr><td>8–9</td><td>1</td><td></td></tr></table>
+<ol><li>Find the relative frequencies for each survey. Write them in the charts.</li><li>Using either a graphing calculator, computer, or by hand, use the frequency column to construct a histogram for each publisher&#x27;s survey. For Publishers A and B, make bar widths of one. For Publisher C, make bar widths of two.</li><li>In complete sentences, give two reasons why the graphs for Publishers A and B are not identical.</li><li>Would you have expected the graph for Publisher C to look like the other two graphs? Why or why not?</li><li>Make new histograms for Publisher A and Publisher B. This time, make bar widths of two.</li><li>Now, compare the graph for Publisher C to the new graphs for Publishers A and B.  Are the graphs more similar or more different? Explain your answer.</li></ol></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Often, cruise ships conduct all on-board transactions, with the exception of gambling, on a cashless basis. At the end of the cruise, guests pay one bill that covers all onboard transactions. Suppose that 60 single travelers and 70 couples were surveyed as to their on-board bills for a seven-day cruise from Los Angeles to the Mexican Riviera. Following is a summary of the bills for each group.</p><table><caption>Singles</caption><tr><th>Amount($)</th><th>Frequency</th><th>Rel. Frequency</th></tr><tr><td>51–100</td><td>5</td><td></td></tr><tr><td>101–150</td><td>10</td><td></td></tr><tr><td>151–200</td><td>15</td><td></td></tr><tr><td>201–250</td><td>15</td><td></td></tr><tr><td>251–300</td><td>10</td><td></td></tr><tr><td>301–350</td><td>5</td><td></td></tr></table>
+
+<table><caption>Couples</caption><tr><th>Amount($)</th><th>Frequency</th><th>Rel. Frequency</th></tr><tr><td>100–150</td><td>5</td><td></td></tr><tr><td>201–250</td><td>5</td><td></td></tr><tr><td>251–300</td><td>5</td><td></td></tr><tr><td>301–350</td><td>5</td><td></td></tr><tr><td>351–400</td><td>10</td><td></td></tr><tr><td>401–450</td><td>10</td><td></td></tr><tr><td>451–500</td><td>10</td><td></td></tr><tr><td>501–550</td><td>10</td><td></td></tr><tr><td>551–600</td><td>5</td><td></td></tr><tr><td>601–650</td><td>5</td><td></td></tr></table>
+<ol><li>Fill in the relative frequency for each group.</li><li>Construct a histogram for the singles group. Scale the <em>x</em>-axis by $50 widths. Use relative frequency on the <em>y</em>-axis.</li><li>Construct a histogram for the couples group. Scale the <em>x</em>-axis by $50 widths. Use relative frequency on the <em>y</em>-axis.</li><li>Compare the two graphs:
+<ol><li>List two similarities between the graphs.</li><li>List two differences between the graphs.</li><li>Overall, are the graphs more similar or different?</li></ol></li><li>Construct a new graph for the couples by hand. Since each couple is paying for two individuals, instead of scaling the <em>x</em>-axis by $50, scale it by $100. Use relative frequency on the <em>y</em>-axis.</li><li>Compare the graph for the singles with the new graph for the couples:<ol><li>List two similarities between the graphs.</li><li>Overall, are the graphs more similar or different?</li></ol></li><li>How did scaling the couples graph differently change the way you compared it to the singles graph?</li><li>Based on the graphs, do you think that individuals spend the same amount, more or less, as singles as they do person by person as a couple? Explain why in one or two complete sentences.</li></ol></div>
+
+<div class="solution">
+<table><caption>Singles</caption><tr><th>Amount($)</th><th>Frequency</th><th>Relative Frequency</th></tr><tr><td>51–100</td><td>5</td><td>0.08</td></tr><tr><td>101–150</td><td>10</td><td>0.17</td></tr><tr><td>151–200</td><td>15</td><td>0.25</td></tr><tr><td>201–250</td><td>15</td><td>0.25</td></tr><tr><td>251–300</td><td>10</td><td>0.17</td></tr><tr><td>301–350</td><td>5</td><td>0.08</td></tr></table>
+<table><caption>Couples</caption><tr><th>Amount($)</th><th>Frequency</th><th>Relative Frequency</th></tr><tr><td>100–150</td><td>5</td><td>0.07</td></tr><tr><td>201–250</td><td>5</td><td>0.07</td></tr><tr><td>251–300</td><td>5</td><td>0.07</td></tr><tr><td>301–350</td><td>5</td><td>0.07</td></tr><tr><td>351–400</td><td>10</td><td>0.14</td></tr><tr><td>401–450</td><td>10</td><td>0.14</td></tr><tr><td>451–500</td><td>10</td><td>0.14</td></tr><tr><td>501–550</td><td>10</td><td>0.14</td></tr><tr><td>551–600</td><td>5</td><td>0.07</td></tr><tr><td>601–650</td><td>5</td><td>0.07</td></tr></table>
+<ol><li>See the table and the table.</li><li>In the following histogram data values that fall on the right boundary are counted in the class interval, while values that fall on the left boundary are not counted (with the exception of the first interval where both boundary values are included).
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C02_M03_106.png" alt="This is a histogram that matches the supplied data supplied for singles. The x-axis shows the total charges in intervals of 50 from 50 to 350, and the y-axis shows the relative frequency in increments of 0.05 from 0 to 0.3."></figure>
+</li><li>In the following histogram, the data values that fall on the right boundary are counted in the class interval, while values that fall on the left boundary are not counted (with the exception of the first interval where values on both boundaries are included).
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C02_M03_107.png" alt="This is a histogram that matches the supplied data for couples. The x-axis shows the total charges in intervals of 50 from 100 to 650, and the y-axis shows the relative frequency in increments of 0.02 from 0 to 0.16."></figure>
+</li><li>Compare the two graphs:
+    <ol><li>Answers may vary. Possible answers include:
+      <ul><li>Both graphs have a single peak.</li><li>Both graphs use class intervals with width equal to $50.</li></ul>
+    </li><li>Answers may vary. Possible answers include:
+      <ul><li>The couples graph has a class interval with no values.</li><li>It takes almost twice as many class intervals to display the data for couples.</li></ul>
+    </li><li>Answers may vary. Possible answers include: The graphs are more similar than different because the overall patterns for the graphs are the same.</li></ol></li><li>Answers may vary.</li><li>Compare the graph for the Singles with the new graph for the Couples:
+  <ol><li><ul><li>Both graphs have a single peak.</li><li>Both graphs display 6 class intervals.</li><li>Both graphs show the same general pattern.</li></ul>
+  </li><li>Answers may vary. Possible answers include: Although the width of the class intervals for couples is double that of the class intervals for singles, the graphs are more similar than they are different.</li></ol></li><li>Answers may vary. Possible answers include: You are able to compare the graphs interval by interval. It is easier to compare the overall patterns with the new scale on the Couples graph. Because a couple represents two individuals, the new scale leads to a more accurate comparison.</li><li>Answers may vary. Possible answers include: Based on the histograms, it seems that spending does not vary much from singles to individuals who are part of a couple. The overall patterns are the same. The range of spending for couples is approximately double the range for individuals.</li></ol></div></div><div class="exercise"><div class="problem">
+<p>Twenty-five randomly selected students were asked the number of movies they watched the previous week. The results are as follows.
+<table><tr><th># of movies</th><th>Frequency</th><th>Relative Frequency</th><th>Cumulative Relative Frequency</th></tr><tr><td>0</td><td>5</td><td></td><td></td></tr><tr><td>1</td><td>9</td><td></td><td></td></tr><tr><td>2</td><td>6</td><td></td><td></td></tr><tr><td>3</td><td>4</td><td></td><td></td></tr><tr><td>4</td><td>1</td><td></td><td></td></tr></table>
+  </p>
+<ol><li>Construct a histogram of the data.</li><li>Complete the columns of the chart.</li></ol></div>
+</div>
+
+<p><em>Use the following information to answer the next two exercises:</em> Suppose 111 people who shopped in a special T-shirt store were asked the number of T-shirts they own costing more than $19 each.</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/fig-ch02_13_11.png" alt="A histogram showing the results of a survey.  Of 111 respondents, 5 own 1 t-shirt costing more than $19, 17 own 2, 23 own 3, 39 own 4, 25 own 5, 2 own 6, and no respondents own 7."></figure>
+<div class="exercise">
+<div class="problem">
+<p>The percentage of  people who own at most three T-shirts costing more than $19 each is approximately:</p><ol><li>21</li><li>59</li><li>41</li><li>Cannot be determined</li></ol></div>
+<div class="solution">
+  <p>c</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+  <p>If the data were collected by asking the first 111 people who entered the store, then the type of sampling is:</p>
+<ol><li>cluster</li><li>simple random</li><li>stratified</li><li>convenience</li></ol></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Following are the rates of unmarried adults for the 50 U.S. states and Washington, DC.</p>
+<table><tr><th>State</th><th>Percent (%)</th><th>State</th><th>Percent (%)</th><th>State</th><th>Percent (%)</th></tr><tr><td>Alabama</td><td>32.2</td><td>Kentucky</td><td>31.3</td><td>North Dakota</td><td>27.2</td></tr><tr><td>Alaska</td><td>24.5</td><td>Louisiana</td><td>31.0</td><td>Ohio</td><td>29.2</td></tr><tr><td>Arizona</td><td>24.3</td><td>Maine</td><td>26.8</td><td>Oklahoma</td><td>30.4</td></tr><tr><td>Arkansas</td><td>30.1</td><td>Maryland</td><td>27.1</td><td>Oregon</td><td>26.8</td></tr><tr><td>California</td><td>24.0</td><td>Massachusetts</td><td>23.0</td><td>Pennsylvania</td><td>28.6</td></tr><tr><td>Colorado</td><td>21.0</td><td>Michigan</td><td>30.9</td><td>Rhode Island</td><td>25.5</td></tr><tr><td>Connecticut</td><td>22.5</td><td>Minnesota</td><td>24.8</td><td>South Carolina</td><td>31.5</td></tr><tr><td>Delaware</td><td>28.0</td><td>Mississippi</td><td>34.0</td><td>South Dakota</td><td>27.3</td></tr><tr><td>Washington, DC</td><td>22.2</td><td>Missouri</td><td>30.5</td><td>Tennessee</td><td>30.8</td></tr><tr><td>Florida</td><td>26.6</td><td>Montana</td><td>23.0</td><td>Texas</td><td>31.0</td></tr><tr><td>Georgia</td><td>29.6</td><td>Nebraska</td><td>26.9</td><td>Utah</td><td>22.5</td></tr><tr><td>Hawaii</td><td>22.7</td><td>Nevada</td><td>22.4</td><td>Vermont</td><td>23.2</td></tr><tr><td>Idaho</td><td>26.5</td><td>New Hampshire</td><td>25.0</td><td>Virginia</td><td>26.0</td></tr><tr><td>Illinois</td><td>28.2</td><td>New Jersey</td><td>23.8</td><td>Washington</td><td>25.5</td></tr><tr><td>Indiana</td><td>29.6</td><td>New Mexico</td><td>25.1</td><td>West Virginia</td><td>32.5</td></tr><tr><td>Iowa</td><td>28.4</td><td>New York</td><td>23.9</td><td>Wisconsin</td><td>26.3</td></tr><tr><td>Kansas</td><td>29.4</td><td>North Carolina</td><td>27.8</td><td>Wyoming</td><td>25.1</td></tr></table><p>Construct a bar graph of the unmarried adult rates of your state and the four states closest to your state. Hint: Label the <em>x</em>-axis with the states.</p></div>
+<div class="solution">
+<p>Answers will vary.
+</p></div>
+</div>
+</div>
+ <h2>Key terms</h2>
+<p><strong>Frequency</strong>  the number of times a value of the data occurs</p>
+<p><strong>Histogram</strong>  a graphical representation in <em>x</em>-<em>y</em> form of the distribution of data in a data set; <em>x</em> represents the data and <em>y</em> represents the frequency, or relative frequency. The graph consists of contiguous rectangles.</p>
+
+<p><strong>Relative Frequency</strong>  the ratio of the number of times a value of the data occurs in the set of all outcomes to the number of all outcomes</p>
+
+</body></html>

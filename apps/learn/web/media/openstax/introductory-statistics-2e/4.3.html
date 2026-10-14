@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.3 Binomial Distribution · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 4.3 Binomial Distribution. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/4-3-binomial-distribution</p>
+<h1>4.3 Binomial Distribution</h1>
+
+<p>There are three characteristics of a binomial experiment.
+<ol><li>There are a fixed number of trials. Think of trials as repetitions of an experiment. The letter <em>n</em> denotes the number of trials.</li><li>There are only two possible outcomes, called &quot;success&quot; and &quot;failure,&quot; for each trial. The letter <em>p</em> denotes the probability of a success on one trial, and <em>q</em> denotes the probability of a failure on one trial. <em>p</em> + <em>q</em> = 1.</li><li>The <em>n</em> trials are independent and are repeated using identical conditions. Because the <em>n</em> trials are independent, the outcome of one trial does not help in predicting the outcome of another trial. Another way of saying this is that for each individual trial, the probability, <em>p</em>, of a success and probability, <em>q</em>, of a failure remain the same. For example, randomly guessing at a true-false statistics question has only two outcomes. If a success is guessing correctly, then a failure is guessing incorrectly. Suppose Joe always guesses correctly on any statistics true-false question with probability <em>p</em> = 0.6. Then, <em>q</em> = 0.4. This means that for every true-false statistics question Joe answers, his probability of success (<em>p</em> = 0.6) and his probability of failure (<em>q</em> = 0.4) remain the same.</li></ol></p><p>The outcomes of a binomial experiment fit a <strong>binomial probability distribution</strong>. The random variable <em>X</em> = the number of successes obtained in the <em>n</em> independent trials.</p><p>The mean, <em>μ</em>, and variance, <em>σ</em><sup>2</sup>, for the binomial probability distribution are <em>μ</em> = <em>np</em> and <em>σ</em><sup>2</sup> = <em>npq</em>. The standard deviation, <em>σ</em>, is then <em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math>.</p><p>Any experiment that has characteristics two and three and where <em>n</em> = 1 is called a <strong>Bernoulli Trial</strong> (named after Jacob Bernoulli who, in the late 1600s, studied them extensively). A binomial experiment takes place when the number of successes is counted in one or more Bernoulli Trials.</p>
+
+<div class="example">
+<p>At ABC College, the withdrawal rate from an elementary physics course is 30% for any given term. This implies that, for any given term, 70% of the students stay in the class for the entire term. A &quot;success&quot; could be defined as an individual who withdrew. The random variable <em>X</em> = the number of students who withdraw from the randomly selected elementary physics class.</p></div>
+
+<div class="note statistics try"><h3>Try It</h3>
+
+<div class="exercise">
+<div class="problem">
+<p>The state health board is concerned about the amount of fruit available in school lunches. Forty-eight percent of schools in the state offer fruit in their lunches every day. This implies that 52% do not. What would a &quot;success&quot; be in this case?</p></div>
+</div>
+</div><div class="example">
+<p>Suppose you play a game that you can only either win or lose. The probability that you win any game is 55%, and the probability that you lose is 45%. Each game you play is independent. If you play the game 20 times, write the function that describes the probability that you win 15 of the 20 times. Here, if you define <em>X</em> as the number of wins, then <em>X</em> takes on the values 0, 1, 2, 3, ..., 20. The probability of a success is <em>p</em> = 0.55. The probability of a failure is <em>q</em> = 0.45. The number of trials is <em>n</em> = 20. The probability question can be stated mathematically as <em>P</em>(<em>x</em> = 15).</p></div>
+
+<div class="note statistics try"><h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>A trainer is teaching a rescued dolphin to catch live fish before returning it to the wild. The probability that the dolphin successfully catches a fish is 35%, and the probability that the dolphin does not successfully catch the fish is 65%. Out of 20 attempts, you want to find the probability that the dolphin succeeds 12 times. State the probability question mathematically.</p></div>
+</div>
+</div><div class="example"><div class="exercise">
+<div class="problem">
+<p>A coin has been altered to weight the outcome from 0.5 to 0.25 and flipped 5 times. Each flip is independent. What is the probability of getting more than 3 heads? Let <em>X</em> = the number of heads in 5 flips of the fair coin. <em>X</em> takes on the values 0, 1, 2, 3, 4, 5. Since the coin is altered to result in <em>p</em> = 0.25, <em>q</em> is 0.75. The number of trials is <em>n</em> = 5. State the probability question mathematically.</p>
+<p>First develop fully the probability density function and graph the probability density function. With the fully developed probability density function we can simply read the solution to the question <math><mi>P</mi><mfenced><mrow><mi>x</mi><mo>&gt;</mo><mn>3</mn></mrow></mfenced></math> heads. <math><mi>P</mi><mfenced><mrow><mi>x</mi><mo>&gt;</mo><mn>3</mn></mrow></mfenced><mo>=</mo><mi>P</mi><mfenced><mrow><mi>x</mi><mo>=</mo><mn>4</mn></mrow></mfenced><mo>+</mo><mi>P</mi><mfenced><mrow><mi>x</mi><mo>=</mo><mn>5</mn></mrow></mfenced><mo>=</mo><mn>0</mn><mo>.</mo><mn>0146</mn><mo>+</mo><mn>0</mn><mo>.</mo><mn>0007</mn><mo>=</mo><mn>0</mn><mo>.</mo><mn>0153</mn><mo>.</mo></math> We have added the two individual probabilities because of the addition rule from Probability Topics.</p>
+<p>the figure also allows us to see the link between the probability density function and probability and area. We also see in the figure the skew of the binomial distribution when p is not equal to 0.5. In the figure the distribution is skewed right as a result of <math><mi>μ</mi><mo>=</mo><mi>n</mi><mi>p</mi><mo>=</mo><mn>1</mn><mo>.</mo><mn>25</mn></math> because <math><mi>p</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>25</mn></math>.</p>
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/IBS2e_Figure_04_00_004.png" alt="Histogram of probability density function of the given data."></figure>
+<div class="eq"><math><mtable columnspacing="0px" columnalign="right center left"><mtr><mtd><mi>P</mi><mfenced><mrow><mi>x</mi><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub></mrow></mfenced></mtd><mtd><mo> </mo><mo>=</mo><mo> </mo></mtd><mtd><mfenced><mtable><mtr><mtd><mi>n</mi></mtd></mtr><mtr><mtd><mi>x</mi></mtd></mtr></mtable></mfenced><msup><mi>p</mi><mi>x</mi></msup><msup><mfenced><mrow><mn>1</mn><mo>-</mo><mi>p</mi></mrow></mfenced><mrow><mi>n</mi><mo>-</mo><mi>x</mi></mrow></msup></mtd></mtr><mtr><mtd></mtd><mtd><mo> </mo><mo>=</mo><mo> </mo></mtd><mtd><mfenced><mtable><mtr><mtd><mn>5</mn></mtd></mtr><mtr><mtd><msub><mi>x</mi><mn>0</mn></msub></mtd></mtr></mtable></mfenced><mo>·</mo><msup><mn>25</mn><msub><mi>x</mi><mn>0</mn></msub></msup><mo>·</mo><msup><mn>75</mn><mrow><mn>5</mn><mo>-</mo><msub><mi>x</mi><mn>0</mn></msub></mrow></msup></mtd></mtr><mtr><mtd></mtd><mtd></mtd><mtd><mi>etc</mi><mo>.</mo></mtd></mtr><mtr><mtd><mi mathvariant="normal">μ</mi></mtd><mtd><mo> </mo><mo>=</mo><mo> </mo></mtd><mtd><mi>np</mi><mo>=</mo><mn>1</mn><mo>.</mo><mn>25</mn></mtd></mtr></mtable></math></div>
+</div>
+</div>
+</div><div class="note statistics try"><h3>Try It</h3>
+<div class="exercise">
+<div class="problem"><p>A fair, six-sided die is rolled ten times. Each roll is independent. You want to find the probability of rolling a one more than three times. State the probability question mathematically.</p>
+
+</div>
+</div>
+</div><div class="example">
+<p>Approximately 70% of statistics students do their homework in time for it to be collected and graded. Each student does homework independently. In a statistics class of 50 students, what is the probability that at least 40 will do their homework on time? Students are selected randomly.<br></p><div class="exercise"><div class="problem">
+<p>a. This is a binomial problem because there is only a success or a __________, there are a fixed number of trials, and the probability of a success is 0.70 for each trial.</p>
+<p>b. If we are interested in the number of students who do their homework on time, then how do we define <em>X</em>?</p>
+<p>c. What values does <em>x</em> take on?</p>
+<p>d. What is a &quot;failure,&quot; in words?</p>
+<p>e. If <em>p</em> + <em>q</em> = 1, then what is <em>q</em>?</p>
+<p>f. The words &quot;at least&quot; translate as what kind of inequality for the probability question <em>P</em>(<em>x</em> ____ 40).</p>
+
+</div>
+<div class="solution">
+ <p>a. failure</p>
+ <p>b. <em>X</em> = the number of statistics students who do their homework on time<br></p>
+ <p>c. 0, 1, 2, …, 50<br></p>
+ <p>d. Failure is defined as a student who does not complete their homework on time.</p>
+<p>The probability of a success is <em>p</em> = 0.70. The number of trials is <em>n</em> = 50.<br></p>
+ <p>e. <em>q</em> = 0.30<br></p>
+ <p>f. greater than or equal to (≥)
+<br>The probability question is <em>P</em>(<em>x</em> ≥ 40).</p></div>
+</div></div>
+
+<div class="note statistics try"><h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>Sixty-five percent of people pass the state driver’s exam on the first try. A group of 50 individuals who have taken the driver’s exam is randomly selected. Give two reasons why this is a binomial problem.</p></div>
+</div>
+</div>
+
+<div class="section"><h3>Notation for the Binomial: <em>B</em> = Binomial Probability Distribution Function</h3><p><em>X</em> ~ <em>B</em>(<em>n</em>, <em>p</em>)</p>
+<p>Read this as &quot;<em>X</em> is a random variable with a binomial distribution.&quot; The parameters are <em>n</em> and <em>p</em>; <em>n</em> = number of trials, <em>p</em> = probability of a success on each trial.</p>
+</div><div class="example"><p>It has been stated that about 41% of adult workers have a high school diploma but do not pursue any further education. If 20 adult workers are randomly selected, find the probability that at most 12 of them have a high school diploma but do not pursue any further education. How many adult workers do you expect to have a high school diploma but do not pursue any further education?</p>
+
+<p>Let <em>X</em> = the number of workers who have a high school diploma but do not pursue any further education.</p>
+
+<p><em>X</em> takes on the values 0, 1, 2, ..., 20 where <em>n</em> = 20, <em>p</em> = 0.41, and <em>q</em> = 1 – 0.41 = 0.59. <em>X</em> ~ <em>B</em>(20, 0.41)</p><p>Find <em>P</em>(<em>x</em> ≤ 12). <em>P</em>(<em>x</em> ≤ 12) = 0.9738. (calculator or computer)</p>
+
+
+<div class="note statistics calculator">
+<p>Go into 2<sup>nd</sup> DISTR. The syntax for the instructions are as follows:</p>
+
+<p><strong>To calculate (<em>x</em> = value): binompdf(<em>n</em>, <em>p</em>, number)</strong>
+if &quot;number&quot; is left out, the result is the binomial probability table.
+<br><strong>To calculate <em>P</em>(<em>x</em> ≤ value): binomcdf(<em>n</em>, <em>p</em>, number)</strong> if &quot;number&quot; is left out, the result is the cumulative binomial probability table.
+<br><strong>For this problem: After you are in <code>2<sup>nd</sup> DISTR</code>, arrow down to <code>binomcdf</code>. Press <code>ENTER</code>. Enter 20,0.41,12). The result is <em>P</em>(<em>x</em> ≤ 12) = 0.9738.</strong></p>
+</div><div class="note">
+
+<h4>NOTE</h4>
+<p>If you want to find <em>P</em>(<em>x</em> = 12), use the pdf (binompdf). If you want to find <em>P</em>(<em>x</em> &gt; 12), use 1 - binomcdf(20,0.41,12).</p></div>
+
+<p>The probability that at most 12 workers have a high school diploma but do not pursue any further education is 0.9738.</p>
+
+<p>The graph of <em>X</em> ~ <em>B</em>(20, 0.41) is as follows:</p><figure><img src="fig-ch04_05_01.png" alt="This histogram shows a binomial probability distribution. It is made up of bars that are fairly normally distributed. The x-axis shows values from 0 to 20. The y-axis shows values from 0 to 0.2 in increments of 0.05."></figure><p>The <em>y</em>-axis contains the probability of <em>x</em>, where <em>X</em> = the number of workers who have only a high school diploma.</p>
+
+<p>The number of adult workers that you expect to have a high school diploma but not pursue any further education is the mean, <em>μ</em> = <em>np</em> = (20)(0.41) = 8.2.</p>
+
+<p>The formula for the variance is σ<sup>2</sup> = <em>npq</em>. The standard deviation is <em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+ </mrow>
+</math>. <br><em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mrow><mo>(</mo>
+     <mrow>
+      <mn>20</mn>
+     </mrow>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mrow>
+      <mn>0.41</mn>
+     </mrow>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mrow>
+      <mn>0.59</mn>
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </msqrt>
+ </mrow>
+</math> = 2.20.</p></div>
+
+<div class="note statistics try "><h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>About 32% of students participate in a community volunteer program outside of school. If 30 students are selected at random, find the probability that at most 14 of them participate in a community volunteer program outside of school. Use the TI-83+ or TI-84 calculator to find the answer.</p></div>
+</div>
+</div><div class="example">
+<div class="exercise"><div class="problem">
+<p>In the 2013 <em>Jerry’s Artarama</em> art supplies catalog, there are 560 pages. Eight of the pages feature signature artists. Suppose we randomly sample 100 pages. Let <em>X</em> = the number of pages that feature signature artists.</p>
+
+<ol><li>What values does <em>x</em> take on?</li><li>What is the probability distribution? Find the following probabilities:
+  <ol><li>the probability that two pages feature signature artists</li><li>the probability that at most six pages feature signature artists</li><li>the probability that more than three pages feature signature artists.</li></ol>
+</li><li>Using the formulas, calculate the (i) mean and (ii) standard deviation.</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>x</em> = 0, 1, 2, 3, 4, 5, 6, 7, 8</li><li><em>X</em> ~ <em>B</em><math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>100</mn><mo>,</mo><mfrac>
+     <mn>8</mn>
+     <mrow>
+      <mn>560</mn>
+     </mrow>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math>
+<ol><li><em>P</em>(<em>x</em> = 2) = binompdf<math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>100</mn><mo>,</mo><mfrac>
+     <mn>8</mn>
+     <mrow>
+      <mn>560</mn>
+     </mrow>
+    </mfrac>
+    <mo>,</mo><mn>2</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> = 0.2466</li><li><em>P</em>(<em>x</em> ≤ 6) = binomcdf<math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>100</mn><mo>,</mo><mfrac>
+     <mn>8</mn>
+     <mrow>
+      <mn>560</mn>
+     </mrow>
+    </mfrac>
+    <mo>,</mo><mn>6</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> = 0.9994</li><li><em>P</em>(<em>x</em> &gt; 3) = 1 – <em>P</em>(<em>x</em> ≤ 3) = 1 – binomcdf<math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>100</mn><mo>,</mo><mfrac>
+     <mn>8</mn>
+     <mrow>
+      <mn>560</mn>
+     </mrow>
+    </mfrac>
+    <mo>,</mo><mn>3</mn>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> = 1 – 0.9443 = 0.0557</li></ol></li><li>
+<ol><li>Mean = <em>np</em> = (100)<math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mfrac>
+     <mn>8</mn>
+     <mrow>
+      <mn>560</mn>
+     </mrow>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mn>800</mn>
+   <mrow>
+    <mn>560</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> ≈ 1.4286</li><li>Standard Deviation = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mo stretchy="false">(</mo><mn>100</mn><mo stretchy="false">)</mo><mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mn>8</mn>
+       <mrow>
+        <mn>560</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow><mrow><mo>(</mo>
+     <mrow>
+      <mfrac>
+       <mrow>
+        <mn>552</mn>
+       </mrow>
+       <mrow>
+        <mn>560</mn>
+       </mrow>
+      </mfrac>
+
+     </mrow>
+    <mo>)</mo></mrow>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math> ≈ 1.1867</li></ol>
+</li></ol></div>
+</div></div>
+
+
+<div class="note statistics try"><h3>Try It</h3>
+
+<div class="exercise"><div class="problem">
+<p>According to a Gallup poll, 60% of American adults prefer saving over spending. Let <em>X</em> = the number of American adults out of a random sample of 50 who prefer saving to spending.</p>
+
+<ol><li>What is the probability distribution for <em>X</em>?</li><li>Use your calculator to find the following probabilities:
+  <ol><li>the probability that 25 adults in the sample prefer saving over spending</li><li>the probability that at most 20 adults prefer saving</li><li>the probability that more than 30 adults prefer saving</li></ol>
+</li><li>Using the formulas, calculate the (i) mean and (ii) standard deviation of <em>X</em>.</li></ol>
+</div>
+</div></div>
+<div class="example">
+<p>The lifetime risk of developing cancer is about one in 67 (1.5%). Suppose we randomly sample 200 people. Let <em>X</em> = the number of people who will develop cancer.</p><div class="exercise">
+<div class="problem">
+<ol><li>What is the probability distribution for <em>X</em>?</li><li>Using the formulas, calculate the (i) mean and (ii) standard deviation of <em>X</em>.</li><li>Use your calculator to find the probability that at most eight people develop cancer</li><li>Is it more likely that five or six people will develop cancer? Justify your answer numerically.</li></ol></div>
+<div class="solution">
+  <ol><li><math><mi>X</mi><mo> </mo><mo>~</mo><mo> </mo><mi>B</mi><mfenced><mrow><mn>200</mn><mo>,</mo><mn>0</mn><mo>.</mo><mn>015</mn></mrow></mfenced></math></li><li><math><mi>Mean</mi><mo>=</mo><mi>n</mi><mi>p</mi><mo>=</mo><mn>200</mn><mfenced><mrow><mn>0</mn><mo>.</mo><mn>015</mn></mrow></mfenced><mo> </mo><mo>=</mo><mn>3</mn></math><br><math><mi>Standard</mi><mo> </mo><mi>Deviation</mi><mo>=</mo><msqrt><mi>n</mi><mi>p</mi><mi>q</mi></msqrt><mo>=</mo><msqrt><mn>200</mn><mo>(</mo><mn>0</mn><mo>.</mo><mn>015</mn><mo>)</mo><mo>(</mo><mn>0</mn><mo>.</mo><mn>985</mn><mo>)</mo></msqrt><mo>=</mo><mn>1</mn><mo>.</mo><mn>719</mn></math></li><li><math><mi>P</mi><mfenced><mrow><mi>x</mi><mo>≤</mo><mn>8</mn></mrow></mfenced><mo> </mo><mo>=</mo><mn>0</mn><mo>.</mo><mn>9965</mn></math></li><li>The probability that five people develop cancer is 0.1011. The probability that six people develop cancer is 0.0500.</li></ol>
+ 
+</div>
+
+</div>
+</div>
+
+<div class="note statistics try"><h3>Try It</h3>
+
+<div class="exercise">
+<div class="problem">
+
+<p>During a certain NBA season, a player for the Los Angeles Clippers had the highest field goal completion rate in the league. This player scored with 61.3% of his shots. Suppose you choose a random sample of 80 shots made by this player during the season. Let <em>X</em> = the number of shots that scored points.</p>
+
+<ol><li>What is the probability distribution for <em>X</em>?</li><li>Using the formulas, calculate the (i) mean and (ii) standard deviation of <em>X</em>.</li><li>Use your calculator to find the probability that this player scored with 60 of these shots.</li><li>Find the probability that this player scored with more than 50 of these shots.</li></ol>
+</div>
+</div>
+</div><div class="example">
+<p>The following example illustrates a problem that is <strong>not</strong> binomial. It violates the condition of independence. ABC College has a student advisory committee made up of ten staff members and six students. The committee wishes to choose a chairperson and a recorder. What is the probability that the chairperson and recorder are both students? The names of all committee members are put into a box, and two names are drawn <strong>without replacement</strong>. The first name drawn determines the chairperson and the second name the recorder. There are two trials. However, the trials are not independent because the outcome of the first trial affects the outcome of the second trial. The probability of a student on the first draw is <math>
+ <mrow>
+  <mfrac>
+   <mn>6</mn>
+   <mrow>
+    <mn>16</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>. The probability of a student on the second draw is <math>
+ <mrow>
+  <mfrac>
+   <mn>5</mn>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math>, when the first draw selects a student. The probability is <math>
+ <mrow>
+  <mfrac>
+   <mn>6</mn>
+   <mrow>
+    <mn>15</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math>, when the first draw selects a staff member. The probability of drawing a student&#x27;s name changes for each of the trials and, therefore, violates the condition of independence.</p></div>
+
+<div class="note statistics try"><h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>A lacrosse team is selecting a captain. The names of all the seniors are put into a hat, and the first three that are drawn will be the captains. The names are not replaced once they are drawn (one person cannot be two captains). You want to see if the captains all play the same position. State whether this is binomial or not and state why.</p></div>
+</div>
+</div><div class="section references">
+<h3>References</h3>
+<p>“Access to electricity (% of population),” The World Bank, 2013. Available online at http://data.worldbank.org/indicator/EG.ELC.ACCS.ZS?order=wbapi_data_value_2009%20wbapi_data_value%20wbapi_data_value-first&amp;sort=asc (accessed May 15, 2015).</p>
+<p>“Distance Education.” Wikipedia. Available online at http://en.wikipedia.org/wiki/Distance_education (accessed May 15, 2013).</p>
+<p>“NBA Statistics – 2013,” ESPN NBA, 2013. Available online at http://espn.go.com/nba/statistics/_/seasontype/2 (accessed May 15, 2013).</p>
+<p>Newport, Frank. “Americans Still Enjoy Saving Rather than Spending: Few demographic differences seen in these views other than by income,” GALLUP® Economy, 2013. Available online at http://www.gallup.com/poll/162368/americans-enjoy-saving-rather-spending.aspx (accessed May 15, 2013).</p>
+<p>Pryor, John H., Linda DeAngelo, Laura Palucki Blake, Sylvia Hurtado, Serge Tran. <em>The American Freshman: National Norms Fall 2011</em>. Los Angeles: Cooperative Institutional Research Program at the Higher Education Research Institute at UCLA, 2011. Also available online at http://heri.ucla.edu/PDFs/pubs/TFS/Norms/Monographs/TheAmericanFreshman2011.pdf (accessed May 15, 2013).</p><p>“The World FactBook,” Central Intelligence Agency. Available online at https://www.cia.gov/library/publications/the-world-factbook/geos/af.html (accessed May 15, 2013).</p>
+<p>“What are the key statistics about pancreatic cancer?” American Cancer Society, 2013. Available online at http://www.cancer.org/cancer/pancreaticcancer/detailedguide/pancreatic-cancer-key-statistics (accessed May 15, 2013).</p>
+</div>
+
+<div class="section summary"><h3>Chapter Review</h3><p>A statistical experiment can be classified as a binomial experiment if the following conditions are met:</p>
+<ol><li>There are a fixed number of trials, <em>n</em>.</li><li>There are only two possible outcomes, called &quot;success&quot; and, &quot;failure&quot; for each trial. The letter <em>p</em> denotes the probability of a success on one trial and <em>q</em> denotes the probability of a failure on one trial.</li><li>The <em>n</em> trials are independent and are repeated using identical conditions.</li></ol><p>The outcomes of a binomial experiment fit a binomial probability distribution. The random variable <em>X</em> = the number of successes obtained in the <em>n</em> independent trials. The mean of <em>X</em> can be calculated using the formula <em>μ</em> = <em>np</em>, and the standard deviation is given by the formula σ = <math>
+ <mrow>
+<mtext> </mtext><msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+ </mrow>
+</math>.</p></div><div class="section formula-review">
+<h3>Formula Review</h3>
+<p><em>X</em> ~ <em>B</em>(<em>n</em>, <em>p</em>) means that the discrete random variable <em>X</em> has a binomial probability distribution with <em>n</em> trials and probability of success <em>p</em>.</p>
+<p><em>X</em> = the number of successes in <em>n</em> independent trials</p>
+<p><em>n</em> = the number of independent trials</p>
+<p><em>X</em> takes on the values <em>x</em> = 0, 1, 2, 3, ..., <em>n</em></p>
+<p><em>p</em> = the probability of a success for any trial</p>
+<p><em>q</em> = the probability of a failure for any trial </p><p><em>p</em> + <em>q</em> = 1</p>
+<p><em>q</em> = 1 – <em>p</em></p><p>The mean of <em>X</em> is <em>μ</em> = <em>np</em>. The standard deviation of <em>X</em> is <em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+ </mrow>
+</math>.</p></div>
+
+
+<div class="section practice">
+
+<p><em>Use the following information to answer the next eight exercises:</em> The Higher Education Research Institute at UCLA collected data from 203,967 incoming first-time, full-time first-year students from 270 four-year colleges and universities in the U.S. 71.3% of those students replied that, yes, they believe that same-sex couples should have the right to legal marital status. Suppose that you randomly pick eight first-time, full-time first-year students from the survey. You are interested in the number that believes that same sex-couples should have the right to legal marital status.</p><div class="exercise">
+<div class="problem">
+<p>In words, define the random variable <em>X</em>.</p>
+</div>
+<div class="solution">
+<p><em>X</em> = the number that reply “yes”</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p><em>X</em> ~ _____(_____,_____)</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+<p>What values does the random variable <em>X</em> take on?</p>
+</div>
+<div class="solution">
+<p>0, 1, 2, 3, 4, 5, 6, 7, 8</p>
+</div></div>
+
+<div class="exercise"><div class="problem">
+<p>Construct the probability distribution function (PDF).</p>
+<table><tr><th><em>x</em></th><th><em>P</em>(<em>x</em>)</th></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table>
+</div>
+
+
+</div><div class="exercise"><div class="problem">
+<p>On average (<em>μ</em>), how many would you expect to answer yes?</p></div>
+<div class="solution">
+<p>5.7</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p>What is the standard deviation (<em>σ</em>)?</p></div>
+
+</div><div class="exercise">
+<div class="problem">
+<p>What is the probability that at most five of the first-year students reply “yes”?</p></div>
+<div class="solution">
+<p>0.4151</p></div></div>
+
+<div class="exercise"><div class="problem">
+<p>What is the probability that at least two of the first-year students reply “yes”?</p></div>
+
+</div></div>
+
+<div class="section free-response"><h3>HOMEWORK</h3><div class="exercise"><div class="problem">
+<p>According to a recent article the average number of babies born with significant hearing loss (deafness) is approximately two per 1,000 babies in a healthy baby nursery. The number climbs to an average of 30 per 1,000 babies in an intensive care nursery.</p>
+<p>Suppose that 1,000 babies from healthy baby nurseries were randomly surveyed. Find the probability that exactly two babies were born deaf.</p>
+</div>
+
+</div><p>Use the following information to answer the next four exercises. Recently, a nurse commented that when a patient calls the medical advice line claiming to have the flu, the chance that they truly have the flu (and not just a nasty cold) is only about 4%. Of the next 25 patients calling in claiming to have the flu, we are interested in how many actually have the flu.</p><div class="exercise">
+<div class="problem">
+<p>Define the random variable and list its possible values.</p>
+</div>
+<div class="solution">
+<p><em>X</em> = the number of patients calling in claiming to have the flu, who actually have the flu.</p>
+<p><em>X</em> = 0, 1, 2, ...25</p>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+<p>State the distribution of <em>X</em>.</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Find the probability that at least four of the 25 patients actually have the flu.</p>
+</div>
+<div class="solution">
+<p>0.0165</p>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+<p>On average, for every 25 patients calling in, how many do you expect to have the flu?</p>
+</div>
+
+
+</div><div class="exercise"><div class="problem">
+  <p>People visiting a hot dog stand often purchase more than one hot dog. The probability distribution for purchases of number of hot dogs per customer at a hot dog stand is given the table.</p>
+
+<table><tr><th><em>x</em></th><th><em>P</em>(<em>x</em>)</th></tr><tr><td>0</td><td>0.03</td></tr><tr><td>1</td><td>0.50</td></tr><tr><td>2</td><td>0.24</td></tr><tr><td>3</td><td></td></tr><tr><td>4</td><td>0.07</td></tr><tr><td>5</td><td>0.04</td></tr></table><ol><li>Describe the random variable <em>X</em> in words.</li><li>Find the probability that a customer purchases three hot dogs.</li><li>Find the probability that a customer purchases at least four hot dogs.</li><li>Find the probability that a customer purchases at most two hot dogs.</li></ol></div>
+<div class="solution">
+<ol><li><em>X</em> = the number of hot dogs a person at a hot dog stand eats</li><li>0.12</li><li>0.11</li><li>0.77</li></ol></div>
+</div>
+
+
+<div class="exercise"><div class="problem">
+  <p>A school newspaper reporter decides to randomly survey 12 students to see if they will attend Tet (Vietnamese New Year) festivities this year. Based on past years, she knows that 18% of students attend Tet festivities. We are interested in the number of students who will attend the festivities.</p>
+
+<ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X ~ _____(_____,_____)</em></li><li>How many of the 12 students do we expect to attend the festivities?</li><li>Find the probability that at most four students will attend.</li><li>Find the probability that more than two students will attend.</li></ol>
+</div>
+
+
+</div><p><em>Use the following information to answer the next three exercises:</em> The probability that the San Jose Sharks will win any given game is 0.3694 based on a 13-year win history of 382 wins out of 1,034 games played (as of a certain date). An upcoming monthly schedule contains 12 games.</p><div class="exercise"><div class="problem">
+  <p>
+    The expected number of wins for that upcoming month is:
+  </p>
+<ol><li>1.67</li><li>12</li><li><math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>382</mn>
+   </mrow>
+   <mrow>
+    <mn>1043</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></li><li>4.43</li></ol></div>
+<div class="solution">
+  <p>d. 4.43
+  </p></div>
+</div><p>Let <em>X</em> = the number of games won in that upcoming month.</p><div class="exercise"><div class="problem">
+  <p>What is the probability that the San Jose Sharks win six games in that upcoming month?</p>
+<ol><li>0.1476</li><li>0.2336</li><li>0.7664</li><li>0.8903</li></ol>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>What is the probability that the San Jose Sharks win at least five games in that upcoming month</p>
+<ol><li>0.3694</li><li>0.5266</li><li>0.4734</li><li>0.2305</li></ol>
+</div>
+
+<div class="solution">
+  <p>c</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>A student takes a ten-question true-false quiz, but did not study and randomly guesses each answer. Find the probability that the student passes the quiz with a grade of at least 70% of the questions correct.</p></div>
+
+</div><div class="exercise"><div class="problem">
+  <p>A student takes a 32-question multiple-choice exam, but did not study and randomly guesses each answer. Each question has three possible choices for the answer. Find the probability that the student guesses <strong>more than</strong> 75% of the questions correctly.</p></div>
+
+<div class="solution">
+  <ul><li><em>X</em> = number of questions answered correctly</li><li><em>X</em> ~ <em>B</em><math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtext>32, </mtext><mfrac>
+     <mtext>1</mtext>
+     <mtext>3</mtext>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math></li><li>We are interested in MORE THAN 75% of 32 questions correct. 75% of 32 is 24. We want to find <em>P</em>(<em>x</em> &gt; 24). The event &quot;more than 24&quot; is the complement of &quot;less than or equal to 24.&quot;</li><li>Using your calculator&#x27;s distribution menu: 1 – binomcdf<math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mtext>32, </mtext><mfrac>
+     <mtext>1</mtext>
+     <mtext>3</mtext>
+    </mfrac>
+    <mo>,</mo><mtext> 24</mtext>
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math></li><li><em>P</em>(<em>x</em> &gt; 24) = 0</li><li>The probability of getting more than 75% of the 32 questions correct when randomly guessing is very small and practically zero.</li></ul></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Six different colored dice are rolled. Of interest is the number of dice that show a one.</p>
+
+<ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>On average, how many dice would you expect to show a one?</li><li>Find the probability that all six dice show a one.</li><li>Is it more likely that three or that four dice will show a one? Use numbers to justify your answer numerically.</li></ol></div>
+
+
+</div><div class="exercise"><div class="problem">
+<p>More than 96 percent of the very largest colleges and universities (more than 15,000 total enrollments) have some online offerings. Suppose you randomly pick 13 such institutions. We are interested in the number that offer distance learning courses.</p>
+
+<ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>On average, how many schools would you expect to offer such courses?</li><li>Find the probability that at most ten offer such courses.</li><li>Is it more likely that 12 or that 13 will offer such courses? Use numbers to justify your answer numerically and answer in a complete sentence.</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>X</em> = the number of college and universities that offer online offerings.</li><li>0, 1, 2, …, 13</li><li><em>X</em> ~ <em>B</em>(13, 0.96)</li><li>12.48</li><li>0.0135</li><li><em>P</em>(<em>x</em> = 12) = 0.3186  <em>P</em>(<em>x</em> = 13) = 0.5882 More likely to get 13.</li></ol></div>
+</div><div class="exercise"><div class="problem">
+  <p>Suppose that about 85% of graduating students attend their graduation. A group of 22 graduating students is randomly chosen.</p>
+<ol><li>In words, define the random variable <em>X</em>.
+</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>How many are expected to attend their graduation?</li><li>Find the probability that 17 or 18 attend.</li><li>Based on numerical values, would you be surprised if all 22 attended graduation? Justify your answer numerically.</li></ol></div>
+
+
+</div><div class="exercise"><div class="problem">
+  <p>At The Fencing Center, 60% of the fencers use the foil as their main weapon. We randomly survey 25 fencers at The Fencing Center. We are interested in the number of fencers who do <strong>not</strong> use the foil as their main weapon.</p><ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>How many are expected to <strong>not</strong> to use the foil as their main weapon?</li><li>Find the probability that six do <strong>not</strong> use the foil as their main weapon.</li><li>Based on numerical values, would you be surprised if all 25 did <strong>not</strong> use foil as their main weapon? Justify your answer numerically.</li></ol></div>
+
+<div class="solution">
+  <ol><li><em>X</em> = the number of fencers who do <strong>not</strong> use the foil as their main weapon</li><li>0, 1, 2, 3,... 25</li><li><em>X</em> ~ <em>B</em>(25,0.40)</li><li>10</li><li>0.0442</li><li>The probability that all 25 not use the foil is almost zero. Therefore, it would be very surprising.</li></ol></div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Approximately 8% of students at a local high school participate in after-school sports all four years of high school. A group of 60 seniors is randomly chosen. Of interest is the number who participated in after-school sports all four years of high school.</p><ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>How many seniors are expected to have participated in after-school sports all four years of high school?</li><li>Based on numerical values, would you be surprised if none of the seniors participated in after-school sports all four years of high school? Justify your answer numerically.</li><li>Based upon numerical values, is it more likely that four or that five of the seniors participated in after-school sports all four years of high school? Justify your answer numerically.</li></ol></div>
+
+
+</div><div class="exercise"><div class="problem">
+  <p>The chance of an IRS audit for a tax return with over $25,000 in income is about 2% per year. We are interested in the expected number of audits a person with that income has in a 20-year period. Assume each year is independent.</p>
+<ol><li>In words, define the random variable <em>X</em>.
+</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>How many audits are expected in a 20-year period?</li><li>Find the probability that a person is not audited at all.</li><li>Find the probability that a person is audited more than twice.</li></ol></div>
+<div class="solution">
+<ol><li><em>X</em> = the number of audits in a 20-year period</li><li>0, 1, 2, …, 20</li><li><em>X</em> ~ <em>B</em>(20, 0.02)</li><li>0.4</li><li>0.6676</li><li>0.0071</li></ol></div>
+</div>
+
+
+<div class="exercise"><div class="problem">
+  <p>It has been estimated that only about 30% of California residents have adequate earthquake supplies. Suppose you randomly survey 11 California residents. We are interested in the number who have adequate earthquake supplies.</p>
+
+<ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>What is the probability that at least eight have adequate earthquake supplies?</li><li>Is it more likely that none or that all of the residents surveyed will have adequate earthquake supplies? Why?</li><li>How many residents do you expect will have adequate earthquake supplies?</li></ol></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+  <p>There are two similar games played for Chinese New Year and Vietnamese New Year. In the Chinese version, fair dice with numbers 1, 2, 3, 4, 5, and 6 are used, along with a board with those numbers. In the Vietnamese version, fair dice with pictures of a gourd, fish, rooster, crab, crayfish, and deer are used. The board has those six objects on it, also. We will play with bets being $1. The player places a bet on a number or object. The “house” rolls three dice. If none of the dice show the number or object that was bet, the house keeps the $1 bet. If one of the dice shows the number or object bet (and the other two do not show it), the player gets back their $1 bet, plus $1 profit. If two of the dice show the number or object bet (and the third die does not show it), the player gets back their $1 bet, plus $2 profit. If all three dice show the number or object bet, the player gets back their $1 bet, plus $3 profit. Let <em>X</em> = number of matches and <em>Y</em> = profit per game.</p>
+
+<ol><li>In words, define the random variable <em>X</em>.</li><li>List the values that <em>X</em> may take on.</li><li>Give the distribution of <em>X</em>. <em>X</em> ~ _____(_____,_____)</li><li>List the values that <em>Y</em> may take on. Then, construct one PDF table that includes both <em>X</em> and <em>Y</em> and their probabilities.</li><li>Calculate the average expected matches over the long run of playing this game for the player.</li><li>Calculate the average expected earnings over the long run of playing this game for the player.</li><li>Determine who has the advantage, the player or the house.</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>X</em> = the number of matches</li><li>0, 1, 2, 3</li><li><em>X</em> ~ <em>B</em><math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mrow>
+    <mn>3</mn><mo>,</mo><mfrac>
+     <mn>1</mn>
+     <mn>6</mn>
+    </mfrac>
+
+   </mrow>
+  <mo>)</mo></mrow>
+ </mrow>
+</math></li><li>In dollars: −1, 1, 2, 3</li><li><math>
+ <mrow>
+  <mfrac>
+   <mn>1</mn>
+   <mn>2</mn>
+  </mfrac>
+ </mrow>
+</math></li><li>Multiply each <em>Y</em> value by the corresponding <em>X</em> probability from the PDF table.  The answer is −0.0787. You lose about eight cents, on average, per game.</li><li>The house has the advantage.</li></ol></div></div>
+
+<div class="exercise"><div class="problem">
+<p>Only 9% of the population of Niger has access to the internet. Suppose we randomly sample 150 people in Niger. Let <em>X</em> = the number of people who have access to the internet.</p>
+<ol><li>What is the probability distribution for <em>X</em>?</li><li>Using the formulas, calculate the mean and standard deviation of <em>X</em>.</li><li>Use your calculator to find the probability that 15 people in the sample have access to the internet.</li><li>Find the probability that at most ten people in the sample have access to the internet.</li><li>Find the probability that more than 25 people in the sample have access to the internet.</li></ol></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>The literacy rate for a nation measures the proportion of people age 15 and over that can read and write. The literacy rate in a certain country is 28.1%. Suppose you choose 15 people in that country at random. Let <em>X</em> = the number of people who are literate.</p>
+<ol><li>Sketch a graph of the probability distribution of <em>X</em>.</li><li>Using the formulas, calculate the (i) mean and (ii) standard deviation of <em>X</em>.</li><li>Find the probability that more than five people in the sample are literate. Is it is more likely that three people or four people are literate.</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>X</em> ~ <em>B</em>(15, 0.281)
+<figure><img src="CNX_Stats_C04_M05_001anno.png" alt="This histogram shows a binomial probability distribution. It is made up of bars that are fairly normally distributed. The x-axis shows values from 0 to 15, with bars from 0 to 9. The y-axis shows values from 0 to 0.25 in increments of 0.05."></figure></li><li>
+<ol><li>Mean = <em>μ</em> = <em>np</em> = 15(0.281) = 4.215</li><li>Standard Deviation = <em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mn>15</mn><mo stretchy="false">(</mo><mn>0.281</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>0.719</mn><mo stretchy="false">)</mo>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math> = 1.7409</li></ol></li><li><em>P</em>(<em>x</em> &gt; 5) = 1 – <em>P</em>(<em>x</em> ≤ 5) = 1 – binomcdf(15, 0.281, 5) = 1 – 0.7754 = 0.2246
+<br><em>P</em>(<em>x</em> = 3) = binompdf(15, 0.281, 3) = 0.1927
+<br><em>P</em>(<em>x</em> = 4) = binompdf(15, 0.281, 4) = 0.2259
+<br>It is more likely that four people are literate that three people are.</li></ol></div>
+</div>
+
+</div> <h2>Key terms</h2>
+<p><strong>Binomial Experiment</strong> a statistical experiment that satisfies the following three conditions:
+<ol><li>There are a fixed number of trials, <em>n</em>.</li><li>There are only two possible outcomes, called &quot;success&quot; and, &quot;failure,&quot; for each trial. The letter <em>p</em> denotes the probability of a success on one trial, and <em>q</em> denotes the probability of a failure on one trial.</li><li>The <em>n</em> trials are independent and are repeated using identical conditions.</li></ol>
+</p>
+  <p><strong>Bernoulli Trials</strong> an experiment with the following characteristics:
+<ol><li>There are only two possible outcomes called “success” and “failure” for each trial.</li><li>The probability <em>p</em> of a success is the same for any trial (so the probability <em>q</em> = 1 − <em>p</em> of a failure is the same for any trial).</li></ol>
+</p>
+
+<p><strong>Binomial Probability Distribution</strong> a discrete random variable (RV) that arises from Bernoulli trials; there are a fixed number, <em>n</em>, of independent trials. “Independent” means that the result of any trial (for example, trial one) does not affect the results of the following trials, and all trials are conducted under the same conditions. Under these circumstances the binomial RV <em>X</em> is defined as the number of successes in <em>n</em> trials. The notation is: <em>X</em> ~ <em>B</em>(<em>n</em>, <em>p</em>). The mean is <em>μ</em> = <em>np</em> and the standard deviation is <em>σ</em> = <math>
+ <mrow>
+  <msqrt>
+   <mrow>
+    <mi>n</mi><mi>p</mi><mi>q</mi>
+   </mrow>
+  </msqrt>
+
+ </mrow>
+</math>. The probability of exactly <em>x</em> successes in <em>n</em> trials is <br><em>P</em>(<em>X</em> = <em>x</em>) = <math>
+ <mrow>
+  <mrow><mo>(</mo>
+   <mtable columnalign="left">
+    <mtr>
+     <mtd>
+      <mi>n</mi>
+     </mtd>
+    </mtr>
+    <mtr>
+     <mtd>
+      <mi>x</mi>
+     </mtd>
+    </mtr>
+   </mtable>
+  <mo>)</mo></mrow>
+ </mrow>
+</math><em>p</em><sup>x</sup><em>q</em><sup>n − x</sup>.</p>
+
+</body></html>

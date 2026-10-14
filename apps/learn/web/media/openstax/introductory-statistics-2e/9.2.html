@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9.2 Outcomes and the Type I and Type II Errors · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 9.2 Outcomes and the Type I and Type II Errors. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors</p>
+<h1>9.2 Outcomes and the Type I and Type II Errors</h1>
+
+    <p>When you perform a hypothesis test, there are four possible outcomes depending on the actual truth (or falseness) of the null hypothesis <em>H<sub>0</sub></em> and the decision to reject or not. The outcomes are summarized in the following table:</p>
+
+  <table><tr><th>ACTION</th><th><em>H<sub>0</sub></em> IS ACTUALLY</th><th>...</th></tr><tr><td></td><td>True</td><td>False</td></tr><tr><td><strong>Do not reject <em>H<sub>0</sub></em></strong></td><td>Correct Outcome</td><td>Type II error</td></tr><tr><td><strong>Reject <em>H<sub>0</sub></em></strong></td><td>Type I Error</td><td>Correct Outcome</td></tr></table>
+  <p>The four possible outcomes in the table are:
+    <ol><li>The decision is <strong>not to reject <em>H<sub>0</sub></em></strong> when <strong><em>H<sub>0</sub></em> is true (correct decision).</strong></li><li>The decision is to <strong>reject <em>H<sub>0</sub></em></strong> when <strong><em>H<sub>0</sub></em> is true</strong> (incorrect decision known as a<strong>Type I error</strong>).</li><li>The decision is <strong>not to reject <em>H<sub>0</sub></em></strong> when, in fact, <strong><em>H<sub>0</sub></em> is false</strong> (incorrect decision known as a <strong>Type II error</strong>).</li><li>The decision is to <strong>reject <em>H<sub>0</sub></em></strong> when <strong><em>H<sub>0</sub></em> is false</strong> (<strong>correct decision</strong> whose probability is called the <strong>Power of the Test</strong>).</li></ol></p><p>Each of the errors occurs with a particular probability. The Greek letters <em>α</em> and <em>β</em> represent the probabilities.</p><p><em>α</em> = probability of a Type I error = <strong><em>P</em>(Type I error)</strong> = probability of rejecting the null hypothesis when the null hypothesis is true.</p><p><em>β</em> = probability of a Type II error = <strong><em>P</em>(Type II error)</strong> = probability of not rejecting the null hypothesis when the null hypothesis is false.</p><p><em>α</em> and <em>β</em> should be as small as possible because they are probabilities of errors. They are rarely zero.</p><p>The Power of the Test is 1 – <em>β</em>. Ideally, we want a high power that is as close to one as possible. Increasing the sample size can increase the Power of the Test.</p><p>The following are examples of Type I and Type II errors.</p>
+
+  <div class="example">
+    <p>Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: Navah&#x27;s rock climbing equipment is safe.</p>
+    <p><strong>Type I error</strong>: Navah thinks that her rock climbing equipment may not be safe when, in fact, it really is safe. <strong>Type II error</strong>: Navah thinks that her rock climbing equipment may be safe when, in fact, it is not safe.</p><p><strong><em>α</em> = probability</strong> that Navah thinks her rock climbing equipment may not be safe when, in fact, it really is safe. <strong><em>β</em> = probability</strong> that Navah thinks her rock climbing equipment may be safe when, in fact, it is not safe.</p><p>Notice that, in this case, the error with the greater consequence is the Type II error. (If Navah thinks her rock climbing equipment is safe, she will go ahead and use it.)</p>
+  </div>
+
+
+  <div class="note statistics try">
+    
+     <h3>Try It</h3>
+    <div class="exercise">
+    <div class="problem">
+  <p>Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the blood cultures contain no traces of pathogen <em>X</em>. State the Type I and Type II errors.</p>
+</div>
+  </div>
+
+  </div>
+
+  <div class="example"><p>Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: The victim of an automobile accident is alive when they arrive at the emergency room of a hospital.</p>
+
+    <p><strong>Type I error</strong>: The emergency crew thinks that the victim is dead when, in fact, the victim is alive. <strong>Type II error</strong>: The emergency crew does not know if the victim is alive when, in fact, the victim is dead.</p><p><strong><em>α</em> = probability</strong> that the emergency crew thinks the victim is dead when, in fact, the victim is really alive = <em>P</em>(Type I error).
+<strong><em>β</em> = probability</strong> that the emergency crew does not know if the victim is alive when, in fact, the victim is dead = <em>P</em>(Type II error).</p><p>The error with the greater consequence is the Type I error. (If the emergency crew thinks the victim is dead, they will not treat them.)</p>
+  </div>
+
+ <div class="note statistics try">
+
+<h3>Try It</h3>
+
+<div class="exercise"><div class="problem">
+  <p>Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: a patient is not sick. Which type of error has the greater consequence, Type I or Type II?</p></div>
+  </div>
+
+ </div>
+
+<div class="example"><p>A company called Genetic Labs claims to be able to increase the likelihood that a pregnancy will result in a male being born. Statisticians want to test the claim. Suppose that the null hypothesis, <em>H<sub>0</sub></em>, is: Genetic Labs has no effect on sex outcome.</p><p><strong>Type I error</strong>: This results when a true null hypothesis is rejected. In the context of this scenario, we would state that we believe that Genetic Labs influences the sex outcome, when in fact it has no effect. The probability of this error occurring is denoted by the Greek letter alpha, <em>α</em>.</p><p><strong>Type II error</strong>: This results when we fail to reject a false null hypothesis. In context, we would state that Genetic Labs does not influence the sex outcome of a pregnancy when, in fact, it does. The probability of this error occurring is denoted by the Greek letter beta, <em>β</em>.</p><p>The error of greater consequence would be the Type I error since people would use the Genetic Labs product in hopes of increasing the chances of having a male.</p>
+</div>
+
+  <div class="note statistics try"><h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>“Red tide” is a bloom of poison-producing algae–a few different species of a class of plankton called dinoflagellates. When the weather and water conditions cause these blooms, shellfish such as clams living in the area develop dangerous levels of a paralysis-inducing toxin. In Massachusetts, the Division of Marine Fisheries (DMF) monitors levels of the toxin in shellfish by regular sampling of shellfish along the coastline. If the mean level of toxin in clams exceeds 800 μg (micrograms) of toxin per kg of clam meat in any area, clam harvesting is banned there until the bloom is over and levels of toxin in clams subside. Describe both a Type I and a Type II error in this context, and state which error has the greater consequence.</p></div>
+
+</div></div><div class="example"><p>A certain experimental drug claims a cure rate of at least 75% for males with prostate cancer. Describe both the Type I and Type II errors in context. Which error is the more serious?</p><p><strong>Type I</strong>: A cancer patient believes the cure rate for the drug is less than 75% when it actually is at least 75%.</p><p><strong>Type II</strong>: A cancer patient believes the experimental drug has at least a 75% cure rate when it has a cure rate that is less than 75%.</p><p>In this scenario, the Type II error contains the more severe consequence. If a patient believes the drug works at least 75% of the time, this most likely will influence the patient’s (and doctor’s) choice about whether to use the drug as a treatment option.</p></div>
+
+  <div class="note statistics try">
+    
+    <h3>Try It</h3>
+    <p>Determine both Type I and Type II errors for the following scenario:</p>
+<p>Assume a null hypothesis, <em>H<sub>0</sub></em>, that states the percentage of adults with jobs is at least 88%.</p>
+
+    <div class="exercise">
+      <div class="problem">
+        <p>Identify the Type I and Type II errors from these four statements.
+          <ol><li>Not to reject the null hypothesis that the percentage of adults who have jobs is at least 88% when that percentage is actually less than 88%</li><li>Not to reject the null hypothesis that the percentage of adults who have jobs is at least 88% when the percentage is actually at least 88%.</li><li>Reject the null hypothesis that the percentage of adults who have jobs is at least 88% when the percentage is actually at least 88%.</li><li>Reject the null hypothesis that the percentage of adults who have jobs is at least 88% when that percentage is actually less than 88%.
+</li></ol>
+</p>
+</div>
+    </div>
+
+  </div>
+
+  <div class="section summary">
+    <h3>Chapter Review</h3>
+
+    <p>In every hypothesis test, the outcomes are dependent on a correct interpretation of the data. Incorrect calculations or misunderstood summary statistics can yield errors that affect the results. A <strong>Type I</strong> error occurs when a true null hypothesis is rejected. A <strong>Type II error</strong> occurs when a false null hypothesis is not rejected.</p>
+    <p>The probabilities of these errors are denoted by the Greek letters <em>α</em> and <em>β</em>, for a Type I and a Type II error respectively. The power of the test, 1 – <em>β</em>, quantifies the likelihood that a test will yield the correct result of a true alternative hypothesis being accepted. A high power is desirable.</p></div>
+
+<div class="section formula-review">
+<h3>Formula Review</h3>
+
+  <p><em>α</em> = probability of a Type I error = <em>P</em>(Type I error) = probability of rejecting the null hypothesis when the null hypothesis is true.</p><p><em>β</em> = probability of a Type II error = <em>P</em>(Type II error) = probability of not rejecting the null hypothesis when the null hypothesis is false.</p></div>
+
+<div class="section practice">
+<div class="exercise">
+  <div class="problem">
+  <p>
+The mean price of mid-sized cars in a region is $32,000. A test is conducted to see if the claim is true. State the Type I and Type II errors in complete sentences.
+  </p>
+</div>
+
+<div class="solution">
+  <p>Type I: The mean price of mid-sized cars is $32,000, but we conclude that it is not $32,000.</p>
+<p>Type II: The mean price of mid-sized cars is not $32,000, but we conclude that it is $32,000.</p>
+</div>
+</div>
+  <div class="exercise"><div class="problem">
+  <p>A sleeping bag is tested to withstand temperatures of –15 °F. You think the bag cannot stand temperatures that low. State the Type I and Type II errors in complete sentences.</p></div></div>
+  <div class="exercise"><div class="problem">
+  <p>For Exercise 9.12, what are <em>α</em> and <em>β</em> in words?
+  </p></div>
+
+<div class="solution">
+  <p><em>α</em> = the probability that you think the bag cannot withstand -15 degrees F, when in fact it can
+  </p><p><em>β</em> = the probability that you think the bag can withstand -15 degrees F, when in fact it cannot</p></div>
+</div>
+
+  <div class="exercise"><div class="problem">
+  <p>In words, describe 1 – <em>β</em> For Exercise 9.12.
+  </p></div></div><div class="exercise"><div class="problem">
+  <p>A group of doctors is deciding whether or not to perform an operation. Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the surgical procedure will go well. State the Type I and Type II errors in complete sentences.</p>
+</div>
+
+<div class="solution">
+  <p>
+Type I: The procedure will go well, but the doctors think it will not.
+  </p>
+<p>Type II: The procedure will not go well, but the doctors think it will.</p>
+</div>
+</div><div class="exercise"><div class="problem">
+  <p>A group of doctors is deciding whether or not to perform an operation. Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the surgical procedure will go well. Which is the error with the greater consequence?</p>
+</div></div><div class="exercise">
+    <div class="problem">
+  <p>The power of a test is 0.981. What is the probability of a Type II error?</p>
+</div>
+
+<div class="solution">
+  <p>0.019</p>
+</div>
+</div><div class="exercise"><div class="problem">
+  <p>A group of divers is exploring an old sunken ship. Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the sunken ship does not contain buried treasure. State the Type I and Type II errors in complete sentences.</p>
+</div></div><div class="exercise"><div class="problem">
+  <p>A microbiologist is testing a water sample for E-coli. Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the sample does not contain E-coli. The probability that the sample does not contain E-coli, but the microbiologist thinks it does is 0.012. The probability that the sample does contain E-coli, but the microbiologist thinks it does not is 0.002. What is the power of this test?</p>
+</div>
+
+<div class="solution">
+  <p>0.998</p>
+</div>
+  </div>
+
+  <div class="exercise"><div class="problem">
+  <p>A microbiologist is testing a water sample for E-coli. Suppose the null hypothesis, <em>H<sub>0</sub></em>, is: the sample contains E-coli. Which is the error with the greater consequence?</p>
+</div></div></div>
+
+
+<div class="section free-response">
+<h3>Homework</h3>
+<div class="exercise">
+  <div class="problem">
+  <p>State the Type I and Type II errors in complete sentences given the following statements.</p>
+    <ol><li>The mean number of years Americans work before retiring is 34.</li><li>At most 60% of Americans vote in presidential elections.</li><li>The mean starting salary for San Jose State University graduates is at least $100,000 per year.</li><li>Twenty-nine percent of high school seniors get drunk each month.</li><li>Fewer than 5% of adults ride the bus to work in Los Angeles.</li><li>The mean number of cars a person owns in their lifetime is not more than ten.</li><li>About half of Americans prefer to live away from cities, given the choice.</li><li>Europeans have a mean paid vacation each year of six weeks.</li><li>The chance of developing breast cancer is under 11% for females.</li><li>Private universities mean tuition cost is more than $20,000 per year.</li></ol>
+
+</div>
+
+<div class="solution">
+  <ol><li>Type I error: We conclude that the mean is not 34 years, when it really is 34 years. Type II error: We conclude that the mean is 34 years, when in fact it really is not 34 years.</li><li>Type I error: We conclude that more than 60% of Americans vote in presidential elections, when the actual percentage is at most 60%.Type II error: We conclude that at most 60% of Americans vote in presidential elections when, in fact, more than 60% do.</li><li>Type I error: We conclude that the mean starting salary is less than $100,000, when it really is at least $100,000. Type II error: We conclude that the mean starting salary is at least $100,000 when, in fact, it is less than $100,000.</li><li>Type I error: We conclude that the proportion of high school seniors who get drunk each month is not 29%, when it really is 29%. Type II error: We conclude that the proportion of high school seniors who get drunk each month is 29% when, in fact, it is not 29%.</li><li>Type I error: We conclude that fewer than 5% of adults ride the bus to work in Los Angeles, when the percentage that do is really 5% or more. Type II error: We conclude that 5% or more adults ride the bus to work in Los Angeles when, in fact, fewer that 5% do. </li><li>Type I error: We conclude that the mean number of cars a person owns in their lifetime is more than 10, when in reality it is not more than 10. Type II error: We conclude that the mean number of cars a person owns in their lifetime is not more than 10 when, in fact, it is more than 10.</li><li>Type I error: We conclude that the proportion of Americans who prefer to live away from cities is not about half, though the actual proportion is about half. Type II error: We conclude that the proportion of Americans who prefer to live away from cities is half when, in fact, it is not half.</li><li>Type I error: We conclude that the duration of paid vacations each year for Europeans is not six weeks, when in fact it is six weeks. Type II error: We conclude that the duration of paid vacations each year for Europeans is six weeks when, in fact, it is not.</li><li>Type I error: We conclude that the proportion is less than 11%, when it is really at least 11%. Type II error: We conclude that the proportion of females who develop breast cancer is at least 11%, when in fact it is less than 11%.</li><li>Type I error: We conclude that the average tuition cost at private universities is more than $20,000, though in reality it is at most $20,000. Type II error: We conclude that the average tuition cost at private universities is at most $20,000 when, in fact, it is more than $20,000.</li></ol>
+</div>
+</div>
+
+  <div class="exercise"><div class="problem">
+  <p>For statements a-j in Exercise 9.66, answer the following in complete sentences.</p><ol><li>State a consequence of committing a Type I error.</li><li>State a consequence of committing a Type II error.</li></ol>
+</div></div><div class="exercise">
+<div class="problem">
+<p>When a new drug is created, the pharmaceutical company must subject it to testing before receiving the necessary permission from the Food and Drug Administration (FDA) to market the drug. Suppose the null hypothesis is “the drug is unsafe.” What is the Type II Error?</p>
+  <ol><li>To conclude the drug is safe when in, fact, it is unsafe.</li><li>Not to conclude the drug is safe when, in fact, it is safe.</li><li>To conclude the drug is safe when, in fact, it is safe.</li><li>Not to conclude the drug is unsafe when, in fact, it is unsafe.</li></ol>
+</div>
+<div class="solution">
+<p>b</p></div>
+</div>
+
+<div class="exercise"><div class="problem"><p>A statistics instructor believes that fewer than 20% of Evergreen Valley College (EVC) students attended the opening midnight showing of the latest Marvel Universe movie. The instructor surveys 84 students and finds that 11 of them attended the midnight showing. The Type I error is to conclude that the percent of EVC students who attended is ________.</p>
+  <ol><li>at least 20%, when in fact, it is less than 20%.</li><li>20%, when in fact, it is 20%.</li><li>less than 20%, when in fact, it is at least 20%.</li><li>less than 20%, when in fact, it is less than 20%.</li></ol>
+  </div></div><div class="exercise"><div class="problem">
+<p>It is believed that Lake Tahoe Community College (LTCC) Intermediate Algebra students get less than seven hours of sleep per night, on average. A survey of 22 LTCC Intermediate Algebra students generated a mean of 7.24 hours with a standard deviation of 1.93 hours. At a level of significance of 5%, do LTCC Intermediate Algebra students get less than seven hours of sleep per night, on average?</p>
+<p>The Type II error is not to reject that the mean number of hours of sleep LTCC students get per night is at least seven when, in fact, the mean number of hours</p>
+  <ol><li>is more than seven hours.</li><li>is at most seven hours.</li><li>is at least seven hours.</li><li>is less than seven hours.</li></ol>
+
+</div>
+
+<div class="solution"><p>d</p></div>
+</div><div class="exercise"><div class="problem"><p>Previously, an organization reported that teenagers spent 4.5 hours per week, on average, on the phone. The organization thinks that, currently, the mean is higher. Fifteen randomly chosen teenagers were asked how many hours per week they spend on the phone. The sample mean was 4.75 hours with a sample standard deviation of 2.0. Conduct a hypothesis test, the Type I error is:</p><ol><li>to conclude that the current mean hours per week is higher than 4.5, when in fact, it is higher</li><li>to conclude that the current mean hours per week is higher than 4.5, when in fact, it is the same</li><li>to conclude that the mean hours per week currently is 4.5, when in fact, it is higher</li><li>to conclude that the mean hours per week currently is no higher than 4.5, when in fact, it is not higher</li></ol></div></div></div>
+
+ <h2>Key terms</h2>
+<p><strong>Type I Error</strong> The decision is to reject the null hypothesis when, in fact, the null hypothesis is true.
+    </p>
+
+
+<p><strong>Type II Error</strong> The decision is not to reject the null hypothesis when, in fact, the null hypothesis is false.
+    </p>
+
+
+
+</body></html>

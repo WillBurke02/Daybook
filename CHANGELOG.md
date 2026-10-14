@@ -1,5 +1,15 @@
 # Changes
 
+## 4.0.18 — 15 October 2026
+
+- **25 more lessons from OpenStax**, word for word with a link to each section as published: measurements
+  and uncertainty, waves, superposition, EMF and internal resistance, electric and magnetic fields,
+  induction, projectiles, moments, friction, work and power, rotation, vibration, damping, Bernoulli,
+  heat transfer, the first law, differential equations, matrices, corrosion, and five statistics lessons
+  (sampling, data, probability, distributions, hypothesis tests).
+- Imported exercises keep their instruction ("For the following exercises, …"), and ones that lean on a
+  figure or an earlier exercise are left out of the check.
+
 ## 4.0.17 — 15 October 2026
 
 - **Plainer wording**: hints and notes across Log, Learn, Money, Home and Admin say less. The ones

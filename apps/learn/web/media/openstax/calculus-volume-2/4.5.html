@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.5 First-Order Linear Equations · Calculus Volume 2</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Calculus Volume 2, Strang, Herman et al., section 4.5 First-Order Linear Equations. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/calculus-volume-2/pages/4-5-first-order-linear-equations</p>
+<h1>4.5 First-Order Linear Equations</h1>
+
+<p>Earlier, we studied an application of a first-order differential equation that involved solving for the velocity of an object. In particular, if a ball is thrown upward with an initial velocity of <math><mrow><msub><mi>v</mi><mn>0</mn></msub></mrow></math> ft/s, then an initial-value problem that describes the velocity of the ball after <math><mi>t</mi></math> seconds is given by</p>
+<div class="eq"><math><mrow><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mn>−32</mn><mo>,</mo><mspace width="1em"></mspace><mi>v</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>.</mo></mrow></math></div>
+<p>This model assumes that the only force acting on the ball is gravity. Now we add to the problem by allowing for the possibility of <strong>air resistance</strong> acting on the ball.</p>
+<p>Air resistance always acts in the direction opposite to motion. Therefore if an object is rising, air resistance acts in a downward direction. If the object is falling, air resistance acts in an upward direction (the figure). There is no exact relationship between the velocity of an object and the air resistance acting on it. For very small objects, air resistance is proportional to velocity; that is, the force due to air resistance is numerically equal to some constant <math><mi>k</mi></math> times <math><mi>v</mi><mo>.</mo></math> For larger (e.g., baseball-sized) objects, depending on the shape, air resistance can be approximately proportional to the square of the velocity. In fact, air resistance may be proportional to <math><mrow><msup><mi>v</mi><mrow><mn>1.5</mn></mrow></msup><mo>,</mo></mrow></math> or <math><mrow><msup><mi>v</mi><mrow><mn>0.9</mn></mrow></msup><mo>,</mo></mrow></math> or some other power of <math><mrow><mi>v</mi><mo>.</mo></mrow></math></p>
+<figure><img src="CNX_Calc_Figure_08_05_001.jpg" alt="A diagram of a baseball with an arrow above it pointing up and an arrow below it pointing down. The upper arrow is labeled “air resistance –kv” and the lower arrow is labeled “g = -9.8 m/sec ^ 2.”"><figcaption>Forces acting on a moving baseball: gravity acts in a downward direction and air resistance acts in a direction opposite to the direction of motion.</figcaption></figure>
+<p>We will work with the linear approximation for air resistance. If we assume <math><mrow><mi>k</mi><mo>&gt;</mo><mn>0</mn><mo>,</mo></mrow></math> then the expression for the force <math><mrow><msub><mi>F</mi><mi>A</mi></msub></mrow></math> due to air resistance is given by <math><mrow><msub><mi>F</mi><mi>A</mi></msub><mo>=</mo><mtext>−</mtext><mi>k</mi><mi>v</mi><mo>.</mo></mrow></math> Therefore the sum of the forces acting on the object is equal to the sum of the gravitational force and the force due to air resistance. This, in turn, is equal to the mass of the object multiplied by its acceleration at time <math><mi>t</mi></math> (Newton’s second law). This gives us the differential equation</p>
+<div class="eq"><math><mrow><mi>m</mi><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mtext>−</mtext><mi>k</mi><mi>v</mi><mo>−</mo><mi>m</mi><mi>g</mi><mo>.</mo></mrow></math></div>
+<p>Finally, we impose an initial condition <math><mrow><mi>v</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>,</mo></mrow></math> where <math><mrow><msub><mi>v</mi><mn>0</mn></msub></mrow></math> is the initial velocity measured in meters per second. This makes <math><mrow><mi>g</mi><mo>=</mo><mn>9.8</mn><msup><mrow><mspace width="0.2em"></mspace><mtext>m/s</mtext></mrow><mn>2</mn></msup><mo>.</mo></mrow></math> The initial-value problem becomes</p>
+<div class="eq"><math><mrow><mi>m</mi><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mtext>−</mtext><mi>k</mi><mi>v</mi><mo>−</mo><mi>m</mi><mi>g</mi><mo>,</mo><mspace width="1em"></mspace><mi>v</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><msub><mi>v</mi><mn>0</mn></msub><mo>.</mo></mrow></math></div>
+<p>The differential equation in this initial-value problem is an example of a first-order linear differential equation. (Recall that a differential equation is first-order if the highest-order derivative that appears in the equation is <math><mn>1.</mn><mo stretchy="false">)</mo></math> In this section, we study first-order linear equations and examine a method for finding a general solution to these types of equations, as well as solving initial-value problems involving them.</p>
+<div class="note">
+<h3>Definition</h3>
+<p>A first-order differential equation is <strong>linear</strong> if it can be written in the form</p>
+<div class="eq"><math><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mi>b</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>c</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo></mrow></math></div>
+<p>where <math><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><mi>b</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> and <math><mrow><mi>c</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> are arbitrary functions of <math><mrow><mi>x</mi><mo>.</mo></mrow></math></p>
+</div>
+<p>Remember that the unknown function <math><mi>y</mi></math> depends on the variable <math><mrow><mi>x</mi><mo>;</mo></mrow></math> that is, <math><mi>x</mi></math> is the independent variable and <math><mi>y</mi></math> is the dependent variable. Some examples of first-order linear differential equations are</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mrow><mo>(</mo><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo><mo>+</mo><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>3</mn></mrow><mo>)</mo></mrow><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mtd></mtr><mtr><mtd columnalign="right"><mrow><mo>(</mo><mrow><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo><mo>−</mo><mrow><mo>(</mo><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mtext>cot</mtext><mspace width="0.1em"></mspace><mi>x</mi></mtd></mtr><mtr><mtd columnalign="right"><mn>4</mn><mi>x</mi><mi>y</mi><mo>′</mo><mo>+</mo><mrow><mo>(</mo><mrow><mn>3</mn><mspace width="0.1em"></mspace><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>4</mn><mi>x</mi><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Examples of first-order nonlinear differential equations include</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msup><mrow><mo>(</mo><mrow><mi>y</mi><mo>′</mo></mrow><mo>)</mo></mrow><mn>4</mn></msup><mo>−</mo><msup><mrow><mo>(</mo><mrow><mi>y</mi><mo>′</mo></mrow><mo>)</mo></mrow><mn>3</mn></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>(</mo><mrow><mn>3</mn><mi>x</mi><mo>−</mo><mn>2</mn></mrow><mo>)</mo></mrow><mrow><mo>(</mo><mrow><mi>y</mi><mo>+</mo><mn>4</mn></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><mn>4</mn><mi>y</mi><mo>′</mo><mo>+</mo><mn>3</mn><msup><mi>y</mi><mn>3</mn></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>4</mn><mi>x</mi><mo>−</mo><mn>5</mn></mtd></mtr><mtr><mtd columnalign="right"><msup><mrow><mo>(</mo><mrow><mi>y</mi><mo>′</mo></mrow><mo>)</mo></mrow><mn>2</mn></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>y</mi><mo>+</mo><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>These equations are nonlinear because of terms like <math><mrow><msup><mrow><mrow><mo>(</mo><msup><mi>y</mi><mo>′</mo></msup><mo>)</mo></mrow></mrow><mn>4</mn></msup><mo>,</mo><msup><mi>y</mi><mn>3</mn></msup><mo>,</mo></mrow></math> etc. Due to these terms, it is impossible to put these equations into the same form as the equation.</p>
+<div class="section">
+<h3>Standard Form</h3>
+<p>Consider the differential equation</p>
+<div class="eq"><math><mrow><mrow><mo>(</mo><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow><mo>)</mo></mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>3</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>.</mo></mrow></math></div>
+<p>Our main goal in this section is to derive a solution method for equations of this form. It is useful to have the coefficient of <math><msup><mi>y</mi><mo>′</mo></msup></math> be equal to <math><mrow><mn>1</mn><mo>.</mo></mrow></math> To make this happen, we divide both sides by <math><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mo>.</mo></mrow></math></p>
+<div class="eq"><math><mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mrow><mo>(</mo><mrow><mfrac><mrow><mi>x</mi><mo>−</mo><mn>3</mn></mrow><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow></mfrac></mrow><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>y</mi><mo>=</mo><mfrac><mrow><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mrow><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow></mfrac></mrow></math></div>
+<p>This is called the <strong>standard form</strong> of the differential equation. We will use it later when finding the solution to a general first-order linear differential equation. Returning to the equation, we can divide both sides of the equation by <math><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> This leads to the equation</p>
+<div class="eq"><math><mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mfrac><mrow><mi>b</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac><mi>y</mi><mo>=</mo><mfrac><mrow><mi>c</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>Now define <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mi>b</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mi>c</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac><mo>.</mo></mrow></math> Then the equation becomes</p>
+<div class="eq"><math><mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>y</mi><mo>=</mo><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>.</mo></mrow></math></div>
+<p>We can write any first-order linear differential equation in this form, and this is referred to as the standard form for a first-order linear differential equation.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Writing First-Order Linear Equations in Standard Form</h6>
+<p>Put each of the following first-order linear differential equations into standard form. Identify <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> for each equation.</p>
+<ol><li><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>4</mn><mi>y</mi></mrow></math></li><li><math><mrow><mfrac><mrow><mn>3</mn><mi>x</mi><mi>y</mi><mo>′</mo></mrow><mrow><mn>4</mn><mi>y</mi><mo>−</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mn>2</mn></mrow></math> (here <math><mrow><mi>x</mi><mo>≠</mo><mn>0</mn><mo stretchy="false">)</mo></mrow></math></li><li><math><mrow><mi>y</mi><mo>=</mo><mn>3</mn><mi>y</mi><mo>′</mo><mo>−</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>5</mn></mrow></math></li></ol>
+</div>
+<div class="solution">
+<ol><li>Add <math><mrow><mn>4</mn><mi>y</mi></mrow></math> to both sides:<br>
+<div class="eq"><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mn>4</mn><mi>y</mi><mo>=</mo><mn>3</mn><mi>x</mi><mo>.</mo></mrow></math></div><br>
+In this equation, <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>4</mn></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3</mn><mi>x</mi><mo>.</mo></mrow></math></li><li>Multiply both sides by <math><mrow><mn>4</mn><mi>y</mi><mo>−</mo><mn>3</mn><mo>,</mo></mrow></math> then subtract <math><mrow><mn>8</mn><mi>y</mi></mrow></math> from each side:<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mfrac><mrow><mn>3</mn><mi>x</mi><mi>y</mi><mo>′</mo></mrow><mrow><mn>4</mn><mi>y</mi><mo>−</mo><mn>3</mn></mrow></mfrac></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="right"><mn>3</mn><mi>x</mi><mi>y</mi><mo>′</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>2</mn><mrow><mo>(</mo><mrow><mn>4</mn><mi>y</mi><mo>−</mo><mn>3</mn></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><mn>3</mn><mi>x</mi><mi>y</mi><mo>′</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>8</mn><mi>y</mi><mo>−</mo><mn>6</mn></mtd></mtr><mtr><mtd columnalign="right"><mn>3</mn><mi>x</mi><mi>y</mi><mo>′</mo><mo>−</mo><mn>8</mn><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−6</mn><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Finally, divide both sides by <math><mrow><mn>3</mn><mi>x</mi></mrow></math> to make the coefficient of <math><mrow><mi>y</mi><mo>′</mo></mrow></math> equal to <math><mrow><mn>1</mn><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mrow><mi>y</mi><mo>′</mo><mo>−</mo><mfrac><mn>8</mn><mrow><mn>3</mn><mi>x</mi></mrow></mfrac><mi>y</mi><mo>=</mo><mo>−</mo><mfrac><mn>2</mn><mrow><mi>x</mi></mrow></mfrac><mo>.</mo></mrow></math></div> This is allowable because in the original statement of this problem we assumed that <math><mrow><mi>x</mi><mo>≠</mo><mn>0</mn><mo>.</mo></mrow></math> (If <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math> then the original equation becomes <math><mrow><mn>0</mn><mo>=</mo><mn>2</mn><mo>,</mo></mrow></math> which is clearly a false statement.)<br>
+In this equation, <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mo>−</mo><mfrac><mn>8</mn><mrow><mn>3</mn><mi>x</mi></mrow></mfrac></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mo>−</mo><mfrac><mn>2</mn><mrow><mi>x</mi></mrow></mfrac><mo>.</mo></mrow></math></li><li>Subtract <math><mi>y</mi></math> from each side and add <math><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>5</mn><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mrow><mn>3</mn><mi>y</mi><mo>′</mo><mo>−</mo><mi>y</mi><mo>=</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>5</mn><mo>.</mo></mrow></math></div><br>
+Next divide both sides by <math><mrow><mn>3</mn><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mrow><mi>y</mi><mo>′</mo><mo>−</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mi>y</mi><mo>=</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mfrac><mn>5</mn><mn>3</mn></mfrac><mo>.</mo></mrow></math></div><br>
+In this equation, <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mfrac><mn>5</mn><mn>3</mn></mfrac><mo>.</mo></mrow></math></li></ol></div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Put the equation <math><mrow><mfrac><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo></mrow><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>3</mn><mi>y</mi><mo>−</mo><mn>4</mn></mrow></mfrac><mo>=</mo><mn>5</mn></mrow></math> into standard form and identify <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mfrac><mrow><mn>15</mn></mrow><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mfrac><mi>y</mi><mo>=</mo><mfrac><mrow><mn>10</mn><mi>x</mi><mo>−</mo><mn>20</mn></mrow><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mfrac><mo>;</mo><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>15</mn></mrow><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mfrac></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>10</mn><mi>x</mi><mo>−</mo><mn>20</mn></mrow><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Multiply both sides by the common denominator, then collect all terms involving <math><mi>y</mi></math> on one side.</p>
+</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>Integrating Factors</h3>
+<p>We now develop a solution technique for any first-order linear differential equation. We start with the standard form of a first-order linear differential equation:</p>
+<div class="eq"><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo><mo>.</mo></mrow></mrow></math></div>
+<p>The first term on the left-hand side of the equation is the derivative of the unknown function, and the second term is the product of a known function with the unknown function. This is somewhat reminiscent of the product rule from the Differentiation Rules section. If we multiply the equation by a yet-to-be-determined function <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> then the equation becomes</p>
+<div class="eq"><math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>The left-hand side the equation can be matched perfectly to the product rule:</p>
+<div class="eq"><math><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>[</mo><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>]</mo></mrow><mo>=</mo><msup><mi>f</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><msup><mi>g</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Matching term by term gives <math><mrow><mi>y</mi><mo>=</mo><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> and <math><mrow><msup><mi>g</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> Taking the derivative of <math><mrow><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> and setting it equal to the right-hand side of <math><mrow><msup><mi>g</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> leads to</p>
+<div class="eq"><math><mrow><msup><mi>μ</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>This is a first-order, separable differential equation for <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> We know <math><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></math> because it appears in the differential equation we are solving. Separating variables and integrating yields</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mfrac><mrow><msup><mi>μ</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mrow><msup><mi>μ</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></mrow></mrow></mstyle><mi>d</mi><mi>x</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mtext>ln</mtext><mrow><mo>|</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>|</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><msup><mi>e</mi><mrow><mtext>ln</mtext><mrow><mo>|</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>|</mo></mrow></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>+</mo><mi>C</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mrow><mo>|</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>|</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><msub><mi>C</mi><mn>1</mn></msub><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><msub><mi>C</mi><mn>2</mn></msub><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Here <math><mrow><msub><mi>C</mi><mn>2</mn></msub></mrow></math> can be an arbitrary (positive or negative) constant. This leads to a general method for solving a first-order linear differential equation. We first multiply both sides of the equation by the <strong>integrating factor</strong> <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> This gives</p>
+<div class="eq"><math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>The left-hand side of the equation can be rewritten as <math><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>(</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi></mrow><mo>)</mo></mrow><mo>.</mo></mrow></math></p>
+<div class="eq"><math><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>(</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi></mrow><mo>)</mo></mrow><mo>=</mo><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Next integrate both sides of the equation with respect to <math><mrow><mi>x</mi><mo>.</mo></mrow></math></p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>(</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi></mrow><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Divide both sides of the equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mtext>:</mtext></mrow></math></p>
+<div class="eq"><math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac><mrow><mo>[</mo><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi><mo>+</mo><mi>C</mi></mrow></mrow></mstyle></mrow><mo>]</mo></mrow><mo>.</mo></mrow></math></div>
+<p>Since <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> was previously calculated, we are now finished. An important note about the integrating constant <math><mrow><mi>C</mi><mtext>:</mtext></mrow></math> It may seem that we are inconsistent in the usage of the integrating constant. However, the integral involving <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> is necessary in order to find an integrating factor for the equation. Only one integrating factor is needed in order to solve the equation; therefore, it is safe to assign a value for <math><mi>C</mi></math> for this integral. We chose <math><mrow><mi>C</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> When calculating the integral inside the brackets in the equation, it is necessary to keep our options open for the value of the integrating constant, because our goal is to find a general family of solutions to the equation. This integrating factor guarantees just that.</p>
+<div class="note problem-solving">
+<h4>Solving a First-order Linear Differential Equation</h4>
+<ol><li>Put the equation into standard form and identify <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></li><li>Calculate the integrating factor <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup><mo>.</mo></mrow></math></li><li>Multiply both sides of the differential equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></li><li>Integrate both sides of the equation obtained in step <math><mn>3</mn><mo>,</mo></math> and divide both sides by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></li><li>If there is an initial condition, determine the value of <math><mrow><mi>C</mi><mo>.</mo></mrow></math></li></ol>
+</div>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>Solving a First-order Linear Equation</h6>
+<p>Find a general solution for the differential equation <math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>+</mo><mn>3</mn><mi>y</mi><mo>=</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>3</mn><mi>x</mi><mo>.</mo></mrow></math> Assume <math><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<ol><li>To put this differential equation into standard form, divide both sides by <math><mrow><mi>x</mi><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mfrac><mn>3</mn><mi>x</mi></mfrac><mi>y</mi><mo>=</mo><mn>4</mn><mi>x</mi><mo>−</mo><mn>3</mn><mo>.</mo></mrow></math></div><br>
+Therefore <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mn>3</mn><mi>x</mi></mfrac></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>4</mn><mi>x</mi><mo>−</mo><mn>3</mn><mo>.</mo></mrow></math></li><li>The integrating factor is <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mrow><mo>(</mo><mrow><mn>3</mn><mtext>/</mtext><mi>x</mi></mrow><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mn>3</mn><mspace width="0.1em"></mspace><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></msup><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>.</mo></mrow></math></li><li>Multiplying both sides of the differential equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> gives us<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msup><mi>x</mi><mn>3</mn></msup><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mrow><mo>(</mo><mrow><mfrac><mn>3</mn><mi>x</mi></mfrac></mrow><mo>)</mo></mrow><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><msup><mi>x</mi><mn>3</mn></msup><mrow><mo>(</mo><mrow><mn>4</mn><mi>x</mi><mo>−</mo><mn>3</mn></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><msup><mi>x</mi><mn>3</mn></msup><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>4</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup></mtd></mtr><mtr><mtd columnalign="right"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>(</mo><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi></mrow><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>4</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup><mo>.</mo></mtd></mtr></mtable></math></div></li><li>Integrate both sides of the equation.<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>(</mo><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi></mrow><mo>)</mo></mrow></mrow></mrow></mstyle><mi>d</mi><mi>x</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>4</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup></mrow></mrow></mstyle><mi>d</mi><mi>x</mi></mtd></mtr><mtr><mtd columnalign="right"><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>4</mn><msup><mi>x</mi><mn>5</mn></msup></mrow><mn>5</mn></mfrac><mo>−</mo><mfrac><mrow><mn>3</mn><msup><mi>x</mi><mn>4</mn></msup></mrow><mn>4</mn></mfrac><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow><mn>5</mn></mfrac><mo>−</mo><mfrac><mrow><mn>3</mn><mi>x</mi></mrow><mn>4</mn></mfrac><mo>+</mo><mi>C</mi><msup><mi>x</mi><mrow><mn>−3</mn></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div></li><li>There is no initial value, so the problem is complete.</li></ol>
+</div>
+<p>
+<h5>Analysis</h5>
+<p>You may have noticed the condition that was imposed on the differential equation; namely, <math><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow></math> For any nonzero value of <math><mrow><mi>C</mi><mo>,</mo></mrow></math> the general solution is not defined at <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> Furthermore, when <math><mrow><mi>x</mi><mo>&lt;</mo><mn>0</mn><mo>,</mo></mrow></math> the integrating factor changes. The integrating factor is given by the equation as <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mrow></mstyle><mi>d</mi><mi>x</mi></mrow></msup><mo>.</mo></mrow></math> For this <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> we get</p>
+<div class="eq"><math><mrow><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi><mo>=</mo></mrow></mrow></mstyle></mrow></msup><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mo stretchy="false">(</mo><mn>3</mn><mtext>/</mtext><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mn>3</mn><mspace width="0.1em"></mspace><mtext>ln</mtext><mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow></mrow></msup><mo>=</mo><msup><mrow><mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow></mrow><mn>3</mn></msup><mo>,</mo></mrow></math></div>
+<p>since <math><mrow><mi>x</mi><mo>&lt;</mo><mn>0</mn><mo>.</mo></mrow></math> The behavior of the general solution changes at <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math> largely due to the fact that <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> is not defined there.</p>
+</p>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Find the general solution to the differential equation <math><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>2</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>y</mi><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>.</mo></mrow></math> Assume <math><mrow><mi>x</mi><mo>&gt;</mo><mn>2</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mfrac><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>C</mi></mrow><mrow><mi>x</mi><mo>−</mo><mn>2</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h5>Hint</h5>
+<p>Use the method outlined in the problem-solving strategy for first-order linear differential equations.</p>
+</p>
+</div>
+</div>
+<p>Now we use the same strategy to find the solution to an initial-value problem.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h6>A First-order Linear Initial-Value Problem</h6>
+<p>Solve the initial-value problem</p>
+<div class="eq"><math><mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mn>3</mn><mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn><mo>,</mo><mspace width="1em"></mspace><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn><mo>.</mo></mrow></math></div>
+</div>
+<div class="solution">
+<ol><li>This differential equation is already in standard form with <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>3</mn></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn><mo>.</mo></mrow></math></li><li>The integrating factor is <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>3</mn><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>.</mo></mrow></math></li><li>Multiplying both sides of the differential equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> gives<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mn>3</mn><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>(</mo><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>[</mo><mrow><mi>y</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mrow><mo>]</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>(</mo><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Integrate both sides of the equation:<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mrow><mo>[</mo><mrow><mi>y</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mrow><mo>]</mo></mrow><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mrow><mo>(</mo><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mrow><mn>3</mn></mfrac><mrow><mo>(</mo><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>−</mo><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mn>2</mn><mn>3</mn></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mrow><mo>(</mo><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mn>3</mn></mfrac><mo>−</mo><mfrac><mrow><mn>2</mn><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mrow><mn>9</mn></mfrac><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mn>3</mn></mfrac><mo>−</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−3</mn><mi>x</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>2</mn><mi>x</mi></mrow><mn>3</mn></mfrac><mo>−</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−3</mn><mi>x</mi></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div></li><li>Now substitute <math><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math> and <math><mrow><mi>y</mi><mo>=</mo><mn>3</mn></mrow></math> into the general solution and solve for <math><mrow><mi>C</mi><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mi>y</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mn>2</mn><mn>3</mn></mfrac><mi>x</mi><mo>−</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−3</mn><mi>x</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mn>3</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mn>2</mn><mn>3</mn></mfrac><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>−</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−3</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mn>3</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mo>−</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>C</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>32</mn></mrow><mn>9</mn></mfrac><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Therefore the solution to the initial-value problem is<br>
+<div class="eq"><math><mrow><mi>y</mi><mo>=</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mi>x</mi><mo>−</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>+</mo><mfrac><mrow><mn>32</mn></mrow><mn>9</mn></mfrac><msup><mi>e</mi><mrow><mn>−3</mn><mi>x</mi></mrow></msup><mo>.</mo></mrow></math></div></li></ol>
+</div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>Solve the initial-value problem <math><mrow><mi>y</mi><mo>′</mo><mo>−</mo><mn>2</mn><mi>y</mi><mo>=</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>3</mn><mspace width="1em"></mspace><mi>y</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>−2</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mi>y</mi><mo>=</mo><mo>-</mo><mn>2</mn><mi>x</mi><mo>-</mo><mfrac><mn>5</mn><mn>2</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>e</mi><mrow><mn>2</mn><mi>x</mi></mrow></msup></math></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>Applications of First-order Linear Differential Equations</h3>
+<p>We look at two different applications of first-order linear differential equations. The first involves air resistance as it relates to objects that are rising or falling; the second involves an electrical circuit. Other applications are numerous, but most are solved in a similar fashion.</p>
+<div class="section">
+<h4>Free fall with air resistance</h4>
+<p>We discussed air resistance at the beginning of this section. The next example shows how to apply this concept for a ball in vertical motion. Other factors can affect the force of air resistance, such as the size and shape of the object, but we ignore them here.</p>
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<h7>A Ball with Air Resistance</h7>
+<p>A racquetball is hit straight upward with an initial velocity of <math><mn>2</mn></math> m/s. The mass of a racquetball is approximately <math><mrow><mn>0.0427</mn></mrow></math> kg. Air resistance acts on the ball with a force numerically equal to <math><mrow><mn>0.5</mn><mi>v</mi><mo>,</mo></mrow></math> where <math><mi>v</mi></math> represents the velocity of the ball at time <math><mrow><mi>t</mi><mo>.</mo></mrow></math></p>
+<ol><li>Find the velocity of the ball as a function of time.</li><li>How long does it take for the ball to reach its maximum height?</li><li>If the ball is hit from an initial height of <math><mn>1</mn></math> meter, how high will it reach?</li></ol>
+</div>
+<div class="solution">
+<ol><li>The mass <math><mrow><mi>m</mi><mo>=</mo><mn>0.0427</mn><mspace width="0.2em"></mspace><mtext>kg</mtext><mo>,</mo><mi>k</mi><mo>=</mo><mn>0.5</mn><mo>,</mo></mrow></math> and <math><mrow><mi>g</mi><mo>=</mo><mn>9.8</mn><msup><mrow><mspace width="0.2em"></mspace><mtext>m/s</mtext></mrow><mn>2</mn></msup><mo>.</mo></mrow></math> The initial velocity is <math><mrow><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn></mrow></math> m/s. Therefore the initial-value problem is<br>
+<div class="eq"><math><mrow><mn>0.0427</mn><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mn>−0.5</mn><mi>v</mi><mo>−</mo><mn>0.0427</mn><mrow><mo>(</mo><mrow><mn>9.8</mn></mrow><mo>)</mo></mrow><mo>,</mo><mspace width="1em"></mspace><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><mo>.</mo></mrow></math></div><br>
+Dividing the differential equation by <math><mrow><mn>0.0427</mn></mrow></math> gives<br>
+<div class="eq"><math><mrow><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mn>−11.7096</mn><mi>v</mi><mo>−</mo><mn>9.8</mn><mo>,</mo><mspace width="1em"></mspace><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>2</mn><mo>.</mo></mrow></math></div><br>
+The differential equation is linear. Using the problem-solving strategy for linear differential equations:<br>
+Step 1. Rewrite the differential equation as <math><mrow><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mn>11.7096</mn><mi>v</mi><mo>=</mo><mn>−9.8</mn><mo>.</mo></mrow></math> This gives <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>11.7096</mn></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>−9.8</mn></mrow></math><br>
+Step 2. The integrating factor is <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>11.7096</mn><mi>d</mi><mi>t</mi></mrow></mrow></mstyle></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup><mo>.</mo></mrow></math><br>
+Step 3. Multiply the differential equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mn>11.7096</mn><mi>v</mi><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−9.8</mn><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo>[</mo><mrow><mi>v</mi><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup></mrow><mo>]</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−9.8</mn><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Step 4. Integrate both sides:<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mrow><mo>[</mo><mrow><mi>v</mi><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup></mrow><mo>]</mo></mrow></mrow></mrow></mstyle><mspace width="0.1em"></mspace><mi>d</mi><mi>t</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>−9.8</mn><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup><mi>d</mi><mi>t</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mi>v</mi><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>−9.8</mn></mrow><mrow><mn>11.7096</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>11.7096</mn><mi>t</mi></mrow></msup><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.8369</mn><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Step 5. Solve for <math><mi>C</mi></math> using the initial condition <math><mrow><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mi>v</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mtext>:</mtext></mrow></math><br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.8369</mn><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mi>v</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.8369</mn><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−11.7096</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mn>2</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.8369</mn><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>C</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>2.8369.</mn></mtd></mtr></mtable></math></div><br>
+Therefore the solution to the initial-value problem is <math><mrow><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>2.8369</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mo>.</mo></mrow></math></li><li>The ball reaches its maximum height when the velocity is equal to zero. The reason is that when the velocity is positive, it is rising, and when it is negative, it is falling. Therefore when it is zero, it is neither rising nor falling, and is at its maximum height:<br>
+<div class="eq"><math><mtable><mtr></mtr><mtr><mtd columnalign="right"><mn>2.8369</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="right"><mn>2.8369</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>0.8369</mn></mtd></mtr><mtr><mtd columnalign="right"><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>0.8369</mn></mrow><mrow><mn>2.8369</mn></mrow></mfrac><mo>≈</mo><mn>0.295</mn></mtd></mtr><mtr><mtd columnalign="right"><mtext>ln</mtext><mspace width="0.1em"></mspace><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mtext>ln</mtext><mspace width="0.1em"></mspace><mn>0.295</mn><mo>≈</mo><mo>−</mo><mn>1.221</mn></mtd></mtr><mtr><mtd columnalign="right"><mn>−11.7096</mn><mi>t</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−1.221</mn></mtd></mtr><mtr><mtd columnalign="right"><mi>t</mi></mtd><mtd columnalign="left"><mo>≈</mo></mtd><mtd columnalign="left"><mn>0.104.</mn></mtd></mtr></mtable></math></div><br>
+Therefore it takes approximately <math><mrow><mn>0.104</mn></mrow></math> second to reach maximum height.</li><li>To find the height of the ball as a function of time, use the fact that the derivative of position is velocity, i.e., if <math><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></math> represents the height at time <math><mi>t</mi><mo>,</mo></math> then <math><mrow><msup><mi>h</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>.</mo></mrow></math> Because we know <math><mrow><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mrow></math> and the initial height, we can form an initial-value problem:<br>
+<div class="eq"><math><mrow><msup><mi>h</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>2.8369</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mo>,</mo><mspace width="1em"></mspace><mi>h</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>1</mn><mo>.</mo></mrow></math></div><br>
+Integrating both sides of the differential equation with respect to <math><mi>t</mi></math> gives<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><msup><mi>h</mi><mo>′</mo></msup><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>t</mi></mrow></mrow></mstyle></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>2.8369</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn></mrow></mrow></mstyle><mi>d</mi><mi>t</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>h</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mo>−</mo><mfrac><mrow><mn>2.8369</mn></mrow><mrow><mn>11.7096</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mi>t</mi><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>h</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.2423</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mi>t</mi><mo>+</mo><mi>C</mi><mo>.</mo></mtd></mtr></mtable></math></div><br>
+Solve for <math><mi>C</mi></math> by using the initial condition:<br>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mi>h</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.2423</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mi>t</mi><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>h</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.2423</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></msup><mo>−</mo><mn>0.8369</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mn>1</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>−0.2423</mn><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>C</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>1.2423.</mn></mtd></mtr></mtable></math></div><br>
+Therefore<br>
+<div class="eq"><math><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>−0.2423</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mi>t</mi><mo>+</mo><mn>1.2423</mn><mo>.</mo></mrow></math></div><br>
+After <math><mrow><mn>0.104</mn></mrow></math> second, the height is given by<br>
+<math><mrow><mi>h</mi><mo stretchy="false">(</mo><mn>0.104</mn><mo stretchy="false">)</mo><mo>=</mo><mn>−0.2423</mn><msup><mi>e</mi><mrow><mn>−11.7096</mn><mi>t</mi></mrow></msup><mo>−</mo><mn>0.8369</mn><mi>t</mi><mo>+</mo><mn>1.2423</mn><mo>≈</mo><mn>1.0836</mn></mrow></math> meter.</li></ol></div>
+</div>
+</div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>The weight of a penny is <math><mrow><mn>2.5</mn></mrow></math> grams (United States Mint, “Coin Specifications,” accessed April 9, 2015, http://www.usmint.gov/about_the_mint/?action=coin_specifications), and the upper observation deck of the Empire State Building is <math><mrow><mn>369</mn></mrow></math> meters above the street. Since the penny is a small and relatively smooth object, air resistance acting on the penny is actually quite small. We assume the air resistance is numerically equal to <math><mrow><mn>0.0025</mn><mi>v</mi><mo>.</mo></mrow></math> Furthermore, the penny is dropped with no initial velocity imparted to it.</p>
+<ol><li>Set up an initial-value problem that represents the falling penny.</li><li>Solve the problem for <math><mrow><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></li><li>What is the terminal velocity of the penny (i.e., calculate the limit of the velocity as <math><mi>t</mi></math> approaches infinity)?</li></ol>
+</div>
+<div class="solution">
+<ol><li><math><mtable><mtr><mtd columnalign="right"><mfrac><mrow><mi>d</mi><mi>v</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mtext>−</mtext><mi>v</mi><mo>−</mo><mn>9.8</mn></mtd></mtr><mtr><mtd columnalign="right"><mi>v</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>0</mn></mtd></mtr></mtable></math></li><li><math><mrow><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>9.8</mn><mrow><mo>(</mo><mrow><msup><mi>e</mi><mrow><mtext>−</mtext><mi>t</mi></mrow></msup><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow></math></li><li><math><mrow><munder><mrow><mtext>lim</mtext></mrow><mrow><mi>t</mi><mo stretchy="false">→</mo><mi>∞</mi></mrow></munder><mi>v</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><munder><mrow><mtext>lim</mtext></mrow><mrow><mi>t</mi><mo stretchy="false">→</mo><mi>∞</mi></mrow></munder><mrow><mo>(</mo><mrow><mn>9.8</mn><mrow><mo>(</mo><mrow><msup><mi>e</mi><mrow><mtext>−</mtext><mi>t</mi></mrow></msup><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mo>=</mo><mn>−9.8</mn><mspace width="0.2em"></mspace><mtext>m/s</mtext><mo>≈</mo><mo>−</mo><mn>21.922</mn><mspace width="0.2em"></mspace><mtext>mph</mtext></mrow></math></li></ol>
+</div>
+<p>
+<h6>Hint</h6>
+<p>Set up the differential equation the same way as the example. Remember to convert from grams to kilograms.</p>
+</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h4>Electrical Circuits</h4>
+<p>A source of electromotive force (e.g., a battery or generator) produces a flow of current in a closed circuit, and this current produces a voltage drop across each resistor, inductor, and capacitor in the circuit. Kirchhoff’s Loop Rule states that the sum of the voltage drops across resistors, inductors, and capacitors is equal to the total electromotive force in a closed circuit. We have the following three results:</p>
+<ol><li>The voltage drop across a resistor is given by<br>
+<div class="eq"><math><mrow><msub><mi>E</mi><mi>R</mi></msub><mo>=</mo><mi>R</mi><mi>i</mi><mo>,</mo></mrow></math></div><br>
+where <math><mi>R</mi></math> is a constant of proportionality called the <em>resistance,</em> and <math><mi>i</mi></math> is the current.</li><li>The voltage drop across an inductor is given by<br>
+<div class="eq"><math><mrow><msub><mi>E</mi><mi>L</mi></msub><mo>=</mo><mi>L</mi><msup><mi>i</mi><mo>′</mo></msup><mo>,</mo></mrow></math></div><br>
+where <math><mi>L</mi></math> is a constant of proportionality called the <em>inductance</em>, and <math><mi>i</mi></math> again denotes the current.</li><li>The voltage drop across a capacitor is given by<br>
+<div class="eq"><math><mrow><msub><mi>E</mi><mi>C</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>C</mi></mfrac><mi>q</mi><mo>,</mo></mrow></math></div></li></ol>
+<p>where <math><mi>C</mi></math> is a constant of proportionality called the <em>capacitance</em>, and <math><mi>q</mi></math> is the instantaneous charge on the capacitor. The relationship between <math><mi>i</mi></math> and <math><mi>q</mi></math> is <math><mrow><mi>i</mi><mo>=</mo><msup><mi>q</mi><mo>′</mo></msup><mo>.</mo></mrow></math></p>
+<p>We use units of volts <math><mrow><mrow><mo>(</mo><mtext>V</mtext><mo>)</mo></mrow></mrow></math> to measure voltage <math><mrow><mi>E</mi><mo>,</mo></mrow></math> amperes <math><mrow><mrow><mo>(</mo><mtext>A</mtext><mo>)</mo></mrow></mrow></math> to measure current <math><mrow><mi>i</mi><mo>,</mo></mrow></math> coulombs <math><mrow><mrow><mo>(</mo><mtext>C</mtext><mo>)</mo></mrow></mrow></math> to measure charge <math><mrow><mi>q</mi><mo>,</mo></mrow></math> ohms <math><mrow><mrow><mo>(</mo><mtext>Ω</mtext><mo>)</mo></mrow></mrow></math> to measure resistance <math><mrow><mi>R</mi><mo>,</mo></mrow></math> henrys <math><mrow><mrow><mo>(</mo><mtext>H</mtext><mo>)</mo></mrow></mrow></math> to measure inductance <math><mrow><mi>L</mi><mo>,</mo></mrow></math> and farads <math><mrow><mrow><mo>(</mo><mtext>F</mtext><mo>)</mo></mrow></mrow></math> to measure capacitance <math><mrow><mi>C</mi><mo>.</mo></mrow></math> Consider the circuit in the figure.</p>
+<figure><img src="CNX_Calc_Figure_08_05_003.jpg" alt="A diagram of an electric circuit in a rectangle. The top has a capacitor C, the left has a voltage generator Vs, the bottom was a resistor R, and the right has an inductor L."><figcaption>A typical electric circuit, containing a voltage generator <math><mrow><mrow><mo>(</mo><mrow><msub><mi>V</mi><mi>S</mi></msub></mrow><mo>)</mo></mrow><mo>,</mo></mrow></math> capacitor <math><mrow><mrow><mo>(</mo><mi>C</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> inductor <math><mrow><mrow><mo>(</mo><mi>L</mi><mo>)</mo></mrow><mo>,</mo></mrow></math> and resistor <math><mrow><mrow><mo>(</mo><mi>R</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></figcaption></figure>
+<p>Applying Kirchhoff’s Loop Rule to this circuit, we let <math><mi>E</mi></math> denote the electromotive force supplied by the voltage generator. Then</p>
+<div class="eq"><math><mrow><msub><mi>E</mi><mi>L</mi></msub><mo>+</mo><msub><mi>E</mi><mi>R</mi></msub><mo>+</mo><msub><mi>E</mi><mi>C</mi></msub><mo>=</mo><mi>E</mi><mo>.</mo></mrow></math></div>
+<p>Substituting the expressions for <math><mrow><msub><mi>E</mi><mi>L</mi></msub><mo>,</mo><msub><mi>E</mi><mi>R</mi></msub><mo>,</mo></mrow></math> and <math><mrow><msub><mi>E</mi><mi>C</mi></msub></mrow></math> into this equation, we obtain</p>
+<div class="eq"><math><mrow><mi>L</mi><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mi>R</mi><mi>i</mi><mo>+</mo><mfrac><mn>1</mn><mi>C</mi></mfrac><mi>q</mi><mo>=</mo><mi>E</mi><mo>.</mo></mrow></math></div>
+<p>If there is no capacitor in the circuit, then the equation becomes</p>
+<div class="eq"><math><mrow><mi>L</mi><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mi>R</mi><mi>i</mi><mo>=</mo><mi>E</mi><mo>.</mo></mrow></math></div>
+<p>This is a first-order differential equation in <math><mi>i</mi><mo>.</mo></math> The circuit is referred to as an <math><mrow><mi>L</mi><mi>R</mi></mrow></math> circuit.</p>
+<p>Next, suppose there is no inductor in the circuit, but there is a capacitor and a resistor, so <math><mrow><mi>L</mi><mo>=</mo><mn>0</mn><mo>,</mo><mi>R</mi><mo>≠</mo><mn>0</mn><mo>,</mo></mrow></math> and <math><mrow><mi>C</mi><mo>≠</mo><mn>0</mn><mo>.</mo></mrow></math> Then the equation can be rewritten as</p>
+<div class="eq"><math><mrow><mi>R</mi><msup><mi>q</mi><mo>′</mo></msup><mo>+</mo><mfrac><mn>1</mn><mi>C</mi></mfrac><mi>q</mi><mo>=</mo><mi>E</mi><mo>,</mo></mrow></math></div>
+<p>which is a first-order linear differential equation. This is referred to as an <strong><em>RC</em> circuit</strong>. In either case, we can set up and solve an initial-value problem.</p>
+<div class="example">
+<div class="exercise"><div class="problem">
+<h7>Finding Current in an <em>RL</em> Electric Circuit</h7>
+<p>A circuit has in series an electromotive force given by <math><mrow><mi>E</mi><mo>=</mo><mn>50</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mspace width="0.2em"></mspace><mtext>V</mtext><mo>,</mo></mrow></math> a resistor of <math><mrow><mn>5</mn><mtext>Ω</mtext><mo>,</mo></mrow></math> and an inductor of <math><mrow><mn>0.4</mn><mspace width="0.2em"></mspace><mtext>H</mtext><mtext>.</mtext></mrow></math> If the initial current is <math><mrow><mn>0</mn><mo>,</mo></mrow></math> find the current at time <math><mrow><mi>t</mi><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>We have a resistor and an inductor in the circuit, so we use the equation. The voltage drop across the resistor is given by <math><mrow><msub><mi>E</mi><mi>R</mi></msub><mo>=</mo><mi>R</mi><mi>i</mi><mo>=</mo><mn>5</mn><mi>i</mi><mo>.</mo></mrow></math> The voltage drop across the inductor is given by <math><mrow><msub><mi>E</mi><mi>L</mi></msub><mo>=</mo><mi>L</mi><msup><mi>i</mi><mo>′</mo></msup><mo>=</mo><mn>0.4</mn><msup><mi>i</mi><mo>′</mo></msup><mo>.</mo></mrow></math> The electromotive force becomes the right-hand side of the equation. Therefore the equation becomes</p>
+<div class="eq"><math><mrow><mn>0.4</mn><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mn>5</mn><mi>i</mi><mo>=</mo><mn>50</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>.</mo></mrow></math></div>
+<p>Dividing both sides by <math><mrow><mn>0.4</mn></mrow></math> gives the equation</p>
+<div class="eq"><math><mrow><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mn>12.5</mn><mi>i</mi><mo>=</mo><mn>125</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>.</mo></mrow></math></div>
+<p>Since the initial current is 0, this result gives an initial condition of <math><mrow><mi>i</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> We can solve this initial-value problem using the five-step strategy for solving first-order differential equations.</p>
+<p>Step 1. Rewrite the differential equation as <math><mrow><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mn>12.5</mn><mi>i</mi><mo>=</mo><mn>125</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>.</mo></mrow></math> This gives <math><mrow><mi>p</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>12.5</mn></mrow></math> and <math><mrow><mi>q</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mn>125</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>.</mo></mrow></math></p>
+<p>Step 2. The integrating factor is <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>12.5</mn><mi>d</mi><mi>t</mi></mrow></mrow></mstyle></mrow></msup><mo>=</mo><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mo>.</mo></mrow></math></p>
+<p>Step 3. Multiply the differential equation by <math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mtext>:</mtext></mrow></math></p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><msup><mi>i</mi><mo>′</mo></msup><mo>+</mo><mn>12.5</mn><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mi>i</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>125</mn><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mtd></mtr><mtr><mtd columnalign="right"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mspace width="0.1em"></mspace><mrow><mo>[</mo><mrow><mi>i</mi><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup></mrow><mo>]</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mn>125</mn><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Step 4. Integrate both sides:</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mstyle displaystyle="true"><mrow><mo stretchy="true">∫</mo><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mspace width="0.1em"></mspace><mrow><mo>[</mo><mrow><mi>i</mi><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup></mrow><mo>]</mo></mrow></mrow></mrow></mstyle><mspace width="0.1em"></mspace><mi>d</mi><mi>t</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mn>125</mn><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mspace width="0.2em"></mspace><mi>d</mi><mi>t</mi></mrow></mrow></mstyle></mtd></mtr><mtr><mtd columnalign="right"><mi>i</mi><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mrow><mo>(</mo><mrow><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>89</mn></mrow></mfrac></mrow><mo>)</mo></mrow><mspace width="0.1em"></mspace><msup><mi>e</mi><mrow><mn>12.5</mn><mi>t</mi></mrow></msup><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>i</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>89</mn></mrow></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−12.5</mn><mi>t</mi></mrow></msup><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Step 5. Solve for <math><mi>C</mi></math> using the initial condition <math><mrow><mi>v</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mtext>:</mtext></mrow></math></p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mi>i</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>89</mn></mrow></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−12.5</mn><mi>t</mi></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mi>i</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow><mrow><mn>89</mn></mrow></mfrac><mo>+</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>−12.5</mn><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></msup></mtd></mtr><mtr><mtd columnalign="right"><mn>0</mn></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mo>−</mo><mfrac><mrow><mn>400</mn></mrow><mrow><mn>89</mn></mrow></mfrac><mo>+</mo><mi>C</mi></mtd></mtr><mtr><mtd columnalign="right"><mi>C</mi></mtd><mtd columnalign="left"><mo>=</mo></mtd><mtd columnalign="left"><mfrac><mrow><mn>400</mn></mrow><mrow><mn>89</mn></mrow></mfrac><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Therefore the solution to the initial-value problem is <math><mrow><mi>i</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>+</mo><mn>400</mn><msup><mi>e</mi><mrow><mn>−12.5</mn><mi>t</mi></mrow></msup></mrow><mrow><mn>89</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>89</mn></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>400</mn><msup><mi>e</mi><mrow><mn>−12.5</mn><mi>t</mi></mrow></msup></mrow><mrow><mn>89</mn></mrow></mfrac><mo>.</mo></mrow></math></p>
+<p>The first term can be rewritten as a single cosine function. First, multiply and divide by <math><mrow><msqrt><mrow><msup><mrow><mn>250</mn></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mn>400</mn></mrow><mn>2</mn></msup></mrow></msqrt><mo>=</mo><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt><mtext>:</mtext></mrow></math></p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>89</mn></mrow></mfrac></mtd><mtd columnalign="left"><mo>=</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mrow><mo>(</mo><mrow><mfrac><mrow><mn>250</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mn>400</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mo>−</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mrow><mo>(</mo><mrow><mfrac><mrow><mn>8</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac><mo>−</mo><mfrac><mrow><mn>5</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac></mrow><mo>)</mo></mrow><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Next, define <math><mi>φ</mi></math> to be an acute angle such that <math><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>φ</mi><mo>=</mo><mfrac><mn>8</mn><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac><mo>.</mo></mrow></math> Then <math><mrow><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>φ</mi><mo>=</mo><mfrac><mn>5</mn><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac></mrow></math> and</p>
+<div class="eq"><math><mtable><mtr><mtd columnalign="right"><mo>−</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mrow><mo>(</mo><mrow><mfrac><mrow><mn>8</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac><mo>−</mo><mfrac><mrow><mn>5</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mrow><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow></mfrac></mrow><mo>)</mo></mrow></mtd><mtd columnalign="left"><mo>=</mo><mo>−</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mspace width="0.1em"></mspace><mrow><mo>(</mo><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>φ</mi><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi><mo>−</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>φ</mi><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>20</mn><mi>t</mi></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd></mtd><mtd columnalign="left"><mo>=</mo><mo>−</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mtext>cos</mtext><mrow><mo>(</mo><mrow><mn>20</mn><mi>t</mi><mo>+</mo><mi>φ</mi></mrow><mo>)</mo></mrow><mo>.</mo></mtd></mtr></mtable></math></div>
+<p>Therefore the solution can be written as</p>
+<div class="eq"><math><mrow><mi>i</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mo>−</mo><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mrow><mo>(</mo><mrow><mn>20</mn><mi>t</mi><mo>+</mo><mi>φ</mi></mrow><mo>)</mo></mrow><mo>+</mo><mfrac><mrow><mn>400</mn><msup><mi>e</mi><mrow><mn>−12.5</mn><mi>t</mi></mrow></msup></mrow><mrow><mn>89</mn></mrow></mfrac><mo>.</mo></mrow></math></div>
+<p>The second term is called the <em>attenuation</em> term, because it disappears rapidly as <em>t</em> grows larger. The phase shift is given by <math><mrow><mi>φ</mi><mo>,</mo></mrow></math> and the amplitude of the steady-state current is given by <math><mrow><mfrac><mrow><mn>50</mn><msqrt><mrow><mn>89</mn></mrow></msqrt></mrow><mrow><mn>89</mn></mrow></mfrac><mo>.</mo></mrow></math> The graph of this solution appears in the figure:</p>
+<figure><img src="CNX_Calc_Figure_08_05_004.jpg" alt="A graph of the given solution over [0, 6] on the x axis. It is an oscillating function, rapidly going from just below -5 to just above 5."></figure>
+</div>
+</div></div>
+<div class="note checkpoint">
+<div class="exercise">
+<div class="problem">
+<p>A circuit has in series an electromotive force given by <math><mrow><mi>E</mi><mo>=</mo><mn>20</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>5</mn><mi>t</mi></mrow></math> V, a capacitor with capacitance <math><mrow><mn>0.02</mn><mspace width="0.2em"></mspace><mtext>F</mtext><mo>,</mo></mrow></math> and a resistor of <math><mn>8</mn><mspace width="0.2em"></mspace><mtext>Ω</mtext><mo>.</mo></math> If the initial charge is <math><mrow><mn>4</mn><mspace width="0.2em"></mspace><mtext>C</mtext><mo>,</mo></mrow></math> find the charge at time <math><mrow><mi>t</mi><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p>Initial-value problem:</p>
+<p><math><mrow><mn>8</mn><msup><mi>q</mi><mo>′</mo></msup><mo>+</mo><mfrac><mn>1</mn><mrow><mn>0.02</mn></mrow></mfrac><mi>q</mi><mo>=</mo><mn>20</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>5</mn><mi>t</mi><mo>,</mo><mspace width="1em"></mspace><mi>q</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><mn>4</mn></mrow></math></p>
+<p><math><mrow><mi>q</mi><mrow><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>10</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mn>5</mn><mi>t</mi><mo>−</mo><mn>8</mn><mspace width="0.1em"></mspace><mtext>cos</mtext><mspace width="0.1em"></mspace><mn>5</mn><mi>t</mi><mo>+</mo><mn>172</mn><msup><mi>e</mi><mrow><mn>−6.25</mn><mi>t</mi></mrow></msup></mrow><mrow><mn>41</mn></mrow></mfrac></mrow></math></p>
+</div>
+<p>
+<h6>Hint</h6>
+<p>Use the equation for an <math><mrow><mi>R</mi><mi>C</mi></mrow></math> circuit to set up an initial-value problem.</p>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section key-concepts">
+<h3>Key Concepts</h3>
+<ul><li>Any first-order linear differential equation can be written in the form <math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>.</mo></mrow></math></li><li>We can use a five-step problem-solving strategy for solving a first-order linear differential equation that may or may not include an initial value.</li><li>Applications of first-order linear differential equations include determining motion of a rising or falling object with air resistance and finding current in an electrical circuit.</li></ul>
+</div>
+<div class="section key-equations">
+<h3>Key Equations</h3>
+<table><tr><td><strong>standard form</strong></td><td><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></td></tr><tr><td><strong>integrating factor</strong></td><td><math><mrow><mi>μ</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mstyle displaystyle="true"><mrow><mo>∫</mo><mrow><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.1em"></mspace><mi>d</mi><mi>x</mi></mrow></mrow></mstyle></mrow></msup></mrow></math></td></tr></table>
+</div>
+<div class="section section-exercises">
+<p>Are the following differential equations linear? Explain your reasoning.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi><mo>+</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>t</mi><mi>y</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p>Yes</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>=</mo><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p>Yes</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><msup><mi>e</mi><mi>y</mi></msup></mrow></math></p>
+</div>
+</div>
+<p>Write the following first-order differential equations in standard form.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi><mo>+</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>−</mo><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mn>3</mn><mi>y</mi><mo>−</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mtext>−</mtext><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mrow><mo>(</mo><mrow><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>+</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mfrac><mrow><mrow><mo>(</mo><mrow><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mo>)</mo></mrow></mrow><mi>x</mi></mfrac><mi>y</mi><mo>=</mo><mtext>−</mtext><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mn>4</mn><mi>y</mi><mo>+</mo><mi>t</mi><mi>y</mi><mo>+</mo><mtext>tan</mtext><mspace width="0.1em"></mspace><mi>t</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>y</mi><mi>x</mi><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>−</mo><mi>y</mi><mi>x</mi><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<p>What are the integrating factors for the following differential equations?</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mi>y</mi><mo>+</mo><mn>3</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><msup><mi>e</mi><mi>x</mi></msup><mi>y</mi><mo>=</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><msup><mi>e</mi><mfenced><msup><mi>e</mi><mi>x</mi></msup></mfenced></msup></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mspace width="0.1em"></mspace><mtext>ln</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>+</mo><mn>3</mn><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>=</mo><mtext>tanh</mtext><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>+</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mtext>−</mtext><mtext>ln</mtext><mrow><mo>(</mo><mrow><mtext>cosh</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mn>3</mn><mi>t</mi><mi>y</mi><mo>=</mo><msup><mi>e</mi><mi>t</mi></msup><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<p>Solve the following differential equations by using integrating factors.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>y</mi><mo>+</mo><mn>2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>−</mo><mfrac><mn>2</mn><mn>3</mn></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>2</mn><mi>y</mi><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>y</mi><mo>−</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>x</mi><mo>+</mo><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>x</mi><mo>+</mo><mi>x</mi><mi>y</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup><mtext>/</mtext><mn>2</mn></mrow></msup><mo>−</mo><mn>3</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mo>+</mo><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mtext>sin</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn><mi>x</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><mspace width="0.1em"></mspace><mtext>tan</mtext><mrow><mo>(</mo><mrow><mfrac><mi>x</mi><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mo>−</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>4</mn><mspace width="0.1em"></mspace><mtext>tan</mtext><mrow><mo>(</mo><mrow><mfrac><mi>x</mi><mn>2</mn></mfrac></mrow><mo>)</mo></mrow><mtext>ln</mtext><mrow><mo>(</mo><mrow><mtext>sin</mtext><mrow><mo>(</mo><mrow><mfrac><mi>x</mi><mn>2</mn></mfrac></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><msup><mi>e</mi><mi>x</mi></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>y</mi><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>=</mo><mfrac><mi>y</mi><mi>x</mi></mfrac></mrow></math></p>
+</div>
+</div>
+<p>Solve the following differential equations. Use your calculator to draw a family of solutions. Are there certain initial conditions that change the behavior of the solution?</p>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>=</mo><mn>2</mn><mi>y</mi><mo>−</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><msup><mi>e</mi><mrow><mrow><mi>t</mi><mtext>/</mtext><mn>3</mn></mrow></mrow></msup><mo>−</mo><mn>2</mn><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>+</mo><mfrac><mi>y</mi><mn>2</mn></mfrac><mo>=</mo><mtext>sin</mtext><mo stretchy="false">(</mo><mn>3</mn><mi>t</mi><mo stretchy="false">)</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mfrac><mi>C</mi><mrow><msqrt><mi>x</mi></msqrt></mrow></mfrac><mo>+</mo><mn>2</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mo stretchy="false">(</mo><mn>3</mn><mi>t</mi><mo stretchy="false">)</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mn>2</mn><mfrac><mrow><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mi>x</mi></mfrac><mo>−</mo><mn>3</mn><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>y</mi><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>3</mn></msup><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><mtext>sin</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>+</mo><mtext>cos</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow></msqrt><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><msup><mrow><mtext>sinh</mtext></mrow><mrow><mn>−1</mn></mrow></msup><mi>x</mi></mrow></msup><mo>−</mo><mn>2</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> <math><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>y</mi><mo>′</mo><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi><mo>=</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<p>Solve the following initial-value problems by using integrating factors.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>y</mi><mo>=</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>x</mi><mo>+</mo><mn>4</mn><msup><mi>e</mi><mi>–x</mi></msup><mo>−</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>−</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mn>3</mn><mi>x</mi></mrow><mn>2</mn></mfrac><mrow><mo>(</mo><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mi>y</mi><mo>−</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mrow><mo>(</mo><mrow><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></mrow><mo>)</mo></mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>−</mo><mn>1</mn><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><msup><mrow><mtext>tan</mtext></mrow><mrow><mn>−1</mn></mrow></msup><mi>x</mi></mrow></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn><mi>x</mi><mspace width="0.1em"></mspace><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>5</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mo stretchy="false">(</mo><mn>2</mn><mo>+</mo><mi>x</mi><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn><mo>+</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mrow><mo>(</mo><mrow><mfrac><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mn>2</mn></mfrac></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mi>y</mi><mo>&#x27;</mo><mo>=</mo><mi>x</mi><mi>y</mi><mo>+</mo><mn>2</mn><mi>x</mi><msup><mi>e</mi><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mo>,</mo><mi>y</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>=</mo><mn>2</mn></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msqrt><mi>x</mi></msqrt><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>+</mo><mn>2</mn><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mn>2</mn><msup><mi>e</mi><mrow><mn>2</mn><msqrt><mi>x</mi></msqrt></mrow></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>2</mn><msqrt><mi>x</mi></msqrt><mo>−</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>2</mn><mi>y</mi><mo>+</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>−1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>A falling object of mass <math><mi>m</mi></math> can reach terminal velocity when the drag force is proportional to its velocity, with proportionality constant <math><mrow><mi>k</mi><mo>.</mo></mrow></math> Set up the differential equation and solve for the velocity given an initial velocity of <math><mrow><mn>0</mn><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>v</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>g</mi><mi>m</mi></mrow><mi>k</mi></mfrac><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mtext>−</mtext><mrow><mrow><mi>k</mi><mi>t</mi></mrow><mtext>/</mtext><mi>m</mi></mrow></mrow></msup></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Using your expression from the preceding problem, what is the terminal velocity? (<em>Hint:</em> Examine the limiting behavior; does the velocity approach a value?)</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> Using your equation for terminal velocity, solve for the distance fallen. How long does it take to fall <math><mrow><mn>5000</mn></mrow></math> meters if the mass is <math><mrow><mn>100</mn></mrow></math> kilograms, the acceleration due to gravity is <math><mrow><mn>9.8</mn></mrow></math> m/s<sup>2</sup> and the proportionality constant is <math><mrow><mn>4</mn><mo>?</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mn>40.451</mn></mrow></math> seconds</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>A more accurate way to describe terminal velocity is that the drag force is proportional to the square of velocity, with a proportionality constant <math><mrow><mi>k</mi><mo>.</mo></mrow></math> Set up the differential equation and solve for the velocity.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Using your expression from the preceding problem, what is the terminal velocity? (<em>Hint:</em> Examine the limiting behavior: Does the velocity approach a value?)</p>
+</div>
+<div class="solution">
+<p><math><mrow><msqrt><mrow><mfrac><mrow><mi>g</mi><mi>m</mi></mrow><mi>k</mi></mfrac></mrow></msqrt></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><strong>[T]</strong> Using your equation for terminal velocity, solve for the distance fallen. How long does it take to fall <math><mrow><mn>5000</mn></mrow></math> meters if the mass is <math><mrow><mn>100</mn></mrow></math> kilograms, the acceleration due to gravity is <math><mrow><mn>9.8</mn><msup><mrow><mspace width="0.2em"></mspace><mtext>m/s</mtext></mrow><mn>2</mn></msup></mrow></math> and the proportionality constant is <math><mrow><mn>4</mn><mo>?</mo></mrow></math> Does it take more or less time than your initial estimate?</p>
+</div>
+</div>
+<p>For the following problems, determine how parameter <math><mi>a</mi></math> affects the solution.</p>
+<div class="exercise">
+<div class="problem">
+<p>Solve the generic equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>y</mi><mo>.</mo></mrow></math> How does varying <math><mi>a</mi></math> change the behavior?</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mi>x</mi></msup><mo>−</mo><mi>a</mi><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Solve the generic equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>a</mi><mi>y</mi><mo>+</mo><mi>x</mi><mo>.</mo></mrow></math> How does varying <math><mi>a</mi></math> change the behavior?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Solve the generic equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>x</mi><mi>y</mi><mo>.</mo></mrow></math> How does varying <math><mi>a</mi></math> change the behavior?</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow><mtext>/</mtext><mn>2</mn></mrow></mrow></msup><mo>−</mo><mi>a</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Solve the generic equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mo>+</mo><mi>a</mi><mi>x</mi><mi>y</mi><mo>.</mo></mrow></math> How does varying <math><mi>a</mi></math> change the behavior?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Solve <math><mrow><mi>y</mi><mo>′</mo><mo>−</mo><mi>y</mi><mo>=</mo><msup><mi>e</mi><mrow><mi>k</mi><mi>t</mi></mrow></msup></mrow></math> with the initial condition <math><mrow><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow></math> As <math><mi>k</mi></math> approaches <math><mrow><mn>1</mn><mo>,</mo></mrow></math> what happens to your formula?</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mrow><mi>k</mi><mi>t</mi></mrow></msup><mo>−</mo><msup><mi>e</mi><mi>t</mi></msup></mrow><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+</div>
+<div class="section review-exercises">
+<h3>Chapter Review Exercises</h3>
+<p><em>True or False?</em> Justify your answer with a proof or a counterexample.</p><div class="exercise">
+<div class="problem">
+<p>The differential equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi><mo>−</mo><mtext>cos</mtext><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><msup><mi>y</mi><mo>″</mo></msup></mrow></math> is linear.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The differential equation <math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>x</mi><mo>−</mo><mi>y</mi></mrow></math> is separable.</p>
+</div>
+<div class="solution">
+<p>F</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You can explicitly solve all first-order differential equations by separation or by the method of integrating factors.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You can determine the behavior of all first-order differential equations using directional fields or Euler’s method.</p>
+</div>
+<div class="solution">
+<p>T</p>
+</div>
+</div>
+<p>For the following problems, find the general solution to the differential equations.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><msup><mi>y</mi><mo>′</mo></msup><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><msup><mi>e</mi><mi>x</mi></msup><mo>−</mo><mn>2</mn><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><msup><mn>2</mn><mi>x</mi></msup><mo>+</mo><msup><mrow><mtext>cos</mtext></mrow><mrow><mn>−1</mn></mrow></msup><mi>x</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mn>2</mn><mi>x</mi></msup></mrow><mrow><mtext>ln</mtext><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow></mrow></mfrac><mo>+</mo><mi>x</mi><mspace width="0.1em"></mspace><msup><mrow><mtext>cos</mtext></mrow><mrow><mn>−1</mn></mrow></msup><mi>x</mi><mo>−</mo><msqrt><mrow><mn>1</mn><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mo>+</mo><mi>C</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mrow><mo>(</mo><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><msup><mi>e</mi><mrow><mtext>−</mtext><mi>y</mi></mrow></msup><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mtext>ln</mtext><mrow><mo>(</mo><mrow><mi>C</mi><mo>−</mo><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>2</mn><mi>y</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mspace width="0.1em"></mspace><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>y</mi></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>e</mi><mrow><msup><mi>e</mi><mrow><mi>C</mi><mo>+</mo><mi>x</mi></mrow></msup></mrow></msup></mrow></math></p>
+</div>
+</div>
+<p>For the following problems, find the solution to the initial value problem.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>8</mn><mi>x</mi><mo>−</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>−</mo><mn>3</mn><msup><mi>x</mi><mn>4</mn></msup><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>5</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>x</mi><mo>−</mo><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>+</mo><mn>2</mn><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>4</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>4</mn><mo>+</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>−</mo><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>x</mi><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>2</mn></mrow><mo>)</mo></mrow><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><msup><mi>y</mi><mn>2</mn></msup><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mtext>cos</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>−2</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mfrac><mn>2</mn><mrow><mn>1</mn><mo>+</mo><mn>3</mn><mrow><mo>(</mo><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow><mo>)</mo></mrow></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>y</mi><mo>′</mo><mo>=</mo><mi>y</mi><mo>−</mo><mn>2</mn><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>3</mn><mi>y</mi><mo>−</mo><mi>x</mi><mo>+</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>−1</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>−2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mi>x</mi><mo>−</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>−</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup></mrow></math></p>
+</div>
+</div>
+<p>For the following problems, draw the directional field associated with the differential equation, then solve the differential equation. Draw a sample solution on the directional field.</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>2</mn><mi>y</mi><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mfrac><mn>1</mn><mi>x</mi></mfrac><mo>+</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi><mo>−</mo><mi>y</mi><mo>,</mo></mrow></math> for <math><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution"><p><br>
+<figure><img src="CNX_Calc_Figure_08_05_202.jpg" alt="A direction field with arrows pointing up and to the right along a logarithmic curve that approaches negative infinity as x goes to zero and increases as x goes to infinity."></figure><br>
+<math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>C</mi><msup><mi>e</mi><mrow><mtext>−</mtext><mi>x</mi></mrow></msup><mo>+</mo><mtext>ln</mtext><mspace width="0.1em"></mspace><mi>x</mi></mrow></math></p>
+</div>
+</div>
+<p>For the following problems, use Euler’s Method with <math><mrow><mi>n</mi><mo>=</mo><mn>5</mn></mrow></math> steps over the interval <math><mrow><mi>t</mi><mo>=</mo><mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo><mo>.</mo></mrow></math> Then solve the initial-value problem exactly. How close is your Euler’s Method estimate?</p>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><mn>−4</mn><mi>y</mi><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p><math><mrow><mi>y</mi><mo>′</mo><mo>=</mo><msup><mn>3</mn><mi>x</mi></msup><mo>−</mo><mn>2</mn><mi>y</mi><mo>,</mo><mi>y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow></math></p>
+</div>
+<div class="solution">
+<p>Euler: <math><mrow><mn>0.6939</mn><mo>,</mo></mrow></math> exact solution: <math><mrow><mi>y</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><msup><mn>3</mn><mi>x</mi></msup><mo>−</mo><msup><mi>e</mi><mrow><mn>−2</mn><mi>x</mi></mrow></msup></mrow><mrow><mn>2</mn><mo>+</mo><mtext>ln</mtext><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<p>For the following problems, set up and solve the differential equations.</p>
+<div class="exercise">
+<div class="problem">
+<p>A car drives along a freeway, accelerating according to <math><mrow><mi>a</mi><mo>=</mo><mn>5</mn><mspace width="0.1em"></mspace><mtext>sin</mtext><mo stretchy="false">(</mo><mi>π</mi><mi>t</mi><mo stretchy="false">)</mo><mo>,</mo></mrow></math> where <math><mi>t</mi></math> represents time in minutes. Find the velocity at any time <math><mrow><mi>t</mi><mo>,</mo></mrow></math> assuming the car starts with an initial speed of <math><mrow><mn>60</mn></mrow></math> mph.</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You throw a ball of mass <math><mn>2</mn></math> kilograms into the air with an upward velocity of <math><mn>8</mn></math> m/s. Find exactly the time the ball will remain in the air, assuming that gravity is given by <math><mrow><mi>g</mi><mo>=</mo><mn>9.8</mn><msup><mrow><mspace width="0.2em"></mspace><mtext>m/s</mtext></mrow><mn>2</mn></msup><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mfrac><mrow><mn>40</mn></mrow><mrow><mn>49</mn></mrow></mfrac></mrow></math> second</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You drop a ball with a mass of <math><mn>5</mn></math> kilograms out an airplane window at a height of <math><mrow><mn>5000</mn></mrow></math> m. How long does it take for the ball to reach the ground?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You drop the same ball of mass <math><mn>5</mn></math> kilograms out of the same airplane window at the same height, except this time you assume a drag force proportional to the ball’s velocity, using a proportionality constant of <math><mn>3</mn></math> and the ball reaches terminal velocity. Solve for the distance fallen as a function of time. How long does it take the ball to reach the ground?</p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>5000</mn><mo>+</mo><mfrac><mrow><mn>245</mn></mrow><mn>9</mn></mfrac><mo>−</mo><mfrac><mrow><mn>49</mn></mrow><mn>3</mn></mfrac><mi>t</mi><mo>−</mo><mfrac><mrow><mn>245</mn></mrow><mn>9</mn></mfrac><msup><mi>e</mi><mrow><mtext>−</mtext><mrow><mn>5</mn><mtext>/</mtext><mrow><mn>3</mn><mi>t</mi></mrow></mrow></mrow></msup><mo>,</mo><mi>t</mi><mo>=</mo><mn>307.8</mn></mrow></math> seconds</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>A drug is administered to a patient every <math><mrow><mn>24</mn></mrow></math> hours and is cleared at a rate proportional to the amount of drug left in the body, with proportionality constant <math><mrow><mn>0.2</mn><mo>.</mo></mrow></math> If the patient needs a baseline level of <math><mn>5</mn></math> mg to be in the bloodstream at all times, how large should the dose be?</p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>A <math><mrow><mn>1000</mn></mrow></math>-liter tank contains pure water and a solution of <math><mrow><mn>0.2</mn></mrow></math> kg salt/L is pumped into the tank at a rate of <math><mn>1</mn></math> L/min and is drained at the same rate. Solve for total amount of salt in the tank at time <math><mrow><mi>t</mi><mo>.</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>200</mn><mrow><mo>(</mo><mrow><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mtext>−</mtext><mrow><mi>t</mi><mtext>/</mtext><mrow><mn>1000</mn></mrow></mrow></mrow></msup></mrow><mo>)</mo></mrow></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>You boil water to make tea. When you pour the water into your teapot, the temperature is <math><mrow><mn>100</mn><mtext>°C.</mtext></mrow></math> After <math><mn>5</mn></math> minutes in your <math><mrow><mn>15</mn><mtext>°C</mtext></mrow></math> room, the temperature of the tea is <math><mrow><mn>85</mn><mtext>°C.</mtext></mrow></math> Solve the equation to determine the temperatures of the tea at time <math><mi>t</mi><mo>.</mo></math> How long must you wait until the tea is at a drinkable temperature <math><mrow><mo>(</mo><mn>72</mn><mtext>°C</mtext><mo>)?</mo></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>The human population (in thousands) of Nevada in <math><mrow><mn>1950</mn></mrow></math> was roughly <math><mrow><mn>160</mn><mo>.</mo></mrow></math> If the carrying capacity is estimated at <math><mrow><mn>10</mn></mrow></math> million individuals, and assuming a growth rate of <math><mrow><mn>2</mn><mtext>%</mtext></mrow></math> per year, develop a logistic growth model and solve for the population in Nevada at any time (use <math><mrow><mn>1950</mn></mrow></math> as time = 0). What population does your model predict for <math><mrow><mn>2000</mn><mo>?</mo></mrow></math> How close is your prediction to the true value of <math><mrow><mn>1,998,257</mn><mo>?</mo></mrow></math></p>
+</div>
+<div class="solution">
+<p><math><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>1600000</mn><msup><mi>e</mi><mrow><mn>0.02</mn><mi>t</mi></mrow></msup></mrow><mrow><mn>9840</mn><mo>+</mo><mn>160</mn><msup><mi>e</mi><mrow><mn>0.02</mn><mi>t</mi></mrow></msup></mrow></mfrac></mrow></math></p>
+</div>
+</div>
+<div class="exercise">
+<div class="problem">
+<p>Repeat the previous problem but use Gompertz growth model. Which is more accurate?</p>
+</div>
+</div>
+</div>
+ <h2>Key terms</h2>
+<p><strong>integrating factor</strong> any function <math><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math> that is multiplied on both sides of a differential equation to make the side involving the unknown function equal to the derivative of a product of two functions</p>
+<p><strong>linear</strong> description of a first-order differential equation that can be written in the form <math><mrow><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><msup><mi>y</mi><mo>′</mo></msup><mo>+</mo><mi>b</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>c</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></p>
+<p><strong>standard form</strong> the form of a first-order linear differential equation obtained by writing the differential equation in the form <math><mrow><mi>y</mi><mo>′</mo><mo>+</mo><mi>p</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>y</mi><mo>=</mo><mi>q</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></p>
+
+</body></html>

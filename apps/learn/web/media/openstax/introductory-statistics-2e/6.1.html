@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6.1 The Standard Normal Distribution · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 6.1 The Standard Normal Distribution. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/6-1-the-standard-normal-distribution</p>
+<h1>6.1 The Standard Normal Distribution</h1>
+
+<p>The <strong>standard normal distribution</strong> is a normal distribution of <strong>standardized values called</strong> <strong><em>z</em>-scores</strong>. <strong>A <em>z</em>-score is measured in units of the standard deviation.</strong> For example, if the mean of a normal distribution is five and the standard deviation is two, the value 11 is three standard deviations above (or to the right of) the mean. The calculation is as follows:</p>
+
+<p><em>x</em> = <em>μ</em> + (<em>z</em>)(<em>σ</em>) = 5 + (3)(2) = 11</p>
+
+<p>The <em>z</em>-score is three.</p>
+<p>The mean for the standard normal distribution is zero, and the standard deviation is one. The transformation <em>z</em> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>x</mi><mo>−</mo><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math> produces the distribution <em>Z</em> ~ <em>N</em>(0, 1). The value <em>x</em> in the given equation comes from a normal distribution with mean <em>μ</em> and standard deviation <em>σ</em>.</p><div class="section">
+<h3><em>Z</em>-Scores</h3>
+ <p>If <em>X</em> is a normally distributed random variable and <em>X</em> ~ <em>N(μ, σ)</em>, then the <em>z</em>-score is:</p>
+ <div class="eq"><math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mi>x</mi><mtext> </mtext><mo>–</mo><mtext> </mtext><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math></div><p><strong>The <em>z</em>-score tells you how many standard deviations the value <em>x</em> is above (to the right of) or below (to the left of) the mean, <em>μ</em>.</strong> Values of <em>x</em> that are larger than the mean have positive <em>z</em>-scores, and values of <em>x</em> that are smaller than the mean have negative <em>z</em>-scores. If <em>x</em> equals the mean, then <em>x</em> has a <em>z</em>-score of zero.</p>
+
+<div class="example">
+<p>Suppose <em>X</em> ~ <em>N(5, 6)</em>. This says that <em>X</em> is a normally distributed random variable with mean <em>μ</em> = 5 and standard deviation <em>σ</em> = 6. Suppose <em>x</em> = 17. Then:</p>
+<div class="eq"><math>
+ <mrow>
+  <mi>z</mi><mo>=</mo><mfrac>
+   <mrow>
+    <mi>x</mi><mo>–</mo><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mn>17</mn><mo>–</mo><mn>5</mn>
+   </mrow>
+   <mn>6</mn>
+  </mfrac>
+  <mo>=</mo><mn>2</mn>
+ </mrow>
+</math></div><p>This means that <em>x</em> = 17 is <strong>two standard deviations</strong> (2<em>σ</em>) above or to the right of the mean <em>μ</em> = 5.</p><p>Notice that: 5 + (2)(6) = 17 (The pattern is <em>μ</em> + <em>zσ</em> = <em>x</em>)</p><p>Now suppose <em>x</em> = 1. Then: <em>z</em> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>x</mi><mo>–</mo><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>1</mn><mo>–</mo><mn>5</mn>
+   </mrow>
+   <mn>6</mn>
+  </mfrac>
+
+ </mrow>
+</math> = –0.67 (rounded to two decimal places)</p><p><strong>This means that <em>x</em> = 1 is 0.67 standard deviations (–0.67<em>σ</em>) below or to the left of the mean <em>μ</em> = 5. Notice that:</strong> 5 + (–0.67)(6) is approximately equal to one (This has the pattern <em>μ</em> + (–0.67)σ = 1)</p><p>Summarizing, when <em>z</em> is positive, <em>x</em> is above or to the right of <em>μ</em> and when <em>z</em> is negative, <em>x</em> is to the left of or below <em>μ</em>. Or, when <em>z</em> is positive, <em>x</em> is greater than <em>μ</em>, and when <em>z</em> is negative <em>x</em> is less than <em>μ</em>.</p>
+</div>
+
+
+<div class="note statistics try">
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+  <p>What is the <em>z</em>-score of <em>x</em>, when <em>x</em> = 1 and <em>X</em> ~ <em>N</em>(12,3)?</p>
+</div>
+</div>
+</div>
+
+<div class="example">
+<p>Some doctors believe that a person can lose five pounds, on the average, in a month by reducing their fat intake and by exercising consistently. Suppose weight loss has a normal distribution. Let <em>X</em> = the amount of weight lost (in pounds) by a person in a month. Use a standard deviation of two pounds. <em>X</em> ~ <em>N</em>(5, 2). Fill in the blanks.<br></p><div class="exercise">
+<div class="problem">
+  <p>a. Suppose a person <strong>lost</strong> ten pounds in a month. The <em>z</em>-score when <em>x</em> = 10 pounds is <em>z</em> = 2.5 (verify). This <em>z</em>-score tells you that <em>x</em> = 10 is ________ standard deviations to the ________ (right or left) of the mean _____ (What is the mean?).</p></div>
+
+<div class="solution">
+  <p>a. This <em>z</em>-score tells you that <em>x</em> = 10 is <strong>2.5</strong> standard deviations to the <strong>right</strong> of the mean <strong>five</strong>.<br></p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+  <p>b. Suppose a person <strong>gained</strong> three pounds (a negative weight loss). Then <em>z</em> = __________. This <em>z</em>-score tells you that <em>x</em> = –3 is ________ standard deviations to the __________ (right or left) of the mean.</p></div>
+
+<div class="solution">
+  <p>b. <em>z</em> = <strong>–4</strong>. This <em>z</em>-score tells you that <em>x</em> = –3 is <strong>four</strong> standard deviations to the <strong>left</strong> of the mean.<br></p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>c. Suppose the random variables <em>X</em> and <em>Y</em> have the following normal distributions: <em>X</em> ~ <em>N</em>(5, 6) and <em>Y</em> ~ <em>N</em>(2, 1). If <em>x</em> = 17, then <em>z</em> = 2. (This was previously shown.) If <em>y</em> = 4, what is <em>z</em>?
+  </p></div>
+
+<div class="solution">
+  <p>c. <em>z</em> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>y</mi><mo>−</mo><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>4</mn><mo>−</mo><mn>2</mn>
+   </mrow>
+   <mn>1</mn>
+  </mfrac>
+
+ </mrow>
+</math> = 2 where <em>µ</em> = 2 and <em>σ</em> = 1.</p></div>
+</div><p>The <em>z</em>-score for <em>y</em> = 4 is <em>z</em> = 2. This means that four is <em>z</em> = 2 standard deviations to the right of the mean. Therefore, <em>x</em> = 17 and <em>y</em> = 4 are both two (of <strong>their own</strong>) standard deviations to the right of <strong>their</strong> respective means.</p>
+
+<p><strong>The <em>z</em>-score allows us to compare data that are scaled differently.</strong> To understand the concept, suppose <em>X</em> ~ <em>N</em>(5, 6) represents weight gains for one group of people who are trying to gain weight in a six week period and <em>Y</em> ~ <em>N</em>(2, 1) measures the same weight gain for a second group of people. A negative weight gain would be a weight loss. Since <em>x</em> = 17 and <em>y</em> = 4 are each two standard deviations to the right of their means, they represent the same, standardized weight gain <strong>relative to their means</strong>.</p></div>
+
+
+<div class="note statistics try">
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Fill in the blanks.</p>
+<p>Jerome averages 16 points a game with a standard deviation of four points. <em>X</em> ~ <em>N</em>(16,4). Suppose Jerome scores ten points in a game. The <em>z</em>–score when <em>x</em> = 10 is –1.5. This score tells you that <em>x</em> = 10 is _____ standard deviations to the ______(right or left) of the mean______(What is the mean?).</p></div>
+</div>
+</div>
+
+
+<p><h3>The Empirical Rule</h3>If <em>X</em> is a random variable and has a normal distribution with mean <em>µ</em> and standard deviation <em>σ</em>, then the <strong>Empirical Rule</strong> states the following:</p><ul><li>About 68% of the <em>x</em> values lie between –1<em>σ</em> and +1<em>σ</em> of the mean <em>µ</em> (within one standard deviation of the mean).</li><li>About  95% of the <em>x</em> values lie between –2<em>σ</em> and +2<em>σ</em> of the mean <em>µ</em> (within two standard deviations of the mean).</li><li>About 99.7% of the <em>x</em> values lie between –3<em>σ</em> and +3<em>σ</em> of the mean <em>µ</em> (within three standard deviations of the mean). Notice that almost all the <em>x</em> values lie within three standard deviations of the mean.</li><li>The <em>z</em>-scores for +1<em>σ</em> and –1<em>σ</em> are +1 and –1, respectively.</li><li>The <em>z</em>-scores for +2<em>σ</em>  and –2<em>σ</em> are +2 and –2, respectively.</li><li>The <em>z</em>-scores for +3<em>σ</em>  and –3<em>σ</em> are +3 and –3 respectively.</li></ul><p>The empirical rule is also known as the 68-95-99.7 rule.</p>
+
+<figure><img src="fig-ch06_03_01.png" alt="This frequency curve illustrates the empirical rule. The normal curve is shown over a horizontal axis. The axis is labeled with points -3s, -2s, -1s, m, 1s, 2s, 3s.  Vertical lines connect the axis to the curve at each labeled point. The peak of the curve aligns with the point m."></figure>
+
+
+
+<div class="example">
+ <p>The mean height of 15 to 18-year-old males from Chile from 2009 to 2010 was 170 cm with a standard deviation of 6.28 cm. Male heights are known to follow a normal distribution. Let <em>X</em> = the height of a 15 to 18-year-old male from Chile in 2009 to 2010. Then <em>X</em> ~ <em>N</em>(170, 6.28).<br></p><div class="exercise">
+<div class="problem">
+<p>a. Suppose a 15 to 18-year-old male from Chile was 168 cm tall from 2009 to 2010. The <em>z</em>-score when <em>x</em> = 168 cm is <em>z</em> = _______. This <em>z</em>-score tells you that <em>x</em> = 168 is ________ standard deviations to the ________ (right or left) of the mean _____ (What is the mean?).</p>
+<p>b. Suppose that the height of a 15 to 18-year-old male from Chile from 2009 to 2010 has a <em>z</em>-score of <em>z</em> = 1.27. What is the male’s height? The <em>z</em>-score (<em>z</em> = 1.27) tells you that the male’s height is ________ standard deviations to the __________ (right or left) of the mean.</p>
+
+</div>
+<div class="solution">
+  <p>a. –0.32, 0.32, left, 170<br></p>
+  <p>b. 177.98 cm, 1.27, right</p></div>
+</div>
+</div>
+
+<div class="note statistics try">
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Use the information in the example to answer the following questions.</p>
+
+
+<ol><li>Suppose a 15 to 18-year-old male from Chile was 176 cm tall from 2009 to 2010. The <em>z</em>-score when <em>x</em> = 176 cm is <em>z</em> = _______. This <em>z</em>-score tells you that <em>x</em> = 176 cm is ________ standard deviations to the ________ (right or left) of the mean _____ (What is the mean?).</li><li>Suppose that the height of a 15 to 18-year-old male from Chile from 2009 to 2010 has a <em>z</em>-score of <em>z</em> = –2. What is the male’s height? The <em>z</em>-score (<em>z</em> = –2) tells you that the male’s height is ________ standard deviations to the __________ (right or left) of the mean.</li></ol></div>
+
+
+</div>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<p>From 1984 to 1985, the mean height of 15 to 18-year-old males from Chile was 172.36 cm, and the standard deviation was 6.34 cm. Let <em>Y</em> = the height of 15 to 18-year-old males from 1984 to 1985. Then <em>Y</em> ~ <em>N</em>(172.36, 6.34).</p>
+
+<p>The mean height of 15 to 18-year-old males from Chile from 2009 to 2010 was 170 cm with a standard deviation of 6.28 cm. Male heights are known to follow a normal distribution. Let <em>X</em> = the height of a 15 to 18-year-old male from Chile in 2009 to 2010. Then <em>X</em> ~ <em>N</em>(170, 6.28).</p>
+
+<p>Find the <em>z</em>-scores for <em>x</em> = 160.58 cm and <em>y</em> = 162.85 cm. Interpret each <em>z</em>-score. What can you say about <em>x</em> = 160.58 cm and <em>y</em> = 162.85 cm as they compare to their respective means and standard deviations?</p></div>
+
+<div class="solution">
+  <p>The <em>z</em>-score for <em>x</em> = -160.58 is <em>z</em> = –1.5.
+<br>The <em>z</em>-score for <em>y</em> = 162.85 is <em>z</em> = –1.5.
+<br>Both <em>x</em> = 160.58 and <em>y</em> = 162.85 deviate the same number of standard deviations from their respective means and in the same direction.</p></div>
+</div>
+</div>
+
+<div class="note statistics try">
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>In 2012, 1,664,479 students took the SAT exam. The distribution of scores in the verbal section of the SAT had a mean <em>µ</em> = 496 and a standard deviation <em>σ</em> = 114. Let <em>X</em> = a SAT exam verbal section score in 2012. Then <em>X</em> ~ <em>N</em>(496, 114).</p>
+<p>Find the <em>z</em>-scores for <em>x</em><sub>1</sub> = 325 and <em>x</em><sub>2</sub> = 366.21. Interpret each <em>z</em>-score. What can you say about <em>x</em><sub>1</sub> = 325 and <em>x</em><sub>2</sub> = 366.21 as they compare to their respective means and standard deviations?</p></div>
+</div>
+</div>
+
+<div class="example">
+<p>Suppose <em>x</em> has a normal distribution with mean 50 and standard deviation 6.</p>
+<ul><li>About 68% of the <em>x</em> values lie within one standard deviation of the mean. Therefore, about 68% of the <em>x</em> values lie between –1<em>σ</em> = (–1)(6) = –6 and 1<em>σ</em> = (1)(6) = 6 of the mean 50. The values 50 – 6 = 44 and 50 + 6 = 56 are within one standard deviation from the mean 50. The <em>z</em>-scores are –1 and +1 for 44 and 56, respectively.</li><li>About 95% of the <em>x</em> values lie within two standard deviations of the mean. Therefore, about 95% of the <em>x</em> values lie between –2<em>σ</em> = (–2)(6) = –12 and 2<em>σ</em> = (2)(6) = 12. The values 50 – 12 = 38 and 50 + 12 = 62 are within two standard deviations from the mean 50. The <em>z</em>-scores are –2 and +2 for 38 and 62, respectively.</li><li>About 99.7% of the <em>x</em> values lie within three standard deviations of the mean. Therefore, about 99.7% of the <em>x</em> values lie between –3<em>σ</em> = (–3)(6) = –18 and 3<em>σ</em> = (3)(6) = 18 from the mean 50. The values 50 – 18 = 32 and 50 + 18 = 68 are within three standard deviations of the mean 50. The <em>z</em>-scores are –3 and +3 for 32 and 68, respectively.</li></ul></div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+  <p>Suppose <em>X</em> has a normal distribution with mean 25 and standard deviation five. Between what values of <em>x</em> do 68% of the values lie?</p></div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+  <p>From 1984 to 1985, the mean height of 15 to 18-year-old males from Chile was 172.36 cm, and the standard deviation was 6.34 cm. Let <em>Y</em> = the height of 15 to 18-year-old males in 1984 to 1985. Then <em>Y</em> ~ <em>N</em>(172.36, 6.34).</p>
+
+<p>
+<ol><li>About 68% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________, respectively.</li><li>About 95% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________ respectively.</li><li>About 99.7% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________, respectively.</li></ol></p>
+</div>
+
+<div class="solution">
+<ol><li>About 68% of the values lie between 166.02 cm and 178.7 cm. The <em>z</em>-scores are –1 and 1.</li><li>About 95% of the values lie between 159.68 cm and 185.04 cm. The <em>z</em>-scores are –2 and 2.</li><li>About 99.7% of the values lie between 153.34 cm and 191.38 cm. The <em>z</em>-scores are –3 and 3.</li></ol></div>
+</div>
+</div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>The scores on a college entrance exam have an approximate normal distribution with mean, <em>µ</em> = 52 points and a standard deviation, <em>σ</em> = 11 points.</p>
+
+<ol><li>About 68% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________, respectively.</li><li>About 95% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________, respectively. </li><li>About 99.7% of the <em>y</em> values lie between what two values? These values are ________________. The <em>z</em>-scores are ________________, respectively.
+  </li></ol></div>
+</div></div>
+</div>
+
+<div class="section references">
+<h3>References</h3>
+<p>“Blood Pressure of Males and Females.” StatCruch, 2013. Available online at http://www.statcrunch.com/5.0/viewreport.php?reportid=11960 (accessed May 14, 2013).</p>
+<p>“The Use of Epidemiological Tools in Conflict-affected populations: Open-access educational resources for policy-makers: Calculation of z-scores.” London School of Hygiene and Tropical Medicine, 2009. Available online at http://conflict.lshtm.ac.uk/page_125.htm (accessed May 14, 2013).</p><p>“2012 College-Bound Seniors Total Group Profile Report.” CollegeBoard, 2012. Available online at http://media.collegeboard.com/digitalServices/pdf/research/TotalGroup-2012.pdf (accessed May 14, 2013).</p>
+<p>“Digest of Education Statistics: ACT score average and standard deviations by sex and race/ethnicity and percentage of ACT test takers, by selected composite score ranges and planned fields of study: Selected years, 1995 through 2009.” National Center for Education Statistics. Available online at http://nces.ed.gov/programs/digest/d09/tables/dt09_147.asp (accessed May 14, 2013).</p>
+<p>Data from the <em>San Jose Mercury News</em>.</p><p>Data from <em>The World Almanac and Book of Facts</em>.</p><p>“List of stadiums by capacity.” Wikipedia. Available online at https://en.wikipedia.org/wiki/List_of_stadiums_by_capacity (accessed May 14, 2013).</p>
+<p>Data from the National Basketball Association. Available online at www.nba.com (accessed May 14, 2013).</p>
+</div>
+
+<div class="section summary">
+<h3>Chapter Review</h3>
+<p>A <em>z</em>-score is a standardized value. Its distribution is the standard normal, <em>Z</em> ~ <em>N</em>(0, 1). The mean of the <em>z</em>-scores is zero and the standard deviation is one. If <em>z</em> is the <em>z</em>-score for a value <em>x</em> from the normal distribution <em>N</em>(<em>µ</em>, <em>σ</em>) then <em>z</em> tells you how many standard deviations <em>x</em> is above (greater than) or below (less than) <em>µ</em>.</p>
+</div>
+
+<div class="section formula-review">
+<h3>Formula Review</h3>
+<p><em>z</em> = a standardized value (<em>z</em>-score)</p>
+<p>mean = 0; standard deviation = 1</p>
+
+<p>To find the observed value, <em>x</em>, when the <em>z</em>-scores is known:<br><em>x</em> = <em>μ</em> + (<em>z</em>)<em>σ</em></p><p><em>z</em>-score: <em>z</em> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>x</mi><mtext> – </mtext><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math></p><p><em>Z</em> = the random variable for <em>z</em>-scores</p>
+
+</div>
+
+
+
+<div class="section practice">
+<div class="exercise">
+<div class="problem">
+<p>A bottle of water contains 12.05 fluid ounces with a standard deviation of 0.01 ounces. Define the random variable <em>X</em> in words. <em>X</em> = ____________.</p></div>
+<div class="solution">
+<p>ounces of water in a bottle</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>A normal distribution has a mean of 61 and a standard deviation of 15. What is the median?</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+<p><em>X</em> ~ <em>N</em>(1, 2)</p>
+<p><em>σ</em> = _______</p>
+</div>
+<div class="solution">
+<p>2</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>A company manufactures rubber balls. The mean diameter of a ball is 12 cm with a standard deviation of 0.2 cm. Define the random variable <em>X</em> in words. <em>X</em> = ______________.</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+<p><em>X</em> ~ <em>N</em>(–4, 1)</p><p>What is the median?</p>
+</div>
+<div class="solution">
+<p>–4</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p><em>X</em> ~ <em>N</em>(3, 5)</p>
+<p><em>σ</em> = _______</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p><em>X</em> ~ <em>N</em>(–2, 1)</p><p><em>μ</em> = _______</p>
+</div>
+<div class="solution">
+<p>–2</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>What does a <em>z</em>-score measure?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>What does standardizing a normal distribution do to the mean?</p>
+</div>
+<div class="solution">
+<p>The mean becomes zero.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Is <em>X</em> ~ <em>N</em>(0, 1) a standardized normal distribution? Why or why not?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>What is the <em>z</em>-score of <em>x</em> = 12, if it is two standard deviations to the right of the mean?</p>
+</div>
+<div class="solution">
+<p><em>z</em> = 2</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>What is the <em>z</em>-score of <em>x</em> = 9, if it is 1.5 standard deviations to the left of the mean?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>What is the <em>z</em>-score of <em>x</em> = –2, if it is 2.78 standard deviations to the right of the mean?</p></div>
+<div class="solution">
+<p><em>z</em> = 2.78</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>What is the <em>z</em>-score of <em>x</em> = 7, if it is 0.133 standard deviations to the left of the mean?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(2, 6). What value of <em>x</em> has a <em>z</em>-score of three?</p>
+</div>
+<div class="solution">
+<p><em>x</em> = 20</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(8, 1). What value of <em>x</em> has a <em>z</em>-score of –2.25?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(9, 5). What value of <em>x</em> has a <em>z</em>-score of –0.5?</p></div>
+<div class="solution">
+<p><em>x</em> = 6.5</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(2, 3). What value of <em>x</em> has a <em>z</em>-score of –0.67?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(4, 2). What value of <em>x</em> is 1.5 standard deviations to the left of the mean?</p>
+</div>
+<div class="solution">
+<p><em>x</em> = 1</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(4, 2). What value of <em>x</em> is two standard deviations to the right of the mean?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(8, 9). What value of <em>x</em> is 0.67 standard deviations to the left of the mean?</p>
+</div>
+<div class="solution">
+<p><em>x</em> = 1.97</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(–1, 2). What is the <em>z</em>-score of <em>x</em> = 2?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(12, 6). What is the <em>z</em>-score of <em>x</em> = 2?</p>
+</div>
+<div class="solution">
+<p><em>z</em> = –1.67</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(9, 3). What is the <em>z</em>-score of <em>x</em> = 9?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose a normal distribution has a mean of six and a standard deviation of 1.5. What is the <em>z</em>-score of <em>x</em> = 5.5?</p>
+</div>
+<div class="solution">
+<p><em>z</em> ≈ –0.33</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>In a normal distribution, <em>x</em> = 5 and <em>z</em> = –1.25. This tells you that <em>x</em> = 5 is ____ standard deviations to the ____ (right or left) of the mean.</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>In a normal distribution, <em>x</em> = 3 and <em>z</em> = 0.67. This tells you that <em>x</em> = 3 is ____ standard deviations to the ____ (right or left) of the mean.</p></div>
+<div class="solution">
+<p>0.67, right</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>In a normal distribution, <em>x</em> = –2 and <em>z</em> = 6. This tells you that <em>x</em> = –2 is ____ standard deviations to the ____ (right or left) of the mean.</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>In a normal distribution, <em>x</em> = –5 and <em>z</em> = –3.14. This tells you that <em>x</em> = –5 is ____ standard deviations to the ____ (right or left) of the mean.</p></div>
+<div class="solution">
+<p>3.14, left</p>
+</div>
+</div>
+
+
+<div class="exercise"><div class="problem">
+<p>In a normal distribution, <em>x</em> = 6 and <em>z</em> = –1.7. This tells you that <em>x</em> = 6 is ____ standard deviations to the ____ (right or left) of the mean.</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>About what percent of <em>x</em> values from a normal distribution lie within one standard deviation (left and right) of the mean of that distribution?</p>
+</div>
+<div class="solution">
+<p>about 68%</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>About what percent of the <em>x</em> values from a normal distribution lie within two standard deviations (left and right) of the mean of that distribution?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>About what percent of <em>x</em> values lie between the second and third standard deviations (both sides)?</p></div>
+<div class="solution">
+<p>about 4%</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(15, 3). Between what <em>x</em> values does 68.27% of the data lie? The range of <em>x</em> values is centered at the mean of the distribution (i.e., 15).</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(–3, 1). Between what <em>x</em> values does 95.45% of the data lie? The range of <em>x</em> values is centered at the mean of the distribution(i.e., –3).</p></div>
+<div class="solution">
+<p>between –5 and –1</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>Suppose <em>X</em> ~ <em>N</em>(–3, 1). Between what <em>x</em> values does 34.14% of the data lie?</p></div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>About  what percent of <em>x</em> values lie between the mean and three standard deviations?</p>
+</div>
+<div class="solution">
+<p>about 50%</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>About what percent of <em>x</em> values lie between the mean and one standard deviation?</p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+<p>About what percent of <em>x</em> values lie between the first and second standard deviations from the mean (both sides)?</p>
+</div>
+<div class="solution">
+<p>about 27%</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>About what percent of <em>x</em> values lie between the first and third standard deviations(both sides)?</p></div>
+
+
+</div><p><em>Use the following information to answer the next two exercises:</em> The life of wearable fitness devices is normally distributed with mean of 4.1 years and a standard deviation of 1.3 years. A wearable fitness device is guaranteed for three years. We are interested in the length of time a wearable fitness device lasts.</p>
+<div class="exercise">
+<div class="problem">
+  <p>Define the random variable <em>X</em> in words. <em>X</em> = _______________.</p>
+</div>
+<div class="solution">
+<p>The lifetime of a wearable fitness device measured in years.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p><em>X</em> ~ _____(_____,_____)</p>
+</div>
+
+
+</div></div>
+
+<div class="section free-response">
+<h3>Homework</h3>
+<p><em>Use the following information to answer the next two exercises:</em> The patient recovery time from a particular surgical procedure is normally distributed with a mean of 5.3 days and a standard deviation of 2.1 days.</p>
+
+<div class="exercise"><div class="problem">
+  <p>What is the median recovery time?</p>
+<ol><li>2.7</li><li>5.3</li><li>7.4</li><li>2.1</li></ol>
+</div>
+
+
+</div><div class="exercise"><div class="problem">
+  <p>What is the <em>z</em>-score for a patient who takes ten days to recover?</p>
+<ol><li>1.5</li><li>0.2</li><li>2.2</li><li>7.3</li></ol>
+</div>
+<div class="solution">
+  <p>c</p>
+</div>
+</div>
+
+
+<div class="exercise"><div class="problem">
+<p>The length of time to find a parking space at 9 A.M. follows a normal distribution with a mean of five minutes and a standard deviation of two minutes. If the mean is significantly greater than the standard deviation, which of the following statements is true?</p>
+<ol><li>The data cannot follow the uniform distribution.</li><li>The data cannot follow the exponential distribution..</li><li>The data cannot follow the normal distribution.</li></ol>
+
+<ol><li>I only	</li><li>II only	</li><li>III only	</li><li>I, II, and III</li></ol>
+</div>
+
+
+</div><div class="exercise"><div class="problem">
+<p>The heights of the 430 National Basketball Association players were listed on team rosters at the start of a recent season. The heights of basketball players have an approximate normal distribution with mean, <em>µ</em> = 79 inches and a standard deviation, <em>σ</em> = 3.89 inches. For each of the following heights, calculate the <em>z</em>-score and interpret it using complete sentences.</p>
+<ol><li>77 inches</li><li>85 inches</li><li>If an NBA player reported his height had a <em>z</em>-score of 3.5, would you believe him? Explain your answer.</li></ol>
+
+</div>
+
+<div class="solution">
+  <ol><li>Use the <em>z</em>-score formula. <em>z</em> = –0.5141. The height of 77 inches is 0.5141 standard deviations below the mean. An NBA player whose height is 77 inches is shorter than average.</li><li>Use the <em>z</em>-score formula. <em>z</em> = 1.5424. The height 85 inches is 1.5424 standard deviations above the mean. An NBA player whose height is 85 inches is taller than average.</li><li>Height = 79 + 3.5(3.89) = 92.615 inches, which is taller than 7 feet, 8 inches. There are very few NBA players this tall so the answer is no, not likely.</li></ol></div>
+</div><div class="exercise"><div class="problem">
+  <p>The systolic blood pressure (given in millimeters) of males has an approximately normal distribution with mean <em>µ</em> = 125 and standard deviation <em>σ</em> = 14. Systolic blood pressure for males follows a normal distribution.</p>
+<ol><li>Calculate the <em>z</em>-scores for the male systolic blood pressures 100 and 150 millimeters. </li><li>If a male friend of yours said he thought his systolic blood pressure was 2.5 standard deviations below the mean, but that he believed his blood pressure was between 100 and 150 millimeters, what would you say to him?</li></ol>
+</div>
+
+
+</div><div class="exercise"><div class="problem">
+<p>Kyle’s doctor told him that the <em>z</em>-score for his systolic blood pressure is 1.75. Which of the following is the best interpretation of this standardized score? The systolic blood pressure (given in millimeters) of males has an approximately normal distribution with mean <em>µ</em> = 125 and standard deviation <em>σ</em> = 14. If <em>X</em> = a systolic blood pressure score then  <em>X</em> ~ <em>N</em> (125, 14).</p><ol><li>Which answer(s) <strong>is/are</strong> correct?
+<ol><li>Kyle’s systolic blood pressure is 175.</li><li>Kyle’s systolic blood pressure is 1.75 times the average blood pressure of men his age.</li><li>Kyle’s systolic blood pressure is 1.75 above the average systolic blood pressure of men his age.</li><li>Kyles’s systolic blood pressure is 1.75 standard deviations above the average systolic blood pressure for men.</li></ol></li><li>Calculate Kyle’s blood pressure.</li></ol>
+</div>
+
+<div class="solution">
+
+<ol><li>iv</li><li>Kyle’s blood pressure is equal to 125 + (1.75)(14) = 149.5.</li></ol>
+</div>
+</div><div class="exercise"><div class="problem">
+  <p>Height and weight are two measurements used to track a child’s development. The World Health Organization measures child development by comparing the weights of children who are the same height and the same gender. In 2009, weights for all 80 cm girls in the reference population had a mean <em>µ</em> = 10.2 kg and standard deviation <em>σ</em> = 0.8 kg. Weights are normally distributed. <em>X</em> ~ <em>N</em>(10.2, 0.8). Calculate the <em>z</em>-scores that correspond to the following weights and interpret them.
+<ol><li>11 kg</li><li>7.9 kg</li><li>12.2 kg</li></ol></p>
+</div>
+
+
+</div><div class="exercise">
+<div class="problem">
+  <p>During a certain year, 1,475,623 students heading to college took the SAT. The distribution of scores in the math section of the SAT follows a normal distribution with mean <em>µ</em> = 520 and standard deviation <em>σ</em> = 115.</p>
+
+<ol><li>Calculate the <em>z</em>-score for an SAT score of 720. Interpret it using a complete sentence.</li><li>What math SAT score is 1.5 standard deviations above the mean? What can you say about this SAT score?</li><li>During a different year, the SAT math test had a mean of 514 and standard deviation 117. The ACT math test is an alternate to the SAT and is approximately normally distributed with mean 21 and standard deviation 5.3. If one person took the SAT math test and scored 700 and a second person took the ACT math test and scored 30, who did better with respect to the test they took?</li></ol></div>
+
+<div class="solution">
+<p>Let <em>X</em> = an SAT math score and <em>Y</em> = an ACT math score. Use the z-score formula.</p>
+<ol><li><em>X</em> = 720 : <math><mi>z</mi><mo>=</mo><mfrac><mrow><mn>720</mn><mo>-</mo><mn>520</mn></mrow><mn>115</mn></mfrac><mo>=</mo><mn>1</mn><mo>.</mo><mn>74</mn></math>. The exam score of 720 is 1.74 standard deviations above the mean of 520.</li><li><em>z</em> = 1.5 <br>The math SAT score is 520 + 1.5(115) ≈ 692.5. The exam score of 692.5 is 1.5 standard deviations above the mean of 520.</li><li><math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>X</mi><mtext> – </mtext><mi>μ</mi>
+   </mrow>
+   <mtext>σ</mtext>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mtext>700 – 514</mtext>
+   </mrow>
+   <mrow>
+    <mtext>117</mtext>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> ≈ 1.59, the <em>z</em>-score for the SAT. <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>Y</mi><mtext> – </mtext><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mn>30</mn><mtext> – </mtext><mn>21</mn>
+   </mrow>
+   <mrow>
+    <mn>5.3</mn>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> ≈ 1.70, the <em>z</em>-scores for the ACT. With respect to the test they took, the person who took the ACT did better (has the higher <em>z</em>-score).</li></ol></div>
+</div>
+
+
+</div>
+
+ <h2>Key terms</h2>
+<p><strong>Standard Normal Distribution</strong> a continuous random variable (RV) <em>X</em> ~ <em>N</em>(0, 1); when <em>X</em> follows the standard normal distribution, it is often noted as <em>Z</em> ~ <em>N</em>(0, 1).</p>
+
+<p><strong>z-score</strong> the linear transformation of the form <em>z</em> = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>x</mi><mtext> </mtext><mo>–</mo><mtext> </mtext><mi>μ</mi>
+   </mrow>
+   <mi>σ</mi>
+  </mfrac>
+
+ </mrow>
+</math>; if this transformation is applied to any normal distribution <em>X</em> ~ <em>N</em>(<em>μ</em>, <em>σ</em>) the result is the standard normal distribution <em>Z</em> ~ <em>N</em>(0,1). If this transformation is applied to any specific value <em>x</em> of the RV with mean <em>μ</em> and standard deviation <em>σ</em>, the result is called the  <em>z</em>-score of <em>x</em>. The <em>z</em>-score allows us to compare data that are normally distributed but scaled differently.</p>
+
+
+</body></html>

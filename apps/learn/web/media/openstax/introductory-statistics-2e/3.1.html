@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.1 Terminology · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 3.1 Terminology. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/3-1-terminology</p>
+<h1>3.1 Terminology</h1>
+
+<p>Probability is a measure that is associated with how certain we are of outcomes of a particular experiment or activity. An <strong>experiment</strong> is a planned operation carried out under controlled conditions. If the result is not predetermined, then the experiment is said to be a <strong>chance</strong> experiment. Flipping one fair coin twice is an example of an experiment.</p>
+<p>A result of an experiment is called an <strong>outcome</strong>. The <strong>sample space</strong> of an experiment is the set of all possible outcomes. Three ways to represent a sample space are: to list the possible outcomes, to create a tree diagram, or to create a Venn diagram. The uppercase letter <em>S</em> is used to denote the sample space. For example, if you flip one fair coin, <em>S</em> = {<em>H</em>, <em>T</em>} where <em>H</em> = heads and <em>T</em> = tails are the outcomes.</p><p>An <strong>event</strong> is any combination of outcomes. Upper case letters like <em>A</em> and <em>B</em> represent events. For example, if the experiment is to flip one fair coin, event <em>A</em> might be getting at most one head. The probability of an event <em>A</em> is written <em>P</em>(<em>A</em>).</p>
+
+<p>The <strong>probability</strong> of any outcome is the <strong>long-term relative frequency</strong> of that outcome. <strong>Probabilities are between zero and one, inclusive</strong> (that is, zero and one and all numbers between these values). <em>P</em>(<em>A</em>) = 0 means the event <em>A</em> can never happen. <em>P</em>(<em>A</em>) = 1 means the event <em>A</em> always happens. <em>P</em>(<em>A</em>) = 0.5 means the event <em>A</em> is equally likely to occur or not to occur. For example, if you flip one fair coin repeatedly (from 20 to 2,000 to 20,000 times) the relative frequency of heads approaches 0.5 (the probability of heads).</p>
+
+<p><strong>Equally likely</strong> means that each outcome of an experiment occurs with equal probability. For example, if you toss a <strong>fair</strong>, six-sided die, each face (1, 2, 3, 4, 5, or 6) is as likely to occur as any other face. If you toss a fair coin, a Head (<em>H</em>) and a Tail (<em>T</em>) are equally likely to occur. If you randomly guess the answer to a true/false question on an exam, you are equally likely to select a correct answer or an incorrect answer.</p>
+
+<p><strong>To calculate the probability of an event <em>A</em> when all outcomes in the sample space are equally likely</strong>, count the number of outcomes for event <em>A</em> and divide by the total number of outcomes in the sample space. For example, if you toss a fair dime and a fair nickel, the sample space is {<em>HH</em>, <em>TH</em>, <em>HT</em>, <em>TT</em>} where <em>T</em> = tails and <em>H</em> = heads. The sample space has four outcomes. <em>A</em> = getting one head. There are two outcomes that meet this condition {<em>HT</em>, <em>TH</em>}, so <em>P</em>(<em>A</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>4</mn>
+  </mfrac>
+ </mrow>
+</math> = 0.5.</p><p>Suppose you roll one fair six-sided die, with the numbers {1, 2, 3, 4, 5, 6} on its faces. Let event <em>E</em> = rolling a number that is at least five. There are two outcomes {5, 6}. <em>P</em>(<em>E</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>2</mn>
+   <mn>6</mn>
+  </mfrac>
+ </mrow>
+</math>. If you were to roll the die only a few times, you would not be surprised if your observed results did not match the probability. If you were to roll the die a very large number of times, you would expect that, overall, <math><mrow><mfrac><mn>2</mn><mn>6</mn></mfrac></mrow></math> of the rolls would result in an outcome of &quot;at least five&quot;. You would not expect exactly <math><mrow><mfrac><mn>2</mn><mn>6</mn></mfrac></mrow></math>. The long-term relative frequency of obtaining this result would approach the theoretical probability of <math><mrow><mfrac><mn>2</mn><mn>6</mn></mfrac></mrow></math> as the number of repetitions grows larger and larger.</p>
+
+<p>This important characteristic of probability experiments is known as the <strong>law of large numbers</strong> which states that as the number of repetitions of an experiment is increased, the relative frequency obtained in the experiment tends to become closer and closer to the theoretical probability. Even though the outcomes do not happen according to any set pattern or order, overall, the long-term observed relative frequency will approach the theoretical probability. (The word <strong>empirical</strong> is often used instead of the word observed.)</p>
+
+<p>It is important to realize that in many situations, the outcomes are not equally likely. A coin or die may be <strong>unfair</strong>, or <strong>biased</strong>. Two math professors in Europe had their statistics students test the Belgian one Euro coin and discovered that in 250 trials, a head was obtained 56% of the time and a tail was obtained 44% of the time. The data seem to show that the coin is not a fair coin; more repetitions would be helpful to draw a more accurate conclusion about such bias. Some dice may be biased. Look at the dice in a game you have at home; the spots on each face are usually small holes carved out and then painted to make the spots visible. Your dice may or may not be biased; it is possible that the outcomes may be affected by the slight weight differences due to the different numbers of holes in the faces. Gambling casinos make a lot of money depending on outcomes from rolling dice, so casino dice are made differently to eliminate bias. Casino dice have flat faces; the holes are completely filled with paint having the same density as the material that the dice are made out of so that each face is equally likely to occur. Later we will learn techniques to use to work with probabilities for events that are not equally likely.<br></p>
+
+<p><h2><strong>&quot;OR&quot; Event</strong>:</h2>An outcome is in the event <em>A</em> OR <em>B</em> if the outcome is in <em>A</em> or is in <em>B</em> or is in both <em>A</em> and <em>B</em>.<br>The event A OR B can also be written as A Union B, with notation as follows:<br><math><mi>A</mi><mo>∪</mo><mi>B</mi></math><br>For example, let A = {1, 2, 3, 4, 5} and B = {4, 5, 6, 7, 8}.<br>Then <math><mi>A</mi><mo>∪</mo><mi>B</mi></math> = {1, 2, 3, 4, 5, 6, 7, 8}. Notice that 4 and 5 are NOT listed twice.<br></p>
+<p><h2><strong>&quot;AND&quot; Event</strong>:</h2>An outcome is in the event <em>A</em> AND <em>B</em> if the outcome is in both <em>A</em> and <em>B</em> at the same time.<br>The event <em>A</em> AND <em>B</em> can also be written as <em>A</em> Intersection <em>B</em>, with notation as follows:<br><math><mi>A</mi><mo>∩</mo><mi>B</mi></math><br>For example, let <em>A</em> and <em>B</em> be {1, 2, 3, 4, 5} and {4, 5, 6, 7, 8}, respectively.<br>Then <math><mi>A</mi><mo>∩</mo><mi>B</mi></math>= {4, 5}.</p>
+
+<p>The <strong>complement of event <em>A</em></strong> is denoted <em>A′</em> (read &quot;<em>A</em> prime&quot;). <em>A′</em> consists of all outcomes that are <strong>NOT</strong> in <em>A</em>. Notice that <em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = 1. For example, let <em>S</em> = {1, 2, 3, 4, 5, 6} and let <em>A</em> = {1, 2, 3, 4}. Then, <em>A′</em> = {5, 6}. <em>P</em>(<em>A</em>) = <math><mrow><mfrac><mn>4</mn><mn>6</mn></mfrac></mrow></math>, <em>P</em>(<em>A′</em>) = <math><mrow><mfrac><mn>2</mn><mn>6</mn></mfrac></mrow></math>, and <em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>4</mn>
+   <mn>6</mn>
+  </mfrac>
+  <mo> + </mo><mfrac>
+   <mn>2</mn>
+   <mn>6</mn>
+  </mfrac>
+   </mrow>
+</math> = 1</p><p>The <strong>conditional probability</strong> of <em>A</em> given <em>B</em> is written <em>P</em>(<em>A</em>|<em>B</em>). <em>P</em>(<em>A</em>|<em>B</em>) is the probability that event <em>A</em> will occur given that the event <em>B</em> has already occurred. <strong>A conditional reduces the sample space</strong>. We calculate the probability of <em>A</em> from the reduced sample space <em>B</em>. The formula to calculate <em>P</em>(<em>A</em>|<em>B</em>) is <em>P</em>(<em>A</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mtext> AND </mtext><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math> where <em>P</em>(<em>B</em>) is greater than zero.</p><p>For example, suppose we toss one fair, six-sided die. The sample space <em>S</em> = {1, 2, 3, 4, 5, 6}. Let <em>A</em> = face is 2 or 3 and <em>B</em> = face is even (2, 4, 6). To calculate <em>P</em>(<em>A</em>|<em>B</em>), we count the number of outcomes 2 or 3 in the sample space <em>B</em> = {2, 4, 6}. Then we divide that by the number of outcomes <em>B</em> (rather than <em>S</em>).</p><p>We get the same result by using the formula. Remember that <em>S</em> has six outcomes.</p><p><em>P</em>(<em>A</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mspace width="2pt"></mspace><mtext>AND</mtext><mspace width="2pt"></mspace><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mo stretchy="false">(</mo><mtext>the number of outcomes that are 2 or 3 and even in </mtext><mspace width="2pt"></mspace><mi>S</mi><mo stretchy="false">)</mo>
+     </mrow>
+     <mn>6</mn>
+    </mfrac>
+   </mrow>
+   <mrow>
+    <mfrac>
+     <mrow>
+      <mo stretchy="false">(</mo><mtext>the number of outcomes that are even in </mtext><mspace width="2pt"></mspace><mi>S</mi><mo stretchy="false">)</mo>
+     </mrow>
+     <mn>6</mn>
+    </mfrac>
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mrow>
+    <mfrac>
+     <mn>1</mn>
+     <mn>6</mn>
+    </mfrac>
+
+   </mrow>
+   <mrow>
+    <mfrac>
+     <mn>3</mn>
+     <mn>6</mn>
+    </mfrac>
+
+   </mrow>
+  </mfrac>
+  <mo>=</mo><mfrac>
+   <mn>1</mn>
+   <mn>3</mn>
+  </mfrac>
+
+ </mrow>
+</math>
+</p><p><h2>Understanding Terminology and Symbols</h2>It is important to read each problem carefully to think about and understand what the events are. Understanding the wording is the first very important step in solving probability problems. Reread the problem several times if necessary. Clearly identify the event of interest. Determine whether there is a condition stated in the wording that would indicate that the probability is conditional; carefully identify the condition, if any.</p>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<p>The sample space <em>S</em> is the whole numbers starting at one and less than 20.</p>
+<ol><li><em>S</em> = _____________________________
+<p>Let event <em>A</em> = the even numbers and event <em>B</em> = numbers greater than 13.</p>
+</li><li><em>A</em> = _____________________, <em>B</em> = _____________________</li><li><em>P</em>(<em>A</em>) = _____________, <em>P</em>(<em>B</em>) = ________________</li><li><em>A</em> AND <em>B</em> = ____________________, <em>A</em> OR <em>B</em> = ________________</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = _________, <em>P</em>(<em>A</em> OR <em>B</em>) = _____________</li><li><em>A′</em> = _____________, <em>P</em>(<em>A′</em>) = _____________</li><li><em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = ____________</li><li><em>P</em>(<em>A</em>|<em>B</em>) = ___________, <em>P</em>(<em>B</em>|<em>A</em>) = _____________; are the probabilities equal?</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>S</em> = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}</li><li><em>A</em> = {2, 4, 6, 8, 10, 12, 14, 16, 18}, <em>B</em> = {14, 15, 16, 17, 18, 19}</li><li><em>P</em>(<em>A</em>) = <math><mrow><mfrac><mn>9</mn><mrow><mn>19</mn></mrow></mfrac>
+ </mrow></math>, <em>P</em>(<em>B</em>) = <math><mrow><mfrac>
+   <mn>6</mn>
+   <mrow>
+    <mn>19</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></li><li><em>A</em> AND <em>B</em> = {14,16,18}, <em>A</em> OR <em>B</em> = {2, 4, 6, 8, 10, 12, 14, 15, 16, 17, 18, 19}</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = <math><mrow><mfrac><mn>3</mn><mrow><mn>19</mn></mrow>  </mfrac></mrow></math>, <em>P</em>(<em>A</em> OR <em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mn>12</mn>
+   <mrow>
+    <mn>19</mn>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></li><li><em>A′</em> = 1, 3, 5, 7, 9, 11, 13, 15, 17, 19; <em>P</em>(<em>A′</em>) = <math>
+ <mrow><mfrac><mrow><mn>10</mn></mrow><mrow><mn>19</mn></mrow></mfrac> </mrow></math></li><li><em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = 1 (<math>
+ <mrow><mfrac><mrow><mn>9</mn></mrow><mrow><mn>19</mn></mrow></mfrac> </mrow></math> + <math>
+ <mrow><mfrac><mrow><mn>10</mn></mrow><mrow><mn>19</mn></mrow></mfrac> </mrow></math> = 1)</li><li><em>P</em>(<em>A</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mtext> AND </mtext><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>6</mn>
+  </mfrac>
+
+ </mrow>
+</math>, <em>P</em>(<em>B</em>|<em>A</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mtext> AND </mtext><mi>B</mi><mo stretchy="false">)</mo>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo>
+   </mrow>
+  </mfrac>
+
+ </mrow>
+</math> = <math>
+ <mrow>
+  <mfrac>
+   <mn>3</mn>
+   <mn>9</mn>
+  </mfrac>
+
+ </mrow>
+</math>, No</li></ol></div>
+</div>
+</div>
+
+<div class="note statistics try">
+
+<h3>Try It</h3>
+<div class="exercise">
+<div class="problem">
+<p>The sample space <em>S</em> is all the ordered pairs of two whole numbers, the first from one to three and the second from one to four (Example: (1, 4)).<br></p><ol><li><em>S</em> = _____________________________
+<br>Let event <em>A</em> = the sum is even and event <em>B</em> = the first number is prime.</li><li><em>A</em> = _____________________, <em>B</em> = _____________________</li><li><em>P</em>(<em>A</em>) = _____________, <em>P</em>(<em>B</em>) = ________________</li><li><em>A</em> AND <em>B</em> = ____________________, <em>A</em> OR <em>B</em> = ________________</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = _________, <em>P</em>(<em>A</em> OR <em>B</em>) = _____________</li><li><em>B′</em> = _____________, <em>P</em>(<em>B′</em>) = _____________</li><li><em>P</em>(<em>A</em>) + <em>P</em>(<em>A′</em>) = ____________</li><li><em>P</em>(<em>A</em>|<em>B</em>) = ___________, <em>P</em>(<em>B</em>|<em>A</em>) = _____________; are the probabilities equal?</li></ol></div>
+</div>
+</div>
+
+<div class="example">
+<div class="exercise">
+<div class="problem">
+<p>A fair, six-sided die is rolled. Describe the sample space <em>S</em>, identify each of the following events with a subset of <em>S</em> and compute its probability (an outcome is the number of dots that show up).</p>
+<ol><li>Event <em>T</em> = the outcome is two.</li><li>Event <em>A</em> = the outcome is an even number.</li><li>Event <em>B</em> = the outcome is less than four.</li><li>The complement of <em>A</em>.</li><li><em>A</em> GIVEN <em>B</em></li><li><em>B</em> GIVEN <em>A</em></li><li><em>A</em> AND <em>B</em></li><li><em>A</em> OR <em>B</em></li><li><em>A</em> OR <em>B′</em></li><li>Event <em>N</em> = the outcome is a prime number.</li><li>Event <em>I</em> = the outcome is seven.</li></ol></div>
+<div class="solution">
+<ol><li><em>T</em> = {2}, <em>P</em>(<em>T</em>) = <math><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac></mrow></math></li><li><em>A</em> = {2, 4, 6}, <em>P</em>(<em>A</em>) = <math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></li><li><em>B</em> = {1, 2, 3}, <em>P</em>(<em>B</em>) = <math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></li><li><em>A′</em> = {1, 3, 5}, <em>P</em>(<em>A′</em>) = <math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></li><li><em>A</em>|<em>B</em> = {2}, <em>P</em>(<em>A</em>|<em>B</em>) = <math><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math></li><li><em>B</em>|<em>A</em> = {2}, <em>P</em>(<em>B</em>|<em>A</em>) = <math><mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math></li><li><em>A</em> AND <em>B</em> = {2}, <em>P</em>(<em>A</em> AND <em>B</em>) = <math><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac></mrow></math></li><li><em>A</em> OR <em>B</em> = {1, 2, 3, 4, 6}, <em>P</em>(<em>A</em> OR <em>B</em>) = <math><mrow><mfrac><mn>5</mn><mn>6</mn></mfrac></mrow></math></li><li><em>A</em> OR <em>B′</em> = {2, 4, 5, 6}, <em>P</em>(<em>A</em> OR <em>B′</em>) = <math><mrow><mfrac><mn>2</mn><mn>3</mn></mfrac></mrow></math></li><li><em>N</em> = {2, 3, 5}, <em>P</em>(<em>N</em>) = <math><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow></math></li><li>A six-sided die does not have seven dots. <em>P</em>(7) = 0.</li></ol></div>
+</div>
+</div>
+<div class="note statistics try">
+  <h3>Try It</h3>
+  <div class="exercise">
+  <div class="problem">
+  <p>A number is randomly selected between 1 to 10. Describe the sample space <em>S</em>, identify each of the following events with a subset of S, and compute its probability (an outcome is the number selected).</p>
+  <ol><li>Event <em>F</em> = the outcome is 5.</li><li>Event <em>A</em> = the number is more than 6.</li><li>Event <em>B</em> = the number is odd.</li><li>The complement of <em>B</em>.</li><li><em>A</em> GIVEN <em>B</em>.</li><li><em>B</em> GIVEN <em>A</em>.</li><li><em>A</em> OR <em>B</em>.</li><li><em>A’</em> OR <em>B</em>.</li><li>Event <em>P</em> = the outcome is a composite number.</li><li>Event <em>M</em> = the number is a multiple of 3.</li></ol>
+  </div>
+  <div class="solution">
+  <ol><li><math><mi>F</mi><mo>=</mo><mn>5</mn><mo>,</mo><mi>P</mi><mo>(</mo><mi>F</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mn>10</mn></mfrac></math></li><li><math><mi>A</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>7</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>A</mi><mo>)</mo><mo>=</mo><mfrac><mn>3</mn><mn>10</mn></mfrac></math></li><li><math><mi>B</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo>=</mo><mfrac><mn>5</mn><mn>10</mn></mfrac></math></li><li><math><mi>B</mi><mo>&#x27;</mo><mo>=</mo><mfenced open="{" close="}"><mrow><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>B</mi><mo>&#x27;</mo><mo>)</mo><mo>=</mo><mfrac><mn>5</mn><mn>10</mn></mfrac></math></li><li><math><mi>A</mi><mo>|</mo><mi>B</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>7</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mfenced open="{" close="}"><mrow><mi>A</mi><mo>|</mo><mi>B</mi></mrow></mfenced><mo>=</mo><mfrac><mn>2</mn><mn>5</mn></mfrac></math></li><li><math><mi>B</mi><mo>|</mo><mi>A</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>7</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>B</mi><mo>|</mo><mi>A</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></math></li><li><math><mi>A</mi><mi>O</mi><mi>R</mi><mi>B</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>10</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>A</mi><mi>O</mi><mi>R</mi><mi>B</mi><mo>)</mo><mo>=</mo><mfrac><mn>7</mn><mn>10</mn></mfrac></math></li><li><math><mi>A</mi><mo>&#x27;</mo><mi>O</mi><mi>R</mi><mi>B</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>A</mi><mo>&#x27;</mo><mi>O</mi><mi>R</mi><mi>B</mi><mo>)</mo><mo>=</mo><mfrac><mn>4</mn><mn>5</mn></mfrac></math></li><li><math><mi>P</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>9</mn><mo>,</mo><mn>10</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>P</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></math></li><li><math><mi>M</mi><mo>=</mo><mfenced open="{" close="}"><mrow><mn>3</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>9</mn></mrow></mfenced><mo>,</mo><mi>P</mi><mo>(</mo><mi>M</mi><mo>)</mo><mo>=</mo><mfrac><mn>3</mn><mn>10</mn></mfrac></math></li></ol>
+  </div>
+  </div>
+  </div>
+<div class="example">
+<p>the table describes the distribution of a random sample <em>S</em> of 100 individuals, organized by sex assigned at birth and whether they are right- or left-handed.
+<table><tr><th></th><th>Right-handed</th><th>Left-handed</th></tr><tr><td>Males</td><td>43</td><td>9</td></tr><tr><td>Females</td><td>44</td><td>4</td></tr></table></p>
+
+<div class="exercise">
+<div class="problem">
+<p>Let’s denote the events <em>M</em> = the subject is male, <em>F</em> = the subject is female, <em>R</em> = the subject is right-handed, <em>L</em> = the subject is left-handed. Compute the following probabilities:</p><ol><li><em>P</em>(<em>M</em>)</li><li><em>P</em>(<em>F</em>)</li><li><em>P</em>(<em>R</em>)</li><li><em>P</em>(<em>L</em>)</li><li><em>P</em>(<em>M</em> AND <em>R</em>)</li><li><em>P</em>(<em>F</em> AND <em>L</em>)</li><li><em>P</em>(<em>M</em> OR <em>F</em>)</li><li><em>P</em>(<em>M</em> OR <em>R</em>)</li><li><em>P</em>(<em>F</em> OR <em>L</em>)</li><li><em>P</em>(<em>M&#x27;</em>)</li><li><em>P</em>(<em>R</em>|<em>M</em>)</li><li><em>P</em>(<em>F</em>|<em>L</em>)</li><li><em>P</em>(<em>L</em>|<em>F</em>)</li></ol></div>
+<div class="solution">
+<ol><li><em>P</em>(<em>M</em>) = 0.52</li><li><em>P</em>(<em>F</em>) = 0.48</li><li><em>P</em>(<em>R</em>) = 0.87</li><li><em>P</em>(<em>L</em>) = 0.13</li><li><em>P</em>(<em>M</em> AND <em>R</em>) = 0.43</li><li><em>P</em>(<em>F</em> AND <em>L</em>) = 0.04</li><li><em>P</em>(<em>M</em> OR <em>F</em>) = 1</li><li><em>P</em>(<em>M</em> OR <em>R</em>) = 0.96</li><li><em>P</em>(<em>F</em> OR <em>L</em>) = 0.57</li><li><em>P</em>(<em>M&#x27;</em>) = 0.48</li><li><em>P</em>(<em>R</em>|<em>M</em>) = 0.8269 (rounded to four decimal places)</li><li><em>P</em>(<em>F</em>|<em>L</em>) = 0.3077 (rounded to four decimal places)</li><li><em>P</em>(<em>L</em>|<em>F</em>) = 0.0833</li></ol></div>
+</div>
+</div>
+<div class="note statistics try">
+  <h3>Try It</h3>
+  <div class="exercise">
+  <div class="problem">
+  <p>The table describes the distribution of a random sample S of 100 individuals, organized by gender and whether they like tea or coffee.</p>
+  <table><caption></caption><tr><th></th><th><strong>Tea</strong></th><th><strong>Coffee</strong></th></tr><tr><td><strong>Men</strong></td><td>22</td><td>26</td></tr><tr><td><strong>Women</strong></td><td>16</td><td>36</td></tr></table>
+  <p>Let&#x27;s denote the events <em>M</em> = the subject is a man, <em>W</em> = the subject is a woman, <em>T</em> = the subject likes tea, and <em>C</em> = the subject likes coffee. Compute the following probabilities:</p>
+  <ol><li><em>P</em>(<em>M</em>)</li><li><em>P</em>(<em>W</em>)</li><li><em>P</em>(<em>T</em>)</li><li><em>P</em>(<em>C</em>)</li><li><em>P</em>(<em>M</em> AND <em>T</em>)</li><li><em>P</em>(<em>W</em> and <em>C</em>)</li><li><em>P</em>(<em>M</em> OR <em>W</em>)</li><li><em>P</em>(<em>M</em> OR <em>T</em>)</li><li><em>P</em>(<em>W</em> OR <em>C</em>)</li><li><em>P</em>(<em>M</em>&#x27;)</li><li><em>P</em>(<em>T</em>|<em>M</em>)</li><li><em>P</em>(<em>W</em>|<em>C</em>)</li><li><em>P</em>(<em>C</em>|<em>W</em>)</li></ol>
+  </div>
+  <div class="solution">
+  <ol><li><math><mi>P</mi><mo>(</mo><mi>M</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>48</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>W</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>52</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>T</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>38</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>C</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>62</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>M</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>T</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>22</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>W</mi><mo> </mo><mi>a</mi><mi>n</mi><mi>d</mi><mo> </mo><mi>C</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>36</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>M</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>W</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>1</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>M</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>T</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>64</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>W</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>C</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>78</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>M</mi><mo>&#x27;</mo><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>52</mn></math></li><li><math><mi>P</mi><mo>(</mo><mi>T</mi><mo>|</mo><mi>M</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>4583</mn></math> (rounded to four decimal places)</li><li><math><mi>P</mi><mo>(</mo><mi>W</mi><mo>|</mo><mi>C</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>5806</mn></math> (rounded to four decimal places)</li><li><math><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>W</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>6923</mn></math> (rounded to four decimal places)</li></ol>
+  </div>
+  </div>
+  </div>
+<div class="section references">
+<h3>References</h3>
+<p>“Countries List by Continent.” Worldatlas, 2013. Available online at http://www.worldatlas.com/cntycont.htm (accessed May 2, 2013).</p>
+</div>
+
+<div class="section summary">
+<h3>Chapter Review</h3>
+<p>In this module we learned the basic terminology of probability. The set of all possible outcomes of an experiment is called the sample space. Events are subsets of the sample space, and they are assigned a probability that is a number between zero and one, inclusive.</p>
+</div>
+
+<div class="section formula-review">
+<h3>Formula Review</h3>
+<p><em>A</em> and <em>B</em> are events</p>
+<p><em>P</em>(<em>S</em>) = 1 where <em>S</em> is the sample space</p><p>0 ≤ <em>P</em>(<em>A</em>) ≤ 1</p>
+<p><em>P</em>(<em>A</em>|<em>B</em>) = <math>
+ <mrow>
+  <mfrac>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>A</mi><mtext> AND </mtext><mi>B</mi><mtext>)</mtext>
+   </mrow>
+   <mrow>
+    <mi>P</mi><mtext>(</mtext><mi>B</mi><mtext>)</mtext>
+   </mrow>
+  </mfrac>
+ </mrow>
+</math></p>
+</div>
+
+<div class="section practice">
+<div class="exercise">
+<div class="problem">
+<p>In a particular college class, there are men and women students. Some students have long hair and some students have short hair. Write the <strong>symbols</strong> for the probabilities of the events for parts a through j. (Note that you cannot find numerical answers here. You were not given enough information to find any probability values yet; concentrate on understanding the symbols.)</p><ul><li>Let <em>W</em> be the event that a student is a woman.</li><li>Let <em>M</em> be the event that a student is a man.</li><li>Let <em>S</em> be the event that a student has short hair.</li><li>Let <em>L</em> be the event that a student has long hair.</li></ul><ol><li>The probability that a student does not have long hair.</li><li>The probability that a student is a man or has short hair.</li><li>The probability that a student is a woman and has long hair.</li><li>The probability that a student is a man, given that the student has long hair.</li><li>The probability that a student has long hair, given that the student is a man.</li><li>Of all the women students, the probability that a student has short hair.</li><li>Of all students with long hair, the probability that a student is a woman.</li><li>The probability that a student is a woman or has long hair.</li><li>The probability that a randomly selected student is a man student with short hair.</li><li>The probability that a student is a woman.</li></ol></div>
+<div class="solution">
+<ol><li><em>P</em>(<em>L′</em>) = <em>P</em>(<em>S</em>)</li><li><em>P</em>(<em>M</em> OR <em>S</em>)</li><li><em>P</em>(<em>W</em> AND <em>L</em>)</li><li><em>P</em>(<em>M</em>|<em>L</em>)</li><li><em>P</em>(<em>L</em>|<em>M</em>)</li><li><em>P</em>(<em>S</em>|<em>W</em>)</li><li><em>P</em>(<em>W</em>|<em>L</em>)</li><li><em>P</em>(<em>W</em> OR <em>L</em>)</li><li><em>P</em>(<em>M</em> AND <em>S</em>)</li><li><em>P</em>(<em>W</em>)</li></ol>
+</div>
+</div>
+
+<p><em>Use the following information to answer the next four exercises.</em> A box is filled with several party favors. It contains 12 hats, 15 noisemakers, ten finger traps, and five bags of confetti. One party favor is chosen from the box at random.
+<br>Let <em>H</em> = the event of getting a hat.
+<br>Let <em>N</em> = the event of getting a noisemaker.
+<br>Let <em>F</em> = the event of getting a finger trap.
+<br>Let <em>C</em> = the event of getting a bag of confetti.</p>
+
+<div class="exercise"><div class="problem"><p>Find <em>P</em>(<em>H</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find <em>P</em>(<em>N</em>).</p></div>
+<div class="solution">
+<p><em>P</em>(<em>N</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>15</mn>
+    </mrow>
+    <mrow>
+     <mn>42</mn>
+    </mrow>
+   </mfrac>
+  </mrow>
+  </math> = <math>
+   <mrow>
+   <mfrac>
+    <mn>5</mn>
+    <mrow>
+     <mn>14</mn>
+    </mrow>
+   </mfrac>
+  </mrow>
+ </math> = 0.36</p></div>
+</div>
+
+<div class="exercise"><div class="problem"><p>Find <em>P</em>(<em>F</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>C</em>).</p></div>
+<div class="solution">
+<p><em>P</em>(<em>C</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mn>5</mn>
+    <mrow>
+     <mn>42</mn>
+    </mrow>
+   </mfrac>
+  </mrow>
+  </math> = 0.12</p></div>
+</div>
+
+<p><br><em>Use the following information to answer the next six exercises.</em> A jar of 150 jelly beans contains 22 red jelly beans, 38 yellow, 20 green, 28 purple, 26 blue, and the rest are orange. One jelly bean is chosen from the box at random.
+<br>Let <em>B</em> = the event of getting a blue jelly bean
+<br>Let <em>G</em> = the event of getting a green jelly bean.
+<br>Let <em>O</em> = the event of getting an orange jelly bean.
+<br>Let <em>P</em> = the event of getting a purple jelly bean.
+<br>Let <em>R</em> = the event of getting a red jelly bean.
+<br>Let <em>Y</em> = the event of getting a yellow jelly bean.</p><div class="exercise"><div class="problem"><p>Find <em>P</em>(<em>B</em>).</p></div>
+
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>G</em>).</p></div>
+<div class="solution"><p><em>P</em>(<em>G</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>20</mn>
+    </mrow>
+    <mrow>
+     <mn>150</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = <math>
+  <mrow>
+   <mfrac>
+    <mn>2</mn>
+    <mrow>
+     <mn>15</mn>
+    </mrow>
+   </mfrac>
+   </mrow>
+  </math> = 0.13</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>P</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find <em>P</em>(<em>R</em>).</p></div>
+<div class="solution">
+<p><em>P</em>(<em>R</em>) = <math>
+  <mrow>
+   <mfrac>
+    <mrow>
+     <mn>22</mn>
+    </mrow>
+    <mrow>
+     <mn>150</mn>
+    </mrow>
+   </mfrac>
+
+  </mrow>
+  </math> = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>11</mn>
+    </mrow>
+    <mrow>
+     <mn>75</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+   </math> = 0.15</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>Find <em>P</em>(<em>Y</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>O</em>).</p></div>
+<div class="solution"><p><em>P</em>(<em>O</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>150</mn><mo>-</mo><mn>22</mn><mo>-</mo><mn>38</mn><mo>-</mo><mn>20</mn><mo>-</mo><mn>28</mn><mo>-</mo><mn>26</mn>
+    </mrow>
+    <mrow>
+     <mn>150</mn>
+    </mrow>
+   </mfrac>
+  </mrow>
+  </math> = <math>
+  <mrow>
+   <mfrac>
+    <mrow>
+     <mn>16</mn>
+    </mrow>
+    <mrow>
+     <mn>150</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = <math>
+  <mrow>
+   <mfrac>
+    <mn>8</mn>
+    <mrow>
+     <mn>75</mn>
+    </mrow>
+   </mfrac>
+
+  </mrow>
+  </math> = 0.11</p></div>
+</div>
+
+<p><br><em>Use the following information to answer the next six exercises.</em> There are 23 countries in North America, 12 countries in South America, 47 countries in Europe, 44 countries in Asia, 54 countries in Africa, and 14 in Oceania (Pacific Ocean region).
+<br>Let <em>A</em> = the event that a country is in Asia.
+<br>Let <em>E</em> = the event that a country is in Europe.
+<br>Let <em>F</em> = the event that a country is in Africa.
+<br>Let <em>N</em> = the event that a country is in North America.
+<br>Let <em>O</em> = the event that a country is in Oceania.
+<br>Let <em>S</em> = the event that a country is in South America.</p>
+
+<div class="exercise"><div class="problem">
+<p>Find <em>P</em>(<em>A</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>E</em>).</p></div>
+<div class="solution"><p><em>P</em>(<em>E</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>47</mn>
+    </mrow>
+    <mrow>
+     <mn>194</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = 0.24</p></div>
+</div>
+
+<div class="exercise"><div class="problem"><p>Find <em>P</em>(<em>F</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>N</em>).</p></div>
+<div class="solution"><p><em>P</em>(<em>N</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>23</mn>
+    </mrow>
+    <mrow>
+     <mn>194</mn>
+    </mrow>
+   </mfrac>
+  </mrow>
+  </math> = 0.12</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem"><p>Find <em>P</em>(<em>O</em>).</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>Find <em>P</em>(<em>S</em>).</p></div>
+<div class="solution"><p><em>P</em>(<em>S</em>) = <math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>12</mn>
+    </mrow>
+    <mrow>
+     <mn>194</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = <math>
+   <mrow>
+   <mfrac>
+    <mn>6</mn>
+    <mrow>
+     <mn>97</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = 0.06</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+<p>What is the probability of drawing a red card in a standard deck of 52 cards?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>What is the probability of drawing a club in a standard deck of 52 cards?</p></div>
+<div class="solution"><p><math>
+   <mrow>
+   <mfrac>
+    <mrow>
+     <mn>13</mn>
+    </mrow>
+    <mrow>
+     <mn>52</mn>
+    </mrow>
+   </mfrac>
+    </mrow>
+  </math> = <math>
+   <mrow>
+   <mfrac>
+    <mn>1</mn>
+    <mn>4</mn>
+   </mfrac>
+    </mrow>
+  </math> = 0.25</p></div>
+</div>
+
+<div class="exercise"><div class="problem"><p>What is the probability of rolling an even number of dots with a fair, six-sided die numbered one through six?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem"><p>What is the probability of rolling a prime number of dots with a fair, six-sided die numbered one through six?</p></div>
+<div class="solution"><p><math>
+  <mrow>
+   <mfrac>
+    <mn>3</mn>
+    <mn>6</mn>
+   </mfrac>
+
+  </mrow>
+  </math> = <math>
+  <mrow>
+   <mfrac>
+    <mn>1</mn>
+    <mn>2</mn>
+   </mfrac>
+    </mrow>
+  </math> = 0.5</p>
+</div>
+</div>
+
+<p><br><em>Use the following information to answer the next two exercises.</em> You see a game at a local fair. You have to throw a dart at a color wheel. Each section on the color wheel is equal in area.
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C03_M01_021.png" alt="A colorful circular design featuring eight equal segments, alternately colored in shades of pink, light blue, mint green, and pale yellow, creating a vibrant, segmented wheel."></figure>
+
+<br>Let <em>B</em> = the event of landing on blue.
+<br>Let <em>R</em> = the event of landing on red.
+<br>Let <em>G</em> = the event of landing on green.
+<br>Let <em>Y</em> = the event of landing on yellow.
+</p>
+
+<div class="exercise"><div class="problem">
+<p>If you land on <em>Y</em>, you get the biggest prize. Find <em>P</em>(<em>Y</em>).</p>
+</div>
+
+</div>
+
+<div class="exercise">
+<div class="problem">
+<p>If you land on red, you don’t get a prize. What is <em>P</em>(<em>R</em>)?</p>
+</div>
+<div class="solution">
+<p><math>
+ <mrow>
+  <mi>P</mi><mo stretchy="false">(</mo><mi>R</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac>
+   <mn>4</mn>
+   <mn>8</mn>
+  </mfrac>
+  <mo>=</mo><mn>0.5</mn>
+ </mrow>
+</math>
+</p>
+</div>
+</div>
+
+<p><br><em>Use the following information to answer the next ten exercises.</em> On a baseball team, there are infielders and outfielders. Some players are great hitters, and some players are not great hitters.
+<br>Let <em>I</em> = the event that a player in an infielder.
+<br>Let <em>O</em> = the event that a player is an outfielder.
+<br>Let <em>H</em> = the event that a player is a great hitter.
+<br>Let <em>N</em> = the event that a player is not a great hitter.</p><div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is not an outfielder.</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+  <p>Write the symbols for the probability that a player is an outfielder or is a great hitter.</p>
+</div>
+<div class="solution">
+  <p><em>P</em>(<em>O</em> OR <em>H</em>)</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is an infielder and is not a great hitter.</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+  <p>Write the symbols for the probability that a player is a great hitter, given that the player is an infielder.</p>
+</div>
+<div class="solution">
+  <p><em>P</em>(<em>H</em>|<em>I</em>)</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is an infielder, given that the player is a great hitter.</p>
+</div>
+
+</div><div class="exercise">
+<div class="problem">
+  <p>Write the symbols for the probability that of all the outfielders, a player is not a great hitter.</p></div>
+<div class="solution">
+  <p><em>P</em>(<em>N</em>|<em>O</em>)</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that of all the great hitters, a player is an outfielder.</p></div>
+
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is an infielder or is not a great hitter.</p>
+</div>
+<div class="solution">
+  <p><em>P</em>(<em>I</em> OR <em>N</em>)</p></div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is an outfielder and is a great hitter.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>Write the symbols for the probability that a player is an infielder.</p>
+</div>
+<div class="solution">
+  <p><em>P</em>(<em>I</em>)</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>What is the word for the set of all possible outcomes?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+  <p>What is conditional probability?</p>
+</div>
+<div class="solution">
+  <p>The likelihood that an event will occur given that another event has already occurred.</p>
+</div>
+</div>
+
+<div class="exercise"><div class="problem">
+  <p>A shelf holds 12 books. Eight are fiction and the rest are nonfiction. Each is a different book with a unique title. The fiction books are numbered one to eight. The nonfiction books are numbered one to four. Randomly select one book
+<br>Let <em>F</em> = event that book is fiction
+<br>Let <em>N</em> = event that book is nonfiction
+<br>What is the sample space?</p></div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+  <p>What is the sum of the probabilities of an event and its complement?</p>
+</div>
+<div class="solution">
+<p>1</p>
+</div>
+</div>
+
+<p><br><em>Use the following information to answer the next two exercises.</em> You are rolling a fair, six-sided number cube. Let <em>E</em> = the event that it lands on an even number. Let <em>M</em> = the event that it lands on a multiple of three.</p>
+
+<div class="exercise"><div class="problem">
+  <p>What does <em>P</em>(<em>E</em>|<em>M</em>) mean in words?</p>
+</div>
+</div>
+
+<div class="exercise">
+<div class="problem">
+  <p>What does <em>P</em>(<em>E</em> OR <em>M</em>) mean in words?</p>
+</div>
+<div class="solution">
+  <p>the probability of landing on an even number or a multiple of three</p>
+</div>
+</div>
+</div>
+
+<div class="section free-response"><h3>Homework</h3><div class="exercise"><div class="problem"><figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C03_RWP_002.png" alt="This is a bar graph with three bars for each category on the x-axis: age groups, gender, and total. The first bar shows the number of people in the category. The second bar shows the percent in the category that approve, and the third bar shows percent in the category that disapprove. The y-axis has intervals of 200 from 0–1200."><figcaption></figcaption></figure><p>The graph in the figure displays the sample sizes and percentages of people in different age and gender groups who were polled concerning their approval of Mayor Ford’s actions in office. The total number in the sample of all the age groups is 1,045.</p>
+<ol><li>Define three events in the graph.</li><li>Describe in words what the entry 40 means.</li><li>Describe in words the complement of the entry in question 2.</li><li>Describe in words what the entry 30 means.</li><li>Out of the men and women, what percent are men?</li><li>Out of the women, what percent disapprove of Mayor Ford?</li><li>Out of all the age groups, what percent approve of Mayor Ford?</li><li>Find <em>P</em>(Approve|Men).</li><li>Out of the age groups, what percent are more than 44 years old?</li><li>Find <em>P</em>(Approve|Age &lt; 35).</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+  <p>Explain what is wrong with the following statements. Use complete sentences.</p>
+<ol><li>If there is a 60% chance of rain on Saturday and a 70% chance of rain on Sunday, then there is a 130% chance of rain over the weekend.</li><li>The probability that a baseball player hits a home run is greater than the probability that he gets a successful hit.</li></ol>
+</div>
+<div class="solution">
+<ol><li>You can&#x27;t calculate the joint probability knowing the probability of both events occurring, which is not in the information given; the probabilities should be multiplied, not added; and probability is never greater than 100%</li><li>A home run by definition is a successful hit, so he has to have at least as many successful hits as home runs.</li></ol></div>
+</div>
+</div> <h2>Key terms</h2>
+  <p><strong>Conditional Probability</strong> the likelihood that an event will occur given that another event has already occurred</p>
+
+<p><strong>Equally Likely</strong> Each outcome of an experiment has the same probability.</p>
+
+<p><strong>Event</strong> a subset of the set of all outcomes of an experiment; the set of all outcomes of an experiment is called a <strong>sample space</strong> and is usually denoted by <em>S</em>. An event is an arbitrary subset in <em>S</em>. It can contain one outcome, two outcomes, no outcomes (empty subset), the entire sample space, and the like. Standard notations for events are capital letters such as <em>A</em>, <em>B</em>, <em>C</em>, and so on.</p>
+
+
+<p><strong>Experiment</strong> a planned activity carried out under controlled conditions</p>
+
+
+<p><strong>Outcome</strong> a particular result of an experiment</p>
+
+<p><strong>Probability</strong> a number between zero and one, inclusive, that gives the likelihood that a specific event will occur; the foundation of statistics is given by the following 3 axioms (by A.N. Kolmogorov, 1930’s): Let <em>S</em> denote the sample space and <em>A</em> and <em>B</em> are two events in <em>S</em>. Then:
+<ul><li>0 ≤ <em>P</em>(<em>A</em>) ≤ 1</li><li>If <em>A</em> and <em>B</em> are any two mutually exclusive events, then <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(B).</li><li><em>P</em>(<em>S</em>) = 1</li></ul>
+</p>
+
+<p><strong>Sample Space</strong> the set of all possible outcomes of an experiment</p>
+
+ <p><strong>AND Event</strong> An outcome is in the event <em>A</em> AND <em>B</em> if the outcome is in both <em>A</em> AND <em>B</em> at the same time.</p>
+
+<p><strong>Complement Event</strong> The complement of event <em>A</em> consists of all outcomes that are NOT in <em>A</em>.</p>
+
+<p><strong>Conditional Probability of <em>A</em> GIVEN <em>B</em></strong> <em>P</em>(<em>A</em>|<em>B</em>) is the probability that event <em>A</em> will occur given that the event <em>B</em> has already occurred.</p>
+
+<p><strong>Or Event</strong> An outcome is in the event <em>A</em> OR <em>B</em> if the outcome is in <em>A</em> or is in <em>B</em> or is in both <em>A</em> and <em>B</em>.</p>
+
+</body></html>

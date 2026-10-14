@@ -236,13 +236,13 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                 if tag == "section":
                     flush()
                     t = e.find("c:title", NS)
-                    if "coreq-skills" in cls:
-                        continue          # the book's review of another course (Practice Makes Perfect): the original page has it
+                    if any(k in cls.split() for k in SKIP):
+                        continue          # objectives (the goals), exam prep, reading lists, another course's review: the original page has them
                     if t is not None and text(self.kids(t)) == "Proof":
                         continue          # a proof stays whole, in the original page, not cut into cards
                     heading = text(self.kids(t)) if t is not None else heading
-                    if "section-exercises" in cls or "section-exercise" in cls:
-                        bank.extend(exercises(e, None))                  # the end-of-section set: its last few become the check
+                    if any(k in cls.split() for k in BANK):
+                        bank.extend(x for x in exercises(e, None) if not ALONE.search(x["front"]))   # the end-of-section set: its last few become the check
                     else:
                         walk(e)
                     continue
@@ -256,7 +256,7 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                     out.append({"type": "concept", "stage": "example", "title": f"Example: {text(self.kids(e.find('c:title', NS))) if e.find('c:title', NS) is not None else heading or self.title}",
                                 "html": self.html(e), "body": text(self.html(e))})
                     continue
-                if tag == "note" and "try" in cls:
+                if tag == "note" and ("try" in cls.split() or "check-understanding" in cls):
                     flush()
                     # one Try It a heading, the first that stands alone: the book gives one after nearly every example, and
                     # all of them in Review is the same question over and over. The rest, and any that needs something a
@@ -272,15 +272,24 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                 words += len(text(piece).split())
                 if words >= 220:                                       # a long run of reading: a card at the next element
                     flush()
-        def exercises(parent, stage):
+        def exercises(parent, stage, lead=""):
+            # "For the following exercises, solve…" comes once before a run of them: each card carries it
             got = []
-            for ex in parent.iter(C + "exercise"):
-                prob, sol = ex.find("c:problem", NS), ex.find("c:solution", NS)
-                if prob is None or sol is None:
-                    continue                                           # no answer given: it stays in the original page
-                p, s = self.kids(prob), self.kids(sol)
-                got.append({"type": "flash", "stage": stage, "front": text(p) or "(see the figure)", "back": text(s) or "(see the figure)",
-                            "front_html": p, "back_html": s})
+            for ex in parent:
+                tag = ex.tag.replace(C, "")
+                if tag == "para" and re.match(r"(For|In) (the following|exercises?)", text(self.kids(ex))):
+                    lead = self.html(ex)
+                elif tag == "section":
+                    got += exercises(ex, stage)
+                elif tag != "exercise":
+                    got += exercises(ex, stage, lead)
+                else:
+                    prob, sol = ex.find("c:problem", NS), ex.find("c:solution", NS)
+                    if prob is None or sol is None:
+                        continue                                       # no answer given: it stays in the original page
+                    p, s = lead + self.kids(prob), self.kids(sol)
+                    got.append({"type": "flash", "stage": stage, "front": text(p) or "(see the figure)", "back": text(s) or "(see the figure)",
+                                "front_html": p, "back_html": s})
             return got
         bank = []
         walk(self.content)
@@ -303,7 +312,7 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
         ab = self.root.find(".//md:abstract", NS)
         if ab is not None and ab.find(".//c:item", NS) is not None:
             return [text(self.kids(i)) for i in ab.iter(C + "item")]
-        note = next((x for x in self.content.iter(C + "note") if "learning-objective" in (x.get("class") or "")), None)
+        note = next((x for x in self.content.iter() if x.tag in (C + "note", C + "section") and "learning-objective" in (x.get("class") or "")), None)
         return [text(self.kids(i)) for i in note.iter(C + "item")] if note is not None else []
 
     def save_page(self):
@@ -316,6 +325,11 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                 open(dest, "wb").write(fetch(self.book.repo, f"media/{name}", binary=True))
         open(os.path.join(folder, f"{self.number}.html"), "w", encoding="utf-8").write(self.page_html())
 
+
+# a section of these classes is left out of the cards, or (BANK) is the exercise set the check comes from
+SKIP = {"coreq-skills", "learning-objectives", "ap-test-prep", "references"}
+BANK = {"section-exercises", "section-exercise", "problems-exercises", "conceptual-questions", "exercises", "practice",
+        "free-response", "bring-together-homework", "review-problems", "review-conceptual-questions"}
 
 # words that mean an exercise leans on something the card cannot show
 ALONE = re.compile(r"\b(the figure|the table|the example|the box|another section|graph(ed)? (in|below|above|shown)|shown (in|below|above)|"

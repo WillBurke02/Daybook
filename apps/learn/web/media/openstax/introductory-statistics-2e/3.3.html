@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.3 Two Basic Rules of Probability · Introductory Statistics 2e</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+figure{margin:16px 0} img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.note,.example{border-left:3px solid var(--rule);padding:4px 14px;margin:14px 0} .solution{background:var(--panel-2);padding:4px 12px}
+.credit{font-size:13px;color:var(--ink-3)} .eq{margin:10px 0;text-align:center}</style></head><body>
+<p class="credit">The original, as published: OpenStax, Introductory Statistics 2e, Illowsky, Dean, section 3.3 Two Basic Rules of Probability. © Rice University. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://openstax.org/books/introductory-statistics-2e/pages/3-3-two-basic-rules-of-probability</p>
+<h1>3.3 Two Basic Rules of Probability</h1>
+
+<p>When calculating probability, there are two rules to consider when determining if two events are independent or dependent and if they are mutually exclusive or not.</p>
+<div class="section">
+<h3>The Multiplication Rule</h3>
+<p>If <em>A</em> and <em>B</em> are two events defined on a <strong>sample space</strong>, then: <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>B</em>)<em>P</em>(<em>A</em>|<em>B</em>).</p>
+
+<p>This rule may also be written as: <em>P</em>(<em>A</em>|<em>B</em>) = <math>
+<mrow>
+<mfrac>
+<mrow>
+<mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mtext> AND </mtext><mi>B</mi><mo stretchy="false">)</mo>
+</mrow>
+<mrow>
+<mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo>
+</mrow>
+</mfrac>
+</mrow>
+</math></p>
+
+<p>(The probability of <em>A</em> given <em>B</em> equals the probability of <em>A</em> and <em>B</em> divided by the probability of <em>B</em>.)</p><p>If <em>A</em> and <em>B</em> are <strong>independent</strong>, then <em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>). Then <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>|<em>B</em>)<em>P</em>(<em>B</em>) becomes <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>).</p>
+</div>
+
+<div class="section">
+<h3>The Addition Rule</h3>
+<p>If <em>A</em> and <em>B</em> are defined on a sample space, then: <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) - <em>P</em>(<em>A</em> AND <em>B</em>).</p>
+
+<p>If <em>A</em> and <em>B</em> are <strong>mutually exclusive</strong>, then <em>P</em>(<em>A</em> AND <em>B</em>) = 0. Then <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) - <em>P</em>(<em>A</em> AND <em>B</em>) becomes <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>).</p>
+
+<div class="example">
+<p>Klaus is trying to choose where to go on vacation. His two choices are: <em>A</em> = New Zealand and <em>B</em> = Alaska</p>
+<ul><li>Klaus can only afford one vacation. The probability that he chooses <em>A</em> is <em>P</em>(<em>A</em>) = 0.6 and the probability that he chooses <em>B</em> is <em>P</em>(<em>B</em>) = 0.35.</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = 0 because Klaus can only afford to take one vacation</li><li>Therefore, the probability that he chooses either New Zealand or Alaska is <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) = 0.6 + 0.35 = 0.95. Note that the probability that he does not choose to go anywhere on vacation must be 0.05.</li></ul></div>
+<div class="note statistics try">
+  <h4>Try It</h4>
+  <div class="exercise">
+  <div class="problem">
+  <p>Anna has to buy a new car. She has two choices, car A and car B. Anna can afford only one car. The probability that Anna will buy car A is <math><mi>P</mi><mo>(</mo><mi>A</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>25</mn></math>, and the probability that Anna will buy car B is <math><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>65</mn></math>. Find:</p>
+  <ul><li><math><mi>P</mi><mo>(</mo><mi>A</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>B</mi><mo>)</mo></math></li><li><math><mi>P</mi><mo>(</mo><mi>A</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>B</mi><mo>)</mo></math></li></ul>
+  </div>
+  <div class="solution">
+  <ul><li><math><mi>P</mi><mo>(</mo><mi>A</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>B</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn></math> because it is given that Anna can afford only one car.</li><li>Since <math><mi>P</mi><mo>(</mo><mi>A</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>B</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn></math>, then <math><mi>P</mi><mo>(</mo><mi>A</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>B</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mi>P</mi><mo>(</mo><mi>A</mi><mo>)</mo><mo> </mo><mo>+</mo><mo> </mo><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>25</mn><mo> </mo><mo>+</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>65</mn><mo> </mo><mo>=</mo><mo> </mo><mn>0</mn><mo>.</mo><mn>9</mn></math>. Note that the probability that Anna does not a car must be 0.1.</li></ul>
+  </div>
+  </div>
+  </div>
+<div class="example">
+<p>Carlos plays college soccer. He makes a goal 65% of the time he shoots. Carlos is going to attempt two goals in a row in the next game. <em>A</em> = the event Carlos is successful on his first attempt. <em>P</em>(<em>A</em>) = 0.65. <em>B</em> = the event Carlos is successful on his second attempt. <em>P</em>(<em>B</em>) = 0.65. Carlos tends to shoot in streaks. The probability that he makes the second goal <strong>GIVEN</strong> that he made the first goal is 0.90.<br></p>
+<div class="exercise">
+<div class="problem">
+<p>a. What is the probability that he makes both goals?</p>
+<p>b. What is the probability that Carlos makes either the first goal or the second goal?</p>
+<p>c. Are <em>A</em> and <em>B</em> independent?</p>
+<p>d. Are <em>A</em> and <em>B</em> mutually exclusive?</p>
+</div>
+<div class="solution">
+<p>a. The problem is asking you to find <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>B</em> AND <em>A</em>). Since <em>P</em>(<em>B</em>|<em>A</em>) = 0.90: <em>P</em>(<em>B</em> AND <em>A</em>) = <em>P</em>(<em>B</em>|<em>A</em>) <em>P</em>(<em>A</em>) = (0.90)(0.65) = 0.585</p>
+<p>Carlos makes the first and second goals with probability 0.585.<br></p>
+
+<p>b. The problem is asking you to find <em>P</em>(<em>A</em> OR <em>B</em>).</p>
+<p><em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) - <em>P</em>(<em>A</em> AND <em>B</em>) = 0.65 + 0.65 - 0.585 = 0.715</p>
+<p>Carlos makes either the first goal or the second goal with probability 0.715.<br></p>
+
+<p>c. No, they are not, because <em>P</em>(<em>B</em> AND <em>A</em>) = 0.585.</p><p><em>P</em>(<em>B</em>)<em>P</em>(<em>A</em>) = (0.65)(0.65) = 0.423</p><p>0.423 ≠ 0.585 = <em>P</em>(<em>B</em> AND <em>A</em>)</p>
+<p>So, <em>P</em>(<em>B</em> AND <em>A</em>) is <strong>not</strong> equal to <em>P</em>(<em>B</em>)<em>P</em>(<em>A</em>).<br></p>
+
+<p>d. No, they are not because <em>P</em>(<em>A</em> and <em>B</em>) = 0.585.</p><p>To be mutually exclusive, <em>P</em>(<em>A</em> AND <em>B</em>) must equal zero.</p>
+</div>
+</div>
+</div>
+
+<div class="note statistics try">
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>Helen plays basketball. For free throws, she makes the shot 75% of the time. Helen must now attempt two free throws. <em>C</em> = the event that Helen makes the first shot. <em>P</em>(<em>C</em>) = 0.75. <em>D</em> = the event Helen makes the second shot. <em>P</em>(<em>D</em>) = 0.75. The probability that Helen makes the second free throw given that she made the first is 0.85. What is the probability that Helen makes both free throws?</p>
+</div>
+</div>
+</div>
+
+<div class="example">
+<p>A community swim team has <strong>150</strong> members. <strong>Seventy-five</strong> of the members are advanced swimmers. <strong>Forty-seven</strong> of the members are intermediate swimmers. The remainder are novice swimmers. <strong>Forty</strong> of the advanced swimmers practice four times a week. <strong>Thirty</strong> of the intermediate swimmers practice four times a week. <strong>Ten</strong> of the novice swimmers practice four times a week. Suppose one member of the swim team is chosen randomly.<br></p>
+<div class="exercise">
+<div class="problem">
+<p>a. What is the probability that the member is a novice swimmer?</p>
+<p>b. What is the probability that the member practices four times a week?</p>
+<p>c. What is the probability that the member is an advanced swimmer and practices four times a week?</p>
+<p>d. What is the probability that a member is an advanced swimmer and an intermediate swimmer? Are being an advanced swimmer and an intermediate swimmer mutually exclusive? Why or why not?</p>
+<p>e. Are being a novice swimmer and practicing four times a week independent events? Why or why not?</p>
+</div>
+<div class="solution">
+<p>a. <math><mfrac><mn>28</mn><mn>150</mn></mfrac></math><br></p>
+<p>b. <math><mfrac><mn>80</mn><mn>150</mn></mfrac></math><br></p>
+<p>c. <math><mfrac><mn>40</mn><mn>150</mn></mfrac></math><br></p>
+<p>d. <em>P</em>(advanced AND intermediate) = 0, so these are mutually exclusive events. A swimmer cannot be an advanced swimmer and an intermediate swimmer at the same time.<br></p>
+<p>e. No, these are not independent events.
+<br><em>P</em>(novice AND practices four times per week) = 0.0667
+<br><em>P</em>(novice)<em>P</em>(practices four times per week) = 0.0996
+<br>0.0667 ≠ 0.0996</p>
+</div>
+</div>
+</div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A school has 200 seniors of whom 140 will be going to college next year. Forty will be going directly to work. The remainder are taking a gap year. Fifty of the seniors going to college play sports. Thirty of the seniors going directly to work play sports. Five of the seniors taking a gap year play sports. What is the probability that a senior is taking a gap year?</p>
+</div>
+</div>
+</div>
+
+<div class="example">
+<p>Felicity attends Modesto JC in Modesto, CA. The probability that Felicity enrolls in a math class is 0.2 and the probability that she enrolls in a speech class is 0.65. The probability that she enrolls in a math class GIVEN that she enrolls in speech class is 0.25.</p><p>Let: <em>M</em> = math class, <em>S</em> = speech class, <em>M</em>|<em>S</em> = math given speech</p>
+<div class="exercise">
+<div class="problem">
+<ol><li>What is the probability that Felicity enrolls in math and speech?
+<br>Find <em>P</em>(<em>M</em> AND <em>S</em>) = <em>P</em>(<em>M</em>|<em>S</em>)<em>P</em>(<em>S</em>).</li><li>What is the probability that Felicity enrolls in math or speech classes?
+<br>Find <em>P</em>(<em>M</em> OR <em>S</em>) = <em>P</em>(<em>M</em>) + <em>P</em>(<em>S</em>) - <em>P</em>(<em>M</em> AND <em>S</em>).</li><li>Are <em>M</em> and <em>S</em> independent? Is <em>P</em>(<em>M</em>|<em>S</em>) = <em>P</em>(<em>M</em>)?</li><li>Are <em>M</em> and <em>S</em> mutually exclusive? Is <em>P</em>(<em>M</em> AND <em>S</em>) = 0?</li></ol>
+</div>
+<div class="solution">
+<p>a. 0.1625, b. 0.6875, c. No, d. No</p></div>
+</div>
+</div>
+
+<div class="note statistics try">
+
+<h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A student goes to the library. Let events <em>B</em> = the student checks out a book and <em>D</em> = the student checks out a DVD. Suppose that <em>P</em>(<em>B</em>) = 0.40, <em>P</em>(<em>D</em>) = 0.30 and <em>P</em>(<em>D</em>|<em>B</em>) = 0.5.</p><ol><li>Find <em>P</em>(<em>B</em> AND <em>D</em>).</li><li>Find <em>P</em>(<em>B</em> OR <em>D</em>).</li></ol></div>
+</div>
+</div>
+
+<div class="example">
+<p>Studies show that about one woman in seven (approximately 14.3%) who live to be 90 will develop breast cancer. Suppose that of those women who develop breast cancer, a test is negative 2% of the time. Also suppose that in the general population of women, the test for breast cancer is negative about 85% of the time. Let <em>B</em> = woman develops breast cancer and let <em>N</em> = tests negative. Suppose one woman is selected at random.<br></p>
+<div class="exercise">
+<div class="problem">
+<p>a. What is the probability that the woman develops breast cancer? What is the probability that woman tests negative?</p>
+<p>b. Given that the woman has breast cancer, what is the probability that she tests negative?</p>
+<p>c. What is the probability that the woman has breast cancer AND tests negative?</p>
+<p>d. What is the probability that the woman has breast cancer or tests negative?</p>
+<p>e. Are having breast cancer and testing negative independent events?</p>
+<p>f. Are having breast cancer and testing negative mutually exclusive?</p>
+
+</div>
+<div class="solution">
+<p>a. <em>P</em>(<em>B</em>) = 0.143; <em>P</em>(<em>N</em>) = 0.85<br></p>
+<p>b. <em>P</em>(<em>N</em>|<em>B</em>) = 0.02<br></p>
+<p>c. <em>P</em>(<em>B</em> AND <em>N</em>) = <em>P</em>(<em>B</em>)<em>P</em>(<em>N</em>|<em>B</em>) = (0.143)(0.02) = 0.0029<br></p>
+<p>d. <em>P</em>(<em>B</em> OR <em>N</em>) = <em>P</em>(<em>B</em>) + <em>P</em>(<em>N</em>) - <em>P</em>(<em>B</em> AND <em>N</em>) = 0.143 + 0.85 - 0.0029 = 0.9901<br></p>
+<p>e. No. <em>P</em>(<em>N</em>) = 0.85; <em>P</em>(<em>N</em>|<em>B</em>) = 0.02. So, <em>P</em>(<em>N</em>|<em>B</em>) does not equal <em>P</em>(<em>N</em>).<br></p>
+<p>f. No. <em>P</em>(<em>B</em> AND <em>N</em>) = 0.0029. For <em>B</em> and <em>N</em> to be mutually exclusive, <em>P</em>(<em>B</em> AND <em>N</em>) must be zero.</p>
+</div>
+</div>
+</div>
+<div class="note statistics try"><h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A school has 200 seniors of whom 140 will be going to college next year. Forty will be going directly to work. The remainder are taking a gap year. Fifty of the seniors going to college play sports. Thirty of the seniors going directly to work play sports. Five of the seniors taking a gap year play sports. What is the probability that a senior is going to college and plays sports?</p>
+</div>
+</div>
+</div><div class="example">
+<div class="exercise">
+<div class="problem">
+<p>Refer to the information in the example. <em>P</em> = tests positive.</p>
+<ol><li>Given that a woman develops breast cancer, what is the probability that she tests positive. Find <em>P</em>(<em>P</em>|<em>B</em>) = 1 - <em>P</em>(<em>N</em>|<em>B</em>).</li><li>What is the probability that a woman develops breast cancer and tests positive. Find <em>P</em>(<em>B</em> AND <em>P</em>) = <em>P</em>(<em>P</em>|<em>B</em>)<em>P</em>(<em>B</em>).</li><li>What is the probability that a woman does not develop breast cancer. Find <em>P</em>(<em>B′</em>) = 1 - <em>P</em>(<em>B</em>).</li><li>What is the probability that a woman tests positive for breast cancer. Find <em>P</em>(<em>P</em>) = 1 - <em>P</em>(<em>N</em>).</li></ol></div>
+<div class="solution">
+<p>a. 0.98; b. 0.1401; c. 0.857; d. 0.15</p>
+</div>
+</div></div>
+<div class="note statistics try"><h4>Try It</h4>
+<div class="exercise">
+<div class="problem">
+<p>A student goes to the library. Let events <em>B</em> = the student checks out a book and <em>D</em> = the student checks out a DVD. Suppose that <em>P</em>(<em>B</em>) = 0.40, <em>P</em>(<em>D</em>) = 0.30 and <em>P</em>(<em>D</em>|<em>B</em>) = 0.5.</p><ol><li>Find <em>P</em>(<em>B′</em>).</li><li>Find <em>P</em>(<em>D</em> AND <em>B</em>).</li><li>Find <em>P</em>(<em>B</em>|<em>D</em>).</li><li>Find <em>P</em>(<em>D</em> AND <em>B′</em>).</li><li>Find <em>P</em>(<em>D</em>|<em>B′</em>).</li></ol></div>
+</div>
+</div>
+</div>
+
+<div class="section references">
+<h3>References</h3>
+<p>DiCamillo, Mark, Mervin Field. “The File Poll.” Field Research Corporation. Available online at http://www.field.com/fieldpollonline/subscribers/Rls2443.pdf (accessed May 2, 2013).</p>
+<p>Rider, David, “Ford support plummeting, poll suggests,” The Star, September 14, 2011. Available online at  http://www.thestar.com/news/gta/2011/09/14/ford_support_plummeting_poll_suggests.html (accessed May 2, 2013).</p>
+<p>“Mayor’s Approval Down.” News Release by Forum Research Inc. Available online at http://www.forumresearch.com/forms/News Archives/News Releases/74209_TO_Issues_-_Mayoral_Approval_%28Forum_Research%29%2820130320%29.pdf (accessed May 2, 2013).</p>
+<p>“Roulette.” Wikipedia. Available online at http://en.wikipedia.org/wiki/Roulette (accessed May 2, 2013).</p>
+<p>Shin, Hyon B., Robert A. Kominski. “Language Use in the United States: 2007.” United States Census Bureau. Available online at http://www.census.gov/hhes/socdemo/language/data/acs/ACS-12.pdf (accessed May 2, 2013).</p>
+<p>Data from the Baseball-Almanac, 2013. Available online at www.baseball-almanac.com (accessed May 2, 2013).</p>
+<p>Data from U.S. Census Bureau.</p>
+<p>Data from the Wall Street Journal.</p>
+<p>Data from The Roper Center: Public Opinion Archives at the University of Connecticut. Available online at http://www.ropercenter.uconn.edu/ (accessed May 2, 2013).</p>
+<p>Data from Field Research Corporation. Available online at www.field.com/fieldpollonline (accessed May 2,2 013).</p>
+</div>
+
+<div class="section summary">
+<h3>Chapter Review</h3>
+<p>The multiplication rule and the addition rule are used for computing the probability of <em>A</em> and <em>B</em>, as well as the probability of <em>A</em> or <em>B</em> for two given events <em>A</em>, <em>B</em> defined on the sample space. In sampling with replacement each member of a population is replaced after it is picked, so that member has the possibility of being chosen more than once, and the events are considered to be independent. In sampling without replacement, each member of a population may be chosen only once, and the events are considered to be not independent. The events <em>A</em> and <em>B</em> are mutually exclusive events when they do not have any outcomes in common.</p></div>
+
+<div class="section formula-review">
+<h3>Formula Review</h3>
+<p><strong>The multiplication rule:</strong> <em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>|<em>B</em>)<em>P</em>(<em>B</em>)</p>
+<p><strong>The addition rule:</strong> <em>P</em>(<em>A</em> OR <em>B</em>) = <em>P</em>(<em>A</em>) + <em>P</em>(<em>B</em>) - <em>P</em>(<em>A</em> AND <em>B</em>)</p>
+</div>
+
+<div class="section practice">
+<p><em>Use the following information to answer the next ten exercises.</em> A local restaurant knows that the probability that a customer will order a pizza is 87%. The restaurant also knows that the probability that a customer will order a salad is 32%. Of the customers who order pizzas, 55% of them also order a salad.<br></p><p>In this problem, let:
+<ul><li><em>Z</em> = event that a customer orders a pizza</li><li><em>S</em> = event that a customer orders a salad</li></ul></p>
+<p>Suppose that one customer is randomly selected.</p>
+<div class="exercise"><div class="problem">
+<p>Find <em>P</em>(<em>Z</em>).</p>
+</div>
+<div class="solution">
+  <p>Find <em>P</em>(<em>S</em>) : <em>P</em>(<em>S</em>) = 0.87</p>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>Find <em>P</em>(<em>S</em>).</p>
+</div>
+<div class="solution">
+  <p>Find <em>P</em>(<em>S</em>) : <em>P</em>(<em>S</em>) = 0.32</p>
+  </div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Find <em>P</em>(<em>S</em>|<em>Z</em>).</p>
+</div>
+<div class="solution">
+  <p>Find <em>P</em>(<em>S</em> | <em>Z</em>) : <em>P</em>(<em>S</em> | <em>Z</em>) = 0.55</p>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>In words, what is <em>S</em>|<em>Z</em>?</p>
+</div>
+<div class="solution">
+  <p>In words, what is <em>S</em> | <em>Z</em>? :  <em>S</em> | <em>Z</em> means, given that the customer has ordered pizza, the person also orders a salad.</p>
+  </div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Find <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi><mo>)</mo></math>.</p></div>
+<div class="solution">
+  <p>Find <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi><mo>)</mo></math>: <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi><mo>)</mo></math>= 0.4785</p>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>In words, what is <math><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi></math>?</p></div>
+<div class="solution">
+  <p>In words, what is <math><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi></math>? : <math><mi>Z</mi><mo> </mo><mi>A</mi><mi>N</mi><mi>D</mi><mo> </mo><mi>S</mi></math> represents the event that a customer orders a pizza and salad.</p>
+  </div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Are <em>P</em> and <em>S</em> independent events? Show why or why not.</p></div>
+<div class="solution">
+  <p>Are <em>P</em> and <em>S</em> independent events? Show why or why not. No, because <em>P</em>(<em>S</em>) does not equal <em>P</em>(<em>S</em> | <em>Z</em>).</p>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>Find <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi><mo>)</mo></math>.</p></div>
+<div class="solution">
+  <p>Find <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi><mo>)</mo></math>: <math><mi>P</mi><mo>(</mo><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi><mo>)</mo></math>= 0.7115</p>
+  </div>
+</div>
+<div class="exercise"><div class="problem">
+<p>In words, what is <math><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi></math>?</p>
+</div>
+<div class="solution">
+  <p>In words, what is <math><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi></math>?<br><math><mi>Z</mi><mo> </mo><mi>O</mi><mi>R</mi><mo> </mo><mi>S</mi></math> represents the event that a customer orders a pizza or salad.</p>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>Are <em>Z</em> and <em>S</em> mutually exclusive events? Show why or why not.</p></div>
+<div class="solution">
+  <p>Are <em>Z</em> and <em>S</em> mutually exclusive events? Show why or why not. No, because <em>P</em>(<em>S</em> and <em>Z</em>) does not equal 0.</p>
+  </div>
+</div>
+</div>
+
+<div class="section free-response"><h3>Homework</h3><div class="exercise"><div class="problem"><p>Prior to the 2015 Supreme Court decision legalizing same-sex marriage nationwide, a survey reported that 61% of California registered voters approved of allowing two people of the same gender to marry and have regular marriage laws apply to them. Among 18 to 39 year olds (California registered voters), the approval rating was 78%. Six in ten California registered voters said that the upcoming Supreme Court’s ruling about the constitutionality of California’s Proposition 8 was either very or somewhat important to them. Out of those CA registered voters who support same-sex marriage, 75% say the ruling is important to them.</p>
+<p>In this problem, let:</p>
+
+<ul><li><em>C</em> = California registered voters who support same-sex marriage.</li><li><em>B</em> = California registered voters who say the Supreme Court’s ruling about the constitutionality of California’s Proposition 8 is very or somewhat important to them</li><li><em>A</em> = California registered voters who are 18 to 39 years old.<ol><li>Find <em>P</em>(<em>C</em>).</li><li>Find <em>P</em>(<em>B</em>).</li><li>Find <em>P</em>(<em>C</em>|<em>A</em>).</li><li>Find <em>P</em>(<em>B</em>|<em>C</em>).</li><li>In words, what is <em>C</em>|<em>A</em>?</li><li>In words, what is <em>B</em>|<em>C</em>?</li><li>Find <em>P</em>(<em>C</em> AND <em>B</em>).</li><li>In words, what is <em>C</em> AND <em>B</em>?</li><li>Find <em>P</em>(<em>C</em> OR <em>B</em>).</li><li>Are <em>C</em> and <em>B</em> mutually exclusive events? Show why or why not.</li></ol></li></ul>
+
+</div>
+</div><div class="exercise"><div class="problem">
+<p>A survey was conducted in a large city to measure the popularity of that city’s mayor. The survey was repeated every year for three years. The survey polled 1,046 people to measure the mayor’s popularity. Everyone polled expressed either approval or disapproval. These are the results the poll produced:</p><ul><li>In Year 1, 60% of the population approved of the mayor’s actions in office.</li><li>In Year 2, 57% of the population approved of his actions.</li><li>In Year 3, the percentage of popular approval was measured at 42%.<ol><li>What is the sample size for this study?</li><li>What proportion in the poll disapproved of the mayor, according to the results from Year 3?</li><li>How many people polled responded that they approved the mayor based on results from Year 3?</li><li>What is the probability that a person supported the mayor, based on the data collected in Year 2?</li><li>What is the probability that a person supported the mayor, based on the data collected in Year 1?</li></ol></li></ul>
+</div>
+<div class="solution">
+<ol><li>The Forum Research surveyed 1,046 Torontonians.</li><li>58%</li><li>42% of 1,046 = 439 (rounding to the nearest integer)</li><li>0.57</li><li>0.60.</li></ol></div>
+</div><p><em>Use the following information to answer the next three exercises.</em> The casino game, roulette, allows the gambler to bet on the probability of a ball, which spins in the roulette wheel, landing on a particular color, number, or range of numbers. The table used to place bets contains of 38 numbers, and each number is assigned to a color and a range.</p>
+
+<figure><img src="https://raw.githubusercontent.com/openstax/osbooks-introductory-statistics-bundle/main/media/CNX_Stats_C03_RWP_003.png" alt="This is an image of a roulette table."><figcaption>(credit: film8ker/wikibooks)</figcaption></figure>
+
+<div class="exercise"><div class="problem">
+<ol><li>List the sample space of the 38 possible outcomes in roulette.</li><li>You bet on red. Find <em>P</em>(red).</li><li>You bet on -1st 12- (1st Dozen). Find <em>P</em>(-1st 12-).</li><li>You bet on an even number. Find <em>P</em>(even number).</li><li>Is getting an odd number the complement of getting an even number? Why?</li><li>Find two mutually exclusive events.</li><li>Are the events Even and 1st Dozen independent?</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+<p>Compute the probability of winning the following types of bets:</p>
+<ol><li>Betting on two lines that touch each other on the table as in 1-2-3-4-5-6</li><li>Betting on three numbers in a line, as in 1-2-3</li><li>Betting on one number</li><li>Betting on four numbers that touch each other to form a square, as in 10-11-13-14</li><li>Betting on two numbers that touch each other on the table, as in 10-11 or 10-13</li><li>Betting on 0-00-1-2-3</li><li>Betting on 0-1-2; or 0-00-2; or 00-2-3</li></ol></div>
+<div class="solution">
+<ol><li><em>P</em>(Betting on two line that touch each other on the table) = <math>
+<mrow>
+<mfrac>
+<mn>6</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math></li><li><em>P</em>(Betting on three numbers in a line) = <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li><em>P</em>(Bettting on one number) = <math>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li><em>P</em>(Betting on four number that touch each other to form a square) = <math>
+<mrow>
+<mfrac>
+<mn>4</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li><em>P</em>(Betting on two number that touch each other on the table ) = <math>
+<mrow>
+<mfrac>
+<mn>2</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li><em>P</em>(Betting on 0-00-1-2-3) = <math>
+<mrow>
+<mfrac>
+<mn>5</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li><em>P</em>(Betting on 0-1-2; or 0-00-2; or 00-2-3) = <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mrow>
+<mn>38</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li></ol></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Compute the probability of winning the following types of bets:</p>
+<ol><li>Betting on a color</li><li>Betting on one of the dozen groups</li><li>Betting on the range of numbers from 1 to 18</li><li>Betting on the range of numbers 19–36</li><li>Betting on one of the columns</li><li>Betting on an even or odd number (excluding zero)</li></ol>
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p>Suppose that you have eight cards. Five are green and three are yellow. The five green cards are numbered 1, 2, 3, 4, and 5. The three yellow cards are numbered 1, 2, and 3. The cards are well shuffled. You randomly draw one card.</p>
+<ul><li><em>G</em> = card drawn is green</li><li><em>E</em> = card drawn is even-numbered
+<ol><li>List the sample space.</li><li><em>P</em>(<em>G</em>) = _____</li><li><em>P</em>(<em>G</em>|<em>E</em>) = _____</li><li><em>P</em>(<em>G</em> AND <em>E</em>) = _____</li><li><em>P</em>(<em>G</em> OR <em>E</em>) = _____</li><li>Are <em>G</em> and <em>E</em> mutually exclusive? Justify your answer numerically.</li></ol></li></ul>
+</div>
+<div class="solution">
+<ol><li>{<em>G</em>1, <em>G</em>2, <em>G</em>3, <em>G</em>4, <em>G</em>5, <em>Y</em>1, <em>Y</em>2, <em>Y</em>3}</li><li><math>
+<mfrac>
+<mn>5</mn>
+<mn>8</mn>
+</mfrac>
+<mtext></mtext>
+</math></li><li><math>
+<mfrac>
+<mn>2</mn>
+<mn>3</mn>
+</mfrac>
+<mtext></mtext>
+</math></li><li><math>
+<mfrac>
+<mn>2</mn>
+<mn>8</mn>
+</mfrac>
+<mtext></mtext>
+</math></li><li><math>
+<mfrac>
+<mn>6</mn>
+<mn>8</mn>
+</mfrac>
+<mtext></mtext>
+</math>
+</li><li>No, because <em>P</em>(<em>G</em> AND <em>E</em>) does not equal 0.</li></ol>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Roll two fair dice separately. Each die has six faces.</p><ol><li>List the sample space.</li><li>Let <em>A</em> be the event that either a three or four is rolled first, followed by an even number. Find <em>P</em>(<em>A</em>).</li><li>Let <em>B</em> be the event that the sum of the two rolls is at most seven. Find <em>P</em>(<em>B</em>).</li><li>In words, explain what “<em>P</em>(<em>A</em>|<em>B</em>)” represents. Find <em>P</em>(<em>A</em>|<em>B</em>).</li><li>Are <em>A</em> and <em>B</em> mutually exclusive events? Explain your answer in one to three complete sentences, including numerical justification.</li><li>Are <em>A</em> and <em>B</em> independent events? Explain your answer in one to three complete sentences, including numerical justification.</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+<p>A special deck of cards has ten cards. Four are green, three are blue, and three are red. When a card is picked, its color of it is recorded. An experiment consists of first picking a card and then tossing a coin.</p>
+<ol><li>List the sample space.</li><li>Let <em>A</em> be the event that a blue card is picked first, followed by landing a head on the coin toss. Find <em>P</em>(<em>A</em>).</li><li>Let <em>B</em> be the event that a red or green is picked, followed by landing a head on the coin toss. Are the events <em>A</em> and <em>B</em> mutually exclusive? Explain your answer in one to three complete sentences, including numerical justification.</li><li>Let <em>C</em> be the event that a red or blue is picked, followed by landing a head on the coin toss. Are the events <em>A</em> and <em>C</em> mutually exclusive? Explain your answer in one to three complete sentences, including numerical justification.</li></ol></div>
+<div class="solution">
+<div class="note">
+
+<h6>NOTE</h6>
+<p>The coin toss is independent of the card picked first.</p></div>
+<ol><li>{(<em>G</em>,<em>H</em>) (<em>G</em>,<em>T</em>) (<em>B</em>,<em>H</em>) (<em>B</em>,<em>T</em>) (<em>R</em>,<em>H</em>) (<em>R</em>,<em>T</em>)}</li><li><em>P</em>(<em>A</em>) = <em>P</em>(blue)<em>P</em>(head) = <math>
+<mrow>
+<mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mrow>
+<mn>10</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+</mrow>
+</math><math>
+<mrow>
+<mrow><mo>(</mo>
+<mrow>
+<mfrac>
+<mn>1</mn>
+<mrow>
+<mn>2</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+<mo>)</mo></mrow>
+</mrow>
+</math>
+= <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mrow>
+<mn>20</mn>
+</mrow>
+</mfrac>
+
+</mrow>
+</math>
+</li><li>Yes, <em>A</em> and <em>B</em> are mutually exclusive because they cannot happen at the same time; you cannot pick a card that is both blue and also (red or green). <em>P</em>(<em>A</em> AND <em>B</em>) = 0</li><li>No, <em>A</em> and <em>C</em> are not mutually exclusive because they can occur at the same time. In fact, <em>C</em> includes all of the outcomes of <em>A</em>; if the card chosen is blue it is also (red or blue). <em>P</em>(<em>A</em> AND <em>C</em>) = <em>P</em>(<em>A</em>) = <math>
+<mrow>
+<mfrac>
+<mn>3</mn>
+<mrow>
+<mn>20</mn>
+</mrow>
+</mfrac>
+</mrow>
+</math></li></ol></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>An experiment consists of first rolling a die and then tossing a coin.</p>
+<ol><li>List the sample space.</li><li>Let <em>A</em> be the event that either a three or a four is rolled first, followed by landing a head on the coin toss. Find <em>P</em>(<em>A</em>).</li><li>Let <em>B</em> be the event that the first and second tosses land on heads. Are the events <em>A</em> and <em>B</em> mutually exclusive? Explain your answer in one to three complete sentences, including numerical justification.</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+<p>An experiment consists of tossing a nickel, a dime, and a quarter. Of interest is the side the coin lands on.</p>
+<ol><li>List the sample space.</li><li>Let <em>A</em> be the event that there are at least two tails. Find <em>P</em>(<em>A</em>).</li><li>Let <em>B</em> be the event that the first and second tosses land on heads. Are the events <em>A</em> and <em>B</em> mutually exclusive? Explain your answer in one to three complete sentences, including justification.</li></ol>
+</div>
+<div class="solution">
+<ol><li><em>S</em> = {(<em>HHH</em>), (<em>HHT</em>), (<em>HTH</em>), (<em>HTT</em>), (<em>THH</em>), (<em>THT</em>), (<em>TTH</em>), (<em>TTT</em>)}</li><li><math>
+<mrow>
+<mfrac>
+<mn>4</mn>
+<mn>8</mn>
+</mfrac>
+</mrow>
+</math>
+</li><li>Yes, because if <em>A</em> has occurred, it is impossible to obtain two tails. In other words, <em>P</em>(<em>A</em> AND <em>B</em>) = 0.</li></ol></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>Consider the following scenario:
+<br>Let <em>P</em>(<em>C</em>) = 0.4.
+<br>Let <em>P</em>(<em>D</em>) = 0.5.
+<br>Let <em>P</em>(<em>C</em>|<em>D</em>) = 0.6.
+<ol><li>Find <em>P</em>(<em>C</em> AND <em>D</em>).</li><li>Are <em>C</em> and <em>D</em> mutually exclusive? Why or why not?</li><li>Are <em>C</em> and <em>D</em> independent events? Why or why not?</li><li>Find <em>P</em>(<em>C</em> OR <em>D</em>).</li><li>Find <em>P</em>(<em>D</em>|<em>C</em>).</li></ol>
+</p>
+</div>
+</div><div class="exercise">
+<div class="problem">
+<p><em>Y</em> and <em>Z</em> are independent events.</p>
+<ol><li>Rewrite the basic Addition Rule <em>P</em>(<em>Y</em> OR <em>Z</em>) = <em>P</em>(<em>Y</em>) + <em>P</em>(<em>Z</em>) - <em>P</em>(<em>Y</em> AND <em>Z</em>) using the information that <em>Y</em> and <em>Z</em> are independent events.</li><li>Use the rewritten rule to find <em>P</em>(<em>Z</em>) if <em>P</em>(<em>Y</em> OR <em>Z</em>) = 0.71 and <em>P</em>(<em>Y</em>) = 0.42.</li></ol>
+</div>
+<div class="solution">
+<ol><li>If <em>Y</em> and <em>Z</em> are independent, then <em>P</em>(<em>Y</em> AND <em>Z</em>) = <em>P</em>(<em>Y</em>)<em>P</em>(<em>Z</em>), so <em>P</em>(<em>Y</em> OR <em>Z</em>) = <em>P</em>(<em>Y</em>) + <em>P</em>(<em>Z</em>) - <em>P</em>(<em>Y</em>)<em>P</em>(<em>Z</em>).</li><li>0.5</li></ol></div></div>
+<div class="exercise"><div class="problem">
+<p><em>G</em> and <em>H</em> are mutually exclusive events. <em>P</em>(<em>G</em>) = 0.5 <em>P</em>(<em>H</em>) = 0.3</p>
+<ol><li>Explain why the following statement MUST be false: <em>P</em>(<em>H</em>|<em>G</em>) = 0.4.</li><li>Find <em>P</em>(<em>H</em> OR <em>G</em>).</li><li>Are <em>G</em> and <em>H</em> independent or dependent events? Explain in a complete sentence.</li></ol></div>
+</div><div class="exercise">
+<div class="problem">
+<p>According to the 2019 U.S. Census, approximately 331,449,281 people live in the United States. Of these people, 67,800,000 speak a language other than English at home. Of those who speak another language at home, 61.6% speak Spanish.</p>
+<p>Let: <em>E</em> = speaks English at home; <em>E′</em> = speaks another language at home; <em>S</em> = speaks Spanish;</p>
+<p>Finish each probability statement by matching the correct answer.</p>
+<table><tr><th>Probability Statements</th><th>Answers</th></tr><tr><td>a. <math><mi>P</mi><mo>(</mo><mi>E</mi><mo>′</mo><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo></math></td><td>i. 0.7954</td></tr><tr><td>b. <math><mi>P</mi><mo>(</mo><mi>E</mi><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo></math></td><td>ii. 0.616</td></tr><tr><td>c. <math><mi>P</mi><mo>(</mo><mi>S</mi><mo> </mo><mo>∩</mo><mo> </mo><mi>E</mi><mo>′</mo><mo>)</mo><mo> </mo><mo>=</mo></math></td><td>iii. 0.2046</td></tr><tr><td>d. <math><mi>P</mi><mo>(</mo><mi>S</mi><mo> </mo><mo>|</mo><mo> </mo><mi>E</mi><mo>′</mo><mo>)</mo><mo> </mo><mo>=</mo><mo> </mo></math></td><td>iv. 0.1260</td></tr></table></div>
+<div class="solution">
+<p>
+<ol><li>iii</li><li>i</li><li>iv</li><li>ii</li></ol>
+</p>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+<p>1994, the U.S. government held a lottery to issue 55,000 Green Cards (permits for non-citizens to work legally in the U.S.). Renate Deutsch, from Germany, was one of approximately 6.5 million people who entered this lottery. Let <em>G</em> = won green card.</p><ol><li>What was Renate’s chance of winning a Green Card? Write your answer as a probability statement.</li><li>In the summer of 1994, Renate received a letter stating she was one of 110,000 finalists chosen. Once the finalists were chosen, assuming that each finalist had an equal chance to win, what was Renate’s chance of winning a Green Card? Write your answer as a conditional probability statement. Let <em>F</em> = was a finalist.</li><li>Are <em>G</em> and <em>F</em> independent or dependent events? Justify your answer numerically and also explain why.</li><li>Are <em>G</em> and <em>F</em> mutually exclusive events? Justify your answer numerically and explain why.</li></ol></div>
+</div><div class="exercise"><div class="problem">
+<p>Three professors at George Washington University did an experiment to determine if economists are more selfish than other people. They dropped 64 stamped, addressed envelopes with $10 cash in different classrooms on the George Washington campus. 44% were returned overall. From the economics classes 56% of the envelopes were returned. From the business, psychology, and history classes 31% were returned.</p>
+<p>Let: <em>R</em> = money returned; <em>E</em> = economics classes; <em>O</em> = other classes</p>
+<ol><li>Write a probability statement for the overall percent of money returned.</li><li>Write a probability statement for the percent of money returned out of the economics classes.</li><li>Write a probability statement for the percent of money returned out of the other classes.</li><li>Is money being returned independent of the class? Justify your answer numerically and explain it.</li><li>Based upon this study, do you think that economists are more selfish than other people? Explain why or why not. Include numbers to justify your answer.</li></ol></div>
+<div class="solution">
+<ol><li><em>P</em>(<em>R</em>) = 0.44</li><li><em>P</em>(<em>R</em>|<em>E</em>) = 0.56</li><li><em>P</em>(<em>R</em>|<em>O</em>) = 0.31</li><li>No, whether the money is returned is not independent of which class the money was placed in. There are several ways to justify this mathematically, but one is that the money placed in economics classes is not returned at the same overall rate; <em>P</em>(<em>R</em>|<em>E</em>) ≠ <em>P</em>(<em>R</em>).</li><li>No, this study definitely does not support that notion; <em><u>in fact</u></em>, it suggests the opposite. The money placed in the economics classrooms was returned at a higher rate than the money place in all classes collectively; <em>P</em>(<em>R</em>|<em>E</em>) &gt; <em>P</em>(<em>R</em>).</li></ol></div>
+</div><div class="exercise"><div class="problem">
+<p>The following table of data obtained from www.baseball-almanac.com shows hit information for four players. Suppose that one hit from the table is randomly selected.</p><table><tr><th>Name</th><th>Single</th><th>Double</th><th>Triple</th><th>Home Run</th><th>Total Hits</th></tr><tr><td>Babe Ruth</td><td>1,517</td><td>506</td><td>136</td><td>714</td><td>2,873</td></tr><tr><td>Jackie Robinson</td><td>1,054</td><td>273</td><td>54</td><td>137</td><td>1,518</td></tr><tr><td>Ty Cobb</td><td>3,053</td><td>724</td><td>295</td><td>117</td><td>4,189</td></tr><tr><td>Hank Aaron</td><td>2,294</td><td>624</td><td>98</td><td>755</td><td>3,771</td></tr><tr><td>Total</td><td>7,918</td><td>2,127</td><td>583</td><td>1,723</td><td>12,351</td></tr></table>
+<p>Are &quot;the hit being made by Hank Aaron&quot; and &quot;the hit being a double&quot; independent events?</p><ol><li>Yes, because <em>P</em>(hit by Hank Aaron|hit is a double) = <em>P</em>(hit by Hank Aaron)</li><li>No, because <em>P</em>(hit by Hank Aaron|hit is a double) ≠ <em>P</em>(hit is a double)</li><li>No, because <em>P</em>(hit is by Hank Aaron|hit is a double) ≠ <em>P</em>(hit by Hank Aaron)</li><li>Yes, because <em>P</em>(hit is by Hank Aaron|hit is a double) = <em>P</em>(hit is a double)</li></ol>
+</div>
+<div class="solution">
+  <ol><li><em>P</em>(type O OR Rh-) = <em>P</em>(type O) + <em>P</em>(Rh-) – <em>P</em>(type O AND Rh-)<br>0.38 = 0.45 + 0.07 – <em>P</em>(type O AND Rh-);<br>Solve to find <em>P</em>(type O AND Rh-) = 0.14.<br>14% of people have type O, Rh- blood.</li><li><em>P</em>(NOT(type O AND Rh-)) = 1 – <em>P</em>(type O AND Rh-) = 1 – 0.14 = 0.86<br>86% of people do not have type O, Rh- blood.</li></ol>
+  </div>
+</div><div class="exercise">
+<div class="problem">
+<p>According to the American Red Cross, a person with type O blood and a negative Rh factor (Rh-) can donate blood to any person with any blood type. Their data show that 45% of people have type O blood and 7% of people have Rh- factor; 38% of people have type O or Rh- factor.</p>
+<ol><li>Find the probability that a person has both type O blood and the Rh- factor.</li><li>Find the probability that a person does NOT have both type O blood and the Rh- factor.</li></ol>
+</div>
+<div class="solution">
+<ol><li>
+<p><em>P</em>(type O OR Rh-) = <em>P</em>(type O) + <em>P</em>(Rh-) - <em>P</em>(type O AND Rh-)</p>
+<p>0.52 = 0.43 + 0.15 - <em>P</em>(type O AND Rh-); solve to find <em>P</em>(type O AND Rh-) = 0.06</p>
+<p>6% of people have type O, Rh- blood</p>
+</li><li>
+<p><em>P</em>(NOT(type O AND Rh-)) = 1 - <em>P</em>(type O AND Rh-) = 1 - 0.06 = 0.94</p>
+<p>94% of people do not have type O, Rh- blood</p>
+</li></ol>
+</div>
+</div>
+<div class="exercise"><div class="problem">
+<p>At a college, 72% of courses have final exams and 46% of courses require research papers. Suppose that 32% of courses have a research paper and a final exam. Let <em>F</em> be the event that a course has a final exam. Let <em>R</em> be the event that a course requires a research paper.</p>
+<ol><li>Find the probability that a course has a final exam or a research project. </li><li>Find the probability that a course has NEITHER of these two requirements.</li></ol>
+</div>
+</div><div class="exercise"><div class="problem">
+<p>In a box of assorted cookies, 36% contain chocolate and 12% contain nuts. In the box, 8% contain both chocolate and nuts. Sean is allergic to both chocolate and nuts.</p>
+<ol><li>Find the probability that a cookie contains chocolate or nuts (he can&#x27;t eat it).</li><li>Find the probability that a cookie does not contain chocolate or nuts (he can eat it).</li></ol>
+</div>
+<div class="solution">
+<ol><li>Let <em>C</em> = be the event that the cookie contains chocolate. Let <em>N</em> = the event that the cookie contains nuts.</li><li><em>P</em>(<em>C</em> OR <em>N</em>) = <em>P</em>(<em>C</em>) + <em>P</em>(<em>N</em>) - <em>P</em>(<em>C</em> AND <em>N</em>) = 0.36 + 0.12 - 0.08 = 0.40</li><li><em>P</em>(NEITHER chocolate NOR nuts)  = 1 - <em>P</em>(<em>C</em> OR <em>N</em>) = 1 - 0.40 = 0.60</li></ol></div>
+</div>
+<div class="exercise"><div class="problem">
+<p>A college finds that 10% of students have taken a distance learning class and that 40% of students are part time students. Of the part time students, 20% have taken a distance learning class. Let <em>D</em> = event that a student takes a distance learning class and <em>E</em> = event that a student is a part time student</p>
+<ol><li>Find <em>P</em>(<em>D</em> AND <em>E</em>).</li><li>Find <em>P</em>(<em>E</em>|<em>D</em>).</li><li>Find <em>P</em>(<em>D</em> OR <em>E</em>).</li><li>Using an appropriate test, show whether <em>D</em> and <em>E</em> are independent.</li><li>Using an appropriate test, show whether <em>D</em> and <em>E</em> are mutually exclusive.</li></ol></div>
+</div>
+</div> <h2>Key terms</h2>
+<p><strong>Independent Events</strong> The occurrence of one event has no effect on the probability of the occurrence of another event. Events <em>A</em> and <em>B</em> are independent if one of the following is true:
+<ol><li><em>P</em>(<em>A</em>|<em>B</em>) = <em>P</em>(<em>A</em>)</li><li><em>P</em>(<em>B</em>|<em>A</em>) = <em>P</em>(<em>B</em>)</li><li><em>P</em>(<em>A</em> AND <em>B</em>) = <em>P</em>(<em>A</em>)<em>P</em>(<em>B</em>)</li></ol>
+</p>
+<p><strong>Mutually Exclusive</strong> Two events are mutually exclusive if the probability that they both happen at the same time is zero. If events <em>A</em> and <em>B</em> are mutually exclusive, then <em>P</em>(<em>A</em> AND <em>B</em>) = 0.</p>
+
+</body></html>
