@@ -10,5 +10,6 @@ export const api = {
   timeline: q => get(`timeline${qs(q)}`),
   print:    (from, to) => get(`print${qs({ from, to })}`),
   renameTag: (from, to) => send('tag/rename', { from, to }),
+  photos:   q => get(`photos${qs(q)}`),
   media:    id => core.table('attachment', { id }).then(([a]) => a?.data),
 };

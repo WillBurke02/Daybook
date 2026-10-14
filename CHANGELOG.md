@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.9 — 14 October 2026
+
+- **Photos in Log**: a Photos page shows every photo and video as a grid, newest first, with the
+  date on each. The tags along the top show one tag's alone (#site: every photo from site).
+  Tap one to see it full size; its date opens the entry. A tag's timeline links to its photos.
+
 ## 4.0.8 — 14 October 2026
 
 - **What a tag stands for**: Log → Tags → Edit gives a tag a note (#ts247: "Siemens S7-1500 on

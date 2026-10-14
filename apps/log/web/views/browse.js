@@ -4,6 +4,7 @@ import { api } from '../api.js';
 import { el, table, dialog, flash } from '../core/dom.js';
 import { today, dayLong, addMonths, monthLong, lastDay, dateUK } from '../core/format.js';
 import { calendar } from '../ui/calendar.js';
+import { viewImage, videoTile } from '../ui/media.js';
 
 const dayLink = (d, text) => el('a', { href: `#/day?d=${d}` }, text || dayLong(d));
 
@@ -17,7 +18,8 @@ export const timeline = { title: 'Timeline', narrow: true, layout: [{ use: 'log.
     const page = async () => {
       const got = await api.timeline({ before, tag, limit: 30 });
       if (tag && before === '9999-12-31') body.prepend(el('p', { class: 'tagnote' }, got.note || el('span', { class: 'muted' }, `No note on #${tag} yet.`),
-        ' ', el('a', { class: 'small', href: `#/tags?edit=${encodeURIComponent(tag)}` }, got.note ? 'Edit' : 'Add one')));
+        ' ', el('a', { class: 'small', href: `#/tags?edit=${encodeURIComponent(tag)}` }, got.note ? 'Edit' : 'Add one'),
+        ' · ', el('a', { class: 'small', href: `#/photos?tag=${encodeURIComponent(tag)}` }, 'Photos')));
       for (const d of got.days) {
         list.append(el('section', { class: 'tday' },
           el('h3', {}, dayLink(d.day)),
@@ -87,6 +89,36 @@ export const month = { title: 'Calendar', layout: [{ use: 'log.month', w: 8 }, {
       { k: 'n', label: 'Entries', n: true }, { k: 'last_day', label: 'Last', fmt: dateUK },
       { k: 'edit', label: '', render: r => el('button', { class: 'btn plain sm', type: 'button', onclick: () => edit(r) }, 'Edit') }],
       rows, { empty: 'No tags yet. Type a word with # in front, such as #site, in any entry.' }));
+  } },
+} };
+
+// Every photo and video, newest first, as a grid; a tag's alone from the chips along the top.
+export const photos = { title: 'Photos', layout: [{ use: 'log.photos' }], panels: {
+  'log.photos': { title: 'Photos', w: 12, deps: ['entry', 'attachment', 'clip'], async render(body, ctx) {
+    const tag = (ctx.params.tag || '').toLowerCase();
+    const tags = (await api.view('v_tag', { order: 'n', desc: 1 }).catch(() => [])).slice(0, 14);
+    if (tag && !tags.some(t => t.tag === tag)) tags.unshift({ tag });
+    const go = t => ctx.go('photos', t ? { tag: t } : {});
+    body.append(el('div', { class: 'row wrap photochips' },
+      el('button', { class: 'chip' + (tag ? '' : ' on'), type: 'button', onclick: () => go('') }, 'All'),
+      tags.map(t => el('button', { class: 'chip' + (t.tag === tag ? ' on' : ''), type: 'button', title: t.note || null, onclick: () => go(t.tag) }, '#' + t.tag))));
+    const grid = el('div', { class: 'photogrid' }), more = el('button', { class: 'btn plain', type: 'button', hidden: true }, 'More');
+    let offset = 0;
+    const page = async () => {
+      const got = await api.photos({ tag, offset, limit: 60 });
+      grid.append(...got.items.map(i => {
+        const title = `${dayLong(i.day)}${i.at ? ' · ' + i.at : ''}${i.text ? ' · ' + i.text.split('\n')[0].slice(0, 80) : ''}`;
+        return el('div', { class: 'ptile' }, i.type === 'video' ? videoTile(i, '/log/', title)
+          : el('button', { class: 'thumb', type: 'button', title, onclick: () => viewImage(api.media(i.id), title) }, el('img', { src: i.thumb, alt: title, loading: 'lazy' })),
+          el('a', { class: 'pday small', href: `#/day?d=${i.day}&e=${i.entry_id}` }, `${i.day.slice(8)}/${i.day.slice(5, 7)}/${i.day.slice(2, 4)}`));
+      }));
+      offset += got.items.length;
+      more.hidden = !got.more;
+      if (!grid.children.length) grid.replaceWith(el('p', { class: 'note' }, tag ? `No photos on entries tagged #${tag}.` : 'No photos yet. Add some with the camera or + in the box at the top.'));
+    };
+    more.addEventListener('click', page);
+    body.append(grid, more);
+    await page();
   } },
 } };
 

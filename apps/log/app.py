@@ -346,6 +346,18 @@ def route(db, method, p, query, body, ctx):
                      "tag_notes": dict(db.execute("SELECT tag, note FROM tag_note").fetchall()),   # ponytail: all of them; a handful
                      "inbox": [dict(r) for r in db.execute("SELECT i.* FROM inbox i")]}
 
+    if p == ["photos"] and method == "GET":         # every photo and video, newest first; one tag's, if asked
+        tag = (g("tag") or "").lower().lstrip("#")
+        off, limit = int(g("offset", 0)), min(int(g("limit", 60)), 200)
+        where, args = ("AND e.tags LIKE ?", [f"% {tag} %"]) if tag else ("", [])
+        rows = [dict(r) for r in db.execute(
+            "SELECT * FROM (SELECT a.id, 'photo' AS type, a.thumb, NULL AS duration_s, e.id AS entry_id, e.day, e.at, e.text "
+            f"  FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE a.type = 'photo' {where} "
+            "UNION ALL SELECT c.id, 'video', c.thumb, c.duration_s, e.id, e.day, e.at, e.text "
+            f"  FROM clip c JOIN entry e ON e.id = c.entry_id WHERE 1 {where}) "
+            "ORDER BY day DESC, COALESCE(at, '99:99') DESC, id DESC LIMIT ? OFFSET ?", args + args + [limit + 1, off])]
+        return 200, {"items": rows[:limit], "more": len(rows) > limit}
+
     if p == ["timeline"] and method == "GET":
         before, tag = g("before", "9999-12-31"), (g("tag") or "").lower().lstrip("#")
         limit = min(int(g("limit", 30)), 200)

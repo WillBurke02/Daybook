@@ -138,6 +138,10 @@ assert dict(db.execute("SELECT tag, note FROM tag_note").fetchall()) == {"site":
 assert R("GET", "timeline", q={"tag": ["site"]})["note"] == "The Leeds plant"
 assert one("SELECT text FROM entry WHERE day = '2026-09-11'")[0] == "At #SITE and #site-b"
 db.execute("DELETE FROM entry WHERE day = '2026-09-11'"); db.commit()
+ph = R("GET", "photos")
+assert ph["items"] and all(i["type"] in ("photo", "video") and i["day"] for i in ph["items"]) and "data" not in ph["items"][0]
+assert all("#site" in (i["text"] or "").lower() for i in R("GET", "photos", q={"tag": ["site"]})["items"])
+assert not R("GET", "photos", q={"tag": ["siemens"]})["items"], "a tag with no photos has none"
 print("ok — timeline, calendar, tags, rename, print, search")
 
 # === reminders: !fri in an entry, from the entry's own day =========================================

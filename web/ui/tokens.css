@@ -645,6 +645,15 @@ dialog { width: min(760px, 94vw); }
 .suggs { list-style: none; margin: 0; padding: 0; }
 .tagassist { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
 .chip.rem { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.photochips { gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.photochips .chip { cursor: pointer; padding: 4px 10px; font-size: 13px; }
+.photogrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+.ptile { position: relative; }
+.ptile .thumb { display: block; width: 100%; padding: 0; border: 0; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: var(--rule-soft); }
+.ptile .thumb img, .ptile .vid .novid { display: block; width: 100%; aspect-ratio: 1; height: auto; object-fit: cover; }
+.ptile .vid .novid { display: grid; place-items: center; color: var(--ink-2); font-size: 12px; }
+.ptile .pday { position: absolute; left: 4px; bottom: 4px; padding: 0 5px; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; text-decoration: none; }
+@media (max-width: 600px) { .photogrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; } }
 .tagnote { margin: 0 0 12px; padding: 8px 12px; border-radius: var(--r); background: var(--accent-soft); white-space: pre-wrap; }
 .chip.rem.done { color: var(--ink-3); border-color: var(--rule); text-decoration: line-through; }
 .reminders { list-style: none; margin: 0; padding: 0; }
@@ -825,11 +834,11 @@ body[data-app="log"] main.narrow .grid { gap: 6px; }
         box-shadow: 0 6px 22px rgba(0,0,0,.25); display: grid; gap: 6px; }
 .busy progress { width: 100%; height: 6px; accent-color: var(--accent-soft); }
 .pending .pvid { position: relative; display: inline-flex; align-items: center; font-size: 12px; }
-.pending .pvid b, .entry .vid .play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff;
+.pending .pvid b, .entry .vid .play, .ptile .vid .play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff;
   text-shadow: 0 0 4px #000; font-size: 15px; pointer-events: none; }
-.entry .vid { position: relative; cursor: pointer; }
+.entry .vid, .ptile .vid { position: relative; cursor: pointer; }
 .entry .vid .novid { display: grid; place-items: center; width: 96px; height: 72px; border-radius: 4px; background: var(--panel-2); color: var(--ink-2); font-size: 12px; }
-.entry .vid .len { position: absolute; right: 4px; bottom: 3px; font-size: 11px; color: #fff; text-shadow: 0 0 3px #000; }
+.entry .vid .len, .ptile .vid .len { position: absolute; right: 4px; bottom: 3px; font-size: 11px; color: #fff; text-shadow: 0 0 3px #000; }
 video.full { max-width: 100%; max-height: 75vh; display: block; margin: auto; background: #000; border-radius: 6px; }
 .recorder { display: inline-flex; gap: 6px; align-items: center; }
 .rec.on { color: var(--debit); border-color: var(--debit); }

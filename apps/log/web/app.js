@@ -13,8 +13,8 @@ const toDay = d => { location.hash = `#/day?d=${d}`; };
 export default {
   name: 'log', title: 'Log', home: 'day', period: false,
   about: 'a diary of the day and the work day.',
-  pages: { day: day.page, timeline: browse.timeline, calendar: browse.month, tags: browse.tags, print: printing.page },
-  groups: [[null, ['day', 'timeline', 'calendar', 'tags', 'print']]],
+  pages: { day: day.page, timeline: browse.timeline, calendar: browse.month, photos: browse.photos, tags: browse.tags, print: printing.page },
+  groups: [[null, ['day', 'timeline', 'calendar', 'photos', 'tags', 'print']]],
   setup: [],
   quick: [{ label: 'Today', href: '#/day' }],
   sqlHint: 'SELECT day, COUNT(*) FROM entry GROUP BY day ORDER BY day DESC',
