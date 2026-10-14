@@ -115,7 +115,9 @@ except api.Err:
 
 # === practice: numeric cards only, from the lessons picked ===========================
 p = learn.practice(db, [pe], 12, rng=rng)
-assert len(p) == 12 and all(c["type"] == "numeric" and c["lesson_id"] == pe for c in p)
+have = one("SELECT COUNT(*) FROM card WHERE lesson_id = ? AND type = 'numeric'", pe)[0]
+assert len(p) == min(12, have) and all(c["type"] == "numeric" and c["lesson_id"] == pe for c in p)
+assert len({c["id"] for c in p}) == len(p), "a set asks each question once"
 no_numeric = db.execute("SELECT id FROM lesson WHERE id NOT IN (SELECT lesson_id FROM card WHERE type = 'numeric') LIMIT 1").fetchone()["id"]
 assert learn.practice(db, [], 5) == [] and learn.practice(db, [no_numeric], 5) == []
 

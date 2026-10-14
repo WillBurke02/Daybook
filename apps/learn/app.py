@@ -402,7 +402,11 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
     group = lambda rows: {k: [r for r in rows if r["subject_id"] == k] for k in subs}
     due_all = group([r for r in db.execute(CARD_SQL + "WHERE v.asks AND v.due IS NOT NULL AND v.due <= ? ORDER BY v.due", (now,))
                      if r["id"] not in ex])
-    practice_all = group([r for r in db.execute(CARD_SQL + "WHERE c.type = 'numeric' AND v.reps > 0") if r["id"] not in ex])
+    # practice: a numeric card met before, with new numbers; once a day at most, the longest unseen first, so the
+    # few you have met do not come round again and again while the rest wait
+    rested = (datetime.now() - timedelta(hours=20)).strftime("%Y-%m-%d %H:%M")
+    practice_all = group([r for r in db.execute(CARD_SQL + "WHERE c.type = 'numeric' AND v.reps > 0 AND COALESCE(v.last_seen, '') < ?",
+                                                (rested,)) if r["id"] not in ex])
     weak_all = {}
     for r in db.execute("SELECT x.subject_id, u.scope, u.theta - s.theta FROM skill u JOIN unit x ON x.id = u.scope "
                         "JOIN skill s ON s.scope = x.subject_id"):
@@ -411,7 +415,7 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
         due = due_all[s]
         new = []                                          # filled below, from one lesson only
         weak = weak_all.get(s, {})
-        practice = sorted(practice_all[s], key=lambda r: (weak.get(r["unit_id"], 0), rng.random()))
+        practice = sorted(practice_all[s], key=lambda r: (weak.get(r["unit_id"], 0) > -0.5, r["last_seen"] or "", rng.random()))
         pools[s] = {"review": [r for r in due if not r["struggle"]], "struggle": [r for r in due if r["struggle"]],
                     "new": new, "practice": practice}
     # New cards come from one lesson at a time, in its order, so an idea sits next to its question:
@@ -479,7 +483,9 @@ def warmup(db, lesson, n=3):
 def practice(db, lessons, n=10, rng=random):
     rows = [r for r in db.execute(CARD_SQL + f"WHERE c.type = 'numeric' AND c.lesson_id IN ({','.join('?' * len(lessons))}) "
                                              "AND COALESCE(v.stage, '') <> 'calibrate'", lessons)] if lessons else []
-    return [_card(rng.choice(rows), "practice") for _ in range(n)] if rows else []
+    # each question once in a set (new numbers every time), the ones not seen for longest first
+    rows.sort(key=lambda r: (r["last_seen"] or "", rng.random()))
+    return [_card(r, "practice") for r in rows[:n]]
 
 
 def _recall(r, now=None):

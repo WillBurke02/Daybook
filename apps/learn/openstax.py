@@ -79,6 +79,7 @@ class Section:
         self.title = root.find("c:title", NS).text.strip()
         self.content = root.find("c:content", NS)
         self.media = set()                                     # figures it uses, to fetch
+        self.ids = {e.get("id"): e.tag.replace(C, "") for e in root.iter() if e.get("id")}   # what a link points at
 
     @property
     def url(self):
@@ -121,7 +122,16 @@ class Section:
             return f" <small>({inner()})</small>"
         if tag == "link":
             url = e.get("url")
-            return f'<a href="{escape(url)}" target="_blank" rel="noopener noreferrer">{inner()}</a>' if url and url.startswith("http") else inner()
+            if url and url.startswith("http"):
+                return f'<a href="{escape(url)}" target="_blank" rel="noopener noreferrer">{inner()}</a>'
+            # the book numbers its figures and tables when it prints them, so a link to one is empty here: say what it is
+            words = inner()
+            if words.strip():
+                return words
+            if e.get("document"):
+                return "another section"
+            return {"figure": "the figure", "table": "the table", "example": "the example", "equation": "the equation",
+                    "exercise": "the exercise", "note": "the box", "section": "the section"}.get(self.ids.get(e.get("target-id")), "the text")
         if tag == "list":
             t = "ol" if e.get("list-type") == "enumerated" else "ul"
             title = e.find("c:title", NS)
@@ -207,7 +217,7 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
 
     # ---- the section as cards: reading, examples, exercises with their answers --------------------
     def cards(self, prefix):
-        out, buf, words, heading = [], [], 0, None
+        out, buf, words, heading, tried, shown = [], [], 0, None, set(), {}
         n = 0
         def flush():
             nonlocal buf, words
@@ -226,6 +236,10 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                 if tag == "section":
                     flush()
                     t = e.find("c:title", NS)
+                    if "coreq-skills" in cls:
+                        continue          # the book's review of another course (Practice Makes Perfect): the original page has it
+                    if t is not None and text(self.kids(t)) == "Proof":
+                        continue          # a proof stays whole, in the original page, not cut into cards
                     heading = text(self.kids(t)) if t is not None else heading
                     if "section-exercises" in cls or "section-exercise" in cls:
                         bank.extend(exercises(e, None))                  # the end-of-section set: its last few become the check
@@ -234,12 +248,24 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
                     continue
                 if tag == "example":
                     flush()
+                    if e.find("c:title", NS) is not None and text(self.kids(e.find("c:title", NS))) == "Proof":
+                        continue
+                    shown[heading] = shown.get(heading, 0) + 1
+                    if shown[heading] > 2:
+                        continue          # two worked examples a heading; the rest are in the original page
                     out.append({"type": "concept", "stage": "example", "title": f"Example: {text(self.kids(e.find('c:title', NS))) if e.find('c:title', NS) is not None else heading or self.title}",
                                 "html": self.html(e), "body": text(self.html(e))})
                     continue
                 if tag == "note" and "try" in cls:
                     flush()
-                    out.extend(exercises(e, "practise"))
+                    # one Try It a heading, the first that stands alone: the book gives one after nearly every example, and
+                    # all of them in Review is the same question over and over. The rest, and any that needs something a
+                    # card cannot show (a graph, a table, an earlier example), stay in the original page.
+                    if heading not in tried:
+                        got = [x for x in exercises(e, "practise") if not ALONE.search(x["front"])][:1]
+                        if got:
+                            tried.add(heading)
+                            out.extend(got)
                     continue
                 piece = self.html(e)
                 buf.append(piece)
@@ -291,6 +317,11 @@ figure{{margin:16px 0}} img{{max-width:100%;height:auto}} table{{border-collapse
         open(os.path.join(folder, f"{self.number}.html"), "w", encoding="utf-8").write(self.page_html())
 
 
+# words that mean an exercise leans on something the card cannot show
+ALONE = re.compile(r"\b(the figure|the table|the example|the box|another section|graph(ed)? (in|below|above|shown)|shown (in|below|above)|"
+                   r"refer to|using the data|use the data|in the previous|from the previous|the graph|graphing (calculator|utility))\b|^\(see the figure\)", re.I)
+
+
 def text(html):
     """The words of some HTML, for search and lists: tags out, spaces tidied."""
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html or "")).replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"').strip()
@@ -325,8 +356,17 @@ def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
         old = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
         if old and not old.get("imported"):
             raise ValueError(f"{lesson_id} is written already: list it under originals, not lessons")
+        # what Daybook adds to a lesson from a book (context, questions, machines) is kept through a fresh import:
+        # each added card goes after the book's card it names ("after"), else before the check
+        added = [c for c in old.get("cards", []) if c.get("added")]
+        for c in added:
+            at = next((i + 1 for i, x in enumerate(cards) if x["id"] == c.get("after")), None)
+            if at is None:
+                at = next((i for i, x in enumerate(cards) if x.get("stage") == "check"), len(cards))
+            cards.insert(at, c)
         words = sum(len((c.get("body") or c.get("front", "") + " " + c.get("back", "")).split()) for c in cards)
-        lesson = {"id": lesson_id, "imported": {"from": "openstax", "sections": [f"{s.book.slug} {s.number}" for s in secs]},
+        lesson = {**{k: v for k, v in old.items() if k in ("title", "level", "prereq", "tags", "summary")},
+                  "id": lesson_id, "imported": {"from": "openstax", "sections": [f"{s.book.slug} {s.number}" for s in secs]},
                   "minutes": max(10, round(words / 130 + sum(c["type"] == "flash" for c in cards))),
                   "goals": goals, "sources": [s.credit for s in secs],
                   "resources": [{"kind": "read", "title": f"The original: {s.book.title}, {s.number} {s.title}", "url": s.page,

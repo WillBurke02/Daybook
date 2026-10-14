@@ -1,5 +1,17 @@
 # Changes
 
+## 4.0.16 — 15 October 2026
+
+- **Less repetition in Learn**: the same few questions kept coming round while most never did.
+  - The feed's practice (a numeric question you have met, with new numbers) now waits a day before a
+    question comes back, and picks the ones you have not seen for longest. A practice set asks each
+    question once.
+  - The lessons brought in from OpenStax had swollen: one had 211 cards. The book's review of another
+    course ("Practice Makes Perfect", "Objective 1… (IA 3.5.3)") is gone; a lesson keeps two worked
+    examples and one "Try It" a heading, leaves proofs whole in the original page, and drops exercises
+    that lean on a graph or table the card cannot show. That lesson now has 146 cards, 25 of them
+    practice instead of 59. A link the book left empty ("graphed in .") now says "the figure".
+
 ## 4.0.15 — 14 October 2026
 
 - **Home, three ways**: a switch at the top of Home picks how it looks, and a phone and a computer
