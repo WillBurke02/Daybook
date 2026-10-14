@@ -22,7 +22,7 @@ SELECT day, SUM(kind = 'work') AS work, MAX(kind = 'day' AND TRIM(COALESCE(text,
        + (SELECT COUNT(*) FROM clip c JOIN entry x ON x.id = c.entry_id WHERE x.day = e.day) AS attachments
 FROM entry e GROUP BY day;
 
--- Every tag, how often, and when last used.
+-- Every tag, how often, when last used, and what it stands for.
 CREATE VIEW v_tag AS
 WITH RECURSIVE split(id, day, rest, tag) AS (
   SELECT id, day, LTRIM(tags) || ' ', NULL FROM entry WHERE TRIM(COALESCE(tags, '')) <> ''
@@ -30,5 +30,5 @@ WITH RECURSIVE split(id, day, rest, tag) AS (
   SELECT id, day, LTRIM(SUBSTR(rest, INSTR(rest, ' ') + 1)), SUBSTR(rest, 1, INSTR(rest, ' ') - 1)
   FROM split WHERE rest <> '' AND INSTR(rest, ' ') > 0
 )
-SELECT tag, COUNT(DISTINCT id) AS n, MAX(day) AS last_day
+SELECT tag, COUNT(DISTINCT id) AS n, MAX(day) AS last_day, (SELECT note FROM tag_note t WHERE t.tag = split.tag) AS note
 FROM split WHERE tag IS NOT NULL AND tag <> '' GROUP BY tag;

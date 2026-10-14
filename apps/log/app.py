@@ -19,7 +19,7 @@ SIGNATURE = "entry"
 SOURCES = {
     "v_entry": ["Entries", "Every entry: its day, time, kind (diary or work), text and tags, and how many photos and voice notes."],
     "v_log_day": ["Days logged", "One row a day with anything logged: work entries, whether there is a diary, entries in all."],
-    "v_tag": ["Tags", "Every tag, how often and when it was last used."],
+    "v_tag": ["Tags", "Every tag, how often and when it was last used, and its note."],
     "v_attachment": ["Photos and voice notes", "Each attachment, without the picture or sound itself."],
 }
 OTHERS = ("money", "learn")
@@ -300,9 +300,18 @@ def route(db, method, p, query, body, ctx):
         for r in rows:
             text = hit.sub("#" + new, r["text"])
             db.execute("UPDATE entry SET text = ?, tags = ? WHERE id = ?", (text, tags_of(text), r["id"]))
+        # its note goes with it; onto a tag that has one, the two notes join
+        notes = [dict(r) for r in db.execute("SELECT * FROM tag_note WHERE tag IN (?, ?)", (old, new.lower()))]
+        mine = next((r["note"] for r in notes if r["tag"] == old), None)
+        if mine and old != new.lower():
+            theirs = next((r["note"] for r in notes if r["tag"] == new.lower()), None)
+            db.execute("DELETE FROM tag_note WHERE tag = ?", (old,))
+            db.execute("INSERT OR REPLACE INTO tag_note (tag, note) VALUES (?, ?)", (new.lower(), f"{theirs}\n{mine}" if theirs else mine))
         n = len(rows)
         _db.log_change(db, "edit", "entry", f"Renamed #{old} to #{new} in {n} entr{'y' if n == 1 else 'ies'}", rows=n,
-                       detail={"undo": [{"op": "restore", "table": "entry", "rows": rows}]})
+                       detail={"undo": [{"op": "restore", "table": "entry", "rows": rows},
+                                        {"op": "remove_where", "table": "tag_note", "where": {"tag": new.lower()}},
+                                        {"op": "restore", "table": "tag_note", "rows": notes}]})
         db.commit()
         return 200, {"ok": True, "entries": n}
 
@@ -334,6 +343,7 @@ def route(db, method, p, query, body, ctx):
             "SELECT id, day, text, remind, reminded FROM entry WHERE remind IS NOT NULL AND (substr(remind, 1, 10) = ? "
             "OR (? = ? AND reminded IS NULL AND substr(remind, 1, 10) < ?)) ORDER BY remind", (d, d, today, d))]
         return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1], "reminders": rem,
+                     "tag_notes": dict(db.execute("SELECT tag, note FROM tag_note").fetchall()),   # ponytail: all of them; a handful
                      "inbox": [dict(r) for r in db.execute("SELECT i.* FROM inbox i")]}
 
     if p == ["timeline"] and method == "GET":
@@ -355,7 +365,8 @@ def route(db, method, p, query, body, ctx):
             out.append({"day": d, "thumbs": thumbs,
                         "lines": [{"at": r["at"], "kind": r["kind"], "text": (r["text"] or "").strip().split("\n")[0][:160],
                                    "photos": r["photos"], "voices": r["voices"], "videos": r["videos"]} for r in rows]})
-        return 200, {"days": out, "more": len(days) == limit}
+        note = db.execute("SELECT note FROM tag_note WHERE tag = ?", (tag,)).fetchone() if tag else None
+        return 200, {"days": out, "more": len(days) == limit, "note": note[0] if note else None}
 
     if p == ["print"] and method == "GET":
         frm, to = g("from") or date.today().isoformat(), g("to") or g("from") or date.today().isoformat()

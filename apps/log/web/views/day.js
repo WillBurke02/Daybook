@@ -11,8 +11,9 @@ import { pictureInput, recorder, voicePlayer, viewImage, blobOf, shrink, mediaIn
 
 const now = () => new Date().toTimeString().slice(0, 5);
 const dayOf = ctx => /^\d{4}-\d{2}-\d{2}$/.test(ctx.params.d || '') ? ctx.params.d : today();
+let tagNotes = {};                                       // what each tag stands for (Tags → Edit), from the day's fetch
 const tagLinks = tags => (tags || '').trim().split(/\s+/).filter(Boolean)
-  .map(t => el('a', { class: 'chip', href: `#/timeline?tag=${encodeURIComponent(t)}` }, '#' + t));
+  .map(t => el('a', { class: 'chip', href: `#/timeline?tag=${encodeURIComponent(t)}`, title: tagNotes[t] || null }, '#' + t));
 // when an entry's !fri falls: on its own day's Reminders
 const whenOf = r => `${dow(r.slice(0, 10))} ${r.slice(8, 10)}/${r.slice(5, 7)}${r.length > 10 ? ' ' + r.slice(11) : ''}`;
 const remindChip = e => e.remind ? el('a', { class: 'chip rem' + (e.reminded ? ' done' : ''), href: `#/day?d=${e.remind.slice(0, 10)}`,
@@ -22,7 +23,7 @@ const changed = ctx => { cache = null; tagList = null; ctx.reload(); };
 
 // ---- #tags: the ones in use, offered as a # is typed ------------------------------------
 let tagList = null;                                      // most used first; fetched again after a change
-const tagsInUse = () => tagList ??= api.view('v_tag', { order: 'n', desc: 1 }).then(r => r.map(t => t.tag)).catch(() => []);
+const tagsInUse = () => tagList ??= api.view('v_tag', { order: 'n', desc: 1 }).catch(() => []);
 
 /** The row under a box that offers #site and #siemens as #si is typed: a tap (or Tab) finishes the word. */
 export function tagAssist(box) {
@@ -40,11 +41,11 @@ export function tagAssist(box) {
     w = /(?:^|[^\w#])#([\w-]*)$/.exec(box.value.slice(0, at))?.[1] ?? null;
     if (w == null) { strip.hidden = true; return; }
     const has = new Set([...(box.value.slice(0, at - w.length - 1) + ' ' + box.value.slice(at)).matchAll(/#([\w-]+)/g)].map(m => m[1].toLowerCase()));
-    const got = (await tagsInUse()).filter(t => t.startsWith(w.toLowerCase()) && t !== w.toLowerCase() && !has.has(t)).slice(0, 8);
+    const got = (await tagsInUse()).filter(({ tag: t }) => t.startsWith(w.toLowerCase()) && t !== w.toLowerCase() && !has.has(t)).slice(0, 8);
     strip.hidden = !got.length;
     // pointerdown is held back so the box keeps its focus (an entry is not saved half-typed); the click picks
     const keep = e => e.preventDefault();
-    strip.replaceChildren(...got.map(t => el('button', { type: 'button', class: 'chip', tabindex: -1,
+    strip.replaceChildren(...got.map(({ tag: t, note }) => el('button', { type: 'button', class: 'chip', tabindex: -1, title: note || null,
       onpointerdown: keep, onmousedown: keep, onclick: () => pick(t) }, '#' + t)));
   };
   box.addEventListener('input', offer);
@@ -267,6 +268,7 @@ export const panels = {
   'log.diary': { title: 'Diary', w: 12, deps: ['entry', 'attachment'], async render(body, ctx) {
     const d = dayOf(ctx);
     const got = await load(d);
+    tagNotes = got.tag_notes || {};
     const diary = got.entries.find(e => e.kind === 'day');
     const long = new Date(d + 'T12:00:00Z').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
     ctx.pageTitle(long, `${d === today() ? 'Today · ' : d === addDays(today(), -1) ? 'Yesterday · ' : ''}${d.slice(0, 4)}`);
@@ -297,6 +299,7 @@ export const panels = {
   'log.work': { title: 'Work', w: 8, deps: ['entry', 'attachment'], async render(body, ctx) {
     const d = dayOf(ctx);
     const got = await load(d);
+    tagNotes = got.tag_notes || {};
     const work = got.entries.filter(e => e.kind === 'work');
     ctx.aside.append(el('span', { class: 'muted num' }, `${work.length} entr${work.length === 1 ? 'y' : 'ies'}`));
     if (!work.length) { body.append(el('p', { class: 'note' }, 'Nothing logged for work on this day. Use the box at the top.')); return; }

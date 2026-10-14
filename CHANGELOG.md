@@ -1,5 +1,12 @@
 # Changes
 
+## 4.0.8 — 14 October 2026
+
+- **What a tag stands for**: Log → Tags → Edit gives a tag a note (#ts247: "Siemens S7-1500 on
+  line 2, Leeds"). It shows on the Tags page, at the top of the tag's timeline (with Add one or Edit),
+  and when you point at the tag on an entry or in the suggestions as you type. Renaming a tag takes
+  its note along; merging two joins their notes. Undo puts both back.
+
 ## 4.0.7 — 14 October 2026
 
 - **Reminders in Log**: write `!fri`, `!tomorrow 9:00`, `!16/10`, `!3d` or `!2w 2pm` in an entry and it

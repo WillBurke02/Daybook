@@ -16,6 +16,8 @@ export const timeline = { title: 'Timeline', narrow: true, layout: [{ use: 'log.
     let before = '9999-12-31';
     const page = async () => {
       const got = await api.timeline({ before, tag, limit: 30 });
+      if (tag && before === '9999-12-31') body.prepend(el('p', { class: 'tagnote' }, got.note || el('span', { class: 'muted' }, `No note on #${tag} yet.`),
+        ' ', el('a', { class: 'small', href: `#/tags?edit=${encodeURIComponent(tag)}` }, got.note ? 'Edit' : 'Add one')));
       for (const d of got.days) {
         list.append(el('section', { class: 'tday' },
           el('h3', {}, dayLink(d.day)),
@@ -55,28 +57,37 @@ export const month = { title: 'Calendar', layout: [{ use: 'log.month', w: 8 }, {
   } },
   'log.tags': { title: 'Tags', w: 4, deps: ['entry'], async render(body, ctx) {
     const rows = await api.view('v_tag', { order: 'n', desc: 1 });
-    // a typo (#sit) or two names for one thing (#ts247, #TS-247): rename it, onto a tag in use to merge them
-    const rename = r => {
-      const to = el('input', { value: r.tag, 'aria-label': 'New name', autocapitalize: 'off' });
-      dialog(`Rename #${r.tag}`, el('div', { class: 'stack' }, el('label', {}, 'New name ', to),
-        el('p', { class: 'note' }, `Changes #${r.tag} in the text of its ${r.n} entr${r.n === 1 ? 'y' : 'ies'}. A name already in use joins the two.`)),
-        [{ label: 'Rename', fn: async () => {
-          if (to.value.trim().replace(/^#/, '').toLowerCase() === r.tag) return;
+    const redraw = () => { ctx.changed('entry'); ctx.refresh(); };           // the others, then this one
+    // what a tag stands for, and its name: a typo (#sit) or two names for one thing (#ts247, #TS-247) is renamed,
+    // onto a tag in use to merge them
+    const edit = r => {
+      const to = el('input', { value: r.tag, 'aria-label': 'Name', autocapitalize: 'off' });
+      const note = el('textarea', { rows: 3, 'aria-label': 'What it stands for', placeholder: 'What it stands for: the machine, the site, the job…' }, r.note || '');
+      note.value = r.note || '';
+      dialog(`#${r.tag}`, el('div', { class: 'stack' }, el('label', {}, 'What it stands for', note), el('label', {}, 'Name ', to),
+        el('p', { class: 'note' }, `A new name changes #${r.tag} in the text of its ${r.n} entr${r.n === 1 ? 'y' : 'ies'}; a name already in use joins the two.`)),
+        [{ label: 'Save', fn: async () => {
           try {
-            const got = await api.renameTag(r.tag, to.value);
-            const redraw = () => { ctx.changed('entry'); ctx.refresh(); };       // the others, then this one
-            flash(`Renamed in ${got.entries} entr${got.entries === 1 ? 'y' : 'ies'}`, { label: 'Undo', fn: async () => { await api.undo(); redraw(); } });
+            const text = note.value.trim();
+            if (text !== (r.note || '')) await (text ? api.save('tag_note', { tag: r.tag, note: text }) : api.remove('tag_note', r.tag));
+            if (to.value.trim().replace(/^#/, '').toLowerCase() !== r.tag) {
+              const got = await api.renameTag(r.tag, to.value);
+              flash(`Renamed in ${got.entries} entr${got.entries === 1 ? 'y' : 'ies'}`, { label: 'Undo', fn: async () => { await api.undo(); redraw(); } });
+            } else flash('Saved');
             redraw();
           } catch (e) { flash(e.message); return false; }
         } }]);
-      setTimeout(() => to.select());
+      setTimeout(() => note.focus());
     };
+    const asked = rows.find(r => r.tag === ctx.params.edit);                // from a tag's timeline: Add one / Edit
+    if (asked) { edit(asked); history.replaceState(null, '', '#/tags'); }
     body.append(table([
       { k: 'tag', label: 'Tag', render: r => el('a', { href: `#/timeline?tag=${encodeURIComponent(r.tag)}` }, '#' + r.tag) },
+      { k: 'note', label: 'Stands for', render: r => el('span', { class: 'muted small' }, r.note || '') },
       { k: 'n', label: 'Entries', n: true }, { k: 'last_day', label: 'Last', fmt: dateUK },
-      { k: 'rename', label: '', render: r => el('button', { class: 'btn plain sm', type: 'button', onclick: () => rename(r) }, 'Rename') }],
+      { k: 'edit', label: '', render: r => el('button', { class: 'btn plain sm', type: 'button', onclick: () => edit(r) }, 'Edit') }],
       rows, { empty: 'No tags yet. Type a word with # in front, such as #site, in any entry.' }));
   } },
 } };
 
-export const tags = { title: 'Tags', layout: [{ use: 'log.tags', w: 6 }], panels: {} };
+export const tags = { title: 'Tags', layout: [{ use: 'log.tags', w: 12 }], panels: {} };
