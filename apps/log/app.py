@@ -342,7 +342,7 @@ def home(db):
             "items_title": "Latest", "items_empty": "Nothing logged yet.",
             "items": [{"when": f"{r['day'][8:]}/{r['day'][5:7]}" + (f" {r['at']}" if r["at"] else ""),
                        "text": (r["text"] or "").split("\n")[0][:90], "href": f"#/day?d={r['day']}&e={r['id']}"} for r in recent],
-            "quick": {"placeholder": "Add to today's log (Ctrl+Enter)", "post": "quick", "done": "Added to today"},
+            "quick": {"placeholder": "Add to today's log", "post": "quick", "done": "Added to today"},
             "memory": _memory(db, today),
             "photos": [{"thumb": r["thumb"], "href": f"#/day?d={r['day']}&e={r['id']}"} for r in db.execute(
                 "SELECT a.thumb, e.day, e.id FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE a.type = 'photo' "

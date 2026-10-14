@@ -137,8 +137,7 @@ const levelsPanel = { title: 'Levels', w: 12, deps: ['skill'], async render(body
   const lv = await api.levels();
   const subs = lv.skills.filter(s => s.kind === 'subject');
   if (!subs.length) {
-    body.append(el('p', { class: 'note' }, 'No levels yet. ', el('a', { href: '#/calibrate' }, 'Find your level'),
-      ' in a subject (about ten minutes), or just keep going: every answer that counts sharpens it.'), ladder(null));
+    body.append(el('p', { class: 'note' }, 'No levels yet. ', el('a', { href: '#/calibrate' }, 'Find your level'), '.'), ladder(null));
     return;
   }
   body.append(el('div', { class: 'levelgrid' }, subs.map(s => {
@@ -155,8 +154,7 @@ const levelsPanel = { title: 'Levels', w: 12, deps: ['skill'], async render(body
       units.length ? el('div', { class: 'unitmap' }, units.map(u => el('div', { class: 'mrow' }, el('span', {}, u.title),
         el('span', { class: 'lvlbar' }, el('i', { style: `width:${Math.round(100 * Math.min(1, u.level / 9))}%` })), stageChip(u, true)))) : null);
   })), el('details', {}, el('summary', {}, 'The stages'), ladder(null),
-    el('p', { class: 'note' }, 'Stages are Daybook’s own scale, 1 to 9, starting below GCSE; the UK qualification level (RQF) is alongside. ',
-      'Your stage is where you get about 8 in 10 right. The range narrows as you answer more.')));
+    el('p', { class: 'note' }, 'Stages 1 to 9, with the UK qualification level (RQF). Your stage is where you get about 8 in 10 right.')));
 } };
 
 const confidencePanel = { title: 'How sure, how right', w: 6, deps: ['answer'], async render(body) {
@@ -164,7 +162,7 @@ const confidencePanel = { title: 'How sure, how right', w: 6, deps: ['answer'], 
   const say = ['Guess', 'Think so', 'Sure'];
   body.append(table([{ k: 'confidence', label: 'You said', fmt: v => say[v] }, { k: 'asked', label: 'Answers', n: true },
     { k: 'pct', label: 'Right', n: true, fmt: v => `${v}%` }], rows, { empty: 'Tap how sure you are before answering and it shows here.' }),
-    el('p', { class: 'note' }, 'Well judged is about 90% right when sure and near chance when guessing. Sure and wrong is worth noticing: those come back soonest.'));
+    el('p', { class: 'note' }, 'Sure and wrong cards come back soonest.'));
 } };
 
 const reworkPanel = { title: 'Needs rework', w: 6, deps: ['report', 'card_state'], async render(body, ctx) {

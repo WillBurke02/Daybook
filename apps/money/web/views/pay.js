@@ -83,7 +83,7 @@ export const panels = {
         el('strong', {}, isNew ? 'Payslip not saved yet' : `Payslip paid ${dayLong(was)}`),
         el('span', {}, clash ? el('span', { class: 'deb' }, 'There is already a payslip on this date. ',
             el('a', { href: `#/pay?slip=${head.pay_date}` }, 'Open that one'), ' or change the pay date.')
-          : isNew ? 'Grey figures are worked out from your salary; left as they are, they are what is saved.'
+          : isNew ? 'Grey figures are estimated from your salary.'
           : unsaved ? el('span', { class: 'warn' }, 'Changes not saved yet') : 'Changing anything here changes this payslip.'));
       for (const b of saveBtns) { b.textContent = isNew ? 'Save new payslip' : 'Save changes'; b.disabled = clash || (!isNew && !unsaved); }
     };
@@ -352,8 +352,7 @@ export const panels = {
         'The payslips took ', el('strong', {}, money(c.tax)), Math.abs(gap) < 5 ? ', which is about right.'
           : el('span', { class: gap > 0 ? 'deb' : 'cre' }, `: ${money(Math.abs(gap))} ${gap > 0 ? 'more' : 'less'} than that.`),
         c.missing.length ? ' With payslips missing, that only holds if you earned nothing in those months.' : ''),
-      el('p', { class: 'note' }, 'The estimate assumes the standard personal allowance (tax code 1257L) and this year’s rates from ',
-        'Settings. The P60 arrives by 31 May; type its figures in to check them. A difference is worth raising with payroll or HMRC.'));
+      el('p', { class: 'note' }, 'Assumes tax code 1257L and this year’s rates from Settings. Check it against your P60 (due by 31 May).'));
   } },
 
   'pay.details': { title: 'My details', w: 6, async render(body, ctx) {

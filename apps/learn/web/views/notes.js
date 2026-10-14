@@ -16,7 +16,7 @@ const notesPanel = { title: 'Notes', w: 12, async render(body, ctx) {
     href: `#/notes?s=${encodeURIComponent(s.id)}`, 'aria-current': s.id === sid ? 'page' : null }, s.title))));
   if (!subject) return;
   const rows = await api.subjectNotes(sid);
-  if (!rows.length) { body.append(el('p', { class: 'note' }, 'No summaries in this subject yet: they come with each lesson as it is written.')); return; }
+  if (!rows.length) { body.append(el('p', { class: 'note' }, 'No summaries yet.')); return; }
   let unit = null;
   for (const r of rows) {
     if (r.unit !== unit) { unit = r.unit; body.append(el('h2', { class: 'nunit' }, unit)); }

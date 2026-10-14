@@ -136,7 +136,7 @@ const TYPES = {
       c.hint ? el('details', { class: 'hint' }, el('summary', {}, 'Hint'), rich(c.hint, values)) : null);
     const go = () => {
       const given = read(input.value, c.unit);
-      if (!isFinite(given)) { flash('Type a number (5920, 1.18e-3, 4.7k and 5920*10/2000 all work)'); input.focus(); return; }
+      if (!isFinite(given)) { flash('Enter a number, e.g. 5920, 1.18e-3 or 4.7k'); input.focus(); return; }
       const v = values.answer, correct = right(given, v, c);
       input.disabled = check.disabled = true;
       input.classList.add(correct ? 'right' : 'wrong');
@@ -154,9 +154,9 @@ const TYPES = {
   // shows the first n steps worked, then you do the rest, a step at a time.
   steps(c, face, done, values) {
     const given = c.worked ? c.steps.length : Math.min(c.given || 0, c.steps.length);
-    add(face, rich(c.q, values), el('p', { class: 'muted small' }, c.worked ? 'A worked example: read each step and see why it follows.'
-      : given ? `The first ${given === 1 ? 'step is' : given + ' steps are'} done for you. Work out the rest yourself, then show each one.`
-      : 'Work out each step yourself first, then show it.'));
+    add(face, rich(c.q, values), el('p', { class: 'muted small' }, c.worked ? 'Worked example.'
+      : given ? `${given === 1 ? 'Step 1 is' : 'Steps 1 to ' + given + ' are'} done for you.`
+      : 'Work out each step, then show it.'));
     const list = el('ol', { class: 'steps' });
     add(face, list);
     c.steps.slice(0, given).forEach(st_ => add(list, el('li', { class: 'given' }, st_.ask ? rich(st_.ask, values) : null,
@@ -169,7 +169,7 @@ const TYPES = {
     let n = given, rates = null;
     const nextStep = () => {
       const s = c.steps[n];
-      const mine = el('input', { class: 'sm', placeholder: 'Your step (for yourself; not marked)', 'aria-label': 'Your step' });
+      const mine = el('input', { class: 'sm', placeholder: 'Your step', 'aria-label': 'Your step' });
       const reveal = el('button', { class: 'btn plain sm', type: 'button' }, 'Show');
       const li = el('li', {}, s.ask ? rich(s.ask, values) : null, el('div', { class: 'row mid' }, mine, reveal));
       reveal.addEventListener('click', () => {
@@ -237,7 +237,7 @@ const TYPES = {
   },
 
   match(c, face, done, values) {
-    add(face, rich(c.q || 'Match each one to its pair.', values), el('p', { class: 'muted small' }, 'Pick one on the left, then its partner on the right.'));
+    add(face, rich(c.q || 'Match each one to its pair.', values), el('p', { class: 'muted small' }, 'Pick a pair.'));
     const rights = shuffle(c.pairs.map((p, i) => ({ t: p[1], i })));
     const pairs = new Map();                            // left index -> right index
     let sel = null, checked = false;
@@ -301,7 +301,7 @@ const TYPES = {
       add(face, guess);
     }
     // hide: the widget's readings (what it works out) stay hidden until you have answered, where they would give it away
-    if (c.hide) { w.classList.add('hiding'); add(face, el('p', { class: 'muted small' }, 'Its readings show once you have answered.')); }
+    if (c.hide) { w.classList.add('hiding'); add(face, el('p', { class: 'muted small' }, 'Readings show after you answer.')); }
     add(face, w);
     // diagnose: one of its faults, picked afresh each time the card comes round, is put in before the machine starts
     const fault = inner.type === 'diagnose' ? inner.faults[Math.floor(Math.random() * inner.faults.length)] : null;
@@ -331,10 +331,10 @@ const TYPES = {
   // Saying why is one of the surest ways to learn from a worked example (self-explanation).
   explain(c, face, done, values) {
     add(face, c.context ? el('div', { class: 'context' }, rich(c.context, values)) : null, rich(c.q, values));
-    const mine = el('textarea', { rows: 4, class: 'mine', placeholder: 'In your own words… (for you; not marked)', 'aria-label': 'Your explanation' });
+    const mine = el('textarea', { rows: 4, class: 'mine', placeholder: 'In your own words', 'aria-label': 'Your explanation' });
     let rates = null;
     const compare = el('button', { class: 'btn', type: 'button', onclick: () => {
-      if (!mine.value.trim()) { flash('Write something first: even a rough go helps it stick'); mine.focus(); return; }
+      if (!mine.value.trim()) { flash('Write something first'); mine.focus(); return; }
       mine.readOnly = true;
       mine.blur();
       compare.remove();
@@ -517,9 +517,9 @@ export function listenButton(text) {
 
 /** "Report a problem": a note on the card, for the Needs rework list. */
 export function report(id) {
-  const note = el('textarea', { rows: 3, placeholder: 'What is wrong with it? (the answer, the wording, a typo…)', style: 'width:100%' });
+  const note = el('textarea', { rows: 3, placeholder: 'What is wrong?', style: 'width:100%' });
   dialog('Report a problem with this card', el('div', {}, note), [{ label: 'Send', fn: async () => {
-    try { await api.report(id, note.value); flash('Thanks: it is on the Needs rework list in Stats'); } catch (e) { flash(e.message); return false; }
+    try { await api.report(id, note.value); flash('Reported'); } catch (e) { flash(e.message); return false; }
   } }]);
 }
 

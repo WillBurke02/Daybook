@@ -30,7 +30,7 @@ export const timeline = { title: 'Timeline', narrow: true, layout: [{ use: 'log.
         before = d.day;
       }
       more.hidden = !got.more;
-      if (!list.children.length) list.append(el('p', { class: 'note' }, tag ? `Nothing tagged #${tag}.` : 'Nothing logged yet. Use the box at the top.'));
+      if (!list.children.length) list.append(el('p', { class: 'note' }, tag ? `Nothing tagged #${tag}.` : 'Nothing logged yet.'));
     };
     more.addEventListener('click', page);
     body.append(list, more);
@@ -55,19 +55,19 @@ export const month = { title: 'Calendar', layout: [{ use: 'log.month', w: 8 }, {
       m !== today().slice(0, 7) ? el('button', { class: 'btn plain sm', type: 'button', onclick: () => ctx.go('calendar', {}) }, 'This month') : null));
     body.append(calendar({ month: m, dots: Object.fromEntries(days.map(d => [d.day, d.entries])),
                            onPick: d => ctx.go('day', { d }) }),
-      el('p', { class: 'note' }, `${days.length} day${days.length === 1 ? '' : 's'} logged this month. A dot for each entry, up to five.`));
+      el('p', { class: 'note' }, `${days.length} day${days.length === 1 ? '' : 's'} logged`));
   } },
   'log.tags': { title: 'Tags', w: 4, deps: ['entry'], async render(body, ctx) {
     const rows = await api.view('v_tag', { order: 'n', desc: 1 });
     const redraw = () => { ctx.changed('entry'); ctx.refresh(); };           // the others, then this one
-    // what a tag stands for, and its name: a typo (#sit) or two names for one thing (#ts247, #TS-247) is renamed,
+    // what a tag stands for, and its name: a typo (#sit) or two names for one thing (#pump-3, #pump3) is renamed,
     // onto a tag in use to merge them
     const edit = r => {
       const to = el('input', { value: r.tag, 'aria-label': 'Name', autocapitalize: 'off' });
-      const note = el('textarea', { rows: 3, 'aria-label': 'What it stands for', placeholder: 'What it stands for: the machine, the site, the job…' }, r.note || '');
+      const note = el('textarea', { rows: 3, 'aria-label': 'What it stands for' }, r.note || '');
       note.value = r.note || '';
       dialog(`#${r.tag}`, el('div', { class: 'stack' }, el('label', {}, 'What it stands for', note), el('label', {}, 'Name ', to),
-        el('p', { class: 'note' }, `A new name changes #${r.tag} in the text of its ${r.n} entr${r.n === 1 ? 'y' : 'ies'}; a name already in use joins the two.`)),
+        el('p', { class: 'note' }, `Renaming changes ${r.n} entr${r.n === 1 ? 'y' : 'ies'}. Using an existing name merges the two tags.`)),
         [{ label: 'Save', fn: async () => {
           try {
             const text = note.value.trim();
@@ -88,7 +88,7 @@ export const month = { title: 'Calendar', layout: [{ use: 'log.month', w: 8 }, {
       { k: 'note', label: 'Stands for', render: r => el('span', { class: 'muted small' }, r.note || '') },
       { k: 'n', label: 'Entries', n: true }, { k: 'last_day', label: 'Last', fmt: dateUK },
       { k: 'edit', label: '', render: r => el('button', { class: 'btn plain sm', type: 'button', onclick: () => edit(r) }, 'Edit') }],
-      rows, { empty: 'No tags yet. Type a word with # in front, such as #site, in any entry.' }));
+      rows, { empty: 'No tags yet.' }));
   } },
 } };
 
@@ -114,7 +114,7 @@ export const photos = { title: 'Photos', layout: [{ use: 'log.photos' }], panels
       }));
       offset += got.items.length;
       more.hidden = !got.more;
-      if (!grid.children.length) grid.replaceWith(el('p', { class: 'note' }, tag ? `No photos on entries tagged #${tag}.` : 'No photos yet. Add some with the camera or + in the box at the top.'));
+      if (!grid.children.length) grid.replaceWith(el('p', { class: 'note' }, tag ? `No photos on entries tagged #${tag}.` : 'No photos yet.'));
     };
     more.addEventListener('click', page);
     body.append(grid, more);

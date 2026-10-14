@@ -43,7 +43,7 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study', '
       el('table', { class: 'g' }, el('tbody', {}, GROUPS.map(([label, subs]) => el('tr', {}, el('td', {}, label),
         el('td', {}, seg(WHERE.map(([w, v]) => ({ v: String(v), label: w })), '', v => { subs.forEach(s => { said[s] = +v; }); })))))),
       el('div', { class: 'row' }, el('button', { class: 'btn', type: 'button', onclick: async () => {
-        try { await api.rough(said); flash('Thanks: the feed starts near that'); ctx.refresh(); } catch (e) { flash(e.message); }
+        try { await api.rough(said); flash('Saved'); ctx.refresh(); } catch (e) { flash(e.message); }
       } }, 'Start from there'))));
   }
 
@@ -142,7 +142,7 @@ const timerPanel = { title: 'Study timer', w: 4, deps: ['study'], async render(b
   const title = id => subjects.find(s => s.id === id)?.title || 'No subject';
   body.append(clock, el('div', { class: 'row mid' }, pick, btn), note,
     done.length ? el('ul', { class: 'plain small' }, done.map(d => el('li', {}, `${minutes(d.minutes)} · ${title(d.subject_id)}${d.note ? ' · ' + d.note : ''}`)))
-      : el('p', { class: 'note' }, 'Time from the timer counts towards the goal when it is set in minutes, and shows in Stats.'));
+      : el('p', { class: 'note' }, 'Counts towards a goal set in minutes.'));
 } };
 
 // ---- what the feed brings, and how much of it ------------------------------------------------
@@ -171,7 +171,7 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
     });
     w.addEventListener('change', () => {
       const n = parseFloat(w.value);
-      if (!(n >= 0)) { flash('A weight is a number: 2 brings twice as many cards as 1'); return; }
+      if (!(n >= 0)) { flash('Weight must be a number'); return; }
       const next = { ...weights, [s.id]: n };
       if (n === 1) delete next[s.id];
       saveSetting('weights', JSON.stringify(next), ctx);
@@ -184,8 +184,7 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
       el('label', { class: 'c' }, remind, 'A daily “review in Learn” in the calendar feed, with an alert at '), remindAt),
     el('table', { class: 'g lsubjects' }, el('thead', {}, el('tr', {}, el('th', {}, 'In the feed'), el('th', { class: 'n' }, 'Written'), el('th', { class: 'n' }, 'Weight'))),
       el('tbody', {}, rows.map(r => r.tr))),
-    el('p', { class: 'note' }, 'The feed takes turns between the subjects that are on, in proportion to their weights: due reviews first, ',
-      'then the next new cards in course order, then practice with new numbers.'));
+    el('p', { class: 'note' }, 'A weight of 2 gives a subject twice as many cards as 1.'));
 } };
 
 export const page = { title: 'Today', quick: false,

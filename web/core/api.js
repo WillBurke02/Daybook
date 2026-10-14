@@ -13,7 +13,7 @@ function offline(when) {
   const t = new Date(when), at = isNaN(t) ? '' : ` from ${t.toLocaleString('en-GB', { weekday: 'short', hour: '2-digit', minute: '2-digit' })}`;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'offline'; b.setAttribute('role', 'status');
-  b.textContent = `Daybook cannot be reached: this is what the phone kept${at}. Log keeps what you add and sends it later. Tap to try again.`;
+  b.textContent = `Offline: showing data saved${at}. Tap to retry.`;
   b.onclick = () => location.reload();
   document.body.prepend(b);
 }

@@ -54,7 +54,6 @@ const reviewPanel = { title: 'Review', w: 12, async render(body, ctx) {
   const comeback = ctx.params.mode === 'comeback';
   let queue = comeback ? await api.comeback() : await api.due();
   ctx.setTitle(comeback ? `Weekly comeback · ${queue.length} from this week` : queue.length ? `Review · ${queue.length} due` : 'Review');
-  if (comeback) body.append(el('p', { class: 'note' }, 'Everything you missed in the last seven days, once more, while the week is fresh.'));
   await runner(body, ctx, {
     mode: comeback ? 'comeback' : 'review',
     counter: ({ done, right }) => `${done} done · ${right} right`,
@@ -80,7 +79,7 @@ const strugglePanel = { title: 'Coming back', w: 12, deps: ['card_state'], async
     { k: 'right_days', label: 'Days right', n: true, fmt: v => `${v} of 3` },
     { k: 'due', label: 'Next', fmt: v => v ? when(v) : '' }],
     rows, { empty: 'Nothing: a card you miss after learning it, or miss while sure, comes here until you get it right on three separate days.' }),
-    rows.length ? el('p', { class: 'note' }, 'These come round in the feed and Review a fixed share of the time. A card leaves when it is right on three separate days.') : null);
+    null);
 } };
 
 const savedPanel = { title: 'Saved for later', w: 12, deps: ['card_state'], async render(body, ctx) {
@@ -101,7 +100,7 @@ const practicePanel = { title: 'Practice', w: 12, async render(body, ctx) {
   const numeric = await api.view('v_card', { type: 'numeric', order: 'lesson_id' });
   const lessons = [...new Map(numeric.map(c => [c.lesson_id, c])).values()];
   const chosen = (ctx.params.lessons || '').split(',').filter(id => lessons.some(l => l.lesson_id === id));
-  if (!lessons.length) { body.append(el('p', { class: 'note' }, 'Practice uses the numeric questions in the lessons. None are written yet.')); return; }
+  if (!lessons.length) { body.append(el('p', { class: 'note' }, 'No numeric questions yet.')); return; }
   const boxes = lessons.map(l => el('input', { type: 'checkbox', checked: chosen.includes(l.lesson_id), value: l.lesson_id }));
   const subjects = [...new Set(lessons.map(l => l.subject))];
   const picker = el('details', { class: 'lpick', open: !chosen.length },
@@ -112,7 +111,7 @@ const practicePanel = { title: 'Practice', w: 12, async render(body, ctx) {
       const ids = boxes.filter(b => b.checked).map(b => b.value);
       if (!ids.length) { flash('Tick at least one lesson'); return; }
       ctx.go('practice', { lessons: ids.join(',') });
-    } }, 'Start'), el('span', { class: 'note' }, 'Each question comes with new numbers every time. Right answers here do not push reviews further out.')));
+    } }, 'Start'), el('span', { class: 'note' }, 'New numbers each time.')));
   body.append(picker);
   if (!chosen.length) return;
   let queue = [];

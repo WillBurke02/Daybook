@@ -82,7 +82,7 @@ function contextItems(e) {
   if (svg) items.push('-',
     { label: 'Copy chart as a picture', fn: async () => {
       try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': await chartPicture(svg) })]); flash('Chart copied'); }
-      catch { flash('This browser will not copy pictures; use Save instead'); } } },
+      catch { flash('This browser cannot copy pictures. Use Save.'); } } },
     { label: 'Save chart as a picture', fn: async () => {
       const a = el('a', { href: URL.createObjectURL(await chartPicture(svg)), download: `${nameOf(panel)}.png` });
       document.body.append(a); a.click(); a.remove(); } });
@@ -165,10 +165,9 @@ function shortcuts() {
 
 /** Help → Suggest a change: a note on what to change, saved with where it was written. Admin → Suggestions lists them. */
 function suggest() {
-  const box = el('textarea', { rows: 4, 'aria-label': 'Suggestion', placeholder: 'What would you change? If something went wrong: what you did, and what you expected.' });
+  const box = el('textarea', { rows: 4, 'aria-label': 'Suggestion', placeholder: 'What would you change?' });
   const where = { app: app.app.title, page: location.hash || '#/', screen: `${innerWidth}×${innerHeight}`, version: state.meta.version };
-  dialog('Suggest a change', el('div', { class: 'stack' }, box,
-    el('p', { class: 'note' }, `Saved with where you are: ${where.app} ${where.page}, a ${where.screen} window. Admin → Suggestions lists them, to copy.`)),
+  dialog('Suggest a change', el('div', { class: 'stack' }, box),
     [{ label: 'Save', fn: async () => {
       if (!box.value.trim()) { box.focus(); return false; }
       try { await suite.save('suggestion', { text: box.value.trim(), ...where }); flash('Saved to Admin → Suggestions'); }

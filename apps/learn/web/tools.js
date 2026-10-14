@@ -464,7 +464,7 @@ function calculator() {
     zoom(e.deltaY > 0 ? 1.2 : 1 / 1.2, (e.clientX - b.left) / b.width, (e.clientY - b.top) / b.height); }, { passive: false });
   const graph = el('div', { class: 'calc-pane' },
     ...fns.map((r, i) => el('label', { class: 'row mid g-fn' }, el('span', { class: 'g-sw', style: `--sw: var(${r.c})` }), `y${i + 1} =`, r.input)),
-    canvas, read, el('p', { class: 'muted small' }, 'x is in radians on the graph, so sin(x) has its usual shape; Calc and Solve use the Degrees or Radians setting.'),
+    canvas, read, el('p', { class: 'muted small' }, 'Graphs use radians.'),
     el('div', { class: 'row mid g-ctl' },
       el('button', { class: 'btn plain sm', type: 'button', 'aria-label': 'Zoom in', onclick: () => zoom(1 / 1.5) }, '+'),
       el('button', { class: 'btn plain sm', type: 'button', 'aria-label': 'Zoom out', onclick: () => zoom(1.5) }, '−'),
@@ -494,7 +494,7 @@ function calculator() {
   const to = field({ placeholder: 'anywhere', 'aria-label': 'Look to', class: 'calc-in calc-num' }, run);
   const solver = el('div', { class: 'calc-pane' }, eq,
     el('div', { class: 'row mid small' }, 'between', from, 'and', to, el('button', { class: 'btn sm', type: 'button', onclick: run }, 'Solve')),
-    res, el('p', { class: 'muted small' }, 'Any one letter is the unknown (x, R, I…). Every place the sides cross is found; one where they only touch may be missed, so graph it to check.'));
+    res, el('p', { class: 'muted small' }, 'Solves for one unknown letter.'));
 
   // the keys: they type into whichever box was last used
   const typeIn = s => {

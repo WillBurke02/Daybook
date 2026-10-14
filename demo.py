@@ -91,7 +91,7 @@ UPDATE leave_year SET extra = 3 WHERE year = 2026;
         M[name] = m
         return m
 
-    merch("TS247",           gid["Salary"],       ["TS247"])
+    merch("Employer",        gid["Salary"],       ["EMPLOYER LTD"])
     merch("Internal",        gid["Moving money"], ["TO SAVER","TO T212","TO JOINT","FROM BARCLAYS"], internal=1)
     merch("Tesco",           cid["Groceries/Tesco"],   ["TESCO"])
     merch("Aldi",            cid["Groceries/Aldi"],    ["ALDI"])
@@ -175,7 +175,7 @@ UPDATE leave_year SET extra = 3 WHERE year = 2026;
             pen = round(gr * 0.05, 2)
             sl = float(int(max(0, gr * 12 - 28470) * 0.09 / 12))
             net = round(gr - tax_ - ni - pen - sl, 2)
-            tx(1, d, "TS247 SALARY", net)
+            tx(1, d, "EMPLOYER LTD SALARY", net)
             for acc, tag, amt in ((2, "TO JOINT", 620), (3, "TO SAVER", random.choice([300, 400, 500, 600])),
                                   (4, "TO T212", random.choice([100, 150, 200, 250]))):
                 a = tx(1, d, tag, -amt)
@@ -209,7 +209,7 @@ UPDATE leave_year SET extra = 3 WHERE year = 2026;
             db.execute("INSERT INTO shift (date,start,end,project) VALUES (?,'07:30',?,?)",
                        (d.isoformat(), random.choice(["15:30","16:00","16:00","16:30","17:00"]) if d.weekday() == 4
                         else random.choice(["16:00","16:00","16:30","17:00","17:30"]),
-                        random.choice(["Ultrasonic rig","Motor test rig","Panel build","Site"])))
+                        random.choice(["Workshop","Test bay","Panel build","Site"])))
             if random.random() < 0.09:
                 db.execute("INSERT INTO shift (date,start,end,note,project) "
                            "VALUES (?,'19:00','21:30','site callout','Site')", (d.isoformat(),))
@@ -266,12 +266,12 @@ UPDATE leave_year SET extra = 3 WHERE year = 2026;
 def log():
     from apps.log import app as logapp
     db = _db.open_db(suite.path("log"), APPS["log"], quiet=True, no_backup=True)
-    WORK = ["Rig 2 PLC swapped, backed up the old program first. #ts247 #ut-bridge",
+    WORK = ["Swapped a failed PLC; backed up the old program first. #site",
             "Waited two hours for the panel delivery.", "Commissioning signed off by the customer. #site",
-            "Galil axis tuned: KP 6, KD 64, KI 0.02. Overshoot gone. #ut-bridge",
-            "Drive fault F0002 on the Santerno: DC bus overvoltage on decel. Lengthened the ramp. #site #drives",
-            "Wrote the SCL for the new interlock. Tested in PLCSIM first. #ts247", "Site visit, surveyed the old panel. #site",
-            "Probe calibration on the 25 mm step block. #ut-bridge", "Tidied the WPF HMI trend screen. #scada"]
+            "Servo axis tuned: Kp 6, Kd 64, Ki 0.02. Overshoot gone. #axis",
+            "Drive tripped on DC bus overvoltage while slowing down. Lengthened the ramp. #site #drives",
+            "Wrote the interlock logic and tested it in simulation first. #plc", "Site visit, surveyed the old panel. #site",
+            "Probe calibration on the 25 mm step block. #ndt", "Tidied the HMI trend screen. #scada"]
     DIARY = ["Good day. Gym after work.", "Tired. Early night.", "Ran 5 km before work. Legs heavy.",
              "Read two chapters of the maths book.", "Quiet evening, cooked a curry."]
     d = date(2026, 7, 20)

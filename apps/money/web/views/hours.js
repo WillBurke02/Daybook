@@ -160,7 +160,7 @@ export const panels = {
           const ok = document.execCommand('copy'); getSelection().removeAllRanges();
           if (!ok) return flash('The browser blocked copying: use the email draft or the CSV');
         }
-        flash('Copied. Paste it into the email to HR.');
+        flash('Copied.');
       };
       out.replaceChildren(
         el('div', { class: 'row mid' },

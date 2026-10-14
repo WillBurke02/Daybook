@@ -94,7 +94,7 @@ const coursesPanel = { title: 'Courses', w: 12, deps: ['card', 'lesson', 'skill'
         s.id !== 'mine' ? el('a', { class: 'btn plain sm', href: '/learn/api/' + api.packUrl(s.id), title: 'This course as a pack (.zip), to share or keep' }, 'Download') : null),
       shown.length ? shown : el('p', { class: 'muted small' }, 'None here.')));
   }
-  if (!subjects.some(s => s.id !== 'mine')) body.append(el('p', { class: 'note' }, 'No courses found. They are the files in apps/learn/content.'));
+  if (!subjects.some(s => s.id !== 'mine')) body.append(el('p', { class: 'note' }, 'No courses found.'));
   if (open) requestAnimationFrame(() => document.getElementById(`s-${open}`)?.scrollIntoView({ block: 'start' }));
 } };
 
@@ -116,7 +116,7 @@ export function resources(list, heading) {
 
 /** Your notes on a lesson: saved as you type. */
 export function notesBox(lessonId, text) {
-  const t = el('textarea', { class: 'lnotes', rows: 4, placeholder: 'Your notes on this lesson: what clicked, what to remember, questions to look up.' });
+  const t = el('textarea', { class: 'lnotes', rows: 4, placeholder: 'Notes' });
   t.value = text || '';
   let timer;
   t.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => api.notes(lessonId, t.value).catch(e => flash(e.message)), 600); });
@@ -135,8 +135,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     el('a', { class: 'btn plain sm', href: `#/notes?s=${encodeURIComponent(lesson.subject_id)}&l=${encodeURIComponent(id)}` }, 'Notes'),
     got.cards.some(c => c.type === 'numeric') ? el('a', { class: 'btn plain sm', href: `#/practice?lessons=${encodeURIComponent(id)}` }, 'Practise') : null);
   if (!got.cards.length) {
-    body.append(el('p', { class: 'note' }, 'This lesson is in the outline but not written yet. Its cards come in a later update; ',
-      'until then, ', el('a', { href: `#/mine?lesson=${encodeURIComponent(id)}` }, 'write your own for it'), '.'),
+    body.append(el('p', { class: 'note' }, 'Not written yet. ', el('a', { href: `#/mine?lesson=${encodeURIComponent(id)}` }, 'Add your own cards'), '.'),
       resources(lesson.resources, 'Reading and watching'));
     return;
   }
@@ -144,7 +143,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   if (ctx.params.prove) {                        // from the map: do it for real, log it, and the stop is proven
     body.append(el('div', { class: 'lcard' }, el('h3', {}, `Prove it: ${lesson.title}`),
       el('p', { class: 'small muted' }, 'On the bench or on site. Logged to today in Log (with a photo if you like), it marks this skill proven on the map.'),
-      (lesson.bench?.length ? lesson.bench : [{ task: 'Show you can do this for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
+      (lesson.bench?.length ? lesson.bench : [{ task: 'Do it for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
       el('div', { class: 'row' }, el('a', { class: 'btn plain', href: '#/map' }, 'Skill map'), el('a', { class: 'btn plain', href: lessonHref(id) }, 'The lesson'))));
     return;
   }
@@ -201,8 +200,8 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     card = null;
     const resume = lesson.pos && !lesson.finished && lesson.pos < seq.length ? lesson.pos : 0;
     const rk = partOf(resume);
-    const ready = you ? (you.level >= lesson.level + 0.5 ? 'You are above this lesson’s level in this unit: test out if you like.'
-      : you.level >= lesson.level - 0.5 ? 'This is at your level.' : 'This is a stretch from where you are: the worked examples will help.') : null;
+    const ready = you ? (you.level >= lesson.level + 0.5 ? 'Below your level: you could test out.'
+      : you.level >= lesson.level - 0.5 ? 'At your level.' : 'Above your level.') : null;
     stage.replaceChildren(el('div', { class: 'lcard lintro' },
       el('div', { class: 'row mid' }, lesson.level != null ? stageChip({ level: lesson.level }) : null,
         lesson.minutes ? el('span', { class: 'chip' }, parts.length > 1 ? `${parts.length} parts of about ${Math.round(lesson.minutes / parts.length)} min`
@@ -259,9 +258,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     stage.replaceChildren(el('div', { class: 'lcard lend' },
       el('h3', {}, !hasCheck ? 'Lesson done.' : learned ? 'Lesson learned.' : 'Lesson done: some of it comes back soon.'),
       el('p', {}, answered ? `${answered} answered, ${right} right. ` : '',
-        hasCheck && learned ? 'Its check questions come back in about a day, a week and three weeks; right each time and it is solid.'
-          : hasCheck ? 'The check questions you missed come back first, and the lesson counts as learned once you get them all right.'
-          : 'The cards you answered come back in Review when they are due.'),
+        hasCheck && learned ? '' : hasCheck ? 'Missed check questions come back first.' : ''),
       opened?.unlocked?.length ? el('div', { class: 'unlocked' }, el('h4', {}, 'This opened:'),
         el('ul', {}, opened.unlocked.map(u => el('li', {}, el('a', { href: lessonHref(u.id) }, u.title))))) : null,
       opened?.next && opened.next.id !== id ? el('p', {}, `Next on ${opened.track}: `, el('a', { href: lessonHref(opened.next.id) }, opened.next.can), '.') : null,
@@ -270,7 +267,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
       fbtn(),
       el('h4', {}, 'Prove it: do it for real'),
       el('p', { class: 'small muted' }, 'On the bench or on site. Logged to today in Log (with a photo if you like), it marks this skill proven on the map.'),
-      (lesson.bench?.length ? lesson.bench : [{ task: 'Show you can do this for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
+      (lesson.bench?.length ? lesson.bench : [{ task: 'Do it for real.', check: lesson.goals || [] }]).map(b => benchTask(b, id)),
       resources((lesson.resources || []).filter(r => r.when !== 'before'), 'To go further'),
       el('h4', {}, 'Your notes'), notesBox(id, got.notes),
       el('div', { class: 'row' },
@@ -360,8 +357,7 @@ async function testOut(body, ctx, lesson) {
   const items = await api.testout(lesson.id);
   let i = 0, right = 0, asked = 0;
   const stage = el('div', { class: 'player' });
-  const note = el('p', { class: 'muted' }, `Test out: ${items.length} of this lesson’s harder questions. Get them all right and it counts as learned; `,
-    'miss one and the lesson is there to work through.');
+  const note = el('p', { class: 'muted' }, `Test out: ${items.length} questions. All right and the lesson is learned.`);
   const step = async () => {
     if (i >= items.length) {
       const r = await api.testoutDone(lesson.id, right, asked);
@@ -380,7 +376,7 @@ async function testOut(body, ctx, lesson) {
     stage.replaceChildren(card, go);
   };
   body.append(note, stage);
-  if (!items.length) { stage.append(el('p', { class: 'note' }, 'This lesson has no questions to test out with.')); return; }
+  if (!items.length) { stage.append(el('p', { class: 'note' }, 'No questions to test out with.')); return; }
   step();
 }
 

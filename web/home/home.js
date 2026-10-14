@@ -59,7 +59,7 @@ const tickBtn = it => it.tick ? el('button', { class: 'tick', type: 'button', 'a
 const todoList = items => items.length
   ? el('ul', { class: 'todo' }, items.map(it => el('li', { class: [it.done && 'done', it.late && 'late'].filter(Boolean).join(' ') || null },
       tickBtn(it), el('a', goTo(it), it.text), el('span', { class: 'num muted small' }, it.late ? 'earlier' : it.at || it.sub || ''), dot(it.app))))
-  : el('p', { class: 'note' }, 'Nothing to do. In Log, !fri in an entry makes it a reminder.');
+  : el('p', { class: 'note' }, 'Nothing to do.');
 const todoOf = d => itemsOf(d).filter(i => TODO.has(i.kind)).sort((a, b) => a.done - b.done || byTime(a, b));
 
 const sofarList = items => items.length
@@ -170,7 +170,7 @@ function viewTiles() {
         el('button', { class: 'btn plain sm', type: 'button', 'aria-pressed': String(wide), onclick: () => save(n => { n.size[x.id] = wide ? 'small' : 'wide'; }) }, 'Wide'),
         el('button', { class: 'icon', type: 'button', 'aria-label': off ? 'Show' : 'Hide', title: off ? 'Show this tile' : 'Hide this tile',
           onclick: () => save(n => { n.hidden = off ? n.hidden.filter(h => h !== x.id) : [...n.hidden, x.id]; }) }, icon(off ? 'eyeoff' : 'eye'))) : null);
-  }) : el('p', { class: 'note' }, 'Every tile is hidden. Arrange shows them again.'));
+  }) : el('p', { class: 'note' }, 'All tiles are hidden.'));
 }
 
 // ---- C: Timeline ------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ function viewTimeline() {
           el('div', { class: 'chips' }, xs.filter(i => ALLDAY.has(i.kind)).map(i => el('a', { class: `chip a-${i.app}`, href: link(i.app, i.href) }, i.text)))),
         d === today() && log ? quickBox(log) : null,
         anytime.length ? el('div', { class: 'anytime' }, el('h3', {}, 'Any time'), anytime.map(tlCard)) : null,
-        rows.length ? line : el('p', { class: 'note' }, 'Nothing at a time on this day.'))),
+        rows.length ? line : el('p', { class: 'note' }, 'Nothing scheduled.'))),
     el('div', { class: 'side' }, box('This week', el('div', { class: 'hfigs col' }, allFigs().map(({ f, app }) => fig(f, app)))),
       learn ? box(learn.app.title, ringBlock(learn)) : null, mem ? box(null, memoryBlock(mem)) : null));
 }
@@ -273,7 +273,6 @@ async function start() {
     arranging = !arranging;
     e.currentTarget.setAttribute('aria-pressed', String(arranging));
     document.body.classList.toggle('arranging', arranging);
-    if (arranging) flash('Move the tiles with the arrows; Wide makes one two wide; the eye hides one');
     draw();
   });
   $('.appbar .more').addEventListener('click', e => {

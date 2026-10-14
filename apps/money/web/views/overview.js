@@ -62,8 +62,7 @@ export const panels = {
       el('div', { class: 'row', style: 'margin-top:8px' },
         el('label', { class: 'f' }, 'Balance today', bal), el('label', { class: 'f' }, 'Save before payday', save),
         el('label', { class: 'f' }, 'Account', acct)),
-      el('p', { class: 'note' }, 'Bills are the reminders with an amount that fall due before payday and after the balance’s date. ',
-        'A balance typed today wins over an older statement.'));
+      el('p', { class: 'note' }, 'Bills are reminders with an amount due before payday. A balance typed here replaces an older statement.'));
   } },
 
   'overview.accounts': { title: 'Accounts', w: 6, deps: ['statement', 'valuation', 'account'], async render(body) {

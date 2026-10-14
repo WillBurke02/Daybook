@@ -434,7 +434,7 @@ function editBar(page, working, base) {
       base.reload();
     } }, 'Reset page'),
     el('button', { class: 'btn sm', type: 'button', onclick: () => document.querySelector('.appbar .custom')?.click() }, 'Done'),
-    el('span', { class: 'narrowhint' }, 'The window is narrow, so panels show wider than the widths set here; a wider window shows them as set.'));
+    el('span', { class: 'narrowhint' }, 'Widths apply on a wider window.'));
 }
 
 /** The panels this app has, by the page they come from, and panels of your own making. */
@@ -451,7 +451,7 @@ function addDrawer(working, base) {
     el('div', { class: 'grp' }, 'Make your own'),
     el('div', { class: 'kinds' }, [['chart', 'Chart'], ['table', 'Table'], ['tiles', 'Figures'], ['text', 'Note']].map(([type, label]) =>
       el('button', { class: 'btn plain sm', type: 'button', onclick: () => configure({ type, id: 'p' + Date.now().toString(36), w: 6 }, cfg => add(cfg)) }, label))),
-    el('p', { class: 'note' }, 'A chart, table or figures over any of this app’s data, with a second source joined on if you like; a note is text of your own.'),
+    
     fromPages.map(([title, uses]) => [el('div', { class: 'grp' }, `From ${title}`),
       uses.map(u => el('button', { class: 'pick', type: 'button', onclick: e => { e.currentTarget.remove(); add({ use: u, w: REGISTRY[u].w }); } },
         el('span', {}, REGISTRY[u].title), icon('plus')))]),
@@ -512,7 +512,7 @@ export function configure(c, done) {
       parts.push(f('Text', el('textarea', { rows: 6, oninput: e => { c.text = e.target.value; } }, c.text || '')));
     } else {
       parts.push(f('Data', sourcePick(c.source, v => { c.source = v; c.cols = []; c.y = []; c.ks = []; c.x = c.split = null; delete c.date; delete c.join; draw(); }),
-        c.source ? named[c.source]?.[1] || 'Stored as it is; the rows below show what it holds.' : 'Pick what the panel is about; you see a few rows of it next.'));
+        c.source ? named[c.source]?.[1] || '' : ''));
       if (c.source) {
         const [a, b] = await Promise.all([sampleOf(c.source), c.join?.source ? sampleOf(c.join.source) : []]);
         if (mine !== ticket) return;
@@ -535,7 +535,7 @@ export function configure(c, done) {
           el('thead', {}, el('tr', {}, show.map(k => el('th', { title: kind[k] }, human(k), el('small', {}, kind[k]))))),
           el('tbody', {}, rows.slice(0, 3).map(r => el('tr', {}, show.map(k => el('td', { class: kind[k] === 'number' ? 'n' : null }, fmtFor(k, r[k]) ?? ''))))))),
           cols.length > show.length ? el('small', { class: 'muted' }, `and ${cols.length - show.length} more columns`) : null)
-          : el('p', { class: 'note' }, 'Nothing in it yet, so no rows to show.'));
+          : el('p', { class: 'note' }, 'No rows yet.'));
         // a second source, joined on a column the two share
         if (!c.join) parts.push(el('button', { class: 'btn plain sm', type: 'button', onclick: () => { c.join = {}; draw(); } }, icon('plus'), 'Add columns from another source'));
         else {
@@ -550,8 +550,8 @@ export function configure(c, done) {
             c.join.source ? el('div', { class: 'row mid' },
               f('Where this', select(opt(aCols), on[0], { onchange: e => { c.join.on = [e.target.value, on[1]]; draw(); } })),
               f(`matches ${nameOf(c.join.source)}’s`, select([{ v: '', label: '—' }, ...bCols.map(k => ({ v: k, label: human(k) }))], on[1], { onchange: e => { c.join.on = [on[0], e.target.value]; draw(); } }))) : null,
-            el('small', { class: 'muted' }, c.join.source ? `For each row, the matching rows of ${nameOf(c.join.source)} are added up (numbers summed) and join it as ${prefixOf(c.join.source)}…`
-              : 'Pick a second source: its columns join these wherever the two match, a date to a date, say.'),
+            el('small', { class: 'muted' }, c.join.source ? `Matching rows of ${nameOf(c.join.source)} are summed in as ${prefixOf(c.join.source)}…`
+              : 'Pick a second source to join on a matching column.'),
             el('button', { class: 'link', type: 'button', onclick: () => { delete c.join; draw(); } }, 'Remove the join')));
           if (c.join.source && !on[0]) guess();
         }
@@ -605,7 +605,7 @@ export function configure(c, done) {
     if (!c.title && c.source && c.type !== 'builtin') c.title = nameOf(c.source) + (c.join ? ` and ${nameOf(c.join.source).toLowerCase()}` : '');
     if (c.type === 'builtin' && !c.use) { flash('Pick a panel'); return false; }
     if (['chart', 'table', 'tiles'].includes(c.type) && !c.source) { flash('Pick the data'); return false; }
-    if (c.type === 'chart' && (!c.x || !(c.y || []).length)) { flash('Pick what goes along the bottom and at least one value'); return false; }
+    if (c.type === 'chart' && (!c.x || !(c.y || []).length)) { flash('Pick the x axis and at least one value'); return false; }
     done(c);
   } }]);
 }

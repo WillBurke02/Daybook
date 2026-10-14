@@ -72,7 +72,7 @@ export const panels = {
   'reminders.regular': { title: 'Regular payments found', w: 12, deps: ['reminder', 'txn'], async render(body, ctx) {
     const found = await api.regular();
     body.append(el('p', { class: 'note', style: 'margin-top:0' },
-      'Payees paid about the same amount at a steady interval, lately. Nothing is added until you say so.'),
+      'Payees paid about the same amount at a steady interval. Nothing is added until you say so.'),
       table([{ k: 'name', label: 'Payee' }, { k: 'every', label: 'Seems to be', fmt: everyLabel },
              { k: 'amount', label: 'Amount', n: true, fmt: money }, { k: 'last', label: 'Last paid', fmt: dayShort },
              { k: 'next', label: 'Next expected', fmt: dayShort },

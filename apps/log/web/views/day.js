@@ -95,7 +95,7 @@ async function sendVideos(entryId, videos) {
 // ---- written with no way to the Pi: kept on this phone (core/outbox.js), sent on the next visit or once back online ----
 let lastCtx = null;
 const keptNote = el('span', { class: 'muted small kept' });
-const showKept = () => held('log').then(xs => { keptNote.textContent = xs.length ? `${xs.length} kept on this phone, to send` : ''; });
+const showKept = () => held('log').then(xs => { keptNote.textContent = xs.length ? `${xs.length} waiting to send` : ''; });
 let sending = false;                                     // one send at a time: a render and coming back online can meet
 async function sendKept() {
   if (sending) return;
@@ -103,9 +103,9 @@ async function sendKept() {
   const n = await flush('log', async it => {
     const r = await api.quick(it.body);
     if (it.videos?.length) await sendVideos(r.id, it.videos);
-  }, (it, e) => flash(`An entry kept on this phone was refused: ${e.message}`)).catch(() => 0).finally(() => { sending = false; });
+  }, (it, e) => flash(`A saved entry was refused: ${e.message}`)).catch(() => 0).finally(() => { sending = false; });
   showKept();
-  if (n) { flash(`Sent ${n} entr${n === 1 ? 'y' : 'ies'} kept on this phone`); if (lastCtx) changed(lastCtx); }
+  if (n) { flash(`Sent ${n} saved entr${n === 1 ? 'y' : 'ies'}`); if (lastCtx) changed(lastCtx); }
 }
 addEventListener('online', sendKept);
 
@@ -113,7 +113,7 @@ export async function quickBar(ctx) {
   lastCtx = ctx;
   const onDayPage = !location.hash || location.hash.startsWith('#/day');
   const forDay = onDayPage ? dayOf(ctx) : today();
-  const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened? #tags, !fri for a reminder' : `Add to ${dayLong(forDay)}`,
+  const text = el('textarea', { rows: 1, placeholder: forDay === today() ? 'What happened?' : `Add to ${dayLong(forDay)}`,
                                 'aria-label': 'Log text' });
   text.value = draft();
   text.addEventListener('input', () => draft(text.value));
@@ -149,7 +149,7 @@ export async function quickBar(ctx) {
     addBtn.disabled = true;
     try {
       if (waiting) { addBtn.textContent = 'Getting ready…'; await preparing; }
-      if (!text.value.trim() && !pending.photos.length && !pending.voice && !pending.videos.length) return flash('Write something, or add a photo, a video or a voice note');
+      if (!text.value.trim() && !pending.photos.length && !pending.voice && !pending.videos.length) return flash('Nothing to add');
       addBtn.textContent = 'Sending…';
       const { photos, videos, voice } = pending;
       if (photos.length) busy(`Sending ${photos.length} photo${photos.length === 1 ? '' : 's'}…`);
@@ -171,8 +171,8 @@ export async function quickBar(ctx) {
         pending = { photos: [], voice: null, videos: [] };
         draft(''); text.value = '';
         show(); showKept();
-        flash('Daybook cannot be reached: kept on this phone, and sent when it can be');
-      } catch { flash('Daybook cannot be reached, and this phone could not keep it: try again shortly'); }
+        flash('Offline: saved on this phone, sent when back online');
+      } catch { flash('Offline, and it could not be saved on this phone. Try again.'); }
     }
     finally { addBtn.disabled = false; addBtn.textContent = 'Add'; }
   };
@@ -184,7 +184,6 @@ export async function quickBar(ctx) {
       recorder(v => { pending.voice = v; show(); }), shown,
       el('span', { class: 'spacer' }),
       keptNote,
-      el('span', { class: 'muted small hint' }, 'Ctrl+Enter adds · paste or drop a picture'),
       addBtn));
   // a pasted screenshot or a dropped photo joins what is about to be added
   bar.addEventListener('paste', e => { const f = mediaIn(e.clipboardData); if (f.length) { e.preventDefault(); takeMedia(f); } });
@@ -255,11 +254,10 @@ function addMedia(e, ctx) {
 /** An entry as a Learn flash card (a fault found today, asked again next week): filed under My cards, From Log. */
 const LOG_LESSON = 'mine.cards.from-log';
 function learnCard(e) {
-  const front = el('textarea', { rows: 3, 'aria-label': 'Front', placeholder: 'The question: what caused the fan noise on M3?' });
-  const back = el('textarea', { rows: 4, 'aria-label': 'Back', placeholder: 'The answer: what it was, and how you found it' });
+  const front = el('textarea', { rows: 3, 'aria-label': 'Front', placeholder: 'Question' });
+  const back = el('textarea', { rows: 4, 'aria-label': 'Back', placeholder: 'Answer' });
   front.value = (e.text || '').replace(/(?<![\w!])![\w/:]+(\s+\d{1,2}(:\d{2})?\s*([ap]m)?)?/gi, '').replace(/\s+/g, ' ').trim();
-  dialog('Make a Learn card', el('div', { class: 'stack' }, el('label', {}, 'Front', front), el('label', {}, 'Back', back),
-    el('p', { class: 'note' }, 'It goes in Learn under My cards, From Log, and comes up in reviews like any other card.')),
+  dialog('Make a Learn card', el('div', { class: 'stack' }, el('label', {}, 'Front', front), el('label', {}, 'Back', back)),
     [{ label: 'Make the card', fn: async () => {
       if (!front.value.trim() || !back.value.trim()) { flash('A card needs a front and a back'); return false; }
       const learn = appApi('learn'), id = `own/${LOG_LESSON}/${Date.now().toString(36)}`;
@@ -349,7 +347,7 @@ export const panels = {
       last.onclick = () => ctx.go('day', { d: got.prev });
       last.style.visibility = '';
     }
-    const text = el('textarea', { class: 'diary', rows: 2, placeholder: 'How the day went. #tags work here too.', 'aria-label': 'Diary' });
+    const text = el('textarea', { class: 'diary', rows: 2, placeholder: 'How the day went', 'aria-label': 'Diary' });
     text.value = diary?.text || '';
     text.addEventListener('change', async () => {
       try {
@@ -368,7 +366,7 @@ export const panels = {
     tagNotes = got.tag_notes || {};
     const work = got.entries.filter(e => e.kind === 'work');
     ctx.aside.append(el('span', { class: 'muted num' }, `${work.length} entr${work.length === 1 ? 'y' : 'ies'}`));
-    if (!work.length) { body.append(el('p', { class: 'note' }, 'Nothing logged for work on this day. Use the box at the top.')); return; }
+    if (!work.length) { body.append(el('p', { class: 'note' }, 'Nothing logged.')); return; }
     body.append(el('div', { class: 'entries' }, work.map(e => workEntry(e, ctx))));
     lightUp(body.querySelector(`#e${CSS.escape(ctx.params.e || '')}`));      // arrived from Home or search: that entry
   } },

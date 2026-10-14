@@ -24,8 +24,8 @@ const cardsPanel = { title: 'My cards', w: 8, deps: ['card', 'lesson'], async re
   const [rows, lessons] = await Promise.all([api.view('v_card', { source: 'own', order: 'lesson' }), api.view('v_lesson', { source: 'own' })]);
   const pick = await lessonPicker(ctx.params.lesson || lessons[0]?.id);
   let editing = null, kind = 'flash';
-  const front = el('textarea', { rows: 3, placeholder: 'Front: the question. $maths$ works, as do **bold** and - lists', 'aria-label': 'Front' });
-  const back = el('textarea', { rows: 3, placeholder: 'Back: the answer, and why', 'aria-label': 'Back' });
+  const front = el('textarea', { rows: 3, placeholder: 'Front', 'aria-label': 'Front' });
+  const back = el('textarea', { rows: 3, placeholder: 'Back', 'aria-label': 'Back' });
   const json = el('textarea', { rows: 10, class: 'mono', spellcheck: false, 'aria-label': 'Card as JSON', hidden: true });
   const kindBtn = el('button', { class: 'btn plain sm', type: 'button', onclick: () => setKind(kind === 'flash' ? 'json' : 'flash') });
   const title = el('strong', {}, 'New flash card');
@@ -65,8 +65,7 @@ const cardsPanel = { title: 'My cards', w: 8, deps: ['card', 'lesson'], async re
   body.append(el('div', { class: 'lform' }, title, el('label', {}, 'Lesson ', pick), front, back, json,
     el('div', { class: 'row mid' }, el('button', { class: 'btn', type: 'button', onclick: save }, 'Save'),
       el('button', { class: 'btn plain', type: 'button', onclick: clear }, 'Clear'), el('span', { class: 'spacer' }), kindBtn)),
-    el('p', { class: 'note' }, 'Any card type can be written as JSON, as in the course files: concept, mcq, numeric (with vars and an answer formula), ',
-      'steps, order, match, flash or code. Cards filed in a course lesson show at the end of it.'),
+    el('p', { class: 'note' }, 'JSON types: concept, mcq, numeric, steps, order, match, flash, code.'),
     table([
       { k: 'text', label: 'Card', render: r => el('a', { href: `#/lesson?id=${encodeURIComponent(r.lesson_id)}&card=${encodeURIComponent(r.id)}` }, firstLine(r.text) || r.id) },
       { k: 'lesson', label: 'Lesson' }, { k: 'type', label: 'Type' },
@@ -81,7 +80,7 @@ const cardsPanel = { title: 'My cards', w: 8, deps: ['card', 'lesson'], async re
 
 const lessonsPanel = { title: 'My lessons', w: 4, deps: ['lesson', 'card'], async render(body, ctx) {
   const rows = await api.view('v_lesson', { source: 'own', order: 'title' });
-  const name = el('input', { placeholder: 'A new lesson, such as Site notes', 'aria-label': 'New lesson' });
+  const name = el('input', { placeholder: 'New lesson name', 'aria-label': 'New lesson' });
   const add = async () => {
     const t = name.value.trim();
     if (!t) return;
@@ -101,15 +100,14 @@ const lessonsPanel = { title: 'My lessons', w: 4, deps: ['lesson', 'card'], asyn
         r.cards ? null : el('button', { class: 'btn danger sm', type: 'button', onclick: async () => {
           try { await api.remove('lesson', r.id); ctx.changed('lesson'); ctx.refresh(); } catch (e) { flash(e.message); }
         } }, 'Delete'));
-    })) : el('p', { class: 'note' }, 'Lessons of your own sit under My cards in Courses. You can also file cards in any course lesson.'));
+    })) : el('p', { class: 'note' }, 'No lessons of your own yet.'));
 } };
 
 const importPanel = { title: 'Import flash cards', w: 4, async render(body, ctx) {
   const text = el('textarea', { rows: 6, class: 'mono', placeholder: 'front,back,topic\nOhm’s law?,V = IR,Electricity', 'aria-label': 'CSV' });
   const file = el('input', { type: 'file', accept: '.csv,text/csv,text/plain', 'aria-label': 'CSV file',
     onchange: async e => { const f = e.target.files[0]; if (f) text.value = await f.text(); } });
-  body.append(el('p', { class: 'note' }, 'A CSV of front,back,topic, one card a line. A topic that names a lesson (its title or id) files the card there; ',
-    'any other topic becomes a lesson of your own.'), file, text,
+  body.append(el('p', { class: 'note' }, 'One card a line: front,back,topic. A topic matching a lesson adds the card to it.'), file, text,
     el('div', { class: 'row' }, el('button', { class: 'btn', type: 'button', onclick: async () => {
       try { const r = await api.importCsv(text.value); flash(`Imported ${r.added} card${r.added === 1 ? '' : 's'}`); text.value = ''; file.value = ''; ctx.changed('card'); ctx.changed('lesson'); }
       catch (e) { flash(e.message); }
@@ -147,17 +145,15 @@ const packsPanel = { title: 'Courses from elsewhere', w: 8, async render(body, c
     } catch (e) { said.textContent = ''; flash(e.message); }
     file.value = '';
   });
-  body.append(el('p', { class: 'note' }, 'An Anki deck (.apkg), a Moodle XML quiz (.xml), a GIFT quiz (.gift) or a Daybook course pack (.zip). ',
-    'Multiple choice, numbers, matching, true or false and flash cards come in; anything else is counted and left out. ',
-    'Importing the same file again updates it and keeps your progress. Any subject, your own or a course, downloads as a pack ',
-    'from Courses, to share or keep. A pack is loaded on this computer only: import it on each one you use.'),
+  body.append(el('p', { class: 'note' }, 'Anki (.apkg), Moodle XML (.xml), GIFT (.gift) or a Daybook pack (.zip). ',
+    'Importing again updates it and keeps your progress.'),
     el('div', { class: 'row mid' }, file), said, list);
   draw();
 } };
 
 const mistakesPanel = { title: 'From my mistakes', w: 8, deps: ['card'], async render(body, ctx) {
   const rows = await api.view('v_card', { source: 'mistake', order: 'due' });
-  body.append(el('p', { class: 'note' }, 'A wrong answer becomes a flash card with the answer and the reason, due at once. Delete one once it has stuck.'),
+  body.append(el('p', { class: 'note' }, 'Wrong answers become flash cards here.'),
     table([{ k: 'text', label: 'Card', render: r => firstLine(r.text) }, { k: 'lesson', label: 'Lesson' },
       { k: 'due', label: 'Next', fmt: v => v ? v.slice(0, 10) : '' },
       { k: '_x', label: '', sort: false, render: r => el('button', { class: 'btn danger sm', type: 'button', onclick: async () => {

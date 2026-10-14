@@ -82,7 +82,7 @@ export const panels = {
     body.append(el('div', { class: 'row mid', style: 'margin-bottom:8px' }, draft.date, draft.amount, draft.note,
       el('button', { class: 'btn sm', type: 'button', onclick: () => cam.click() }, '📷 Photo'), cam,
       el('button', { class: 'btn plain sm', type: 'button', onclick: () => pick.click() }, 'File…'), pick));
-    if (!rows.length) { body.append(el('p', { class: 'note' }, 'None waiting. A receipt kept here is matched to its payment once the statement is in.')); return; }
+    if (!rows.length) { body.append(el('p', { class: 'note' }, 'None waiting.')); return; }
     const find = async (r, cell) => {
       const cands = await api.receiptMatches(r.id);
       cell.replaceChildren(...(cands.length ? cands.map(c => el('div', { class: 'row mid' },

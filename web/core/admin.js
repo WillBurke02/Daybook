@@ -43,8 +43,7 @@ async function openDb(path) {
   ];
   dialog(`Open ${info.name}?`, el('div', { class: 'stack' },
     table([{ k: 0, label: '' }, { k: 1, label: '' }], facts),
-    info.problem ? null : el('p', { class: 'note' }, `${state.meta.db} is backed up first. Then everything you see in ${APP.title}, and every `,
-      `change you make there, is ${info.name}'s, until you switch back. ${APP.title} opens it next time too.`)),
+    info.problem ? null : el('p', { class: 'note' }, `${state.meta.db} is backed up first. ${APP.title} uses ${info.name} until you switch back.`)),
     info.problem ? [] : [{ label: `Open ${info.name}`, cls: 'btn', fn: async () => {
       try { await api.admin.switchDb(info.path); location.reload(); } catch (e) { flash(e.message); return false; }
     } }]);
@@ -58,8 +57,7 @@ function databases() {
     const n = name.value.trim();
     if (!n) return flash('Give the new database a name');
     dialog(copy ? `Copy ${state.meta.db} as ${n}?` : `Start ${n} empty?`, el('p', {},
-      copy ? `A copy of everything in ${state.meta.db}, to try things on. ` : `An empty ${APP.title} database. `,
-      `It opens straight away; ${state.meta.db} is backed up first and stays as it is.`),
+      copy ? `A copy of ${state.meta.db}. ` : `An empty ${APP.title} database. `, `${state.meta.db} is backed up first.`),
       [{ label: copy ? 'Make the copy' : 'Create it', cls: 'btn', fn: async () => {
         try { await api.admin.newDb(n, copy); location.reload(); } catch (e) { flash(e.message); return false; }
       } }]);
@@ -147,7 +145,7 @@ function themes() {
       el('header', {}, el('h2', {}, 'Preview')),
       el('div', { class: 'body' }, el('div', { class: 'scroll' }, el('table', {},
         el('thead', {}, el('tr', {}, el('th', {}, 'Date'), el('th', {}, 'Payee'), el('th', { class: 'n' }, 'Amount'))),
-        el('tbody', {}, [['Mon 7 Sep', 'Tesco', '-£42.10', 'deb'], ['Thu 17 Sep', 'TS247', '+£1,786.40', 'cre'], ['Fri 18 Sep', 'Shell', '-£61.02', 'deb']]
+        el('tbody', {}, [['Mon 7 Sep', 'Tesco', '-£42.10', 'deb'], ['Thu 17 Sep', 'Salary', '+£1,786.40', 'cre'], ['Fri 18 Sep', 'Shell', '-£61.02', 'deb']]
           .map(([d, p, a, c]) => el('tr', {}, el('td', {}, d), el('td', {}, p), el('td', { class: 'n' }, el('span', { class: c + ' num' }, a))))))),
         el('div', { class: 'row', style: 'margin-top:8px' }, el('button', { class: 'btn sm', type: 'button' }, 'Button'),
           el('span', { class: 'chip ok' }, 'ok'), el('span', { class: 'chip warn' }, 'check'),
@@ -463,10 +461,8 @@ function github() {
       e.target.disabled = false;
     };
     box.replaceChildren(
-      el('p', { class: 'note' }, 'Your commits, pull requests and issues show on each day in Log, and Log is backed up to a private repository ',
-        'as Markdown (a file a month, and your tags), once a day. A fine-grained token with read access to your repositories, ',
-        'and Contents read and write on the backup repository. If private work does not show, a classic token with the repo scope does. ',
-        'The token is kept in suite.db only.'),
+      el('p', { class: 'note' }, 'Shows your GitHub activity in Log and backs Log up daily to a private repository as Markdown. ',
+        'Token: read access to your repositories, and Contents write on the backup one.'),
       el('label', {}, 'Username ', user), el('label', {}, 'Token ', token), el('label', {}, 'Back up to ', repo),
       el('div', { class: 'row' },
         el('button', { class: 'btn sm', onclick: run('Saving', async () => {
@@ -496,8 +492,7 @@ function sync() {
   const showCode = code => dialog('The sync code', el('div', { class: 'stack' },
     el('div', { class: 'keyrow' }, el('input', { value: code, readonly: true, onfocus: e => e.target.select() }),
       el('button', { class: 'btn plain sm', onclick: () => copy(code) }, 'Copy')),
-    el('p', { class: 'note' }, 'Type it on each other computer, in Admin → Sync, with the same folder. Keep it in your password ',
-      'manager: it unlocks the files, and it never goes in the folder. Lose it and a new sync has to be started.')), []);
+    el('p', { class: 'note' }, 'Enter it on each other computer. Keep it in a password manager: it cannot be recovered.')), []);
   const draw = async () => {
     const st = await suite.sync.status();
     if (st.on) {
@@ -516,11 +511,9 @@ function sync() {
           act('Sync now', async () => { await suite.sync.now(); draw(); }, 'btn sm'),
           act('Show the code', async () => showCode((await suite.sync.code()).code)),
           act('Leave…', () => dialog('Stop syncing this computer?', el('p', {},
-            'Its data stays as it is and the other computers carry on. To join again later you need the code; ',
-            'rows changed here meanwhile may then show twice.'),
+            'Its data stays. Rejoining later needs the code.'),
             [{ label: 'Leave sync', cls: 'btn danger', fn: async () => { await suite.sync.leave(); draw(); } }]))),
-        el('p', { class: 'note' }, 'A round runs every minute and a few seconds after a change. The newest change to each ',
-          'field wins; when both computers changed the same one, the one it replaced is in Change history, and Undo brings it back.'));
+        el('p', { class: 'note' }, 'Syncs every minute. If two computers change the same field, the newer change wins; the other is in Change history.'));
       return;
     }
     const kind = select([{ v: 'folder', label: 'A folder (OneDrive, Google Drive, a USB stick)' }, { v: 'github', label: 'A GitHub repository' }],
@@ -540,10 +533,8 @@ function sync() {
         if (!code.value.trim()) showCode(r.code);
         draw();
       }, 'btn sm')),
-      el('p', { class: 'note' }, 'The first computer leaves the code empty and is given one. Each other computer picks the same folder ',
-        '(wherever it sits on that computer) and types the code; what it already has is matched up, not doubled. ',
-        'Every computer keeps working offline and catches up when the folder is back. For GitHub, make a private repository ',
-        'and a fine-grained token with read and write access to its contents.'));
+      el('p', { class: 'note' }, 'First computer: leave the code empty. Others: same folder, and the code. ',
+        'For GitHub: a private repository and a token with read and write access to its contents.'));
   };
   draw().catch(e => box.replaceChildren(el('p', { class: 'note deb' }, e.message)));
   return panel('Sync between computers', 6, box);
@@ -572,8 +563,7 @@ function version() {
               'Updated. Close Daybook and open it again to use it; each database is backed up and moved on as it opens.')))
               .catch(err => { flash(err.message); e.target.disabled = false; });
           } }, 'Update now')),
-      el('p', { class: 'note' }, 'Your data is never touched. The code it replaces is kept: ', el('code', {}, 'python daybook.py update --rollback'),
-        ' puts it back.'));
+      el('p', { class: 'note' }, 'Data is not changed. To undo: ', el('code', {}, 'python daybook.py update --rollback')));
   };
   const again = () => el('button', { class: 'btn plain sm', onclick: check }, 'Check for newer code');
   box.append(again());
@@ -636,7 +626,7 @@ function suggestions() {
             await suite.remove('suggestion', s.id);
             flash('Deleted', { label: 'Undo', fn: async () => { await suite.undo(); draw(); } }); draw();
           } }, 'Delete')))))
-        : el('p', { class: 'note' }, rows.length ? 'Nothing open.' : 'None yet. Help → Suggest a change, on any page, writes one down with where you were.'),
+        : el('p', { class: 'note' }, rows.length ? 'Nothing open.' : 'None yet.'),
       el('div', { class: 'row' },
         open.length ? el('button', { class: 'btn sm', onclick: () => copy(`Daybook suggestions:\n${open.map(s => `- ${s.text.replace(/\s*\n\s*/g, ' / ')} (${where(s)})`).join('\n')}`) },
           `Copy the ${open.length} open`) : null,
@@ -656,40 +646,34 @@ function keys() {
     const [cal, cap, wid] = await Promise.all([suite.token('cal'), suite.token('capture'), suite.token('widget')]);
     const feed = `${location.origin}/cal/${cal.token}.ics`, figures = `${location.origin}/widget/${wid.token}.json`;
     const quick = `${location.origin}/log/api/quick`;
-    const reset = name => () => dialog('Make a new key?', el('p', {}, 'The old one stops working at once: anything using it must be given the new one.'),
+    const reset = name => () => dialog('Make a new key?', el('p', {}, 'The old key stops working.'),
       [{ label: 'Make a new key', cls: 'btn danger', fn: async () => { await suite.token(name, true); draw(); } }]);
     box.replaceChildren(
       row('Calendar feed', feed, reset('cal'), el('a', { class: 'btn plain sm', href: feed + '?download=1' }, 'Download .ics')),
-      el('p', { class: 'note' }, 'Subscribe to this address from Outlook or your phone’s calendar: bills with amounts, paydays, days off, ',
-        'bank holidays, and the daily review if Learn has it switched on. Anyone with the address can read those, so keep it to yourself. ',
-        'A calendar that fetches from the cloud (Google Calendar) cannot reach a Tailscale address; the phone’s own calendar and Outlook on the PC can. ',
-        'Alerts: a bill at 9:00 the day before, payday at 8:00, Learn’s review and Log’s reminders at their time. An iPhone drops a subscription’s alerts ',
-        'until you open Settings, Calendar, its accounts, the Daybook subscription, and turn off Remove Alerts.'),
+      el('p', { class: 'note' }, 'Subscribe to it in your phone’s calendar or Outlook; keep it private. Google Calendar cannot reach a Tailscale address. ',
+        'On an iPhone, turn off Remove Alerts for this subscription (Settings → Calendar → Calendar Accounts).'),
       row('Phone capture key', cap.token, reset('capture')),
-      el('div', { class: 'note' }, 'An iPhone Shortcut that adds to Log, made in the Shortcuts app (+ for a new one):',
+      el('div', { class: 'note' }, 'iPhone Shortcut to add to Log:',
         el('ol', {},
           el('li', {}, 'Add ', el('strong', {}, 'Dictate Text'), ' (or ', el('strong', {}, 'Ask for Input'), ' to type).'),
           el('li', {}, 'Add ', el('strong', {}, 'Get Contents of URL'), ': the URL ', el('code', {}, quick), '; Method POST; Headers ',
             el('code', {}, 'Authorization'), ' = ', el('code', {}, `Bearer ${cap.token}`), ' and ', el('code', {}, 'X-Daybook'), ' = ',
             el('code', {}, '1'), '; Request Body JSON, with a Text field ', el('code', {}, 'text'), ' set to the Dictated Text.'),
-          el('li', {}, 'Name it Log. Put it on the Home Screen or the Action button, or say “Hey Siri, Log”.')),
-        'The key adds to Log and opens nothing else.'),
-      el('div', { class: 'note' }, 'Share to Log: photos from the share sheet straight into today, with the same key. Another Shortcut:',
+          el('li', {}, 'Name it Log.'))),
+      el('div', { class: 'note' }, 'Shortcut to share photos to Log:',
         el('ol', {},
           el('li', {}, 'In its details (ⓘ), turn on ', el('strong', {}, 'Show in Share Sheet'), ' and have it receive ', el('strong', {}, 'Images'), '.'),
-          el('li', {}, 'Add ', el('strong', {}, 'Convert Image'), ' to JPEG, then ', el('strong', {}, 'Resize Image'), ' by Longest Edge to 1600 (quicker to send).'),
-          el('li', {}, 'Add ', el('strong', {}, 'Ask for Input'), ' (Text, prompt “Note”) for words and #tags; leave it out for photos alone.'),
+          el('li', {}, 'Add ', el('strong', {}, 'Convert Image'), ' to JPEG, then ', el('strong', {}, 'Resize Image'), ' by Longest Edge to 1600.'),
+          el('li', {}, 'Add ', el('strong', {}, 'Ask for Input'), ' (Text) for a note. Optional.'),
           el('li', {}, 'Add ', el('strong', {}, 'Get Contents of URL'), ': the URL ', el('code', {}, `${location.origin}/log/share`),
             '; Method POST; Header ', el('code', {}, 'Authorization'), ' = ', el('code', {}, `Bearer ${cap.token}`),
             '; Request Body Form, with a Text field ', el('code', {}, 'text'), ' set to the Provided Input and a File field ',
             el('code', {}, 'photo'), ' set to the Resized Image.'),
-          el('li', {}, 'Name it Share to Log. In Photos: Share, then Share to Log. The photos are made smaller and filed the next time Log is open.'))),
+          el('li', {}, 'Name it Share to Log.'))),
       row('Phone widget', figures, reset('widget'),
         el('button', { class: 'btn plain sm', onclick: () => copy(widgetScript(figures)) }, 'Copy script')),
-      el('p', { class: 'note' }, 'A home-screen widget on an iPhone: get Scriptable (free, App Store), make a new script, paste the ',
-        'copied script, and name it Daybook. Long-press the Home Screen, + , Scriptable, and choose Daybook. ',
-        'Its Parameter (long-press the widget, Edit Widget) set to money, learn or log shows just that app. ',
-        'It shows Home’s figures and can change nothing; the phone needs Tailscale on to reach it.'));
+      el('p', { class: 'note' }, 'Needs the Scriptable app. Paste the script into a new script, then add a Scriptable widget. ',
+        'Set its Parameter to money, learn or log for one app.'));
   };
   draw();
   return panel('Calendar feed and phone', 6, box);

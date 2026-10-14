@@ -117,8 +117,7 @@ export function searchPage(app) {
       ctx.aside.append(el('label', { class: 'c' }, el('input', { type: 'checkbox', checked: everywhere,
         onchange: e => ctx.go('search', { q, all: e.target.checked ? 1 : '' }) }), 'Every app'));
       if (!q) {
-        body.append(el('p', { class: 'note' }, 'Type in the search box at the top (or press /). Words can come in any order; ',
-          'a number such as 24.99 also finds that amount.'));
+        body.append(el('p', { class: 'note' }, 'Search words or an amount, such as 24.99.'));
         return;
       }
       ctx.setTitle(`Search · “${q}”`);
@@ -132,7 +131,7 @@ export function searchPage(app) {
           n += g.rows.length;
           body.append(el('h3', { class: 'hits-h' }, label, el('span', { class: 'muted' }, ` ${g.rows.length}${g.more ? '+' : ''}`)),
             el('div', { class: 'hits' }, g.rows.map(r => hitRow(fn(r), words))),
-            ...(g.more ? [el('p', { class: 'note' }, 'More than shown; add a word to narrow it.')] : []));
+            ...(g.more ? [el('p', { class: 'note' }, 'More not shown. Add a word to narrow it.')] : []));
         }
         if (!groups.length && title) body.append(el('p', { class: 'note' }, 'Nothing here.'));
       };

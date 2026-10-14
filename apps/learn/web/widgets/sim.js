@@ -51,7 +51,7 @@ export async function mount(box, p, report) {
       },
     }) : null;
   } catch { view = null; }
-  if (!view) { stage.replaceChildren(sc.view ? el('p', { class: 'muted small' }, 'This device cannot draw the 3D view; the panel below still runs the machine.') : ''); if (!sc.view) stage.remove(); }
+  if (!view) { stage.replaceChildren(sc.view ? el('p', { class: 'muted small' }, '3D is not available on this device.') : ''); if (!sc.view) stage.remove(); }
   else cam.append(
     el('button', { class: 'btn plain sm', type: 'button', title: 'Zoom in', 'aria-label': 'Zoom in', onclick: () => view.zoom(1 / 1.25) }, '+'),
     el('button', { class: 'btn plain sm', type: 'button', title: 'Zoom out', 'aria-label': 'Zoom out', onclick: () => view.zoom(1.25) }, '−'),

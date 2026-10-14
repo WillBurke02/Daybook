@@ -131,7 +131,7 @@ async function render(body, ctx) {
     if (card.finished()) { go(1); return; }
     try {
       const r = await card.tooEasy();
-      if (r?.needs) { flash('A new card needs an answer first: a right one sends it further out'); return; }
+      if (r?.needs) { flash('Answer it first'); return; }
       if (r?.today) { s.today = r.today; drawTop(); }
       flash(r?.next ? `Too easy: ${r.next.toLowerCase()}` : 'Marked as read');
     } catch (e) { flash(e.message); }

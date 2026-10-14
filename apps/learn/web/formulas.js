@@ -70,7 +70,7 @@ export async function formulaHelp(maths, lessonId) {
   if (symbols.length) box.append(el('h3', {}, 'Reading the maths'), el('table', { class: 'g fsyms' }, el('tbody', {}, symbols.map(symbolView))));
   if (lesson.length) box.append(el('details', { open: !here.length && !symbols.length || null },
     el('summary', {}, `The other formulas in this lesson (${lesson.length})`), ...lesson.map(f => formulaView(f, { link: false }))));
-  if (!box.children.length) box.append(el('p', { class: 'note' }, 'Nothing written about this maths yet. Use Report on the card to say what was unclear, and it will get some.'));
+  if (!box.children.length) box.append(el('p', { class: 'note' }, 'Nothing written about this yet.'));
   box.append(el('p', {}, el('a', { href: '#/formulas' }, 'Every formula and symbol')));
   const d = dialog('Formula help', box);
   d.addEventListener('click', e => { if (e.target.closest('a[href^="#"]')) d.close(); });
@@ -81,7 +81,7 @@ export const formulasPanel = { title: 'Formulas', w: 12, async render(body, ctx)
   const db = await loadFormulas();
   ctx.setTitle('');
   ctx.pageTitle('Formulas', 'What each formula says, what its letters stand for, and how to read the maths');
-  const q = el('input', { type: 'search', class: 'fsearch', placeholder: 'Find a formula, a letter or a word (slip, derivative, Ohm…)', value: ctx.params.q || '', style: 'width:100%' });
+  const q = el('input', { type: 'search', class: 'fsearch', placeholder: 'Find a formula or symbol', value: ctx.params.q || '', style: 'width:100%' });
   const out = el('div');
   const draw = () => {
     const t = q.value.trim().toLowerCase();

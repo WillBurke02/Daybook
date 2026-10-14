@@ -33,7 +33,7 @@ const heatPanel = { title: 'Every day', w: 12, deps: ['study'], async render(bod
       tile('Days studied', String(days.filter(d => d.cards || d.minutes).length), `of the last ${WEEKS * 7}`),
       tile('Streak', `${t.streak} day${t.streak === 1 ? '' : 's'}`)),
     el('div', { class: 'heatbox' }, months, grid),
-    el('p', { class: 'note' }, 'Darker is more cards that day. Hover a day for its cards and minutes.'));
+    el('p', { class: 'note' }, 'Darker: more cards.'));
 } };
 
 const accuracyPanel = { title: 'Accuracy by subject', w: 6, async render(body) {
@@ -41,7 +41,7 @@ const accuracyPanel = { title: 'Accuracy by subject', w: 6, async render(body) {
   body.append(table([{ k: 'subject', label: 'Subject', fmt: v => v || 'Removed' }, { k: 'asked', label: 'Asked', n: true },
     { k: 'correct', label: 'Right', n: true }, { k: 'pct', label: 'Right %', n: true, fmt: v => v == null ? '' : `${v}%` }],
     rows, { empty: 'Nothing answered yet.' }),
-    el('p', { class: 'note' }, 'Every answer counts, including practice and reviews. Flash cards count as right unless rated Again.'));
+    el('p', { class: 'note' }, 'Flash cards count as right unless rated Again.'));
 } };
 
 const masteryPanel = { title: 'Solid, by topic', w: 6, deps: ['card'], async render(body) {
@@ -60,7 +60,7 @@ const masteryPanel = { title: 'Solid, by topic', w: 6, deps: ['card'], async ren
     u.subject !== last && (last = u.subject) ? el('h3', {}, u.subject) : null,
     el('div', { class: 'mrow' }, el('span', {}, u.unit), bar(u.mastered / u.asks, `${u.mastered} of ${u.asks}`),
       el('span', { class: 'num small muted' }, `${Math.round(100 * u.mastered / u.asks)}%`))])),
-    el('p', { class: 'note' }, 'Solid: a card you are expected to remember for three weeks or more, or have got right on three separate days since you last missed it.'));
+    el('p', { class: 'note' }, 'Solid: likely remembered for three weeks or more.'));
 } };
 
 const hardestPanel = { title: 'Hardest cards', w: 8, async render(body) {

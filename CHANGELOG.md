@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.17 — 15 October 2026
+
+- **Plainer wording**: hints and notes across Log, Learn, Money, Home and Admin say less. The ones
+  that explained the obvious (how tags work, what Ctrl+Enter does) are gone.
+- Demo data and the Learn tracks no longer name a particular employer or project.
+
 ## 4.0.16 — 15 October 2026
 
 - **Less repetition in Learn**: the same few questions kept coming round while most never did.
@@ -85,8 +91,8 @@
 
 ## 4.0.8 — 14 October 2026
 
-- **What a tag stands for**: Log → Tags → Edit gives a tag a note (#ts247: "Siemens S7-1500 on
-  line 2, Leeds"). It shows on the Tags page, at the top of the tag's timeline (with Add one or Edit),
+- **What a tag stands for**: Log → Tags → Edit gives a tag a note (#pump-3: "the duty pump in the
+  basement plant room"). It shows on the Tags page, at the top of the tag's timeline (with Add one or Edit),
   and when you point at the tag on an entry or in the suggestions as you type. Renaming a tag takes
   its note along; merging two joins their notes. Undo puts both back.
 
@@ -121,7 +127,7 @@
   (and under the diary and each entry); #si narrows them to #site and #siemens. A tap, or Tab,
   finishes the word, and a tag already in the text is not offered again.
 - **Rename a tag**: Log → Tags → Rename fixes a typo (#sit) in every entry at once. A name already
-  in use merges the two (#TS-247 into #ts247). Undo puts every entry back.
+  in use merges the two (#pump3 into #pump-3). Undo puts every entry back.
 
 ## 4.0.3 — 13 October 2026
 
