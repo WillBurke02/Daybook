@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.10 — 14 October 2026
+
+- **Log to Learn**: the card button on a Log entry makes it a Learn flash card. The entry's text
+  starts the front, to turn into a question; you write the answer on the back. It is filed in Learn
+  under My cards, From Log (with the day it came from) and comes up in reviews like any other card.
+
 ## 4.0.9 — 14 October 2026
 
 - **Photos in Log**: a Photos page shows every photo and video as a grid, newest first, with the

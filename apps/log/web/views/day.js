@@ -2,7 +2,7 @@
 // and, when Money is there, the shifts worked. The quick add sits above every page.
 import { api } from '../api.js';
 import { appApi, APP } from '../core/api.js';
-import { el, flash, seg } from '../core/dom.js';
+import { el, flash, seg, dialog } from '../core/dom.js';
 import { icon } from '../core/pages.js';
 import { today, addDays, dayLong, dow, toTime, hhmm, span } from '../core/format.js';
 import { state } from '../core/state.js';
@@ -217,6 +217,29 @@ function addMedia(e, ctx) {
     recorder(v => put({ voice: v })));
 }
 
+/** An entry as a Learn flash card (a fault found today, asked again next week): filed under My cards, From Log. */
+const LOG_LESSON = 'mine.cards.from-log';
+function learnCard(e) {
+  const front = el('textarea', { rows: 3, 'aria-label': 'Front', placeholder: 'The question: what caused the fan noise on M3?' });
+  const back = el('textarea', { rows: 4, 'aria-label': 'Back', placeholder: 'The answer: what it was, and how you found it' });
+  front.value = (e.text || '').replace(/(?<![\w!])![\w/:]+(\s+\d{1,2}(:\d{2})?\s*([ap]m)?)?/gi, '').replace(/\s+/g, ' ').trim();
+  dialog('Make a Learn card', el('div', { class: 'stack' }, el('label', {}, 'Front', front), el('label', {}, 'Back', back),
+    el('p', { class: 'note' }, 'It goes in Learn under My cards, From Log, and comes up in reviews like any other card.')),
+    [{ label: 'Make the card', fn: async () => {
+      if (!front.value.trim() || !back.value.trim()) { flash('A card needs a front and a back'); return false; }
+      const learn = appApi('learn'), id = `own/${LOG_LESSON}/${Date.now().toString(36)}`;
+      try {
+        if (!(await learn.table('lesson', { id: LOG_LESSON })).length)
+          await learn.save('lesson', { id: LOG_LESSON, unit_id: 'mine.cards', title: 'From Log', sort: 0, source: 'own' });
+        await learn.save('card', { id, lesson_id: LOG_LESSON, sort: 1000, source: 'own', data: JSON.stringify({ type: 'flash', id,
+          front: front.value.trim(), back: `${back.value.trim()}\n\n*From Log, ${e.day.slice(8)}/${e.day.slice(5, 7)}/${e.day.slice(0, 4)}*` }) });
+        flash('Added to Learn', { label: 'See it', fn: () => { location.href = '/learn/#/mine'; } });
+      } catch (x) { flash(x.message); return false; }
+    } }]);
+  setTimeout(() => { front.focus(); front.select(); });
+}
+const hasLearn = () => state.meta.apps?.some(a => a.name === 'learn');
+
 function workEntry(e, ctx) {
   const at = el('input', { class: 'sm at', value: e.at || '', placeholder: '--:--', inputmode: 'numeric', 'aria-label': 'Time' });
   const text = el('textarea', { rows: 1, 'aria-label': 'Entry' }, e.text || '');
@@ -230,6 +253,8 @@ function workEntry(e, ctx) {
     el('div', { class: 'when' }, at),
     el('div', { class: 'what' }, text, tagAssist(text), attachments(e, ctx), el('div', { class: 'row mid' }, tagLinks(e.tags), remindChip(e),
       el('span', { class: 'actions row mid' }, addMedia(e, ctx),
+        hasLearn() ? el('button', { class: 'icon', type: 'button', title: 'Make a Learn card from this', 'aria-label': 'Make a Learn card from this',
+          onclick: () => learnCard(e) }, icon('card')) : null,
         el('button', { class: 'icon del', type: 'button', title: 'Delete entry', 'aria-label': 'Delete entry', onclick: async () => {
           await api.remove('entry', e.id);
           flash('Entry deleted', { label: 'Undo', fn: async () => { await api.undo(); changed(ctx); } });
