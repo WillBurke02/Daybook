@@ -388,6 +388,8 @@ signed in while you use it (the sign-in renews itself; 30 days unused and it ask
   `Authorization: Bearer <key>` and `X-Daybook: 1`, request body JSON with a
   `text` field (Dictate Text or Ask for Input before it). The key is in Admin →
   Calendar feed and phone, with the steps filled in; it opens that one door and nothing else.
+- **Share to Log on iPhone**: a second Shortcut in the share sheet sends photos (and a note) to
+  `/log/share` with the same key; Admin → Calendar feed and phone lists its steps.
 - **iPhone widget**: Admin → Calendar feed and phone → Phone widget → **Copy script**, paste it
   into a new script in Scriptable (free), and add a Scriptable widget to the Home Screen.
   It shows Home's figures (safe to spend, payday, hours this week, Learn due, today's

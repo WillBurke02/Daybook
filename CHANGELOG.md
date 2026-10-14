@@ -1,5 +1,12 @@
 # Changes
 
+## 4.0.11 — 14 October 2026
+
+- **Share to Log on iPhone**: the phone capture key now also opens `/log/share`, so a Shortcut in
+  the share sheet can send photos, and a note with #tags, straight into today's Log. Admin →
+  Calendar feed and phone lists its five steps with your key filled in. Photos the Shortcut sends
+  one at a time, a minute apart at most, join the same entry.
+
 ## 4.0.10 — 14 October 2026
 
 - **Log to Learn**: the card button on a Log entry makes it a Learn flash card. The entry's text

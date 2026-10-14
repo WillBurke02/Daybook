@@ -308,10 +308,11 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(404, {"error": "no such endpoint"})
 
     def _capture_ok(self, path):
-        """The phone's quick-capture key opens exactly one door: <app>/api/quick."""
+        """The phone's capture key opens two doors, both to add: <app>/api/quick (a note) and <app>/share
+        (photos from the share sheet, for an iPhone Shortcut)."""
         auth = self.headers.get("Authorization", "")
-        return (path.endswith("/api/quick") and auth.startswith("Bearer ")
-                and _suite.token_ok("capture", auth[7:].strip()))
+        return (self.command == "POST" and (path.endswith("/api/quick") or path.endswith("/share"))
+                and auth.startswith("Bearer ") and _suite.token_ok("capture", auth[7:].strip()))
 
     # --- an app's endpoints ------------------------------------------------------------
     def _ctx(self, name, meta=False):
@@ -389,7 +390,9 @@ class Handler(BaseHTTPRequestHandler):
                 fields[key] = part.get_content()
         db = _db.connect(_suite.path(name))
         try:
-            return self._go(app.share(db, fields, files))
+            where = app.share(db, fields, files)
+            # a Shortcut (it sent the key) gets an answer; a browser's share sheet goes to the day
+            return self._send(200, {"ok": True}) if self.headers.get("Authorization") else self._go(where)
         finally:
             db.close()
 

@@ -250,8 +250,20 @@ if "log" in SUITE.apps:
     assert raw("/log/api/quick", "POST", {"text": "From the Shortcut"}, K)[0] == 200
     assert raw("/log/api/quick", "POST", {"text": "x"}, dict(W, Authorization="Bearer wrong"))[0] == 401
     assert raw("/log/api/t/entry", headers=K)[0] == 401 and raw("/money/api/meta", headers=K)[0] == 401, "the key opens one door"
+    # the share sheet through a Shortcut: the key, no cookie; photos sent one at a time join the first
+    pic = lambda text=None: ((f"--{B}\r\nContent-Disposition: form-data; name=\"text\"\r\n\r\n{text}\r\n" if text else "")
+                             + f"--{B}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"p.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"
+                             ).encode() + b"\xff\xd8\xff" + b"\0" * 32 + f"\r\n--{B}--\r\n".encode()
+    KS = {"Authorization": f"Bearer {key}", **FORM}
+    code, _, body = raw("/log/share", "POST", pic("From the share sheet #site"), KS)
+    assert code == 200 and json.loads(body) == {"ok": True}, (code, body)
+    assert raw("/log/share", "POST", pic(), KS)[0] == 200
+    assert raw("/log/share", "POST", pic(), dict(FORM, Authorization="Bearer wrong"))[0] == 401
+    assert raw("/log/api/share", "GET", None, KS)[0] == 401, "the key adds; it reads nothing"
+    inbox = json.loads(raw("/log/api/t/inbox", headers=C)[2])
+    assert len(inbox) == 3 and inbox[1]["entry_id"] == inbox[2]["entry_id"], "the bare photo joined the share before it"
     days = json.loads(raw(f"/log/api/day?d={date.today().isoformat()}", headers=C)[2])
-    assert [e["text"] for e in days["entries"]][-2:] == ["Shared note #site", "From the Shortcut"], days
+    assert [e["text"] for e in days["entries"]][-3:] == ["Shared note #site", "From the Shortcut", "From the share sheet #site"], days
     print("ok — share sheet and capture key")
 
 # === a new password signs every other device out ==================================

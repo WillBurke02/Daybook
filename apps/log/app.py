@@ -211,14 +211,23 @@ def share(db, fields, files):
     pics = [(m, d) for m, d in files if m.startswith("image/") and len(d) <= SHARE_MAX]
     if not text and not pics:
         return "/log/#/day"
-    eid = db.execute("INSERT INTO entry (day, at, kind, text, tags, remind) VALUES (?,?,?,?,?,?)",
-                     (date.today().isoformat(), datetime.now().strftime("%H:%M"), "work", text or None, tags_of(text),
-                      remind_of(text, date.today().isoformat()))).lastrowid
-    for m, d in pics:
-        db.execute("INSERT INTO inbox (entry_id, mime, data) VALUES (?,?,?)",
-                   (eid, m, f"data:{m};base64,{base64.b64encode(d).decode()}"))
+    # pictures with no words, a minute after a share: the rest of it (a Shortcut sending one photo at a time)
+    # ponytail: two separate shares of bare photos within a minute become one entry
+    last = None if text else db.execute(
+        "SELECT entity_id FROM change_log WHERE entity = 'entry' AND summary LIKE 'Shared to Log%' "
+        "AND at >= datetime('now', '-1 minute') ORDER BY id DESC LIMIT 1").fetchone()
+    joined = bool(last) and db.execute("SELECT 1 FROM entry WHERE id = ?", (int(last[0]),)).fetchone() is not None
+    if joined:
+        eid = int(last[0])
+    else:
+        eid = db.execute("INSERT INTO entry (day, at, kind, text, tags, remind) VALUES (?,?,?,?,?,?)",
+                         (date.today().isoformat(), datetime.now().strftime("%H:%M"), "work", text or None, tags_of(text),
+                          remind_of(text, date.today().isoformat()))).lastrowid
+    got = [db.execute("INSERT INTO inbox (entry_id, mime, data) VALUES (?,?,?)",
+                      (eid, m, f"data:{m};base64,{base64.b64encode(d).decode()}")).lastrowid for m, d in pics]
     _db.log_change(db, "edit", "entry", f"Shared to Log{f', {len(pics)} picture(s)' if pics else ''}", eid,
-                   detail={"undo": [{"op": "remove", "table": "entry", "pk": "id", "ids": [eid]}]})
+                   detail={"undo": [{"op": "remove", "table": "inbox", "pk": "id", "ids": got}] if joined else
+                           [{"op": "remove", "table": "entry", "pk": "id", "ids": [eid]}]})
     db.commit()
     return f"/log/#/day?d={date.today().isoformat()}"
 
