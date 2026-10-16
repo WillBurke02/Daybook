@@ -19,6 +19,8 @@ const TYPES = ['concept', 'widget', 'mcq', 'numeric', 'steps', 'order', 'match',
 const files = dir => readdirSync(dir).flatMap(f => statSync(join(dir, f)).isDirectory() ? files(join(dir, f)) : [join(dir, f)]);
 const lessons = new Map(), problems = [];
 const bad = (where, what) => problems.push(`${where}: ${what}`);
+// the licences an import may come under: each lets the words be copied as they are, with credit
+const LICENCES = /CC BY-NC-SA 4\.0|CC BY 4\.0|CC BY-SA 4\.0|CC BY 3\.0|CC BY-SA 2\.5|CC BY-NC-SA 3\.0|Open Government Licence v3\.0|public domain/;
 
 // ---- the outlines ----
 const SUBJECTS = readdirSync(CONTENT).filter(s => statSync(join(CONTENT, s)).isDirectory());
@@ -141,7 +143,7 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!(q.answer >= 0 && q.answer < (q.options || []).length)) bad(at, 'the answer is not one of the options');
       if (!q.why) bad(at, 'an mcq gives its reason (why)');
       const right = String(q.options?.[q.answer] ?? '').length, wrong = Math.max(...(q.options || []).filter((_, i) => i !== q.answer).map(o => String(o).length));
-      if (right > 1.5 * wrong && right - wrong > 12) bad(at, 'the right option gives itself away by being much the longest: trim it, and put the reason in why');
+      if (right > 1.5 * wrong && right - wrong > 12 && !(les?.imported && !q.added)) bad(at, 'the right option gives itself away by being much the longest: trim it, and put the reason in why');
       const others = (q.options || []).filter((_, i) => i !== q.answer).map(o => String(o).length), meanWrong = others.reduce((a, b) => a + b, 0) / (others.length || 1);
       if (isBank && right > wrong && right > 1.2 * meanWrong && right - wrong > 8) bad(at, 'a calibration question: the right option is the longest by a margin (over 1.2x the wrong ones and 8+ characters past the longest): lengthen the wrong options or trim the right one');
     }
@@ -263,10 +265,11 @@ function template(les, where) {
 
 // ---- a lesson brought in as published (SPEC.md §1): the original words and maths, credited, its pages there ----
 // An original page lives in web/media/openstax/<book>/<section>.html, beside its figures.
-function original(url) { return /^media\/openstax\/[\w-]+\/[\d.]+\.html$/.test(url || '') && existsSync(join(ROOT, 'apps/learn/web', url)); }
+function original(url) { return /^media\/(openstax\/[\w-]+\/[\d.]+|[\w-]+\/[\w-]+)\.html$/.test(url || '') && existsSync(join(ROOT, 'apps/learn/web', url)); }
+
 function imported(les, where) {
-  if (!(Array.isArray(les.sources) && les.sources.length && les.sources.every(x => /CC BY-NC-SA 4\.0/.test(x) && /Imported as published/.test(x))))
-    bad(where, 'an import credits each section, its licence (CC BY-NC-SA 4.0) and says it is as published');
+  if (!(Array.isArray(les.sources) && les.sources.length && les.sources.every(x => LICENCES.test(x) && /Imported as published/.test(x))))
+    bad(where, 'an import credits each section, its licence (one that allows copying) and says it is as published');
   if (!(les.resources || []).length || !les.resources.every(r => original(r.url))) bad(where, 'an import links each section as published (The original)');
   for (const c of les.cards.filter(c => !c.added)) {          // Daybook's own cards (added) are checked as written ones are
     const at = `${les.id}/${c.id}`, html = [c.html, c.front_html, c.back_html].filter(Boolean).join('');

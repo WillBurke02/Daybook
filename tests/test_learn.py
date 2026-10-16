@@ -370,3 +370,18 @@ book = [{"id": i, "stage": st} for i, st in [("a", "learn"), ("b", "check"), ("c
 got = [c["id"] for c in place(book, [{"id": "x"}, {"id": "y", "after": "a"}, {"id": "z"}])]
 assert got == ["a", "y", "b", "c", "x", "z", "d", "e"], got
 print("ok — imported lessons keep their added cards in place")
+
+# === other sources: a page's words kept, its furniture dropped, cut into cards ======
+from apps.learn import sources as _src      # noqa: E402
+_html = ("<main><h1>Title</h1><p>Intro</p><div class='ad'>buy now</div><h2>One</h2><p>" + "word " * 100 + "</p>"
+         "<h3>Small</h3><p>tiny</p><h2>Two</h2><p>see <a href='/x'>this</a> <img src='f.png' alt='F'></p><script>x()</script></main>")
+_page = _src.Page("t", {}, "https://example.org/a/")
+_blocks = _page.blocks(_src.prune(_src.tree(_html).find("main"), [".ad"]))
+_all_text = " ".join(b[1] if b[0] == "b" else b[2] for b in _blocks)
+assert "buy now" not in _all_text and "x()" not in _all_text, _all_text
+assert '<a href="https://example.org/x">this</a>' in _all_text and 'src="media/t/' in _all_text, _all_text
+assert [b[2] for b in _src.part(_blocks, {"part": ["One"], "url": ""}) if b[0] == "h"] == ["One", "Small"]
+_cards = _src.cards([b for b in _blocks if not (b[0] == "h" and b[1] == 1)], "Title", "t1")
+assert [c["title"] for c in _cards] == ["Title", "Small"], [c["title"] for c in _cards]   # short parts run on into the next
+assert "<h4>One</h4>" in _cards[0]["html"] and "<h4>Two</h4>" in _cards[-1]["html"]
+print("ok — other sources: kept words, dropped furniture, parts and cards")

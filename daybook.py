@@ -347,7 +347,7 @@ def cmd_learn_import(a):
     """Open textbooks into Learn as published (apps/learn/content/imports.json). It fetches from GitHub."""
     from apps.learn import openstax
     try:
-        openstax.run()
+        openstax.run(only=set(a.lessons) or None)
     except (OSError, ValueError) as e:
         raise _db.Stop(f"The import stopped: {e}")
     print("Done. Commit apps/learn/content and apps/learn/web/media, and every copy of Daybook has them without fetching.")
@@ -422,7 +422,8 @@ def main(argv=None):
     s = add("update"); s.set_defaults(fn=cmd_update)
     s.add_argument("--check", action="store_true", help="only say whether there is newer code")
     s.add_argument("--rollback", action="store_true", help="put back the code from before the last update")
-    add("learn-import").set_defaults(fn=cmd_learn_import)
+    s = add("learn-import"); s.set_defaults(fn=cmd_learn_import)
+    s.add_argument("lessons", nargs="*", help="only these lessons (ids); all of them if none")
     s = add("import"); s.set_defaults(fn=cmd_import)
     s.add_argument("files", nargs="+")
     s.add_argument("--account", type=int, required=True, help="account id (see Settings)")

@@ -106,6 +106,13 @@ Kinds: **procedure** (a method you carry out: all stages, example chain required
 
 Ids: lower case words and dashes, unique in the lesson, and **forever** (progress hangs off them).
 
+**Other open and official sources** (apps/learn/sources.py, `pages` and `links` in content/imports.json): UK ones
+first (HSE, legislation.gov.uk, gov.uk, NCSC, DoITPoMS from Cambridge), then open textbooks and official
+documentation. A web page, part of one (`part`: from a heading to a heading) or a PDF's pages (`pages`) becomes
+the lesson's reading cards, word for word, with the credit, the licence and a kept copy; a PDF's diagrams come
+as pictures of the page. `links` gives a written lesson more to read, as published. `python3 daybook.py
+learn-import <lesson ids>` fetches just those.
+
 **A lesson imported from a book** (`imported` in its file) is the book's words. Daybook's own cards in it
 (context, longer questions, machines) carry `"added": true`, and `"after": "<a book card's id>"` to sit after
 that card; without it they go before the lesson's last check. A fresh import keeps them, and the card shows

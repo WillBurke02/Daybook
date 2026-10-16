@@ -1,0 +1,192 @@
+{
+ "id": "mechanical.strength.torsion",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "doitpoms: Bending and Torsion of Beams"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "DoITPoMS, University of Cambridge, Bending and Torsion of Beams. CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/. Imported as published, from https://www.doitpoms.ac.uk/tlplib/beam_bending/"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Bending and Torsion of Beams",
+   "url": "media/doitpoms/bending-and-torsion-of-beams-447197.html",
+   "by": "DoITPoMS, University of Cambridge, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Twisting moments (torques) and torsional stiffness",
+   "html": "<p>Torsion is the twisting of a beam under the action of a torque(twisting moment). It is systematically applied to screws, nuts, axles, drive shafts etc, and is also generated more randomly under service conditions in car bodies, boat hulls, aircraft fuselages, bridges, springs and many other structures and components. A torque, <em>T </em>, has the same units (N m) as a bending moment, <em>M </em>. Both are the product of a force and a distance. In the case of a torque, the force is tangential and the distance is the radial distance between this tangent and the axis of rotation. </p><p><img src=\"media/doitpoms/0b0d97a8-twist_diagram.jpg\" alt=\"\"></p><p>Torsion of a Cylindrical Bar</p><p>Torsion of a cylindrical bar is illustrated in the figure. It can be seen that the shear strain in an element of the bar is given by </p><p>\\[\\gamma = \\frac{{r\\;{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\]</p><p>This equation applies both at the surface of the bar, as shown, and also for any other radial location, using the appropriate value of <em>r </em>. Clearly, the shear strain varies linearly with <em>r </em>, from zero at the centre of the bar to a peak value at the free surface. </p><p>The shear stress, τ, at any radial location, is related to the shear strain by </p><p>\\[\\tau = G\\gamma \\]</p><p>where <em>G </em> is the shear modulus. It follows that </p><p>\\[\\tau = Gr\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\]</p><p>The torque, <em>T </em>, can therefore be written as </p>",
+   "body": "Torsion is the twisting of a beam under the action of a torque(twisting moment). It is systematically applied to screws, nuts, axles, drive shafts etc, and is also generated more randomly under service conditions in car bodies, boat hulls, aircraft fuselages, bridges, springs and many other structures and components. A torque, T , has the same units (N m) as a bending moment, M . Both are the product of a force and a distance. In the case of a torque, the force is tangential and the distance is the radial distance between this tangent and the axis of rotation. Torsion of a Cylindrical Bar Torsion of a cylindrical bar is illustrated in the figure. It can be seen that the shear strain in an element of the bar is given by \\[\\gamma = \\frac{{r\\;{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\] This equation applies both at the surface of the bar, as shown, and also for any other radial location, using the appropriate value of r . Clearly, the shear strain varies linearly with r , from zero at the centre of the bar to a peak value at the free surface. The shear stress, τ, at any radial location, is related to the shear strain by \\[\\tau = G\\gamma \\] where G is the shear modulus. It follows that \\[\\tau = Gr\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\] The torque, T , can therefore be written as",
+   "id": "doitpoms1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Twisting moments (torques) and torsional stiffness",
+   "html": "<p>\\[T = \\int\\limits_A {{\\rm{d}}T = } \\int\\limits_A {\\tau \\;r\\;{\\rm{d}}A} = \\int\\limits_A {G\\;{r^2}\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}{\\rm{d}}A} \\]</p><p>As for the beam bending case, the geometrical integral is represented as a (polar) second moment of area </p><p>\\[{I_{\\rm{P}}} = \\int\\limits_A {{r^2}{\\rm{d}}A} \\]</p><p>For a solid cylinder of diameter <em>w </em>, this can be written as </p><p>\\[{I_{\\rm{P}}} = \\int\\limits_A {{r^2}} {\\rm{d}}A = \\int\\limits_0^{d/2} {{r^2}2} \\pi r\\;{\\rm{d}}r = \\pi \\left[ {\\frac{{{r^4}}}{2}} \\right]_0^{w/2} = \\frac{{\\pi {w^4}}}{{32}}\\]</p><p>The torque is thus given by </p><p>\\[T = G\\;{I_{\\rm{p}}}\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\]</p><p>Comparing this equation with the corresponding one for beam bending </p><p> <em>M = E I Κ</em></p><p>it can be seen that the torsional analogue for the <em>curvature </em> of a bent beam is the <strong><em>rate of twist </em></strong> along the length of the bar. This can be measured experimentally, although not quite so easily as a curvature (because the macroscopic shape of the bar does not actually change - at least when it is straight - see next page for an important example of a case when it is NOT straight). </p>",
+   "body": "\\[T = \\int\\limits_A {{\\rm{d}}T = } \\int\\limits_A {\\tau \\;r\\;{\\rm{d}}A} = \\int\\limits_A {G\\;{r^2}\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}{\\rm{d}}A} \\] As for the beam bending case, the geometrical integral is represented as a (polar) second moment of area \\[{I_{\\rm{P}}} = \\int\\limits_A {{r^2}{\\rm{d}}A} \\] For a solid cylinder of diameter w , this can be written as \\[{I_{\\rm{P}}} = \\int\\limits_A {{r^2}} {\\rm{d}}A = \\int\\limits_0^{d/2} {{r^2}2} \\pi r\\;{\\rm{d}}r = \\pi \\left[ {\\frac{{{r^4}}}{2}} \\right]_0^{w/2} = \\frac{{\\pi {w^4}}}{{32}}\\] The torque is thus given by \\[T = G\\;{I_{\\rm{p}}}\\frac{{{\\rm{d}}\\theta }}{{{\\rm{d}}L}}\\] Comparing this equation with the corresponding one for beam bending M = E I Κ it can be seen that the torsional analogue for the curvature of a bent beam is the rate of twist along the length of the bar. This can be measured experimentally, although not quite so easily as a curvature (because the macroscopic shape of the bar does not actually change - at least when it is straight - see next page for an important example of a case when it is NOT straight).",
+   "id": "doitpoms1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Springs",
+   "html": "<p><img src=\"media/doitpoms/10dd77d9-coil.jpg\" alt=\"\"></p><p>A collection of assorted springs</p><p><a href=\"https://www.doitpoms.ac.uk/tlplib/terms.php\"><em></em></a></p><p>An interesting example of torsion is provided by the deformation that takes place during the loading of <strong><em>springs </em></strong> (torsional coils). Of course, these have a wide range of engineering applications. They are normally made of (high yield stress) metals. (Ceramics are too brittle, while polymers are insufficiently stiff: fibre composites are also unsuitable - see below.) When a spring is loaded (compressed or extended), the deformation experienced by the wire is one of pure torsion. This is illustrated in the diagram below. </p><p><img src=\"media/doitpoms/8f9bb9e0-coil2.jpg\" alt=\"\"></p><p>Illustration of how the application of an axial load, F, to a spring generates torsional deformation of the wire and hence axial extension of the spring. </p><p>The torque acting on the wire is given by </p><p>\\[T = F\\left( {\\frac{D}{2}} \\right)\\]</p><p>in which <em>F </em> is the axial force and <em>D </em> is the coil diameter. It can be shown ( <strong><em><a href=\"https://www.doitpoms.ac.uk/tlplib/beam_bending/derived_equations.php\">click here</a> </em></strong>) that the shear stress within the wire (at a distance <em>r </em> from the core) is given by </p><p>\\[\\tau = \\frac{{Tr}}{{2I}}\\]</p><p>in which <em>I </em> is the bending second moment of area (NOT the polar moment), and the shear strain in the wire is related to the change in axial extension of one turn of the coil, <em>s </em>, by the expression </p><p>\\[\\gamma = \\frac{{2sr}}{{\\pi {D^2}}}\\]</p><p>Measurement of the extension (per turn) of a spring, as a function of the applied force (first carried out systematically by <strong><em>Robert Hooke </em></strong>, in his pioneering work on the nature of elasticity) is a very convenient method of obtaining elastic constants. The ratio of τ to γ , obtained from the above equations, gives the shear modulus, <em>G </em>. The loading geometry is such that a large axial extension (per turn) is generated, while the strains within the material remain low, particularly for springs with a large ratio of <em>D </em> to <em>w </em>. Of course, this is exactly why springs are of practical use - they accommodate large deflections or displacements without the material being strained beyond its elastic limit (which is small for all materials except rubbers). </p>",
+   "body": "A collection of assorted springs An interesting example of torsion is provided by the deformation that takes place during the loading of springs (torsional coils). Of course, these have a wide range of engineering applications. They are normally made of (high yield stress) metals. (Ceramics are too brittle, while polymers are insufficiently stiff: fibre composites are also unsuitable - see below.) When a spring is loaded (compressed or extended), the deformation experienced by the wire is one of pure torsion. This is illustrated in the diagram below. Illustration of how the application of an axial load, F, to a spring generates torsional deformation of the wire and hence axial extension of the spring. The torque acting on the wire is given by \\[T = F\\left( {\\frac{D}{2}} \\right)\\] in which F is the axial force and D is the coil diameter. It can be shown ( click here ) that the shear stress within the wire (at a distance r from the core) is given by \\[\\tau = \\frac{{Tr}}{{2I}}\\] in which I is the bending second moment of area (NOT the polar moment), and the shear strain in the wire is related to the change in axial extension of one turn of the coil, s , by the expression \\[\\gamma = \\frac{{2sr}}{{\\pi {D^2}}}\\] Measurement of the extension (per turn) of a spring, as a function of the applied force (first carried out systematically by Robert Hooke , in his pioneering work on the nature of elasticity) is a very convenient method of obtaining elastic constants. The ratio of τ to γ , obtained from the above equations, gives the shear modulus, G . The loading geometry is such that a large axial extension (per turn) is generated, while the strains within the material remain low, particularly for springs with a large ratio of D to w . Of course, this is exactly why springs are of practical use - they accommodate large deflections or displacements without the material being strained beyond its elastic limit (which is small for all materials except rubbers).",
+   "id": "doitpoms1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Springs",
+   "html": "<p>It's interesting to note why springs are not normally made of fibre composites. The natural orientation for the fibres would be along the length of the rod (wire) to be formed into a coil. However, these fibres would have very little effect on the shear modulus in a transverse section of the rod, which is the property that controls the elastic extensions of the spring. It might as well have been made solely of the polymeric matrix (although such springs have a very low stiffness). It's only by winding fibres into the hoop direction of the rod that the shear stiffness of transverse sections would be boosted. However, this is impractical, at least for anything but very large scale springs, since it would require the fibres to adopt higher curvatures than would normally be possible. </p>",
+   "body": "It's interesting to note why springs are not normally made of fibre composites. The natural orientation for the fibres would be along the length of the rod (wire) to be formed into a coil. However, these fibres would have very little effect on the shear modulus in a transverse section of the rod, which is the property that controls the elastic extensions of the spring. It might as well have been made solely of the polymeric matrix (although such springs have a very low stiffness). It's only by winding fibres into the hoop direction of the rod that the shear stiffness of transverse sections would be boosted. However, this is impractical, at least for anything but very large scale springs, since it would require the fibres to adopt higher curvatures than would normally be possible.",
+   "id": "doitpoms1-4"
+  },
+  {
+   "id": "add-tors-tau",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A solid steel shaft {d} mm in diameter carries a torque of {t} N·m. What is the largest shear stress in it, in MPa?",
+   "vars": {
+    "d": {
+     "pick": [
+      20,
+      25,
+      30,
+      40,
+      50
+     ]
+    },
+    "t": {
+     "pick": [
+      100,
+      200,
+      400,
+      800
+     ]
+    }
+   },
+   "answer": "16 * t / (PI() * (d / 1000)^3) / 1e6",
+   "unit": "MPa",
+   "work": "$\\tau = \\frac{T r}{I_P} = \\frac{16T}{\\pi d^3} = \\frac{16 \\times {t}}{\\pi \\times ({d}/1000)^3} = {answer:1}$ MPa",
+   "why": "The shear stress grows with radius and is largest at the surface: $\\tau = Tr/I_P$, with $I_P = \\pi d^4/32$ for a solid shaft, which simplifies to $16T/\\pi d^3$.",
+   "hint": "$I_P = \\pi d^4 / 32$ and the surface is at $r = d/2$.",
+   "added": true
+  },
+  {
+   "id": "add-tors-angle",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A solid steel shaft (G = 80 GPa) {d} mm in diameter and {l} m long carries {t} N·m. How far does one end twist relative to the other, in degrees?",
+   "vars": {
+    "d": {
+     "pick": [
+      20,
+      30,
+      40
+     ]
+    },
+    "l": {
+     "pick": [
+      0.5,
+      1,
+      2
+     ]
+    },
+    "t": {
+     "pick": [
+      50,
+      100,
+      200
+     ]
+    }
+   },
+   "answer": "DEGREES(t * l / (80e9 * PI() * (d / 1000)^4 / 32))",
+   "unit": "°",
+   "work": "$\\theta = \\frac{TL}{G I_P}$, $I_P = \\pi ({d}/1000)^4/32$: $\\theta = {answer:3}$°",
+   "why": "From the package's $T = G I_P \\, d\\theta/dL$: over a length $L$, $\\theta = TL/(G I_P)$ in radians; times $180/\\pi$ for degrees.",
+   "hint": "Work in metres and radians, then convert.",
+   "added": true
+  },
+  {
+   "id": "add-tors-hollow",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Why are drive shafts often made as tubes rather than solid bars?",
+   "options": [
+    "The core carries little torque, so it is mostly weight",
+    "A tube has a higher shear modulus G than a bar",
+    "Solid bars cannot be welded onto flanges",
+    "A tube's shear stress is equal at every radius"
+   ],
+   "answer": 0,
+   "why": "Shear stress rises with radius, and $I_P$ depends on $r^4$: the material near the axis is lightly stressed and adds little stiffness. A tube puts the material where it works hardest.",
+   "added": true
+  },
+  {
+   "id": "add-tors-keys",
+   "type": "concept",
+   "stage": "learn",
+   "title": "On machines: keys",
+   "body": "A shaft passes its torque to a pulley, gear or coupling through a **key**: a steel bar sitting half in a keyway in the shaft and half in the hub. The key is loaded in **shear** across its width, and in **crushing** (bearing) on its sides.\n\nThe force on the key is the torque divided by the shaft's radius, $F = T/(d/2)$. Key sizes for each shaft diameter are standardised (in the UK, BS 4235 for metric keys). The keyway cuts into the shaft and concentrates stress at its corners, a common place for fatigue cracks to start on shafts that see reversing torque.",
+   "added": true
+  },
+  {
+   "id": "add-tors-key-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A {d} mm shaft drives a pulley through a key {w} mm wide and {l} mm long, carrying {t} N·m. What is the average shear stress across the key, in MPa?",
+   "vars": {
+    "d": {
+     "pick": [
+      30,
+      40,
+      50
+     ]
+    },
+    "w": {
+     "pick": [
+      8,
+      10,
+      12,
+      14
+     ]
+    },
+    "l": {
+     "pick": [
+      30,
+      40,
+      50
+     ]
+    },
+    "t": {
+     "pick": [
+      100,
+      200,
+      300
+     ]
+    }
+   },
+   "let": {
+    "force": "t / (d / 2000)"
+   },
+   "answer": "force / (w * l)",
+   "unit": "MPa",
+   "work": "$F = T/(d/2) = {t} \\div {d}/2000 = {force:0}$ N; area $= {w} \\times {l}$ mm²; $\\tau = {answer:1}$ MPa (N/mm²)",
+   "why": "The key is sheared across its width along its length: the shear area is width × length. N/mm² is MPa.",
+   "hint": "Force at the shaft's surface first: torque over radius.",
+   "added": true
+  }
+ ]
+}

@@ -123,7 +123,7 @@ function parser(src) {
     const words = () => peek()?.t === 'raw' ? next().v : rawGroup();
     if (c === 'text' || c === 'textrm' || c === 'mbox') return `<mtext>${esc(words())}</mtext>`;
     if (c === 'operatorname') return `<mi>${esc(words())}</mi>`;
-    if (c === 'mathrm' || c === 'unit') { const was = upright; upright = true; const a = arg(); upright = was; return a; }
+    if (c === 'mathrm' || c === 'unit' || c === 'rm') { const was = upright; upright = true; const a = arg(); upright = was; return a; }
     if (c === 'mathbf' || c === 'boldsymbol' || c === 'bm') return `<mstyle mathvariant="bold">${arg()}</mstyle>`;
     if (c in ACCENT) return `<mover accent="true">${arg()}${mo(ACCENT[c], ' stretchy="false"')}</mover>`;
     if (c in SPACE) return `<mspace width="${SPACE[c]}"/>`;

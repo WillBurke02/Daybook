@@ -1,60 +1,901 @@
 {
-  "about": "Open textbooks brought in as published (python3 daybook.py learn-import). 'lessons': an unwritten outline lesson filled with these sections, word for word. 'originals': a lesson already written from these sections, which gains a link to them as published. Sections are numbered as in the book: 11.1 is chapter 11's first section.",
-  "books": {
-    "precalculus-2e": {"repo": "osbooks-college-algebra-bundle", "title": "Precalculus 2e", "by": "Abramson et al."},
-    "algebra-and-trigonometry-2e": {"repo": "osbooks-college-algebra-bundle", "title": "Algebra and Trigonometry 2e", "by": "Abramson et al."},
-    "calculus-volume-1": {"repo": "osbooks-calculus-bundle", "title": "Calculus Volume 1", "by": "Strang, Herman et al."},
-    "calculus-volume-2": {"repo": "osbooks-calculus-bundle", "title": "Calculus Volume 2", "by": "Strang, Herman et al."},
-    "prealgebra-2e": {"repo": "osbooks-prealgebra-bundle", "title": "Prealgebra 2e", "by": "Marecek, Anthony-Smith, Honeycutt Mathis"},
-    "college-physics-2e": {"repo": "osbooks-college-physics-bundle", "title": "College Physics 2e", "by": "Urone, Hinrichs"},
-    "university-physics-volume-2": {"repo": "osbooks-university-physics-bundle", "title": "University Physics Volume 2", "by": "Ling, Sanny, Moebs"},
-    "university-physics-volume-1": {"repo": "osbooks-university-physics-bundle", "title": "University Physics Volume 1", "by": "Ling, Sanny, Moebs"},
-    "introductory-statistics-2e": {"repo": "osbooks-introductory-statistics-bundle", "title": "Introductory Statistics 2e", "by": "Illowsky, Dean"},
-    "chemistry-2e": {"repo": "osbooks-chemistry-bundle", "title": "Chemistry 2e", "by": "Flowers, Theopold, Langley, Robinson"}
+ "about": "Open textbooks brought in as published (python3 daybook.py learn-import). 'lessons': an unwritten outline lesson filled with these sections, word for word. 'originals': a lesson already written from these sections, which gains a link to them as published. Sections are numbered as in the book: 11.1 is chapter 11's first section. 'pages': an unwritten lesson filled from the other open and official sources in 'sources' (UK ones first), word for word; 'links': a written lesson's further reading from them, as published.",
+ "books": {
+  "precalculus-2e": {
+   "repo": "osbooks-college-algebra-bundle",
+   "title": "Precalculus 2e",
+   "by": "Abramson et al."
   },
-  "lessons": {
-    "maths.pure.coordinate-geometry": [["algebra-and-trigonometry-2e", "2.1"], ["precalculus-2e", "2.2"]],
-    "maths.pure.sequences-series": [["precalculus-2e", "11.1"], ["precalculus-2e", "11.2"], ["precalculus-2e", "11.3"], ["precalculus-2e", "11.4"]],
-    "maths.pure.binomial": [["precalculus-2e", "11.6"]],
-    "maths.pure.exp-log": [["precalculus-2e", "4.1"], ["precalculus-2e", "4.3"], ["precalculus-2e", "4.5"], ["precalculus-2e", "4.6"]],
-    "maths.pure.integration": [["calculus-volume-1", "5.2"], ["calculus-volume-1", "5.3"], ["calculus-volume-1", "5.5"], ["calculus-volume-2", "3.1"]],
-    "maths.pure.numerical-methods": [["calculus-volume-1", "4.9"], ["calculus-volume-2", "3.6"]],
-    "maths.pure.vectors": [["precalculus-2e", "8.8"]],
-    "physics.measure.uncertainties": [["college-physics-2e", "1.3"]],
-    "physics.waves.progressive": [["college-physics-2e", "16.9"], ["college-physics-2e", "17.2"]],
-    "physics.waves.superposition": [["college-physics-2e", "16.10"], ["college-physics-2e", "17.5"]],
-    "physics.elec.emf": [["college-physics-2e", "21.2"]],
-    "physics.fields.electric": [["college-physics-2e", "18.4"], ["college-physics-2e", "18.5"]],
-    "physics.fields.magnetic": [["college-physics-2e", "22.3"], ["college-physics-2e", "22.4"], ["college-physics-2e", "22.7"], ["college-physics-2e", "22.9"]],
-    "physics.fields.induction": [["college-physics-2e", "23.1"], ["college-physics-2e", "23.2"], ["college-physics-2e", "23.3"], ["college-physics-2e", "23.5"]],
-    "maths.mech.projectiles": [["college-physics-2e", "3.4"]],
-    "maths.mech.moments": [["college-physics-2e", "9.2"], ["college-physics-2e", "9.4"]],
-    "mechanical.elements.friction": [["college-physics-2e", "5.1"]],
-    "mechanical.dynamics.energy": [["college-physics-2e", "7.1"], ["college-physics-2e", "7.2"], ["college-physics-2e", "7.7"]],
-    "mechanical.dynamics.rotation": [["college-physics-2e", "10.1"], ["college-physics-2e", "10.3"], ["college-physics-2e", "10.4"]],
-    "mechanical.dynamics.vibration": [["college-physics-2e", "16.2"], ["college-physics-2e", "16.3"], ["college-physics-2e", "16.8"]],
-    "instrumentation.theory.second-order": [["university-physics-volume-1", "15.5"]],
-    "fluids.flow.bernoulli": [["college-physics-2e", "12.1"], ["college-physics-2e", "12.2"], ["college-physics-2e", "12.4"]],
-    "fluids.heat.transfer": [["college-physics-2e", "14.5"], ["college-physics-2e", "14.6"], ["college-physics-2e", "14.7"]],
-    "fluids.heat.thermodynamics": [["college-physics-2e", "15.1"], ["college-physics-2e", "15.3"]],
-    "maths.eng.odes": [["calculus-volume-2", "4.1"], ["calculus-volume-2", "4.3"], ["calculus-volume-2", "4.5"]],
-    "maths.eng.matrices": [["precalculus-2e", "9.5"], ["precalculus-2e", "9.6"], ["precalculus-2e", "9.7"]],
-    "materials.materials.corrosion": [["chemistry-2e", "17.6"]],
-    "maths.stats.sampling": [["introductory-statistics-2e", "1.2"]],
-    "maths.stats.data": [["introductory-statistics-2e", "2.2"], ["introductory-statistics-2e", "2.4"], ["introductory-statistics-2e", "2.7"]],
-    "maths.stats.probability": [["introductory-statistics-2e", "3.1"], ["introductory-statistics-2e", "3.2"], ["introductory-statistics-2e", "3.3"]],
-    "maths.stats.distributions": [["introductory-statistics-2e", "4.3"], ["introductory-statistics-2e", "6.1"], ["introductory-statistics-2e", "6.2"]],
-    "maths.stats.hypothesis": [["introductory-statistics-2e", "9.1"], ["introductory-statistics-2e", "9.2"], ["introductory-statistics-2e", "9.4"]]
+  "algebra-and-trigonometry-2e": {
+   "repo": "osbooks-college-algebra-bundle",
+   "title": "Algebra and Trigonometry 2e",
+   "by": "Abramson et al."
   },
-  "originals": {
-    "maths.pure.trigonometry": [["algebra-and-trigonometry-2e", "7.1"], ["algebra-and-trigonometry-2e", "7.2"], ["algebra-and-trigonometry-2e", "10.1"], ["algebra-and-trigonometry-2e", "10.2"]],
-    "maths.pure.algebra-functions": [["algebra-and-trigonometry-2e", "3.1"], ["algebra-and-trigonometry-2e", "3.2"], ["algebra-and-trigonometry-2e", "4.1"]],
-    "maths.found.measures": [["prealgebra-2e", "7.5"], ["prealgebra-2e", "9.4"]],
-    "maths.found.shapes": [["prealgebra-2e", "9.3"], ["prealgebra-2e", "9.4"]],
-    "physics.elec.circuits": [["college-physics-2e", "21.1"]],
-    "physics.elec.ac": [["college-physics-2e", "20.5"], ["university-physics-volume-2", "15.1"]],
-    "physics.elec.resistance": [["college-physics-2e", "20.2"], ["college-physics-2e", "20.3"], ["college-physics-2e", "20.4"]],
-    "physics.elec.charge-current": [["college-physics-2e", "20.1"], ["college-physics-2e", "19.1"]],
-    "electrical.supply.ac-power": [["university-physics-volume-2", "15.2"], ["university-physics-volume-2", "15.4"], ["college-physics-2e", "20.4"]]
+  "calculus-volume-1": {
+   "repo": "osbooks-calculus-bundle",
+   "title": "Calculus Volume 1",
+   "by": "Strang, Herman et al."
+  },
+  "calculus-volume-2": {
+   "repo": "osbooks-calculus-bundle",
+   "title": "Calculus Volume 2",
+   "by": "Strang, Herman et al."
+  },
+  "prealgebra-2e": {
+   "repo": "osbooks-prealgebra-bundle",
+   "title": "Prealgebra 2e",
+   "by": "Marecek, Anthony-Smith, Honeycutt Mathis"
+  },
+  "college-physics-2e": {
+   "repo": "osbooks-college-physics-bundle",
+   "title": "College Physics 2e",
+   "by": "Urone, Hinrichs"
+  },
+  "university-physics-volume-2": {
+   "repo": "osbooks-university-physics-bundle",
+   "title": "University Physics Volume 2",
+   "by": "Ling, Sanny, Moebs"
+  },
+  "university-physics-volume-1": {
+   "repo": "osbooks-university-physics-bundle",
+   "title": "University Physics Volume 1",
+   "by": "Ling, Sanny, Moebs"
+  },
+  "introductory-statistics-2e": {
+   "repo": "osbooks-introductory-statistics-bundle",
+   "title": "Introductory Statistics 2e",
+   "by": "Illowsky, Dean"
+  },
+  "chemistry-2e": {
+   "repo": "osbooks-chemistry-bundle",
+   "title": "Chemistry 2e",
+   "by": "Flowers, Theopold, Langley, Robinson"
   }
+ },
+ "lessons": {
+  "maths.pure.coordinate-geometry": [
+   [
+    "algebra-and-trigonometry-2e",
+    "2.1"
+   ],
+   [
+    "precalculus-2e",
+    "2.2"
+   ]
+  ],
+  "maths.pure.sequences-series": [
+   [
+    "precalculus-2e",
+    "11.1"
+   ],
+   [
+    "precalculus-2e",
+    "11.2"
+   ],
+   [
+    "precalculus-2e",
+    "11.3"
+   ],
+   [
+    "precalculus-2e",
+    "11.4"
+   ]
+  ],
+  "maths.pure.binomial": [
+   [
+    "precalculus-2e",
+    "11.6"
+   ]
+  ],
+  "maths.pure.exp-log": [
+   [
+    "precalculus-2e",
+    "4.1"
+   ],
+   [
+    "precalculus-2e",
+    "4.3"
+   ],
+   [
+    "precalculus-2e",
+    "4.5"
+   ],
+   [
+    "precalculus-2e",
+    "4.6"
+   ]
+  ],
+  "maths.pure.integration": [
+   [
+    "calculus-volume-1",
+    "5.2"
+   ],
+   [
+    "calculus-volume-1",
+    "5.3"
+   ],
+   [
+    "calculus-volume-1",
+    "5.5"
+   ],
+   [
+    "calculus-volume-2",
+    "3.1"
+   ]
+  ],
+  "maths.pure.numerical-methods": [
+   [
+    "calculus-volume-1",
+    "4.9"
+   ],
+   [
+    "calculus-volume-2",
+    "3.6"
+   ]
+  ],
+  "maths.pure.vectors": [
+   [
+    "precalculus-2e",
+    "8.8"
+   ]
+  ],
+  "physics.measure.uncertainties": [
+   [
+    "college-physics-2e",
+    "1.3"
+   ]
+  ],
+  "physics.waves.progressive": [
+   [
+    "college-physics-2e",
+    "16.9"
+   ],
+   [
+    "college-physics-2e",
+    "17.2"
+   ]
+  ],
+  "physics.waves.superposition": [
+   [
+    "college-physics-2e",
+    "16.10"
+   ],
+   [
+    "college-physics-2e",
+    "17.5"
+   ]
+  ],
+  "physics.elec.emf": [
+   [
+    "college-physics-2e",
+    "21.2"
+   ]
+  ],
+  "physics.fields.electric": [
+   [
+    "college-physics-2e",
+    "18.4"
+   ],
+   [
+    "college-physics-2e",
+    "18.5"
+   ]
+  ],
+  "physics.fields.magnetic": [
+   [
+    "college-physics-2e",
+    "22.3"
+   ],
+   [
+    "college-physics-2e",
+    "22.4"
+   ],
+   [
+    "college-physics-2e",
+    "22.7"
+   ],
+   [
+    "college-physics-2e",
+    "22.9"
+   ]
+  ],
+  "physics.fields.induction": [
+   [
+    "college-physics-2e",
+    "23.1"
+   ],
+   [
+    "college-physics-2e",
+    "23.2"
+   ],
+   [
+    "college-physics-2e",
+    "23.3"
+   ],
+   [
+    "college-physics-2e",
+    "23.5"
+   ]
+  ],
+  "maths.mech.projectiles": [
+   [
+    "college-physics-2e",
+    "3.4"
+   ]
+  ],
+  "maths.mech.moments": [
+   [
+    "college-physics-2e",
+    "9.2"
+   ],
+   [
+    "college-physics-2e",
+    "9.4"
+   ]
+  ],
+  "mechanical.elements.friction": [
+   [
+    "college-physics-2e",
+    "5.1"
+   ]
+  ],
+  "mechanical.dynamics.energy": [
+   [
+    "college-physics-2e",
+    "7.1"
+   ],
+   [
+    "college-physics-2e",
+    "7.2"
+   ],
+   [
+    "college-physics-2e",
+    "7.7"
+   ]
+  ],
+  "mechanical.dynamics.rotation": [
+   [
+    "college-physics-2e",
+    "10.1"
+   ],
+   [
+    "college-physics-2e",
+    "10.3"
+   ],
+   [
+    "college-physics-2e",
+    "10.4"
+   ]
+  ],
+  "mechanical.dynamics.vibration": [
+   [
+    "college-physics-2e",
+    "16.2"
+   ],
+   [
+    "college-physics-2e",
+    "16.3"
+   ],
+   [
+    "college-physics-2e",
+    "16.8"
+   ]
+  ],
+  "instrumentation.theory.second-order": [
+   [
+    "university-physics-volume-1",
+    "15.5"
+   ]
+  ],
+  "fluids.flow.bernoulli": [
+   [
+    "college-physics-2e",
+    "12.1"
+   ],
+   [
+    "college-physics-2e",
+    "12.2"
+   ],
+   [
+    "college-physics-2e",
+    "12.4"
+   ]
+  ],
+  "fluids.heat.transfer": [
+   [
+    "college-physics-2e",
+    "14.5"
+   ],
+   [
+    "college-physics-2e",
+    "14.6"
+   ],
+   [
+    "college-physics-2e",
+    "14.7"
+   ]
+  ],
+  "fluids.heat.thermodynamics": [
+   [
+    "college-physics-2e",
+    "15.1"
+   ],
+   [
+    "college-physics-2e",
+    "15.3"
+   ]
+  ],
+  "maths.eng.odes": [
+   [
+    "calculus-volume-2",
+    "4.1"
+   ],
+   [
+    "calculus-volume-2",
+    "4.3"
+   ],
+   [
+    "calculus-volume-2",
+    "4.5"
+   ]
+  ],
+  "maths.eng.matrices": [
+   [
+    "precalculus-2e",
+    "9.5"
+   ],
+   [
+    "precalculus-2e",
+    "9.6"
+   ],
+   [
+    "precalculus-2e",
+    "9.7"
+   ]
+  ],
+  "materials.materials.corrosion": [
+   [
+    "chemistry-2e",
+    "17.6"
+   ]
+  ],
+  "maths.stats.sampling": [
+   [
+    "introductory-statistics-2e",
+    "1.2"
+   ]
+  ],
+  "maths.stats.data": [
+   [
+    "introductory-statistics-2e",
+    "2.2"
+   ],
+   [
+    "introductory-statistics-2e",
+    "2.4"
+   ],
+   [
+    "introductory-statistics-2e",
+    "2.7"
+   ]
+  ],
+  "maths.stats.probability": [
+   [
+    "introductory-statistics-2e",
+    "3.1"
+   ],
+   [
+    "introductory-statistics-2e",
+    "3.2"
+   ],
+   [
+    "introductory-statistics-2e",
+    "3.3"
+   ]
+  ],
+  "maths.stats.distributions": [
+   [
+    "introductory-statistics-2e",
+    "4.3"
+   ],
+   [
+    "introductory-statistics-2e",
+    "6.1"
+   ],
+   [
+    "introductory-statistics-2e",
+    "6.2"
+   ]
+  ],
+  "maths.stats.hypothesis": [
+   [
+    "introductory-statistics-2e",
+    "9.1"
+   ],
+   [
+    "introductory-statistics-2e",
+    "9.2"
+   ],
+   [
+    "introductory-statistics-2e",
+    "9.4"
+   ]
+  ]
+ },
+ "originals": {
+  "maths.pure.trigonometry": [
+   [
+    "algebra-and-trigonometry-2e",
+    "7.1"
+   ],
+   [
+    "algebra-and-trigonometry-2e",
+    "7.2"
+   ],
+   [
+    "algebra-and-trigonometry-2e",
+    "10.1"
+   ],
+   [
+    "algebra-and-trigonometry-2e",
+    "10.2"
+   ]
+  ],
+  "maths.pure.algebra-functions": [
+   [
+    "algebra-and-trigonometry-2e",
+    "3.1"
+   ],
+   [
+    "algebra-and-trigonometry-2e",
+    "3.2"
+   ],
+   [
+    "algebra-and-trigonometry-2e",
+    "4.1"
+   ]
+  ],
+  "maths.found.measures": [
+   [
+    "prealgebra-2e",
+    "7.5"
+   ],
+   [
+    "prealgebra-2e",
+    "9.4"
+   ]
+  ],
+  "maths.found.shapes": [
+   [
+    "prealgebra-2e",
+    "9.3"
+   ],
+   [
+    "prealgebra-2e",
+    "9.4"
+   ]
+  ],
+  "physics.elec.circuits": [
+   [
+    "college-physics-2e",
+    "21.1"
+   ]
+  ],
+  "physics.elec.ac": [
+   [
+    "college-physics-2e",
+    "20.5"
+   ],
+   [
+    "university-physics-volume-2",
+    "15.1"
+   ]
+  ],
+  "physics.elec.resistance": [
+   [
+    "college-physics-2e",
+    "20.2"
+   ],
+   [
+    "college-physics-2e",
+    "20.3"
+   ],
+   [
+    "college-physics-2e",
+    "20.4"
+   ]
+  ],
+  "physics.elec.charge-current": [
+   [
+    "college-physics-2e",
+    "20.1"
+   ],
+   [
+    "college-physics-2e",
+    "19.1"
+   ]
+  ],
+  "electrical.supply.ac-power": [
+   [
+    "university-physics-volume-2",
+    "15.2"
+   ],
+   [
+    "university-physics-volume-2",
+    "15.4"
+   ],
+   [
+    "college-physics-2e",
+    "20.4"
+   ]
+  ]
+ },
+ "sources": {
+  "hse": {
+   "by": "Health and Safety Executive",
+   "uk": true,
+   "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "keep": [
+    "#page-contents",
+    "#contentContainer",
+    "main"
+   ],
+   "drop": [
+    ".printable-version",
+    ".hse-back-to-top",
+    ".v6-youtube-embed",
+    ".hse-breadcrumb__container",
+    "nav"
+   ],
+   "stop": [
+    "Related content",
+    "Is this page useful",
+    "Updated"
+   ]
+  },
+  "legislation": {
+   "by": "legislation.gov.uk (The National Archives)",
+   "uk": true,
+   "licence": "Contains public sector information licensed under the Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "keep": [
+    "#viewLegSnippet",
+    "#viewLegContents"
+   ],
+   "drop": [
+    ".LegAnnotations",
+    ".LegExtentRestriction",
+    ".LegCommentaryItem"
+   ]
+  },
+  "govuk": {
+   "by": "GOV.UK",
+   "uk": true,
+   "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+  },
+  "ncsc": {
+   "by": "National Cyber Security Centre",
+   "uk": true,
+   "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "keep": [
+    "div.c-layout-main",
+    "main"
+   ],
+   "drop": [
+    "p.mb-fl-xs",
+    "nav",
+    "aside"
+   ],
+   "skip": [
+    "Pages"
+   ],
+   "stop": [
+    "Learn more",
+    "Published",
+    "Reviewed",
+    "Also see",
+    "Was this article",
+    "Share and print",
+    "Downloads"
+   ],
+   "title_from": [
+    "h2.h1",
+    "h1",
+    "title"
+   ]
+  },
+  "doitpoms": {
+   "by": "DoITPoMS, University of Cambridge",
+   "uk": true,
+   "licence": "CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/",
+   "keep": [
+    "div.col-lg-9"
+   ],
+   "drop": [
+    "span.float-end",
+    ".d-print-none"
+   ],
+   "lead": false,
+   "skip": [
+    "Contents",
+    "Aims",
+    "Before you start",
+    "Video clip",
+    "Questions",
+    "Going further",
+    "simulation",
+    "Simulation"
+   ],
+   "cut": [
+    "DoITPoMS standard terms of use"
+   ]
+  },
+  "liec": {
+   "by": "Tony R. Kuphaldt, Lessons In Electric Circuits",
+   "licence": "CC BY 4.0, https://creativecommons.org/licenses/by/4.0/",
+   "keep": [
+    "body"
+   ]
+  },
+  "liii": {
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation",
+   "licence": "CC BY 4.0, https://creativecommons.org/licenses/by/4.0/"
+  },
+  "wikipedia": {
+   "by": "Wikipedia contributors",
+   "licence": "CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/",
+   "keep": [
+    "#mw-content-text"
+   ],
+   "drop": [
+    ".reflist",
+    ".navbox",
+    ".infobox",
+    ".mw-editsection",
+    "sup.reference",
+    ".hatnote",
+    ".ambox",
+    "#toc",
+    ".noprint",
+    ".metadata",
+    ".shortdescription",
+    ".mw-empty-elt",
+    "figure",
+    ".thumb",
+    ".gallery",
+    ".mbox-small",
+    ".sidebar",
+    ".vertical-navbox",
+    ".navbox-styles",
+    "style",
+    ".mw-references-wrap"
+   ],
+   "stop": [
+    "See also",
+    "References",
+    "Notes",
+    "Further reading",
+    "External links",
+    "Bibliography",
+    "Citations",
+    "Sources",
+    "Footnotes"
+   ]
+  }
+ },
+ "pages": {
+  "safety.law.law": [
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/ukpga/1974/37/section/2",
+    "title": "Health and Safety at Work etc. Act 1974, section 2: General duties of employers to their employees"
+   },
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/ukpga/1974/37/section/6",
+    "title": "Health and Safety at Work etc. Act 1974, section 6: General duties of manufacturers etc. as regards articles and substances for use at work"
+   },
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/ukpga/1974/37/section/7",
+    "title": "Health and Safety at Work etc. Act 1974, section 7: General duties of employees at work"
+   },
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/uksi/1998/2306/regulation/4",
+    "title": "Provision and Use of Work Equipment Regulations 1998, regulation 4: Suitability of work equipment"
+   },
+   {
+    "src": "govuk",
+    "url": "https://www.gov.uk/guidance/placing-ukca-or-ce-marked-products-on-the-market-in-great-britain"
+   }
+  ],
+  "safety.law.risk": [
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/simple-health-safety/risk/index.htm"
+   },
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/simple-health-safety/risk/steps-needed-to-manage-risk.htm"
+   },
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/simple-health-safety/risk/more-detail-on-managing-risk.htm"
+   }
+  ],
+  "safety.law.rams": [
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/pubns/priced/hsg250.pdf",
+    "pages": [
+     7,
+     15
+    ],
+    "title": "Guidance on permit-to-work systems (HSG250)"
+   },
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/pubns/priced/hsg253.pdf",
+    "pages": [
+     44,
+     46
+    ],
+    "title": "The safe isolation of plant and equipment (HSG253), Appendix 2: Non-process isolation hazards"
+   }
+  ],
+  "safety.safeguards.guards": [
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/pubns/priced/l22.pdf",
+    "pages": [
+     36,
+     38
+    ],
+    "title": "Safe use of work equipment (L22): regulation 11, Dangerous parts of machinery"
+   },
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/pubns/priced/l22.pdf",
+    "pages": [
+     70,
+     73
+    ],
+    "title": "Safe use of work equipment (L22), Appendix 1: Further guidance on regulation 11"
+   }
+  ],
+  "electrical.hazardous.atex": [
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/uksi/2002/2776/schedule/2",
+    "title": "Dangerous Substances and Explosive Atmospheres Regulations 2002, Schedule 2: Classification of places where explosive atmospheres may occur"
+   },
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/uksi/2002/2776/regulation/7",
+    "title": "Dangerous Substances and Explosive Atmospheres Regulations 2002, regulation 7: Places where explosive atmospheres may occur"
+   },
+   {
+    "src": "legislation",
+    "url": "https://www.legislation.gov.uk/uksi/2002/2776/schedule/3",
+    "title": "Dangerous Substances and Explosive Atmospheres Regulations 2002, Schedule 3: Criteria for the selection of equipment and protective systems"
+   }
+  ],
+  "instrumentation.loops.alarms": [
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/humanfactors/topics/alarm-management.htm"
+   },
+   {
+    "src": "hse",
+    "url": "https://www.hse.gov.uk/pubns/chis6.pdf",
+    "title": "Better alarm handling (CHIS6)"
+   }
+  ],
+  "physics.ut.generation": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/piezoelectrics/"
+   }
+  ],
+  "materials.materials.heat-treatment": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/jominy/"
+   }
+  ],
+  "materials.materials.composites": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/fibre_composites/",
+    "skip": [
+     "Contents",
+     "Aims",
+     "Before you start",
+     "Video clip",
+     "Questions",
+     "Going further",
+     "simulation",
+     "Simulation",
+     "Definitions",
+     "derivation",
+     "inaccuracy",
+     "Notations",
+     "Single fibre pull out",
+     "Stresses in a Vaulting Pole",
+     "Why are they",
+     "Interfacial debonding"
+    ]
+   }
+  ],
+  "materials.processes.additive": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/add_manuf/"
+   }
+  ],
+  "mechanical.strength.beams": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/beam_bending/",
+    "skip": [
+     "Contents",
+     "Aims",
+     "Before you start",
+     "Video clip",
+     "Questions",
+     "Going further",
+     "simulation",
+     "Simulation",
+     "Twisting moments",
+     "Springs",
+     "Pole-vaulting",
+     "Derivation"
+    ]
+   }
+  ],
+  "mechanical.strength.torsion": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/beam_bending/",
+    "part": [
+     "Twisting moments",
+     "Plastic deformation"
+    ],
+    "questions": false
+   }
+  ],
+  "networks.systems.security": [
+   {
+    "src": "ncsc",
+    "url": "https://www.ncsc.gov.uk/collection/operational-technology/secure-connectivity/introduction"
+   },
+   {
+    "src": "ncsc",
+    "url": "https://www.ncsc.gov.uk/collection/operational-technology/secure-connectivity/principle-1"
+   },
+   {
+    "src": "ncsc",
+    "url": "https://www.ncsc.gov.uk/collection/operational-technology/secure-connectivity/principle-3"
+   }
+  ],
+  "software.systems.security": [
+   {
+    "src": "ncsc",
+    "url": "https://www.ncsc.gov.uk/collection/passwords/updating-your-approach"
+   },
+   {
+    "src": "ncsc",
+    "url": "https://www.ncsc.gov.uk/collection/10-steps/identity-and-access-management"
+   }
+  ]
+ },
+ "links": {
+  "materials.materials.properties": [
+   {
+    "src": "doitpoms",
+    "url": "https://www.doitpoms.ac.uk/tlplib/mechanical_properties/",
+    "questions": false
+   }
+  ]
+ }
 }

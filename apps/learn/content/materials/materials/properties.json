@@ -1,7 +1,16 @@
 {
  "id": "materials.materials.properties",
  "title": "Material properties: strength, hardness, toughness",
- "tags": ["materials", "strength", "hardness", "toughness", "ductility", "Charpy", "tensile test", "density"],
+ "tags": [
+  "materials",
+  "strength",
+  "hardness",
+  "toughness",
+  "ductility",
+  "Charpy",
+  "tensile test",
+  "density"
+ ],
  "kind": "facts",
  "level": 4.8,
  "minutes": 20,
@@ -13,7 +22,23 @@
  ],
  "summary": "Different properties answer different questions. A file is very **hard** but snaps if dropped: hard, not **tough**.\n\n- **Strength**: the stress it takes. **Yield strength**: where it starts to stay bent. **Ultimate tensile strength** (UTS): the most it takes. In MPa (N/mm²). Tested by pulling a bar in a **tensile test**: UTS = peak load ÷ original area.\n- **Ductility**: how far it stretches before it breaks: **elongation** = increase in gauge length ÷ original × 100%. Ductile metals give warning; brittle ones (cast iron, glass, hardened tool steel) do not.\n- **Hardness**: resistance to dents and scratches. Pressed in with an indenter: **Brinell** (HB, a ball), **Vickers** (HV, a diamond pyramid), **Rockwell** (HRC on hardened steels). Harder usually means stronger and more wear-resistant, but less tough.\n- **Toughness**: the energy it absorbs before breaking, with a crack or notch. The **Charpy** test swings a pendulum through a notched bar and measures the joules absorbed. Steels lose toughness when **cold**: the grade letters say at what temperature 27 J is guaranteed: **JR** at +20 °C, **J0** at 0 °C, **J2** at −20 °C (S355J2, for example).\n- **Stiffness**: Young's modulus $E$: steel about 200 GPa, titanium about 114, aluminium about 70.\n- **Density**: steel about 7850 kg/m³, titanium about 4430, aluminium about 2700.\n\nStrong is not stiff, and hard is not tough. Aluminium alloys can match mild steel's strength at a third of the weight, but bend three times as far. Titanium is strong, fairly light and resists corrosion: costly, so used where it pays (aerospace, chemical plant).",
  "resources": [
-  {"when": "after", "kind": "video", "title": "Reaching Breaking Point: Materials, Stresses, and Toughness (Crash Course Engineering #18)", "url": "https://thecrashcourse.com/courses/reaching-breaking-point-materials-stresses-toughness-crash-course-engineering-18/", "by": "Crash Course", "minutes": 10}
+  {
+   "when": "after",
+   "kind": "video",
+   "title": "Reaching Breaking Point: Materials, Stresses, and Toughness (Crash Course Engineering #18)",
+   "url": "https://thecrashcourse.com/courses/reaching-breaking-point-materials-stresses-toughness-crash-course-engineering-18/",
+   "by": "Crash Course",
+   "minutes": 10
+  },
+  {
+   "kind": "read",
+   "title": "Introduction to Mechanical Properties of Materials",
+   "url": "media/doitpoms/introduction-to-mechanical-properties-of-materials-2e82c2.html",
+   "by": "DoITPoMS, University of Cambridge",
+   "when": "after",
+   "note": "More on this, as published",
+   "linked": true
+  }
  ],
  "sources": [
   "BS EN ISO 6892-1: Metallic materials. Tensile testing. Method of test at room temperature",
@@ -23,46 +48,421 @@
   "Callister, W. D. and Rethwisch, D. G.: Materials Science and Engineering: An Introduction, 10th edition (Wiley)"
  ],
  "formulas": [
-  {"name": "Tensile strength", "tex": "UTS = \\frac{F_{max}}{A_0}", "match": ["\\frac{F_{max}}{A_0}"],
+  {
+   "name": "Tensile strength",
+   "tex": "UTS = \\frac{F_{max}}{A_0}",
+   "match": [
+    "\\frac{F_{max}}{A_0}"
+   ],
    "says": "The biggest load the test bar took, shared over the area it started with.",
-   "symbols": [["UTS", "the ultimate tensile strength (MPa)"], ["F_{max}", "the peak load in the test (N)"], ["A_0", "the original cross-section area (mm²)"]],
-   "example": "Peak 40 kN on 100 mm²: $\\frac{40\\,000}{100} = 400$ MPa."},
-  {"name": "Elongation at break", "tex": "A\\% = \\frac{L_u - L_0}{L_0} \\times 100", "match": ["\\frac{L_u - L_0}{L_0}"],
+   "symbols": [
+    [
+     "UTS",
+     "the ultimate tensile strength (MPa)"
+    ],
+    [
+     "F_{max}",
+     "the peak load in the test (N)"
+    ],
+    [
+     "A_0",
+     "the original cross-section area (mm²)"
+    ]
+   ],
+   "example": "Peak 40 kN on 100 mm²: $\\frac{40\\,000}{100} = 400$ MPa."
+  },
+  {
+   "name": "Elongation at break",
+   "tex": "A\\% = \\frac{L_u - L_0}{L_0} \\times 100",
+   "match": [
+    "\\frac{L_u - L_0}{L_0}"
+   ],
    "says": "How much longer the gauge length is after the break, as a percentage of what it was.",
-   "symbols": [["A\\%", "the elongation (per cent)"], ["L_u", "the gauge length after the break, pieces fitted together (mm)"], ["L_0", "the original gauge length (mm)"]],
-   "example": "50 mm grew to 61 mm: $\\frac{11}{50} \\times 100 = 22\\%$."}
+   "symbols": [
+    [
+     "A\\%",
+     "the elongation (per cent)"
+    ],
+    [
+     "L_u",
+     "the gauge length after the break, pieces fitted together (mm)"
+    ],
+    [
+     "L_0",
+     "the original gauge length (mm)"
+    ]
+   ],
+   "example": "50 mm grew to 61 mm: $\\frac{11}{50} \\times 100 = 22\\%$."
+  }
  ],
  "bench": [
-  {"task": "Look up the material certificate (mill cert) for a steel delivery or a fabricated part at work.", "check": ["Find the grade (for example S355J2) and say what J2 means", "Find the yield strength, tensile strength and elongation", "Find the Charpy result and its test temperature", "Check each is at or above what the grade requires"]}
+  {
+   "task": "Look up the material certificate (mill cert) for a steel delivery or a fabricated part at work.",
+   "check": [
+    "Find the grade (for example S355J2) and say what J2 means",
+    "Find the yield strength, tensile strength and elongation",
+    "Find the Charpy result and its test temperature",
+    "Check each is at or above what the grade requires"
+   ]
+  }
  ],
  "cards": [
-  {"id": "try-file", "type": "mcq", "stage": "try", "q": "A hardened steel file is very hard, yet it can snap if dropped on a concrete floor. Which property does it lack?", "options": ["Toughness", "Hardness", "Stiffness", "Density"], "answer": 0, "why": "Hardness is resistance to dents and scratches; toughness is the energy it can absorb before breaking. Hardening steel raises hardness and lowers toughness: a file is the extreme."},
-
-  {"id": "strength", "type": "concept", "stage": "learn", "title": "Strength and the tensile test", "body": "**Strength** is the stress a material takes, in MPa (N/mm²). It is measured by pulling a standard bar until it breaks, a **tensile test**:\n\n- **Yield strength** ($R_e$, or $R_{p0.2}$ where there is no clear yield): where it begins to stretch for good.\n- **Ultimate tensile strength** ($R_m$, UTS): the peak load ÷ the original area.\n\nDesign works below yield. S275 structural steel: yield 275 MPa, UTS about 410–560 MPa.", "more": "The tensile machine records load against stretch. At first the bar stretches a tiny amount, in proportion to the load, and would spring back. Then at the yield point it starts to stretch much more for little extra load. Then the load climbs to a peak (the UTS) as the metal hardens by being stretched, before a neck forms and it breaks.\n\nAluminium and many alloy steels have no sharp yield point, so the **0.2% proof stress** is used: the stress that leaves a 0.2% permanent stretch.\n\nThe S in S275 is structural steel, and 275 is the minimum yield strength in MPa (for thinner sections)."},
-  {"id": "uts-calc", "type": "numeric", "stage": "learn", "level": 4.9, "q": "A tensile test bar of {ar} mm² breaks after a peak load of {kn} kN. What is its tensile strength?", "vars": {"ar": {"pick": [50, 78.5, 100, 150]}, "kn": {"pick": [20, 30, 45, 60]}}, "answer": "kn * 1000 / ar", "unit": "MPa", "tolerance": 0.01, "work": "$\\frac{{kn} \\times 1000}{{ar}} = {answer}$ MPa", "why": "Tensile strength is the peak load over the original area; N/mm² is MPa.", "hint": "kN × 1000 for newtons, ÷ the area in mm²."},
-
-  {"id": "ductility", "type": "concept", "stage": "learn", "title": "Ductility: stretch before breaking", "body": "**Ductility** is how far a material stretches before it breaks. From the tensile test, the **elongation**: fit the broken halves together and measure the gauge length.\n\n$$A\\% = \\frac{L_u - L_0}{L_0} \\times 100$$\n\nMild steel: about 20–25%. Cast iron: under 1%: **brittle**.\n\nDuctility is a safety margin: a ductile part bends and gives warning; a brittle one breaks suddenly. It also decides whether a part can be bent, pressed or drawn into shape.", "more": "Mark two lines 50 mm apart on a test bar. After it breaks, push the pieces together and measure between the lines: say 61 mm. It stretched 11 mm, which is $11 \\div 50 = 22\\%$.\n\nA chocolate bar from the fridge snaps cleanly: brittle. Warm toffee stretches into strings before it parts: ductile. Most structural steels behave like the toffee at room temperature, which is why overloaded steelwork sags and twists before it collapses."},
-  {"id": "elong-calc", "type": "numeric", "stage": "learn", "level": 4.6, "q": "A tensile bar's gauge marks were {l0} mm apart. After the break, fitted together, they are {lu} mm apart. What is the elongation?", "vars": {"l0": {"pick": [50, 80, 100]}, "pc": {"pick": [8, 12, 18, 22, 30]}}, "let": {"lu": "l0 * (1 + pc / 100)"}, "answer": "(lu - l0) / l0 * 100", "unit": "%", "tolerance": 0.01, "work": "$\\frac{{lu} - {l0}}{{l0}} \\times 100 = {answer}\\%$", "why": "The increase over the original length, as a percentage.", "hint": "Increase ÷ original × 100."},
-
-  {"id": "hardness", "type": "concept", "stage": "learn", "title": "Hardness: dents and wear", "body": "**Hardness** is resistance to being dented or scratched. A hard indenter is pressed in under a set load and the dent is measured:\n\n- **Brinell** (HB): a hard ball; a big dent, good for castings and softer steels\n- **Vickers** (HV): a diamond pyramid; any material, small dents\n- **Rockwell** (HRC for hardened steels): reads the depth directly; quick\n\nHarder usually means more **wear** resistance and higher strength, but less toughness. Hardness tests are quick and nearly non-destructive, so they check heat treatment.", "more": "Press your thumbnail into wood, then into a steel plate: the wood dents. Hardness tests do that with a measured load and a tiny precise indenter.\n\nA mild steel might be about 130 HB; a hardened tool steel 60 HRC or more (around 700 HV). Bearings and gear teeth are hardened at the surface for wear while their core stays tougher.\n\nFor steels, hardness and tensile strength go roughly together, so a hardness reading on a finished part gives a fair idea of its strength without cutting out a test bar (conversion tables are in ISO 18265)."},
-  {"id": "hardness-match", "type": "match", "stage": "learn", "level": 4.6, "q": "Match each hardness test with its indenter.", "pairs": [["Brinell", "A hard ball"], ["Vickers", "A diamond pyramid"], ["Rockwell C", "A diamond cone, reading the depth"]], "why": "Each test presses a known indenter in under a set load and measures the dent: its size (Brinell, Vickers) or depth (Rockwell)."},
-
-  {"id": "toughness", "type": "concept", "stage": "learn", "title": "Toughness, and the cold", "body": "**Toughness** is the energy a material absorbs before it breaks, especially with a notch or crack in it. The **Charpy** test swings a pendulum through a notched bar and measures the joules it took.\n\nMany steels are tough when warm and turn **brittle when cold**. So a steel grade's letters say at what temperature it is guaranteed 27 J:\n\n- **JR**: +20 °C\n- **J0**: 0 °C\n- **J2**: −20 °C\n\nOutdoor structures in a UK winter call for J0 or J2.", "more": "Toughness is about cracks. A tough material, notched, still stretches and absorbs energy at the notch tip; a brittle one lets the crack run straight through.\n\nThe Charpy pendulum is lifted to a set height and dropped through the bar. The higher it swings on afterwards, the less energy the bar took: a tough bar slows it a lot.\n\nTest the same steel at falling temperatures and the energy drops sharply over a range: the **ductile-to-brittle transition**. Ships and bridges have broken in two in cold weather because their steel was past it. S355J2 means: structural, 355 MPa yield, 27 J guaranteed at −20 °C."},
-  {"id": "j2-mean", "type": "mcq", "stage": "learn", "q": "What does the 'J2' in S355J2 tell you?", "options": ["It is guaranteed 27 J in a Charpy test at −20 °C", "It is the second grade of S355 by strength", "It has a yield strength of 355 MPa at 2 °C", "It may be welded only with J2 electrodes"], "answer": 0, "why": "The letters after the strength give the impact toughness: 27 J (J) at −20 °C (2). JR is at +20 °C and J0 at 0 °C. The 355 is the minimum yield strength in MPa."},
-
-  {"id": "stiff-light", "type": "concept", "stage": "learn", "title": "Stiffness and weight", "body": "**Stiffness** is Young's modulus, $E$: how much it bends under load, not how much it takes. **Density** is how heavy it is for its size.\n\n- Steel: E about 200 GPa, density about 7850 kg/m³\n- Titanium alloy: about 114 GPa, 4430 kg/m³\n- Aluminium alloy: about 70 GPa, 2700 kg/m³\n\nA strong aluminium alloy can match mild steel's strength at a third of the weight, but it bends three times as far. Strength per weight is what aircraft and moving machine parts care about.", "more": "Two beams of the same shape, one steel, one aluminium, the same load: the aluminium one sags three times as much, because E is a third. To match the steel's stiffness the aluminium section is made deeper, which is why aluminium extrusions are often bigger and boxier.\n\nPer kilogram, though, aluminium does well: a third of the density, so a deeper section can still be lighter. For a gantry axis that accelerates hard, lighter moving parts mean a smaller motor.\n\nTitanium sits between: much stronger than most aluminium, about half steel's stiffness, 57% of its weight, and very corrosion resistant."},
-  {"id": "stiff-or-strong", "type": "mcq", "stage": "learn", "level": 5.1, "q": "A steel bracket is swapped for an aluminium one of the same shape and the same strength. What changes most?", "options": ["It deflects about three times as much", "It breaks at about a third of the load", "It weighs about three times as much", "Nothing changes: the strength is the same"], "answer": 0, "why": "Same strength, so it takes the same load before yielding. But aluminium's E is about a third of steel's, so it bends about three times as far. It also weighs about a third as much."},
-
-  {"id": "match-props", "type": "match", "stage": "practise", "q": "Match each property with what it means.", "pairs": [["Strength", "The stress it takes before yielding or breaking"], ["Hardness", "How well it resists dents and scratches"], ["Toughness", "The energy it absorbs before it fractures"], ["Ductility", "How far it stretches before it breaks"], ["Stiffness", "How little it bends under load"]], "why": "Five different questions about a material, with five different tests."},
-  {"id": "match-tests", "type": "match", "stage": "practise", "level": 4.5, "q": "Match each test with what it measures.", "pairs": [["Tensile test", "Yield, tensile strength and elongation"], ["Charpy test", "Impact toughness"], ["Vickers test", "Hardness"]]},
-  {"id": "uts-round", "type": "numeric", "stage": "practise", "level": 5.3, "q": "A round test bar {dd} mm in diameter breaks at {kn} kN. What is its tensile strength?", "vars": {"dd": {"pick": [8, 10, 12.5]}, "kn": {"pick": [25, 35, 50]}}, "let": {"ar": "PI() * dd ^ 2 / 4"}, "answer": "kn * 1000 / ar", "unit": "MPa", "tolerance": 0.01, "work": "$A = \\frac{\\pi \\times {dd}^2}{4} = {ar:1}$ mm²; $\\frac{{kn} \\times 1000}{{ar:1}} = {answer}$ MPa", "why": "Area of the round bar first, then the peak load over it.", "hint": "$A = \\frac{\\pi d^2}{4}$."},
-  {"id": "cold-steel", "type": "mcq", "stage": "practise", "level": 5.3, "q": "A crane runway outdoors in Scotland is to be made of S355. Why might the designer ask for S355J2 rather than S355JR?", "options": ["J2 is tested tough at −20 °C; JR only at +20 °C", "J2 has a higher yield strength than JR", "J2 is easier to cut and drill than JR", "JR cannot be used outdoors at all"], "answer": 0, "why": "Steel can turn brittle in the cold. JR only guarantees toughness at room temperature; J2 guarantees it at −20 °C, which a Scottish winter can reach. Both have the same 355 MPa yield."},
-  {"id": "flash-densities", "type": "flash", "stage": "practise", "front": "Rough densities: steel, titanium, aluminium?", "back": "Steel about 7850 kg/m³; titanium about 4430; aluminium about 2700."},
-  {"id": "flash-e", "type": "flash", "stage": "practise", "front": "Young's modulus (stiffness): steel, titanium, aluminium?", "back": "Steel about 200 GPa; titanium alloy about 114 GPa; aluminium about 70 GPa."},
-  {"id": "hard-tough", "type": "mcq", "stage": "practise", "level": 5.0, "q": "Gear teeth are often case hardened: hard at the surface, softer in the middle. Why?", "options": ["Hard skin for wear, tough core against snapping", "It makes the gear lighter overall", "A soft core makes the gear stiffer", "So the teeth can be machined afterwards"], "answer": 0, "why": "Hardness resists wear where the teeth rub; a tougher core absorbs shock loads without the tooth snapping. Through-hardening would make the whole tooth brittle."},
-
-  {"id": "check-try", "type": "mcq", "stage": "check", "q": "A glass rod is hard and strong in compression, but shatters when struck. Which property is it short of?", "options": ["Toughness", "Hardness", "Stiffness", "Strength in compression"], "answer": 0, "why": "Glass is hard and stiff but absorbs very little energy before cracking: it is brittle, with low toughness."},
-  {"id": "check-uts", "type": "numeric", "stage": "check", "q": "A test bar of {ar} mm² breaks at {kn} kN. Tensile strength?", "vars": {"ar": {"pick": [80, 100, 125]}, "kn": {"pick": [32, 44, 50]}}, "answer": "kn * 1000 / ar", "unit": "MPa", "tolerance": 0.01, "work": "$\\frac{{kn} \\times 1000}{{ar}} = {answer}$ MPa", "why": "Peak load over original area."},
-  {"id": "check-grades", "type": "match", "stage": "check", "q": "Match each toughness letter pair with its Charpy test temperature (27 J).", "pairs": [["JR", "+20 °C"], ["J0", "0 °C"], ["J2", "−20 °C"]]}
+  {
+   "id": "try-file",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A hardened steel file is very hard, yet it can snap if dropped on a concrete floor. Which property does it lack?",
+   "options": [
+    "Toughness",
+    "Hardness",
+    "Stiffness",
+    "Density"
+   ],
+   "answer": 0,
+   "why": "Hardness is resistance to dents and scratches; toughness is the energy it can absorb before breaking. Hardening steel raises hardness and lowers toughness: a file is the extreme."
+  },
+  {
+   "id": "strength",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Strength and the tensile test",
+   "body": "**Strength** is the stress a material takes, in MPa (N/mm²). It is measured by pulling a standard bar until it breaks, a **tensile test**:\n\n- **Yield strength** ($R_e$, or $R_{p0.2}$ where there is no clear yield): where it begins to stretch for good.\n- **Ultimate tensile strength** ($R_m$, UTS): the peak load ÷ the original area.\n\nDesign works below yield. S275 structural steel: yield 275 MPa, UTS about 410–560 MPa.",
+   "more": "The tensile machine records load against stretch. At first the bar stretches a tiny amount, in proportion to the load, and would spring back. Then at the yield point it starts to stretch much more for little extra load. Then the load climbs to a peak (the UTS) as the metal hardens by being stretched, before a neck forms and it breaks.\n\nAluminium and many alloy steels have no sharp yield point, so the **0.2% proof stress** is used: the stress that leaves a 0.2% permanent stretch.\n\nThe S in S275 is structural steel, and 275 is the minimum yield strength in MPa (for thinner sections)."
+  },
+  {
+   "id": "uts-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.9,
+   "q": "A tensile test bar of {ar} mm² breaks after a peak load of {kn} kN. What is its tensile strength?",
+   "vars": {
+    "ar": {
+     "pick": [
+      50,
+      78.5,
+      100,
+      150
+     ]
+    },
+    "kn": {
+     "pick": [
+      20,
+      30,
+      45,
+      60
+     ]
+    }
+   },
+   "answer": "kn * 1000 / ar",
+   "unit": "MPa",
+   "tolerance": 0.01,
+   "work": "$\\frac{{kn} \\times 1000}{{ar}} = {answer}$ MPa",
+   "why": "Tensile strength is the peak load over the original area; N/mm² is MPa.",
+   "hint": "kN × 1000 for newtons, ÷ the area in mm²."
+  },
+  {
+   "id": "ductility",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Ductility: stretch before breaking",
+   "body": "**Ductility** is how far a material stretches before it breaks. From the tensile test, the **elongation**: fit the broken halves together and measure the gauge length.\n\n$$A\\% = \\frac{L_u - L_0}{L_0} \\times 100$$\n\nMild steel: about 20–25%. Cast iron: under 1%: **brittle**.\n\nDuctility is a safety margin: a ductile part bends and gives warning; a brittle one breaks suddenly. It also decides whether a part can be bent, pressed or drawn into shape.",
+   "more": "Mark two lines 50 mm apart on a test bar. After it breaks, push the pieces together and measure between the lines: say 61 mm. It stretched 11 mm, which is $11 \\div 50 = 22\\%$.\n\nA chocolate bar from the fridge snaps cleanly: brittle. Warm toffee stretches into strings before it parts: ductile. Most structural steels behave like the toffee at room temperature, which is why overloaded steelwork sags and twists before it collapses."
+  },
+  {
+   "id": "elong-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A tensile bar's gauge marks were {l0} mm apart. After the break, fitted together, they are {lu} mm apart. What is the elongation?",
+   "vars": {
+    "l0": {
+     "pick": [
+      50,
+      80,
+      100
+     ]
+    },
+    "pc": {
+     "pick": [
+      8,
+      12,
+      18,
+      22,
+      30
+     ]
+    }
+   },
+   "let": {
+    "lu": "l0 * (1 + pc / 100)"
+   },
+   "answer": "(lu - l0) / l0 * 100",
+   "unit": "%",
+   "tolerance": 0.01,
+   "work": "$\\frac{{lu} - {l0}}{{l0}} \\times 100 = {answer}\\%$",
+   "why": "The increase over the original length, as a percentage.",
+   "hint": "Increase ÷ original × 100."
+  },
+  {
+   "id": "hardness",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Hardness: dents and wear",
+   "body": "**Hardness** is resistance to being dented or scratched. A hard indenter is pressed in under a set load and the dent is measured:\n\n- **Brinell** (HB): a hard ball; a big dent, good for castings and softer steels\n- **Vickers** (HV): a diamond pyramid; any material, small dents\n- **Rockwell** (HRC for hardened steels): reads the depth directly; quick\n\nHarder usually means more **wear** resistance and higher strength, but less toughness. Hardness tests are quick and nearly non-destructive, so they check heat treatment.",
+   "more": "Press your thumbnail into wood, then into a steel plate: the wood dents. Hardness tests do that with a measured load and a tiny precise indenter.\n\nA mild steel might be about 130 HB; a hardened tool steel 60 HRC or more (around 700 HV). Bearings and gear teeth are hardened at the surface for wear while their core stays tougher.\n\nFor steels, hardness and tensile strength go roughly together, so a hardness reading on a finished part gives a fair idea of its strength without cutting out a test bar (conversion tables are in ISO 18265)."
+  },
+  {
+   "id": "hardness-match",
+   "type": "match",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "Match each hardness test with its indenter.",
+   "pairs": [
+    [
+     "Brinell",
+     "A hard ball"
+    ],
+    [
+     "Vickers",
+     "A diamond pyramid"
+    ],
+    [
+     "Rockwell C",
+     "A diamond cone, reading the depth"
+    ]
+   ],
+   "why": "Each test presses a known indenter in under a set load and measures the dent: its size (Brinell, Vickers) or depth (Rockwell)."
+  },
+  {
+   "id": "toughness",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Toughness, and the cold",
+   "body": "**Toughness** is the energy a material absorbs before it breaks, especially with a notch or crack in it. The **Charpy** test swings a pendulum through a notched bar and measures the joules it took.\n\nMany steels are tough when warm and turn **brittle when cold**. So a steel grade's letters say at what temperature it is guaranteed 27 J:\n\n- **JR**: +20 °C\n- **J0**: 0 °C\n- **J2**: −20 °C\n\nOutdoor structures in a UK winter call for J0 or J2.",
+   "more": "Toughness is about cracks. A tough material, notched, still stretches and absorbs energy at the notch tip; a brittle one lets the crack run straight through.\n\nThe Charpy pendulum is lifted to a set height and dropped through the bar. The higher it swings on afterwards, the less energy the bar took: a tough bar slows it a lot.\n\nTest the same steel at falling temperatures and the energy drops sharply over a range: the **ductile-to-brittle transition**. Ships and bridges have broken in two in cold weather because their steel was past it. S355J2 means: structural, 355 MPa yield, 27 J guaranteed at −20 °C."
+  },
+  {
+   "id": "j2-mean",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does the 'J2' in S355J2 tell you?",
+   "options": [
+    "It is guaranteed 27 J in a Charpy test at −20 °C",
+    "It is the second grade of S355 by strength",
+    "It has a yield strength of 355 MPa at 2 °C",
+    "It may be welded only with J2 electrodes"
+   ],
+   "answer": 0,
+   "why": "The letters after the strength give the impact toughness: 27 J (J) at −20 °C (2). JR is at +20 °C and J0 at 0 °C. The 355 is the minimum yield strength in MPa."
+  },
+  {
+   "id": "stiff-light",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Stiffness and weight",
+   "body": "**Stiffness** is Young's modulus, $E$: how much it bends under load, not how much it takes. **Density** is how heavy it is for its size.\n\n- Steel: E about 200 GPa, density about 7850 kg/m³\n- Titanium alloy: about 114 GPa, 4430 kg/m³\n- Aluminium alloy: about 70 GPa, 2700 kg/m³\n\nA strong aluminium alloy can match mild steel's strength at a third of the weight, but it bends three times as far. Strength per weight is what aircraft and moving machine parts care about.",
+   "more": "Two beams of the same shape, one steel, one aluminium, the same load: the aluminium one sags three times as much, because E is a third. To match the steel's stiffness the aluminium section is made deeper, which is why aluminium extrusions are often bigger and boxier.\n\nPer kilogram, though, aluminium does well: a third of the density, so a deeper section can still be lighter. For a gantry axis that accelerates hard, lighter moving parts mean a smaller motor.\n\nTitanium sits between: much stronger than most aluminium, about half steel's stiffness, 57% of its weight, and very corrosion resistant."
+  },
+  {
+   "id": "stiff-or-strong",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.1,
+   "q": "A steel bracket is swapped for an aluminium one of the same shape and the same strength. What changes most?",
+   "options": [
+    "It deflects about three times as much",
+    "It breaks at about a third of the load",
+    "It weighs about three times as much",
+    "Nothing changes: the strength is the same"
+   ],
+   "answer": 0,
+   "why": "Same strength, so it takes the same load before yielding. But aluminium's E is about a third of steel's, so it bends about three times as far. It also weighs about a third as much."
+  },
+  {
+   "id": "match-props",
+   "type": "match",
+   "stage": "practise",
+   "q": "Match each property with what it means.",
+   "pairs": [
+    [
+     "Strength",
+     "The stress it takes before yielding or breaking"
+    ],
+    [
+     "Hardness",
+     "How well it resists dents and scratches"
+    ],
+    [
+     "Toughness",
+     "The energy it absorbs before it fractures"
+    ],
+    [
+     "Ductility",
+     "How far it stretches before it breaks"
+    ],
+    [
+     "Stiffness",
+     "How little it bends under load"
+    ]
+   ],
+   "why": "Five different questions about a material, with five different tests."
+  },
+  {
+   "id": "match-tests",
+   "type": "match",
+   "stage": "practise",
+   "level": 4.5,
+   "q": "Match each test with what it measures.",
+   "pairs": [
+    [
+     "Tensile test",
+     "Yield, tensile strength and elongation"
+    ],
+    [
+     "Charpy test",
+     "Impact toughness"
+    ],
+    [
+     "Vickers test",
+     "Hardness"
+    ]
+   ]
+  },
+  {
+   "id": "uts-round",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "A round test bar {dd} mm in diameter breaks at {kn} kN. What is its tensile strength?",
+   "vars": {
+    "dd": {
+     "pick": [
+      8,
+      10,
+      12.5
+     ]
+    },
+    "kn": {
+     "pick": [
+      25,
+      35,
+      50
+     ]
+    }
+   },
+   "let": {
+    "ar": "PI() * dd ^ 2 / 4"
+   },
+   "answer": "kn * 1000 / ar",
+   "unit": "MPa",
+   "tolerance": 0.01,
+   "work": "$A = \\frac{\\pi \\times {dd}^2}{4} = {ar:1}$ mm²; $\\frac{{kn} \\times 1000}{{ar:1}} = {answer}$ MPa",
+   "why": "Area of the round bar first, then the peak load over it.",
+   "hint": "$A = \\frac{\\pi d^2}{4}$."
+  },
+  {
+   "id": "cold-steel",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.3,
+   "q": "A crane runway outdoors in Scotland is to be made of S355. Why might the designer ask for S355J2 rather than S355JR?",
+   "options": [
+    "J2 is tested tough at −20 °C; JR only at +20 °C",
+    "J2 has a higher yield strength than JR",
+    "J2 is easier to cut and drill than JR",
+    "JR cannot be used outdoors at all"
+   ],
+   "answer": 0,
+   "why": "Steel can turn brittle in the cold. JR only guarantees toughness at room temperature; J2 guarantees it at −20 °C, which a Scottish winter can reach. Both have the same 355 MPa yield."
+  },
+  {
+   "id": "flash-densities",
+   "type": "flash",
+   "stage": "practise",
+   "front": "Rough densities: steel, titanium, aluminium?",
+   "back": "Steel about 7850 kg/m³; titanium about 4430; aluminium about 2700."
+  },
+  {
+   "id": "flash-e",
+   "type": "flash",
+   "stage": "practise",
+   "front": "Young's modulus (stiffness): steel, titanium, aluminium?",
+   "back": "Steel about 200 GPa; titanium alloy about 114 GPa; aluminium about 70 GPa."
+  },
+  {
+   "id": "hard-tough",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "Gear teeth are often case hardened: hard at the surface, softer in the middle. Why?",
+   "options": [
+    "Hard skin for wear, tough core against snapping",
+    "It makes the gear lighter overall",
+    "A soft core makes the gear stiffer",
+    "So the teeth can be machined afterwards"
+   ],
+   "answer": 0,
+   "why": "Hardness resists wear where the teeth rub; a tougher core absorbs shock loads without the tooth snapping. Through-hardening would make the whole tooth brittle."
+  },
+  {
+   "id": "check-try",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A glass rod is hard and strong in compression, but shatters when struck. Which property is it short of?",
+   "options": [
+    "Toughness",
+    "Hardness",
+    "Stiffness",
+    "Strength in compression"
+   ],
+   "answer": 0,
+   "why": "Glass is hard and stiff but absorbs very little energy before cracking: it is brittle, with low toughness."
+  },
+  {
+   "id": "check-uts",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A test bar of {ar} mm² breaks at {kn} kN. Tensile strength?",
+   "vars": {
+    "ar": {
+     "pick": [
+      80,
+      100,
+      125
+     ]
+    },
+    "kn": {
+     "pick": [
+      32,
+      44,
+      50
+     ]
+    }
+   },
+   "answer": "kn * 1000 / ar",
+   "unit": "MPa",
+   "tolerance": 0.01,
+   "work": "$\\frac{{kn} \\times 1000}{{ar}} = {answer}$ MPa",
+   "why": "Peak load over original area."
+  },
+  {
+   "id": "check-grades",
+   "type": "match",
+   "stage": "check",
+   "q": "Match each toughness letter pair with its Charpy test temperature (27 J).",
+   "pairs": [
+    [
+     "JR",
+     "+20 °C"
+    ],
+    [
+     "J0",
+     "0 °C"
+    ],
+    [
+     "J2",
+     "−20 °C"
+    ]
+   ]
+  }
  ]
 }

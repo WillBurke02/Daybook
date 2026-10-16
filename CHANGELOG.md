@@ -1,5 +1,15 @@
 # Changes
 
+## 4.0.21 — 16 October 2026
+
+- **Lessons from UK sources**, word for word with a link to each as published: the law (the Health and
+  Safety at Work Act, PUWER, UKCA and CE marking from gov.uk), risk assessment, permits to work and isolation,
+  guards (HSE's PUWER code), hazardous areas (DSEAR zones), alarm handling (HSE), OT and password security
+  (NCSC), and from Cambridge's DoITPoMS: piezoelectrics, heat treatment, composites, additive
+  manufacturing, beams and torsion. The DoITPoMS questions come too, marked, with their own explanations.
+- Each of them has questions of its own as well, including longer ones worked in steps.
+- Equations written in TeX in a source now show as maths.
+
 ## 4.0.20 — 16 October 2026
 
 - The ☰ menu no longer draws a circle beside every item (Home's round tick buttons were styled for the

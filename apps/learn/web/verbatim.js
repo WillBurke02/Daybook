@@ -3,7 +3,8 @@
 // which browsers draw natively). It arrives as HTML from the import, so it is rebuilt here from a
 // short list of elements and attributes; anything else (a script, a handler, a style) is dropped.
 const HTML = new Set(['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'sub', 'sup', 'small', 'code', 'ul', 'ol', 'li', 'table', 'caption',
-                      'thead', 'tbody', 'tr', 'th', 'td', 'figure', 'figcaption', 'img', 'div', 'span', 'h2', 'h3', 'h4', 'h5', 'blockquote', 'a']);
+                      'thead', 'tbody', 'tr', 'th', 'td', 'figure', 'figcaption', 'img', 'div', 'span', 'h2', 'h3', 'h4', 'h5', 'blockquote', 'a',
+                      'pre', 'dl', 'dt', 'dd']);
 const MATH = new Set(['math', 'mrow', 'mi', 'mn', 'mo', 'ms', 'mtext', 'mspace', 'msub', 'msup', 'msubsup', 'mfrac', 'msqrt', 'mroot',
                       'mfenced', 'mtable', 'mtr', 'mtd', 'munder', 'mover', 'munderover', 'mstyle', 'mpadded', 'mphantom', 'menclose',
                       'semantics', 'mlabeledtr', 'mmultiscripts', 'mprescripts', 'none']);
@@ -12,6 +13,7 @@ const MATH_ATTRS = new Set(['display', 'mathvariant', 'stretchy', 'fence', 'sepa
   'columnalign', 'rowalign', 'columnspacing', 'rowspacing', 'lspace', 'rspace', 'width', 'height', 'depth', 'accent', 'accentunder',
   'largeop', 'movablelimits', 'form', 'notation', 'scriptlevel', 'displaystyle', 'columnlines', 'rowlines', 'frame']);
 const MATHNS = 'http://www.w3.org/1998/Math/MathML';
+import { tex } from './ui/math.js';
 
 function copy(node, into) {
   for (const n of node.childNodes) {
@@ -41,5 +43,24 @@ export function verbatim(html) {
   const box = document.createElement('div');
   box.className = 'rich verbatim';
   copy(doc.body, box);
+  typeset(box);
   return box;
+}
+
+/** Maths a source wrote as TeX, \( inline \) and \[ displayed \], set as maths (the words stay as they were). */
+function typeset(box) {
+  const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), found = [];
+  while (walker.nextNode()) if (/\\[([]/.test(walker.currentNode.data)) found.push(walker.currentNode);
+  for (const node of found) {
+    const parts = node.data.split(/(\\\([\s\S]+?\\\)|\\\[[\s\S]+?\\\])/);
+    if (parts.length < 2) continue;
+    const frag = document.createDocumentFragment();
+    for (const part of parts) {
+      const m = part.match(/^\\([([])([\s\S]+)\\[)\]]$/);
+      if (!m) { frag.append(part); continue; }
+      const math = new DOMParser().parseFromString(tex(m[2], m[1] === '['), 'text/html').body.firstChild;
+      frag.append(math ? document.importNode(math, true) : part);
+    }
+    node.replaceWith(frag);
+  }
 }

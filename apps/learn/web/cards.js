@@ -108,7 +108,7 @@ const TYPES = {
 
   mcq(c, face, done, values) {
     const order = c.shuffle === false ? c.options.map((_, i) => i) : shuffle(c.options.map((_, i) => i));
-    add(face, rich(c.q, values));
+    add(face, c.q_html ? verbatim(c.q_html) : rich(c.q, values));
     let answered = false;
     const pick = (i, b) => {
       if (answered) return;

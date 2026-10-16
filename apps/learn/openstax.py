@@ -357,7 +357,7 @@ def place(cards, added):
     return out
 
 
-def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
+def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print, only=None):
     """Do every import the plan lists. Lessons: written to their file (cards, goals, sources, the original).
     Originals: the page, and a link to it added to the lesson's reading list."""
     plan = json.load(open(plan_file, encoding="utf-8"))
@@ -373,6 +373,8 @@ def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
                 except (ValueError, AttributeError):
                     pass
     for lesson_id, sections in plan.get("lessons", {}).items():
+        if only and lesson_id not in only:
+            continue
         secs = [book(b).section(n) for b, n in sections]
         cards, goals = [], []
         for k, s in enumerate(secs):
@@ -400,6 +402,8 @@ def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
         open(path, "w", encoding="utf-8").write(json.dumps(lesson, ensure_ascii=False, indent=1) + "\n")
         log(f"{lesson_id}: {len(cards)} cards from {', '.join(s.book.title + ' ' + s.number for s in secs)}")
     for lesson_id, sections in plan.get("originals", {}).items():
+        if only and lesson_id not in only:
+            continue
         path = files[lesson_id]
         les = json.load(open(path, encoding="utf-8"))
         res = [r for r in les.get("resources") or [] if not str(r.get("url", "")).startswith("media/openstax/")]
@@ -412,3 +416,5 @@ def run(plan_file=os.path.join(CONTENT, "imports.json"), log=print):
         les["resources"] = res
         open(path, "w", encoding="utf-8").write(json.dumps(les, ensure_ascii=False, indent=1) + "\n")
         log(f"{lesson_id}: the original of {len(sections)} section(s) linked")
+    from . import sources                                  # the other open and official sources
+    sources.run(plan, files, log, only)
