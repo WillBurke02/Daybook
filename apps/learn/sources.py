@@ -315,7 +315,8 @@ def pdf_blocks(data, spec, src, url):
             mathy = sum(len(sp["text"]) for sp in spans if re.match(r"(CMMI|CMSY|CMEX|Symbol|MT|Math)", sp["font"].split("+")[-1]))
             if size < body - 1.5 and len(t.split()) < 40:
                 kind = "loose"                             # small type: labels, notes on a figure
-            elif size >= body + 1.5 and len(t.split()) <= 16 and not item:
+            elif size >= body + 1.5 and len(t.split()) <= 16 and not item and (
+                    not spec.get("numbered") or re.match(r"^\d+(\.\d+)+\s", t)):   # (a book that numbers its headings)
                 kind = "h"
             elif item:
                 kind = "item"
@@ -323,20 +324,52 @@ def pdf_blocks(data, spec, src, url):
                 kind = "text"
             else:
                 kind = "loose"
-            items.append([y0, y1, x0, x1, kind, (t, size, mathy > len(t) / 3)])
+            tex = any(re.match(r"(CMMI|CMSY|CMEX)", sp["font"].split("+")[-1]) for sp in spans)   # TeX's maths fonts
+            if re.match(r"^(Figure|Fig\.|Table)\s+\d", t) and len(t.split()) < 25:
+                kind = "loose"                             # a caption goes with its figure
+            if all(re.match(r"(CMTT|Courier|.*Mono)", sp["font"].split("+")[-1]) for sp in spans):
+                kind, tex = "loose", True                  # code: as a picture, since its spacing and underscores do not survive as text
+            items.append([y0, y1, x0, x1, kind, (t, size, mathy > len(t) / 3 or kind == "loose" and tex)])
+        paths = page.get_drawings()
         for r in page.cluster_drawings() if hasattr(page, "cluster_drawings") else []:
+            inner = [d for d in paths if r.contains(d["rect"])]
+            on = [it for it in items if r.x0 - 2 <= (it[2] + it[3]) / 2 <= r.x1 + 2 and r.y0 - 2 <= (it[0] + it[1]) / 2 <= r.y1 + 2]
+            cover = sum((it[3] - it[2]) * (it[1] - it[0]) for it in on) / max(1, r.width * r.height)
+            if len(inner) <= 2 and all(x[0] == "re" for d in inner for x in d["items"]) and cover < 0.1:
+                for it in on:                              # an empty frame (a margin panel) is not a figure; its words are a label
+                    it[4] = "loose"
+                continue
+            if len(inner) <= 6 and len(on) == 1 and cover > 0.3:
+                continue                                   # a bar behind one line of words (a heading) is not a figure
             if r.width > 8 and r.height > 8 and r.height < H * 0.9:
-                items.append([r.y0, r.y1, r.x0, r.x1, "draw", None])
+                items.append([r.y0, r.y1, r.x0, r.x1, "draw", len(inner)])
+            elif max(r.width, r.height) > 8:               # a line: a scale, an arrow, a fraction bar, if words are set on it
+                items.append([r.y0, r.y1, r.x0, r.x1, "rule", None])
         for im in page.get_image_info():
             x0, y0, x1, y1 = im["bbox"]
             if (x1 - x0) > 30 and (y1 - y0) > 30:
                 items.append([y0, y1, x0, x1, "draw", "image"])
-        # a shaded panel behind paragraphs (a case study, a note) is not a figure: its words are the text
-        words = [it for it in items if it[4] in ("text", "h", "item")]
-        inside = lambda d, w: d[2] - 2 <= (w[2] + w[3]) / 2 <= d[3] + 2 and d[0] - 2 <= (w[0] + w[1]) / 2 <= d[1] + 2
-        items = [it for it in items if not (it[4] == "draw" and it[5] != "image" and any(inside(it, w) for w in words))]
+        # a shaded panel or a picture behind paragraphs (a case study, a note) is not a figure: its words are the text;
+        # a drawing with only short words on it (a graph, a diagram) is a figure, and those words are its labels
+        # (a table is a drawing with many short words in it, and code in a box is mostly symbols: both are figures)
+        said = [it for it in items if it[4] in ("text", "h", "item", "loose")]
+        inside = lambda d, w, m=2: d[2] - m <= (w[2] + w[3]) / 2 <= d[3] + m and d[0] - m <= (w[0] + w[1]) / 2 <= d[1] + m
+
+        def panel(d):
+            if d[5] != "image" and d[5] > 6:               # many lines drawn: a diagram, however much it says
+                return False
+            on = [w for w in said if inside(d, w)]
+            prose = [x for w in on if w[4] != "loose" or len(w[5][0].split()) >= 15 for x in w[5][0].split()]
+            labels = sum(len(w[5][0].split()) for w in on if w[4] == "loose" and len(w[5][0].split()) < 15)
+            return len(prose) > labels and sum(len(x) == 1 or bool(re.search(r"[;(){}=<>#]", x)) for x in prose) < 0.2 * len(prose)
+        items = [it for it in items if not (it[4] == "draw" and panel(it))]
+        draws = [it for it in items if it[4] == "draw"]
+        for it in items:                                   # (a row of labels set just off a scale counts too)
+            if it[4] in ("text", "h") and (any(inside(d, it) for d in draws)
+                                          or len(it[5][0].split()) < 12 and any(inside(d, it, 16) for d in draws)):
+                it[4] = "loose"
         # two columns (text blocks on both halves, few across both): the left column is read first, then the right
-        texts = [it for it in items if it[4] in ("text", "h", "item", "loose")]
+        texts = [it for it in items if it[4] in ("text", "h", "item")]   # (a figure's labels on both halves are not columns)
         left = sum(it[3] <= W * 0.55 for it in texts)
         right = sum(it[2] >= W * 0.45 for it in texts)
         if left >= 3 and right >= 3 and sum(it[3] - it[2] > W * 0.6 for it in texts) <= 2:
@@ -369,7 +402,9 @@ def pdf_blocks(data, spec, src, url):
             kind = it[4]
             if kind == "band":
                 parts = it[5]
-                picture = any(x[4] == "draw" for x in parts) or any(x[5][2] for x in parts if x[4] != "draw")
+                labels = [x for x in parts if x[4] == "loose" and len(x[5][0].split()) <= 4]
+                picture = any(x[4] == "draw" for x in parts) or any(x[5][2] for x in parts if x[4] == "loose") \
+                    or any(x[4] == "rule" for x in parts) and len(labels) >= 3
                 if picture and (it[1] - it[0]) > 10 and not (p == first - 1 and it[1] < H * 0.14):   # (not the publisher's logo)
                     clip = pymupdf.Rect(max(0, it[2] - 6), max(0, it[0] - 4), min(W, it[3] + 6), min(H, it[1] + 4))
                     photo = any(x[4] == "draw" and x[5] == "image" for x in parts)
@@ -380,7 +415,7 @@ def pdf_blocks(data, spec, src, url):
                     out.append(("b", f'<figure><img src="media/{src}/{name}" alt="A figure from page {p + 1} of the original"></figure>'))
                 else:
                     for x in parts:                        # no drawing: small type (a footnote) or words set apart
-                        if x[4] != "draw" and x[5][0]:
+                        if x[4] == "loose" and x[5][0]:
                             small = x[5][1] < body - 1.5
                             out.append(("b", f"<p><small>{escape(x[5][0])}</small></p>" if small else f"<p>{escape(x[5][0])}</p>"))
                 continue
@@ -414,11 +449,16 @@ def pdf_blocks(data, spec, src, url):
                     out.append(("b", f"<ul>{item}</ul>"))
                 li = False
                 continue
+            prev = out[-1][1] if out and out[-1][0] == "b" else ""
+            if prev.startswith("<p>") and t[:1].islower() and not re.search(r"[.:;!?)”]</p>$", prev):
+                out[-1] = ("b", prev[:-4] + " " + escape(t) + "</p>")   # a paragraph carried over a page break
+                continue
             out.append(("b", f"<p>{escape(t)}</p>"))
     return [b[:3] for b in out], (doc.metadata.get("title") or "").strip(), figures
 
 
 BULLET = re.compile(r"^[■•▪●◆–]+$")
+BRACKETS = str.maketrans("\x00\x01\x10\x11\x12\x13", "()()()")   # TeX's big brackets (cmex), as plain ones
 
 
 def pdf_paragraphs(page, heads):
@@ -462,8 +502,11 @@ def pdf_paragraphs(page, heads):
         size = max(sp["size"] for sp in spans)
         item = any(c == col(r) and abs(by - y0) < 4 and bx < x0 for bx, by, c in bullets) or bool(re.match(r"^[•●■]\s", t))
         numbered = bool(re.match(r"^\d{1,3}\s+\S", t)) and g is not None and x0 <= g["x"] + 2
+        caption = re.compile(r"^(Figure|Fig\.|Table)\s+\d")       # a caption is a line of its own
         joins = (g is not None and not item and not numbered and col(r) == g["col"] and abs(size - g["size"]) < 0.6
-                 and -2 <= y0 - g["y1"] < max(4.0, (y1 - y0) * 0.7) and x0 <= g["x"] + 20 and x0 >= g["x"] - 25)
+                 and not caption.match(t) and not caption.match(g["t"])
+                 and -max(2.0, (y1 - y0) * 0.4) <= y0 - g["y1"] < max(4.0, (y1 - y0) * 0.7)
+                 and x0 <= g["x"] + 20 and x0 >= g["x"] - 25)   # (line boxes taller than the leading overlap)
         if joins:
             g["t"] += " " + t
             g["spans"] += spans
@@ -479,6 +522,7 @@ def pdf_paragraphs(page, heads):
     for g in out:
         t = re.sub(r"\s+", " ", re.sub(r"(\w)- (\w)", r"\1\2", g["t"])).strip()
         t = re.sub(r"^[•●■]\s*", "", t)
+        t = re.sub(r"[\x00-\x08\x0b-\x1f]", "", t.translate(BRACKETS))
         for lig, plain in (("ﬁ", "fi"), ("ﬂ", "fl"), ("ﬀ", "ff"), ("ﬃ", "ffi"), ("ﬄ", "ffl")):
             t = t.replace(lig, plain)
         yield g["x0"], g["y0"], g["x1"], g["y1"], t, g["spans"], g["item"]
@@ -613,6 +657,8 @@ def cards(blocks, title, prefix):
             out.append({"type": "concept", "stage": "learn", "title": heading, "html": html, "body": text(html)})
         buf, words = [], 0
     for b in blocks:
+        if b[0] == "b" and words >= 100 and words + len(text(b[1]).split()) > 280:
+            flush()                                        # a long run of reading: a card before it gets too long
         if b[0] == "h":
             if words >= 90 or not buf:                     # a new card; a short part runs on into the next
                 flush()
@@ -647,7 +693,7 @@ def save(page, blocks, credit):
     body = "".join(f"<h{min(4, max(2, b[1]))}>{escape(b[2])}</h{min(4, max(2, b[1]))}>" if b[0] == "h" else b[1] for b in blocks)
     body = re.sub(r'src="media/[\w-]+/', 'src="', body)
     slug = re.sub(r"[^a-z0-9]+", "-", page.title.lower()).strip("-")[:60] or "page"
-    slug += "-" + hashlib.sha1(page.url.encode()).hexdigest()[:6]
+    slug += "-" + hashlib.sha1((page.url + body).encode()).hexdigest()[:6]   # (two parts of one page are two files)
     open(os.path.join(folder, f"{slug}.html"), "w", encoding="utf-8").write(f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(page.title)}</title>

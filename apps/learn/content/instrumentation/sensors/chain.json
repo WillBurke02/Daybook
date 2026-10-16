@@ -1,0 +1,306 @@
+{
+ "id": "instrumentation.sensors.chain",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "liii: 4 to 20 mA analog current signals",
+   "liii: Controller output, 4-wire and 2-wire current loops",
+   "liii: NAMUR signal levels"
+  ]
+ },
+ "minutes": 32,
+ "sources": [
+  "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, 4 to 20 mA analog current signals. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/socratic/sinst/book/liii.pdf",
+  "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, Controller output, 4-wire and 2-wire current loops. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/socratic/sinst/book/liii.pdf",
+  "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, NAMUR signal levels. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/socratic/sinst/book/liii.pdf"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: 4 to 20 mA analog current signals",
+   "url": "media/liii/4-to-20-ma-analog-current-signals-7019ad.html",
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: Controller output, 4-wire and 2-wire current loops",
+   "url": "media/liii/controller-output-4-wire-and-2-wire-current-loops-705a01.html",
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: NAMUR signal levels",
+   "url": "media/liii/namur-signal-levels-372d90.html",
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.1 4 to 20 mA analog current signals",
+   "html": "<p>The most popular form of signal transmission used in modern industrial instrumentation systems (as of this writing) is the 4 to 20 milliamp DC standard. This is an analog signal standard, meaning that the electric current is used to proportionately represent measurements or command signals. Typically, a 4 milliamp current value represents 0% of scale, a 20 milliamp current value represents 100% of scale, and any current value in between 4 and 20 milliamps represents a commensurate percentage in between 0% and 100%. The following table shows the corresponding current and percentage values for each 25% increment between 0% and 100%. Every instrument technician tasked with maintaining 4-20 mA instruments commits these values to memory, because they are referenced so often:</p><figure><img src=\"media/liii/ffcee18b80ea.png\" alt=\"A figure from page 890 of the original\"></figure><p>For example, if we were to calibrate a 4-20 mA temperature transmitter for a measurement range of 50 to 250 degrees C, we could relate the current and measured temperature values on a graph like this:</p><figure><img src=\"media/liii/c74f487493f2.png\" alt=\"A figure from page 891 of the original\"></figure><p>This is not unlike 3-15 pounds per square inch (PSI) pneumatic signal standard, where a varying air pressure signal proportionately represents some process variable. Both 3-15 PSI and 4-20 mA signal standards are referred to as live zero because their ranges begin with a non-zero value. This “live” zero provides a simple means of discriminating between a legitimate 0% signal value and a failed signal (e.g. leaking tube or severed cable)1.</p>",
+   "body": "The most popular form of signal transmission used in modern industrial instrumentation systems (as of this writing) is the 4 to 20 milliamp DC standard. This is an analog signal standard, meaning that the electric current is used to proportionately represent measurements or command signals. Typically, a 4 milliamp current value represents 0% of scale, a 20 milliamp current value represents 100% of scale, and any current value in between 4 and 20 milliamps represents a commensurate percentage in between 0% and 100%. The following table shows the corresponding current and percentage values for each 25% increment between 0% and 100%. Every instrument technician tasked with maintaining 4-20 mA instruments commits these values to memory, because they are referenced so often: For example, if we were to calibrate a 4-20 mA temperature transmitter for a measurement range of 50 to 250 degrees C, we could relate the current and measured temperature values on a graph like this: This is not unlike 3-15 pounds per square inch (PSI) pneumatic signal standard, where a varying air pressure signal proportionately represents some process variable. Both 3-15 PSI and 4-20 mA signal standards are referred to as live zero because their ranges begin with a non-zero value. This “live” zero provides a simple means of discriminating between a legitimate 0% signal value and a failed signal (e.g. leaking tube or severed cable)1.",
+   "id": "liii1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.1 4 to 20 mA analog current signals",
+   "html": "<p><small>1Not all industrial measurement and control signals are “live zero” like the 3-15 PSI and 4-20 mA standards. 0 to</small></p><p>An important concept to grasp with all analog instrumentation is that instruments sending and receiving analog signals must be compatibly ranged in order to properly represent the desired variable. To illustrate, let us consider a temperature measurement system consisting of a thermocouple2, a temperature transmitter, a 250 ohm resistor (to convert the 4-20 mA analog signal into a 1-5 volt analog signal), and a special voltmeter functioning as a temperature indicator:</p><figure><img src=\"media/liii/fbb45d05bd0f.png\" alt=\"A figure from page 892 of the original\"></figure><p>Note how the output range of each sending device matches the input range of its corresponding receiving device. If we view this system as a path for information to flow from the thermocouple’s tip to the transmitter to the resistor and finally to the voltmeter/indicator, we see that the analog output range of each device must correspond to the analog input range of the next device, or else the real-world meaning of the analog signal will be lost. This correspondence does not happen automatically, but must be established by the instrument technician building the system. In this case, it would be the technician’s responsibility to properly adjust the range of the temperature transmitter, and also to ensure the indicator’s display scale was properly labeled. Both the thermocouple and the resistor are non-adjustable devices, their input/output characteristics being fixed by physical laws.</p>",
+   "body": "1Not all industrial measurement and control signals are “live zero” like the 3-15 PSI and 4-20 mA standards. 0 to An important concept to grasp with all analog instrumentation is that instruments sending and receiving analog signals must be compatibly ranged in order to properly represent the desired variable. To illustrate, let us consider a temperature measurement system consisting of a thermocouple2, a temperature transmitter, a 250 ohm resistor (to convert the 4-20 mA analog signal into a 1-5 volt analog signal), and a special voltmeter functioning as a temperature indicator: Note how the output range of each sending device matches the input range of its corresponding receiving device. If we view this system as a path for information to flow from the thermocouple’s tip to the transmitter to the resistor and finally to the voltmeter/indicator, we see that the analog output range of each device must correspond to the analog input range of the next device, or else the real-world meaning of the analog signal will be lost. This correspondence does not happen automatically, but must be established by the instrument technician building the system. In this case, it would be the technician’s responsibility to properly adjust the range of the temperature transmitter, and also to ensure the indicator’s display scale was properly labeled. Both the thermocouple and the resistor are non-adjustable devices, their input/output characteristics being fixed by physical laws.",
+   "id": "liii1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.1 4 to 20 mA analog current signals",
+   "html": "<p>10 volts DC is a common “dead zero” signal standard, although far more common in environmental (building heating and cooling) control systems than industrial control systems. I once encountered an old analog control system using −10 volts to +10 volts as its analog signal range, which meant 0 volts represented a 50% signal! A failed signal path in such a system could have been very misleading indeed, as a 50% signal value is not suspicious in the least. 2This is a temperature sensing element consisting of two different metal wires joined together, which generate a small voltage proportional to temperature. The correspondence between junction temperature and DC millivoltage is very well established by scientific testing, and so we may use this principle to sense process temperature.</p><p>DC current signals are also used in control systems to command the positioning of a final control element, such as a control valve or a variable-speed motor drive (VSD). In these cases, the milliamp value does not directly represent a process measurement, but rather how the degree to which the final control element influences the process. Typically (but not always!), 4 milliamps commands a closed (shut) control valve or a stopped motor, while 20 milliamps commands a wide-open valve or a motor running at full speed. Final control elements often are equipped with adjustable ranges so that an accurate correspondence between the analog signal and the desired control action may be ensured.</p>",
+   "body": "10 volts DC is a common “dead zero” signal standard, although far more common in environmental (building heating and cooling) control systems than industrial control systems. I once encountered an old analog control system using −10 volts to +10 volts as its analog signal range, which meant 0 volts represented a 50% signal! A failed signal path in such a system could have been very misleading indeed, as a 50% signal value is not suspicious in the least. 2This is a temperature sensing element consisting of two different metal wires joined together, which generate a small voltage proportional to temperature. The correspondence between junction temperature and DC millivoltage is very well established by scientific testing, and so we may use this principle to sense process temperature. DC current signals are also used in control systems to command the positioning of a final control element, such as a control valve or a variable-speed motor drive (VSD). In these cases, the milliamp value does not directly represent a process measurement, but rather how the degree to which the final control element influences the process. Typically (but not always!), 4 milliamps commands a closed (shut) control valve or a stopped motor, while 20 milliamps commands a wide-open valve or a motor running at full speed. Final control elements often are equipped with adjustable ranges so that an accurate correspondence between the analog signal and the desired control action may be ensured.",
+   "id": "liii1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.1 4 to 20 mA analog current signals",
+   "html": "<p>Thus, most industrial control systems use at least two different 4-20 mA signals: one to represent the process variable (PV) and one to represent the command signal to the final control element (the “manipulated variable” or MV):</p><figure><img src=\"media/liii/c97916a39e2f.png\" alt=\"A figure from page 893 of the original\"></figure><p>The relationship between these two signals depends entirely on the response of the controller. There is no reason to ever expect the PV and MV current signals to be equal to each other except by chance, for they represent entirely different variables. In fact, if the controller is reverse-acting, it is entirely normal for the two current signals to be inversely related: as the PV signal increases going to a reverse-acting controller, the output signal will decrease. If the controller is placed into “manual” mode by a human operator, the output signal will have no automatic relation to the PV signal at all, instead being entirely determined by the operator’s whim.</p>",
+   "body": "Thus, most industrial control systems use at least two different 4-20 mA signals: one to represent the process variable (PV) and one to represent the command signal to the final control element (the “manipulated variable” or MV): The relationship between these two signals depends entirely on the response of the controller. There is no reason to ever expect the PV and MV current signals to be equal to each other except by chance, for they represent entirely different variables. In fact, if the controller is reverse-acting, it is entirely normal for the two current signals to be inversely related: as the PV signal increases going to a reverse-acting controller, the output signal will decrease. If the controller is placed into “manual” mode by a human operator, the output signal will have no automatic relation to the PV signal at all, instead being entirely determined by the operator’s whim.",
+   "id": "liii1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.2 Relating 4 to 20 mA signals to instrument variables",
+   "html": "<p>A 4 to 20 mA current signal represents some signal along a 0 to 100 percent scale. Usually, this scale is linear as shown by this graph:</p><figure><img src=\"media/liii/24b83b4e1ee1.png\" alt=\"A figure from page 894 of the original\"></figure><p>Being a linear function, we may use the standard slope-intercept linear equation to relate signal percentage to current values:</p><p>y = mx + b</p><p>Where, y = Output from instrument x = Input to instrument m = Slope b = y-intercept point (i.e. the live zero of the instrument’s range)</p><p>Once we determine suitable values for m and b, we may then use this linear equation to predict any value for y given x, and vice-versa. This is very useful for predicting the 4-20 mA signal output of a process transmitter, or the expected stem position of a 4-20 mA controlled valve, or any other correspondence between a 4-20 mA signal and some physical variable. Before we may use this equation for any practical purpose, we must determine the slope (m) and intercept (b) values appropriate for the instrument we wish to apply the equation to. Next, we will see some examples of how to do this.</p><p>For the linear function shown, we may determine the slope value (m) by dividing the line’s rise by its run. Two sets of convenient points we may use in calculating rise over run are 4 and 20 milliamps (for the rise), and 0 and 100 percent (for the run):</p>",
+   "body": "A 4 to 20 mA current signal represents some signal along a 0 to 100 percent scale. Usually, this scale is linear as shown by this graph: Being a linear function, we may use the standard slope-intercept linear equation to relate signal percentage to current values: y = mx + b Where, y = Output from instrument x = Input to instrument m = Slope b = y-intercept point (i.e. the live zero of the instrument’s range) Once we determine suitable values for m and b, we may then use this linear equation to predict any value for y given x, and vice-versa. This is very useful for predicting the 4-20 mA signal output of a process transmitter, or the expected stem position of a 4-20 mA controlled valve, or any other correspondence between a 4-20 mA signal and some physical variable. Before we may use this equation for any practical purpose, we must determine the slope (m) and intercept (b) values appropriate for the instrument we wish to apply the equation to. Next, we will see some examples of how to do this. For the linear function shown, we may determine the slope value (m) by dividing the line’s rise by its run. Two sets of convenient points we may use in calculating rise over run are 4 and 20 milliamps (for the rise), and 0 and 100 percent (for the run):",
+   "id": "liii1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.2 Relating 4 to 20 mA signals to instrument variables",
+   "html": "<figure><img src=\"media/liii/d58c7225bb55.png\" alt=\"A figure from page 895 of the original\"></figure><figure><img src=\"media/liii/490d04ac73b3.png\" alt=\"A figure from page 895 of the original\"></figure><p>To calculate the y-intercept (b), all we need to do is solve for b at some known coordinate pair of x and y. Again, we find convenient points3 for this task at 0 percent and 4 milliamps:</p><figure><img src=\"media/liii/95fd887b3690.png\" alt=\"A figure from page 895 of the original\"></figure><p>b = 4</p><figure><img src=\"media/liii/1377c0d2424d.png\" alt=\"A figure from page 895 of the original\"></figure><p>Now we have a complete formula for converting a percentage value into a milliamp value:</p><figure><img src=\"media/liii/6a4af4c450ef.png\" alt=\"A figure from page 896 of the original\"></figure><p>We may now use this formula to calculate how many milliamps represent any given percentage of signal. For example, suppose we needed to convert a percentage of 34.7% into a corresponding 4-20 mA current. We would do so like this:</p><figure><img src=\"media/liii/3c007fb9d8dd.png\" alt=\"A figure from page 896 of the original\"></figure><p>y = 9.552</p><p>Thus, 34.7% is equivalent to 9.552 milliamps in a 4-20 mA signal range.</p><p>The slope-intercept formula for linear functions may be applied to any linear instrument, as illustrated in the following examples.</p>",
+   "body": "To calculate the y-intercept (b), all we need to do is solve for b at some known coordinate pair of x and y. Again, we find convenient points3 for this task at 0 percent and 4 milliamps: b = 4 Now we have a complete formula for converting a percentage value into a milliamp value: We may now use this formula to calculate how many milliamps represent any given percentage of signal. For example, suppose we needed to convert a percentage of 34.7% into a corresponding 4-20 mA current. We would do so like this: y = 9.552 Thus, 34.7% is equivalent to 9.552 milliamps in a 4-20 mA signal range. The slope-intercept formula for linear functions may be applied to any linear instrument, as illustrated in the following examples.",
+   "id": "liii1-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.3 Controller output current loops",
+   "html": "<p>The simplest form of 4-20 mA current loop is the type used to represent the output of a process controller, sending a command signal to a final control element. Here, the controller supplies both the electrical power and signal information to the final control element, which acts as an electrical load. To illustrate, consider the example of a controller sending a 4-20 mA signal to an I/P (currentto-pressure) signal converter, which then pneumatically drives a control valve:</p><figure><img src=\"media/liii/38b1ee41e19f.png\" alt=\"A figure from page 915 of the original\"></figure><p>This particular controller has two digital displays, one for process variable (PV) and one for setpoint (SP), with a bargraph for displaying the output value (Out). One pushbutton provides the operator with a way to switch between Automatic and Manual modes (A/M), while two other pushbuttons provide means to decrement and increment either the setpoint value (in Automatic mode) or the Output value (in Manual mode). Inside the controller, a dependent current source provides the 4-20 mA DC current signal to the I/P transducer. Like all current sources, its purpose is to maintain current in the “loop” circuit regardless of circuit resistance or any external voltage sources. Unlike a constant current source, a “dependent” current source (represented by a diamond shape instead of a circle shape) varies its current value according to some external stimulus. In this case, either the mathematical function of the controller (Automatic mode) or the arbitrary action of the human operator (Manual mode) tells the current source how much DC current it should maintain in the circuit. For example, if the operator happened to switch the controller into Manual mode and set the output value at 50%, the proper amount of DC current for this signal percentage would be 12 mA (exactly half-way between 4 mA and 20 mA). If everything is working properly, the current in the “loop” circuit to the I/P transducer should remain exactly at 12 mA regardless of slight changes in wire resistance, I/P coil resistance, or anything else: the current source inside the controller will “fight” as hard as it has to in order to maintain this set amount of current. This current, as it flows through the wire coil of the I/P transducer mechanism, creates a magnetic field inside the I/P to actuate the pneumatic mechanism and produce a 9 PSI pressure signal output to the control valve (9 PSI being exactly half-way between 3 PSI and 15 PSI in the 3-15 PSI signal standard range). This should move the control valve to the half-way position. The details of the controller’s internal current source are not terribly important. Usually, it takes the form of an operational amplifier circuit driven by the voltage output of a DAC (Digital-to-Analog Converter). The DAC converts a binary number (either from the controller’s automatic calculations, or from the human operator’s manual setting) into a small DC voltage, which then commands the opamp circuit to regulate output current at a proportional value.</p>",
+   "body": "The simplest form of 4-20 mA current loop is the type used to represent the output of a process controller, sending a command signal to a final control element. Here, the controller supplies both the electrical power and signal information to the final control element, which acts as an electrical load. To illustrate, consider the example of a controller sending a 4-20 mA signal to an I/P (currentto-pressure) signal converter, which then pneumatically drives a control valve: This particular controller has two digital displays, one for process variable (PV) and one for setpoint (SP), with a bargraph for displaying the output value (Out). One pushbutton provides the operator with a way to switch between Automatic and Manual modes (A/M), while two other pushbuttons provide means to decrement and increment either the setpoint value (in Automatic mode) or the Output value (in Manual mode). Inside the controller, a dependent current source provides the 4-20 mA DC current signal to the I/P transducer. Like all current sources, its purpose is to maintain current in the “loop” circuit regardless of circuit resistance or any external voltage sources. Unlike a constant current source, a “dependent” current source (represented by a diamond shape instead of a circle shape) varies its current value according to some external stimulus. In this case, either the mathematical function of the controller (Automatic mode) or the arbitrary action of the human operator (Manual mode) tells the current source how much DC current it should maintain in the circuit. For example, if the operator happened to switch the controller into Manual mode and set the output value at 50%, the proper amount of DC current for this signal percentage would be 12 mA (exactly half-way between 4 mA and 20 mA). If everything is working properly, the current in the “loop” circuit to the I/P transducer should remain exactly at 12 mA regardless of slight changes in wire resistance, I/P coil resistance, or anything else: the current source inside the controller will “fight” as hard as it has to in order to maintain this set amount of current. This current, as it flows through the wire coil of the I/P transducer mechanism, creates a magnetic field inside the I/P to actuate the pneumatic mechanism and produce a 9 PSI pressure signal output to the control valve (9 PSI being exactly half-way between 3 PSI and 15 PSI in the 3-15 PSI signal standard range). This should move the control valve to the half-way position. The details of the controller’s internal current source are not terribly important. Usually, it takes the form of an operational amplifier circuit driven by the voltage output of a DAC (Digital-to-Analog Converter). The DAC converts a binary number (either from the controller’s automatic calculations, or from the human operator’s manual setting) into a small DC voltage, which then commands the opamp circuit to regulate output current at a proportional value.",
+   "id": "liii2-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.3 Controller output current loops",
+   "html": "<p>The scenario is much the same if we replace the I/P and control valve with a variable-speed motor drive. From the controller’s perspective, the only difference it sees is a resistive load instead of an inductive load. The input resistance of the motor drive circuit converts the 4-20 mA signal into an analog voltage signal (typically 1-5 V, but not always). This voltage signal then commands the motor drive circuitry, telling it to modulate the power going to the electric motor in order to drive it at the desired speed:</p><figure><img src=\"media/liii/3e40852c350f.png\" alt=\"A figure from page 916 of the original\"></figure><p>Here, the variable-speed motor drive is a high-power electronic circuit that takes 3-phase AC power in and converts it to DC power at a variable voltage (that voltage level controlled by the 4-20 mA signal from the controller output). Another style of motor “drive” is one that takes in AC power and outputs 3-phase AC power at variable voltage and frequency to power an AC induction motor. This latter style is usually called a variable frequency drive or VFD, but it looks the same to the controller output: a fixed resistive load accepting the 4-20 mA output signal.</p>",
+   "body": "The scenario is much the same if we replace the I/P and control valve with a variable-speed motor drive. From the controller’s perspective, the only difference it sees is a resistive load instead of an inductive load. The input resistance of the motor drive circuit converts the 4-20 mA signal into an analog voltage signal (typically 1-5 V, but not always). This voltage signal then commands the motor drive circuitry, telling it to modulate the power going to the electric motor in order to drive it at the desired speed: Here, the variable-speed motor drive is a high-power electronic circuit that takes 3-phase AC power in and converts it to DC power at a variable voltage (that voltage level controlled by the 4-20 mA signal from the controller output). Another style of motor “drive” is one that takes in AC power and outputs 3-phase AC power at variable voltage and frequency to power an AC induction motor. This latter style is usually called a variable frequency drive or VFD, but it looks the same to the controller output: a fixed resistive load accepting the 4-20 mA output signal.",
+   "id": "liii2-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.3 Controller output current loops",
+   "html": "<p>In some process applications the final control element is “reverse-acting” in that a controller output current value of 4 mA tells the FCE to go to its “full” (100%) capacity and a controller output current value of 20 mA commands the FCE to go to its minimum (0%) capacity. Such is the case with an I/P transducer driving an “air-to-close” pneumatic control valve, where the valve’s spring works to push the throttling mechanism open and air pressure on the valve diaphragm works to push the throttling mechanism shut. A practical reason for designing a control system like this is if the dictates of process safety require the valve go wide-open if ever the instrument air supply fails or the 4-20 mA output signal circuit fails. In such applications, we need to configure the controller in such a way that the output display (digital read-out and/or bargraph) is reverse-indicating so as to avoid confusing any human operator using the controller. Since 4 mA represents a wide-open control valve and 20 mA represents a fully shut control valve, a reverse-indicating controller will display 0% output when the current signal is 20 mA and 100% output when the current signal is 4 mA (i.e. the controller display is a direct representation of control valve stem position, not of the current signal itself):</p><p>Air-to-Close valve with controller configured for ‘‘reverse indication’’ on its output display</p>",
+   "body": "In some process applications the final control element is “reverse-acting” in that a controller output current value of 4 mA tells the FCE to go to its “full” (100%) capacity and a controller output current value of 20 mA commands the FCE to go to its minimum (0%) capacity. Such is the case with an I/P transducer driving an “air-to-close” pneumatic control valve, where the valve’s spring works to push the throttling mechanism open and air pressure on the valve diaphragm works to push the throttling mechanism shut. A practical reason for designing a control system like this is if the dictates of process safety require the valve go wide-open if ever the instrument air supply fails or the 4-20 mA output signal circuit fails. In such applications, we need to configure the controller in such a way that the output display (digital read-out and/or bargraph) is reverse-indicating so as to avoid confusing any human operator using the controller. Since 4 mA represents a wide-open control valve and 20 mA represents a fully shut control valve, a reverse-indicating controller will display 0% output when the current signal is 20 mA and 100% output when the current signal is 4 mA (i.e. the controller display is a direct representation of control valve stem position, not of the current signal itself): Air-to-Close valve with controller configured for ‘‘reverse indication’’ on its output display",
+   "id": "liii2-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.3 Controller output current loops",
+   "html": "<figure><img src=\"media/liii/3793a3b2c3ca.png\" alt=\"A figure from page 917 of the original\"></figure><p>It should be noted that direct or reverse indication on the controller’s faceplate is unrelated to direct or reverse control action of the controller’s algorithm. The former is merely the way in which the output signal is graphically represented to the human operator while the latter is the relationship between the process variable (PV) signal and the controller’s output (MV) signal necessary for negative-feedback control. For the sake of argument, this controller’s automatic action could still be direct (i.e. greater PV signal = greater output signal) even though its output bargraph indication is reverse in order to faithfully show valve stem position to the human operator.</p>",
+   "body": "It should be noted that direct or reverse indication on the controller’s faceplate is unrelated to direct or reverse control action of the controller’s algorithm. The former is merely the way in which the output signal is graphically represented to the human operator while the latter is the relationship between the process variable (PV) signal and the controller’s output (MV) signal necessary for negative-feedback control. For the sake of argument, this controller’s automatic action could still be direct (i.e. greater PV signal = greater output signal) even though its output bargraph indication is reverse in order to faithfully show valve stem position to the human operator.",
+   "id": "liii2-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.4 4-wire (“self-powered”) transmitter current loops",
+   "html": "<p>DC electric current signals may also be used to communicate process measurement information from transmitters to controllers, indicators, recorders, alarms, and other input devices. Recall that the purpose of a transmitter is to sense some physical variable (e.g. pressure, temperature, flow) and then report that quantity in the form of a signal, in this case a 4 to 20 milliamp DC current proportional to that measured quantity. The simplest form of 4-20 mA measurement loop is one where the transmitter has two terminals for the 4-20 mA signal wires to connect, and two more terminals where a power source connects. These transmitters are called “4-wire” or “self-powered” units. The current signal from the transmitter connects to the process variable input terminals of the controller to complete the loop:</p><figure><img src=\"media/liii/05b004d8d8f4.png\" alt=\"A figure from page 918 of the original\"></figure><p>Some process controllers are not equipped to directly accept milliamp input signals, but rather can only interpret DC voltage signals. In such cases we must connect a precision resistor across the controller’s input terminals to convert the 4-20 mA transmitter signal into a standardized analog voltage signal the controller can understand. A voltage signal range of 1 to 5 volts is standard, although some models of controller use different voltage ranges and therefore require different precision resistor values. If the voltage range is 1-5 volts and the current range is 4-20 mA, the precision resistor value must be 250 ohms according to Ohm’s Law. Since this is a digital controller, the input voltage at the controller terminals is interpreted by an analog-to-digital converter (ADC) circuit, which converts the measured voltage into a digital number the controller’s microprocessor can interpret.</p>",
+   "body": "DC electric current signals may also be used to communicate process measurement information from transmitters to controllers, indicators, recorders, alarms, and other input devices. Recall that the purpose of a transmitter is to sense some physical variable (e.g. pressure, temperature, flow) and then report that quantity in the form of a signal, in this case a 4 to 20 milliamp DC current proportional to that measured quantity. The simplest form of 4-20 mA measurement loop is one where the transmitter has two terminals for the 4-20 mA signal wires to connect, and two more terminals where a power source connects. These transmitters are called “4-wire” or “self-powered” units. The current signal from the transmitter connects to the process variable input terminals of the controller to complete the loop: Some process controllers are not equipped to directly accept milliamp input signals, but rather can only interpret DC voltage signals. In such cases we must connect a precision resistor across the controller’s input terminals to convert the 4-20 mA transmitter signal into a standardized analog voltage signal the controller can understand. A voltage signal range of 1 to 5 volts is standard, although some models of controller use different voltage ranges and therefore require different precision resistor values. If the voltage range is 1-5 volts and the current range is 4-20 mA, the precision resistor value must be 250 ohms according to Ohm’s Law. Since this is a digital controller, the input voltage at the controller terminals is interpreted by an analog-to-digital converter (ADC) circuit, which converts the measured voltage into a digital number the controller’s microprocessor can interpret.",
+   "id": "liii2-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.4 4-wire (“self-powered”) transmitter current loops",
+   "html": "<p>In some installations, transmitter power is supplied through additional wires in the cable from a power source located near the controller:</p><figure><img src=\"media/liii/ee2814182b4e.png\" alt=\"A figure from page 919 of the original\"></figure><p>The obvious disadvantage of this scheme is the requirement of two more conductors in the cable. More conductors means the cable will be larger-diameter and more expensive for a given length. Cables with more conductors will require larger electrical conduit to fit in to, and all field wiring panels will have to contain more terminal blocks to marshal the additional conductors. If no suitable electrical power source exists at the transmitter location, though, a 4-wire cable is necessary to service a 4-wire transmitter.</p>",
+   "body": "In some installations, transmitter power is supplied through additional wires in the cable from a power source located near the controller: The obvious disadvantage of this scheme is the requirement of two more conductors in the cable. More conductors means the cable will be larger-diameter and more expensive for a given length. Cables with more conductors will require larger electrical conduit to fit in to, and all field wiring panels will have to contain more terminal blocks to marshal the additional conductors. If no suitable electrical power source exists at the transmitter location, though, a 4-wire cable is necessary to service a 4-wire transmitter.",
+   "id": "liii2-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.5 2-wire (“loop-powered”) transmitter current loops",
+   "html": "<p>It is possible to convey electrical power and communicate analog information over the same two wires using 4 to 20 milliamps DC, if we design the transmitter to be loop-powered. A looppowered transmitter connects to a process controller with only two wires, which is why loop-powered transmitters are synonymously known as 2-wire transmitters:</p><figure><img src=\"media/liii/e913697f03e7.png\" alt=\"A figure from page 920 of the original\"></figure><p>Here, the transmitter is not really a current source in the sense that a 4-wire transmitter is. Instead, a 2-wire transmitter’s circuitry is designed to act as a current regulator, limiting current in the series loop to a value representing the process measurement, while relying on a remote source of power to motivate the electric current. Please note the direction of the arrow in the transmitter’s dependent current source symbol, and how it relates to the voltage polarity marks. Refer back to the illustration of a 4-wire transmitter circuit for comparison. The current “source” in this looppowered transmitter actually behaves as an electrical load6, while the current source in the 4-wire transmitter functioned as a true electrical source. A loop-powered transmitter gets its operating power from the minimum terminal voltage and current available at its two terminals. With the typical source voltage being 24 volts DC, and the maximum voltage dropped across the controller’s 250 ohm resistor being 5 volts DC, the transmitter should always have at least 19 volts available at its terminals. Given the lower end of the 4-20 mA signal range, the transmitter should always have at least 4 mA of current to function on. Thus, the transmitter will always have a certain minimum amount of electrical power available on which to operate, while regulating current to signal the process measurement to the receiving instrument.</p>",
+   "body": "It is possible to convey electrical power and communicate analog information over the same two wires using 4 to 20 milliamps DC, if we design the transmitter to be loop-powered. A looppowered transmitter connects to a process controller with only two wires, which is why loop-powered transmitters are synonymously known as 2-wire transmitters: Here, the transmitter is not really a current source in the sense that a 4-wire transmitter is. Instead, a 2-wire transmitter’s circuitry is designed to act as a current regulator, limiting current in the series loop to a value representing the process measurement, while relying on a remote source of power to motivate the electric current. Please note the direction of the arrow in the transmitter’s dependent current source symbol, and how it relates to the voltage polarity marks. Refer back to the illustration of a 4-wire transmitter circuit for comparison. The current “source” in this looppowered transmitter actually behaves as an electrical load6, while the current source in the 4-wire transmitter functioned as a true electrical source. A loop-powered transmitter gets its operating power from the minimum terminal voltage and current available at its two terminals. With the typical source voltage being 24 volts DC, and the maximum voltage dropped across the controller’s 250 ohm resistor being 5 volts DC, the transmitter should always have at least 19 volts available at its terminals. Given the lower end of the 4-20 mA signal range, the transmitter should always have at least 4 mA of current to function on. Thus, the transmitter will always have a certain minimum amount of electrical power available on which to operate, while regulating current to signal the process measurement to the receiving instrument.",
+   "id": "liii2-7"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.5 2-wire (“loop-powered”) transmitter current loops",
+   "html": "<p><small>6Some of my students have referred to such a circuit as a smart load, since it functions as a load but nevertheless exerts control over the circuit current.</small></p><p>Internally, the electronic hardware of a 2-wire transmitter circuitry resembles the following (simplified) diagram. Note that everything shown within the shaded rectangle is represented by the “2-wire transmitter” circle in the previous diagram:</p><figure><img src=\"media/liii/4e78f0f408e6.png\" alt=\"A figure from page 921 of the original\"></figure><p>All sensing, scaling, and output conditioning circuitry inside the transmitter must be designed to operate on less than 4 mA of DC current, and at a modest terminal voltage. In order to create loop currents exceeding 4 mA – as the transmitter must do in order to span the entire 4 to 20 milliamp signal range – the transmitter circuitry uses a transistor to shunt (bypass) extra current from one terminal to the other as needed to make the total current indicative of the process measurement. For example, if the transmitter’s internal operating current is only 3.8 mA, and it must regulate loop current at a value of 16 mA to represent a condition of 75% process measurement, the shunt transistor will be driven by the opamp to bypass exactly 12.2 mA of current (because 3.8 mA + 12.2 mA = 16.0 mA). The very low amount of electrical power available at a 2-wire transmitter’s terminals limits its functionality. If the transmitter requires more electrical power than can be delivered with 4 milliamps and 19 volts (minimum each), the only solution is to go with a 4-wire transmitter where the power conductors are separate from the signal conductors. An example of a process transmitter that must be 4-wire is a chemical analyzer such as a chromatograph, requiring enough power to operate an electrical heater, solenoid valves, and an on-board computer to process the sensor data. There is simply no way to operate a machine as complex and power-hungry as a 2010-era chromatograph on</p>",
+   "body": "6Some of my students have referred to such a circuit as a smart load, since it functions as a load but nevertheless exerts control over the circuit current. Internally, the electronic hardware of a 2-wire transmitter circuitry resembles the following (simplified) diagram. Note that everything shown within the shaded rectangle is represented by the “2-wire transmitter” circle in the previous diagram: All sensing, scaling, and output conditioning circuitry inside the transmitter must be designed to operate on less than 4 mA of DC current, and at a modest terminal voltage. In order to create loop currents exceeding 4 mA – as the transmitter must do in order to span the entire 4 to 20 milliamp signal range – the transmitter circuitry uses a transistor to shunt (bypass) extra current from one terminal to the other as needed to make the total current indicative of the process measurement. For example, if the transmitter’s internal operating current is only 3.8 mA, and it must regulate loop current at a value of 16 mA to represent a condition of 75% process measurement, the shunt transistor will be driven by the opamp to bypass exactly 12.2 mA of current (because 3.8 mA + 12.2 mA = 16.0 mA). The very low amount of electrical power available at a 2-wire transmitter’s terminals limits its functionality. If the transmitter requires more electrical power than can be delivered with 4 milliamps and 19 volts (minimum each), the only solution is to go with a 4-wire transmitter where the power conductors are separate from the signal conductors. An example of a process transmitter that must be 4-wire is a chemical analyzer such as a chromatograph, requiring enough power to operate an electrical heater, solenoid valves, and an on-board computer to process the sensor data. There is simply no way to operate a machine as complex and power-hungry as a 2010-era chromatograph on",
+   "id": "liii2-8"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.5 2-wire (“loop-powered”) transmitter current loops",
+   "html": "<p>4 milliamps and 19 volts! Early current-based industrial transmitters were not capable of operating on such low levels of electrical power, and so used a different current signal standard: 10 to 50 milliamps DC. Loop power supplies for these transmitters ranged upwards of 90 volts to provide enough power for the transmitter. Safety concerns made the 10-50 mA standard unsuitable for some industrial installations, and modern microelectronic circuitry with its reduced power consumption made the 4-20 mA standard practical for nearly all types of process transmitters.</p><h4>13.6 4-wire “passive” versus “active” output transmitters</h4><p>Some self-powered (4-wire) analog electronic transmitters are designed to behave as electrical loads rather than as electrical sources. Such transmitters are commonly referred to as having passive or sinking 4-20 mA outputs, as opposed to the active or sourcing 4-wire transmitters previously described:</p><figure><img src=\"media/liii/0464f382693a.png\" alt=\"A figure from page 922 of the original\"></figure><p>At first this seems needlessly confusing. Why build a self-powered transmitter requiring a second power supply in the circuit to drive the 4-20 mA signal? The reason for this type of transmitter’s existence is the sheer popularity of loop-powered 2-wire 4-20 mA transmitters. Loop-powered field instruments have become so popular in industry that many control systems, PLCs, indicators, and other receiving devices have their own loop power supply built in so that these systems can only connect to loads and are therefore incompatible with current-sourcing 4-wire transmitters. Thus, “passive” or “sinking” 4-wire transmitters were developed to accommodate control systems designed to work (only) with loop-powered instruments. Some 4-wire transmitters are configurable for either passive or active (i.e. sinking versus sourcing) operation, requiring the installing technician to pay close attention in order for the circuit to properly function.</p>",
+   "body": "4 milliamps and 19 volts! Early current-based industrial transmitters were not capable of operating on such low levels of electrical power, and so used a different current signal standard: 10 to 50 milliamps DC. Loop power supplies for these transmitters ranged upwards of 90 volts to provide enough power for the transmitter. Safety concerns made the 10-50 mA standard unsuitable for some industrial installations, and modern microelectronic circuitry with its reduced power consumption made the 4-20 mA standard practical for nearly all types of process transmitters. 13.6 4-wire “passive” versus “active” output transmitters Some self-powered (4-wire) analog electronic transmitters are designed to behave as electrical loads rather than as electrical sources. Such transmitters are commonly referred to as having passive or sinking 4-20 mA outputs, as opposed to the active or sourcing 4-wire transmitters previously described: At first this seems needlessly confusing. Why build a self-powered transmitter requiring a second power supply in the circuit to drive the 4-20 mA signal? The reason for this type of transmitter’s existence is the sheer popularity of loop-powered 2-wire 4-20 mA transmitters. Loop-powered field instruments have become so popular in industry that many control systems, PLCs, indicators, and other receiving devices have their own loop power supply built in so that these systems can only connect to loads and are therefore incompatible with current-sourcing 4-wire transmitters. Thus, “passive” or “sinking” 4-wire transmitters were developed to accommodate control systems designed to work (only) with loop-powered instruments. Some 4-wire transmitters are configurable for either passive or active (i.e. sinking versus sourcing) operation, requiring the installing technician to pay close attention in order for the circuit to properly function.",
+   "id": "liii2-9"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "13.7.7 NAMUR signal levels",
+   "html": "<p>One of the intrinsic benefits of a “live zero” analog signal standard such as 4-20 mA is that a wire break (open fault) can immediately be detected by the absence of current in the circuit. If the signal scale started at zero (e.g. 0-20 mA), there would be no way to electrically distinguish between a broken wire and a legitimate 0% signal value. In other words, the “live” LRV point of a 4-20 mA signal provides us with a way to indicate a certain type of circuit fault in addition to indicating an analog measurement during normal operation. The NAMUR signal standard takes this philosophy one step further by defining specific diagnostic meaning to values of current lying outside the 4-20 mA range:</p><figure><img src=\"media/liii/63b74e860501.png\" alt=\"A figure from page 942 of the original\"></figure><p>NAMUR-compliant transmitters are designed to limit their output signals between 3.8 mA and less than 21 mA when functioning properly. Signals lying outside this range indicate some form of failure has occurred within the transmitter or the circuit wiring. NAMUR-compliant control systems will recognize these errant milliamp values as fault states, and may be programmed to take specific action upon receiving these signal values. Such actions include forcing controllers into manual mode, initiating automatic shutdown procedures, or taking some other form of safe action appropriate to the knowledge of a failed process transmitter.</p><p>916</p>",
+   "body": "One of the intrinsic benefits of a “live zero” analog signal standard such as 4-20 mA is that a wire break (open fault) can immediately be detected by the absence of current in the circuit. If the signal scale started at zero (e.g. 0-20 mA), there would be no way to electrically distinguish between a broken wire and a legitimate 0% signal value. In other words, the “live” LRV point of a 4-20 mA signal provides us with a way to indicate a certain type of circuit fault in addition to indicating an analog measurement during normal operation. The NAMUR signal standard takes this philosophy one step further by defining specific diagnostic meaning to values of current lying outside the 4-20 mA range: NAMUR-compliant transmitters are designed to limit their output signals between 3.8 mA and less than 21 mA when functioning properly. Signals lying outside this range indicate some form of failure has occurred within the transmitter or the circuit wiring. NAMUR-compliant control systems will recognize these errant milliamp values as fault states, and may be programmed to take specific action upon receiving these signal values. Such actions include forcing controllers into manual mode, initiating automatic shutdown procedures, or taking some other form of safe action appropriate to the knowledge of a failed process transmitter. 916",
+   "id": "liii3-1"
+  },
+  {
+   "id": "add-namur",
+   "type": "concept",
+   "stage": "learn",
+   "after": "liii3-1",
+   "title": "In UK and European plants: NE 43",
+   "body": "The fault levels in the section above come from NAMUR's recommendation **NE 43**, widely used in UK and European plants. A healthy signal stays between **3.8 and 20.5 mA** (a little under- and over-range for a real measurement). At **3.6 mA or less**, or **21 mA or more**, the transmitter is saying it has failed, and the control system can treat the value as bad rather than as a very low or very high reading.",
+   "added": true
+  },
+  {
+   "id": "add-ma-pct",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A transmitter's 4 to 20 mA signal reads {ma} mA. What percentage of its range is that?",
+   "vars": {
+    "ma": {
+     "pick": [
+      5.6,
+      8,
+      10.4,
+      12,
+      13.6,
+      16.8,
+      18.4
+     ]
+    }
+   },
+   "answer": "(ma - 4) / 16 * 100",
+   "unit": "%",
+   "abs": 0.1,
+   "work": "$({ma} - 4) \\div 16 \\times 100 = {answer:1}$%",
+   "why": "4 mA is 0% and 20 mA is 100%: 16 mA of span. Forgetting to take off the 4 mA live zero is the usual slip.",
+   "hint": "Take off the 4 mA first.",
+   "added": true
+  },
+  {
+   "id": "add-ma-eu",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A pressure transmitter is ranged {lo} to {hi} bar. Its loop current is {ma} mA. What pressure does that mean?",
+   "vars": {
+    "lo": {
+     "pick": [
+      0,
+      -1,
+      2
+     ]
+    },
+    "hi": {
+     "pick": [
+      10,
+      16,
+      25
+     ]
+    },
+    "ma": {
+     "pick": [
+      6,
+      9,
+      12,
+      14.5,
+      17
+     ]
+    }
+   },
+   "answer": "lo + (ma - 4) / 16 * (hi - lo)",
+   "unit": "bar",
+   "abs": 0.02,
+   "work": "$({ma} - 4)/16 = {pct:3}$ of the span; ${lo} + {pct:3} \\times ({hi} - {lo}) = {answer:2}$ bar",
+   "let": {
+    "pct": "(ma - 4) / 16"
+   },
+   "why": "The signal is a straight line: the fraction of span, times the span, plus the bottom of the range. With a range that does not start at zero, the lower range value must be added back.",
+   "hint": "Fraction of span first, then into bar.",
+   "added": true
+  },
+  {
+   "id": "add-loop-load",
+   "type": "steps",
+   "stage": "practise",
+   "given": 1,
+   "q": "A 2-wire transmitter needs at least 11 V across its terminals. The loop has a 24 V supply, a 250 Ω input resistor in the PLC card and 2 × 40 Ω of cable. Will it still work at 20 mA, and how much more resistance could the loop take?",
+   "steps": [
+    {
+     "ask": "The voltage dropped across the loop's resistance at 20 mA",
+     "show": "$0.020 \\times (250 + 80) = 6.6$ V"
+    },
+    {
+     "ask": "What is left for the transmitter",
+     "show": "$24 - 6.6 = 17.4$ V, above 11 V: it works"
+    },
+    {
+     "ask": "The most loop resistance it could have",
+     "show": "$(24 - 11) \\div 0.020 = 650$ Ω"
+    },
+    {
+     "ask": "How much more could be added",
+     "show": "$650 - 330 = 320$ Ω (another indicator, a longer cable, a barrier)"
+    }
+   ],
+   "why": "A loop-powered transmitter lives on what the loop leaves it. Check at the top of the range, 20 mA, where the drops are biggest: a loop that works at 12 mA can still fail near full scale.",
+   "added": true
+  },
+  {
+   "id": "add-namur-mcq",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A level transmitter set up to NAMUR NE 43 reads 3.5 mA. How should the control system treat it?",
+   "options": [
+    "As a failed signal, not a real level",
+    "As a level just below the bottom of range",
+    "As a level of exactly 0%",
+    "As normal: anything above 0 mA is valid"
+   ],
+   "answer": 0,
+   "why": "3.6 mA or less is a fault signal under NE 43. That is the point of a live zero: 0% is 4 mA, so a current well below it cannot be a real measurement.",
+   "added": true
+  },
+  {
+   "id": "add-2wire-mcq",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What makes a transmitter '2-wire' (loop-powered)?",
+   "options": [
+    "It takes its power from the same loop it signals on",
+    "It has two separate power supplies",
+    "It sends two signals, one on each wire",
+    "It needs a mains supply plus two signal wires"
+   ],
+   "answer": 0,
+   "why": "A 2-wire transmitter regulates the loop current while running on the small power the loop gives it: below 4 mA there would not be enough for it to work, which is one reason the range starts at 4 mA. A 4-wire transmitter has its own supply and two more wires for the signal.",
+   "added": true
+  }
+ ]
+}

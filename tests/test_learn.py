@@ -385,3 +385,34 @@ _cards = _src.cards([b for b in _blocks if not (b[0] == "h" and b[1] == 1)], "Ti
 assert [c["title"] for c in _cards] == ["Title", "Small"], [c["title"] for c in _cards]   # short parts run on into the next
 assert "<h4>One</h4>" in _cards[0]["html"] and "<h4>Two</h4>" in _cards[-1]["html"]
 print("ok — other sources: kept words, dropped furniture, parts and cards")
+
+# === a PDF: a shaded panel's words are text; a ruled table and a caption are one figure ======
+try:
+    import pymupdf as _mu
+except ImportError:
+    _mu = None
+if _mu:
+    _d = _mu.open()
+    _pg = _d.new_page(width=595, height=842)
+    _say = "Plain words in a paragraph of the body text that goes on for a while and keeps going. "
+    _pg.insert_textbox(_mu.Rect(60, 140, 540, 220), _say * 3, fontsize=10)
+    _pg.draw_rect(_mu.Rect(55, 240, 545, 330), color=None, fill=(0.85, 0.85, 0.85))      # a case study panel
+    _pg.insert_textbox(_mu.Rect(60, 245, 540, 325), "Case words. " + _say * 2, fontsize=10)
+    _pg.insert_text((65, 354), "Controller output in percent and the I/P output in PSI with the pigment valve and base valve",
+                    fontsize=9)                                                            # a table: a long heading row,
+    for _i in range(5):                                                                    # then rules and short cells
+        _pg.draw_line((60, 360 + 20 * _i), (540, 360 + 20 * _i))
+        if _i < 4:
+            for _j, _w in enumerate(["3 PSI", "shut", "open"]):
+                _pg.insert_text((70 + 160 * _j, 374 + 20 * _i), _w, fontsize=10)
+    for _x in (60, 220, 380, 540):
+        _pg.draw_line((_x, 340), (_x, 440))
+    _pg.draw_line((60, 340), (540, 340))
+    _pg.insert_text((60, 456), "Figure 1 A table of valves", fontsize=10)
+    _pg.insert_textbox(_mu.Rect(60, 470, 540, 560), _say * 3, fontsize=10)
+    _b, _, _f = _src.pdf_blocks(_d.tobytes(), {}, "t", "u")
+    _out = [b[-1] for b in _b]
+    assert sum("<figure>" in o for o in _out) == 1 and len(_f) == 1, _out                    # the table, as one picture
+    assert any(o.startswith("<p>Case words.") for o in _out), _out                         # the panel, as words
+    assert not any("PSI" in o or "Figure 1" in o for o in _out if "<figure>" not in o), _out   # (not a panel: many lines)
+    print("ok — a PDF: panels as words, a ruled table with its caption as one figure")

@@ -1,5 +1,18 @@
 # Changes
 
+## 4.0.22 — 16 October 2026
+
+- **22 more lessons**, from Lessons In Industrial Instrumentation (an open textbook): 4 to 20 mA loops
+  and scaling, temperature, pressure, level and flow sensors, load cells, control valves, calibration,
+  data acquisition, step tests, loop tuning, cascade, ratio and split-range control, PID blocks, HMIs,
+  Modbus, Ethernet, TCP and UDP, RS-232 and RS-485, serial data, vibration, motor control circuits,
+  pneumatic circuits and SCADA (with the NCSC's guidance on knowing your OT estate). Each has its own
+  questions, with UK practice where it differs (thermocouple colours, NAMUR signal levels, Siemens scaling).
+- Imported PDFs read better: equations, tables, code listings and scales come through as pictures of
+  the page rather than broken lines of text; text boxes and case studies stay as words; captions stay
+  with their figures; and lines in HSE's guidance now join into paragraphs.
+- Two lessons taken from one source page no longer share (and overwrite) one saved copy of it.
+
 ## 4.0.21 — 16 October 2026
 
 - **Lessons from UK sources**, word for word with a link to each as published: the law (the Health and

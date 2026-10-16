@@ -1,0 +1,209 @@
+{
+ "id": "instrumentation.sensors.load-cells",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "liii: Bridge circuits",
+   "liii: Level measurement by weight (load cells)"
+  ]
+ },
+ "minutes": 22,
+ "sources": [
+  "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, Bridge circuits. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/socratic/sinst/book/liii.pdf",
+  "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, Level measurement by weight (load cells). CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/socratic/sinst/book/liii.pdf"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Bridge circuits",
+   "url": "media/liii/bridge-circuits-b7aa16.html",
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: Level measurement by weight (load cells)",
+   "url": "media/liii/level-measurement-by-weight-load-cells-69ef5c.html",
+   "by": "Tony R. Kuphaldt, Lessons In Industrial Instrumentation, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9 Bridge circuits",
+   "html": "<p>A bridge circuit is basically a pair of voltage dividers where the circuit output is taken as the difference in potential between the two dividers. Bridge circuits may be drawn in schematic form in an H-shape or in a diamond shape, although the diamond configuration is more common:</p><figure><img src=\"media/liii/19b3a08e012c.png\" alt=\"A figure from page 354 of the original\"></figure><p>The voltage source powering the bridge circuit is called the excitation source. This source may be DC or AC depending on the application of the bridge circuit. The components comprising the bridge need not be resistors, either: capacitors, inductors, lengths of wire, sensing elements, and other component forms are possible, depending on the application. Two major applications exist for bridge circuits, which will be explained in the following subsections.</p>",
+   "body": "A bridge circuit is basically a pair of voltage dividers where the circuit output is taken as the difference in potential between the two dividers. Bridge circuits may be drawn in schematic form in an H-shape or in a diamond shape, although the diamond configuration is more common: The voltage source powering the bridge circuit is called the excitation source. This source may be DC or AC depending on the application of the bridge circuit. The components comprising the bridge need not be resistors, either: capacitors, inductors, lengths of wire, sensing elements, and other component forms are possible, depending on the application. Two major applications exist for bridge circuits, which will be explained in the following subsections.",
+   "id": "liii1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.1 Component measurement",
+   "html": "<p>Bridge circuits may be used to test components. In this capacity, one of the “arms” of the bridge circuit is comprised of the component under test, while at least one of the other “arms” is made adjustable. The common Wheatstone bridge circuit for resistance measurement is shown here:</p><figure><img src=\"media/liii/79573eb6c65a.png\" alt=\"A figure from page 355 of the original\"></figure><p>Fixed resistors R1 and R2 are of precisely known value and high precision. Variable resistor Radjust has a labeled knob allowing for a person to adjust and read its value to a high degree of precision. When the ratio of the variable resistance to the specimen resistance equals the ratio of the two fixed resistors, the sensitive galvanometer will register exactly zero volts regardless of the excitation source’s value. This is called a balanced condition for the bridge circuit:</p><figure><img src=\"media/liii/b3f60c208b81.png\" alt=\"A figure from page 355 of the original\"></figure><p>When the two resistance ratios are equal, the voltage drops across the respective resistances will also be equal. Kirchhoff’s Voltage Law declares that the voltage differential between two equal and opposite voltage drops must be zero, accounting for the meter’s indication of balance.</p><p>It would not be inappropriate to relate this to the operation of a laboratory balance-beam scale, comparing a specimen of unknown mass against a set of known masses. In either case, the instrument is merely comparing an unknown quantity against an (adjustable) known quantity, indicating a condition of equality between the two:</p>",
+   "body": "Bridge circuits may be used to test components. In this capacity, one of the “arms” of the bridge circuit is comprised of the component under test, while at least one of the other “arms” is made adjustable. The common Wheatstone bridge circuit for resistance measurement is shown here: Fixed resistors R1 and R2 are of precisely known value and high precision. Variable resistor Radjust has a labeled knob allowing for a person to adjust and read its value to a high degree of precision. When the ratio of the variable resistance to the specimen resistance equals the ratio of the two fixed resistors, the sensitive galvanometer will register exactly zero volts regardless of the excitation source’s value. This is called a balanced condition for the bridge circuit: When the two resistance ratios are equal, the voltage drops across the respective resistances will also be equal. Kirchhoff’s Voltage Law declares that the voltage differential between two equal and opposite voltage drops must be zero, accounting for the meter’s indication of balance. It would not be inappropriate to relate this to the operation of a laboratory balance-beam scale, comparing a specimen of unknown mass against a set of known masses. In either case, the instrument is merely comparing an unknown quantity against an (adjustable) known quantity, indicating a condition of equality between the two:",
+   "id": "liii1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.1 Component measurement",
+   "html": "<figure><img src=\"media/liii/4edc1c10c082.png\" alt=\"A figure from page 356 of the original\"></figure><p>Many legacy instruments were designed around the concept of a self-balancing bridge circuit, where an electric servo motor drove a potentiometer to achieve a balanced condition against the voltage produced by some process sensor. Analog electronic paper chart recorders often used this principle. Almost all pneumatic process instruments use this principle to translate the force of a sensing element into a variable air pressure. Modern bridge circuits are mostly used in laboratories for extremely precise component measurements. Very rarely will you encounter a Wheatstone bridge circuit used in the process industries.</p>",
+   "body": "Many legacy instruments were designed around the concept of a self-balancing bridge circuit, where an electric servo motor drove a potentiometer to achieve a balanced condition against the voltage produced by some process sensor. Analog electronic paper chart recorders often used this principle. Almost all pneumatic process instruments use this principle to translate the force of a sensing element into a variable air pressure. Modern bridge circuits are mostly used in laboratories for extremely precise component measurements. Very rarely will you encounter a Wheatstone bridge circuit used in the process industries.",
+   "id": "liii1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<p>A different application for bridge circuits is to convert the output of an electrical sensor into a voltage signal representing some physical measurement. This is by far the most popular use of bridge measurement circuits in industry, and here we see the same circuit used in an entirely different manner from that of the balanced Wheatstone bridge circuit.</p><figure><img src=\"media/liii/35df3dfa882f.png\" alt=\"A figure from page 357 of the original\"></figure><p>Here, the bridge will be balanced only when Rsensor is at one particular resistance value. Unlike the Wheatstone bridge, which serves to measure a component’s value when the circuit is balanced, this bridge circuit will probably spend most of its life in an unbalanced condition. The output voltage changes as a function of sensor resistance, which makes that voltage a reflection of the sensor’s physical condition. In the above circuit, we see that the output voltage increases (positive on the top wire, negative on the bottom wire) as the resistance of Rsensor increases.</p><p>One of the most common applications for this kind of bridge circuit is in strain measurement, where the mechanical strain of an object is converted into an electrical signal. The sensor used here is a device known as a strain gauge: a folded wire designed to stretch and compress with the object under test, altering its electrical resistance accordingly. Strain gauges are typically quite small, as shown by this photograph:</p>",
+   "body": "A different application for bridge circuits is to convert the output of an electrical sensor into a voltage signal representing some physical measurement. This is by far the most popular use of bridge measurement circuits in industry, and here we see the same circuit used in an entirely different manner from that of the balanced Wheatstone bridge circuit. Here, the bridge will be balanced only when Rsensor is at one particular resistance value. Unlike the Wheatstone bridge, which serves to measure a component’s value when the circuit is balanced, this bridge circuit will probably spend most of its life in an unbalanced condition. The output voltage changes as a function of sensor resistance, which makes that voltage a reflection of the sensor’s physical condition. In the above circuit, we see that the output voltage increases (positive on the top wire, negative on the bottom wire) as the resistance of Rsensor increases. One of the most common applications for this kind of bridge circuit is in strain measurement, where the mechanical strain of an object is converted into an electrical signal. The sensor used here is a device known as a strain gauge: a folded wire designed to stretch and compress with the object under test, altering its electrical resistance accordingly. Strain gauges are typically quite small, as shown by this photograph:",
+   "id": "liii1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<figure><img src=\"media/liii/5e0d6a8b548e.jpg\" alt=\"A figure from page 358 of the original\"></figure><p>Strain gauges are useful when bonded to metal specimens, providing a means of electrically sensing the strain (“stretching” or “compressing” of that specimen). The following bridge circuit is a typical application for a strain gauge:</p><figure><img src=\"media/liii/ae8c38845c0e.png\" alt=\"A figure from page 358 of the original\"></figure><p>When the specimen is stretched along its long axis, the metal wires in the strain gauge stretch with it, increasing their length and decreasing their cross-sectional area, both of which work to increase the wire’s electrical resistance. This stretching is microscopic in scale, but the resistance change is measurable and repeatable within the specimen’s elastic limit. In the above circuit example, stretching the specimen will cause the voltmeter to read upscale (as defined by the polarity marks). Compressing the specimen along its long axis has the opposite effect, decreasing the strain gauge resistance and driving the meter downscale. Strain gauges are used to precisely measure the strain (stretching or compressing motion) of mechanical elements. One application for strain gauges is the measurement of strain on machinery components, such as the frame components of an automobile or airplane undergoing design development testing. Another application is in the measurement of force in a device called a load cell. A “load cell” is comprised of one or more strain gauges bonded to the surface of a metal structure having precisely known elastic properties. This metal structure will stretch and compress very precisely with applied force, as though it were an extremely stiffspring. The strain gauges bonded to this structure measure the strain, translating applied force into electrical resistance changes.</p>",
+   "body": "Strain gauges are useful when bonded to metal specimens, providing a means of electrically sensing the strain (“stretching” or “compressing” of that specimen). The following bridge circuit is a typical application for a strain gauge: When the specimen is stretched along its long axis, the metal wires in the strain gauge stretch with it, increasing their length and decreasing their cross-sectional area, both of which work to increase the wire’s electrical resistance. This stretching is microscopic in scale, but the resistance change is measurable and repeatable within the specimen’s elastic limit. In the above circuit example, stretching the specimen will cause the voltmeter to read upscale (as defined by the polarity marks). Compressing the specimen along its long axis has the opposite effect, decreasing the strain gauge resistance and driving the meter downscale. Strain gauges are used to precisely measure the strain (stretching or compressing motion) of mechanical elements. One application for strain gauges is the measurement of strain on machinery components, such as the frame components of an automobile or airplane undergoing design development testing. Another application is in the measurement of force in a device called a load cell. A “load cell” is comprised of one or more strain gauges bonded to the surface of a metal structure having precisely known elastic properties. This metal structure will stretch and compress very precisely with applied force, as though it were an extremely stiffspring. The strain gauges bonded to this structure measure the strain, translating applied force into electrical resistance changes.",
+   "id": "liii1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<p>You can see what a load cell looks like in the following photograph:</p><figure><img src=\"media/liii/819b29cb5d9c.jpg\" alt=\"A figure from page 360 of the original\"></figure><p>Strain gauges are not the only dynamic element applicable to bridge circuits. In fact, any resistance-based sensor may be used in a bridge circuit to translate a physical measurement into an electrical (voltage) signal. Thermistors (changing resistance with temperature) and photocells (changing resistance with light exposure) are just two alternatives to strain gauges. It should be noted that the amount of voltage output by this bridge circuit depends both on the amount of resistance change of the sensor and the value of the excitation source. This dependency on source voltage value is a major difference between a sensing bridge circuit and a Wheatstone (balanced) bridge circuit. In a perfectly balanced bridge, the excitation voltage is irrelevant: the output voltage is zero no matter what source voltage value you use. In an unbalanced bridge circuit, however, source voltage value matters! For this reason, these bridge circuits are often rated in terms of how many millivolts of output they produce per volt of excitation per unit of physical measurement (microns of strain, newtons of stress, etc.).</p>",
+   "body": "You can see what a load cell looks like in the following photograph: Strain gauges are not the only dynamic element applicable to bridge circuits. In fact, any resistance-based sensor may be used in a bridge circuit to translate a physical measurement into an electrical (voltage) signal. Thermistors (changing resistance with temperature) and photocells (changing resistance with light exposure) are just two alternatives to strain gauges. It should be noted that the amount of voltage output by this bridge circuit depends both on the amount of resistance change of the sensor and the value of the excitation source. This dependency on source voltage value is a major difference between a sensing bridge circuit and a Wheatstone (balanced) bridge circuit. In a perfectly balanced bridge, the excitation voltage is irrelevant: the output voltage is zero no matter what source voltage value you use. In an unbalanced bridge circuit, however, source voltage value matters! For this reason, these bridge circuits are often rated in terms of how many millivolts of output they produce per volt of excitation per unit of physical measurement (microns of strain, newtons of stress, etc.).",
+   "id": "liii1-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<p>An interesting feature of a sensing bridge circuit is its ability to cancel out unwanted variables. In the case of a strain gauge, for example, mechanical strain is not the only variable affecting gauge resistance. Temperature also affects gauge resistance. Since we do not wish our strain gauge to also act as a thermometer (which would make measurements very uncertain – how would we differentiate the effects of changing temperature from the effects of changing strain?), we must find some way to nullify resistance changes due solely to temperature, such that our bridge circuit will respond only to changes in strain. The solution is to creatively use a “dummy” strain gauge as another arm of the bridge:</p><figure><img src=\"media/liii/35113a594ab0.png\" alt=\"A figure from page 361 of the original\"></figure>",
+   "body": "An interesting feature of a sensing bridge circuit is its ability to cancel out unwanted variables. In the case of a strain gauge, for example, mechanical strain is not the only variable affecting gauge resistance. Temperature also affects gauge resistance. Since we do not wish our strain gauge to also act as a thermometer (which would make measurements very uncertain – how would we differentiate the effects of changing temperature from the effects of changing strain?), we must find some way to nullify resistance changes due solely to temperature, such that our bridge circuit will respond only to changes in strain. The solution is to creatively use a “dummy” strain gauge as another arm of the bridge:",
+   "id": "liii1-7"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<p>The “dummy” gauge is attached to the specimen in such a way that it maintains the same temperature as the active strain gauge, yet experiences no strain. Thus, any difference in gauge resistances must be due solely to specimen strain. The differential nature of the bridge circuit naturally translates the differential resistance of the two gauges into one voltage signal representing strain. If thermistors are used instead of strain gauges, this circuit becomes a differential temperature sensor. Differential temperature sensing circuits are used in solar heating control systems, to detect when the solar collector is hotter than the room or heat storage mass being heated. Sensing bridge circuits may have more than one active “arm” as well. The examples you have seen so far in this section have all been quarter-active bridge circuits. It is possible, however, to incorporate more than one sensor into the same bridge circuit. So long as the sensors’ resistance changes are coordinated, their combined effect will be to increase the sensitivity (and often the linearity as well) of the measurement.</p><p>For example, full-active bridge circuits are sometimes built out of four strain gauges, where each strain gauge comprises one arm of the bridge. Two of the strain gauges must compress and the other two must stretch under the application of the same mechanical force, in order that the bridge will become unbalanced with strain:</p>",
+   "body": "The “dummy” gauge is attached to the specimen in such a way that it maintains the same temperature as the active strain gauge, yet experiences no strain. Thus, any difference in gauge resistances must be due solely to specimen strain. The differential nature of the bridge circuit naturally translates the differential resistance of the two gauges into one voltage signal representing strain. If thermistors are used instead of strain gauges, this circuit becomes a differential temperature sensor. Differential temperature sensing circuits are used in solar heating control systems, to detect when the solar collector is hotter than the room or heat storage mass being heated. Sensing bridge circuits may have more than one active “arm” as well. The examples you have seen so far in this section have all been quarter-active bridge circuits. It is possible, however, to incorporate more than one sensor into the same bridge circuit. So long as the sensors’ resistance changes are coordinated, their combined effect will be to increase the sensitivity (and often the linearity as well) of the measurement. For example, full-active bridge circuits are sometimes built out of four strain gauges, where each strain gauge comprises one arm of the bridge. Two of the strain gauges must compress and the other two must stretch under the application of the same mechanical force, in order that the bridge will become unbalanced with strain:",
+   "id": "liii1-8"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "4.9.2 Sensor signal conditioning",
+   "html": "<figure><img src=\"media/liii/6d64e9a353d6.png\" alt=\"A figure from page 362 of the original\"></figure><p>Not only does a full-active bridge circuit provide greater sensitivity and linearity than a quarteractive bridge, but it also naturally provides temperature compensation without the need for “dummy” strain gauges, since the resistances of all four strain gauges will change by the same proportion if the specimen temperature changes.</p>",
+   "body": "Not only does a full-active bridge circuit provide greater sensitivity and linearity than a quarteractive bridge, but it also naturally provides temperature compensation without the need for “dummy” strain gauges, since the resistances of all four strain gauges will change by the same proportion if the specimen temperature changes.",
+   "id": "liii1-9"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "20.6 Weight",
+   "html": "<p>Weight-based level instruments sense process level in a vessel by directly measuring the weight of the vessel. If the vessel’s empty weight (tare weight) is known, process weight becomes a simple calculation of total weight minus tare weight. Obviously, weight-based level sensors can measure both liquid and solid materials, and they have the benefit of providing inherently linear mass storage measurement38. Load cells (strain gauges bonded to a steel element of precisely known modulus) are typically the primary sensing element of choice for detecting vessel weight. As the vessel’s weight changes, the load cells compress or relax on a microscopic scale, causing the strain gauges inside to change resistance. These small changes in electrical resistance become a direct indication of vessel weight. The following photograph shows three bins used to store powdered milk, each one supported by pillars equipped with load cells near their bases:</p><figure><img src=\"media/liii/1d12457546f9.jpg\" alt=\"A figure from page 1521 of the original\"></figure><p>38Regardless of the vessel’s shape or internal structure, the measurement provided by a weight-sensing system is based on the true mass of the stored material. Unlike height-based level measurement technologies (float, ultrasonic, radar, etc.), no characterization will ever be necessary to convert a measurement of height into a measurement of mass.</p><p>A close-up photograph shows one of the load cell units in detail, near the base of a pillar:</p><figure><img src=\"media/liii/b1929c252307.jpg\" alt=\"A figure from page 1522 of the original\"></figure><p>When multiple load cells are used to measure the weight of a storage vessel, the signals from all load cell units must be added together (“summed”) to produce a signal representative of the vessel’s total weight. Simply measuring the weight at one suspension point is insufficient39, because one can never be sure the vessel’s weight is distributed equally amongst all the supports.</p>",
+   "body": "Weight-based level instruments sense process level in a vessel by directly measuring the weight of the vessel. If the vessel’s empty weight (tare weight) is known, process weight becomes a simple calculation of total weight minus tare weight. Obviously, weight-based level sensors can measure both liquid and solid materials, and they have the benefit of providing inherently linear mass storage measurement38. Load cells (strain gauges bonded to a steel element of precisely known modulus) are typically the primary sensing element of choice for detecting vessel weight. As the vessel’s weight changes, the load cells compress or relax on a microscopic scale, causing the strain gauges inside to change resistance. These small changes in electrical resistance become a direct indication of vessel weight. The following photograph shows three bins used to store powdered milk, each one supported by pillars equipped with load cells near their bases: 38Regardless of the vessel’s shape or internal structure, the measurement provided by a weight-sensing system is based on the true mass of the stored material. Unlike height-based level measurement technologies (float, ultrasonic, radar, etc.), no characterization will ever be necessary to convert a measurement of height into a measurement of mass. A close-up photograph shows one of the load cell units in detail, near the base of a pillar: When multiple load cells are used to measure the weight of a storage vessel, the signals from all load cell units must be added together (“summed”) to produce a signal representative of the vessel’s total weight. Simply measuring the weight at one suspension point is insufficient39, because one can never be sure the vessel’s weight is distributed equally amongst all the supports.",
+   "id": "liii2-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "20.6 Weight",
+   "html": "<p>39If we happened to know, somehow, that the vessel’s weight was in fact equally shared by all supports, it would be sufficient to simply measure stress at one support to infer total vessel weight. In such an installation, assuming three supports, the total vessel weight would be the stress at any one support multiplied by three.</p><p>This next photograph shows a smaller-scale load cell installation used to measure the quantity of material fed into a beer-brewing process40:</p><figure><img src=\"media/liii/657bb7d4837e.jpg\" alt=\"A figure from page 1523 of the original\"></figure><p>Weight-based measurements are often employed where the true mass of a quantity must be ascertained, rather than the level. So long as the material’s density is a known constant, the relationship between weight and level for a vessel of constant cross-sectional area will be linear and predictable. Constant density is not always the case, especially for solid materials, and so weight-based inference of vessel level may be problematic. In applications where batch mass is more important than height (level), weight-based measurement is often the preferred method for portioning batches. You will find weight-based portion measurements used frequently in the food processing industries (e.g. consistently filling bags and boxes with product), and also for custody transfer of certain materials (e.g. coal and metal ore).</p><p><small>40The particular “micro-brewery” process shown here is at the Pike’s Place Market in downtown Seattle, Washington. Three load cells measure the weight of a hopper filled with ingredients prior to brewing in the “mash tun” vessel.</small></p>",
+   "body": "39If we happened to know, somehow, that the vessel’s weight was in fact equally shared by all supports, it would be sufficient to simply measure stress at one support to infer total vessel weight. In such an installation, assuming three supports, the total vessel weight would be the stress at any one support multiplied by three. This next photograph shows a smaller-scale load cell installation used to measure the quantity of material fed into a beer-brewing process40: Weight-based measurements are often employed where the true mass of a quantity must be ascertained, rather than the level. So long as the material’s density is a known constant, the relationship between weight and level for a vessel of constant cross-sectional area will be linear and predictable. Constant density is not always the case, especially for solid materials, and so weight-based inference of vessel level may be problematic. In applications where batch mass is more important than height (level), weight-based measurement is often the preferred method for portioning batches. You will find weight-based portion measurements used frequently in the food processing industries (e.g. consistently filling bags and boxes with product), and also for custody transfer of certain materials (e.g. coal and metal ore). 40The particular “micro-brewery” process shown here is at the Pike’s Place Market in downtown Seattle, Washington. Three load cells measure the weight of a hopper filled with ingredients prior to brewing in the “mash tun” vessel.",
+   "id": "liii2-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "20.6 Weight",
+   "html": "<p>One very important caveat for weight-based level instruments is to isolate the vessel from any external mechanical stresses generated by pipes or machinery. The following illustration shows a typical installation for a weight-based measurement system, where all pipes attaching to the vessel do so through flexible couplings, and the weight of the pipes themselves is borne by outside structures through pipe hangers:</p><figure><img src=\"media/liii/e8b0e5f9d646.png\" alt=\"A figure from page 1524 of the original\"></figure><p>Stress relief is very important because any forces acting upon the storage vessel will be interpreted by the load cells as more or less material stored in the vessel. The only way to ensure that the load cell’s measurement is a direct indication of material held inside the vessel is to ensure that no other forces act upon the vessel except the gravitational weight of the material. A similar concern for weight-based batch measurement is vibration produced by machinery surrounding (or on) the vessel. Vibration is nothing more than oscillatory acceleration, and the acceleration of any mass produces a reaction force (F = ma). Any vessel suspended by weightsensing elements such as load cells will induce oscillating forces on those load cells if shaken by vibration. This concern in particular makes it quite difficult to install and operate agitators or other rotating machinery on a weighed vessel41.</p><p>An interesting problem associated with load cell measurement of vessel weight arises if there are ever electric currents traveling through the load cell(s). This is not a normal state of affairs,</p>",
+   "body": "One very important caveat for weight-based level instruments is to isolate the vessel from any external mechanical stresses generated by pipes or machinery. The following illustration shows a typical installation for a weight-based measurement system, where all pipes attaching to the vessel do so through flexible couplings, and the weight of the pipes themselves is borne by outside structures through pipe hangers: Stress relief is very important because any forces acting upon the storage vessel will be interpreted by the load cells as more or less material stored in the vessel. The only way to ensure that the load cell’s measurement is a direct indication of material held inside the vessel is to ensure that no other forces act upon the vessel except the gravitational weight of the material. A similar concern for weight-based batch measurement is vibration produced by machinery surrounding (or on) the vessel. Vibration is nothing more than oscillatory acceleration, and the acceleration of any mass produces a reaction force (F = ma). Any vessel suspended by weightsensing elements such as load cells will induce oscillating forces on those load cells if shaken by vibration. This concern in particular makes it quite difficult to install and operate agitators or other rotating machinery on a weighed vessel41. An interesting problem associated with load cell measurement of vessel weight arises if there are ever electric currents traveling through the load cell(s). This is not a normal state of affairs,",
+   "id": "liii2-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "20.6 Weight",
+   "html": "<p>41One practical solution to this problem is to shut down the source of vibration (e.g. agitator motor, pump, etc.) for a long enough time to take a sample weight measurement, then run the machine again between measurements. So long as intermittent weight measurement is adequate for the needs of the process, the interference of machine vibration may be dealt with in this manner.</p><p>but it can happen if maintenance workers incorrectly attach arc welding equipment to the support structure of the vessel, or if certain electrical equipment mounted on the vessel such as lights or motors develop ground faults. The electronic amplifier circuits interpreting a load cell’s resistance will detect voltage drops created by such currents, interpreting them as changes in load cell resistance and therefore as changes in material level. Sufficiently large currents may even cause permanent damage to load cells, as is often the case when the currents in question are generated by arc welding equipment.</p><p>A variation on this theme is the so-called hydraulic load cell which is a piston-and-cylinder mechanism designed to translate vessel weight directly into hydraulic (liquid) pressure. A normal pressure transmitter then measures the pressure developed by the load cell and reports it as material weight stored in the vessel. Hydraulic load cells completely bypass the electrical problems associated with resistive load cells, but are more difficult to network for the calculation of total weight (using multiple cells to measure the weight of a large vessel).</p>",
+   "body": "41One practical solution to this problem is to shut down the source of vibration (e.g. agitator motor, pump, etc.) for a long enough time to take a sample weight measurement, then run the machine again between measurements. So long as intermittent weight measurement is adequate for the needs of the process, the interference of machine vibration may be dealt with in this manner. but it can happen if maintenance workers incorrectly attach arc welding equipment to the support structure of the vessel, or if certain electrical equipment mounted on the vessel such as lights or motors develop ground faults. The electronic amplifier circuits interpreting a load cell’s resistance will detect voltage drops created by such currents, interpreting them as changes in load cell resistance and therefore as changes in material level. Sufficiently large currents may even cause permanent damage to load cells, as is often the case when the currents in question are generated by arc welding equipment. A variation on this theme is the so-called hydraulic load cell which is a piston-and-cylinder mechanism designed to translate vessel weight directly into hydraulic (liquid) pressure. A normal pressure transmitter then measures the pressure developed by the load cell and reports it as material weight stored in the vessel. Hydraulic load cells completely bypass the electrical problems associated with resistive load cells, but are more difficult to network for the calculation of total weight (using multiple cells to measure the weight of a large vessel).",
+   "id": "liii2-4"
+  },
+  {
+   "id": "add-bridge-bal",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A Wheatstone bridge has arms R1 and R2 on one side and R3 and R4 on the other. When is it balanced (zero output)?",
+   "options": [
+    "When R1/R2 = R3/R4",
+    "When R1 + R2 = R3 + R4",
+    "When all four are equal, only",
+    "When the excitation is zero"
+   ],
+   "answer": 0,
+   "why": "Balance needs the two dividers to give the same voltage, which happens whenever their ratios match: the resistances need not be equal. A strain gauge unbalances the bridge, and the small output is proportional to the strain and to the excitation voltage.",
+   "added": true
+  },
+  {
+   "id": "add-loadcell-num",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A load cell rated {cap} kg has a sensitivity of 2 mV/V and is excited at {ex} V. What is its output at {kg} kg?",
+   "vars": {
+    "cap": {
+     "pick": [
+      50,
+      100,
+      500
+     ]
+    },
+    "ex": {
+     "pick": [
+      5,
+      10
+     ]
+    },
+    "frac": {
+     "pick": [
+      0.1,
+      0.25,
+      0.5,
+      0.8
+     ]
+    }
+   },
+   "let": {
+    "kg": "cap * frac",
+    "fs": "2 * ex"
+   },
+   "answer": "2 * ex * kg / cap",
+   "unit": "mV",
+   "tolerance": 0.01,
+   "work": "Full scale: $2 \\times {ex} = {fs}$ mV at {cap} kg; at {kg} kg, ${fs} \\times {kg}/{cap} = {answer:2}$ mV",
+   "why": "mV/V means millivolts of output, at full rated load, for each volt of excitation. The output is proportional to both the load and the excitation, which is why a 6-wire load cell senses the excitation at the cell.",
+   "hint": "Full-scale output first: sensitivity times excitation.",
+   "added": true
+  },
+  {
+   "id": "add-weigh-tank",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A tank sits on three load cells. Why is weighing often better than a level sensor for this tank?",
+   "options": [
+    "It measures the mass, whatever the liquid's density or foam",
+    "It never needs calibrating",
+    "It works even if the tank is bolted rigidly to pipes",
+    "It gives the level in metres directly"
+   ],
+   "answer": 0,
+   "why": "Load cells give the contents' mass directly, unaffected by density, foam or the shape of the tank. But pipes and supports that carry part of the weight upset it, so connections must be flexible.",
+   "added": true
+  }
+ ]
+}
