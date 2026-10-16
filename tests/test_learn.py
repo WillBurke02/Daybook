@@ -384,6 +384,8 @@ assert [b[2] for b in _src.part(_blocks, {"part": ["One"], "url": ""}) if b[0] =
 _cards = _src.cards([b for b in _blocks if not (b[0] == "h" and b[1] == 1)], "Title", "t1")
 assert [c["title"] for c in _cards] == ["Title", "Small"], [c["title"] for c in _cards]   # short parts run on into the next
 assert "<h4>One</h4>" in _cards[0]["html"] and "<h4>Two</h4>" in _cards[-1]["html"]
+_lead = _src.cards([("b", "<p>" + "w " * 215 + "as follows:</p>"), ("b", "<table><tr><td>B</td></tr></table>")], "T", "x")
+assert len(_lead) == 1 and "<table>" in _lead[0]["html"]                                  # a lead-in keeps its table
 print("ok — other sources: kept words, dropped furniture, parts and cards")
 
 # === a PDF: a shaded panel's words are text; a ruled table and a caption are one figure ======

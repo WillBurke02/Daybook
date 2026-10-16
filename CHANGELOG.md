@@ -1,5 +1,17 @@
 # Changes
 
+## 4.0.24 — 16 October 2026
+
+- **13 more lessons**, with questions of their own. From UK sources: the EMC Regulations 2016 and the
+  Supply of Machinery (Safety) Regulations 2008 (gov.uk's guidance, and the technical file and
+  declarations from legislation.gov.uk), HSE's GS38 on test equipment, and the Electricity Safety,
+  Quality and Continuity Regulations on earthing. From Lessons In Electric Circuits (an open textbook):
+  three-phase, transformers, harmonics, filters, Fourier, stepper motors, op-amps and microprocessors.
+  From Wikipedia: earthing systems, circuit breakers and RCDs (with the UK's rules), ground loops.
+- The questions bring in UK practice: 400/230 V and the cable colours, BS 7671's fault loop sums and
+  MCB curves, typical Ze values, G5/5 on harmonics, control transformers under BS EN 60204-1.
+- An imported card no longer ends on "…as follows:" with the table on the next card.
+
 ## 4.0.23 — 16 October 2026
 
 - **A second source for 41 lessons** that leant on one, kept with the lesson as "more to read", as

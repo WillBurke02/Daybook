@@ -1,0 +1,215 @@
+{
+ "id": "electronics.digital.micro",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "liec: Microprocessors",
+   "liec: Microprocessor programming"
+  ]
+ },
+ "minutes": 25,
+ "sources": [
+  "Tony R. Kuphaldt, Lessons In Electric Circuits, Microprocessors. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_16.html",
+  "Tony R. Kuphaldt, Lessons In Electric Circuits, Microprocessor programming. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_16.html"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Microprocessors",
+   "url": "media/liec/microprocessors-048c57.html",
+   "by": "Tony R. Kuphaldt, Lessons In Electric Circuits, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: Microprocessor programming",
+   "url": "media/liec/microprocessor-programming-9ee184.html",
+   "by": "Tony R. Kuphaldt, Lessons In Electric Circuits, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> Early computer science pioneers such as Alan Turing and John Von Neumann postulated that for a computing device to be really useful, it not only had to be able to generate specific outputs as dictated by programmed instructions, but it also had to be able to write data to memory, and be able to act on that data later. Both the program steps and the processed data were to reside in a common memory \"pool,\" thus giving way to the label of the <em>stored-program computer</em>. Turing's theoretical machine utilized a sequential-access tape, which would store data for a control circuit to read, the control circuit re-writing data to the tape and/or moving the tape to a new position to read more data. Modern computers use random-access memory devices instead of sequential-access tapes to accomplish essentially the same thing, except with greater capability. </p>",
+   "body": "Early computer science pioneers such as Alan Turing and John Von Neumann postulated that for a computing device to be really useful, it not only had to be able to generate specific outputs as dictated by programmed instructions, but it also had to be able to write data to memory, and be able to act on that data later. Both the program steps and the processed data were to reside in a common memory \"pool,\" thus giving way to the label of the stored-program computer . Turing's theoretical machine utilized a sequential-access tape, which would store data for a control circuit to read, the control circuit re-writing data to the tape and/or moving the tape to a new position to read more data. Modern computers use random-access memory devices instead of sequential-access tapes to accomplish essentially the same thing, except with greater capability.",
+   "id": "liec1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> A helpful illustration is that of early automatic machine tool control technology. Called <em>open-loop</em>, or sometimes just <em>NC</em> (numerical control), these control systems would direct the motion of a machine tool such as a lathe or a mill by following instructions programmed as holes in paper tape. The tape would be run one direction through a \"read\" mechanism, and the machine would blindly follow the instructions on the tape without regard to any other conditions. While these devices eliminated the burden of having to have a human machinist direct every motion of the machine tool, it was limited in usefulness. Because the machine was blind to the real world, only following the instructions written on the tape, it could not compensate for changing conditions such as expansion of the metal or wear of the mechanisms. Also, the tape programmer had to be acutely aware of the sequence of previous instructions in the machine's program to avoid troublesome circumstances (such as telling the machine tool to move the drill bit laterally while it is still inserted into a hole in the work), since the device had no memory other than the tape itself, which was read-only. Upgrading from a simple tape reader to a Finite State control design gave the device a sort of memory that could be used to keep track of what it had already done (through feedback of some of the data bits to the address bits), so at least the programmer could decide to have the circuit remember \"states\" that the machine tool could be in (such as \"coolant on,\" or tool position). However, there was still room for improvement. </p>",
+   "body": "A helpful illustration is that of early automatic machine tool control technology. Called open-loop , or sometimes just NC (numerical control), these control systems would direct the motion of a machine tool such as a lathe or a mill by following instructions programmed as holes in paper tape. The tape would be run one direction through a \"read\" mechanism, and the machine would blindly follow the instructions on the tape without regard to any other conditions. While these devices eliminated the burden of having to have a human machinist direct every motion of the machine tool, it was limited in usefulness. Because the machine was blind to the real world, only following the instructions written on the tape, it could not compensate for changing conditions such as expansion of the metal or wear of the mechanisms. Also, the tape programmer had to be acutely aware of the sequence of previous instructions in the machine's program to avoid troublesome circumstances (such as telling the machine tool to move the drill bit laterally while it is still inserted into a hole in the work), since the device had no memory other than the tape itself, which was read-only. Upgrading from a simple tape reader to a Finite State control design gave the device a sort of memory that could be used to keep track of what it had already done (through feedback of some of the data bits to the address bits), so at least the programmer could decide to have the circuit remember \"states\" that the machine tool could be in (such as \"coolant on,\" or tool position). However, there was still room for improvement.",
+   "id": "liec1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> The ultimate approach is to have the program give instructions which would include the writing of new data to a read/write (RAM) memory, which the program could easily recall and process. This way, the control system could record what it had done, and any sensor-detectable process changes, much in the same way that a human machinist might jot down notes or measurements on a scratch-pad for future reference in his or her work. This is what is referred to as CNC, or <em>Closed-loop Numerical Control</em>. </p><p> Engineers and computer scientists looked forward to the possibility of building digital devices that could modify their own programming, much the same as the human brain adapts the strength of inter-neural connections depending on environmental experiences (that is why memory retention improves with repeated study, and behavior is modified through consequential feedback). Only if the computer's program were stored in the same writable memory \"pool\" as the data would this be practical. It is interesting to note that the notion of a self-modifying program is still considered to be on the cutting edge of computer science. Most computer programming relies on rather fixed sequences of instructions, with a separate field of data being the only information that gets altered. </p>",
+   "body": "The ultimate approach is to have the program give instructions which would include the writing of new data to a read/write (RAM) memory, which the program could easily recall and process. This way, the control system could record what it had done, and any sensor-detectable process changes, much in the same way that a human machinist might jot down notes or measurements on a scratch-pad for future reference in his or her work. This is what is referred to as CNC, or Closed-loop Numerical Control . Engineers and computer scientists looked forward to the possibility of building digital devices that could modify their own programming, much the same as the human brain adapts the strength of inter-neural connections depending on environmental experiences (that is why memory retention improves with repeated study, and behavior is modified through consequential feedback). Only if the computer's program were stored in the same writable memory \"pool\" as the data would this be practical. It is interesting to note that the notion of a self-modifying program is still considered to be on the cutting edge of computer science. Most computer programming relies on rather fixed sequences of instructions, with a separate field of data being the only information that gets altered.",
+   "id": "liec1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> To facilitate the stored-program approach, we require a device that is much more complex than the simple FSM, although many of the same principles apply. First, we need read/write memory that can be easily accessed: this is easy enough to do. Static or dynamic RAM chips do the job well, and are inexpensive. Secondly, we need some form of logic to process the data stored in memory. Because standard and Boolean arithmetic functions are so useful, we can use an Arithmetic Logic Unit (ALU) such as the look-up table ROM example explored earlier. Finally, we need a device that controls how and where data flows between the memory, the ALU, and the outside world. This so-called <em>Control Unit</em> is the most mysterious piece of the puzzle yet, being comprised of tri-state buffers (to direct data to and from buses) and decoding logic which interprets certain binary codes as instructions to carry out. Sample instructions might be something like: \"add the number stored at memory address 0010 with the number stored at memory address 1101,\" or, \"determine the parity of the data in memory address 0111.\" The choice of which binary codes represent which instructions for the Control Unit to decode is largely arbitrary, just as the choice of which binary codes to use in representing the letters of the alphabet in the ASCII standard was largely arbitrary. ASCII, however, is now an internationally recognized standard, whereas control unit instruction codes are almost always manufacturer-specific. </p>",
+   "body": "To facilitate the stored-program approach, we require a device that is much more complex than the simple FSM, although many of the same principles apply. First, we need read/write memory that can be easily accessed: this is easy enough to do. Static or dynamic RAM chips do the job well, and are inexpensive. Secondly, we need some form of logic to process the data stored in memory. Because standard and Boolean arithmetic functions are so useful, we can use an Arithmetic Logic Unit (ALU) such as the look-up table ROM example explored earlier. Finally, we need a device that controls how and where data flows between the memory, the ALU, and the outside world. This so-called Control Unit is the most mysterious piece of the puzzle yet, being comprised of tri-state buffers (to direct data to and from buses) and decoding logic which interprets certain binary codes as instructions to carry out. Sample instructions might be something like: \"add the number stored at memory address 0010 with the number stored at memory address 1101,\" or, \"determine the parity of the data in memory address 0111.\" The choice of which binary codes represent which instructions for the Control Unit to decode is largely arbitrary, just as the choice of which binary codes to use in representing the letters of the alphabet in the ASCII standard was largely arbitrary. ASCII, however, is now an internationally recognized standard, whereas control unit instruction codes are almost always manufacturer-specific.",
+   "id": "liec1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> Putting these components together (read/write memory, ALU, and control unit) results in a digital device that is typically called a <em>processor</em>. If minimal memory is used, and all the necessary components are contained on a single integrated circuit, it is called a <em>microprocessor</em>. When combined with the necessary bus-control support circuitry, it is known as a <em>Central Processing Unit</em>, or CPU. </p><p> CPU operation is summed up in the so-called <em>fetch/execute cycle</em>. <em>Fetch</em> means to read an instruction from memory for the Control Unit to decode. A small binary counter in the CPU (known as the <em>program counter</em> or <em>instruction pointer</em>) holds the address value where the next instruction is stored in main memory. The Control Unit sends this binary address value to the main memory's address lines, and the memory's data output is read by the Control Unit to send to another holding register. If the fetched instruction requires reading more data from memory (for example, in adding two numbers together, we have to read both the numbers that are to be added from main memory or from some other source), the Control Unit appropriately addresses the location of the requested data and directs the data output to ALU registers. Next, the Control Unit would execute the instruction by signaling the ALU to do whatever was requested with the two numbers, and direct the result to another register called the <em>accumulator</em>. The instruction has now been \"fetched\" and \"executed,\" so the Control Unit now increments the program counter to step the next instruction, and the cycle repeats itself. </p>",
+   "body": "Putting these components together (read/write memory, ALU, and control unit) results in a digital device that is typically called a processor . If minimal memory is used, and all the necessary components are contained on a single integrated circuit, it is called a microprocessor . When combined with the necessary bus-control support circuitry, it is known as a Central Processing Unit , or CPU. CPU operation is summed up in the so-called fetch/execute cycle . Fetch means to read an instruction from memory for the Control Unit to decode. A small binary counter in the CPU (known as the program counter or instruction pointer ) holds the address value where the next instruction is stored in main memory. The Control Unit sends this binary address value to the main memory's address lines, and the memory's data output is read by the Control Unit to send to another holding register. If the fetched instruction requires reading more data from memory (for example, in adding two numbers together, we have to read both the numbers that are to be added from main memory or from some other source), the Control Unit appropriately addresses the location of the requested data and directs the data output to ALU registers. Next, the Control Unit would execute the instruction by signaling the ALU to do whatever was requested with the two numbers, and direct the result to another register called the accumulator . The instruction has now been \"fetched\" and \"executed,\" so the Control Unit now increments the program counter to step the next instruction, and the cycle repeats itself.",
+   "id": "liec1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<pre>\n        Microprocessor (CPU)\n\n--------------------------------------\n|       ** Program counter **        |\n|  (increments address value sent to |\n|  external memory chip(s) to fetch  |==========&gt; Address bus\n|  the next instruction)             |          (to RAM memory)\n--------------------------------------\n|        ** Control Unit **          |&lt;=========&gt; Control Bus\n|  (decodes instructions read from   | (to all devices sharing\n|  program in memory, enables flow   | address and/or data busses;\n|  of data to and from ALU, internal | arbitrates all bus communi- \n|  registers, and external devices)  | cations)\n-------------------------------------- \n| ** Arithmetic Logic Unit (ALU) **  |\n|    (performs all mathematical      |\n|     calculations and Boolean       |\n|     functions)                     |\n--------------------------------------\n|          ** Registers **           |\n|    (small read/write memories for  |&lt;=========&gt; Data Bus\n|     holding instruction codes,     | (from RAM memory and other\n|     error codes, ALU data, etc;    |  external devices)\n|     includes the \"accumulator\")    |\n--------------------------------------\n</pre><p> As one might guess, carrying out even simple instructions is a tedious process. Several steps are necessary for the Control Unit to complete the simplest of mathematical procedures. This is especially true for arithmetic procedures such as exponents, which involve repeated executions (\"iterations\") of simpler functions. Just imagine the sheer quantity of steps necessary within the CPU to update the bits of information for the graphic display on a flight simulator game! The only thing which makes such a tedious process practical is the fact that microprocessor circuits are able to repeat the fetch/execute cycle with great speed. </p>",
+   "body": "Microprocessor (CPU) -------------------------------------- | ** Program counter ** | | (increments address value sent to | | external memory chip(s) to fetch |==========> Address bus | the next instruction) | (to RAM memory) -------------------------------------- | ** Control Unit ** |<=========> Control Bus | (decodes instructions read from | (to all devices sharing | program in memory, enables flow | address and/or data busses; | of data to and from ALU, internal | arbitrates all bus communi- | registers, and external devices) | cations) -------------------------------------- | ** Arithmetic Logic Unit (ALU) ** | | (performs all mathematical | | calculations and Boolean | | functions) | -------------------------------------- | ** Registers ** | | (small read/write memories for |<=========> Data Bus | holding instruction codes, | (from RAM memory and other | error codes, ALU data, etc; | external devices) | includes the \"accumulator\") | -------------------------------------- As one might guess, carrying out even simple instructions is a tedious process. Several steps are necessary for the Control Unit to complete the simplest of mathematical procedures. This is especially true for arithmetic procedures such as exponents, which involve repeated executions (\"iterations\") of simpler functions. Just imagine the sheer quantity of steps necessary within the CPU to update the bits of information for the graphic display on a flight simulator game! The only thing which makes such a tedious process practical is the fact that microprocessor circuits are able to repeat the fetch/execute cycle with great speed.",
+   "id": "liec1-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessors",
+   "html": "<p> In some microprocessor designs, there are minimal programs stored within a special ROM memory internal to the device (called <em>microcode</em>) which handle all the sub-steps necessary to carry out more complex math operations. This way, only a single instruction has to be read from the program RAM to do the task, and the programmer doesn't have to deal with trying to tell the microprocessor how to do every minute step. In essence, its a processor inside of a processor; a program running inside of a program. </p>",
+   "body": "In some microprocessor designs, there are minimal programs stored within a special ROM memory internal to the device (called microcode ) which handle all the sub-steps necessary to carry out more complex math operations. This way, only a single instruction has to be read from the program RAM to do the task, and the programmer doesn't have to deal with trying to tell the microprocessor how to do every minute step. In essence, its a processor inside of a processor; a program running inside of a program.",
+   "id": "liec1-7"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> The \"vocabulary\" of instructions which any particular microprocessor chip possesses is specific to that model of chip. An Intel 80386, for example, uses a completely different set of binary codes than a Motorola 68020, for designating equivalent functions. Unfortunately, there are no standards in place for microprocessor instructions. This makes programming at the very lowest level very confusing and specialized. </p><p> When a human programmer develops a set of instructions to directly tell a microprocessor how to do something (like automatically control the fuel injection rate to an engine), they're programming in the CPU's own \"language.\" This language, which consists of the very same binary codes which the Control Unit inside the CPU chip decodes to perform tasks, is often referred to as <em>machine language</em>. While machine language software can be \"worded\" in binary notation, it is often written in hexadecimal form, because it is easier for human beings to work with. For example, I'll present just a few of the common instruction codes for the Intel 8080 micro-processor chip: </p><pre>\nHexadecimal    Binary              Instruction description\n-----------   --------   -----------------------------------------\n|   7B        01111011   Move contents of register A to register E\n|\n|   87        10000111   Add contents of register A to register D\n|\n|   1C        00011100   Increment the contents of register E by 1\n|\n|   D3        11010011   Output byte of data to data bus\n</pre>",
+   "body": "The \"vocabulary\" of instructions which any particular microprocessor chip possesses is specific to that model of chip. An Intel 80386, for example, uses a completely different set of binary codes than a Motorola 68020, for designating equivalent functions. Unfortunately, there are no standards in place for microprocessor instructions. This makes programming at the very lowest level very confusing and specialized. When a human programmer develops a set of instructions to directly tell a microprocessor how to do something (like automatically control the fuel injection rate to an engine), they're programming in the CPU's own \"language.\" This language, which consists of the very same binary codes which the Control Unit inside the CPU chip decodes to perform tasks, is often referred to as machine language . While machine language software can be \"worded\" in binary notation, it is often written in hexadecimal form, because it is easier for human beings to work with. For example, I'll present just a few of the common instruction codes for the Intel 8080 micro-processor chip: Hexadecimal Binary Instruction description ----------- -------- ----------------------------------------- | 7B 01111011 Move contents of register A to register E | | 87 10000111 Add contents of register A to register D | | 1C 00011100 Increment the contents of register E by 1 | | D3 11010011 Output byte of data to data bus",
+   "id": "liec2-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> Even with hexadecimal notation, these instructions can be easily confused and forgotten. For this purpose, another aid for programmers exists called <em>assembly language</em>. With assembly language, two to four letter mnemonic words are used in place of the actual hex or binary code for describing program steps. For example, the instruction <code>7B</code> for the Intel 8080 would be \"<code>MOV A,E</code>\" in assembly language. The mnemonics, of course, are useless to the microprocessor, which can only understand binary codes, but it is an expedient way for programmers to manage the writing of their programs on paper or text editor (word processor). There are even programs written for computers called <em>assemblers</em> which understand these mnemonics, translating them to the appropriate binary codes for a specified target microprocessor, so that the programmer can write a program in the computer's native language without ever having to deal with strange hex or tedious binary code notation. </p>",
+   "body": "Even with hexadecimal notation, these instructions can be easily confused and forgotten. For this purpose, another aid for programmers exists called assembly language . With assembly language, two to four letter mnemonic words are used in place of the actual hex or binary code for describing program steps. For example, the instruction 7B for the Intel 8080 would be \" MOV A,E \" in assembly language. The mnemonics, of course, are useless to the microprocessor, which can only understand binary codes, but it is an expedient way for programmers to manage the writing of their programs on paper or text editor (word processor). There are even programs written for computers called assemblers which understand these mnemonics, translating them to the appropriate binary codes for a specified target microprocessor, so that the programmer can write a program in the computer's native language without ever having to deal with strange hex or tedious binary code notation.",
+   "id": "liec2-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> Once a program is developed by a person, it must be written into memory before a microprocessor can execute it. If the program is to be stored in ROM (which some are), this can be done with a special machine called a <em>ROM programmer</em>, or (if you're masochistic), by plugging the ROM chip into a breadboard, powering it up with the appropriate voltages, and writing data by making the right wire connections to the address and data lines, one at a time, for each instruction. If the program is to be stored in volatile memory, such as the operating computer's RAM memory, there may be a way to type it in by hand through that computer's keyboard (some computers have a mini-program stored in ROM which tells the microprocessor how to accept keystrokes from a keyboard and store them as commands in RAM), even if it is too dumb to do anything else. Many \"hobby\" computer kits work like this. If the computer to be programmed is a fully-functional personal computer with an operating system, disk drives, and the whole works, you can simply command the assembler to store your finished program onto a disk for later retrieval. To \"run\" your program, you would simply type your program's filename at the prompt, press the Enter key, and the microprocessor's Program Counter register would be set to point to the location (\"address\") on the disk where the first instruction is stored, and your program would run from there. </p>",
+   "body": "Once a program is developed by a person, it must be written into memory before a microprocessor can execute it. If the program is to be stored in ROM (which some are), this can be done with a special machine called a ROM programmer , or (if you're masochistic), by plugging the ROM chip into a breadboard, powering it up with the appropriate voltages, and writing data by making the right wire connections to the address and data lines, one at a time, for each instruction. If the program is to be stored in volatile memory, such as the operating computer's RAM memory, there may be a way to type it in by hand through that computer's keyboard (some computers have a mini-program stored in ROM which tells the microprocessor how to accept keystrokes from a keyboard and store them as commands in RAM), even if it is too dumb to do anything else. Many \"hobby\" computer kits work like this. If the computer to be programmed is a fully-functional personal computer with an operating system, disk drives, and the whole works, you can simply command the assembler to store your finished program onto a disk for later retrieval. To \"run\" your program, you would simply type your program's filename at the prompt, press the Enter key, and the microprocessor's Program Counter register would be set to point to the location (\"address\") on the disk where the first instruction is stored, and your program would run from there.",
+   "id": "liec2-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> Although programming in machine language or assembly language makes for fast and highly efficient programs, it takes a lot of time and skill to do so for anything but the simplest tasks, because each machine language instruction is so crude. The answer to this is to develop ways for programmers to write in \"high level\" languages, which can more efficiently express human thought. Instead of typing in dozens of cryptic assembly language codes, a programmer writing in a high-level language would be able to write something like this . . . </p><pre>\nPrint \"Hello, world!\" \n</pre><p> . . . and expect the computer to print \"Hello, world!\" with no further instruction on how to do so. This is a great idea, but how does a microprocessor understand such \"human\" thinking when its vocabulary is so limited? </p>",
+   "body": "Although programming in machine language or assembly language makes for fast and highly efficient programs, it takes a lot of time and skill to do so for anything but the simplest tasks, because each machine language instruction is so crude. The answer to this is to develop ways for programmers to write in \"high level\" languages, which can more efficiently express human thought. Instead of typing in dozens of cryptic assembly language codes, a programmer writing in a high-level language would be able to write something like this . . . Print \"Hello, world!\" . . . and expect the computer to print \"Hello, world!\" with no further instruction on how to do so. This is a great idea, but how does a microprocessor understand such \"human\" thinking when its vocabulary is so limited?",
+   "id": "liec2-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> The answer comes in two different forms: <em>interpretation</em>, or <em>compilation</em>. Just like two people speaking different languages, there has to be some way to transcend the language barrier in order for them to converse. A translator is needed to translate each person's words to the other person's language, one way at a time. For the microprocessor, this means another program, written by another programmer in machine language, which recognizes the ASCII character patterns of high-level commands such as Print (P-r-i-n-t) and can translate them into the necessary bite-size steps that the microprocessor can directly understand. If this translation is done during program execution, just like a translator intervening between two people in a live conversation, it is called \"interpretation.\" On the other hand, if the entire program is translated to machine language in one fell swoop, like a translator recording a monologue on paper and then translating all the words at one sitting into a written document in the other language, the process is called \"compilation.\" </p><p> Interpretation is simple, but makes for a slow-running program because the microprocessor has to continually translate the program between steps, and that takes time. Compilation takes time initially to translate the whole program into machine code, but the resulting machine code needs no translation after that and runs faster as a consequence. Programming languages such as BASIC and FORTH are interpreted. Languages such as C, C++, FORTRAN, and PASCAL are compiled. Compiled languages are generally considered to be the languages of choice for professional programmers, because of the efficiency of the final product. </p>",
+   "body": "The answer comes in two different forms: interpretation , or compilation . Just like two people speaking different languages, there has to be some way to transcend the language barrier in order for them to converse. A translator is needed to translate each person's words to the other person's language, one way at a time. For the microprocessor, this means another program, written by another programmer in machine language, which recognizes the ASCII character patterns of high-level commands such as Print (P-r-i-n-t) and can translate them into the necessary bite-size steps that the microprocessor can directly understand. If this translation is done during program execution, just like a translator intervening between two people in a live conversation, it is called \"interpretation.\" On the other hand, if the entire program is translated to machine language in one fell swoop, like a translator recording a monologue on paper and then translating all the words at one sitting into a written document in the other language, the process is called \"compilation.\" Interpretation is simple, but makes for a slow-running program because the microprocessor has to continually translate the program between steps, and that takes time. Compilation takes time initially to translate the whole program into machine code, but the resulting machine code needs no translation after that and runs faster as a consequence. Programming languages such as BASIC and FORTH are interpreted. Languages such as C, C++, FORTRAN, and PASCAL are compiled. Compiled languages are generally considered to be the languages of choice for professional programmers, because of the efficiency of the final product.",
+   "id": "liec2-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> Naturally, because machine language vocabularies vary widely from microprocessor to microprocessor, and since high-level languages are designed to be as universal as possible, the interpreting and compiling programs necessary for language translation must be microprocessor-specific. Development of these interpreters and compilers is a most impressive feat: the people who make these programs most definitely earn their keep, especially when you consider the work they must do to keep their software product current with the rapidly-changing microprocessor models appearing on the market! </p><p> To mitigate this difficulty, the trend-setting manufacturers of microprocessor chips (most notably, Intel and Motorola) try to design their new products to be <em>backwardly compatible</em> with their older products. For example, the entire instruction set for the Intel 80386 chip is contained within the latest Pentium IV chips, although the Pentium chips have additional instructions that the 80386 chips lack. What this means is that machine-language programs (compilers, too) written for 80386 computers will run on the latest and greatest Intel Pentium IV CPU, but machine-language programs written specifically to take advantage of the Pentium's larger instruction set will not run on an 80386, because the older CPU simply doesn't have some of those instructions in its vocabulary: the Control Unit inside the 80386 cannot decode them. </p>",
+   "body": "Naturally, because machine language vocabularies vary widely from microprocessor to microprocessor, and since high-level languages are designed to be as universal as possible, the interpreting and compiling programs necessary for language translation must be microprocessor-specific. Development of these interpreters and compilers is a most impressive feat: the people who make these programs most definitely earn their keep, especially when you consider the work they must do to keep their software product current with the rapidly-changing microprocessor models appearing on the market! To mitigate this difficulty, the trend-setting manufacturers of microprocessor chips (most notably, Intel and Motorola) try to design their new products to be backwardly compatible with their older products. For example, the entire instruction set for the Intel 80386 chip is contained within the latest Pentium IV chips, although the Pentium chips have additional instructions that the 80386 chips lack. What this means is that machine-language programs (compilers, too) written for 80386 computers will run on the latest and greatest Intel Pentium IV CPU, but machine-language programs written specifically to take advantage of the Pentium's larger instruction set will not run on an 80386, because the older CPU simply doesn't have some of those instructions in its vocabulary: the Control Unit inside the 80386 cannot decode them.",
+   "id": "liec2-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Microprocessor programming",
+   "html": "<p> Building on this theme, most compilers have settings that allow the programmer to select which CPU type he or she wants to compile machine-language code for. If they select the 80386 setting, the compiler will perform the translation using only instructions known to the 80386 chip; if they select the Pentium setting, the compiler is free to make use of all instructions known to Pentiums. This is analogous to telling a translator what minimum reading level their audience will be: a document translated for a child will be understandable to an adult, but a document translated for an adult may very well be gibberish to a child. </p><p> <em>Lessons In Electric Circuits</em> copyright (C) 2000-2023 Tony R. Kuphaldt, under the terms and conditions of the <a href=\"https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_A3.html\">CC BY License</a>. </p><p><a href=\"https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_15.html\"><img src=\"media/liec/38930d9e-previous.jpg\" alt=\"Previous\"></a></p><p><a href=\"https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/index.html\"><img src=\"media/liec/68ef2266-contents.jpg\" alt=\"Contents\"></a></p><p><a href=\"https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_A1.html\"><img src=\"media/liec/443c80d9-next.jpg\" alt=\"Next\"></a></p>",
+   "body": "Building on this theme, most compilers have settings that allow the programmer to select which CPU type he or she wants to compile machine-language code for. If they select the 80386 setting, the compiler will perform the translation using only instructions known to the 80386 chip; if they select the Pentium setting, the compiler is free to make use of all instructions known to Pentiums. This is analogous to telling a translator what minimum reading level their audience will be: a document translated for a child will be understandable to an adult, but a document translated for an adult may very well be gibberish to a child. Lessons In Electric Circuits copyright (C) 2000-2023 Tony R. Kuphaldt, under the terms and conditions of the CC BY License .",
+   "id": "liec2-7"
+  },
+  {
+   "id": "add-pc-mcq",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What does a processor's program counter hold?",
+   "options": [
+    "The address of the next instruction",
+    "The number of instructions run so far",
+    "The result of the last sum",
+    "The program's stack of variables"
+   ],
+   "answer": 0,
+   "why": "After each fetch the program counter moves on to the next instruction; a jump or a call loads it with a new address.",
+   "added": true
+  },
+  {
+   "id": "add-mcu-mcq",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What sets a microcontroller apart from a microprocessor?",
+   "options": [
+    "Its memory and I/O are on the same chip",
+    "It can only add, not multiply",
+    "It has no clock",
+    "It runs only interpreted code"
+   ],
+   "answer": 0,
+   "why": "A microcontroller puts the processor, program memory, RAM, timers and I/O pins in one package: a small complete computer for a dedicated job. A microprocessor needs those around it.",
+   "added": true
+  },
+  {
+   "id": "add-cycle-ns",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A microcontroller runs at {f} MHz and most instructions take one clock cycle. How long is one such instruction, in ns?",
+   "vars": {
+    "f": {
+     "pick": [
+      8,
+      16,
+      48,
+      72,
+      168
+     ]
+    }
+   },
+   "answer": "1000 / f",
+   "unit": "ns",
+   "tolerance": 0.01,
+   "work": "$1 \\div ({f} \\times 10^6)$ s $= {answer:3}$ ns",
+   "why": "The period is one over the frequency. Instructions that touch slow memory or peripherals take longer, so this is a best case.",
+   "added": true
+  },
+  {
+   "id": "add-fetch-mcq",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "In what order does a processor handle each instruction?",
+   "options": [
+    "Fetch, decode, execute",
+    "Decode, fetch, execute",
+    "Execute, fetch, decode",
+    "Fetch, execute, decode"
+   ],
+   "answer": 0,
+   "why": "It reads the instruction from memory at the program counter, works out what it means, then does it, and the cycle repeats.",
+   "added": true
+  }
+ ]
+}

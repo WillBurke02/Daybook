@@ -237,7 +237,7 @@ class Page:
                     words = re.sub(r"\s+", " ", k.words()).strip()
                     if words:
                         out.append(("h", int(k.tag[1]), words))
-                elif k.tag in ("div", "section", "article", "main", "span", "font", "center", "header", "aside") and any(
+                elif k.tag in ("div", "section", "article", "main", "span", "font", "center", "header", "aside", "body") and any(
                         isinstance(x, Node) and (x.tag in BLOCK or re.fullmatch(r"h[1-6]", x.tag)) for x in k.kids):
                     walk(k)                                # a wrapper: what is inside it, in order
                 else:
@@ -660,8 +660,9 @@ def cards(blocks, title, prefix):
         if text(html) or "<img" in html:
             out.append({"type": "concept", "stage": "learn", "title": heading, "html": html, "body": text(html)})
         buf, words = [], 0
+    lead = lambda: buf and text(buf[-1]).rstrip().endswith(":")   # "…as follows:" stays with what follows
     for b in blocks:
-        if b[0] == "b" and words >= 100 and words + len(text(b[1]).split()) > 280:
+        if b[0] == "b" and words >= 100 and words + len(text(b[1]).split()) > 280 and not lead():
             flush()                                        # a long run of reading: a card before it gets too long
         if b[0] == "h":
             if words >= 90 or not buf:                     # a new card; a short part runs on into the next
@@ -672,7 +673,7 @@ def cards(blocks, title, prefix):
             continue
         buf.append(b[1])
         words += len(text(b[1]).split())
-        if words >= 220:
+        if words >= 220 and not lead():
             flush()
     flush()
     for n, c in enumerate(out, 1):

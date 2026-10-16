@@ -1,5 +1,5 @@
 // Question templates: numbers drawn at random each time, an answer worked out
-// by the formula engine, and his answer checked within a tolerance (§7.5).
+// by the formula engine, and the answer given checked within a tolerance (§7.5).
 //   { "type": "numeric", "q": "… {v} m/s … {t} µs. Thickness?",
 //     "vars": { "v": [5850, 5950, 10], "t": [5, 20, 0.5] },     [min, max, step], or a list to pick from
 //     "let": { "d": "v * t / 1e6 / 2 * 1000" },                    worked out in order, for the text

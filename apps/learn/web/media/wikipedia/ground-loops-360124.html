@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ground loops</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Ground loops. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Ground_loop_(electricity) <a href="https://en.wikipedia.org/wiki/Ground_loop_(electricity)">https://en.wikipedia.org/wiki/Ground_loop_(electricity)</a></p>
+<h1>Ground loops</h1>
+<p>In an <a href="https://en.wikipedia.org/wiki/Electrical">electrical</a> system, a <strong>ground loop</strong> or <strong>earth loop</strong> occurs when two points of a circuit are intended to have the same <a href="https://en.wikipedia.org/wiki/Ground_(electricity)">ground</a> reference potential but instead have a different potential between them. This is typically caused when enough <a href="https://en.wikipedia.org/wiki/Electric_current">current</a> is flowing in the connection between the two ground points to produce a <a href="https://en.wikipedia.org/wiki/Voltage_drop">voltage drop</a> and cause the two points to be at different potentials. Current may be produced in a ground loop by <a href="https://en.wikipedia.org/wiki/Electromagnetic_induction">electromagnetic induction</a>.</p><p>Ground loops are a major cause of <a href="https://en.wikipedia.org/wiki/Electrical_noise">noise</a>, <a href="https://en.wikipedia.org/wiki/Mains_hum">hum</a>, and <a href="https://en.wikipedia.org/wiki/Electromagnetic_interference">interference</a> in audio, video, and computer systems. Wiring practices that protect against ground loops include ensuring that all vulnerable signal circuits are referenced to one point as ground. The use of <a href="https://en.wikipedia.org/wiki/Differential_signaling">differential signaling</a> can provide rejection of ground-induced interference. The removal of ground connections to equipment in an effort to eliminate ground loops will also eliminate the protection the safety ground connection is intended to provide.</p><h2>Description</h2><p>A ground loop is caused by the interconnection of electrical devices that results in multiple paths to ground, thereby forming closed conductive loops through the ground connections. A common example is two electrical devices, each connected to a <a href="https://en.wikipedia.org/wiki/Mains_power">mains power</a> outlet by a three-conductor cable and plug containing a safety ground. When signal cables are connected between both devices, the <a href="https://en.wikipedia.org/wiki/Shielded_cable">shield</a> of the signal cable is typically connected to the grounded chassis of both devices. This forms a closed loop through the ground conductors of the power cords, which are connected through the building wiring.</p><p>In the vicinity of electric power wiring, there will always be stray <a href="https://en.wikipedia.org/wiki/Magnetic_field">magnetic fields</a>, particularly from <a href="https://en.wikipedia.org/wiki/Overhead_power_line">utility lines</a> oscillating at <a href="https://en.wikipedia.org/wiki/Line_frequency">line frequency</a> (50 or 60 <a href="https://en.wikipedia.org/wiki/Hertz">hertz</a>). These ambient <a href="https://en.wikipedia.org/wiki/Magnetic_field">magnetic fields</a> passing through the ground loop will induce a <a href="https://en.wikipedia.org/wiki/Electric_current">current</a> in the loop by <a href="https://en.wikipedia.org/wiki/Electromagnetic_induction">electromagnetic induction</a>. The ground loop acts as a single-turn secondary winding of a <a href="https://en.wikipedia.org/wiki/Transformer">transformer</a>, the primary being the summation of all current-carrying conductors nearby. The amount of current induced will depend on the magnitude and proximity of nearby currents. The presence of high-power equipment, such as industrial motors or transformers can increase the interference. Since the conductors comprising the ground loop usually have very low resistance, often below one <a href="https://en.wikipedia.org/wiki/Ohm">ohm</a>, even weak magnetic fields can induce significant currents.</p><p>Since the ground conductor of the signal cable linking the two devices is part of the signal path of the cable, the alternating ground current flowing through the cable can introduce electrical interference in the signal. The induced <a href="https://en.wikipedia.org/wiki/Alternating_current">alternating current</a> flowing through the resistance of the cable ground conductor will cause a small AC <a href="https://en.wikipedia.org/wiki/Voltage_drop">voltage drop</a> across the cable ground. This is added to the signal applied to the input of the next stage. In <a href="https://en.wikipedia.org/wiki/Audio_equipment">audio equipment</a>, the line frequency interference may be heard as a hum in the speakers. In a video system it may cause distortion or <a href="https://en.wikipedia.org/wiki/Video_synchronization">synchronization</a> problems. In computer data connections, it can cause slowdowns or failures of data transfer.</p><p>Ground loops can also exist within the internal circuits of electronic equipment, as design flaws.</p><p>The addition of signal interconnection cables to a system where equipment enclosures are already required to be bonded to ground can create ground loops. Proper design of such a system will satisfy both safety grounding requirements and <a href="https://en.wikipedia.org/wiki/Signal_integrity">signal integrity</a>. For this reason, in some large professional installations such as recording studios, it is sometimes the practice to provide two completely separate ground connections to equipment bays. One is the normal safety ground that connects to exposed metalwork, the other is a technical ground for cable screens and the like.</p><h2>Representative circuit</h2><p>The <a href="https://en.wikipedia.org/wiki/Circuit_diagram">circuit diagram</a> illustrates a simple ground loop. Circuit 1 (left) and circuit 2 (right) share a common path to ground of resistance <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>. Ideally, this ground conductor would have no resistance (<math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+          <mo>=</mo>
+          <mn>0</mn>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>), yielding no voltage drop across it (<math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>V</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+          <mo>=</mo>
+          <mn>0</mn>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>), keeping the connection point between the circuits at a constant ground potential. In that case, the output of circuit 2 is simply <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>V</mi>
+            <mrow>
+              <mtext>out</mtext>
+            </mrow>
+          </msub>
+          <mo>=</mo>
+          <msub>
+            <mi>V</mi>
+            <mrow>
+              <mn>2</mn>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>.</p><p>However, if this ground conductor has some resistance (<math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+          <mo>&gt;</mo>
+          <mn>0</mn>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>), then it forms a <a href="https://en.wikipedia.org/wiki/Voltage_divider">voltage divider</a> with <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mn>1</mn>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>. As a result, if a current (<math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>I</mi>
+            <mrow>
+              <mn>1</mn>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>) is flowing through <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> from circuit 1, then a voltage drop across <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>V</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+          <mspace></mspace>
+          <mo>=</mo>
+          <mspace></mspace>
+          <msub>
+            <mi>I</mi>
+            <mrow>
+              <mn>1</mn>
+            </mrow>
+          </msub>
+          <msub>
+            <mi>R</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> occurs, causing the shared ground connection to no longer be at the actual ground potential. This voltage across the ground conductor is applied to circuit 2 and added to its output:<math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>out</mtext>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mi>G</mi>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <mrow>
+          <mfrac>
+            <msub>
+              <mi>R</mi>
+              <mrow>
+                <mi>G</mi>
+              </mrow>
+            </msub>
+            <mrow>
+              <msub>
+                <mi>R</mi>
+                <mrow>
+                  <mi>G</mi>
+                </mrow>
+              </msub>
+              <mo>+</mo>
+              <msub>
+                <mi>R</mi>
+                <mrow>
+                  <mn>1</mn>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>.</mo>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></p><p>Thus, the two circuits are no longer isolated, and circuit 1 can introduce interference into the output of circuit 2. If circuit 2 is an audio system and circuit 1 has large AC currents flowing in it, the interference may be heard as a 50 or 60 Hz hum in the speakers. Also, both circuits have voltage <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mstyle>
+          <msub>
+            <mi>V</mi>
+            <mrow>
+              <mi>G</mi>
+            </mrow>
+          </msub>
+        </mstyle>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> on their grounded parts that may be exposed to contact, possibly presenting a <a href="https://en.wikipedia.org/wiki/Electric_shock">shock</a> hazard. This is true even if circuit 2 is turned off.</p><p>Although ground loops occur most often in the ground conductors of electrical equipment, similar loops can occur wherever two or more circuits share a common current path. If enough current flows, similar problems occur in these conditions.</p><h2>Common ground loops</h2><p>A common type of ground loop is due to faulty interconnections between electronic components, such as laboratory or <a href="https://en.wikipedia.org/wiki/Recording_studio">recording studio</a> equipment, or home component audio, video, and computer systems. This can create inadvertent closed loops in the ground wiring circuit, which can allow stray line frequency AC current to be induced and flow through the ground conductors of signal cables. The voltage drops in the ground system caused by these currents are added to the signal path, introducing noise and hum into the output. The loops can include the building's utility wiring ground system when more than one component is grounded through the protective earth (third wire) in their power cords.</p><h3>Ground currents on signal cables</h3><p>The symptoms of a ground loop, ground noise and hum in electrical equipment are caused by current flowing in the ground or <em>shield</em> conductor of a cable. Fig. 1 shows a signal cable <em>S</em> linking two electronic components, including the typical <a href="https://en.wikipedia.org/wiki/Line_driver">line driver</a> and receiver amplifiers <em>(triangles)</em>. The cable has a ground or shield conductor which is connected to the chassis ground of each component. The driver amplifier in component 1 <em>(left)</em> applies signal <em>V</em><sub>1</sub> between the signal and ground conductors of the cable. At the destination end <em>(right)</em>, the signal and ground conductors are connected to a <a href="https://en.wikipedia.org/wiki/Differential_amplifier">differential amplifier</a>. This produces the signal input to component 2 by subtracting the shield voltage from the signal voltage to eliminate <a href="https://en.wikipedia.org/wiki/Common-mode_interference">common-mode noise</a> picked up by the cable <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>S2</mtext>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>G2</mtext>
+          </mrow>
+        </msub>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></p><p>If a current <em>I</em> from a separate source is flowing through the ground conductor, the resistance <em>R</em> of the conductor will create a voltage drop along the cable ground of <em>IR</em>, so the destination end of the ground conductor will be at a different potential than the source end <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>G2</mtext>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>G1</mtext>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <mi>I</mi>
+        <mi>R</mi>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> Since the differential amplifier has high impedance, little current flows in the signal wire, therefore there is no voltage drop across it: <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>S2</mtext>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>S1</mtext>
+          </mrow>
+        </msub>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> The ground voltage appears to be in series with the signal voltage <em>V</em><sub>1</sub> and adds to it <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>S1</mtext>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <mo>(</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mtext>G1</mtext>
+          </mrow>
+        </msub>
+        <mo>−</mo>
+        <mi>I</mi>
+        <mi>R</mi>
+        <mo>)</mo>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <msub>
+          <mi>V</mi>
+          <mrow>
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mi>I</mi>
+        <mi>R</mi>
+        <mspace></mspace>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></p><p>If <em>I</em> is an AC current, this can result in noise added to the signal path in component 2.</p>
+</body></html>
