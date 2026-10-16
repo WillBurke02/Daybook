@@ -1,5 +1,10 @@
 # Changes
 
+## 4.0.20 — 16 October 2026
+
+- The ☰ menu no longer draws a circle beside every item (Home's round tick buttons were styled for the
+  whole app; they are Home's alone now). The setup checklist on Home is plain again too.
+
 ## 4.0.19 — 15 October 2026
 
 - **Five new machines to run in 3D**: a mass on a spring and damper on a shaker, a generator (a coil turning

@@ -52,9 +52,9 @@ async function tick(it) {
   const row = Object.fromEntries(Object.entries(t.row).map(([k, v]) => [k, v === '@now' ? stamp() : v]));
   try { await appApi(it.app).save(t.table, row); await load(); } catch (e) { flash(e.message); }
 }
-const tickBtn = it => it.tick ? el('button', { class: 'tick', type: 'button', 'aria-pressed': String(!!it.done),
+const tickBtn = it => it.tick ? el('button', { class: 'htick', type: 'button', 'aria-pressed': String(!!it.done),
   title: it.done ? 'Not done after all' : 'Done', 'aria-label': `${it.text}: ${it.done ? 'done' : 'not done'}`, onclick: () => tick(it) }, it.done ? '✓' : '')
-  : el('span', { class: 'tick none', 'aria-hidden': 'true' });
+  : el('span', { class: 'htick none', 'aria-hidden': 'true' });
 
 const todoList = items => items.length
   ? el('ul', { class: 'todo' }, items.map(it => el('li', { class: [it.done && 'done', it.late && 'late'].filter(Boolean).join(' ') || null },
