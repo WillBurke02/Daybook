@@ -44,14 +44,18 @@ def fetch(url, binary=False):
     if not os.path.exists(path):
         host = urllib.parse.urlsplit(url).netloc
         time.sleep(max(0, 1.0 - (time.time() - _last.get(host, 0))))
-        req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "en-GB"})
-        for wait in (2, 5, 15, 0):                         # a dropped connection is tried again, a few times
+        req = urllib.request.Request(urllib.parse.quote(url, safe=":/?&=%#+@,;~!$'()*[]"),   # (a space in a file name)
+                                     headers={"User-Agent": UA, "Accept-Language": "en-GB"})
+        for wait in (2, 5, 15, 0):                         # a dropped connection, or "too many requests", is tried again
             try:
                 with urllib.request.urlopen(req, timeout=90) as r:
                     data = r.read()
                 break
-            except urllib.error.HTTPError:
-                raise
+            except urllib.error.HTTPError as e:
+                if e.code not in (429, 503) or not wait:
+                    raise
+                after = e.headers.get("Retry-After", "")
+                time.sleep(min(60, int(after) if after.isdigit() else wait * 4))
             except (OSError, http.client.HTTPException):
                 if not wait:
                     raise
@@ -709,23 +713,13 @@ img{{max-width:100%;height:auto}} table{{border-collapse:collapse;margin:12px 0}
     return f"media/{page.src}/{slug}.html"
 
 
+def where(lesson_id):
+    s, u, n = lesson_id.split(".")
+    return os.path.join(CONTENT, s, u, n + ".json")
+
+
 def run(plan, files, log=print, only=None):
     sources = plan.get("sources", {})
-    for lesson_id, parts in plan.get("links", {}).items():   # a written lesson: more to read, as published
-        if only and lesson_id not in only:
-            continue
-        path = files[lesson_id]
-        les = json.load(open(path, encoding="utf-8"))
-        res = [r for r in les.get("resources") or [] if not r.get("linked")]
-        for spec in parts:
-            src = sources[spec["src"]]
-            page, blocks, _, _ = load(spec, sources)
-            credit = f"{src['by']}, {page.title}. {src['licence']}. As published, from {page.url}"
-            res.append({"kind": "read", "title": page.title, "url": save(page, blocks, credit), "by": src["by"], "when": "after",
-                        "note": spec.get("note", "More on this, as published"), "linked": True})
-        les["resources"] = res
-        open(path, "w", encoding="utf-8").write(json.dumps(les, ensure_ascii=False, indent=1) + "\n")
-        log(f"{lesson_id}: {len(parts)} more to read")
     for lesson_id, parts in plan.get("pages", {}).items():
         if only and lesson_id not in only:
             continue
@@ -751,8 +745,7 @@ def run(plan, files, log=print, only=None):
             names.append(f"{spec['src']}: {page.title}")
             resources.append({"kind": "read", "title": f"The original: {page.title}", "url": local, "by": src["by"] + ", as published",
                               "when": "during", "note": "The part as published: this lesson's cards are its words, cut into parts"})
-        subject = lesson_id.split(".")[0]
-        path = files.get(lesson_id) or os.path.join(CONTENT, subject, lesson_id.split(".")[1], lesson_id.split(".")[-1] + ".json")
+        path = files.get(lesson_id) or where(lesson_id)
         old = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
         if old and not old.get("imported"):
             raise ValueError(f"{lesson_id} is written already: link the source from it instead")
@@ -767,3 +760,18 @@ def run(plan, files, log=print, only=None):
         os.makedirs(os.path.dirname(path), exist_ok=True)
         open(path, "w", encoding="utf-8").write(json.dumps(lesson, ensure_ascii=False, indent=1) + "\n")
         log(f"{lesson_id}: {len(all_cards)} cards from {', '.join(names)}")
+    for lesson_id, parts in plan.get("links", {}).items():   # more to read, as published (after the pages: an import rewrites its lesson)
+        if only and lesson_id not in only:
+            continue
+        path = files.get(lesson_id) or where(lesson_id)
+        les = json.load(open(path, encoding="utf-8"))
+        res = [r for r in les.get("resources") or [] if not r.get("linked")]
+        for spec in parts:
+            src = sources[spec["src"]]
+            page, blocks, _, _ = load(spec, sources)
+            credit = f"{src['by']}, {page.title}. {src['licence']}. As published, from {page.url}"
+            res.append({"kind": "read", "title": page.title, "url": save(page, blocks, credit), "by": src["by"], "when": "after",
+                        "note": spec.get("note", "More on this, as published"), "linked": True})
+        les["resources"] = res
+        open(path, "w", encoding="utf-8").write(json.dumps(les, ensure_ascii=False, indent=1) + "\n")
+        log(f"{lesson_id}: {len(parts)} more to read")

@@ -1,7 +1,17 @@
 {
  "id": "physics.elec.capacitors",
  "title": "Capacitors",
- "tags": ["capacitor", "capacitance", "charge", "energy", "time constant", "RC", "discharge", "DC bus", "electrolytic"],
+ "tags": [
+  "capacitor",
+  "capacitance",
+  "charge",
+  "energy",
+  "time constant",
+  "RC",
+  "discharge",
+  "DC bus",
+  "electrolytic"
+ ],
  "kind": "procedure",
  "level": 5.3,
  "minutes": 25,
@@ -14,7 +24,24 @@
  ],
  "summary": "A **capacitor** is two conducting plates separated by an insulator. Connected to a voltage, it stores **charge**: $Q = CV$, with $C$ the **capacitance** in farads (F). Practical sizes are µF (millionths), nF and pF.\n\nIt stores **energy**: $E = \\tfrac{1}{2}CV^2$. A drive's DC bus capacitors at 565 V hold hundreds of joules: dangerous long after the supply is off.\n\n**Combining**: in **parallel**, capacitances **add**; in **series**, $\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}$ (the opposite of resistors).\n\n**Charging and discharging through a resistor** is not instant. The **time constant** $\\tau = RC$ (ohms × farads = seconds) sets the pace:\n\n- charging: $V = V_0(1 - e^{-t/RC})$: 63% after one time constant, about 99% after five\n- discharging: $V = V_0 e^{-t/RC}$: down to 37% after one, under 1% after five\n- time to fall from $V_0$ to $V$: $t = RC\\ln\\frac{V_0}{V}$\n\n$e$ is the number 2.718…, the base of natural growth and decay; $e^{-t/RC}$ is the share left after time $t$.\n\n**Electrolytic** capacitors (the big cans) are **polarised**: fitted backwards, or over their voltage rating, they can vent or burst. They also age, especially when hot.\n\nIn AC circuits a capacitor passes AC and blocks DC, which is what filters and smoothing use.",
  "resources": [
-  {"when": "after", "kind": "read", "title": "RC Charging Circuits", "url": "https://mbedded.ninja/electronics/circuit-design/rc-charging-circuits/", "by": "mbedded.ninja", "minutes": 10, "note": "The charging curve, the time constant table, and practical uses."}
+  {
+   "when": "after",
+   "kind": "read",
+   "title": "RC Charging Circuits",
+   "url": "https://mbedded.ninja/electronics/circuit-design/rc-charging-circuits/",
+   "by": "mbedded.ninja",
+   "minutes": 10,
+   "note": "The charging curve, the time constant table, and practical uses."
+  },
+  {
+   "kind": "read",
+   "title": "Dielectric Materials",
+   "url": "media/doitpoms/dielectric-materials-a205b4.html",
+   "by": "DoITPoMS, University of Cambridge",
+   "when": "after",
+   "note": "What sits between the plates, from Cambridge's DoITPoMS",
+   "linked": true
+  }
  ],
  "sources": [
   "OCR A Level Physics A (H556) specification, 6.1: Capacitors",
@@ -22,76 +49,825 @@
   "IEC 61800-5-1: Adjustable speed electrical power drive systems. Safety requirements (capacitor discharge)"
  ],
  "formulas": [
-  {"name": "Charge on a capacitor", "tex": "Q = CV", "match": ["Q = CV"],
+  {
+   "name": "Charge on a capacitor",
+   "tex": "Q = CV",
+   "match": [
+    "Q = CV"
+   ],
    "says": "The charge stored is the capacitance times the voltage across it.",
-   "symbols": [["Q", "the charge (coulombs, C)"], ["C", "the capacitance (farads, F)"], ["V", "the voltage (V)"]],
-   "example": "100 µF at 24 V: $100 \\times 10^{-6} \\times 24 = 2.4$ mC."},
-  {"name": "Energy stored", "tex": "E = \\tfrac{1}{2}CV^2", "match": ["CV^2"],
+   "symbols": [
+    [
+     "Q",
+     "the charge (coulombs, C)"
+    ],
+    [
+     "C",
+     "the capacitance (farads, F)"
+    ],
+    [
+     "V",
+     "the voltage (V)"
+    ]
+   ],
+   "example": "100 µF at 24 V: $100 \\times 10^{-6} \\times 24 = 2.4$ mC."
+  },
+  {
+   "name": "Energy stored",
+   "tex": "E = \\tfrac{1}{2}CV^2",
+   "match": [
+    "CV^2"
+   ],
    "says": "The energy grows with the voltage squared: double the voltage, four times the energy.",
-   "symbols": [["E", "the energy (J)"], ["C", "the capacitance (F)"], ["V", "the voltage (V)"]],
-   "example": "2200 µF at 565 V: $0.5 \\times 0.0022 \\times 565^2 = 351$ J."},
-  {"name": "Time constant", "tex": "\\tau = RC", "match": ["\\tau = RC"],
+   "symbols": [
+    [
+     "E",
+     "the energy (J)"
+    ],
+    [
+     "C",
+     "the capacitance (F)"
+    ],
+    [
+     "V",
+     "the voltage (V)"
+    ]
+   ],
+   "example": "2200 µF at 565 V: $0.5 \\times 0.0022 \\times 565^2 = 351$ J."
+  },
+  {
+   "name": "Time constant",
+   "tex": "\\tau = RC",
+   "match": [
+    "\\tau = RC"
+   ],
    "says": "Resistance times capacitance gives the time scale of charging and discharging.",
-   "symbols": [["\\tau", "the time constant (s)"], ["R", "the resistance (Ω)"], ["C", "the capacitance (F)"]],
-   "example": "10 kΩ and 100 µF: $10\\,000 \\times 0.0001 = 1$ s."},
-  {"name": "Charging", "tex": "V = V_0(1 - e^{-t/RC})", "match": ["1 - e^{-t/RC}"],
+   "symbols": [
+    [
+     "\\tau",
+     "the time constant (s)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "C",
+     "the capacitance (F)"
+    ]
+   ],
+   "example": "10 kΩ and 100 µF: $10\\,000 \\times 0.0001 = 1$ s."
+  },
+  {
+   "name": "Charging",
+   "tex": "V = V_0(1 - e^{-t/RC})",
+   "match": [
+    "1 - e^{-t/RC}"
+   ],
    "says": "The voltage rises quickly at first, then more and more slowly towards the supply.",
-   "symbols": [["V", "the capacitor's voltage at time t (V)"], ["V_0", "the supply voltage (V)"], ["t", "the time since charging began (s)"], ["R", "the resistance (Ω)"], ["C", "the capacitance (F)"]],
-   "example": "After one time constant: $1 - e^{-1} = 0.63$ of the supply."},
-  {"name": "Discharging", "tex": "V = V_0 e^{-t/RC}", "match": ["V_0 e^{-t/RC}"],
+   "symbols": [
+    [
+     "V",
+     "the capacitor's voltage at time t (V)"
+    ],
+    [
+     "V_0",
+     "the supply voltage (V)"
+    ],
+    [
+     "t",
+     "the time since charging began (s)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "C",
+     "the capacitance (F)"
+    ]
+   ],
+   "example": "After one time constant: $1 - e^{-1} = 0.63$ of the supply."
+  },
+  {
+   "name": "Discharging",
+   "tex": "V = V_0 e^{-t/RC}",
+   "match": [
+    "V_0 e^{-t/RC}"
+   ],
    "says": "The voltage falls quickly at first, then more slowly, never quite reaching zero.",
-   "symbols": [["V", "the voltage at time t (V)"], ["V_0", "the starting voltage (V)"], ["t", "the time since it began to discharge (s)"], ["R", "the discharge resistance (Ω)"], ["C", "the capacitance (F)"]],
-   "example": "After one time constant: $e^{-1} = 0.37$ of the start."},
-  {"name": "Time to discharge to a voltage", "tex": "t = RC\\ln\\frac{V_0}{V}", "match": ["\\ln\\frac{V_0}{V}"],
+   "symbols": [
+    [
+     "V",
+     "the voltage at time t (V)"
+    ],
+    [
+     "V_0",
+     "the starting voltage (V)"
+    ],
+    [
+     "t",
+     "the time since it began to discharge (s)"
+    ],
+    [
+     "R",
+     "the discharge resistance (Ω)"
+    ],
+    [
+     "C",
+     "the capacitance (F)"
+    ]
+   ],
+   "example": "After one time constant: $e^{-1} = 0.37$ of the start."
+  },
+  {
+   "name": "Time to discharge to a voltage",
+   "tex": "t = RC\\ln\\frac{V_0}{V}",
+   "match": [
+    "\\ln\\frac{V_0}{V}"
+   ],
    "says": "The discharging rule turned round for the time.",
-   "symbols": [["t", "the time (s)"], ["R", "the resistance (Ω)"], ["C", "the capacitance (F)"], ["V_0", "the starting voltage (V)"], ["V", "the voltage you are waiting for (V)"]],
-   "example": "τ = 220 s, 565 V down to 50 V: $220 \\times \\ln 11.3 = 533$ s, about 9 minutes."},
-  {"name": "Capacitors in series", "tex": "\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}", "match": ["\\frac{1}{C_1}"],
+   "symbols": [
+    [
+     "t",
+     "the time (s)"
+    ],
+    [
+     "R",
+     "the resistance (Ω)"
+    ],
+    [
+     "C",
+     "the capacitance (F)"
+    ],
+    [
+     "V_0",
+     "the starting voltage (V)"
+    ],
+    [
+     "V",
+     "the voltage you are waiting for (V)"
+    ]
+   ],
+   "example": "τ = 220 s, 565 V down to 50 V: $220 \\times \\ln 11.3 = 533$ s, about 9 minutes."
+  },
+  {
+   "name": "Capacitors in series",
+   "tex": "\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}",
+   "match": [
+    "\\frac{1}{C_1}"
+   ],
    "says": "In series, capacitance falls, the way resistance falls in parallel.",
-   "symbols": [["C", "the combined capacitance"], ["C_1", "the first capacitor"], ["C_2", "the second capacitor"]],
-   "example": "Two 100 µF in series: 50 µF."}
+   "symbols": [
+    [
+     "C",
+     "the combined capacitance"
+    ],
+    [
+     "C_1",
+     "the first capacitor"
+    ],
+    [
+     "C_2",
+     "the second capacitor"
+    ]
+   ],
+   "example": "Two 100 µF in series: 50 µF."
+  }
  ],
  "bench": [
-  {"task": "Watch an RC circuit charge: a 9 V battery or 12 V DC supply, a 100 kΩ resistor and a 100 µF electrolytic (rated 25 V or more), your multimeter across the capacitor. Low voltage only.", "check": ["Work out τ = RC first: 10 s", "Fit the capacitor with its stripe (−) to 0 V", "Connect and read the voltage every 10 s: about 63%, 86%, 95%, 98% of the supply", "Disconnect the supply and short the capacitor through a 1 kΩ resistor (not a bare wire) to discharge it"]}
+  {
+   "task": "Watch an RC circuit charge: a 9 V battery or 12 V DC supply, a 100 kΩ resistor and a 100 µF electrolytic (rated 25 V or more), your multimeter across the capacitor. Low voltage only.",
+   "check": [
+    "Work out τ = RC first: 10 s",
+    "Fit the capacitor with its stripe (−) to 0 V",
+    "Connect and read the voltage every 10 s: about 63%, 86%, 95%, 98% of the supply",
+    "Disconnect the supply and short the capacitor through a 1 kΩ resistor (not a bare wire) to discharge it"
+   ]
+  }
  ],
  "cards": [
-  {"id": "try-wait", "type": "mcq", "stage": "try", "q": "A drive's label says 'wait 10 minutes after isolation before opening'. Why?", "options": ["Its capacitors stay charged to hundreds of volts", "Its fans must stop turning first", "Its software must save the parameters", "Its heatsink is too hot to touch"], "answer": 0, "why": "The DC bus capacitors store charge at about 565 V, and only bleed it away slowly through resistors. Hundreds of joules at that voltage can kill. Wait, then measure the bus before touching."},
-
-  {"id": "what", "type": "concept", "stage": "learn", "title": "Storing charge", "body": "A **capacitor** is two conducting plates with an insulator between. Put a voltage across it and charge builds up on the plates: one side positive, the other negative.\n\n$$Q = CV$$\n\n$Q$ is the charge in **coulombs**, $V$ the voltage, $C$ the **capacitance** in **farads**. A farad is huge, so real ones are in **µF** (millionths), **nF** (billionths) and **pF**.\n\nOnce charged, no current flows through it on DC; it simply holds the charge.", "more": "Think of a water tank with a rubber diaphragm across the middle: push water in one side and the diaphragm stretches, pushing water out of the other side. Nothing goes through, but the tank stores the push. Capacitance is how stretchy the diaphragm is: more capacitance, more charge for the same voltage.\n\nNumbers: 100 µF at 24 V holds $100 \\times 10^{-6} \\times 24 = 0.0024$ C, 2.4 millicoulombs.\n\nMicro means $10^{-6}$, nano $10^{-9}$, pico $10^{-12}$. Most mistakes in capacitor sums are a missing $10^{-6}$."},
-  {"id": "charge", "type": "numeric", "stage": "learn", "level": 4.7, "q": "A {c} µF capacitor is charged to {v} V. How much charge does it hold, in µC?", "vars": {"c": {"pick": [1, 2.2, 10, 47, 100, 470]}, "v": {"pick": [5, 12, 24, 48]}}, "answer": "c * v", "unit": "µC", "tolerance": 0.001, "work": "$Q = CV = {c} \\times {v} = {answer}$ µC", "why": "$Q = CV$; µF × V gives µC directly.", "hint": "$Q = CV$."},
-
-  {"id": "energy", "type": "concept", "stage": "learn", "title": "Stored energy", "body": "Charging a capacitor stores **energy**:\n\n$$E = \\tfrac{1}{2}CV^2$$\n\n$E$ in joules, $C$ in **farads**, $V$ in volts. The **voltage is squared**, so high-voltage capacitors hold far more than low-voltage ones of the same size.\n\nA drive's DC bus (thousands of µF at about 565 V) holds **hundreds of joules**: enough to kill, and it stays there after the supply is off.", "more": "Numbers: a 2200 µF bank at 565 V. $0.5 \\times 0.0022 \\times 565^2 = 351$ J.\n\nThe same 2200 µF at 24 V: $0.5 \\times 0.0022 \\times 576 = 0.63$ J. Same capacitor, 560 times less energy, because of the square.\n\nWhy the half? As the capacitor charges, the voltage it pushes back with rises from 0 to V, so on average the charge went in against half the final voltage."},
-  {"id": "energy-calc", "type": "numeric", "stage": "learn", "level": 5.6, "q": "A {c} µF capacitor is charged to {v} V. How much energy does it store?", "vars": {"c": {"pick": [100, 470, 1000, 2200, 4700]}, "v": {"pick": [24, 50, 325, 565]}}, "answer": "0.5 * c / 1000000 * v ^ 2", "unit": "J", "tolerance": 0.01, "work": "$E = 0.5 \\times {c} \\times 10^{-6} \\times {v}^2 = {answer}$ J", "why": "Half C V squared, with C in farads (µF × $10^{-6}$).", "hint": "C in farads first."},
-
-  {"id": "combine", "type": "concept", "stage": "learn", "title": "Parallel and series", "body": "Capacitors combine the **opposite way** to resistors:\n\n- in **parallel**, capacitances **add**: $C = C_1 + C_2$ (more plate area)\n- in **series**, $\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}$, so the total is **less** than either (the plates are effectively further apart)\n\nTwo equal capacitors in series give half; that is how drives put two 400 V capacitors in series to stand an 800 V bus, with balancing resistors to share the voltage.", "more": "Parallel: two tanks side by side hold twice as much. 100 µF + 100 µF = 200 µF.\n\nSeries: 100 µF and 100 µF: $\\frac{1}{C} = \\frac{1}{100} + \\frac{1}{100} = \\frac{2}{100}$, so $C = 50$ µF. 100 µF and 47 µF: $\\frac{1}{C} = 0.01 + 0.0213 = 0.0313$, $C = 32$ µF. For two, the shortcut is product over sum: $\\frac{100 \\times 47}{147} = 32$ µF.\n\nIn series, each capacitor takes part of the voltage, which is the point when the bus is higher than one capacitor's rating. Without balancing resistors, leakage differences can put too much across one of them."},
-  {"id": "series-c", "type": "numeric", "stage": "learn", "level": 5.4, "q": "A {c1} µF and a {c2} µF capacitor are in series. What is their combined capacitance?", "vars": {"c1": {"pick": [10, 22, 47, 100]}, "c2": {"pick": [10, 33, 47, 220]}}, "answer": "c1 * c2 / (c1 + c2)", "unit": "µF", "tolerance": 0.01, "work": "$\\frac{{c1} \\times {c2}}{{c1} + {c2}} = {answer}$ µF", "why": "In series, the reciprocals add; for two, that is product over sum. The total is always less than the smaller one.", "hint": "Series capacitors combine like parallel resistors."},
-
-  {"id": "tau", "type": "concept", "stage": "learn", "title": "Charging through a resistor: the time constant", "body": "Charged through a resistor, a capacitor does not fill at once. The current is biggest at first (the capacitor is empty), and falls as the voltage builds. The pace is set by the **time constant**:\n\n$$\\tau = RC$$\n\n$\\tau$ (tau) in seconds, $R$ in ohms, $C$ in farads. While charging from 0 towards $V_0$:\n\n$$V = V_0(1 - e^{-t/RC})$$\n\nAfter one $\\tau$ it is at **63%**; after five, about **99%**: call it charged.", "more": "$e$ is a number, about 2.718, that turns up whenever something changes at a rate proportional to how much is left. $e^{-t/RC}$ is the share of the journey still to go: 37% after one τ, 14% after two, 5% after three, 2% after four, under 1% after five.\n\nSo charging is 1 minus that: 63%, 86%, 95%, 98%, 99%.\n\nNumbers: 10 kΩ and 100 µF: $\\tau = 10\\,000 \\times 0.0001 = 1$ s. A 12 V supply charges it to 7.6 V in 1 s and to 11.9 V in 5 s.\n\nThis is used for simple time delays, for debouncing switches, and it is why a capacitor-start motor or a soft-start circuit takes time to come up."},
-  {"id": "tau-calc", "type": "numeric", "stage": "learn", "q": "A {r} kΩ resistor charges a {c} µF capacitor. What is the time constant?", "vars": {"r": {"pick": [1, 4.7, 10, 47, 100]}, "c": {"pick": [1, 10, 47, 100, 470]}}, "answer": "r * 1000 * c / 1000000", "unit": "s", "tolerance": 0.01, "work": "$\\tau = {r} \\times 10^3 \\times {c} \\times 10^{-6} = {answer}$ s", "why": "Ohms times farads gives seconds. kΩ × µF gives milliseconds, a quick shortcut.", "hint": "R in ohms, C in farads, multiply."},
-
-  {"id": "discharge", "type": "concept", "stage": "learn", "title": "Discharging, and how long to wait", "body": "Through a resistor, a charged capacitor discharges:\n\n$$V = V_0 e^{-t/RC}$$\n\nIt falls to 37% after one time constant, under 1% after five, and never quite reaches zero.\n\nTurned round, the time to fall from $V_0$ to a safe $V$:\n\n$$t = RC\\ln\\frac{V_0}{V}$$\n\n$\\ln$ is the natural logarithm (the calculator's ln key): it undoes $e$. Drives have **bleed resistors** across the bus for exactly this, sized so the label's wait time brings the bus below a safe level.", "more": "Numbers: a drive bus of 2200 µF at 565 V with a 100 kΩ bleed resistor. $\\tau = 100\\,000 \\times 0.0022 = 220$ s, nearly 4 minutes. To fall to 50 V: $\\frac{565}{50} = 11.3$; $\\ln 11.3 = 2.42$; $t = 220 \\times 2.42 = 533$ s: about 9 minutes.\n\nIf the bleed resistor has failed open, nothing discharges the bus except leakage, and it can hold its charge for hours. That is why the rule is wait **and measure**, never wait and assume.\n\n$\\ln$ answers 'how many time constants does it take?': $\\ln 11.3 = 2.42$ time constants to fall by a factor of 11.3."},
-  {"id": "discharge-v", "type": "numeric", "stage": "learn", "level": 5.8, "q": "A capacitor charged to {v0} V discharges through a resistor with a time constant of {tau} s. What is its voltage after {tt} s?", "vars": {"v0": {"pick": [24, 100, 325, 565]}, "tau": {"pick": [1, 5, 30, 120]}, "k": {"pick": [0.5, 1, 2, 3]}}, "let": {"tt": "k * tau"}, "answer": "v0 * EXP(-tt / tau)", "unit": "V", "tolerance": 0.01, "work": "$V = {v0} \\times e^{-{tt}/{tau}} = {answer}$ V", "why": "Discharging: the start voltage times $e$ to the minus (time over time constant).", "hint": "$V = V_0 e^{-t/RC}$, with $t/RC$ = {tt} ÷ {tau}."},
-
-  {"id": "practical", "type": "concept", "stage": "learn", "title": "Fitting them right", "body": "- **Electrolytic** capacitors (the large cans) are **polarised**: the stripe marks **−**. Fitted backwards, they heat, vent and can burst.\n- Every capacitor has a **voltage rating**: stay well under it (a common rule is to use one rated at least 1.5 times the working voltage).\n- Electrolytics **age**, faster when hot: a drive's capacitors are a life-limited part, and a drive stored unpowered for years may need its capacitors **re-formed** (powered up gently) before use.\n- On AC, a capacitor passes AC and blocks DC: the basis of filters, and of motor run and start capacitors (which are non-polarised).", "more": "The stripe on an electrolytic has minus signs printed on it, and the minus leg is usually the shorter one. On a circuit board the symbol has a curved or filled plate for the negative side, or a + by the positive.\n\nWhy do they age? The insulating layer is a very thin oxide film that slowly changes, and the liquid inside dries out through the seal, especially when warm. A 10 °C rise roughly halves their life.\n\nRe-forming: after long storage the oxide film degrades, and full voltage at once can make it leak heavily and overheat. Drive makers give a procedure: a reduced voltage for a time, then full."},
-  {"id": "polarity", "type": "mcq", "stage": "learn", "level": 4.8, "q": "An electrolytic capacitor on a 24 V board is fitted with its stripe to +24 V. What is likely to happen?", "options": ["It heats up and may vent or burst", "It works normally: polarity does not matter", "It charges to −24 V and works", "It stores twice the energy"], "answer": 0, "why": "The stripe marks the negative lead. Reverse voltage breaks down the oxide layer, a large current flows, and the capacitor heats and can vent violently."},
-
-  {"id": "worked-bus", "type": "steps", "stage": "example", "worked": true, "q": "A drive's bus has 3300 µF, charged to 565 V, with a 68 kΩ bleed resistor. How much energy does it hold, and how long until it is below 50 V?", "steps": [{"ask": "The energy.", "show": "$E = 0.5 \\times 0.0033 \\times 565^2 = 527$ J"}, {"ask": "The time constant.", "show": "$\\tau = 68\\,000 \\times 0.0033 = 224$ s"}, {"ask": "How many time constants to fall by $\\frac{565}{50} = 11.3$ times?", "show": "$\\ln 11.3 = 2.42$"}, {"ask": "The time.", "show": "$224 \\times 2.42 = 543$ s, about 9 minutes; then measure to prove it."}], "why": "Energy says how dangerous; RC and the log say how long. The measurement is still the proof: a failed bleed resistor stretches the time enormously."},
-  {"id": "explain-ln", "type": "explain", "stage": "example", "q": "Why does step 3 use ln to find the number of time constants?", "context": "Falling from 565 V to 50 V is a factor of 11.3; ln 11.3 = 2.42 time constants.", "model": "In each time constant the voltage falls to 37% of what it was, which is a division by e. So falling by a factor of 11.3 takes however many divisions by e make 11.3, and that is exactly what the natural logarithm gives: e to the power 2.42 is 11.3. Multiplying 2.42 time constants by the 224 s each gives the time.", "points": ["Each time constant divides the voltage by e", "Falling by 11.3 means some number of divisions by e", "ln counts them: e^2.42 = 11.3", "Time = that number × τ"]},
-  {"id": "faded-delay", "type": "steps", "stage": "example", "given": 1, "q": "An RC delay of 47 kΩ and 100 µF charges from a 24 V supply. A relay input switches at 15 V. How long is the delay?", "steps": [{"ask": "The time constant.", "show": "$\\tau = 47\\,000 \\times 0.0001 = 4.7$ s"}, {"ask": "15 V is what share of 24 V, and what is left to go?", "show": "$15 \\div 24 = 0.625$; left to go $1 - 0.625 = 0.375$"}, {"ask": "Time for the 'left to go' share to fall to 0.375.", "show": "$t = 4.7 \\times \\ln\\frac{1}{0.375} = 4.7 \\times 0.98 = 4.6$ s"}], "why": "Charging is discharging seen upside down: the gap to the supply decays like a discharge."},
-  {"id": "charge-v", "type": "numeric", "stage": "example", "q": "A capacitor charges from 0 V through {r} kΩ from a {v0} V supply. It is {c} µF. What is its voltage after {tt} s?", "vars": {"r": {"pick": [10, 22, 47]}, "c": {"pick": [47, 100, 220]}, "v0": {"pick": [5, 12, 24]}, "tt": {"pick": [0.5, 1, 2, 5]}}, "let": {"tau": "r * 1000 * c / 1000000"}, "answer": "v0 * (1 - EXP(-tt / tau))", "unit": "V", "tolerance": 0.01, "work": "$\\tau = {tau:2}$ s; $V = {v0} \\times (1 - e^{-{tt}/{tau:2}}) = {answer}$ V", "why": "Charging: the supply times (1 minus the share still to go).", "hint": "Time constant first, then $V_0(1 - e^{-t/RC})$."},
-
-  {"id": "spot-micro", "type": "spot", "stage": "practise", "level": 5.4, "q": "Working out the time constant of 22 kΩ and 470 µF. One line is wrong. Which?", "lines": ["R = 22 kΩ = 22 000 Ω", "C = 470 µF = 470 F", "τ = 22 000 × 470 = 10 340 000 s", "So it takes months to charge"], "wrong": 1, "fix": "C = 470 µF = 0.00047 F, so τ = 22 000 × 0.00047 = 10.3 s", "why": "µF must be turned into farads (× $10^{-6}$). An answer of months for a small circuit is the sanity check that something is off by a million."},
-  {"id": "parallel-c", "type": "numeric", "stage": "practise", "level": 4.6, "q": "{c1} µF, {c2} µF and {c3} µF capacitors are connected in parallel. What is the total?", "vars": {"c1": {"pick": [10, 47, 100]}, "c2": {"pick": [22, 47, 220]}, "c3": {"pick": [1, 10, 470]}}, "answer": "c1 + c2 + c3", "unit": "µF", "tolerance": 0.001, "work": "${c1} + {c2} + {c3} = {answer}$ µF", "why": "In parallel, capacitances simply add: more plate area.", "hint": "Parallel capacitors add."},
-  {"id": "time-safe", "type": "numeric", "stage": "practise", "level": 6.0, "q": "A {c} µF bus at {v0} V discharges through {r} kΩ. How long until it is below 50 V, in seconds?", "vars": {"c": {"pick": [1000, 2200, 4700]}, "v0": {"pick": [325, 565, 650]}, "r": {"pick": [47, 100, 220]}}, "let": {"tau": "r * 1000 * c / 1000000"}, "answer": "tau * LN(v0 / 50)", "unit": "s", "tolerance": 0.01, "work": "$\\tau = {tau:1}$ s; $t = {tau:1} \\times \\ln\\frac{{v0}}{50} = {answer}$ s", "why": "Time constant, then how many of them it takes to fall by the factor $\\frac{V_0}{50}$.", "hint": "$t = RC\\ln\\frac{V_0}{V}$."},
-  {"id": "ac-dc", "type": "mcq", "stage": "practise", "level": 5.0, "q": "A capacitor is placed in series with a signal. What does it do?", "options": ["Passes the changing part, blocks the steady DC", "Passes the DC part and blocks the AC", "Blocks every signal completely", "Doubles the signal's voltage"], "answer": 0, "why": "Once charged, a capacitor passes no steady current, but a changing voltage keeps charging and discharging it, so AC gets through. That is 'AC coupling', and the basis of filters."},
-  {"id": "five-tau", "type": "mcq", "stage": "practise", "level": 4.8, "q": "Roughly how many time constants does a capacitor take to charge 'fully' (about 99%)?", "options": ["About 5", "Exactly 1", "About 2", "It never charges at all"], "answer": 0, "why": "After 1τ it is at 63%, after 3τ 95%, after 5τ about 99%. In theory it never quite gets there; in practice five time constants is treated as charged."},
-
-  {"id": "mix-rc-vs-r", "type": "mcq", "stage": "mix", "level": 5.2, "q": "Two 100 µF capacitors in series, and two 100 Ω resistors in series. What are the totals?", "options": ["50 µF and 200 Ω", "200 µF and 200 Ω", "50 µF and 50 Ω", "200 µF and 50 Ω"], "answer": 0, "why": "Capacitors in series combine like resistors in parallel (product over sum), and resistors in series add. Mixing up the two rules is the slip."},
-  {"id": "mix-energy-v", "type": "numeric", "stage": "mix", "level": 5.6, "q": "A capacitor holds {e} J at {v1} V. How much will it hold at {v2} V?", "vars": {"e": {"pick": [1, 5, 20, 100]}, "v1": {"pick": [100, 300]}, "v2": {"pick": [50, 200, 600]}}, "answer": "e * (v2 / v1) ^ 2", "unit": "J", "tolerance": 0.01, "work": "${e} \\times \\left(\\frac{{v2}}{{v1}}\\right)^2 = {answer}$ J", "why": "Energy goes with voltage squared, as kinetic energy goes with speed squared.", "hint": "What power of V is in the energy formula?"},
-  {"id": "mix-q-or-e", "type": "numeric", "stage": "mix", "level": 5.0, "q": "A {c} µF capacitor at {v} V. How much charge, in mC?", "vars": {"c": {"pick": [470, 1000, 2200]}, "v": {"pick": [12, 48, 400]}}, "answer": "c * v / 1000", "unit": "mC", "tolerance": 0.01, "work": "$Q = {c} \\times {v}$ µC; ÷ 1000 gives {answer} mC", "why": "Charge is $Q = CV$, not $\\tfrac{1}{2}CV^2$ (that is energy). µF × V gives µC; ÷ 1000 for mC.", "hint": "Charge or energy?"},
-
-  {"id": "check-try", "type": "mcq", "stage": "check", "q": "Why is a drive's DC bus measured before work, even after waiting?", "options": ["A failed bleed resistor can leave it charged", "Measuring speeds up the discharge", "The meter resets the drive's fault log", "It is not needed after waiting"], "answer": 0, "why": "The wait time assumes the bleed resistors work. If one has failed, the bus can stay charged for hours. Measuring is the proof."},
-  {"id": "check-tau", "type": "numeric", "stage": "check", "q": "{r} kΩ with {c} µF. Time constant in seconds?", "vars": {"r": {"pick": [2.2, 10, 68]}, "c": {"pick": [10, 220, 1000]}}, "answer": "r * c / 1000", "unit": "s", "tolerance": 0.01, "work": "${r} \\times 10^3 \\times {c} \\times 10^{-6} = {answer}$ s", "why": "τ = RC in ohms and farads."},
-  {"id": "check-energy", "type": "numeric", "stage": "check", "q": "{c} µF at {v} V. Energy stored?", "vars": {"c": {"pick": [470, 2200]}, "v": {"pick": [50, 400]}}, "answer": "0.5 * c / 1000000 * v ^ 2", "unit": "J", "tolerance": 0.01, "work": "$0.5 \\times {c} \\times 10^{-6} \\times {v}^2 = {answer}$ J", "why": "Half C V squared, C in farads."}
+  {
+   "id": "try-wait",
+   "type": "mcq",
+   "stage": "try",
+   "q": "A drive's label says 'wait 10 minutes after isolation before opening'. Why?",
+   "options": [
+    "Its capacitors stay charged to hundreds of volts",
+    "Its fans must stop turning first",
+    "Its software must save the parameters",
+    "Its heatsink is too hot to touch"
+   ],
+   "answer": 0,
+   "why": "The DC bus capacitors store charge at about 565 V, and only bleed it away slowly through resistors. Hundreds of joules at that voltage can kill. Wait, then measure the bus before touching."
+  },
+  {
+   "id": "what",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Storing charge",
+   "body": "A **capacitor** is two conducting plates with an insulator between. Put a voltage across it and charge builds up on the plates: one side positive, the other negative.\n\n$$Q = CV$$\n\n$Q$ is the charge in **coulombs**, $V$ the voltage, $C$ the **capacitance** in **farads**. A farad is huge, so real ones are in **µF** (millionths), **nF** (billionths) and **pF**.\n\nOnce charged, no current flows through it on DC; it simply holds the charge.",
+   "more": "Think of a water tank with a rubber diaphragm across the middle: push water in one side and the diaphragm stretches, pushing water out of the other side. Nothing goes through, but the tank stores the push. Capacitance is how stretchy the diaphragm is: more capacitance, more charge for the same voltage.\n\nNumbers: 100 µF at 24 V holds $100 \\times 10^{-6} \\times 24 = 0.0024$ C, 2.4 millicoulombs.\n\nMicro means $10^{-6}$, nano $10^{-9}$, pico $10^{-12}$. Most mistakes in capacitor sums are a missing $10^{-6}$."
+  },
+  {
+   "id": "charge",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.7,
+   "q": "A {c} µF capacitor is charged to {v} V. How much charge does it hold, in µC?",
+   "vars": {
+    "c": {
+     "pick": [
+      1,
+      2.2,
+      10,
+      47,
+      100,
+      470
+     ]
+    },
+    "v": {
+     "pick": [
+      5,
+      12,
+      24,
+      48
+     ]
+    }
+   },
+   "answer": "c * v",
+   "unit": "µC",
+   "tolerance": 0.001,
+   "work": "$Q = CV = {c} \\times {v} = {answer}$ µC",
+   "why": "$Q = CV$; µF × V gives µC directly.",
+   "hint": "$Q = CV$."
+  },
+  {
+   "id": "energy",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Stored energy",
+   "body": "Charging a capacitor stores **energy**:\n\n$$E = \\tfrac{1}{2}CV^2$$\n\n$E$ in joules, $C$ in **farads**, $V$ in volts. The **voltage is squared**, so high-voltage capacitors hold far more than low-voltage ones of the same size.\n\nA drive's DC bus (thousands of µF at about 565 V) holds **hundreds of joules**: enough to kill, and it stays there after the supply is off.",
+   "more": "Numbers: a 2200 µF bank at 565 V. $0.5 \\times 0.0022 \\times 565^2 = 351$ J.\n\nThe same 2200 µF at 24 V: $0.5 \\times 0.0022 \\times 576 = 0.63$ J. Same capacitor, 560 times less energy, because of the square.\n\nWhy the half? As the capacitor charges, the voltage it pushes back with rises from 0 to V, so on average the charge went in against half the final voltage."
+  },
+  {
+   "id": "energy-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A {c} µF capacitor is charged to {v} V. How much energy does it store?",
+   "vars": {
+    "c": {
+     "pick": [
+      100,
+      470,
+      1000,
+      2200,
+      4700
+     ]
+    },
+    "v": {
+     "pick": [
+      24,
+      50,
+      325,
+      565
+     ]
+    }
+   },
+   "answer": "0.5 * c / 1000000 * v ^ 2",
+   "unit": "J",
+   "tolerance": 0.01,
+   "work": "$E = 0.5 \\times {c} \\times 10^{-6} \\times {v}^2 = {answer}$ J",
+   "why": "Half C V squared, with C in farads (µF × $10^{-6}$).",
+   "hint": "C in farads first."
+  },
+  {
+   "id": "combine",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Parallel and series",
+   "body": "Capacitors combine the **opposite way** to resistors:\n\n- in **parallel**, capacitances **add**: $C = C_1 + C_2$ (more plate area)\n- in **series**, $\\frac{1}{C} = \\frac{1}{C_1} + \\frac{1}{C_2}$, so the total is **less** than either (the plates are effectively further apart)\n\nTwo equal capacitors in series give half; that is how drives put two 400 V capacitors in series to stand an 800 V bus, with balancing resistors to share the voltage.",
+   "more": "Parallel: two tanks side by side hold twice as much. 100 µF + 100 µF = 200 µF.\n\nSeries: 100 µF and 100 µF: $\\frac{1}{C} = \\frac{1}{100} + \\frac{1}{100} = \\frac{2}{100}$, so $C = 50$ µF. 100 µF and 47 µF: $\\frac{1}{C} = 0.01 + 0.0213 = 0.0313$, $C = 32$ µF. For two, the shortcut is product over sum: $\\frac{100 \\times 47}{147} = 32$ µF.\n\nIn series, each capacitor takes part of the voltage, which is the point when the bus is higher than one capacitor's rating. Without balancing resistors, leakage differences can put too much across one of them."
+  },
+  {
+   "id": "series-c",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "A {c1} µF and a {c2} µF capacitor are in series. What is their combined capacitance?",
+   "vars": {
+    "c1": {
+     "pick": [
+      10,
+      22,
+      47,
+      100
+     ]
+    },
+    "c2": {
+     "pick": [
+      10,
+      33,
+      47,
+      220
+     ]
+    }
+   },
+   "answer": "c1 * c2 / (c1 + c2)",
+   "unit": "µF",
+   "tolerance": 0.01,
+   "work": "$\\frac{{c1} \\times {c2}}{{c1} + {c2}} = {answer}$ µF",
+   "why": "In series, the reciprocals add; for two, that is product over sum. The total is always less than the smaller one.",
+   "hint": "Series capacitors combine like parallel resistors."
+  },
+  {
+   "id": "tau",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Charging through a resistor: the time constant",
+   "body": "Charged through a resistor, a capacitor does not fill at once. The current is biggest at first (the capacitor is empty), and falls as the voltage builds. The pace is set by the **time constant**:\n\n$$\\tau = RC$$\n\n$\\tau$ (tau) in seconds, $R$ in ohms, $C$ in farads. While charging from 0 towards $V_0$:\n\n$$V = V_0(1 - e^{-t/RC})$$\n\nAfter one $\\tau$ it is at **63%**; after five, about **99%**: call it charged.",
+   "more": "$e$ is a number, about 2.718, that turns up whenever something changes at a rate proportional to how much is left. $e^{-t/RC}$ is the share of the journey still to go: 37% after one τ, 14% after two, 5% after three, 2% after four, under 1% after five.\n\nSo charging is 1 minus that: 63%, 86%, 95%, 98%, 99%.\n\nNumbers: 10 kΩ and 100 µF: $\\tau = 10\\,000 \\times 0.0001 = 1$ s. A 12 V supply charges it to 7.6 V in 1 s and to 11.9 V in 5 s.\n\nThis is used for simple time delays, for debouncing switches, and it is why a capacitor-start motor or a soft-start circuit takes time to come up."
+  },
+  {
+   "id": "tau-calc",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {r} kΩ resistor charges a {c} µF capacitor. What is the time constant?",
+   "vars": {
+    "r": {
+     "pick": [
+      1,
+      4.7,
+      10,
+      47,
+      100
+     ]
+    },
+    "c": {
+     "pick": [
+      1,
+      10,
+      47,
+      100,
+      470
+     ]
+    }
+   },
+   "answer": "r * 1000 * c / 1000000",
+   "unit": "s",
+   "tolerance": 0.01,
+   "work": "$\\tau = {r} \\times 10^3 \\times {c} \\times 10^{-6} = {answer}$ s",
+   "why": "Ohms times farads gives seconds. kΩ × µF gives milliseconds, a quick shortcut.",
+   "hint": "R in ohms, C in farads, multiply."
+  },
+  {
+   "id": "discharge",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Discharging, and how long to wait",
+   "body": "Through a resistor, a charged capacitor discharges:\n\n$$V = V_0 e^{-t/RC}$$\n\nIt falls to 37% after one time constant, under 1% after five, and never quite reaches zero.\n\nTurned round, the time to fall from $V_0$ to a safe $V$:\n\n$$t = RC\\ln\\frac{V_0}{V}$$\n\n$\\ln$ is the natural logarithm (the calculator's ln key): it undoes $e$. Drives have **bleed resistors** across the bus for exactly this, sized so the label's wait time brings the bus below a safe level.",
+   "more": "Numbers: a drive bus of 2200 µF at 565 V with a 100 kΩ bleed resistor. $\\tau = 100\\,000 \\times 0.0022 = 220$ s, nearly 4 minutes. To fall to 50 V: $\\frac{565}{50} = 11.3$; $\\ln 11.3 = 2.42$; $t = 220 \\times 2.42 = 533$ s: about 9 minutes.\n\nIf the bleed resistor has failed open, nothing discharges the bus except leakage, and it can hold its charge for hours. That is why the rule is wait **and measure**, never wait and assume.\n\n$\\ln$ answers 'how many time constants does it take?': $\\ln 11.3 = 2.42$ time constants to fall by a factor of 11.3."
+  },
+  {
+   "id": "discharge-v",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "A capacitor charged to {v0} V discharges through a resistor with a time constant of {tau} s. What is its voltage after {tt} s?",
+   "vars": {
+    "v0": {
+     "pick": [
+      24,
+      100,
+      325,
+      565
+     ]
+    },
+    "tau": {
+     "pick": [
+      1,
+      5,
+      30,
+      120
+     ]
+    },
+    "k": {
+     "pick": [
+      0.5,
+      1,
+      2,
+      3
+     ]
+    }
+   },
+   "let": {
+    "tt": "k * tau"
+   },
+   "answer": "v0 * EXP(-tt / tau)",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$V = {v0} \\times e^{-{tt}/{tau}} = {answer}$ V",
+   "why": "Discharging: the start voltage times $e$ to the minus (time over time constant).",
+   "hint": "$V = V_0 e^{-t/RC}$, with $t/RC$ = {tt} ÷ {tau}."
+  },
+  {
+   "id": "practical",
+   "type": "concept",
+   "stage": "learn",
+   "title": "Fitting them right",
+   "body": "- **Electrolytic** capacitors (the large cans) are **polarised**: the stripe marks **−**. Fitted backwards, they heat, vent and can burst.\n- Every capacitor has a **voltage rating**: stay well under it (a common rule is to use one rated at least 1.5 times the working voltage).\n- Electrolytics **age**, faster when hot: a drive's capacitors are a life-limited part, and a drive stored unpowered for years may need its capacitors **re-formed** (powered up gently) before use.\n- On AC, a capacitor passes AC and blocks DC: the basis of filters, and of motor run and start capacitors (which are non-polarised).",
+   "more": "The stripe on an electrolytic has minus signs printed on it, and the minus leg is usually the shorter one. On a circuit board the symbol has a curved or filled plate for the negative side, or a + by the positive.\n\nWhy do they age? The insulating layer is a very thin oxide film that slowly changes, and the liquid inside dries out through the seal, especially when warm. A 10 °C rise roughly halves their life.\n\nRe-forming: after long storage the oxide film degrades, and full voltage at once can make it leak heavily and overheat. Drive makers give a procedure: a reduced voltage for a time, then full."
+  },
+  {
+   "id": "polarity",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "An electrolytic capacitor on a 24 V board is fitted with its stripe to +24 V. What is likely to happen?",
+   "options": [
+    "It heats up and may vent or burst",
+    "It works normally: polarity does not matter",
+    "It charges to −24 V and works",
+    "It stores twice the energy"
+   ],
+   "answer": 0,
+   "why": "The stripe marks the negative lead. Reverse voltage breaks down the oxide layer, a large current flows, and the capacitor heats and can vent violently."
+  },
+  {
+   "id": "worked-bus",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A drive's bus has 3300 µF, charged to 565 V, with a 68 kΩ bleed resistor. How much energy does it hold, and how long until it is below 50 V?",
+   "steps": [
+    {
+     "ask": "The energy.",
+     "show": "$E = 0.5 \\times 0.0033 \\times 565^2 = 527$ J"
+    },
+    {
+     "ask": "The time constant.",
+     "show": "$\\tau = 68\\,000 \\times 0.0033 = 224$ s"
+    },
+    {
+     "ask": "How many time constants to fall by $\\frac{565}{50} = 11.3$ times?",
+     "show": "$\\ln 11.3 = 2.42$"
+    },
+    {
+     "ask": "The time.",
+     "show": "$224 \\times 2.42 = 543$ s, about 9 minutes; then measure to prove it."
+    }
+   ],
+   "why": "Energy says how dangerous; RC and the log say how long. The measurement is still the proof: a failed bleed resistor stretches the time enormously."
+  },
+  {
+   "id": "explain-ln",
+   "type": "explain",
+   "stage": "example",
+   "q": "Why does step 3 use ln to find the number of time constants?",
+   "context": "Falling from 565 V to 50 V is a factor of 11.3; ln 11.3 = 2.42 time constants.",
+   "model": "In each time constant the voltage falls to 37% of what it was, which is a division by e. So falling by a factor of 11.3 takes however many divisions by e make 11.3, and that is exactly what the natural logarithm gives: e to the power 2.42 is 11.3. Multiplying 2.42 time constants by the 224 s each gives the time.",
+   "points": [
+    "Each time constant divides the voltage by e",
+    "Falling by 11.3 means some number of divisions by e",
+    "ln counts them: e^2.42 = 11.3",
+    "Time = that number × τ"
+   ]
+  },
+  {
+   "id": "faded-delay",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "An RC delay of 47 kΩ and 100 µF charges from a 24 V supply. A relay input switches at 15 V. How long is the delay?",
+   "steps": [
+    {
+     "ask": "The time constant.",
+     "show": "$\\tau = 47\\,000 \\times 0.0001 = 4.7$ s"
+    },
+    {
+     "ask": "15 V is what share of 24 V, and what is left to go?",
+     "show": "$15 \\div 24 = 0.625$; left to go $1 - 0.625 = 0.375$"
+    },
+    {
+     "ask": "Time for the 'left to go' share to fall to 0.375.",
+     "show": "$t = 4.7 \\times \\ln\\frac{1}{0.375} = 4.7 \\times 0.98 = 4.6$ s"
+    }
+   ],
+   "why": "Charging is discharging seen upside down: the gap to the supply decays like a discharge."
+  },
+  {
+   "id": "charge-v",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A capacitor charges from 0 V through {r} kΩ from a {v0} V supply. It is {c} µF. What is its voltage after {tt} s?",
+   "vars": {
+    "r": {
+     "pick": [
+      10,
+      22,
+      47
+     ]
+    },
+    "c": {
+     "pick": [
+      47,
+      100,
+      220
+     ]
+    },
+    "v0": {
+     "pick": [
+      5,
+      12,
+      24
+     ]
+    },
+    "tt": {
+     "pick": [
+      0.5,
+      1,
+      2,
+      5
+     ]
+    }
+   },
+   "let": {
+    "tau": "r * 1000 * c / 1000000"
+   },
+   "answer": "v0 * (1 - EXP(-tt / tau))",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$\\tau = {tau:2}$ s; $V = {v0} \\times (1 - e^{-{tt}/{tau:2}}) = {answer}$ V",
+   "why": "Charging: the supply times (1 minus the share still to go).",
+   "hint": "Time constant first, then $V_0(1 - e^{-t/RC})$."
+  },
+  {
+   "id": "spot-micro",
+   "type": "spot",
+   "stage": "practise",
+   "level": 5.4,
+   "q": "Working out the time constant of 22 kΩ and 470 µF. One line is wrong. Which?",
+   "lines": [
+    "R = 22 kΩ = 22 000 Ω",
+    "C = 470 µF = 470 F",
+    "τ = 22 000 × 470 = 10 340 000 s",
+    "So it takes months to charge"
+   ],
+   "wrong": 1,
+   "fix": "C = 470 µF = 0.00047 F, so τ = 22 000 × 0.00047 = 10.3 s",
+   "why": "µF must be turned into farads (× $10^{-6}$). An answer of months for a small circuit is the sanity check that something is off by a million."
+  },
+  {
+   "id": "parallel-c",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 4.6,
+   "q": "{c1} µF, {c2} µF and {c3} µF capacitors are connected in parallel. What is the total?",
+   "vars": {
+    "c1": {
+     "pick": [
+      10,
+      47,
+      100
+     ]
+    },
+    "c2": {
+     "pick": [
+      22,
+      47,
+      220
+     ]
+    },
+    "c3": {
+     "pick": [
+      1,
+      10,
+      470
+     ]
+    }
+   },
+   "answer": "c1 + c2 + c3",
+   "unit": "µF",
+   "tolerance": 0.001,
+   "work": "${c1} + {c2} + {c3} = {answer}$ µF",
+   "why": "In parallel, capacitances simply add: more plate area.",
+   "hint": "Parallel capacitors add."
+  },
+  {
+   "id": "time-safe",
+   "type": "numeric",
+   "stage": "practise",
+   "level": 6.0,
+   "q": "A {c} µF bus at {v0} V discharges through {r} kΩ. How long until it is below 50 V, in seconds?",
+   "vars": {
+    "c": {
+     "pick": [
+      1000,
+      2200,
+      4700
+     ]
+    },
+    "v0": {
+     "pick": [
+      325,
+      565,
+      650
+     ]
+    },
+    "r": {
+     "pick": [
+      47,
+      100,
+      220
+     ]
+    }
+   },
+   "let": {
+    "tau": "r * 1000 * c / 1000000"
+   },
+   "answer": "tau * LN(v0 / 50)",
+   "unit": "s",
+   "tolerance": 0.01,
+   "work": "$\\tau = {tau:1}$ s; $t = {tau:1} \\times \\ln\\frac{{v0}}{50} = {answer}$ s",
+   "why": "Time constant, then how many of them it takes to fall by the factor $\\frac{V_0}{50}$.",
+   "hint": "$t = RC\\ln\\frac{V_0}{V}$."
+  },
+  {
+   "id": "ac-dc",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 5.0,
+   "q": "A capacitor is placed in series with a signal. What does it do?",
+   "options": [
+    "Passes the changing part, blocks the steady DC",
+    "Passes the DC part and blocks the AC",
+    "Blocks every signal completely",
+    "Doubles the signal's voltage"
+   ],
+   "answer": 0,
+   "why": "Once charged, a capacitor passes no steady current, but a changing voltage keeps charging and discharging it, so AC gets through. That is 'AC coupling', and the basis of filters."
+  },
+  {
+   "id": "five-tau",
+   "type": "mcq",
+   "stage": "practise",
+   "level": 4.8,
+   "q": "Roughly how many time constants does a capacitor take to charge 'fully' (about 99%)?",
+   "options": [
+    "About 5",
+    "Exactly 1",
+    "About 2",
+    "It never charges at all"
+   ],
+   "answer": 0,
+   "why": "After 1τ it is at 63%, after 3τ 95%, after 5τ about 99%. In theory it never quite gets there; in practice five time constants is treated as charged."
+  },
+  {
+   "id": "mix-rc-vs-r",
+   "type": "mcq",
+   "stage": "mix",
+   "level": 5.2,
+   "q": "Two 100 µF capacitors in series, and two 100 Ω resistors in series. What are the totals?",
+   "options": [
+    "50 µF and 200 Ω",
+    "200 µF and 200 Ω",
+    "50 µF and 50 Ω",
+    "200 µF and 50 Ω"
+   ],
+   "answer": 0,
+   "why": "Capacitors in series combine like resistors in parallel (product over sum), and resistors in series add. Mixing up the two rules is the slip."
+  },
+  {
+   "id": "mix-energy-v",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.6,
+   "q": "A capacitor holds {e} J at {v1} V. How much will it hold at {v2} V?",
+   "vars": {
+    "e": {
+     "pick": [
+      1,
+      5,
+      20,
+      100
+     ]
+    },
+    "v1": {
+     "pick": [
+      100,
+      300
+     ]
+    },
+    "v2": {
+     "pick": [
+      50,
+      200,
+      600
+     ]
+    }
+   },
+   "answer": "e * (v2 / v1) ^ 2",
+   "unit": "J",
+   "tolerance": 0.01,
+   "work": "${e} \\times \\left(\\frac{{v2}}{{v1}}\\right)^2 = {answer}$ J",
+   "why": "Energy goes with voltage squared, as kinetic energy goes with speed squared.",
+   "hint": "What power of V is in the energy formula?"
+  },
+  {
+   "id": "mix-q-or-e",
+   "type": "numeric",
+   "stage": "mix",
+   "level": 5.0,
+   "q": "A {c} µF capacitor at {v} V. How much charge, in mC?",
+   "vars": {
+    "c": {
+     "pick": [
+      470,
+      1000,
+      2200
+     ]
+    },
+    "v": {
+     "pick": [
+      12,
+      48,
+      400
+     ]
+    }
+   },
+   "answer": "c * v / 1000",
+   "unit": "mC",
+   "tolerance": 0.01,
+   "work": "$Q = {c} \\times {v}$ µC; ÷ 1000 gives {answer} mC",
+   "why": "Charge is $Q = CV$, not $\\tfrac{1}{2}CV^2$ (that is energy). µF × V gives µC; ÷ 1000 for mC.",
+   "hint": "Charge or energy?"
+  },
+  {
+   "id": "check-try",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Why is a drive's DC bus measured before work, even after waiting?",
+   "options": [
+    "A failed bleed resistor can leave it charged",
+    "Measuring speeds up the discharge",
+    "The meter resets the drive's fault log",
+    "It is not needed after waiting"
+   ],
+   "answer": 0,
+   "why": "The wait time assumes the bleed resistors work. If one has failed, the bus can stay charged for hours. Measuring is the proof."
+  },
+  {
+   "id": "check-tau",
+   "type": "numeric",
+   "stage": "check",
+   "q": "{r} kΩ with {c} µF. Time constant in seconds?",
+   "vars": {
+    "r": {
+     "pick": [
+      2.2,
+      10,
+      68
+     ]
+    },
+    "c": {
+     "pick": [
+      10,
+      220,
+      1000
+     ]
+    }
+   },
+   "answer": "r * c / 1000",
+   "unit": "s",
+   "tolerance": 0.01,
+   "work": "${r} \\times 10^3 \\times {c} \\times 10^{-6} = {answer}$ s",
+   "why": "τ = RC in ohms and farads."
+  },
+  {
+   "id": "check-energy",
+   "type": "numeric",
+   "stage": "check",
+   "q": "{c} µF at {v} V. Energy stored?",
+   "vars": {
+    "c": {
+     "pick": [
+      470,
+      2200
+     ]
+    },
+    "v": {
+     "pick": [
+      50,
+      400
+     ]
+    }
+   },
+   "answer": "0.5 * c / 1000000 * v ^ 2",
+   "unit": "J",
+   "tolerance": 0.01,
+   "work": "$0.5 \\times {c} \\times 10^{-6} \\times {v}^2 = {answer}$ J",
+   "why": "Half C V squared, C in farads."
+  }
  ]
 }

@@ -1,5 +1,16 @@
 # Changes
 
+## 4.0.23 — 16 October 2026
+
+- **A second source for 41 lessons** that leant on one, kept with the lesson as "more to read", as
+  published. UK first: the law itself from legislation.gov.uk (the Management Regulations on risk
+  assessment, PUWER on guards and isolation, the Electricity at Work Regulations on isolation, UK GDPR on
+  security, the NIS Regulations on OT security), HSE's guide to DSEAR, and Cambridge's DoITPoMS on
+  corrosion, conduction, magnetic materials, dielectrics, friction and wear, and batteries. Where no UK
+  source fits, Wikipedia (thermocouples, Modbus, PID, control valves, RS-485 and more).
+- Lessons imported from a source can now carry more to read, and keep it when imported again.
+- The importer waits and tries again when a site says it is busy, and copes with spaces in file names.
+
 ## 4.0.22 — 16 October 2026
 
 - **22 more lessons**, from Lessons In Industrial Instrumentation (an open textbook): 4 to 20 mA loops
