@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stepper motor</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Stepper motor. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. As published, from https://en.wikipedia.org/wiki/Stepper_motor <a href="https://en.wikipedia.org/wiki/Stepper_motor">https://en.wikipedia.org/wiki/Stepper_motor</a></p>
+<h1>Stepper motor</h1>
+<p>A <strong>stepper motor</strong>, also known as <strong>step motor</strong> or <strong>stepping motor</strong>, is a <a href="https://en.wikipedia.org/wiki/Brushless_DC_electric_motor">brushless DC electric motor</a> that rotates in a series of small and discrete angular steps. Stepper motors can be set to any given step position without needing a <a href="https://en.wikipedia.org/wiki/Rotary_encoder">position sensor</a> for <a href="https://en.wikipedia.org/wiki/Feedback">feedback</a>. The step position can be rapidly increased or decreased to create continuous rotation, or the motor can be ordered to actively hold its position at one given step. Motors vary in size, speed, step resolution, and <a href="https://en.wikipedia.org/wiki/Torque">torque</a>.</p><p><a href="https://en.wikipedia.org/wiki/Switched_reluctance_motor">Switched reluctance motors</a> are very large stepping motors with a reduced pole count. They generally employ closed-loop <a href="https://en.wikipedia.org/wiki/Commutator_(electric)">commutators</a>.</p><h2>Mechanism</h2><p><a href="https://en.wikipedia.org/wiki/Brushed_DC_motor">Brushed DC motors</a> rotate continuously when <a href="https://en.wikipedia.org/wiki/DC_voltage">DC voltage</a> is applied to their terminals. The stepper motor is known for its property of converting a train of input pulses (typically square waves) into a precisely defined increment in the shaft’s rotational position. Each pulse rotates the shaft through a fixed angle.</p><p>Stepper motors effectively have multiple "toothed" electromagnets arranged as a stator around a central rotor, a gear-shaped piece of iron. The electromagnets are energized by an external <a href="https://en.wikipedia.org/wiki/Driver_circuit">driver circuit</a> or a <a href="https://en.wikipedia.org/wiki/Micro_controller">micro controller</a>. To make the motor shaft turn, one electromagnet is first given power, which magnetically attracts the gear's teeth. When the gear's teeth are aligned to the first electromagnet, they are slightly offset from the next electromagnet. This means that when the next electromagnet is turned on and the first is turned off, the gear rotates slightly to align with the next one. From there the process is repeated. Each of the partial rotations is called a "step", with an <a href="https://en.wikipedia.org/wiki/Integer_number">integer number</a> of steps making a full rotation. In that way, the motor can be turned by a precise angle.</p><p>The circular arrangement of electromagnets is divided into groups, each group called a phase, and there is an equal number of electromagnets per group. The number of groups is chosen by the designer of the stepper motor. The electromagnets of each group are interleaved with the electromagnets of other groups to form a uniform pattern of arrangement. For example, if the stepper motor has two groups identified as A or B, and ten electromagnets in total, then the grouping pattern would be ABABABABAB.</p><p>Electromagnets within the same group are all energized together. Because of this, stepper motors with more phases typically have more wires (or leads) to control the motor.</p><h2>Types</h2><p>There are three main types of stepper motors: <a href="https://en.wikipedia.org/wiki/Permanent_magnet_motor">permanent magnet</a>, <a href="https://en.wikipedia.org/wiki/Reluctance_motor">variable reluctance</a>, and hybrid synchronous.</p><p><a href="https://en.wikipedia.org/wiki/Permanent_magnet_motor">Permanent magnet motors</a> use a <a href="https://en.wikipedia.org/wiki/Permanent_magnet">permanent magnet</a> (PM) in the rotor and operate on the attraction or repulsion between the rotor magnet and the <a href="https://en.wikipedia.org/wiki/Stator_(electric_machines)">stator</a> electromagnets. Pulses move the rotor clockwise or anticlockwise in discrete steps. If left powered at a final step, a strong <a href="https://en.wikipedia.org/wiki/Detent">detent</a> remains at that shaft location. This detent has a predictable spring rate and specified torque limit; slippage occurs if the limit is exceeded. If current is removed, a lesser <a href="https://en.wikipedia.org/wiki/Detent">detent</a> still remains, holding shaft position against spring or other torque influences. Stepping can then be resumed while reliably being synchronized with control electronics.</p><p>Permanent magnet stepper motors have simple DC switching electronics, a power-off detent, and no position readout. These qualities are ideal for applications such as paper printers, <a href="https://en.wikipedia.org/wiki/3D_printers">3D printers</a>, and robotics. Such applications track position simply by counting the number of steps that each motor has been instructed to take.</p><p>Variable reluctance (VR) motors have a <a href="https://en.wikipedia.org/wiki/Soft_iron">soft iron</a> rotor and operate based on the principle that minimum <a href="https://en.wikipedia.org/wiki/Magnetic_reluctance">reluctance</a> occurs with minimum gap, so the rotor points are attracted toward the stator's <a href="https://en.wikipedia.org/wiki/Magnet">magnetic poles</a>. Variable reluctance motors have detents when powered on, but not when powered off.</p><p>Hybrid synchronous motors are a combination of the permanent magnet and variable reluctance types, to maximize power in a small size.</p><h2>Phases</h2><h3>Two phase</h3><p> There are two basic winding arrangements for the <a href="https://en.wikipedia.org/wiki/Electromagnetic_coil">electromagnetic coils</a> in a two phase stepper motor: bipolar and unipolar.</p><h4>Unipolar motors</h4><p> A unipolar stepper motor has one winding with <a href="https://en.wikipedia.org/wiki/Center_tap">center tap</a> per phase. Each section of windings is switched on for each direction of magnetic field. Since in this arrangement a magnetic pole can be reversed without switching the polarity of the common wire, the <a href="https://en.wikipedia.org/wiki/Commutator_(electric)">commutation</a> circuit can be simply a single switching transistor for each half winding. Typically, given a phase, the center tap of each winding is made common: three leads per phase and six leads for a typical two phase motor. Often, these two phase commons are internally joined, so the motor has only five leads.</p><p>A <a href="https://en.wikipedia.org/wiki/Microcontroller">microcontroller</a> or stepper motor controller can be used to activate the drive <a href="https://en.wikipedia.org/wiki/Transistor">transistors</a> in the right order, and this ease of operation makes unipolar motors popular with hobbyists; they are probably the cheapest way to get precise angular movements. For the experimenter, the windings can be identified by touching the terminal wires together in PM motors. If the terminals of a coil are connected, the shaft becomes harder to turn. One way to distinguish the center tap (common wire) from a coil-end wire is by measuring the resistance. Resistance between common wire and coil-end wire is always half of the resistance between coil-end wires. This is because there is twice the length of coil between the ends and only half from center (common wire) to the end. A quick way to determine if the stepper motor is working is to short circuit every two pairs and try turning the shaft. Whenever a higher-than-normal resistance is felt, it indicates that the circuit to the particular winding is closed and that the phase is working.</p><h4>Bipolar motors</h4><p>Bipolar motors have a pair of single winding connections per phase. The current in a winding needs to be reversed in order to reverse a magnetic pole, so the driving circuit must be more complicated, typically with an <a href="https://en.wikipedia.org/wiki/H-bridge">H-bridge</a> arrangement (however there are several off-the-shelf driver chips available to make this a simple affair). There are two leads per phase, none is common.</p><p>A typical driving pattern for a two coil bipolar stepper motor would be: A+ B+ A− B−. I.e. drive coil A with positive current, then remove current from coil A; then drive coil B with positive current, then remove current from coil B; then drive coil A with negative current (flipping polarity by switching the wires e.g. with an H bridge), then remove current from coil A; then drive coil B with negative current (again flipping polarity same as coil A); the cycle is complete and begins anew.</p><p>Static friction effects using an H-bridge have been observed with certain drive topologies.</p><p>Dithering the stepper signal at a higher frequency than the motor can respond to will reduce this "static friction" effect.</p><p>Because windings are better utilized, they are more powerful than a unipolar motor of the same weight. This is due to the physical space occupied by the windings. A unipolar motor has twice the amount of wire in the same space, but only half used at any point in time, hence is 50% efficient (or approximately 70% of the torque output available). Though a bipolar stepper motor is more complicated to drive, the abundance of driver chips means this is much less difficult to achieve.</p><p>An 8-lead stepper is like a unipolar stepper, but the leads are not joined to common internally to the motor. This kind of motor can be wired in several configurations:</p><ul><li>Unipolar.</li> <li>Bipolar with series windings. This gives higher inductance but lower current per winding.</li> <li>Bipolar with parallel windings. This requires higher current but can perform better as the winding inductance is reduced.</li> <li>Bipolar with a single winding per phase. This method will run the motor on only half the available windings, which will reduce the available low speed torque but require less current</li></ul><h3>Higher-phase count</h3><p>Multi-phase stepper motors with many phases tend to have much lower levels of vibration. While they are more expensive, they do have a higher <a href="https://en.wikipedia.org/wiki/Power_density">power density</a> and with the appropriate drive electronics are often better suited to the application.</p><h2>Driver circuits</h2><p>Stepper motor performance is strongly dependent on the <a href="https://en.wikipedia.org/wiki/Driver_circuit">driver circuit</a>. <a href="https://en.wikipedia.org/wiki/Torque_curve">Torque curves</a> may be extended to greater speeds if the stator poles can be reversed more quickly, the limiting factor being a combination of the winding inductance. To overcome the inductance and switch the windings quickly, one must increase the drive voltage. This leads further to the necessity of limiting the current that these high voltages may otherwise induce.</p><p>An additional limitation, often comparable to the effects of inductance, is the back-EMF of the motor. As the motor's rotor turns, a sinusoidal voltage is generated proportional to the speed (step rate). This AC voltage is subtracted from the voltage waveform available to induce a change in the current.</p><h3>L/R driver circuits</h3><p>L/R driver circuits are also referred to as <a href="https://en.wikipedia.org/wiki/Voltage_source">constant voltage</a> drives because a constant positive or negative voltage is applied to each winding to set the step positions. However, it is winding current, not voltage that applies torque to the stepper motor shaft. The current I in each winding is related to the applied voltage V by the winding inductance L and the winding resistance R. The resistance R determines the maximum current according to <a href="https://en.wikipedia.org/wiki/Ohm&#x27;s_law">Ohm's law</a>: <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>I</mi>
+        <mo>=</mo>
+        <mrow>
+          <mfrac>
+            <mi>V</mi>
+            <mi>R</mi>
+          </mfrac>
+        </mrow>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> The inductance L determines the maximum rate of change of the current in the winding according to the formula for an <a href="https://en.wikipedia.org/wiki/Inductor">inductor</a>: <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mrow>
+          <mfrac>
+            <mrow>
+              <mi>d</mi>
+              <mi>I</mi>
+            </mrow>
+            <mrow>
+              <mi>d</mi>
+              <mi>t</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>=</mo>
+        <mrow>
+          <mfrac>
+            <mi>V</mi>
+            <mi>L</mi>
+          </mfrac>
+        </mrow>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> The resulting current for a voltage pulse is a quickly increasing current as a function of inductance. This reaches the <em>V</em>/<em>R</em> value and holds for the remainder of the pulse. Thus when controlled by a constant voltage drive, the maximum speed of a stepper motor is limited by its inductance since at some speed, the voltage U will be changing faster than the current I can keep up. In simple terms the rate of change of current is <em>L</em>/<em>R</em> (e.g. a 10 mH inductance with 2 ohms resistance will take 5 ms to reach approx 2/3 of maximum torque or around 24 ms to reach 99% of max torque). To obtain high torque at high-speeds requires a large drive voltage with a low resistance and low inductance.</p><p>With an L/R drive it is possible to control a low voltage resistive motor with a higher voltage drive simply by adding an external resistor in series with each winding. This will waste power in the resistors, and generate heat. It is therefore considered a low performing option, albeit simple and cheap.</p><p>Modern voltage-mode drivers overcome some of these limitations by approximating a sinusoidal voltage waveform to the motor phases. The amplitude of the voltage waveform is set up to increase with step rate. If properly tuned, this compensates the effects of inductance and <a href="https://en.wikipedia.org/wiki/Back_EMF">back-EMF</a>, allowing decent performance relative to current-mode drivers, but at the expense of design effort (tuning procedures) that are simpler for current-mode drivers.</p><h3>Chopper drive circuits</h3><p>Chopper drive circuits are referred to as controlled current drives because they generate a controlled current in each winding rather than applying a constant voltage. Chopper drive circuits are most often used with two-winding bipolar motors, the two windings being driven independently to provide a specific motor torque CW or CCW. On each winding, a "supply" voltage is applied to the winding as a square wave voltage; example 8 kHz. The winding inductance smooths the current which reaches a level according to the square wave <a href="https://en.wikipedia.org/wiki/Duty_cycle">duty cycle</a>. Most often bipolar supply (+ and - ) voltages are supplied to the controller relative to the winding return. So 50% duty cycle results in zero current. 0% results in full V/R current in one direction. 100% results in full current in the opposite direction. This current level is monitored by the controller by measuring the voltage across a small sense resistor in series with the winding. This requires additional electronics to sense winding currents, and control the switching, but it allows stepper motors to be driven with higher torque at higher speeds than L/R drives. It also allows the controller to output predetermined current levels rather than fixed. Integrated electronics for this purpose are widely available.</p><h2>Phase current waveforms</h2><p>A stepper motor is a polyphase <a href="https://en.wikipedia.org/wiki/Electric_motor#Three-phase_AC_synchronous_motors">AC synchronous motor</a> (see Theory below), and it is ideally driven by sinusoidal current. A full-step waveform is a gross approximation of a sinusoid, and is the reason why the motor exhibits so much vibration. Various drive techniques have been developed to better approximate a sinusoidal drive waveform: these are half stepping and microstepping.</p><h3>Wave drive (one phase on)</h3><p>In this drive method only a single phase is activated at a time. It has the same number of steps as the full-step drive, but the motor will have significantly less torque than rated. It is rarely used. The animated figure shown above is a wave drive motor. In the animation, rotor has 25 teeth and it takes 4 steps to rotate by one tooth position. So there will be 25 × 4 = 100 steps per full rotation and each step will be 360⁄100 = 3.6<a href="https://en.wikipedia.org/wiki/Degree_(angle)">°</a>.</p><h3>Full-step drive (two phases on)</h3><p>This is the usual method for full-step driving the motor. Two phases are always on so the motor will provide its maximum rated torque. As soon as one phase is turned off, another one is turned on. Wave drive and single phase full step are both one and the same, with same number of steps but difference in torque.</p><h3>Half-stepping</h3><p>When half-stepping, the drive alternates between two phases on and a single phase on. This increases the angular resolution. The motor also has less torque (approx 70%) at the full-step position (where only a single phase is on). This may be mitigated by increasing the current in the active winding to compensate. The advantage of half stepping is that the drive electronics need not change to support it. In animated figure shown above, if we change it to half-stepping, then it will take 8 steps to rotate by 1 tooth position. So there will be 25×8 = 200 steps per full rotation and each step will be 360/200 = 1.8°. Its angle per step is half of the full step.</p><h3>Microstepping</h3><p>What is commonly referred to as microstepping is often <em>sine–cosine microstepping</em> in which the winding current approximates a sinusoidal AC waveform. The common way to achieve sine-cosine current is with chopper-drive circuits. Sine–cosine microstepping is the most common form, but other waveforms can be used. Regardless of the waveform used, as the microsteps become smaller, motor operation becomes smoother, thereby greatly reducing resonance in any parts the motor may be connected to, as well as the motor itself. Resolution will be limited by the mechanical <a href="https://en.wikipedia.org/wiki/Stiction">stiction</a>, <a href="https://en.wikipedia.org/wiki/Backlash_(engineering)">backlash</a>, and other sources of error between the motor and the end device. Gear reducers may be used to increase resolution of positioning.</p><p>Step size reduction is an important step motor feature and a fundamental reason for their use in positioning.</p><p>Example: many modern hybrid step motors are rated such that the travel of every full step (example 1.8 degrees per full step or 200 full steps per revolution) will be within 3% or 5% of the travel of every other full step, as long as the motor is operated within its specified operating ranges. Several manufacturers show that their motors can easily maintain the 3% or 5% equality of step travel size as step size is reduced from full stepping down to 1/10 stepping. Then, as the microstepping divisor number grows, step size repeatability degrades. At large step size reductions it is possible to issue many microstep commands before any motion occurs at all and then the motion can be a "jump" to a new position. Some stepper controller ICs use increased current to minimise such missed steps, especially when the peak current pulses in one phase would otherwise be very brief.</p><h2>Theory</h2><p>A step motor can be viewed as a synchronous AC motor with the number of poles (on both rotor and stator) increased, taking care that they have no common denominator. Additionally, soft magnetic material with many teeth on the rotor and stator cheaply multiplies the number of poles (reluctance motor). Modern steppers are of hybrid design, having both permanent magnets and <a href="https://en.wikipedia.org/wiki/Soft_iron_core">soft iron cores</a>.</p><p>To achieve full rated torque, the coils in a stepper motor must reach their full rated <a href="https://en.wikipedia.org/wiki/Current_(electricity)">current</a> during each step. Winding inductance and <a href="https://en.wikipedia.org/wiki/Counter-electromotive_force">counter-EMF</a> generated by a moving rotor tend to resist changes in drive current, so that as the motor speeds up, less and less time is spent at full current—thus reducing motor torque. As speeds further increase, the current will not reach the rated value, and eventually the motor will cease to produce torque.</p><p>More complex drive circuits, like current-controlled chopper drives, can run off a higher supply voltage and make the effect of the counter EMF and inductance smaller. With availability of integrated circuit solutions these are becoming the most common drives (2026).</p><h3>Pull-in torque</h3><p>This is the measure of the torque produced by a stepper motor when it is operated without an acceleration ramp. At low speeds the stepper motor can synchronize itself with an applied step frequency, and this pull-in torque must overcome friction and inertia. It is important to make sure that the load on the motor is frictional rather than inertial as the friction reduces any unwanted oscillations.</p><p>The pull-in curve defines an area called the start/stop region. Into this region, the motor can be started/stopped instantaneously with a load applied and without loss of synchronism.</p><h3>Pull-out torque</h3><p>The stepper motor pull-out torque is measured by accelerating the motor to the desired speed and then increasing the torque loading until the motor stalls or misses steps. This measurement is taken across a wide range of speeds and the results are used to generate the stepper motor's dynamic performance curve. As noted below this curve is affected by drive voltage, drive current and current switching techniques. A designer may include a safety factor between the rated torque and the estimated full load torque required for the application.</p><h3>Detent torque</h3><p>Stepper motors using permanent magnets usually have an unpowered position holding torque (called <a href="https://en.wikipedia.org/wiki/Cogging_torque">detent torque or cogging</a>, and sometimes included in the specifications). It is approximately sinusoidal and has a stable position every motor step. The detent torque can be used to hold position when the power is off but is often insufficient for this purpose. Hybrid stepper motors with close to 0 detent torque are available. Variable reluctance motors do not exhibit this behavior.</p><h3>Electrical torque</h3><p>Stepper motors have torque generated by the current in the windings. In common 2-phase motors this torque is approximately sinusoidal and has a period of 4 step positions.</p><h3>Ringing and resonance</h3><p>Stepper motors have a resonant frequency determined by the total <a href="https://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a> of the rotor and load and the rotational stiffness of the energised motor. If the step frequency matches this resonance the ringing is more pronounced, steps may be missed, and stalling is more likely. </p><p>Generally the resonant frequency of a <a href="https://en.wikipedia.org/wiki/Torsion_(mechanics)">torsional</a> pendulum is described by the formula:</p><dl><dd><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>f</mi>
+          <mrow>
+            <mi>r</mi>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <mrow>
+          <mfrac>
+            <mn>1</mn>
+            <mrow>
+              <mn>2</mn>
+              <mi>π</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mrow>
+          <msqrt>
+            <mfrac>
+              <msub>
+                <mi>K</mi>
+                <mrow>
+                  <mi>t</mi>
+                </mrow>
+              </msub>
+              <mi>J</mi>
+            </mfrac>
+          </msqrt>
+        </mrow>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></dd></dl><p>where <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>K</mi>
+          <mrow>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is the torsional stiffness in N·m/radian and J is the <a href="https://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a> in kg·m².</p><p>Motor resonance frequency can be calculated from the formula:</p><dl><dd><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>f</mi>
+          <mrow>
+            <mi>r</mi>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <mrow>
+          <mfrac>
+            <mn>1</mn>
+            <mrow>
+              <mn>2</mn>
+              <mi>π</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mrow>
+          <msqrt>
+            <mfrac>
+              <mrow>
+                <mi>p</mi>
+                <msub>
+                  <mi>M</mi>
+                  <mrow>
+                    <mi>h</mi>
+                  </mrow>
+                </msub>
+              </mrow>
+              <mi>J</mi>
+            </mfrac>
+          </msqrt>
+        </mrow>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></dd></dl><p>where <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>M</mi>
+          <mrow>
+            <mi>h</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is the holding torque in N·m, <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>p</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is the number of pole pairs( which is equal to the number of steps divided by 4), and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>J</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is the total rotor and load moment of inertia in kg·m². The torsional stiffness is the slope of the torque sinusoidal torque characteristic. The resonance can be described in terms of <a href="https://en.wikipedia.org/wiki/Damping_factor">damping factor</a> which depends on the ratio of moment of inertia to friction in the motor/load system.</p><p>When a motor moves a full step it overshoots the new step position and oscillates around this point until it comes to rest. This undesirable ringing is experienced as motor rotor vibration and is more pronounced in motors with little damping in the load. If the resonance is allowed to build up, as is the case when full-stepping near the resonant frequency, the motor can jump 4 step positions to the next stable position and end up in the wrong position. This is one of the advantages of microstepping - it does not excite the resonance nearly as much.</p><h2>Ratings and specifications</h2><p>Stepper motors' nameplates typically give only the winding current and occasionally the voltage and winding resistance. The rated <a href="https://en.wikipedia.org/wiki/Voltage">voltage</a> will produce the rated winding current at DC: but this is mostly a meaningless rating, as all modern drivers are current limiting and the drive voltages greatly exceed the motor rated voltage.</p><p>Datasheets from the manufacturer often indicate Inductance. Back-EMF is equally relevant, but seldom listed (it is straightforward to measure with an oscilloscope). These figures can be helpful for more in-depth electronics design, when deviating from standard supply voltages, adapting third party driver electronics, or gaining insight when choosing between motor models with otherwise similar size, voltage, and torque specifications.</p><p>A stepper's low-speed torque will vary directly with current. How quickly the torque falls off at faster speeds depends on the winding inductance and the drive circuitry it is attached to, especially the driving voltage.</p><p>Steppers should be sized according to published <a href="https://en.wikipedia.org/wiki/Torque_curve">torque curve</a>, which is specified by the manufacturer at particular drive voltages or using their own drive circuitry. Dips in the torque curve suggest possible resonances, whose impact on the application should be understood by designers.</p><p>Step motors adapted to harsh environments are often referred to as <a href="https://en.wikipedia.org/wiki/IP65">IP65</a> rated.</p><h3>NEMA stepper motors</h3><p>The US <a href="https://en.wikipedia.org/wiki/National_Electrical_Manufacturers_Association">National Electrical Manufacturers Association</a> (NEMA) standardises various dimensions, marking and other aspects of stepper motors, in NEMA standard <a href="https://en.wikipedia.org/wiki/NEMA_ICS_16">ICS 16</a> . NEMA stepper motors are labeled by faceplate size, NEMA 17 being a stepper motor with a 1.7 by 1.7 inches (43 mm × 43 mm) faceplate and dimensions given in inches. The standard also lists motors with faceplate dimensions given in metric units. These motors are typically referred with NEMA DD, where DD is the diameter of the faceplate in inches multiplied by 10 (e.g., NEMA 17 has a diameter of 1.7 inches). There are further specifiers to describe stepper motors, and such details may be found in the ICS 16-2001 standard.</p><h2>Applications</h2><p>Computer controlled stepper motors are a type of <a href="https://en.wikipedia.org/wiki/Motion-control">motion-control</a> <a href="https://en.wikipedia.org/wiki/Positioning_system">positioning system</a>. They are typically digitally controlled as part of an <a href="https://en.wikipedia.org/wiki/Open-loop_controller">open loop</a> system for use in holding or positioning applications.</p><p>In the field of <a href="https://en.wikipedia.org/wiki/Laser">lasers</a> and <a href="https://en.wikipedia.org/wiki/Optics">optics</a> they are frequently used in precision positioning equipment such as <a href="https://en.wikipedia.org/wiki/Linear_actuator">linear actuators</a>, <a href="https://en.wikipedia.org/wiki/Linear_stage">linear stages</a>, <a href="https://en.wikipedia.org/wiki/Rotation_stage">rotation stages</a>, <a href="https://en.wikipedia.org/wiki/Goniometer_(positioning)">goniometers</a>, and <a href="https://en.wikipedia.org/wiki/Mirror_mount">mirror mounts</a>. Other uses are in packaging machinery, and positioning of <a href="https://en.wikipedia.org/wiki/Valve_pilot?action=edit&amp;redlink=1">valve pilot</a> stages for <a href="https://en.wikipedia.org/wiki/Fluid_control_system?action=edit&amp;redlink=1">fluid control systems</a>.</p><p>Commercially, stepper motors are used in <a href="https://en.wikipedia.org/wiki/Floppy_disk">floppy disk drives</a>, <a href="https://en.wikipedia.org/wiki/Image_scanner">flatbed scanners</a>, <a href="https://en.wikipedia.org/wiki/Computer_printer">computer printers</a>, <a href="https://en.wikipedia.org/wiki/Plotter">plotters</a>, <a href="https://en.wikipedia.org/wiki/Slot_machine">slot machines</a>, <a href="https://en.wikipedia.org/wiki/Image_scanner">image scanners</a>, <a href="https://en.wikipedia.org/wiki/Compact_disc">compact disc</a> drives, <a href="https://en.wikipedia.org/wiki/Intelligent_lighting">intelligent lighting</a>, <a href="https://en.wikipedia.org/wiki/Camera_lens">camera lenses</a>, <a href="https://en.wikipedia.org/wiki/Numerical_control">CNC machines</a>, and <a href="https://en.wikipedia.org/wiki/3D_printer">3D printers</a>. Some programming hobbyists have used arrays of stepper motors as <a href="https://en.wikipedia.org/wiki/Electronic_musical_instrument">electronic musical instruments</a> by programming the motors to rotate at the frequencies of different musical tones, in a sequence that imitates that found in a <a href="https://en.wikipedia.org/wiki/MIDI">MIDI</a> file.</p><h2>Stepper motor system</h2><p>A stepper motor system consists of three basic elements, often combined with some type of user interface (host computer, PLC or dumb terminal):</p><dl><dt>Indexers</dt><dd>The indexer (or controller) is a <a href="https://en.wikipedia.org/wiki/Microprocessor">microprocessor</a> capable of generating step pulses and direction signals for the driver. In addition, the indexer is typically required to perform many other sophisticated command functions.</dd> <dt>Drivers</dt><dd>The driver (or amplifier) converts the indexer command signals into the power necessary to energize the motor windings. There are numerous types of drivers, with different voltage and current ratings and construction technology. Not all drivers are suitable to run all motors, so when designing a motion control system, the driver selection process is critical.</dd> <dt>Stepper motors</dt><dd>The stepper motor is an electromagnetic device that converts digital pulses into mechanical shaft rotation.</dd></dl><h3>Advantages</h3><ul><li>Low cost for control achieved</li> <li>High torque at startup and low speeds</li> <li>Ruggedness</li> <li>Simplicity of construction</li> <li>Can operate in an open loop control system</li> <li>Low maintenance (high reliability)</li> <li>Less likely to stall or slip</li> <li>Will work in any environment</li> <li>Can be used in robotics in a wide scale.</li> <li>High reliability</li> <li>The rotation angle of the motor is proportional to the input pulse.</li> <li>The motor has full torque at standstill (if the windings are energized)</li> <li>Precise positioning and repeatability of movement, since good stepper motors have an accuracy of 3–5% of a step and this error is non-cumulative from one step to the next.</li> <li>Excellent response to starting/stopping/reversing.</li> <li>Very reliable since there are no contact brushes in the motor. Therefore, the life of the motor is simply dependent on the life of the bearing.</li> <li>The motor's response to digital input pulses provides open-loop control, making the motor simpler and less costly to control.</li> <li>It is possible to achieve very low-speed synchronous rotation with a load that is directly coupled to the shaft.</li> <li>A wide range of rotational speeds can be realized, as the speed is proportional to the frequency of the input pulses.</li></ul><h3>Disadvantages</h3><ul><li>Resonance effect often exhibited at low speeds and decreasing torque with increasing speed.</li></ul>
+</body></html>

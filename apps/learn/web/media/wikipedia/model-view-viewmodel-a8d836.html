@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model–view–viewmodel</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Model–view–viewmodel. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. As published, from https://en.wikipedia.org/wiki/Model–view–viewmodel <a href="https://en.wikipedia.org/wiki/Model–view–viewmodel">https://en.wikipedia.org/wiki/Model–view–viewmodel</a></p>
+<h1>Model–view–viewmodel</h1>
+<p><strong>Model–view–viewmodel</strong> (<strong>MVVM</strong>) is a <a href="https://en.wikipedia.org/wiki/Architectural_pattern">layer architecture design</a> in computer software that facilitates the <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separation</a> of the development of a <a href="https://en.wikipedia.org/wiki/Graphical_user_interface">graphical user interface</a> (GUI; the <em>view</em>)—be it via a <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> or GUI code—from the development of the <a href="https://en.wikipedia.org/wiki/Business_logic">business logic</a> or <a href="https://en.wikipedia.org/wiki/Front_and_back_ends">back-end</a> logic (the <em>model</em>) such that the view is not dependent upon any specific model platform.</p><p>The <em>viewmodel</em> of MVVM is a value converter, meaning it is responsible for exposing (converting) the <a href="https://en.wikipedia.org/wiki/Data_object">data objects</a> from the model in such a way they can be easily managed and presented. In this respect, the viewmodel is more <em>model</em> than <em>view</em>, and handles most (if not all) of the view's display logic. The viewmodel may implement a <a href="https://en.wikipedia.org/wiki/Mediator_pattern">mediator pattern</a>, organizing access to the back-end logic around the set of <a href="https://en.wikipedia.org/wiki/Use_case">use cases</a> supported by the view.</p><p>MVVM is a variation of <a href="https://en.wikipedia.org/wiki/Martin_Fowler_(software_engineer)">Martin Fowler</a>'s Presentation Model design pattern. MVVM is very similar to the <a href="https://en.wikipedia.org/wiki/Model-view-presenter">Model-view-presenter</a> pattern. It was invented by <a href="https://en.wikipedia.org/wiki/Microsoft">Microsoft</a> architects Ken Cooper and Ted Peters specifically to simplify <a href="https://en.wikipedia.org/wiki/Event-driven_programming">event-driven programming</a> of user interfaces. The pattern was incorporated into the <a href="https://en.wikipedia.org/wiki/Windows_Presentation_Foundation">Windows Presentation Foundation (WPF)</a> (Microsoft's <a href="https://en.wikipedia.org/wiki/.NET_Framework">.NET</a> graphics system) and <a href="https://en.wikipedia.org/wiki/Silverlight">Silverlight</a>, WPF's Internet application derivative. John Gossman, a Microsoft WPF and Silverlight architect, announced MVVM on his blog in 2005.</p><p>Model–view–viewmodel is also referred to as <strong>model–view–binder</strong>, especially in implementations not involving the <a href="https://en.wikipedia.org/wiki/.NET">.NET</a> platform. <a href="https://en.wikipedia.org/wiki/ZK_(framework)">ZK</a>, a <a href="https://en.wikipedia.org/wiki/Web_application_framework">web application framework</a> written in <a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, and the <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a> <a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a> <a href="https://en.wikipedia.org/wiki/KnockoutJS">KnockoutJS</a> use model–view–binder.</p><h2>Components of MVVM pattern</h2><dl><dt>Model</dt> <dd><em>Model</em> refers either to a <a href="https://en.wikipedia.org/wiki/Domain_model">domain model</a>, which represents real state content (an object-oriented approach), or to the <a href="https://en.wikipedia.org/wiki/Data_access_layer">data access layer</a>, which represents content (a data-centric approach).</dd> <dt>View</dt> <dd>As in the <a href="https://en.wikipedia.org/wiki/Model–view–controller">model–view–controller</a> (MVC) and <a href="https://en.wikipedia.org/wiki/Model–view–presenter">model–view–presenter</a> (MVP) patterns, the <em>view</em> is the structure, layout, and appearance of what a user sees on the screen. It displays a representation of the model and receives the user's interaction with the view (mouse clicks, keyboard input, screen tap gestures, etc.), and it forwards the handling of these to the view model via the <a href="https://en.wikipedia.org/wiki/Data_binding">data binding</a> (properties, event callbacks, etc.) that is defined to link the view and view model.</dd> <dt>View model</dt> <dd>The <em>view model</em> is an abstraction of the view exposing public properties and commands. Instead of the controller of the MVC pattern, or the presenter of the MVP pattern, MVVM has a <em>binder</em>, which automates communication between the view and its bound properties in the view model. The view model has been described as a state of the data in the model.</dd> <dd>The main difference between the view model and the Presenter in the MVP pattern is that the presenter has a reference to a view, whereas the view model does not. Instead, a view directly binds to properties on the view model to send and receive updates. To function efficiently, this requires a binding technology or generating <a href="https://en.wikipedia.org/wiki/Boilerplate_code">boilerplate code</a> to do the binding.</dd></dl><dl><dt>Binder</dt> <dd>Declarative data and command-binding are implicit in the MVVM pattern. In the Microsoft <a href="https://en.wikipedia.org/wiki/Solution_stack">solution stack</a>, the binder is a <a href="https://en.wikipedia.org/wiki/Markup_language">markup language</a> called <a href="https://en.wikipedia.org/wiki/XAML">XAML</a>. The binder frees the developer from being obliged to write boiler-plate logic to synchronize the view model and view. When implemented outside of the Microsoft stack, the presence of a declarative data binding technology is what makes this pattern possible, and without a binder, one would typically use MVP or MVC instead and have to write more boilerplate (or generate it with some other tool).</dd></dl><h2>Rationale</h2><p>MVVM was designed to remove virtually all <a href="https://en.wikipedia.org/wiki/Graphical_user_interface">GUI</a> code ("<a href="https://en.wikipedia.org/wiki/Code-behind">code-behind</a>") from the view layer, by using <a href="https://en.wikipedia.org/wiki/Data_binding">data binding</a> functions in WPF (Windows Presentation Foundation) to better facilitate the separation of view layer development from the rest of the pattern. Instead of requiring <a href="https://en.wikipedia.org/wiki/User_experience_design">user experience</a> (UX) developers to write GUI code, they can use the framework markup language (e.g. <a href="https://en.wikipedia.org/wiki/Extensible_Application_Markup_Language">XAML</a>) and create data bindings to the view model, which is written and maintained by application developers. The separation of roles allows interactive designers to focus on UX needs rather than programming of business logic. The layers of an application can thus be developed in multiple work streams for higher productivity. Even when a single developer works on the entire codebase, a proper separation of the view from the model is more productive, as the user interface typically changes frequently and late in the development cycle based on end-user feedback.</p><p>The MVVM pattern attempts to gain both advantages of separation of functional development provided by MVC, while leveraging the advantages of <a href="https://en.wikipedia.org/wiki/Data_binding">data bindings</a> and the framework by binding data as close to the pure application model as possible. It uses the binder, view model, and any business layers' data-checking features to validate incoming data. The result is that the model and framework drive as much of the operations as possible, eliminating or minimizing application logic which directly manipulates the view (e.g., code-behind).</p><h2>Criticism</h2><p>John Gossman has criticized the MVVM pattern and its application in specific uses, stating that MVVM can be "overkill" when creating simple user interfaces. For larger applications, he believes that generalizing the viewmodel upfront can be difficult, and that large-scale data binding can lead to lower performance.</p><h2>Implementations</h2><h3>.NET frameworks</h3><ul><li>.NET Community Toolkit</li> <li><a href="https://en.wikipedia.org/wiki/Avalonia_(software_framework)">Avalonia</a></li> <li>Caliburn, Caliburn.Micro</li> <li>Chinook.DynamicMvvm Open source</li> <li>DevExpress MVVM</li> <li>DotVVM open source project</li> <li>FreshMvvm</li> <li>Jellyfish</li> <li>Mugen MVVM Toolkit</li> <li>MVVMLight Toolkit</li> <li>MvvmCross</li> <li>MvvmZero</li> <li>Prism Library</li> <li>Rascl</li> <li>ReactiveUI</li> <li><a href="https://en.wikipedia.org/wiki/Uno_Platform">Uno Platform</a> - Open source</li></ul><h4>Web Component libraries</h4><ul><li>Microsoft FAST</li> <li>Omi.js</li></ul><h3>Java frameworks</h3><ul><li><a href="https://en.wikipedia.org/wiki/ZK_(framework)">ZK Studio</a></li></ul><h3>JavaScript frameworks</h3><ul><li><a href="https://en.wikipedia.org/wiki/Angular_(application_platform)">Angular</a></li> <li>Aurelia</li> <li>Durandal</li> <li><a href="https://en.wikipedia.org/wiki/Ember.js">Ember.js</a></li> <li><a href="https://en.wikipedia.org/wiki/Ext_JS">Ext JS</a></li> <li><a href="https://en.wikipedia.org/wiki/Knockout_(web_framework)">Knockout.js</a></li> <li>Oracle JET</li> <li><a href="https://en.wikipedia.org/wiki/React_(software)">React</a></li> <li><a href="https://en.wikipedia.org/wiki/Svelte">Svelte</a></li> <li><a href="https://en.wikipedia.org/wiki/Vue.js">Vue.js</a></li></ul><h3>Frameworks for C++ and XAML (Windows)</h3><ul><li><a href="https://en.wikipedia.org/wiki/C++/WinRT">C++/WinRT</a></li> <li>Xamlcc</li></ul><h2>Examples</h2><p>The following are simple examples of an implementation of the MVVM pattern.</p><h3>C++</h3><p>This is an example using <a href="https://en.wikipedia.org/wiki/C++">C++</a>.</p><pre>export module wikipedia.examples.mvvm;
+
+import std;
+
+using std::string;
+
+export namespace wikipedia::examples::mvvm {
+
+class Model {
+private:
+    int counter = 0;
+public:
+    [[nodiscard]]
+    int getCounter() const noexcept {
+        return counter;
+    }
+
+    void increment() noexcept {
+        counter++;
+    }
+
+    void decrement() noexcept {
+        counter--;
+    }
+};
+
+class ViewModel {
+private:
+    Model&amp; model;
+public:
+    explicit ViewModel(Model&amp; m): 
+        model{m} {}
+
+    void incrementCounter() noexcept {
+        model.increment();
+    }
+
+    void decrementCounter() noexcept {
+        model.decrement();
+    }
+
+    [[nodiscard]]
+    int getCounterValue() const noexcept {
+        return model.getCounter();
+    }
+};
+
+class View {
+private:
+    ViewModel&amp; viewModel;
+public:
+    explicit View(ViewModel&amp; vm): 
+        viewModel{vm} {}
+
+    void run() {
+        string input;
+        while (true) {
+            std::println("Counter: {}", viewModel.getCounterValue());
+            std::print("Enter command (i=increment, d=decrement, q=quit): ");
+            std::getline(std::cin, input);
+
+            if (input == "i") {
+                viewModel.incrementCounter();
+            } else if (input == "d") {
+                viewModel.decrementCounter();
+            } else if (input == "q") {
+                break;
+            } else {
+                std::println("Unknown command.");
+            }
+        }
+    }
+};
+
+}
+</pre><p>Then, the application could be run like so:</p><pre>import wikipedia.examples.mvvm;
+
+using namespace wikipedia::examples::mvvm;
+
+int main(int argc, char* argv[]) {
+    Model m;
+    ViewModel vm(m);
+    View v(vm);
+    v.run();
+    return 0;
+}
+</pre><h3>C#</h3><p>This is an example using <a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#</a>.</p><p>Model.cs:</p><pre>namespace Wikipedia.Examples.Mvvm;
+
+public class Model
+{
+    public int Counter { get; private set; } = 0;
+
+    public void Increment() =&gt; Counter++;
+    public void Decrement() =&gt; Counter--;
+}
+</pre><p>ViewModel.cs:</p><pre>namespace Wikipedia.Examples.Mvvm;
+
+public class ViewModel
+{
+    private readonly Model _model;
+
+    public ViewModel(Model model)
+    {
+        _model = model;
+    }
+
+    public void IncrementCounter() =&gt; _model.Increment();
+    public void DecrementCounter() =&gt; _model.Decrement();
+    public int CounterValue =&gt; _model.Counter;
+}
+</pre><p>View.cs:</p><pre>namespace Wikipedia.Examples.Mvvm;
+
+using System;
+
+public class View
+{
+    private readonly ViewModel _viewModel;
+
+    public View(ViewModel viewModel)
+    {
+        _viewModel = viewModel;
+    }
+
+    public void Run()
+    {
+        string input = String.Empty;
+        while (true)
+        {
+            Console.WriteLine($"Counter: {_viewModel.CounterValue}");
+            Console.Write("Enter command (i=increment, d=decrement, q=quit): ");
+            input = Console.ReadLine();
+            switch (input)
+            {
+                case "i":
+                    _viewModel.IncrementCounter();
+                    break;
+                case "d":
+                    _viewModel.DecrementCounter();
+                    break;
+                case "q":
+                    return;
+                default:
+                    Console.WriteLine("Unknown command.");
+                    break;
+            }
+        }
+    }
+}
+</pre><p>Then, the application Main.cs could be run like so:</p><pre>namespace Wikipedia.Examples;
+
+using Wikipedia.Examples.Mvvm;
+
+public class Main
+{
+    public static void Main()
+    {
+        Model model = new();
+        ViewModel viewModel = new(model);
+        View view = new(viewModel);
+        view.Run();
+    }
+}
+</pre><h3>Java</h3><p>This is an example using <a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>.</p><p>Model.java:</p><pre>package org.wikipedia.examples.mvvm;
+
+public class Model {
+    private int counter = 0;
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void increment() {
+        counter++;
+    }
+
+    public void decrement() {
+        counter--;
+    }
+}
+</pre><p>ViewModel.java:</p><pre>package org.wikipedia.examples.mvvm;
+
+public class ViewModel {
+    private final Model model;
+
+    public ViewModel(Model model) {
+        this.model = model;
+    }
+
+    public void incrementCounter() {
+        model.increment();
+    }
+
+    public void decrementCounter() {
+        model.decrement();
+    }
+
+    public int getCounterValue() {
+        return model.getCounter();
+    }
+}
+</pre><p>View.java:</p><pre>package org.wikipedia.examples.mvvm;
+
+import java.util.Scanner;
+
+public class View {
+    private final ViewModel viewModel;
+
+    public View(ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    public void run() {
+        Scanner stdin = new Scanner(System.in);
+        String input;
+        while (true) {
+            System.out.printf("Counter: %d%n", viewModel.getCounterValue());
+            System.out.print("Enter command (i=increment, d=decrement, q=quit): ");
+            input = stdin.nextLine();
+            switch (input) {
+                case "i":
+                    viewModel.incrementCounter();
+                    break;
+                case "d":
+                    viewModel.decrementCounter();
+                    break;
+                case "q":
+                    return;
+                default:
+                    System.out.println("Unknown command.");
+            }
+        }
+    }
+}
+</pre><p>Then, the application Main.java could be run like so:</p><pre>package org.wikipedia.examples;
+
+import org.wikipedia.examples.mvvm.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Model m = new Model();
+        ViewModel vm = new ViewModel(m);
+        View v = new View(vm);
+        v.run();
+    }
+}
+</pre><h3>Rust</h3><p>This is an example using <a href="https://en.wikipedia.org/wiki/Rust_(programming_language)">Rust</a>.</p><pre>use std::io;
+
+pub struct Model {
+    counter: i32,
+}
+
+impl Model {
+    pub fn new() -&gt; Self {
+        Model { counter: 0 }
+    }
+
+    pub fn get_counter(&amp;self) -&gt; i32 {
+        self.counter
+    }
+
+    pub fn increment(&amp;mut self) {
+        self.counter += 1;
+    }
+
+    pub fn decrement(&amp;mut self) {
+        self.counter -= 1;
+    }
+}
+
+pub struct ViewModel&lt;'a&gt; {
+    model: &amp;'a mut Model,
+}
+
+impl&lt;'a&gt; ViewModel&lt;'a&gt; {
+    pub fn new(model: &amp;'a mut Model) -&gt; Self {
+        Self { model }
+    }
+
+    pub fn increment_counter(&amp;mut self) {
+        self.model.increment();
+    }
+
+    pub fn decrement_counter(&amp;mut self) {
+        self.model.decrement();
+    }
+
+    pub fn get_counter_value(&amp;self) -&gt; i32 {
+        self.model.get_counter()
+    }
+}
+
+pub struct View&lt;'a&gt; {
+    view_model: &amp;'a mut ViewModel&lt;'a&gt;,
+}
+
+impl&lt;'a&gt; View&lt;'a&gt; {
+    pub fn new(view_model: &amp;'a mut ViewModel&lt;'a&gt;) -&gt; Self {
+        Self { view_model }
+    }
+
+    pub fn run(&amp;mut self) {
+        loop {
+            println!("Counter: {}", self.view_model.get_counter_value());
+
+            print!("Enter command (i=increment, d=decrement, q=quit): ");
+            io::stdout().flush().unwrap();
+
+            let mut input: String = String::new();
+            io::stdin().read_line(&amp;mut input).unwrap();
+            let input: String = input.trim();
+
+            match input {
+                "i" =&gt; self.view_model.increment_counter(),
+                "d" =&gt; self.view_model.decrement_counter(),
+                "q" =&gt; break,
+                _ =&gt; println!("Unknown command."),
+            }
+        }
+    }
+}
+</pre><p>Then, the application main.rs could be run like so:</p><pre>mod mvvm;
+
+use mvvm::{Model, View, ViewModel};
+
+fn main() {
+    let mut m: Model = Model::new();
+    let mut vm: ViewModel = ViewModel::new(&amp;mut m);
+    let mut v: View = View::new(&amp;mut vm);
+    v.run();
+}
+</pre>
+</body></html>

@@ -1,0 +1,159 @@
+{
+ "id": "instrumentation.theory.bode",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikibooks: Bode plots"
+  ]
+ },
+ "minutes": 12,
+ "sources": [
+  "Wikibooks contributors, Control Systems, Bode plots. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikibooks.org/wiki/Control_Systems/Bode_Plots"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Bode plots",
+   "url": "media/wikibooks/bode-plots-a1216d.html",
+   "by": "Wikibooks contributors, Control Systems, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bode Plots",
+   "html": "<p>A Bode Plot is a useful tool that shows the gain and phase response of a given LTI system for different frequencies. Bode Plots are generally used with the Fourier Transform of a given system. </p><p>The frequency of the bode plots are plotted against a logarithmic frequency axis. Every tickmark on the frequency axis represents a power of 10 times the previous value. For instance, on a standard Bode plot, the values of the markers go from (0.1, 1, 10, 100, 1000, ...) Because each tickmark is a power of 10, they are referred to as a <strong>decade</strong>. Notice that the \"length\" of a decade decreases as you move to the right on the graph. (note that this description doesn't match the chart above... there are 10 tickmarks per decade, not one, but since it is a log chart they are not evenly spaced). </p><p>The bode Magnitude plot measures the system Input/Output ratio in special units called <strong>decibels</strong>. The Bode phase plot measures the phase shift in degrees (typically, but radians are also used). </p>",
+   "body": "A Bode Plot is a useful tool that shows the gain and phase response of a given LTI system for different frequencies. Bode Plots are generally used with the Fourier Transform of a given system. The frequency of the bode plots are plotted against a logarithmic frequency axis. Every tickmark on the frequency axis represents a power of 10 times the previous value. For instance, on a standard Bode plot, the values of the markers go from (0.1, 1, 10, 100, 1000, ...) Because each tickmark is a power of 10, they are referred to as a decade . Notice that the \"length\" of a decade decreases as you move to the right on the graph. (note that this description doesn't match the chart above... there are 10 tickmarks per decade, not one, but since it is a log chart they are not evenly spaced). The bode Magnitude plot measures the system Input/Output ratio in special units called decibels . The Bode phase plot measures the phase shift in degrees (typically, but radians are also used).",
+   "id": "wikibooks1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Decibels",
+   "html": "<p>A <strong>Decibel</strong> is a ratio between two numbers on a logarithmic scale. To express a ratio between two numbers (A and B) as a decibel we apply the following formula for numbers that represent amplitudes (numbers that represent a power measurement use a factor of 10 rather than 20): </p><dl><dd><math><mrow><mstyle><mi>d</mi><mi>B</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mi>A</mi></mrow><mrow><mi>B</mi></mrow></mfrac><mo>)</mo></mrow></mstyle></mrow></math></dd></dl><p>Where dB is the decibel result. </p><p>Or, if we just want to take the decibels of a single number C, we could just as easily write: </p><dl><dd><math><mrow><mstyle><mi>d</mi><mi>B</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mi>C</mi><mo>)</mo></mstyle></mrow></math></dd></dl>",
+   "body": "A Decibel is a ratio between two numbers on a logarithmic scale. To express a ratio between two numbers (A and B) as a decibel we apply the following formula for numbers that represent amplitudes (numbers that represent a power measurement use a factor of 10 rather than 20): d B = 20 log ⁡ ( A B ) Where dB is the decibel result. Or, if we just want to take the decibels of a single number C, we could just as easily write: d B = 20 log ⁡ ( C )",
+   "id": "wikibooks1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Frequency Response Notations",
+   "html": "<p>If we have a system transfer function T(s), we can separate it into a numerator polynomial N(s) and a denominator polynomial D(s). We can write this as follows: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><mi>N</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow><mrow><mrow><mi>D</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>To get the magnitude gain plot, we must first transit the transfer function into the frequency response by using the change of variables: </p><dl><dd><math><mrow><mstyle><mi>s</mi><mo>=</mo><mi>j</mi><mi>ω</mi></mstyle></mrow></math></dd></dl><p>From here, we can say that our frequency response is a composite of two parts, a real part R and an imaginary part X: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mi>R</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>+</mo><mi>j</mi><mi>X</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mstyle></mrow></math></dd></dl><p>We will use these forms below. </p>",
+   "body": "If we have a system transfer function T(s), we can separate it into a numerator polynomial N(s) and a denominator polynomial D(s). We can write this as follows: T ( s ) = N ( s ) D ( s ) To get the magnitude gain plot, we must first transit the transfer function into the frequency response by using the change of variables: s = j ω From here, we can say that our frequency response is a composite of two parts, a real part R and an imaginary part X: T ( j ω ) = R ( ω ) + j X ( ω ) We will use these forms below.",
+   "id": "wikibooks1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Straight-Line Approximations",
+   "html": "<p>The Bode magnitude and phase plots can be quickly and easily approximated by using a series of straight lines. These approximate graphs can be generated by following a few short, simple rules (listed below). Once the straight-line graph is determined, the actual Bode plot is a smooth curve that follows the straight lines, and travels through the <strong>breakpoints</strong>. </p><h4>Break Points</h4><p>If the frequency response is in pole-zero form: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><munder><mo>∏</mo><mrow><mi>n</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>z</mi><mrow><mi>n</mi></mrow></msub><mo>|</mo></mrow></mrow><mrow><mrow><munder><mo>∏</mo><mrow><mi>m</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>m</mi></mrow></msub><mo>|</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>We say that the values for all z<sub>n</sub> and p<sub>m</sub> are called <strong>break points</strong> of the Bode plot. These are the values where the Bode plots experience the largest change in direction. </p><p>Break points are sometimes also called \"break frequencies\", \"cutoff points\", or \"corner points\". </p>",
+   "body": "The Bode magnitude and phase plots can be quickly and easily approximated by using a series of straight lines. These approximate graphs can be generated by following a few short, simple rules (listed below). Once the straight-line graph is determined, the actual Bode plot is a smooth curve that follows the straight lines, and travels through the breakpoints . Break Points If the frequency response is in pole-zero form: T ( j ω ) = ∏ n | j ω + z n | ∏ m | j ω + p m | We say that the values for all z n and p m are called break points of the Bode plot. These are the values where the Bode plots experience the largest change in direction. Break points are sometimes also called \"break frequencies\", \"cutoff points\", or \"corner points\".",
+   "id": "wikibooks1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bode Gain Plots",
+   "html": "<p><strong>Bode Gain Plots</strong>, or <strong>Bode Magnitude Plots</strong> display the ratio of the system gain at each input frequency. </p><h4>Bode Gain Calculations</h4><p>The magnitude of the transfer function T is defined as: </p><dl><dd><math><mrow><mstyle><mo>|</mo><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>|</mo><mo>=</mo><mrow><msqrt><mrow><msup><mi>R</mi><mrow><mn>2</mn></mrow></msup><mo>+</mo><msup><mi>X</mi><mrow><mn>2</mn></mrow></msup></mrow></msqrt></mrow></mstyle></mrow></math></dd></dl><p>However, it is frequently difficult to transition a function that is in \"numerator/denominator\" form to \"real+imaginary\" form. Luckily, our decibel calculation comes in handy. Let's say we have a frequency response defined as a fraction with numerator and denominator polynomials defined as: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><munder><mo>∏</mo><mrow><mi>n</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>z</mi><mrow><mi>n</mi></mrow></msub><mo>|</mo></mrow></mrow><mrow><mrow><munder><mo>∏</mo><mrow><mi>m</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>m</mi></mrow></msub><mo>|</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>If we convert both sides to decibels, the logarithms from the decibel calculations convert multiplication of the arguments into additions, and the divisions into subtractions: </p><dl><dd><math><mrow><mstyle><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo>=</mo><munder><mo>∑</mo><mrow><mi>n</mi></mrow></munder><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>z</mi><mrow><mi>n</mi></mrow></msub><mo>|</mo><mo>)</mo><mo>−</mo><munder><mo>∑</mo><mrow><mi>m</mi></mrow></munder><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>m</mi></mrow></msub><mo>|</mo><mo>)</mo></mstyle></mrow></math></dd></dl><p>And calculating out the gain of each term and adding them together will give the gain of the system at that frequency. </p>",
+   "body": "Bode Gain Plots , or Bode Magnitude Plots display the ratio of the system gain at each input frequency. Bode Gain Calculations The magnitude of the transfer function T is defined as: | T ( j ω ) | = R 2 + X 2 However, it is frequently difficult to transition a function that is in \"numerator/denominator\" form to \"real+imaginary\" form. Luckily, our decibel calculation comes in handy. Let's say we have a frequency response defined as a fraction with numerator and denominator polynomials defined as: T ( j ω ) = ∏ n | j ω + z n | ∏ m | j ω + p m | If we convert both sides to decibels, the logarithms from the decibel calculations convert multiplication of the arguments into additions, and the divisions into subtractions: G a i n = ∑ n 20 log ⁡ ( | j ω + z n | ) − ∑ m 20 log ⁡ ( | j ω + p m | ) And calculating out the gain of each term and adding them together will give the gain of the system at that frequency.",
+   "id": "wikibooks1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bode Gain Approximations",
+   "html": "<p>The slope of a straight line on a Bode magnitude plot is measured in units of <strong>dB/Decade</strong>, because the units on the vertical axis are dB, and the units on the horizontal axis are decades. </p><p>The value ω = 0 is infinitely far to the left of the bode plot (because a logarithmic scale never reaches zero), so finding the value of the gain at ω = 0 essentially sets that value to be the gain for the Bode plot from all the way on the left of the graph up till the first break point. The value of the slope of the line at ω = 0 is 0 dB/Decade. </p><p>From each pole break point, the slope of the line decreases by 20 dB/Decade. The line is straight until it reaches the next break point. From each zero break point the slope of the line increases by 20 dB/Decade. Double, triple, or higher amounts of repeat poles and zeros affect the gain by multiplicative amounts. Here are some examples: </p><ul><li>2 poles: -40 dB/Decade</li> <li>10 poles: -200 dB/Decade</li> <li>5 zeros: +100 dB/Decade</li></ul>",
+   "body": "The slope of a straight line on a Bode magnitude plot is measured in units of dB/Decade , because the units on the vertical axis are dB, and the units on the horizontal axis are decades. The value ω = 0 is infinitely far to the left of the bode plot (because a logarithmic scale never reaches zero), so finding the value of the gain at ω = 0 essentially sets that value to be the gain for the Bode plot from all the way on the left of the graph up till the first break point. The value of the slope of the line at ω = 0 is 0 dB/Decade. From each pole break point, the slope of the line decreases by 20 dB/Decade. The line is straight until it reaches the next break point. From each zero break point the slope of the line increases by 20 dB/Decade. Double, triple, or higher amounts of repeat poles and zeros affect the gain by multiplicative amounts. Here are some examples: 2 poles: -40 dB/Decade 10 poles: -200 dB/Decade 5 zeros: +100 dB/Decade",
+   "id": "wikibooks1-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bode Phase Plots",
+   "html": "<p><strong>Bode phase plots</strong> are plots of the phase shift to an input waveform dependent on the frequency characteristics of the system input. Again, the Laplace transform does not account for the phase shift characteristics of the system, but the Fourier Transform can. The phase of a complex function, in \"real+imaginary\" form is given as: </p><dl><dd><math><mrow><mstyle><mi>∠</mi><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><msup><mi>tan</mi><mrow><mrow><mo>−</mo><mn>1</mn></mrow></mrow></msup><mrow><mo>(</mo><mrow><mfrac><mrow><mi>X</mi></mrow><mrow><mi>R</mi></mrow></mfrac></mrow><mo>)</mo></mrow></mstyle></mrow></math></dd></dl><h4>Bode Procedure</h4><p>Given a frequency response in pole-zero form: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mi>A</mi><mrow><mfrac><mrow><mrow><munder><mo>∏</mo><mrow><mi>n</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>z</mi><mrow><mi>n</mi></mrow></msub><mo>|</mo></mrow></mrow><mrow><mrow><munder><mo>∏</mo><mrow><mi>m</mi></mrow></munder><mo>|</mo><mi>j</mi><mi>ω</mi><mo>+</mo><msub><mi>p</mi><mrow><mi>m</mi></mrow></msub><mo>|</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Where A is a non-zero constant (can be negative or positive). </p><p>Here are the steps involved in sketching the approximate Bode magnitude plots: </p><p><strong>Bode Magnitude Plots</strong> </p><dl><dt>Step 1</dt> <dd>Factor the transfer function into pole-zero form.</dd> <dt>Step 2</dt> <dd>Find the frequency response from the Transfer function.</dd> <dt>Step 3</dt> <dd>Use logarithms to separate the frequency response into a sum of decibel terms</dd> <dt>Step 4</dt> <dd>Use <math><mrow><mstyle><mi>ω</mi><mo>=</mo><mn>0</mn></mstyle></mrow></math> to find the starting magnitude.</dd> <dt>Step 5</dt> <dd>The locations of every pole and every zero are called <strong>break points</strong>. At a zero breakpoint, the slope of the line increases by 20dB/Decade. At a pole, the slope of the line decreases by 20dB/Decade.</dd> <dt>Step 6</dt> <dd>At a zero breakpoint, the value of the actual graph differs from the value of the straight-line graph by 3dB. A zero is +3dB over the straight line, and a pole is -3dB below the straight line.</dd> <dt>Step 7</dt> <dd>Sketch the actual bode plot as a smooth-curve that follows the straight lines of the previous point, and travels through the breakpoints.</dd></dl>",
+   "body": "Bode phase plots are plots of the phase shift to an input waveform dependent on the frequency characteristics of the system input. Again, the Laplace transform does not account for the phase shift characteristics of the system, but the Fourier Transform can. The phase of a complex function, in \"real+imaginary\" form is given as: ∠ T ( j ω ) = tan − 1 ( X R ) Bode Procedure Given a frequency response in pole-zero form: T ( j ω ) = A ∏ n | j ω + z n | ∏ m | j ω + p m | Where A is a non-zero constant (can be negative or positive). Here are the steps involved in sketching the approximate Bode magnitude plots: Bode Magnitude Plots Step 1 Factor the transfer function into pole-zero form. Step 2 Find the frequency response from the Transfer function. Step 3 Use logarithms to separate the frequency response into a sum of decibel terms Step 4 Use ω = 0 to find the starting magnitude. Step 5 The locations of every pole and every zero are called break points . At a zero breakpoint, the slope of the line increases by 20dB/Decade. At a pole, the slope of the line decreases by 20dB/Decade. Step 6 At a zero breakpoint, the value of the actual graph differs from the value of the straight-line graph by 3dB. A zero is +3dB over the straight line, and a pole is -3dB below the straight line. Step 7 Sketch the actual bode plot as a smooth-curve that follows the straight lines of the previous point, and travels through the breakpoints.",
+   "id": "wikibooks1-7"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Bode Phase Plots",
+   "html": "<p>Here are the steps to drawing the Bode phase plots: </p><p><strong>Bode Phase Plots</strong> </p><dl><dt>Step 1</dt> <dd>If A is positive, start your graph (with zero slope) at 0 degrees. If A is negative, start your graph with zero slope at 180 degrees (or -180 degrees, they are the same thing).</dd> <dt>Step 2</dt> <dd>For every zero, slope the line <strong>up</strong> at 45 degrees per decade when <math><mrow><mstyle><mi>ω</mi><mo>=</mo><mrow><mfrac><mrow><msub><mi>z</mi><mrow><mi>n</mi></mrow></msub></mrow><mrow><mn>10</mn></mrow></mfrac></mrow></mstyle></mrow></math> (1 decade before the break frequency). Multiple zeros means the slope is steeper.</dd> <dt>Step 3</dt> <dd>For every pole, slope the line <strong>down</strong> at 45 degrees per decade when <math><mrow><mstyle><mi>ω</mi><mo>=</mo><mrow><mfrac><mrow><msub><mi>p</mi><mrow><mi>m</mi></mrow></msub></mrow><mrow><mn>10</mn></mrow></mfrac></mrow></mstyle></mrow></math> (1 decade before the break frequency). Multiple poles means the slope is steeper.</dd> <dt>Step 4</dt> <dd>Flatten the slope again when the phase has changed by 90 degrees (for a zero) or -90 degrees (for a pole) (or larger values, for multiple poles or multiple zeros.</dd></dl>",
+   "body": "Here are the steps to drawing the Bode phase plots: Bode Phase Plots Step 1 If A is positive, start your graph (with zero slope) at 0 degrees. If A is negative, start your graph with zero slope at 180 degrees (or -180 degrees, they are the same thing). Step 2 For every zero, slope the line up at 45 degrees per decade when ω = z n 10 (1 decade before the break frequency). Multiple zeros means the slope is steeper. Step 3 For every pole, slope the line down at 45 degrees per decade when ω = p m 10 (1 decade before the break frequency). Multiple poles means the slope is steeper. Step 4 Flatten the slope again when the phase has changed by 90 degrees (for a zero) or -90 degrees (for a pole) (or larger values, for multiple poles or multiple zeros.",
+   "id": "wikibooks1-8"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Example: Constant Gain",
+   "html": "<p>Draw the bode plot of an amplifier system, with a constant gain increase of 6dB. </p><p>Because the gain value is constant, and is not dependent on the frequency, we know that the value of the magnitude graph is constant at all places on the graph. There are no break points, so the slope of the graph never changes. We can draw the graph as a straight, horizontal line at 6dB: </p><h4>Example: Integrator</h4><p>Draw the bode plot of a perfect integrator system given by the transfer function: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mi>s</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>First, we find the frequency response of the system, by a change of variables: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mrow><mi>j</mi><mi>ω</mi></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Then we convert our magnitude into logarithms: </p><dl><dd><math><mrow><mstyle><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mn>2</mn><mo>)</mo><mo>−</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mo>|</mo><mi>j</mi><mi>ω</mi><mo>|</mo><mo>)</mo></mstyle></mrow></math></dd></dl><p>Notice that the location of the break point for the pole is located at ω → 0, which is all the way to the left of the graph. Also, we notice that inserting 0 in for ω gives us an undefined value (which approaches negative infinity, as the limit). We know, because there is a single pole at zero, that the graph to the right of zero (which is everywhere) has a slope of -20dB/Decade. We can determine from our magnitude calculation by plugging in ω → 1 that the second term drops out, and the magnitude at that point is 6dB. We now have the slope of the line, and a point that it intersects, and we can draw the graph: </p>",
+   "body": "Draw the bode plot of an amplifier system, with a constant gain increase of 6dB. Because the gain value is constant, and is not dependent on the frequency, we know that the value of the magnitude graph is constant at all places on the graph. There are no break points, so the slope of the graph never changes. We can draw the graph as a straight, horizontal line at 6dB: Example: Integrator Draw the bode plot of a perfect integrator system given by the transfer function: T ( s ) = 2 s First, we find the frequency response of the system, by a change of variables: T ( j ω ) = 2 j ω Then we convert our magnitude into logarithms: G a i n = 20 log ⁡ ( 2 ) − 20 log ⁡ ( | j ω | ) Notice that the location of the break point for the pole is located at ω → 0, which is all the way to the left of the graph. Also, we notice that inserting 0 in for ω gives us an undefined value (which approaches negative infinity, as the limit). We know, because there is a single pole at zero, that the graph to the right of zero (which is everywhere) has a slope of -20dB/Decade. We can determine from our magnitude calculation by plugging in ω → 1 that the second term drops out, and the magnitude at that point is 6dB. We now have the slope of the line, and a point that it intersects, and we can draw the graph:",
+   "id": "wikibooks1-9"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Example: Differentiator",
+   "html": "<dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mn>2</mn><mi>j</mi><mi>ω</mi></mstyle></mrow></math></dd></dl><h4>Example: 1st Order, Low-pass Filter (1 Break Point)</h4><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2.14</mn></mrow><mrow><mrow><mi>j</mi><mi>ω</mi><mo>+</mo><mn>1</mn></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl>",
+   "body": "T ( j ω ) = 2 j ω Example: 1st Order, Low-pass Filter (1 Break Point) T ( j ω ) = 2.14 j ω + 1",
+   "id": "wikibooks1-10"
+  },
+  {
+   "id": "add-db",
+   "type": "numeric",
+   "stage": "check",
+   "q": "An amplifier's voltage gain is {g}. What is that in decibels?",
+   "vars": {
+    "g": {
+     "pick": [
+      0.1,
+      0.5,
+      2,
+      10,
+      100
+     ]
+    }
+   },
+   "answer": "20 * LOG10(g)",
+   "unit": "dB",
+   "abs": 0.05,
+   "work": "$20 \\log_{10} {g} = {answer:2}$ dB",
+   "why": "Voltage ratios use 20 log. A gain of 10 is 20 dB, of 2 is about 6 dB, and below 1 the decibels are negative.",
+   "hint": "20 × log₁₀ of the gain.",
+   "added": true
+  },
+  {
+   "id": "add-slope",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Above its break frequency, how fast does a single pole's gain fall on a Bode plot?",
+   "options": [
+    "20 dB per decade",
+    "6 dB per decade",
+    "40 dB per decade",
+    "It does not fall"
+   ],
+   "answer": 0,
+   "why": "A first-order lag falls at 20 dB per decade (6 dB per octave). Two poles give 40 dB per decade.",
+   "added": true
+  },
+  {
+   "id": "add-int-phase",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "What phase does an integrator (1/s) add at every frequency?",
+   "options": [
+    "−90°",
+    "+90°",
+    "0°",
+    "−180°"
+   ],
+   "answer": 0,
+   "why": "Integral action always lags by 90°. That lag eats into the phase margin, which is why too much integral makes a loop oscillate.",
+   "added": true
+  }
+ ]
+}

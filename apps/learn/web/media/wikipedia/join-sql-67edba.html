@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join (SQL)</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Join (SQL). CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Join_(SQL) <a href="https://en.wikipedia.org/wiki/Join_(SQL)">https://en.wikipedia.org/wiki/Join_(SQL)</a></p>
+<h1>Join (SQL)</h1>
+<p>A <strong>join</strong> clause in the Structured <a href="https://en.wikipedia.org/wiki/Query_language">Query Language</a> (<a href="https://en.wikipedia.org/wiki/SQL">SQL</a>) combines <a href="https://en.wikipedia.org/wiki/Column_(database)">columns</a> from one or more <a href="https://en.wikipedia.org/wiki/Table_(database)">tables</a> into a new table. The operation corresponds to a <a href="https://en.wikipedia.org/wiki/Join_(relational_algebra)">join operation in relational algebra</a>. Informally, a join stitches two tables and puts on the same row records with matching fields. There are several variants of <code>JOIN</code>: <code>INNER</code>, <code>LEFT OUTER</code>, <code>RIGHT OUTER</code>, <code>FULL OUTER</code>, <code>CROSS</code>, and others.</p><h2>Example tables</h2><p>To explain join types, the rest of this article uses the following tables:</p><table> <caption>Employee table</caption> <tbody><tr> <th>LastName</th><th>DepartmentID</th></tr> <tr> <td>Rafferty</td><td>31</td></tr> <tr> <td>Jones</td><td>33</td></tr> <tr> <td>Heisenberg</td><td>33</td></tr> <tr> <td>Robinson</td><td>34</td></tr> <tr> <td>Smith</td><td>34</td></tr> <tr> <td>Williams</td><td><code>NULL</code></td></tr> </tbody></table><table> <caption>Department table</caption> <tbody><tr> <th>DepartmentID</th><th>DepartmentName</th></tr> <tr> <td>31</td><td>Sales</td></tr> <tr> <td>33</td><td>Engineering</td></tr> <tr> <td>34</td><td>Clerical</td></tr> <tr> <td>35</td><td>Marketing</td></tr> </tbody></table><p><code>Department.DepartmentID</code> is the <a href="https://en.wikipedia.org/wiki/Primary_key">primary key</a> of the <code>Department</code> table, whereas <code>Employee.DepartmentID</code> is a <a href="https://en.wikipedia.org/wiki/Foreign_key">foreign key</a>.</p><p>Note that in <code>Employee</code>, "Williams" has not yet been assigned to a department. Also, no employees have been assigned to the "Marketing" department.</p><p>These are the SQL statements to create the above tables:</p><pre>CREATE TABLE department(
+    DepartmentID INT PRIMARY KEY NOT NULL,
+    DepartmentName VARCHAR(20)
+);
+
+CREATE TABLE employee (
+    LastName VARCHAR(20),
+    DepartmentID INT REFERENCES department(DepartmentID)
+);
+
+INSERT INTO department
+VALUES (31, 'Sales'),
+       (33, 'Engineering'),
+       (34, 'Clerical'),
+       (35, 'Marketing');
+
+INSERT INTO employee
+VALUES ('Rafferty', 31),
+       ('Jones', 33),
+       ('Heisenberg', 33),
+       ('Robinson', 34),
+       ('Smith', 34),
+       ('Williams', NULL);
+</pre><h2>Cross join</h2><p><code>CROSS JOIN</code> returns the <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a> of rows from tables in the join. In other words, it will produce rows which combine each row from the first table with each row from the second table.</p><table> <tbody><tr> <th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th><th>Department.DepartmentID</th></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td><td>31</td></tr> <tr> <td>Jones</td><td>33</td><td>Sales</td><td>31</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Sales</td><td>31</td></tr> <tr> <td>Smith</td><td>34</td><td>Sales</td><td>31</td></tr> <tr> <td>Robinson</td><td>34</td><td>Sales</td><td>31</td></tr> <tr> <td>Williams</td><td><code>NULL</code></td><td>Sales</td><td>31</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Engineering</td><td>33</td></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Smith</td><td>34</td><td>Engineering</td><td>33</td></tr> <tr> <td>Robinson</td><td>34</td><td>Engineering</td><td>33</td></tr> <tr> <td>Williams</td><td><code>NULL</code></td><td>Engineering</td><td>33</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Clerical</td><td>34</td></tr> <tr> <td>Jones</td><td>33</td><td>Clerical</td><td>34</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Clerical</td><td>34</td></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Williams</td><td><code>NULL</code></td><td>Clerical</td><td>34</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Marketing</td><td>35</td></tr> <tr> <td>Jones</td><td>33</td><td>Marketing</td><td>35</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Marketing</td><td>35</td></tr> <tr> <td>Smith</td><td>34</td><td>Marketing</td><td>35</td></tr> <tr> <td>Robinson</td><td>34</td><td>Marketing</td><td>35</td></tr> <tr> <td>Williams</td><td><code>NULL</code></td><td>Marketing</td><td>35</td></tr> </tbody></table><p>Example of an explicit cross join:</p><pre>SELECT *
+FROM employee CROSS JOIN department;
+</pre><p>Example of an implicit cross join:</p><pre>SELECT *
+FROM employee, department;
+</pre><p>The cross join can be replaced with an inner join with an always-true condition:</p><pre>SELECT *
+FROM employee INNER JOIN department ON 1=1;
+</pre><p><code>CROSS JOIN</code> does not itself apply any predicate to filter rows from the joined table. The results of a <code>CROSS JOIN</code> can be filtered using a <code>WHERE</code> clause, which may then produce the equivalent of an inner join.</p><p>In the <a href="https://en.wikipedia.org/wiki/SQL:2011">SQL:2011</a> standard, cross joins are part of the optional F401, "Extended joined table", package.</p><p>Normal uses are for checking the server's performance.</p><h2>Inner join</h2><p>An <strong>inner join</strong> (or <strong>join</strong>) requires each row in the two joined tables to have matching column values, and is a commonly used join operation in <a href="https://en.wikipedia.org/wiki/Application_software">applications</a> but should not be assumed to be the best choice in all situations. Inner join creates a new result table by combining column values of two tables (A and B) based upon the join-predicate. The query compares each row of A with each row of B to find all pairs of rows that satisfy the join-predicate. When the join-predicate is satisfied by matching non-<a href="https://en.wikipedia.org/wiki/Null_(SQL)">NULL</a> values, column values for each matched pair of rows of A and B are combined into a result row.</p><p>The result of the join can be defined as the outcome of first taking the <a href="https://en.wikipedia.org/wiki/Cartesian_product">cartesian product</a> (or cross join) of all rows in the tables (combining every row in table A with every row in table B) and then returning all rows that satisfy the join predicate. Actual SQL implementations normally use other approaches, such as <a href="https://en.wikipedia.org/wiki/Hash_join">hash joins</a> or <a href="https://en.wikipedia.org/wiki/Sort-merge_join">sort-merge joins</a>, since computing the Cartesian product is slower and would often require a prohibitively large amount of memory to store.</p><p>SQL specifies two different syntactical ways to express joins: the "explicit join notation" and the "implicit join notation". The "implicit join notation" is no longer considered a best practice, although database systems still support it.</p><p>The "explicit join notation" uses the <code>JOIN</code> keyword, optionally preceded by the <code>INNER</code> keyword, to specify the table to join, and the <code>ON</code> keyword to specify the predicates for the join, as in the following example:</p><pre>SELECT employee.LastName, employee.DepartmentID, department.DepartmentName
+FROM employee
+INNER JOIN department ON
+employee.DepartmentID = department.DepartmentID;
+</pre><table> <tbody><tr><th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td></tr> </tbody></table><p>The "implicit join notation" simply lists the tables for joining, in the <code>FROM</code> clause of the <code>SELECT</code> statement, using commas to separate them. Thus it specifies a cross join, and the <code>WHERE</code> clause may apply additional filter-predicates (which function comparably to the join-predicates in the explicit notation).</p><p>The following example is equivalent to the previous one, but this time using implicit join notation:</p><pre>SELECT employee.LastName, employee.DepartmentID, department.DepartmentName
+FROM employee, department
+WHERE employee.DepartmentID = department.DepartmentID;
+</pre><p>The queries given in the examples above will join the Employee and department tables using the DepartmentID column of both tables. Where the DepartmentID of these tables match (i.e. the join-predicate is satisfied), the query will combine the <em>LastName</em>, <em>DepartmentID</em> and <em>DepartmentName</em> columns from the two tables into a result row. Where the DepartmentID does not match, no result row is generated.</p><p>Thus the result of the <a href="https://en.wikipedia.org/wiki/Query_plan">execution</a> of the query above will be:</p><table> <tbody><tr><th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td></tr> </tbody></table><p>The employee "Williams" and the department "Marketing" do not appear in the query execution results. Neither of these has any matching rows in the other respective table: "Williams" has no associated department, and no employee has the department ID 35 ("Marketing"). Depending on the desired results, this behavior may be a subtle bug, which can be avoided by replacing the inner join with an outer join.</p><h3>Inner join and NULL values</h3><p>Programmers should take special care when joining tables on columns that can contain <a href="https://en.wikipedia.org/wiki/Null_(SQL)">NULL</a> values, since NULL will never match any other value (not even NULL itself), unless the join condition explicitly uses a combination predicate that first checks that the joins columns are <code>NOT NULL</code> before applying the remaining predicate condition(s). The Inner Join can only be safely used in a database that enforces <a href="https://en.wikipedia.org/wiki/Referential_integrity">referential integrity</a> or where the join columns are guaranteed not to be NULL. Many <a href="https://en.wikipedia.org/wiki/Transaction_processing">transaction processing</a> relational databases rely on <a href="https://en.wikipedia.org/wiki/ACID">atomicity, consistency, isolation, durability</a> (ACID) data update standards to ensure <a href="https://en.wikipedia.org/wiki/Data_integrity">data integrity</a>, making inner joins an appropriate choice. However, transaction databases usually also have desirable join columns that are allowed to be NULL. Many reporting relational database and <a href="https://en.wikipedia.org/wiki/Data_warehouse">data warehouses</a> use high volume <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">extract, transform, load</a> (ETL) batch updates which make referential integrity difficult or impossible to enforce, resulting in potentially NULL join columns that an SQL query author cannot modify and which cause inner joins to omit data with no indication of an error. The choice to use an inner join depends on the database design and data characteristics. A left outer join can usually be substituted for an inner join when the join columns in one table may contain NULL values.</p><p>Any data column that may be NULL (empty) should never be used as a link in an inner join, unless the intended result is to eliminate the rows with the NULL value. If NULL join columns are to be deliberately removed from the <a href="https://en.wikipedia.org/wiki/Result_set">result set</a>, an inner join can be faster than an outer join because the table join and filtering is done in a single step. Conversely, an inner join can result in disastrously slow performance or even a server crash when used in a large volume query in combination with database functions in an SQL Where clause.   , A function in an SQL Where clause can result in the database ignoring relatively compact table indexes. The database may read and inner join the selected columns from both tables before reducing the number of rows using the filter that depends on a calculated value, resulting in a relatively enormous amount of inefficient processing.</p><p>When a result set is produced by joining several tables, including master tables used to look up full-text descriptions of numeric identifier codes (a <a href="https://en.wikipedia.org/wiki/Lookup_table">Lookup table</a>), a NULL value in any one of the foreign keys can result in the entire row being eliminated from the result set, with no indication of error. A complex SQL query that includes one or more inner joins and several outer joins has the same risk for NULL values in the inner join link columns.</p><p>A commitment to SQL code containing inner joins assumes NULL join columns will not be introduced by future changes, including vendor updates, design changes and bulk processing outside of the application's data validation rules such as data conversions, migrations, bulk imports and merges.</p><p>One can further classify inner joins as equi-joins and theta (non-equi) joins.</p><h3>Equi-join</h3><p>The <strong>equi-join</strong>, also known as "the only eligible operation", is a specific type of comparator-based join, that uses only <a href="https://en.wikipedia.org/wiki/Equality_(mathematics)">equality</a> comparisons in the join-predicate. Using other comparison operators (such as <code>&lt;</code>) disqualifies a join as an equi-join. The query shown above has already provided an example of an equi-join:</p><pre>SELECT *
+FROM employee JOIN department
+  ON employee.DepartmentID = department.DepartmentID;
+</pre><p>We can write equi-join as below,</p><pre>SELECT *
+FROM employee, department
+WHERE employee.DepartmentID = department.DepartmentID;
+</pre><p>If columns in an equi-join have the same name, <a href="https://en.wikipedia.org/wiki/SQL-92">SQL-92</a> provides an optional shorthand notation for expressing equi-joins, by way of the <code>USING</code> construct:</p><pre>SELECT *
+FROM employee INNER JOIN department USING (DepartmentID);
+</pre><p>The <code>USING</code> construct is more than mere <a href="https://en.wikipedia.org/wiki/Syntactic_sugar">syntactic sugar</a>, however, since the result set differs from the result set of the version with the explicit predicate. Specifically, any columns mentioned in the <code>USING</code> list will appear only once, with an unqualified name, rather than once for each table in the join. In the case above, there will be a single <code>DepartmentID</code> column and no <code>employee.DepartmentID</code> or <code>department.DepartmentID</code>.</p><p>The <code>USING</code> clause is not supported by MS SQL Server and Sybase.</p><h4>Natural join</h4><p>The natural join is a special case of equi-join. Natural join (⋈) is a <a href="https://en.wikipedia.org/wiki/Binary_relation">binary operator</a> that is written as (<em>R</em> ⋈ <em>S</em>) where <em>R</em> and <em>S</em> are <a href="https://en.wikipedia.org/wiki/Relation_(database)">relations</a>. The result of the natural join is the set of all combinations of <a href="https://en.wikipedia.org/wiki/Tuples">tuples</a> in <em>R</em> and <em>S</em> that are equal on their common attribute names. For an example consider the tables <em>Employee</em> and <em>Dept</em> and their natural join:</p><table> <tbody><tr> <td> <table> <caption><em>Employee</em></caption> <tbody><tr> <th>Name</th><th>EmpId</th><th>DeptName </th></tr><tr> <td>Harry</td><td>3415</td><td>Finance </td></tr><tr> <td>Sally</td><td>2241</td><td>Sales </td></tr><tr> <td>George</td><td>3401</td><td>Finance </td></tr><tr> <td>Harriet</td><td>2202</td><td>Sales</td></tr> </tbody></table></td> <td> <table> <caption><em>Dept</em></caption> <tbody><tr> <th>DeptName</th><th>Manager </th></tr><tr> <td>Finance</td><td>George </td></tr><tr> <td>Sales</td><td>Harriet </td></tr><tr> <td>Production</td><td>Charles</td></tr> </tbody></table></td> <td> <table> <caption><em>Employee</em> <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mo>⋈</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> <em>Dept</em></caption> <tbody><tr> <th>Name</th><th>EmpId</th><th>DeptName</th><th>Manager </th></tr><tr> <td>Harry</td><td>3415</td><td>Finance</td><td>George </td></tr><tr> <td>Sally</td><td>2241</td><td>Sales</td><td>Harriet </td></tr><tr> <td>George</td><td>3401</td><td>Finance</td><td>George </td></tr><tr> <td>Harriet</td><td>2202</td><td>Sales</td><td>Harriet</td></tr> </tbody></table></td></tr> </tbody></table><p>This can also be used to define <a href="https://en.wikipedia.org/wiki/Composition_of_relations">composition of relations</a>. For example, the composition of <em>Employee</em> and <em>Dept</em> is their join as shown above, projected on all but the common attribute <em>DeptName</em>. In <a href="https://en.wikipedia.org/wiki/Category_theory">category theory</a>, the join is precisely the <a href="https://en.wikipedia.org/wiki/Fiber_product">fiber product</a>.</p><p>The natural join is arguably one of the most important operators since it is the relational counterpart of logical AND. Note that if the same variable appears in each of two predicates that are connected by AND, then that variable stands for the same thing and both appearances must always be substituted by the same value. In particular, the natural join allows the combination of relations that are associated by a <a href="https://en.wikipedia.org/wiki/Foreign_key">foreign key</a>. For example, in the above example a foreign key probably holds from <em>Employee</em>.<em>DeptName</em> to <em>Dept</em>.<em>DeptName</em> and then the natural join of <em>Employee</em> and <em>Dept</em> combines all employees with their departments. This works because the foreign key holds between attributes with the same name. If this is not the case such as in the foreign key from <em>Dept</em>.<em>manager</em> to <em>Employee</em>.<em>Name</em> then these columns have to be renamed before the natural join is taken. Such a join is sometimes also referred to as an <strong>equi-join</strong>.</p><p>More formally the semantics of the natural join are defined as follows:</p><dl><dd><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>R</mi>
+        <mo>⋈</mo>
+        <mi>S</mi>
+        <mo>=</mo>
+        <mrow>
+          <mo>{</mo>
+          <mrow>
+            <mi>t</mi>
+            <mo>∪</mo>
+            <mi>s</mi>
+            <mo>∣</mo>
+            <mi>t</mi>
+            <mo>∈</mo>
+            <mi>R</mi>
+            <mtext> </mtext>
+            <mo>∧</mo>
+            <mtext> </mtext>
+            <mi>s</mi>
+            <mo>∈</mo>
+            <mi>S</mi>
+            <mtext> </mtext>
+            <mo>∧</mo>
+            <mtext> </mtext>
+            <mrow>
+              <mrow>
+                <mi>F</mi>
+                <mi>u</mi>
+                <mi>n</mi>
+              </mrow>
+            </mrow>
+            <mo>(</mo>
+            <mi>t</mi>
+            <mo>∪</mo>
+            <mi>s</mi>
+            <mo>)</mo>
+          </mrow>
+          <mo>}</mo>
+        </mrow>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>,</dd></dl><p>where <em>Fun</em> is a <a href="https://en.wikipedia.org/wiki/Predicate_(mathematics)">predicate</a> that is true for a <a href="https://en.wikipedia.org/wiki/Relation_(mathematics)">relation</a> <em>r</em> <a href="https://en.wikipedia.org/wiki/If_and_only_if">if and only if</a> <em>r</em> is a function. It is usually required that <em>R</em> and <em>S</em> must have at least one common attribute, but if this constraint is omitted, and <em>R</em> and <em>S</em> have no common attributes, then the natural join becomes exactly the Cartesian product.</p><p>The natural join can be simulated with Codd's primitives as follows. Let <em>c</em><sub>1</sub>, ..., <em>c</em><sub><em>m</em></sub> be the attribute names common to <em>R</em> and <em>S</em>, <em>r</em><sub>1</sub>, ..., <em>r</em><sub><em>n</em></sub> be the attribute names unique to <em>R</em> and let <em>s</em><sub>1</sub>, ..., <em>s</em><sub><em>k</em></sub> be the attributes unique to <em>S</em>. Furthermore, assume that the attribute names <em>x</em><sub>1</sub>, ..., <em>x</em><sub><em>m</em></sub> are neither in <em>R</em> nor in <em>S</em>. In a first step the common attribute names in <em>S</em> can now be renamed:</p><dl><dd><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>T</mi>
+        <mo>=</mo>
+        <msub>
+          <mi>ρ</mi>
+          <mrow>
+            <msub>
+              <mi>x</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <mo>…</mo>
+            <mo>,</mo>
+            <msub>
+              <mi>x</mi>
+              <mrow>
+                <mi>m</mi>
+              </mrow>
+            </msub>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mi>m</mi>
+              </mrow>
+            </msub>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>S</mi>
+        <mo>)</mo>
+        <mo>=</mo>
+        <msub>
+          <mi>ρ</mi>
+          <mrow>
+            <msub>
+              <mi>x</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <msub>
+          <mi>ρ</mi>
+          <mrow>
+            <msub>
+              <mi>x</mi>
+              <mrow>
+                <mn>2</mn>
+              </mrow>
+            </msub>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mn>2</mn>
+              </mrow>
+            </msub>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mo>…</mo>
+        <msub>
+          <mi>ρ</mi>
+          <mrow>
+            <msub>
+              <mi>x</mi>
+              <mrow>
+                <mi>m</mi>
+              </mrow>
+            </msub>
+            <mrow>
+              <mo>/</mo>
+            </mrow>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mi>m</mi>
+              </mrow>
+            </msub>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>S</mi>
+        <mo>)</mo>
+        <mo>…</mo>
+        <mo>)</mo>
+        <mo>)</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></dd></dl><p>Then we take the Cartesian product and select the tuples that are to be joined:</p><dl><dd><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>U</mi>
+        <mo>=</mo>
+        <msub>
+          <mi>π</mi>
+          <mrow>
+            <msub>
+              <mi>r</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <mo>…</mo>
+            <mo>,</mo>
+            <msub>
+              <mi>r</mi>
+              <mrow>
+                <mi>n</mi>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <mo>…</mo>
+            <mo>,</mo>
+            <msub>
+              <mi>c</mi>
+              <mrow>
+                <mi>m</mi>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <msub>
+              <mi>s</mi>
+              <mrow>
+                <mn>1</mn>
+              </mrow>
+            </msub>
+            <mo>,</mo>
+            <mo>…</mo>
+            <mo>,</mo>
+            <msub>
+              <mi>s</mi>
+              <mrow>
+                <mi>k</mi>
+              </mrow>
+            </msub>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>P</mi>
+        <mo>)</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></dd></dl><p>A <a href="https://en.wikipedia.org/wiki/Natural_join">natural join</a> is a type of equi-join where the <strong>join</strong> predicate arises implicitly by comparing all columns in both tables that have the same column-names in the joined tables. The resulting joined table contains only one column for each pair of equally named columns. In the case that no columns with the same names are found, the result is a <a href="https://en.wikipedia.org/wiki/Cross_join">cross join</a>.</p><p>Most experts agree that NATURAL JOINs are dangerous and therefore strongly discourage their use. The danger comes from inadvertently adding a new column, named the same as another column in the other table. An existing natural join might then "naturally" use the new column for comparisons, making comparisons/matches using different criteria (from different columns) than before. Thus an existing query could produce different results, even though the data in the tables have not been changed, but only augmented. The use of column names to automatically determine table links is not an option in large databases with hundreds or thousands of tables where it would place an unrealistic constraint on naming conventions. Real world databases are commonly designed with <a href="https://en.wikipedia.org/wiki/Foreign_key">foreign key</a> data that is not consistently populated (NULL values are allowed), due to business rules and context. It is common practice to modify column names of similar data in different tables and this lack of rigid consistency relegates natural joins to a theoretical concept for discussion.</p><p>The above sample query for inner joins can be expressed as a natural join in the following way:</p><pre>SELECT *
+FROM employee NATURAL JOIN department;
+</pre><p>As with the explicit <code>USING</code> clause, only one DepartmentID column occurs in the joined table, with no qualifier:</p><table> <tbody><tr> <th>DepartmentID</th><th>Employee.LastName</th><th>Department.DepartmentName</th></tr> <tr> <td>34</td><td>Smith</td><td>Clerical</td></tr> <tr> <td>33</td><td>Jones</td><td>Engineering</td></tr> <tr> <td>34</td><td>Robinson</td><td>Clerical</td></tr> <tr> <td>33</td><td>Heisenberg</td><td>Engineering</td></tr> <tr> <td>31</td><td>Rafferty</td><td>Sales</td></tr> </tbody></table><p><a href="https://en.wikipedia.org/wiki/PostgreSQL">PostgreSQL</a>, MySQL and Oracle support natural joins; Microsoft T-SQL and <a href="https://en.wikipedia.org/wiki/IBM_Db2">IBM DB2</a> do not. The columns used in the join are implicit so the join code does not show which columns are expected, and a change in column names may change the results. In the <a href="https://en.wikipedia.org/wiki/SQL:2011">SQL:2011</a> standard, natural joins are part of the optional F401, "Extended joined table", package.</p><p>In many database environments the column names are controlled by an outside vendor, not the query developer. A natural join assumes stability and consistency in column names which can change during vendor mandated version upgrades.</p><h2>Outer join</h2><p>The joined table retains each row—even if no other matching row exists. Outer joins subdivide further into left outer joins, right outer joins, and full outer joins, depending on which table's rows are retained: left, right, or both (in this case <em>left</em> and <em>right</em> refer to the two sides of the <code>JOIN</code> keyword). Like inner joins, one can further sub-categorize all types of outer joins as equi-joins, natural joins, <code><strong>ON</strong> <em>&lt;predicate&gt;</em></code> (<a href="https://en.wikipedia.org/wiki/Relational_algebra#θ-join_and_equijoin"><em>θ</em>-join</a>), etc.</p><p>No implicit join-notation for outer joins exists in standard SQL.</p><h3>Left outer join</h3><p>The result of a <strong>left outer join</strong> (or simply <strong>left join</strong>) for tables A and B always contains all rows of the "left" table (A), even if the join-condition does not find any matching row in the "right" table (B). This means that if the <code>ON</code> clause matches 0 (zero) rows in B (for a given row in A), the join will still return a row in the result (for that row)—but with NULL in each column from B. A <strong>left outer join</strong> returns all the values from an inner join plus all values in the left table that do not match to the right table, including rows with NULL (empty) values in the link column.</p><p>For example, this allows us to find an employee's department, but still shows employees that have not been assigned to a department (contrary to the inner-join example above, where unassigned employees were excluded from the result).</p><p>Example of a left outer join (the <strong><code>OUTER</code></strong> keyword is optional), with the additional result row (compared with the inner join) italicized:</p><pre>SELECT *
+FROM employee
+LEFT OUTER JOIN department ON employee.DepartmentID = department.DepartmentID;
+</pre><table> <tbody><tr><th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th><th>Department.DepartmentID</th></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td><td>31</td></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td><em>Williams</em></td><td><code>NULL</code></td><td><code>NULL</code></td><td><code>NULL</code></td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td><td>33</td></tr> </tbody></table><h4>Alternative syntaxes</h4><p>Oracle supports the deprecated syntax:</p><pre>SELECT *
+FROM employee, department
+WHERE employee.DepartmentID = department.DepartmentID(+)
+</pre><p><a href="https://en.wikipedia.org/wiki/Go2bank?action=edit&amp;redlink=1">Go2bank</a> supports the syntax (<a href="https://en.wikipedia.org/wiki/Microsoft_SQL_Server">Microsoft SQL Server</a> deprecated this syntax since version 2000):</p><pre>SELECT *
+FROM employee, department
+WHERE employee.DepartmentID *= department.DepartmentID
+</pre><p><a href="https://en.wikipedia.org/wiki/IBM_Informix">IBM Informix</a> supports the syntax:</p><pre>SELECT *
+FROM employee, OUTER department
+WHERE employee.DepartmentID = department.DepartmentID
+</pre><h3>Right outer join</h3><p>A <strong>right outer join</strong> (or <strong>right join</strong>) closely resembles a left outer join, except with the treatment of the tables reversed. Every row from the "right" table (B) will appear in the joined table at least once. If no matching row from the "left" table (A) exists, NULL will appear in columns from A for those rows that have no match in B.</p><p>A right outer join returns all the values from the right table and matched values from the left table (NULL in the case of no matching join predicate). For example, this allows us to find each employee and his or her department, but still show departments that have no employees.</p><p>Below is an example of a right outer join (the <strong><code>OUTER</code></strong> keyword is optional), with the additional result row italicized:</p><pre>SELECT *
+FROM employee RIGHT OUTER JOIN department
+  ON employee.DepartmentID = department.DepartmentID;
+</pre><table> <tbody><tr><th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th><th>Department.DepartmentID</th></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td><td>31</td></tr> <tr> <td><code>NULL</code></td><td><code>NULL</code></td><td><em>Marketing</em></td><td><em>35</em></td></tr> </tbody></table><p>Right and left outer joins are functionally equivalent. Neither provides any functionality that the other does not, so right and left outer joins may replace each other as long as the table order is switched.</p><h3>Full outer join</h3><p>Conceptually, a <strong>full outer join</strong> combines the effect of applying both left and right outer joins. Where rows in the full outer joined tables do not match, the result set will have NULL values for every column of the table that lacks a matching row. For those rows that do match, a single row will be produced in the result set (containing columns populated from both tables).</p><p>For example, this allows us to see each employee who is in a department and each department that has an employee, but also see each employee who is not part of a department and each department which doesn't have an employee.</p><p>Example of a full outer join (the <strong><code>OUTER</code></strong> keyword is optional):</p><pre>SELECT *
+FROM employee FULL OUTER JOIN department
+  ON employee.DepartmentID = department.DepartmentID;
+</pre><table> <tbody><tr><th>Employee.LastName</th><th>Employee.DepartmentID</th><th>Department.DepartmentName</th><th>Department.DepartmentID</th></tr> <tr> <td>Smith</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td>Jones</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Robinson</td><td>34</td><td>Clerical</td><td>34</td></tr> <tr> <td><em>Williams</em></td><td><code>NULL</code></td><td><code>NULL</code></td><td><code>NULL</code></td></tr> <tr> <td>Heisenberg</td><td>33</td><td>Engineering</td><td>33</td></tr> <tr> <td>Rafferty</td><td>31</td><td>Sales</td><td>31</td></tr> <tr> <td><code>NULL</code></td><td><code>NULL</code></td><td><em>Marketing</em></td><td><em>35</em></td></tr> </tbody></table><p>Some database systems do not support the full outer join functionality directly, but they can emulate it through the use of an inner join and UNION ALL selects of the "single table rows" from left and right tables respectively. The same example can appear as follows:</p><pre>SELECT employee.LastName, employee.DepartmentID,
+       department.DepartmentName, department.DepartmentID
+FROM employee
+INNER JOIN department ON employee.DepartmentID = department.DepartmentID
+
+UNION ALL
+
+SELECT employee.LastName, employee.DepartmentID,
+       cast(NULL as varchar(20)), cast(NULL as integer)
+FROM employee
+WHERE NOT EXISTS (
+    SELECT * FROM department
+             WHERE employee.DepartmentID = department.DepartmentID)
+
+UNION ALL
+
+SELECT cast(NULL as varchar(20)), cast(NULL as integer),
+       department.DepartmentName, department.DepartmentID
+FROM department
+WHERE NOT EXISTS (
+    SELECT * FROM employee
+             WHERE employee.DepartmentID = department.DepartmentID)
+</pre><p>Another approach could be UNION ALL of left outer join and right outer join MINUS inner join.</p><h2>Self-join</h2><p>A self-join is joining a table to itself.</p><h3>Example</h3><p>If there were two separate tables for employees and a query which requested employees in the first table having the same country as employees in the second table, a normal join operation could be used to find the answer table. However, all the employee information is contained within a single large table.</p><p>Consider a modified <code>Employee</code> table such as the following:</p><table> <caption>Employee Table</caption> <tbody><tr> <th>EmployeeID</th><th>LastName</th><th>Country</th><th>DepartmentID</th></tr> <tr> <td>123</td><td>Rafferty</td><td>Australia</td><td>31</td></tr> <tr> <td>124</td><td>Jones</td><td>Australia</td><td>33</td></tr> <tr> <td>145</td><td>Heisenberg</td><td>Australia</td><td>33</td></tr> <tr> <td>201</td><td>Robinson</td><td>United States</td><td>34</td></tr> <tr> <td>305</td><td>Smith</td><td>Germany</td><td>34</td></tr> <tr> <td>306</td><td>Williams</td><td>Germany</td><td><code>NULL</code></td></tr> </tbody></table><p>An example solution query could be as follows:</p><pre>SELECT F.EmployeeID, F.LastName, S.EmployeeID, S.LastName, F.Country
+FROM Employee F INNER JOIN Employee S ON F.Country = S.Country
+WHERE F.EmployeeID &lt; S.EmployeeID
+ORDER BY F.EmployeeID, S.EmployeeID;
+</pre><p>Which results in the following table being generated.</p><table> <caption>Employee Table after Self-join by Country</caption> <tbody><tr> <th>EmployeeID</th><th>LastName</th><th>EmployeeID</th><th>LastName</th><th>Country</th></tr> <tr> <td>123</td><td>Rafferty</td><td>124</td><td>Jones</td><td>Australia</td></tr> <tr> <td>123</td><td>Rafferty</td><td>145</td><td>Heisenberg</td><td>Australia</td></tr> <tr> <td>124</td><td>Jones</td><td>145</td><td>Heisenberg</td><td>Australia</td></tr> <tr> <td>305</td><td>Smith</td><td>306</td><td>Williams</td><td>Germany</td></tr> </tbody></table><p>For this example:</p><ul><li><code>F</code> and <code>S</code> are <a href="https://en.wikipedia.org/wiki/Alias_(SQL)">aliases</a> for the first and second copies of the employee table.</li> <li>The condition <code>F.Country = S.Country</code> excludes pairings between employees in different countries. The example question only wanted pairs of employees in the same country.</li> <li>The condition <code>F.EmployeeID &lt; S.EmployeeID</code> excludes pairings where the <code>EmployeeID</code> of the first employee is greater than or equal to the <code>EmployeeID</code> of the second employee. In other words, the effect of this condition is to exclude duplicate pairings and self-pairings. Without it, the following less useful table would be generated (the table below displays only the "Germany" portion of the result):</li></ul><table> <tbody><tr><th>EmployeeID</th><th>LastName</th><th>EmployeeID</th><th>LastName</th><th>Country</th></tr> <tr> <td>305</td><td>Smith</td><td>305</td><td>Smith</td><td>Germany</td></tr> <tr> <td>305</td><td>Smith</td><td>306</td><td>Williams</td><td>Germany</td></tr> <tr> <td>306</td><td>Williams</td><td>305</td><td>Smith</td><td>Germany</td></tr> <tr> <td>306</td><td>Williams</td><td>306</td><td>Williams</td><td>Germany</td></tr> </tbody></table><p>Only one of the two middle pairings is needed to satisfy the original question, and the topmost and bottommost are of no interest at all in this example.</p><h2>Alternatives</h2><p>The effect of an outer join can also be obtained using a UNION ALL between an INNER JOIN and a SELECT of the rows in the "main" table that do not fulfill the join condition. For example,</p><pre>SELECT employee.LastName, employee.DepartmentID, department.DepartmentName
+FROM employee
+LEFT OUTER JOIN department ON employee.DepartmentID = department.DepartmentID;
+</pre><p>can also be written as</p><pre>SELECT employee.LastName, employee.DepartmentID, department.DepartmentName
+FROM employee
+INNER JOIN department ON employee.DepartmentID = department.DepartmentID
+
+UNION ALL
+
+SELECT employee.LastName, employee.DepartmentID, cast(NULL as varchar(20))
+FROM employee
+WHERE NOT EXISTS (
+    SELECT * FROM department
+             WHERE employee.DepartmentID = department.DepartmentID)
+</pre><h2>Implementation</h2><p>Much work in database-systems has aimed at efficient implementation of joins, because relational systems commonly call for joins, yet face difficulties in optimising their efficient execution. The problem arises because inner joins operate both <a href="https://en.wikipedia.org/wiki/Commutative">commutatively</a> and <a href="https://en.wikipedia.org/wiki/Associative">associatively</a>. In practice, this means that the user merely supplies the list of tables for joining and the join conditions to use, and the database system has the task of determining the most efficient way to perform the operation. The choices become more complex as the number of tables involved in a query increases, with each table having different characteristics in record count, average record length (considering NULL fields) and available indexes. Where Clause filters can also significantly impact query volume and cost.</p><p>A <a href="https://en.wikipedia.org/wiki/Query_optimizer">query optimizer</a> determines how to execute a query containing joins. A query optimizer has two basic freedoms:</p><ol><li><strong>Join order</strong>: Because it joins functions commutatively and associatively, the order in which the system joins tables does not change the final result set of the query. However, join-order <strong>could</strong> have an enormous impact on the cost of the join operation, so choosing the best join order becomes very important.</li> <li><strong>Join method</strong>: Given two tables and a join condition, multiple <a href="https://en.wikipedia.org/wiki/Algorithm">algorithms</a> can produce the result set of the join. Which algorithm runs most efficiently depends on the sizes of the input tables, the number of rows from each table that match the join condition, and the operations required by the rest of the query.</li></ol><p>Many join-algorithms treat their inputs differently. One can refer to the inputs to a join as the "outer" and "inner" join operands, or "left" and "right", respectively. In the case of nested loops, for example, the database system will scan the entire inner relation for each row of the outer relation.</p><p>One can classify query-plans involving joins as follows:</p><dl><dt>left-deep</dt><dd>using a base table (rather than another join) as the inner operand of each join in the plan</dd> <dt>right-deep</dt><dd>using a base table as the outer operand of each join in the plan</dd> <dt>bushy</dt><dd>neither left-deep nor right-deep; both inputs to a join may themselves result from joins</dd></dl><p>These names derive from the appearance of the <a href="https://en.wikipedia.org/wiki/Query_plan">query plan</a> if drawn as a <a href="https://en.wikipedia.org/wiki/Tree_data_structure">tree</a>, with the outer join relation on the left and the inner relation on the right (as convention dictates).</p><h3>Join algorithms</h3><p>Three fundamental algorithms for performing a binary join operation exist: <a href="https://en.wikipedia.org/wiki/Nested_loop_join">nested loop join</a>, <a href="https://en.wikipedia.org/wiki/Sort-merge_join">sort-merge join</a> and <a href="https://en.wikipedia.org/wiki/Hash_join">hash join</a>. <a href="https://en.wikipedia.org/wiki/Worst-case_optimal_join_algorithm">Worst-case optimal join algorithms</a> are asymptotically faster than binary join algorithms for joins between more than two relations in the <a href="https://en.wikipedia.org/wiki/Worst_case">worst case</a>.</p><h3>Join indexes</h3><p>Join indexes are <a href="https://en.wikipedia.org/wiki/Database_index">database indexes</a> that facilitate the processing of join queries in <a href="https://en.wikipedia.org/wiki/Data_warehouse">data warehouses</a>: they are currently (2012) available in implementations by <a href="https://en.wikipedia.org/wiki/Oracle_database">Oracle</a> and <a href="https://en.wikipedia.org/wiki/Teradata">Teradata</a>.</p><p>In the Teradata implementation, specified columns, aggregate functions on columns, or components of date columns from one or more tables are specified using a syntax similar to the definition of a <a href="https://en.wikipedia.org/wiki/Database_view">database view</a>: up to 64 columns/column expressions can be specified in a single join index. Optionally, a column that defines the <a href="https://en.wikipedia.org/wiki/Primary_key">primary key</a> of the composite data may also be specified: on parallel hardware, the column values are used to partition the index's contents across multiple disks. When the source tables are updated interactively by users, the contents of the join index are automatically updated. Any query whose WHERE clause specifies any combination of columns or column expressions that are an exact subset of those defined in a join index (a so-called "covering query") will cause the join index, rather than the original tables and their indexes, to be consulted during query execution.</p><p>The Oracle implementation limits itself to using <a href="https://en.wikipedia.org/wiki/Bitmap_index">bitmap indexes</a>. A <em>bitmap join index</em> is used for low-cardinality columns (i.e., columns containing fewer than 300 distinct values, according to the Oracle documentation): it combines low-cardinality columns from multiple related tables. The example Oracle uses is that of an inventory system, where different suppliers provide different parts. The <a href="https://en.wikipedia.org/wiki/Database_schema">schema</a> has three linked tables: two "master tables", Part and Supplier, and a "detail table", Inventory. The last is a many-to-many table linking Supplier to Part, and contains the most rows. Every part has a Part Type, and every supplier is based in the US, and has a State column. There are not more than 60 states+territories in the US, and not more than 300 Part Types. The bitmap join index is defined using a standard three-table join on the three tables above, and specifying the Part_Type and Supplier_State columns for the index. However, it is defined on the Inventory table, even though the columns Part_Type and Supplier_State are "borrowed" from Supplier and Part respectively.</p><p>As for Teradata, an Oracle bitmap join index is only utilized to answer a query when the query's WHERE clause specifies columns limited to those that are included in the join index.</p><h3>Straight join</h3><p>Some database systems allow the user to force the system to read the tables in a join in a particular order. This is used when the join optimizer chooses to read the tables in an inefficient order. For example, in <a href="https://en.wikipedia.org/wiki/MySQL">MySQL</a> the command <code>STRAIGHT_JOIN</code> reads the tables in exactly the order listed in the query.</p>
+</body></html>

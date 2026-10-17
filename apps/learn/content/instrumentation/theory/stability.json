@@ -1,0 +1,134 @@
+{
+ "id": "instrumentation.theory.stability",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikibooks: Stability"
+  ]
+ },
+ "minutes": 12,
+ "sources": [
+  "Wikibooks contributors, Control Systems, Stability. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikibooks.org/wiki/Control_Systems/Stability"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Stability",
+   "url": "media/wikibooks/stability-850ffd.html",
+   "by": "Wikibooks contributors, Control Systems, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Stability",
+   "html": "<p>When a system is unstable, the output of the system may be infinite even though the input to the system was finite. This causes a number of practical problems. For instance, a robot arm controller that is unstable may cause the robot to move dangerously. Also, systems that are unstable often incur a certain amount of physical damage, which can become costly. Nonetheless, many systems are inherently unstable - a fighter jet, for instance, or a rocket at liftoff, are examples of naturally unstable systems. Although we can design controllers that stabilize the system, it is first important to understand what stability is, how it is determined, and why it matters. </p><p>The chapters in this section are heavily mathematical and many require a background in linear differential equations. Readers without a strong mathematical background might want to review the necessary chapters in the <a href=\"https://en.wikibooks.org/wiki/Calculus\">Calculus</a> and <a href=\"https://en.wikibooks.org/wiki/Ordinary_Differential_Equations\">Ordinary Differential Equations</a> books (or equivalent) before reading this material. </p><p>For most of this chapter we will be assuming that the system is linear and can be represented either by a set of transfer functions or in state space. Linear systems have an associated characteristic polynomial which tells us a great deal about the stability of the system. If any coefficient of the characteristic polynomial is zero or negative then the system is either unstable or at most marginally stable. It is important to note that even if all of the coefficients of the characteristic polynomial are positive the system may still be unstable. We will look into this in more detail below. </p>",
+   "body": "When a system is unstable, the output of the system may be infinite even though the input to the system was finite. This causes a number of practical problems. For instance, a robot arm controller that is unstable may cause the robot to move dangerously. Also, systems that are unstable often incur a certain amount of physical damage, which can become costly. Nonetheless, many systems are inherently unstable - a fighter jet, for instance, or a rocket at liftoff, are examples of naturally unstable systems. Although we can design controllers that stabilize the system, it is first important to understand what stability is, how it is determined, and why it matters. The chapters in this section are heavily mathematical and many require a background in linear differential equations. Readers without a strong mathematical background might want to review the necessary chapters in the Calculus and Ordinary Differential Equations books (or equivalent) before reading this material. For most of this chapter we will be assuming that the system is linear and can be represented either by a set of transfer functions or in state space. Linear systems have an associated characteristic polynomial which tells us a great deal about the stability of the system. If any coefficient of the characteristic polynomial is zero or negative then the system is either unstable or at most marginally stable. It is important to note that even if all of the coefficients of the characteristic polynomial are positive the system may still be unstable. We will look into this in more detail below.",
+   "id": "wikibooks1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "BIBO Stability",
+   "html": "<p>A system is defined to be <strong>BIBO Stable</strong> if every bounded input to the system results in a bounded output over the time interval <math><mrow><mstyle><mo>[</mo><msub><mi>t</mi><mrow><mn>0</mn></mrow></msub><mo>,</mo><mi>∞</mi><mo>)</mo></mstyle></mrow></math>. This must hold for all initial times t<sub>o</sub>. So long as we don't input infinity to our system, we won't get infinity output. </p><p>A system is defined to be <strong>uniformly BIBO Stable</strong> if there exists a positive constant <em>k</em> that is independent of t<sub>0</sub> such that for all t<sub>0</sub> the following conditions: </p><dl><dd><math><mrow><mstyle><mo>‖</mo><mi>u</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>‖</mo><mo>≤</mo><mn>1</mn></mstyle></mrow></math></dd></dl><dl><dd><math><mrow><mstyle><mi>t</mi><mo>≥</mo><msub><mi>t</mi><mrow><mn>0</mn></mrow></msub></mstyle></mrow></math></dd></dl><p>implies that </p><dl><dd><math><mrow><mstyle><mo>‖</mo><mi>y</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>‖</mo><mo>≤</mo><mi>k</mi></mstyle></mrow></math></dd></dl><p>There are a number of different types of stability, and keywords that are used with the topic of stability. Some of the important words that we are going to be discussing in this chapter, and the next few chapters are: <strong>BIBO Stable</strong>, <strong>Marginally Stable</strong>, <strong>Conditionally Stable</strong>, <strong>Uniformly Stable</strong>, <strong>Asymptotically Stable</strong>, and <strong>Unstable</strong>. All of these words mean slightly different things. </p>",
+   "body": "A system is defined to be BIBO Stable if every bounded input to the system results in a bounded output over the time interval [ t 0 , ∞ ) . This must hold for all initial times t o . So long as we don't input infinity to our system, we won't get infinity output. A system is defined to be uniformly BIBO Stable if there exists a positive constant k that is independent of t 0 such that for all t 0 the following conditions: ‖ u ( t ) ‖ ≤ 1 t ≥ t 0 implies that ‖ y ( t ) ‖ ≤ k There are a number of different types of stability, and keywords that are used with the topic of stability. Some of the important words that we are going to be discussing in this chapter, and the next few chapters are: BIBO Stable , Marginally Stable , Conditionally Stable , Uniformly Stable , Asymptotically Stable , and Unstable . All of these words mean slightly different things.",
+   "id": "wikibooks1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Determining BIBO Stability",
+   "html": "<p>We can prove mathematically that a system f is BIBO stable if an arbitrary input x is bounded by two finite but large arbitrary constants M and -M: </p><dl><dd><math><mrow><mstyle><mo>−</mo><mi>M</mi><mo>&lt;</mo><mi>x</mi><mo>≤</mo><mi>M</mi></mstyle></mrow></math></dd></dl><p>We apply the input x, and the arbitrary boundaries M and -M to the system to produce three outputs: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mi>x</mi></mrow></msub><mo>=</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></mstyle></mrow></math></dd> <dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mi>M</mi></mrow></msub><mo>=</mo><mi>f</mi><mo>(</mo><mi>M</mi><mo>)</mo></mstyle></mrow></math></dd> <dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mrow><mo>−</mo><mi>M</mi></mrow></mrow></msub><mo>=</mo><mi>f</mi><mo>(</mo><mo>−</mo><mi>M</mi><mo>)</mo></mstyle></mrow></math></dd></dl><p>Now, all three outputs should be finite for all possible values of M and x, and they should satisfy the following relationship: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mrow><mo>−</mo><mi>M</mi></mrow></mrow></msub><mo>≤</mo><msub><mi>y</mi><mrow><mi>x</mi></mrow></msub><mo>≤</mo><msub><mi>y</mi><mrow><mi>M</mi></mrow></msub></mstyle></mrow></math></dd></dl><p>If this condition is satisfied, then the system is BIBO stable. </p><p>A SISO linear time-invariant (LTI) system is BIBO stable if and only if <math><mrow><mstyle><mi>g</mi><mo>(</mo><mi>t</mi><mo>)</mo></mstyle></mrow></math> is absolutely integrable from [0,∞] or from: </p><dl><dd><math><mrow><mstyle><msubsup><mo>∫</mo><mrow><mn>0</mn></mrow><mrow><mi>∞</mi></mrow></msubsup><mo>|</mo><mi>g</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>|</mo><mspace></mspace><mi>d</mi><mi>t</mi><mo>≤</mo><mi>M</mi><mo>&lt;</mo><mi>∞</mi></mstyle></mrow></math></dd></dl>",
+   "body": "We can prove mathematically that a system f is BIBO stable if an arbitrary input x is bounded by two finite but large arbitrary constants M and -M: − M < x ≤ M We apply the input x, and the arbitrary boundaries M and -M to the system to produce three outputs: y x = f ( x ) y M = f ( M ) y − M = f ( − M ) Now, all three outputs should be finite for all possible values of M and x, and they should satisfy the following relationship: y − M ≤ y x ≤ y M If this condition is satisfied, then the system is BIBO stable. A SISO linear time-invariant (LTI) system is BIBO stable if and only if g ( t ) is absolutely integrable from [0,∞] or from: ∫ 0 ∞ | g ( t ) | d t ≤ M < ∞",
+   "id": "wikibooks1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Example",
+   "html": "<p>Consider the system: </p><dl><dd><math><mrow><mstyle><mi>h</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mi>t</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>We can apply our test, selecting an arbitrarily large finite constant M, and an arbitrary input x such that M&gt;x&gt;-M </p><p>As M approaches infinity (but does not reach infinity), we can show that: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mrow><mo>−</mo><mi>M</mi></mrow></mrow></msub><mo>=</mo><munder><mo>lim</mo><mrow><mrow><mi>M</mi><mo>→</mo><mi>∞</mi></mrow></mrow></munder><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mrow><mo>−</mo><mi>M</mi></mrow></mrow></mfrac></mrow><mo>=</mo><msup><mn>0</mn><mrow><mo>−</mo></mrow></msup></mstyle></mrow></math></dd></dl><p>And: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mi>M</mi></mrow></msub><mo>=</mo><munder><mo>lim</mo><mrow><mrow><mi>M</mi><mo>→</mo><mi>∞</mi></mrow></mrow></munder><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mi>M</mi></mrow></mfrac></mrow><mo>=</mo><msup><mn>0</mn><mrow><mo>+</mo></mrow></msup></mstyle></mrow></math></dd></dl><p>So now, we can write out our inequality: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mrow><mo>−</mo><mi>M</mi></mrow></mrow></msub><mo>≤</mo><msub><mi>y</mi><mrow><mi>x</mi></mrow></msub><mo>≤</mo><msub><mi>y</mi><mrow><mi>M</mi></mrow></msub></mstyle></mrow></math></dd> <dd><math><mrow><mstyle><msup><mn>0</mn><mrow><mo>−</mo></mrow></msup><mo>≤</mo><mi>x</mi><mo>&lt;</mo><msup><mn>0</mn><mrow><mo>+</mo></mrow></msup></mstyle></mrow></math></dd></dl><p>And this inequality should be satisfied for all possible values of x. However, we can see that when x is zero, we have the following: </p><dl><dd><math><mrow><mstyle><msub><mi>y</mi><mrow><mi>x</mi></mrow></msub><mo>=</mo><munder><mo>lim</mo><mrow><mrow><mi>x</mi><mo>→</mo><mn>0</mn></mrow></mrow></munder><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow><mo>=</mo><mi>∞</mi></mstyle></mrow></math></dd></dl><p>Which means that x is between -M and M, but the value y<sub>x</sub> is not between y<sub>-M</sub> and y<sub>M</sub>. Therefore, this system is not stable. </p>",
+   "body": "Consider the system: h ( t ) = 2 t We can apply our test, selecting an arbitrarily large finite constant M, and an arbitrary input x such that M>x>-M As M approaches infinity (but does not reach infinity), we can show that: y − M = lim M → ∞ 2 − M = 0 − And: y M = lim M → ∞ 2 M = 0 + So now, we can write out our inequality: y − M ≤ y x ≤ y M 0 − ≤ x < 0 + And this inequality should be satisfied for all possible values of x. However, we can see that when x is zero, we have the following: y x = lim x → 0 2 x = ∞ Which means that x is between -M and M, but the value y x is not between y -M and y M . Therefore, this system is not stable.",
+   "id": "wikibooks1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Poles and Stability",
+   "html": "<p>When the poles of the closed-loop transfer function of a given system are located in the right-half of the S-plane (RHP), the system becomes unstable. When the poles of the system are located in the left-half plane (LHP) and the system is not improper, the system is shown to be stable. A number of tests deal with this particular facet of stability: The <strong>Routh-Hurwitz Criteria</strong>, the <strong>Root-Locus</strong>, and the <strong>Nyquist Stability Criteria</strong> all test whether there are poles of the transfer function in the RHP. We will learn about all these tests in the upcoming chapters. </p><p>If the system is a multivariable, or a MIMO system, then the system is stable if and only if <em>every pole of every transfer function</em> in the transfer function matrix has a negative real part and every transfer function in the transfer function matrix is not improper. For these systems, it is possible to use the Routh-Hurwitz, Root Locus, and Nyquist methods described later, but these methods must be performed once for each individual transfer function in the transfer function matrix. </p>",
+   "body": "When the poles of the closed-loop transfer function of a given system are located in the right-half of the S-plane (RHP), the system becomes unstable. When the poles of the system are located in the left-half plane (LHP) and the system is not improper, the system is shown to be stable. A number of tests deal with this particular facet of stability: The Routh-Hurwitz Criteria , the Root-Locus , and the Nyquist Stability Criteria all test whether there are poles of the transfer function in the RHP. We will learn about all these tests in the upcoming chapters. If the system is a multivariable, or a MIMO system, then the system is stable if and only if every pole of every transfer function in the transfer function matrix has a negative real part and every transfer function in the transfer function matrix is not improper. For these systems, it is possible to use the Routh-Hurwitz, Root Locus, and Nyquist methods described later, but these methods must be performed once for each individual transfer function in the transfer function matrix.",
+   "id": "wikibooks1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Poles and Eigenvalues",
+   "html": "<strong>Note:</strong><br>Every pole of G(s) is an eigenvalue of the system matrix A. However, not every eigenvalue of A is a pole of G(s).<p>The poles of the transfer function, and the eigenvalues of the system matrix A are related. In fact, we can say that the eigenvalues of the system matrix A <em>are the poles of the transfer function</em> of the system. In this way, if we have the eigenvalues of a system in the state-space domain, we can use the Routh-Hurwitz, and Root Locus methods as if we had our system represented by a transfer function instead. </p><p>On a related note, eigenvalues and all methods and mathematical techniques that use eigenvalues to determine system stability <em>only work with time-invariant systems</em>. In systems which are time-variant, the methods using eigenvalues to determine system stability fail. </p>",
+   "body": "Note: Every pole of G(s) is an eigenvalue of the system matrix A. However, not every eigenvalue of A is a pole of G(s). The poles of the transfer function, and the eigenvalues of the system matrix A are related. In fact, we can say that the eigenvalues of the system matrix A are the poles of the transfer function of the system. In this way, if we have the eigenvalues of a system in the state-space domain, we can use the Routh-Hurwitz, and Root Locus methods as if we had our system represented by a transfer function instead. On a related note, eigenvalues and all methods and mathematical techniques that use eigenvalues to determine system stability only work with time-invariant systems . In systems which are time-variant, the methods using eigenvalues to determine system stability fail.",
+   "id": "wikibooks1-6"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Transfer Functions Revisited",
+   "html": "<p>We are going to have a brief refesher here about transfer functions, because several of the later chapters will use transfer functions for analyzing system stability. </p><p>Let us remember our generalized feedback-loop transfer function, with a gain element of K, a forward path Gp(s), and a feedback of Gb(s). We write the transfer function for this system as: </p><dl><dd><math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>c</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><mi>K</mi><mi>G</mi><mi>p</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow><mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Where <math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>c</mi><mi>l</mi></mrow></mrow></msub></mstyle></mrow></math> is the closed-loop transfer function, and <math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub></mstyle></mrow></math> is the open-loop transfer function. Again, we define the open-loop transfer function as the product of the forward path and the feedback elements, as such: </p><dl><dd><math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mi>K</mi><mi>G</mi><mi>p</mi><mo>(</mo><mi>s</mi><mo>)</mo><mi>G</mi><mi>b</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math> &lt;---Note this definition now contradicts the updated definition in the <a href=\"https://en.wikibooks.org/wiki/Control_Systems/Feedback_Loops#Open_Loop_vs_Closed_Loop\">Feedback Loops</a> section.</dd></dl><p>Now, we can define F(s) to be the <strong>characteristic equation</strong>. F(s) is simply the denominator of the closed-loop transfer function, and can be defined as such: </p><p>[Characteristic Equation] </p><dl><dd><math><mrow><mstyle><mi>F</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>+</mo><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>=</mo><mi>D</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math></dd></dl><p>We can say conclusively that the roots of the characteristic equation are the poles of the transfer function. Now, we know a few simple facts: </p><ol><li>The locations of the poles of the closed-loop transfer function determine if the system is stable or not</li> <li>The zeros of the characteristic equation are the poles of the closed-loop transfer function.</li> <li>The characteristic equation is always a simpler equation than the closed-loop transfer function.</li></ol>",
+   "body": "We are going to have a brief refesher here about transfer functions, because several of the later chapters will use transfer functions for analyzing system stability. Let us remember our generalized feedback-loop transfer function, with a gain element of K, a forward path Gp(s), and a feedback of Gb(s). We write the transfer function for this system as: H c l ( s ) = K G p ( s ) 1 + H o l ( s ) Where H c l is the closed-loop transfer function, and H o l is the open-loop transfer function. Again, we define the open-loop transfer function as the product of the forward path and the feedback elements, as such: H o l ( s ) = K G p ( s ) G b ( s ) <---Note this definition now contradicts the updated definition in the Feedback Loops section. Now, we can define F(s) to be the characteristic equation . F(s) is simply the denominator of the closed-loop transfer function, and can be defined as such: [Characteristic Equation] F ( s ) = 1 + H o l = D ( s ) We can say conclusively that the roots of the characteristic equation are the poles of the transfer function. Now, we know a few simple facts: The locations of the poles of the closed-loop transfer function determine if the system is stable or not The zeros of the characteristic equation are the poles of the closed-loop transfer function. The characteristic equation is always a simpler equation than the closed-loop transfer function.",
+   "id": "wikibooks1-7"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Transfer Functions Revisited",
+   "html": "<p>These functions combined show us that we can focus our attention on the characteristic equation, and find the roots of that equation. </p><h4>State-Space and Stability</h4><p>As we have discussed earlier, the system is stable if the eigenvalues of the system matrix A have negative real parts. However, there are other stability issues that we can analyze, such as whether a system is <em>uniformly stable</em>, <em>asymptotically stable</em>, or otherwise. We will discuss all these topics in a later chapter. </p><h4>Marginal Stability</h4><p>When the poles of the system in the complex s-domain exist on the imaginary axis (the vertical axis), or when the eigenvalues of the system matrix are imaginary (no real part), the system exhibits oscillatory characteristics, and is said to be marginally stable. A marginally stable system may become unstable under certain circumstances, and may be perfectly stable under other circumstances. It is impossible to tell by inspection whether a marginally stable system will become unstable or not. </p><p>We will discuss marginal stability more in the following chapters. </p><table> <tbody><tr> <td> <p><a href=\"https://en.wikibooks.org/wiki/Control_Systems/Nichols_Charts\">← Nichols Charts</a> </p> </td> <td> <p><a href=\"https://en.wikibooks.org/wiki/Control_Systems\">Control Systems</a> </p> </td> <td> <p><a href=\"https://en.wikibooks.org/wiki/Control_Systems/State-Space_Stability\">State-Space Stability →</a> </p> </td> </tr> </tbody></table><p>Retrieved from \"<a href=\"https://en.wikibooks.org/w/index.php?title=Control_Systems/Stability&amp;oldid=4028724\">https://en.wikibooks.org/w/index.php?title=Control_Systems/Stability&amp;oldid=4028724</a>\"</p>",
+   "body": "These functions combined show us that we can focus our attention on the characteristic equation, and find the roots of that equation. State-Space and Stability As we have discussed earlier, the system is stable if the eigenvalues of the system matrix A have negative real parts. However, there are other stability issues that we can analyze, such as whether a system is uniformly stable , asymptotically stable , or otherwise. We will discuss all these topics in a later chapter. Marginal Stability When the poles of the system in the complex s-domain exist on the imaginary axis (the vertical axis), or when the eigenvalues of the system matrix are imaginary (no real part), the system exhibits oscillatory characteristics, and is said to be marginally stable. A marginally stable system may become unstable under certain circumstances, and may be perfectly stable under other circumstances. It is impossible to tell by inspection whether a marginally stable system will become unstable or not. We will discuss marginal stability more in the following chapters. ← Nichols Charts Control Systems State-Space Stability → Retrieved from \" https://en.wikibooks.org/w/index.php?title=Control_Systems/Stability&oldid=4028724 \"",
+   "id": "wikibooks1-8"
+  },
+  {
+   "id": "add-lhp",
+   "type": "mcq",
+   "stage": "check",
+   "q": "When is a continuous-time linear system stable?",
+   "options": [
+    "All its poles have negative real parts",
+    "All its zeros are negative",
+    "Its gain is less than 1",
+    "It has no integrators"
+   ],
+   "answer": 0,
+   "why": "Each pole gives a term like e^(pt) in the response. A negative real part makes it die away; a positive one makes it grow.",
+   "added": true
+  },
+  {
+   "id": "add-margins",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What does a loop's phase margin measure?",
+   "options": [
+    "Extra lag it could take before oscillating",
+    "How fast it reaches setpoint",
+    "Its steady-state error",
+    "The size of its noise"
+   ],
+   "answer": 0,
+   "why": "At the frequency where the loop gain is 1, the phase margin is how far the phase is from −180°. Around 45° to 60° gives a well-damped response; near 0° it rings or oscillates.",
+   "added": true
+  },
+  {
+   "id": "add-marginal",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "A tuned loop settles into a steady oscillation that neither grows nor dies. Where are its dominant poles?",
+   "options": [
+    "On the imaginary axis",
+    "Far into the left half-plane",
+    "On the positive real axis",
+    "At the origin only"
+   ],
+   "answer": 0,
+   "why": "Poles on the imaginary axis give a sustained oscillation: marginal stability. That is the point the Ziegler–Nichols ultimate-gain test looks for.",
+   "added": true
+  }
+ ]
+}

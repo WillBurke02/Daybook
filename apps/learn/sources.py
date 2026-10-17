@@ -52,9 +52,9 @@ def fetch(url, binary=False):
                     data = r.read()
                 break
             except urllib.error.HTTPError as e:
-                if e.code not in (429, 503) or not wait:
-                    raise
                 after = e.headers.get("Retry-After", "")
+                if e.code not in (429, 503) or not wait or after.isdigit() and int(after) > 120:
+                    raise                                  # (a site that says "come back in ten minutes" is not waited for)
                 time.sleep(min(60, int(after) if after.isdigit() else wait * 4))
             except (OSError, http.client.HTTPException):
                 if not wait:

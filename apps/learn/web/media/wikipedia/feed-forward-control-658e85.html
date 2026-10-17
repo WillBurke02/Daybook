@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feed forward (control)</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Feed forward (control). CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Feed_forward_(control) <a href="https://en.wikipedia.org/wiki/Feed_forward_(control)">https://en.wikipedia.org/wiki/Feed_forward_(control)</a></p>
+<h1>Feed forward (control)</h1>
+<p>A <strong>feed forward</strong> (sometimes written <strong>feedforward</strong>) is an element or pathway within a <a href="https://en.wikipedia.org/wiki/Control_system">control system</a> that passes a controlling signal from a source in its external environment to a load elsewhere in its external environment. This is often a command signal from an external operator.</p><p>In control engineering, a <strong>feedforward control system</strong> is a control system that uses sensors to detect disturbances affecting the <a href="https://en.wikipedia.org/wiki/Systematic_review">system</a> and then applies an additional input to minimize the effect of the disturbance. This requires a mathematical model of the system so that the effect of disturbances can be properly predicted.</p><p>A control system which has only feed-forward behavior responds to its control signal in a pre-defined way without responding to the way the system reacts; it is in contrast with a system that also has <a href="https://en.wikipedia.org/wiki/Feedback_carburetor">feedback</a>, which adjusts the input to take account of how it affects the system, and how the system itself may vary unpredictably.</p><p>In a feed-forward system, the control variable adjustment is not error-based. Instead it is based on knowledge about the process in the form of a mathematical model of the process and knowledge about, or measurements of, the process disturbances.</p><p>Some prerequisites are needed for control scheme to be reliable by pure feed-forward without feedback: the external command or controlling signal must be available, and the effect of the output of the system on the load should be known (that usually means that the load must be predictably unchanging with time). Sometimes pure feed-forward control without feedback is called 'ballistic', because once a control signal has been sent, it cannot be further adjusted; any corrective adjustment must be by way of a new control signal. In contrast, 'cruise control' adjusts the output in response to the load that it encounters, by a feedback mechanism.</p><p>These systems could relate to <a href="https://en.wikipedia.org/wiki/Control_theory">control theory</a>, physiology, or computing.</p><h2>Overview</h2><p>With feed-forward or feedforward control, the disturbances are measured and accounted for before they have time to affect the system. In the house example, a feed-forward system may measure the fact that the door is opened and automatically turn on the heater before the house can get too cold. The difficulty with feed-forward control is that the effects of the disturbances on the system must be accurately predicted, and there must not be any unmeasured disturbances. For instance, if a window was opened that was not being measured, the feed-forward-controlled thermostat might let the house cool down.</p><p>The term has specific meaning within the field of CPU-based <a href="https://en.wikipedia.org/wiki/Automatic_control">automatic control</a>. The discipline of feedforward control as it relates to modern, CPU based automatic controls is widely discussed, but is seldom practiced due to the difficulty and expense of developing or providing for the <a href="https://en.wikipedia.org/wiki/Mathematical_model">mathematical model</a> required to facilitate this type of control. <a href="https://en.wikipedia.org/wiki/Open-loop_control">Open-loop control</a> and feedback control, often based on canned <a href="https://en.wikipedia.org/wiki/PID_controller">PID control</a> algorithms, are much more widely used.</p><p>There are three types of control systems: open-loop, feed-forward, and feedback. An example of a pure open-loop control system is manual non-power-assisted steering of a motor car; the steering system does not have access to an auxiliary power source and does not respond to varying resistance to turning of the direction wheels; the driver must make that response without help from the steering system. In comparison, <a href="https://en.wikipedia.org/wiki/Power_steering">power steering</a> has access to a controlled auxiliary power source, which depends on the engine speed. When the steering wheel is turned, a valve is opened which allows fluid under pressure to turn the wheels. A sensor monitors that pressure so that the valve only opens enough to cause the correct pressure to reach the wheel turning mechanism. This is feed-forward control where the output of the system, the change in direction of travel of the vehicle, plays no part in the system. See <a href="https://en.wikipedia.org/wiki/Model_predictive_control">Model predictive control</a>.</p><p>If the driver is included in the system, then they do provide a feedback path by observing the direction of travel and compensating for errors by turning the steering wheel. In that case you have a feedback system, and the block labeled <em>System</em> in Figure(c) is a feed-forward system.</p><p>In other words, systems of different types can be nested, and the overall system regarded as a <a href="https://en.wikipedia.org/wiki/Black-box">black-box</a>.</p><p>Feedforward control is distinctly different from open-loop control and <a href="https://en.wikipedia.org/wiki/Teleoperator">teleoperator</a> systems. Feedforward control requires a mathematical model of the plant (process and/or machine being controlled) and the plant's relationship to any inputs or feedback the system might receive. Neither open-loop control nor teleoperator systems require the sophistication of a mathematical model of the <a href="https://en.wikipedia.org/wiki/Physical_system">physical system</a> or plant being controlled. Control based on operator input without integral processing and interpretation through a mathematical model of the system is a teleoperator system and is not considered feedforward control.</p><h2>History</h2><p>Historically, the use of the term <em>feedforward</em> is found in works by <a href="https://en.wikipedia.org/wiki/Harold_S._Black">Harold S. Black</a> in US patent 1686792 (invented 17 March 1923) and <a href="https://en.wikipedia.org/wiki/Donald_MacCrimmon_MacKay">D. M. MacKay</a> as early as 1956. While MacKay's work is in the field of biological control theory, he speaks only of feedforward systems. MacKay does not mention <em>feedforward control</em> or allude to the discipline of <em>feedforward controls</em>. MacKay and other early writers who use the term <em>feedforward</em> are generally writing about theories of how human or animal brains work. Black also has US patent 2102671 invented 2 August 1927 on the technique of feedback applied to electronic systems.</p><p>The discipline of <em>feedforward controls</em> was largely developed by professors and graduate students at <a href="https://en.wikipedia.org/wiki/Georgia_Tech">Georgia Tech</a>, <a href="https://en.wikipedia.org/wiki/Massachusetts_Institute_of_Technology">MIT</a>, <a href="https://en.wikipedia.org/wiki/Stanford_University">Stanford</a> and <a href="https://en.wikipedia.org/wiki/Carnegie_Mellon_University">Carnegie Mellon</a>. Feedforward is not typically hyphenated in scholarly publications. Meckl and Seering of MIT and Book and Dickerson of Georgia Tech began the development of the concepts of Feedforward Control in the mid-1970s. The discipline of Feedforward Controls was well defined in many scholarly papers, articles and books by the late 1980s.</p><h2>Benefits</h2><p>The benefits of feedforward control are significant and can often justify the extra cost, time and effort required to implement the technology. Control accuracy can often be improved by as much as an <a href="https://en.wikipedia.org/wiki/Order_of_magnitude">order of magnitude</a> if the mathematical model is of sufficient quality and implementation of the feedforward control law is well thought out. <a href="https://en.wikipedia.org/wiki/Energy_consumption">Energy consumption</a> by the feedforward control system and its driver is typically substantially lower than with other controls. Stability is enhanced such that the controlled device can be built of lower cost, lighter weight, springier materials while still being highly accurate and able to operate at high speeds. Other benefits of feedforward control include reduced wear and tear on equipment, lower maintenance costs, higher reliability and a substantial reduction in <a href="https://en.wikipedia.org/wiki/Hysteresis">hysteresis</a>. Feedforward control is often combined with feedback control to optimize performance.</p><h2>Model</h2><p>The mathematical model of the plant (machine, process or organism) used by the feedforward control system may be created and input by a <a href="https://en.wikipedia.org/wiki/Control_engineering">control engineer</a> or it may be learned by the control system. Control systems capable of learning and/or adapting their mathematical model have become more practical as <a href="https://en.wikipedia.org/wiki/Microprocessor">microprocessor</a> speeds have increased. The discipline of modern feedforward control was itself made possible by the invention of microprocessors.</p><p>Feedforward control requires integration of the mathematical model into the control algorithm such that it is used to determine the control actions based on what is known about the state of the system being controlled. In the case of control for a lightweight, flexible <a href="https://en.wikipedia.org/wiki/Robotic_arm">robotic arm</a>, this could be as simple as compensating between when the robot arm is carrying a <a href="https://en.wikipedia.org/wiki/Payload_(air_and_space_craft)">payload</a> and when it is not. The target joint angles are adjusted to place the payload in the desired position based on knowing the deflections in the arm from the mathematical model's interpretation of the disturbance caused by the payload. Systems that plan actions and then pass the plan to a different system for execution do not satisfy the above definition of feedforward control. Unless the system includes a means to detect a disturbance or receive an input and process that input through the mathematical model to determine the required modification to the control action, it is not true feedforward control.</p><h3>Open system</h3><p>In <a href="https://en.wikipedia.org/wiki/Control_theory">control theory</a>, an <strong>open system</strong> is a feed forward system that does not have any <a href="https://en.wikipedia.org/wiki/Feedback_loop">feedback loop</a> to control its output. In contrast, a <a href="https://en.wikipedia.org/wiki/Closed_system_(control_theory)">closed system</a> uses on a feedback loop to control the operation of the system. In an open system, the output of the system is not fed back into the input to the system for control or operation.</p><h2>Applications</h2><h3>Physiological feed-forward system</h3><p>In <a href="https://en.wikipedia.org/wiki/Physiology">physiology</a>, feed-forward control is exemplified by the normal anticipatory regulation of heartbeat in advance of actual physical exertion by the central <a href="https://en.wikipedia.org/wiki/Autonomic_nervous_system">autonomic network</a>. Feed-forward control can be likened to learned anticipatory responses to known cues (<a href="https://en.wikipedia.org/wiki/Predictive_coding">predictive coding</a>). Feedback regulation of the heartbeat provides further adaptiveness to the running eventualities of physical exertion. Feedforward systems are also found in biological control of other variables by many regions of animals <a href="https://en.wikipedia.org/wiki/Brain">brains</a>.</p><p>Even in the case of biological feedforward systems, such as in the <a href="https://en.wikipedia.org/wiki/Human_brain">human brain</a>, knowledge or a <a href="https://en.wikipedia.org/wiki/Mental_model">mental model</a> of the plant (body) can be considered to be mathematical as the model is characterized by limits, rhythms, mechanics and patterns.</p><p>A pure feed-forward system is different from a <a href="https://en.wikipedia.org/wiki/Homeostatic">homeostatic</a> control system, which has the function of keeping the body's internal environment 'steady' or in a 'prolonged steady state of readiness.' A homeostatic control system relies mainly on feedback (especially negative), in addition to the feedforward elements of the system.</p><h3>Gene regulation and feed-forward</h3><p>Feed-forward loops (FFLs), a three-node graph of the form A affects B and C and B affects C, are frequently observed in transcription networks in several organisms including <a href="https://en.wikipedia.org/wiki/Escherichia_coli"><em>E. coli</em></a> and <a href="https://en.wikipedia.org/wiki/Saccharomyces_cerevisiae"><em>S. cerevisiae</em></a>, suggesting that they perform functions that are important for the functioning of these organisms. In <em>E. coli</em> and <em>S. cerevisiae</em> transcription networks have been extensively studied, FFLs occur approximately three times more frequently than expected based on random (<a href="https://en.wikipedia.org/wiki/Erdős–Rényi_model">Erdös-Rényi</a>) networks.</p><p>Edges in <a href="https://en.wikipedia.org/wiki/Gene_regulatory_network">transcription networks</a> are directed and signed, as they represent activation (+) or repression (-). The sign of a path in a transcription network can be obtained by multiplying the signs of the edges in the path, so a path with an odd number of negative signs is negative. There are eight possible three-node FFLs as each of the three arrows can be either repression or activation, which can be classified into coherent or incoherent FFLs. Coherent FFLs have the same sign for both the paths from A to C, and incoherent FFLs have different signs for the two paths.</p><p>The temporal dynamics of FFLs show that coherent FFLs can be sign-sensitive delays that filter input into the circuit. We consider the <a href="https://en.wikipedia.org/wiki/Differential_equation">differential equations</a> for a Type-I coherent FFL, where all the arrows are positive:</p><p><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mrow>
+          <mfrac>
+            <mrow>
+              <mi>δ</mi>
+              <mi>B</mi>
+            </mrow>
+            <mrow>
+              <mi>δ</mi>
+              <mi>t</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>=</mo>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>B</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>)</mo>
+        <mo>−</mo>
+        <msub>
+          <mi>γ</mi>
+          <mrow>
+            <mi>B</mi>
+          </mrow>
+        </msub>
+        <mi>B</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></p><p><math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mrow>
+          <mfrac>
+            <mrow>
+              <mi>δ</mi>
+              <mi>C</mi>
+            </mrow>
+            <mrow>
+              <mi>δ</mi>
+              <mi>t</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>=</mo>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>,</mo>
+        <mi>B</mi>
+        <mo>)</mo>
+        <mo>−</mo>
+        <msub>
+          <mi>γ</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math></p><p>Where <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>y</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>z</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> are increasing functions in <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>B</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> representing production, and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>γ</mi>
+          <mrow>
+            <mi>Y</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>γ</mi>
+          <mrow>
+            <mi>z</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> are rate constants representing degradation or dilution of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>B</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> respectively. <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>,</mo>
+        <mi>B</mi>
+        <mo>)</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> can represent an <a href="https://en.wikipedia.org/wiki/AND_gate">AND gate</a> where <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>,</mo>
+        <mi>B</mi>
+        <mo>)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> if either <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> or <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>B</mi>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>, for instance if <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>,</mo>
+        <mi>B</mi>
+        <mo>)</mo>
+        <mo>=</mo>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <msub>
+          <mi>θ</mi>
+          <mrow>
+            <mi>A</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>&gt;</mo>
+        <msub>
+          <mi>k</mi>
+          <mrow>
+            <mi>A</mi>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>)</mo>
+        <msub>
+          <mi>θ</mi>
+          <mrow>
+            <mi>A</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>B</mi>
+        <mo>&gt;</mo>
+        <msub>
+          <mi>k</mi>
+          <mrow>
+            <mi>A</mi>
+            <mi>B</mi>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>)</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> where <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>θ</mi>
+          <mrow>
+            <mi>A</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>θ</mi>
+          <mrow>
+            <mi>B</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> are <a href="https://en.wikipedia.org/wiki/Step_function">step functions</a>. In this case the FFL creates a time-delay between a sustained on-signal, i.e. increase in <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> and the output increase in <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>. This is because production of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> must first induce production of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>B</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>, which is then needed to induce production of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>. However, there is no time-delay in for an off-signal because a reduction of <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> immediately results in a decrease in the production term <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <msub>
+          <mi>β</mi>
+          <mrow>
+            <mi>C</mi>
+          </mrow>
+        </msub>
+        <mo>(</mo>
+        <mi>A</mi>
+        <mo>,</mo>
+        <mi>B</mi>
+        <mo>)</mo>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math>. This system therefore filters out fluctuations in the on-signal and detects persistent signals. This is particularly relevant in settings with stochastically fluctuating signals. In bacteria these circuits create time delays ranging from a few minutes to a few hours.</p><p>Similarly, an <a href="https://en.wikipedia.org/wiki/Inclusive_OR_gate">inclusive-OR gate</a> in which <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is activated by either <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>A</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> or <math>
+  <semantics>
+    <mrow>
+      <mstyle>
+        <mi>B</mi>
+      </mstyle>
+    </mrow>
+    
+  </semantics>
+</math> is a sign-sensitive delay with no delay after the ON step but with a delay after the OFF step. This is because an ON pulse immediately activates B and C, but an OFF step does not immediately result in deactivation of C because B can still be active. This can protect the system from fluctuations that result in the transient loss of the ON signal and can also provide a form of memory. Kalir, Mangan, and Alon, 2005 show that the regulatory system for flagella in <em>E. coli</em> is regulated with a Type 1 coherent feedforward loop.</p><p>For instance, the regulation of the shift from one carbon source to another in <a href="https://en.wikipedia.org/wiki/Diauxic_growth">diauxic growth</a> in <em>E. coli</em> can be controlled via a type-1 coherent FFL. In diauxic growth cells growth using two carbon sources by first rapidly consuming the preferred carbon source, and then slowing growth in a lag phase before consuming the second less preferred carbon source. In E. coli, glucose is preferred over both <a href="https://en.wikipedia.org/wiki/Arabinose">arabinose</a> and <a href="https://en.wikipedia.org/wiki/Lactose">lactose</a>. The absence of glucose is represented via a small molecule cAMP. Diauxic growth in glucose and lactose is regulated by a simple regulatory system involving cAMP and the <a href="https://en.wikipedia.org/wiki/Lac_operon">lac operon</a>. However, growth in arabinose is regulated by a feedforward loop with an AND gate which confers an approximately 20 minute time delay between the ON-step in which cAMP concentration increases when glucose is consumed and when arabinose transporters are expressed. There is no time delay with the OFF signal which occurs when glucose is present. This prevents the cell from shifting to growth on arabinose based on short term fluctuations in glucose availability.</p><p>Additionally, feedforward loops can facilitate cellular memory. Doncic and Skotheim (2003) show this effect in the regulation in the mating of yeast, where extracellular mating pheromone induces mating behavior, including preventing cells from entering the cell cycle. The mating pheromone activates the MAPK pathway, which then activates the cell-cycle inhibitor Far1 and the transcription factor Ste12, which in turn increases the synthesis of inactive Far1. In this system, the concentration of active Far1 depends on the time <a href="https://en.wikipedia.org/wiki/Integral">integral</a> of a function of the external mating pheromone concentration. This dependence on past levels of mating pheromone is a form of cellular memory. This system simultaneously allows for the stability and reversibility.</p><p>Incoherent feedforward loops, in which the two paths from the input to the output node have different signs result in short pulses in response to an ON signal. In this system, input A simultaneous directly increases and indirectly decreases synthesis of output node C. If the indirect path to C (via B) is slower than the direct path a pulse of output is produced in the time period before levels of B are high enough to inhibit synthesis of C. Response to <a href="https://en.wikipedia.org/wiki/Epidermal_growth_factor">epidermal growth factor (EGF)</a> in dividing mammalian cells is an example of a Type-1 incoherent FFL.</p><p>The frequent observation of feed-forward loops in various biological contexts across multiple scales suggests that they have structural properties that are highly adaptive in many contexts. Several theoretical and experimental studies including those discussed here show that FFLs create a mechanism for biological systems to process and store information, which is important for predictive behavior and survival in complex dynamically changing environments.</p><h3>Feed-forward systems in computing</h3><p>In <a href="https://en.wikipedia.org/wiki/Computing">computing</a>, feed-forward normally refers to a <a href="https://en.wikipedia.org/wiki/Perceptron">perceptron</a> network in which the outputs from all <a href="https://en.wikipedia.org/wiki/Neuron">neurons</a> go to following but not preceding <a href="https://en.wikipedia.org/wiki/Abstraction_layer">layers</a>, so there are no <a href="https://en.wikipedia.org/wiki/Feedback_loop">feedback loops</a>. The connections are set up during a training phase, which in effect is when the system is a feedback system.</p><h3>Long distance telephony</h3><p>In the early 1970s, intercity coaxial transmission systems, including <a href="https://en.wikipedia.org/wiki/L-carrier">L-carrier</a>, used feed-forward amplifiers to diminish linear distortion. This more complex method allowed wider <a href="https://en.wikipedia.org/wiki/Bandwidth_(signal_processing)">bandwidth</a> than earlier <a href="https://en.wikipedia.org/wiki/Feedback">feedback</a> systems. <a href="https://en.wikipedia.org/wiki/Optical_fiber">Optical fiber</a>, however, made such systems obsolete before many were built.</p><h3>Automation and machine control</h3><p>Feedforward control is a discipline within the field of automatic controls used in automation.</p><h3>Parallel feed-forward compensation with derivative (PFCD)</h3><p>The method is rather a new technique that changes the phase of an open-loop transfer function of a <a href="https://en.wikipedia.org/wiki/Minimum_phase#Non-minimum_phase">non-minimum phase</a> system into <a href="https://en.wikipedia.org/wiki/Minimum_phase">minimum phase</a>.</p>
+</body></html>

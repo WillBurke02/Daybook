@@ -1,0 +1,118 @@
+{
+ "id": "networks.ip.wireshark",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikipedia: Wireshark"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "Wikipedia contributors, Wireshark. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Wireshark"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Wireshark",
+   "url": "media/wikipedia/wireshark-7c6581.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Wireshark",
+   "html": "<p><strong>Wireshark</strong> is <a href=\"https://en.wikipedia.org/wiki/Free_and_open-source_software\">free and open-source</a> <a href=\"https://en.wikipedia.org/wiki/Packet_analyzer\">packet analyzer</a> software. It is used for <a href=\"https://en.wikipedia.org/wiki/Computer_network\">computer network</a> analysis and troubleshooting, software and <a href=\"https://en.wikipedia.org/wiki/Communications_protocol\">communications protocol</a> development, and education. Originally named <strong>Ethereal</strong>, the project was renamed Wireshark in May 2006 due to trademark issues.</p><p>Wireshark is <a href=\"https://en.wikipedia.org/wiki/Cross-platform\">cross-platform</a>, using the <a href=\"https://en.wikipedia.org/wiki/Qt_(software)\">Qt</a> <a href=\"https://en.wikipedia.org/wiki/Widget_toolkit\">widget toolkit</a> in current releases to implement its user interface, and using <a href=\"https://en.wikipedia.org/wiki/Pcap\">pcap</a> to capture packets; it runs on <a href=\"https://en.wikipedia.org/wiki/Linux\">Linux</a>, <a href=\"https://en.wikipedia.org/wiki/MacOS\">macOS</a>, <a href=\"https://en.wikipedia.org/wiki/BSD\">BSD</a>, <a href=\"https://en.wikipedia.org/wiki/Solaris_(operating_system)\">Solaris</a>, some other <a href=\"https://en.wikipedia.org/wiki/Unix-like\">Unix-like</a> operating systems, and <a href=\"https://en.wikipedia.org/wiki/Microsoft_Windows\">Microsoft Windows</a>. There is also a terminal-based (non-GUI) version called TShark. Wireshark, and the other programs distributed with it such as TShark, are <a href=\"https://en.wikipedia.org/wiki/Free_software\">free software</a>, released under the terms of the <a href=\"https://en.wikipedia.org/wiki/GNU_General_Public_License\">GNU General Public License</a> version 2 or any later version.</p>",
+   "body": "Wireshark is free and open-source packet analyzer software. It is used for computer network analysis and troubleshooting, software and communications protocol development, and education. Originally named Ethereal , the project was renamed Wireshark in May 2006 due to trademark issues. Wireshark is cross-platform , using the Qt widget toolkit in current releases to implement its user interface, and using pcap to capture packets; it runs on Linux , macOS , BSD , Solaris , some other Unix-like operating systems, and Microsoft Windows . There is also a terminal-based (non-GUI) version called TShark. Wireshark, and the other programs distributed with it such as TShark, are free software , released under the terms of the GNU General Public License version 2 or any later version.",
+   "id": "wikipedia1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Functionality",
+   "html": "<p>Wireshark is very similar to <a href=\"https://en.wikipedia.org/wiki/Tcpdump\">tcpdump</a>, but has a <a href=\"https://en.wikipedia.org/wiki/Graphical_user_interface\">graphical</a> <a href=\"https://en.wikipedia.org/wiki/Front-end_and_back-end\">front-end</a> and integrated sorting and filtering options. Wireshark is also widely used in cybersecurity to detect suspicious network activity, including packet sniffing and intrusion attempts.</p><p>Wireshark lets the user put <a href=\"https://en.wikipedia.org/wiki/Network_interface_controller\">network interface controllers</a> into <a href=\"https://en.wikipedia.org/wiki/Promiscuous_mode\">promiscuous mode</a> and is commonly used in ethical hacking and network security analysis. (if supported by the <a href=\"https://en.wikipedia.org/wiki/Network_interface_controller\">network interface controller</a>), so they can see all the traffic visible on that interface including <a href=\"https://en.wikipedia.org/wiki/Unicast\">unicast</a> traffic not sent to that network interface controller's <a href=\"https://en.wikipedia.org/wiki/MAC_address\">MAC address</a>. However, when capturing with a <a href=\"https://en.wikipedia.org/wiki/Packet_analyzer\">packet analyzer</a> in promiscuous mode on a port on a <a href=\"https://en.wikipedia.org/wiki/Network_switch\">network switch</a>, not all traffic through the switch is necessarily sent to the port where the capture is done, so capturing in promiscuous mode is not necessarily sufficient to see all network traffic. <a href=\"https://en.wikipedia.org/wiki/Port_mirroring\">Port mirroring</a> or various <a href=\"https://en.wikipedia.org/wiki/Network_tap\">network taps</a> extend capture to any point on the network. Simple passive taps are extremely resistant to tampering.</p><p>On Linux, BSD, and macOS, with <a href=\"https://en.wikipedia.org/wiki/Pcap\">libpcap</a> 1.0.0 or later, Wireshark 1.4 and later can also put <a href=\"https://en.wikipedia.org/wiki/Wireless_network_interface_controller\">wireless network interface controllers</a> into <a href=\"https://en.wikipedia.org/wiki/Monitor_mode\">monitor mode</a>.</p><p>If a remote machine captures packets and sends the captured packets to a machine running Wireshark using the <a href=\"https://en.wikipedia.org/wiki/TZSP\">TZSP</a> protocol or the protocol used by <a href=\"https://en.wikipedia.org/wiki/OmniPeek\">OmniPeek</a>, Wireshark dissects those packets, so it can analyze packets captured on a remote machine at the time that they are captured.</p>",
+   "body": "Wireshark is very similar to tcpdump , but has a graphical front-end and integrated sorting and filtering options. Wireshark is also widely used in cybersecurity to detect suspicious network activity, including packet sniffing and intrusion attempts. Wireshark lets the user put network interface controllers into promiscuous mode and is commonly used in ethical hacking and network security analysis. (if supported by the network interface controller ), so they can see all the traffic visible on that interface including unicast traffic not sent to that network interface controller's MAC address . However, when capturing with a packet analyzer in promiscuous mode on a port on a network switch , not all traffic through the switch is necessarily sent to the port where the capture is done, so capturing in promiscuous mode is not necessarily sufficient to see all network traffic. Port mirroring or various network taps extend capture to any point on the network. Simple passive taps are extremely resistant to tampering. On Linux, BSD, and macOS, with libpcap 1.0.0 or later, Wireshark 1.4 and later can also put wireless network interface controllers into monitor mode . If a remote machine captures packets and sends the captured packets to a machine running Wireshark using the TZSP protocol or the protocol used by OmniPeek , Wireshark dissects those packets, so it can analyze packets captured on a remote machine at the time that they are captured.",
+   "id": "wikipedia1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "History",
+   "html": "<p>In the late 1990s, Gerald Combs, a computer science graduate of the <a href=\"https://en.wikipedia.org/wiki/University_of_Missouri–Kansas_City\">University of Missouri–Kansas City</a>, was working for a small <a href=\"https://en.wikipedia.org/wiki/Internet_service_provider\">Internet service provider</a>, Network Integration Services. The commercial protocol analysis products at the time were priced around $1500 and did not run on the company's primary platforms (Solaris and Linux), so Gerald began writing Ethereal and released the first version around 1998. The Ethereal <a href=\"https://en.wikipedia.org/wiki/Trademark\">trademark</a> is owned by Network Integration Services.</p><p>In May 2006, Combs accepted a job with CACE Technologies with Loris Degioanni. Combs still held copyright on most of Ethereal's source code (and the rest was re-distributable under the GNU GPL), so he used the contents of the Ethereal <a href=\"https://en.wikipedia.org/wiki/Subversion_(software)\">Subversion</a> repository as the basis for the Wireshark repository. However, he did not own the Ethereal trademark, so he changed the name to Wireshark. In 2010 <a href=\"https://en.wikipedia.org/wiki/Riverbed_Technology\">Riverbed Technology</a> purchased CACE and took over as the primary sponsor of Wireshark. Ethereal development has ceased, and an Ethereal security advisory recommended switching to Wireshark. In 2022, Sysdig took over as the primary sponsor of Wireshark, and, in 2023, established the Wireshark Foundation and put Wireshark into that foundation.</p><p>Wireshark has won several industry awards over the years, including <em><a href=\"https://en.wikipedia.org/wiki/EWeek\">eWeek</a></em>, <em><a href=\"https://en.wikipedia.org/wiki/InfoWorld\">InfoWorld</a></em>, and <em><a href=\"https://en.wikipedia.org/wiki/PC_Magazine\">PC Magazine</a></em>. It is also the top-rated packet sniffer in the Insecure.Org network security tools survey and was the <a href=\"https://en.wikipedia.org/wiki/SourceForge\">SourceForge</a> Project of the Month in August 2010.</p>",
+   "body": "In the late 1990s, Gerald Combs, a computer science graduate of the University of Missouri–Kansas City , was working for a small Internet service provider , Network Integration Services. The commercial protocol analysis products at the time were priced around $1500 and did not run on the company's primary platforms (Solaris and Linux), so Gerald began writing Ethereal and released the first version around 1998. The Ethereal trademark is owned by Network Integration Services. In May 2006, Combs accepted a job with CACE Technologies with Loris Degioanni. Combs still held copyright on most of Ethereal's source code (and the rest was re-distributable under the GNU GPL), so he used the contents of the Ethereal Subversion repository as the basis for the Wireshark repository. However, he did not own the Ethereal trademark, so he changed the name to Wireshark. In 2010 Riverbed Technology purchased CACE and took over as the primary sponsor of Wireshark. Ethereal development has ceased, and an Ethereal security advisory recommended switching to Wireshark. In 2022, Sysdig took over as the primary sponsor of Wireshark, and, in 2023, established the Wireshark Foundation and put Wireshark into that foundation. Wireshark has won several industry awards over the years, including eWeek , InfoWorld , and PC Magazine . It is also the top-rated packet sniffer in the Insecure.Org network security tools survey and was the SourceForge Project of the Month in August 2010.",
+   "id": "wikipedia1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "History",
+   "html": "<p>Combs continues to maintain the overall code of Wireshark and to issue releases of new versions of the software. The product website lists more than 2000 contributing authors.</p><h4>Features</h4><p>Wireshark is a data capturing program that \"understands\" the structure (<a href=\"https://en.wikipedia.org/wiki/Encapsulation_(networking)\">encapsulation</a>) of different networking protocols. It can parse and display the fields, along with their meanings as specified by different networking protocols. Wireshark uses <a href=\"https://en.wikipedia.org/wiki/Pcap\">pcap</a> to capture packets, so it can only capture packets on the types of networks that pcap supports.</p><ul><li>Data can be captured \"from the wire\" from a live network connection or read from a file of already-captured packets.</li> <li>Live data can be read from different types of networks, including <a href=\"https://en.wikipedia.org/wiki/Ethernet\">Ethernet</a>, <a href=\"https://en.wikipedia.org/wiki/IEEE_802.11\">IEEE 802.11</a>, <a href=\"https://en.wikipedia.org/wiki/Point-to-Point_Protocol\">PPP</a>, and <a href=\"https://en.wikipedia.org/wiki/Loopback\">loopback</a>.</li> <li>Captured network data can be browsed via a <a href=\"https://en.wikipedia.org/wiki/Graphical_user_interface\">GUI</a>, or via the terminal (<a href=\"https://en.wikipedia.org/wiki/Command_line_interface\">command line</a>) version of the utility, TShark.</li> <li>Captured files can be programmatically edited or converted via command-line switches to the \"editcap\" program.</li> <li>Data display can be refined using a display filter.</li> <li><a href=\"https://en.wikipedia.org/wiki/Plug-in_(computing)\">Plug-ins</a> can be created for dissecting new protocols.</li> <li><a href=\"https://en.wikipedia.org/wiki/Voice_over_IP\">VoIP</a> calls in the captured traffic can be detected. If encoded in a compatible encoding, the media flow can even be played.</li> <li>Raw <a href=\"https://en.wikipedia.org/wiki/Universal_Serial_Bus\">USB</a> traffic can be captured.</li> <li>Wireless connections can also be filtered as long as they traverse the monitored Ethernet.</li> <li>Various settings, timers, and filters can be set to provide the facility of filtering the output of the captured traffic.</li></ul>",
+   "body": "Combs continues to maintain the overall code of Wireshark and to issue releases of new versions of the software. The product website lists more than 2000 contributing authors. Features Wireshark is a data capturing program that \"understands\" the structure ( encapsulation ) of different networking protocols. It can parse and display the fields, along with their meanings as specified by different networking protocols. Wireshark uses pcap to capture packets, so it can only capture packets on the types of networks that pcap supports. Data can be captured \"from the wire\" from a live network connection or read from a file of already-captured packets. Live data can be read from different types of networks, including Ethernet , IEEE 802.11 , PPP , and loopback . Captured network data can be browsed via a GUI , or via the terminal ( command line ) version of the utility, TShark. Captured files can be programmatically edited or converted via command-line switches to the \"editcap\" program. Data display can be refined using a display filter. Plug-ins can be created for dissecting new protocols. VoIP calls in the captured traffic can be detected. If encoded in a compatible encoding, the media flow can even be played. Raw USB traffic can be captured. Wireless connections can also be filtered as long as they traverse the monitored Ethernet. Various settings, timers, and filters can be set to provide the facility of filtering the output of the captured traffic.",
+   "id": "wikipedia1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "History",
+   "html": "<p>Wireshark's native network trace file formats are the libpcap format read and written by <a href=\"https://en.wikipedia.org/wiki/Pcap\">libpcap, WinPcap, and Npcap</a>, so it can exchange captured network traces with other applications that use the same format, including <a href=\"https://en.wikipedia.org/wiki/Tcpdump\">tcpdump</a> and <a href=\"https://en.wikipedia.org/wiki/CA,_Inc.\">CA</a> NetMaster, and the pcapng format read by newer versions of libpcap. It can also read captures from other network analyzers, such as <a href=\"https://en.wikipedia.org/wiki/Snoop_(software)\">snoop</a>, <a href=\"https://en.wikipedia.org/wiki/Network_General\">Network General</a>'s <a href=\"https://en.wikipedia.org/wiki/Sniffer_(protocol_analyzer)\">Sniffer</a>, and <a href=\"https://en.wikipedia.org/wiki/Microsoft_Network_Monitor\">Microsoft Network Monitor</a>.</p><h4>Security</h4><p>Capturing raw network traffic from an interface typically requires elevated privileges on many platforms. Wireshark can also be used to analyze network traffic in cybersecurity research, including simulated attack traffic. For this reason, older versions of Wireshark and TShark were often run with <a href=\"https://en.wikipedia.org/wiki/Superuser\">superuser</a> permissions to access network interfaces directly. Considering the huge number of protocol dissectors that are called when traffic is captured and recognizing the possibility of a bug in a dissector, a serious security risk can be posed. Due to the rather large number of vulnerabilities in the past (of which many have allowed remote code execution) and developers' doubts for better future development, <a href=\"https://en.wikipedia.org/wiki/OpenBSD\">OpenBSD</a> removed Ethereal from its ports tree prior to OpenBSD 3.6.</p><p>Elevated privileges are not needed for all operations. For example, an alternative is to run tcpdump or the <em>dumpcap</em> utility that comes with Wireshark with superuser privileges to capture packets into a file, and later analyze the packets by running Wireshark with restricted privileges. To emulate near realtime analysis, each captured file may be merged by <em>mergecap</em> into a growing file processed by Wireshark. On wireless networks, it is possible to use the <a href=\"https://en.wikipedia.org/wiki/Aircrack\">Aircrack</a> <a href=\"https://en.wikipedia.org/wiki/Wireless_security\">wireless security</a> tools to capture <a href=\"https://en.wikipedia.org/wiki/IEEE_802.11\">IEEE 802.11</a> frames and read the resulting dump files with Wireshark.</p>",
+   "body": "Wireshark's native network trace file formats are the libpcap format read and written by libpcap, WinPcap, and Npcap , so it can exchange captured network traces with other applications that use the same format, including tcpdump and CA NetMaster, and the pcapng format read by newer versions of libpcap. It can also read captures from other network analyzers, such as snoop , Network General 's Sniffer , and Microsoft Network Monitor . Security Capturing raw network traffic from an interface typically requires elevated privileges on many platforms. Wireshark can also be used to analyze network traffic in cybersecurity research, including simulated attack traffic. For this reason, older versions of Wireshark and TShark were often run with superuser permissions to access network interfaces directly. Considering the huge number of protocol dissectors that are called when traffic is captured and recognizing the possibility of a bug in a dissector, a serious security risk can be posed. Due to the rather large number of vulnerabilities in the past (of which many have allowed remote code execution) and developers' doubts for better future development, OpenBSD removed Ethereal from its ports tree prior to OpenBSD 3.6. Elevated privileges are not needed for all operations. For example, an alternative is to run tcpdump or the dumpcap utility that comes with Wireshark with superuser privileges to capture packets into a file, and later analyze the packets by running Wireshark with restricted privileges. To emulate near realtime analysis, each captured file may be merged by mergecap into a growing file processed by Wireshark. On wireless networks, it is possible to use the Aircrack wireless security tools to capture IEEE 802.11 frames and read the resulting dump files with Wireshark.",
+   "id": "wikipedia1-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "History",
+   "html": "<p>As of Wireshark 0.99.7, Wireshark and TShark run dumpcap to perform traffic capture. Platforms that require special privileges to capture traffic need only arrange that dumpcap is run with those privileges. Neither Wireshark nor TShark need to or should be run with special privileges.</p><h4>Color coding</h4><p>Wireshark can color packets based on rules that match particular fields in packets, to help the user identify the types of traffic at a glance. A default set of rules is provided; users can change existing rules for coloring packets, add new rules, or remove rules.</p>",
+   "body": "As of Wireshark 0.99.7, Wireshark and TShark run dumpcap to perform traffic capture. Platforms that require special privileges to capture traffic need only arrange that dumpcap is run with those privileges. Neither Wireshark nor TShark need to or should be run with special privileges. Color coding Wireshark can color packets based on rules that match particular fields in packets, to help the user identify the types of traffic at a glance. A default set of rules is provided; users can change existing rules for coloring packets, add new rules, or remove rules.",
+   "id": "wikipedia1-6"
+  },
+  {
+   "id": "add-filter",
+   "type": "mcq",
+   "stage": "check",
+   "q": "In Wireshark, which display filter shows only traffic to or from 192.168.0.10?",
+   "options": [
+    "ip.addr == 192.168.0.10",
+    "host 192.168.0.10 only",
+    "filter ip=192.168.0.10",
+    "src 192.168.0.10"
+   ],
+   "answer": 0,
+   "why": "Display filters use field names such as ip.addr, tcp.port and modbus. 'host 192.168.0.10' is capture-filter syntax, set before the capture starts.",
+   "added": true
+  },
+  {
+   "id": "add-span",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A laptop on a switch port sees almost none of the traffic between a PLC and its HMI. Why?",
+   "options": [
+    "A switch sends frames only to their port",
+    "Wireshark needs a licence",
+    "The laptop's own firewall blocks the traffic",
+    "The PLC encrypts everything"
+   ],
+   "answer": 0,
+   "why": "Use a mirrored (SPAN) port on a managed switch, or a network tap, to see traffic between other devices.",
+   "added": true
+  },
+  {
+   "id": "add-retrans",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "A capture shows many TCP retransmissions to one device. What does that point to?",
+   "options": [
+    "Packets being lost on the way",
+    "A correct, healthy link",
+    "A DNS problem",
+    "Too many VLANs"
+   ],
+   "answer": 0,
+   "why": "TCP resends what was not acknowledged. Repeated retransmissions suggest a bad cable or connector, a duplex mismatch, or a congested link.",
+   "added": true
+  }
+ ]
+}

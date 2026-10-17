@@ -1,5 +1,18 @@
 # Changes
 
+## 4.0.26 — 17 October 2026
+
+- **18 more lessons**, each with questions of its own: block diagrams, Bode plots, stability, digital
+  control and Laplace transforms (Wikibooks' Control Systems); SQL, design patterns, data structures,
+  Wireshark and industrial PCs; design for manufacture, linear guides, metals (with 6082, S275 and S355
+  for the UK), CAD, gearing and cams, feedforward; functional safety under ISO 13849 (with the GB
+  machinery regulations and PUWER); and report writing from GOV.UK's own writing guidance.
+- **A second source for 17 more lessons** that leant on one: the Electricity at Work Regulations on
+  testing and on overcurrent protection, DoITPoMS on bearings and steel, the NCSC on securing devices,
+  GitHub Docs on Git, and Wikipedia for the rest.
+- The importer no longer waits on a site that asks it to come back in ten minutes; it leaves that
+  figure out instead.
+
 ## 4.0.25 — 17 October 2026
 
 - **33 more lessons**, each with questions of its own. Software from the makers' own documentation:

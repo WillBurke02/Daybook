@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Select (SQL)</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Select (SQL). CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Select_(SQL) <a href="https://en.wikipedia.org/wiki/Select_(SQL)">https://en.wikipedia.org/wiki/Select_(SQL)</a></p>
+<h1>Select (SQL)</h1>
+<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> <strong>SELECT</strong> statement returns a <a href="https://en.wikipedia.org/wiki/Result_set">result set</a> of rows, from one or more <a href="https://en.wikipedia.org/wiki/Table_(database)">tables</a>.</p><p>A SELECT statement retrieves zero or more rows from one or more <a href="https://en.wikipedia.org/wiki/Database_Tables">database tables</a> or database <a href="https://en.wikipedia.org/wiki/View_(database)">views</a>. In most applications, <code>SELECT</code> is the most commonly used <a href="https://en.wikipedia.org/wiki/Data_manipulation_language">data manipulation language</a> (DML) command. As SQL is a <a href="https://en.wikipedia.org/wiki/Declarative_programming">declarative programming</a> language, <code>SELECT</code> queries specify a result set, but do not specify how to calculate it. The database translates the query into a "<a href="https://en.wikipedia.org/wiki/Query_plan">query plan</a>" which may vary between executions, database versions and database software. This functionality is called the "<a href="https://en.wikipedia.org/wiki/Query_optimizer">query optimizer</a>" as it is responsible for finding the best possible execution plan for the query, within applicable constraints.</p><p>The SELECT statement has many optional clauses:</p><ul><li><code>SELECT</code> list is the list of <a href="https://en.wikipedia.org/wiki/Column_(database)">columns</a> or SQL expressions to be returned by the query. This is approximately the <a href="https://en.wikipedia.org/wiki/Relational_algebra">relational algebra</a> <a href="https://en.wikipedia.org/wiki/Projection_(relational_algebra)">projection</a> operation.</li> <li><code><a href="https://en.wikipedia.org/wiki/Alias_(SQL)">AS</a></code> optionally provides an alias for each column or expression in the <code>SELECT</code> list. This is the relational algebra <a href="https://en.wikipedia.org/wiki/Rename_(relational_algebra)">rename</a> operation.</li> <li><code><a href="https://en.wikipedia.org/wiki/From_(SQL)">FROM</a></code> specifies from which table to get the data.</li> <li><code>WHERE</code> specifies which rows to retrieve. This is approximately the relational algebra <a href="https://en.wikipedia.org/wiki/Selection_(relational_algebra)">selection</a> operation.</li> <li><code><a href="https://en.wikipedia.org/wiki/Group_by_(SQL)">GROUP BY</a></code> groups rows sharing a property so that an <a href="https://en.wikipedia.org/wiki/Aggregate_function">aggregate function</a> can be applied to each group.</li> <li><code><a href="https://en.wikipedia.org/wiki/Having_(SQL)">HAVING</a></code> selects among the groups defined by the GROUP BY clause.</li> <li><code><a href="https://en.wikipedia.org/wiki/Order_by_(SQL)">ORDER BY</a></code> specifies how to order the returned rows.</li></ul><h2>Overview</h2><p><code>SELECT</code> is the most common operation in SQL, called "the query". <code>SELECT</code> retrieves data from one or more <a href="https://en.wikipedia.org/wiki/Table_(database)">tables</a>, or expressions. Standard <code>SELECT</code> statements have no persistent effects on the database. Some non-standard implementations of <code>SELECT</code> can have persistent effects, such as the <code>SELECT INTO</code> syntax provided in some databases.</p><p>Queries allow the user to describe desired data, leaving the <a href="https://en.wikipedia.org/wiki/Database_management_system">database management system (DBMS)</a> to carry out <a href="https://en.wikipedia.org/wiki/Query_plan">planning</a>, <a href="https://en.wikipedia.org/wiki/Query_optimizer">optimizing</a>, and performing the physical operations necessary to produce that result as it chooses.</p><p>A query includes a list of columns to include in the final result, normally immediately following the <code>SELECT</code> keyword. An asterisk ("<code>*</code>") can be used to specify that the query should return all columns of all the queried tables. <code>SELECT</code> is the most complex statement in SQL, with optional keywords and clauses that include:</p><ul><li>The <code><a href="https://en.wikipedia.org/wiki/From_(SQL)">FROM</a></code> clause, which indicates the tables to retrieve data from. The <code>FROM</code> clause can include optional <code><a href="https://en.wikipedia.org/wiki/Join_(SQL)">JOIN</a></code> subclauses to specify the rules for joining tables.</li> <li>The <code>WHERE</code> clause includes a comparison predicate, which restricts the rows returned by the query. The <code>WHERE</code> clause eliminates all rows from the result set where the comparison predicate does not evaluate to True.</li> <li>The <code>GROUP BY</code> clause projects rows having common values into a smaller set of rows. <code>GROUP BY</code> is often used in conjunction with SQL aggregation functions or to eliminate duplicate rows from a result set. The <code>WHERE</code> clause is applied before the <code>GROUP BY</code> clause.</li> <li>The <code><a href="https://en.wikipedia.org/wiki/Having_(SQL)">HAVING</a></code> clause includes a predicate used to filter rows resulting from the <code>GROUP BY</code> clause. Because it acts on the results of the <code>GROUP BY</code> clause, aggregation functions can be used in the <code>HAVING</code> clause predicate.</li> <li>The <code><a href="https://en.wikipedia.org/wiki/Order_by_(SQL)">ORDER BY</a></code> clause identifies which columns to use to sort the resulting data, and in which direction to sort them (ascending or descending). Without an <code>ORDER BY</code> clause, the order of rows returned by an SQL query is undefined.</li> <li>The <code>DISTINCT</code> keyword eliminates duplicate data.</li></ul><p>The following example of a <code>SELECT</code> query returns a list of expensive books. The query retrieves all rows from the <em>Book</em> table in which the <em>price</em> column contains a value greater than 100.00. The result is sorted in ascending order by <em>title</em>. The asterisk (*) in the <em>select list</em> indicates that all columns of the <em>Book</em> table should be included in the result set.</p><pre>SELECT *
+ FROM  Book
+ WHERE price &gt; 100.00
+ ORDER BY title;
+</pre><p>The example below demonstrates a query of multiple tables, grouping, and aggregation, by returning a list of books and the number of authors associated with each book.</p><pre>    SELECT Book.title AS Title,
+           count(*) AS Authors
+     FROM  Book
+     JOIN  Book_author
+       ON  Book.isbn = Book_author.isbn
+ GROUP BY Book.title;
+</pre><p>Example output might resemble the following:</p><pre>Title                  Authors
+---------------------- -------
+SQL Examples and Guide 4
+The Joy of SQL         1
+An Introduction to SQL 2
+Pitfalls of SQL        1</pre><p>Under the precondition that <em>isbn</em> is the only common column name of the two tables and that a column named <em>title</em> only exists in the <em>Book</em> table, one could re-write the query above in the following form:</p><pre>SELECT title,
+       count(*) AS Authors
+ FROM  Book
+ NATURAL JOIN Book_author
+ GROUP BY title;
+</pre><p>However, many vendors either do not support this approach, or require certain column-naming conventions for natural joins to work effectively.</p><p>SQL includes operators and functions for calculating values on stored values. SQL allows the use of expressions in the <em>select list</em> to project data, as in the following example, which returns a list of books that cost more than 100.00 with an additional <em>sales_tax</em> column containing a sales tax figure calculated at 6% of the <em>price</em>.</p><pre>SELECT isbn,
+       title,
+       price,
+       price * 0.06 AS sales_tax
+ FROM  Book
+ WHERE price &gt; 100.00
+ ORDER BY title;
+</pre><h3>Subqueries</h3><p>Queries can be nested so that the results of one query can be used in another query via a <a href="https://en.wikipedia.org/wiki/Relational_operator">relational operator</a> or aggregation function. A nested query is also known as a <em>subquery</em>. While joins and other table operations provide computationally superior (i.e. faster) alternatives in many cases (all depending on implementation), the use of subqueries introduces a hierarchy in execution that can be useful or necessary. In the following example, the aggregation function <code>AVG</code> receives as input the result of a subquery:</p><pre>SELECT isbn,
+       title,
+       price
+ FROM  Book
+ WHERE price &lt; (SELECT AVG(price) FROM Book)
+ ORDER BY title;
+</pre><p>A subquery can use values from the outer query, in which case it is known as a <a href="https://en.wikipedia.org/wiki/Correlated_subquery">correlated subquery</a>.</p><p>Since 1999 the SQL standard allows WITH clauses, i.e. named subqueries often called <a href="https://en.wikipedia.org/wiki/Common_table_expression">common table expressions</a> (named and designed after the IBM DB2 version 2 implementation; Oracle calls these <a href="https://en.wikipedia.org/wiki/Subquery_factoring">subquery factoring</a>). CTEs can also be <a href="https://en.wikipedia.org/wiki/Recursive">recursive</a> by referring to themselves; <a href="https://en.wikipedia.org/wiki/Hierarchical_and_recursive_queries_in_SQL">the resulting mechanism</a> allows tree or graph traversals (when represented as relations), and more generally <a href="https://en.wikipedia.org/wiki/Fixpoint">fixpoint</a> computations.</p><h3>Derived table</h3><p>A derived table is a subquery in a FROM clause. Essentially, the derived table is a subquery that can be selected from or joined to. Derived table functionality allows the user to reference the subquery as a table. The derived table also is referred to as an <em>inline view</em> or a <em>select in from list</em>.</p><p>In the following example, the SQL statement involves a join from the initial Books table to the derived table "Sales". This derived table captures associated book sales information using the ISBN to join to the Books table. As a result, the derived table provides the result set with additional columns (the number of items sold and the company that sold the books):</p><pre>SELECT b.isbn, b.title, b.price, sales.items_sold, sales.company_nm
+FROM Book b
+  JOIN (SELECT SUM(Items_Sold) Items_Sold, Company_Nm, ISBN
+        FROM Book_Sales
+        GROUP BY Company_Nm, ISBN) sales
+  ON sales.isbn = b.isbn
+</pre><h2>Examples</h2><table> <tbody><tr><th>Table "T"</th> <th>Query</th> <th>Result</th></tr> <tr> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> <tr> <td>2</td><td>b</td></tr> </tbody></table></td> <td><code>SELECT * FROM T;</code></td> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> <tr> <td>2</td><td>b</td></tr> </tbody></table></td></tr> <tr> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> <tr> <td>2</td><td>b</td></tr> </tbody></table></td> <td><code>SELECT C1 FROM T;</code></td> <td> <table> <tbody><tr><th>C1</th></tr> <tr> <td>1</td></tr> <tr> <td>2</td></tr> </tbody></table></td></tr> <tr> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> <tr> <td>2</td><td>b</td></tr> </tbody></table></td> <td><code>SELECT * FROM T WHERE C1 = 1;</code></td> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> </tbody></table></td></tr> <tr> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>1</td><td>a</td></tr> <tr> <td>2</td><td>b</td></tr> </tbody></table></td> <td><code>SELECT * FROM T ORDER BY C1 DESC;</code></td> <td> <table> <tbody><tr><th>C1</th><th>C2</th></tr> <tr> <td>2</td><td>b</td></tr> <tr> <td>1</td><td>a</td></tr> </tbody></table></td></tr> <tr> <td>does not exist</td> <td><code>SELECT 1+1, 3*2;</code></td> <td> <table> <tbody><tr><th>`1+1`</th><th>`3*2`</th></tr> <tr> <td>2</td><td>6</td></tr> </tbody></table></td></tr> </tbody></table><p>Given a table T, the <em>query</em> <code>SELECT * FROM T</code> will result in all the elements of all the rows of the table being shown.</p><p>With the same table, the query <code>SELECT C1 FROM T</code> will result in the elements from the column C1 of all the rows of the table being shown. This is similar to a <em><a href="https://en.wikipedia.org/wiki/Projection_(relational_algebra)">projection</a></em> in <a href="https://en.wikipedia.org/wiki/Relational_algebra">relational algebra</a>, except that in the general case, the result may contain duplicate rows. This is also known as a Vertical Partition in some database terms, restricting query output to view only specified fields or columns.</p><p>With the same table, the query <code>SELECT * FROM T WHERE C1 = 1</code> will result in all the elements of all the rows where the value of column C1 is '1' being shown –  in <a href="https://en.wikipedia.org/wiki/Relational_algebra">relational algebra</a> terms, a <em><a href="https://en.wikipedia.org/wiki/Selection_(relational_algebra)">selection</a></em> will be performed, because of the WHERE clause. This is also known as a Horizontal Partition, restricting rows output by a query according to specified conditions.</p><p>With more than one table, the result set will be every combination of rows. So if two tables are T1 and T2, <code>SELECT * FROM T1, T2</code> will result in every combination of T1 rows with every T2 rows. E.g., if T1 has 3 rows and T2 has 5 rows, then 15 rows will result.</p><p>Although not in standard, most DBMS allows using a select clause without a table by pretending that an imaginary table with one row is used. This is mainly used to perform calculations where a table is not needed.</p><p>The SELECT clause specifies a list of properties (columns) by name, or the wildcard character (“*”) to mean “all properties”.</p><h2>Limiting result rows</h2><p>Often it is convenient to indicate a maximum number of rows that are returned. This can be used for testing or to prevent consuming excessive resources if the query returns more information than expected. The approach to do this often varies per vendor.</p><p>In <a href="https://en.wikipedia.org/wiki/International_Organization_for_Standardization">ISO</a> <a href="https://en.wikipedia.org/wiki/SQL:2003">SQL:2003</a>, result sets may be limited by using</p><ul><li><a href="https://en.wikipedia.org/wiki/Cursor_(databases)">cursors</a>, or</li> <li>by adding a <a href="https://en.wikipedia.org/wiki/SQL_window_function">SQL window function</a> to the SELECT-statement</li></ul><p>ISO <a href="https://en.wikipedia.org/wiki/SQL:2008">SQL:2008</a> introduced the <code>FETCH FIRST</code> clause.</p><p>According to PostgreSQL v.9 documentation, an SQL window function "performs a calculation across a set of table rows that are somehow related to the current row", in a way similar to aggregate functions. The name recalls signal processing <a href="https://en.wikipedia.org/wiki/Window_function">window functions</a>. A window function call always contains an <strong>OVER</strong> clause.</p><h3>ROW_NUMBER() window function</h3><p><code>ROW_NUMBER() OVER</code> may be used for a <em>simple table</em> on the returned rows, e.g. to return no more than ten rows:</p><pre>SELECT * FROM
+( SELECT
+    ROW_NUMBER() OVER (ORDER BY sort_key ASC) AS row_number,
+    columns
+  FROM tablename
+) AS foo
+WHERE row_number &lt;= 10
+</pre><p>ROW_NUMBER can be <a href="https://en.wikipedia.org/wiki/Nondeterministic_algorithm">non-deterministic</a>: if <em>sort_key</em> is not unique, each time you run the query it is possible to get different row numbers assigned to any rows where <em>sort_key</em> is the same. When <em>sort_key</em> is unique, each row will always get a unique row number.</p><h3>RANK() window function</h3><p>The <code>RANK() OVER</code> window function acts like ROW_NUMBER, but may return more or less than <em>n</em> rows in case of tie conditions, e.g. to return the top-10 youngest persons:</p><pre>SELECT * FROM (
+  SELECT
+    RANK() OVER (ORDER BY age ASC) AS ranking,
+    person_id,
+    person_name,
+    age
+  FROM person
+) AS foo
+WHERE ranking &lt;= 10
+</pre><p>The above code could return more than ten rows, e.g. if there are two people of the same age, it could return eleven rows.</p><h3>FETCH FIRST clause</h3><p>Since ISO <a href="https://en.wikipedia.org/wiki/SQL:2008">SQL:2008</a> results limits can be specified as in the following example using the <code>FETCH FIRST</code> clause.</p><pre>SELECT * FROM T 
+FETCH FIRST 10 ROWS ONLY
+</pre><p>This clause currently is supported by CA DATACOM/DB 11, IBM DB2, SAP SQL Anywhere, PostgreSQL, EffiProz, H2, HSQLDB version 2.0, Oracle 12c and <a href="https://en.wikipedia.org/wiki/Mimer_SQL">Mimer SQL</a>.</p><p>Microsoft SQL Server 2008 and higher <a href="https://docs.microsoft.com/en-us/sql/t-sql/queries/select-order-by-clause-transact-sql?view=sql-server-2017#using-offset-and-fetch-to-limit-the-rows-returned">supports <code>FETCH FIRST</code></a>, but it is considered part of the <code>ORDER BY</code> clause. The <code>ORDER BY</code>, <code>OFFSET</code>, and <code>FETCH FIRST</code> clauses are all required for this usage.</p><pre>SELECT * FROM T 
+ORDER BY acolumn DESC OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+</pre><h3>Non-standard syntax</h3><p>Some DBMSs offer non-standard syntax either instead of or in addition to SQL standard syntax. Below, variants of the <em>simple limit</em> query for different DBMSes are listed:</p><table> <tbody><tr> <td><pre>SET ROWCOUNT 10
+SELECT * FROM T
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/Microsoft_SQL_Server">MS SQL Server</a> (This also works on Microsoft SQL Server 6.5 while the <strong>Select top 10 * from T</strong> does not)</td></tr> <tr> <td><pre>SELECT * FROM T 
+LIMIT 10 OFFSET 20
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/Netezza">Netezza</a>, <a href="https://en.wikipedia.org/wiki/MySQL">MySQL</a>, <a href="https://en.wikipedia.org/wiki/MariaDB">MariaDB</a> (also supports the standard version, since version 10.6), <a href="https://en.wikipedia.org/wiki/SQL_Anywhere">SAP SQL Anywhere</a>, <a href="https://en.wikipedia.org/wiki/PostgreSQL">PostgreSQL</a> (also supports the standard, since version 8.4), <a href="https://en.wikipedia.org/wiki/SQLite">SQLite</a>, <a href="https://en.wikipedia.org/wiki/HSQLDB">HSQLDB</a>, <a href="https://en.wikipedia.org/wiki/H2_(DBMS)">H2</a>, <a href="https://en.wikipedia.org/wiki/Vertica">Vertica</a>, <a href="https://en.wikipedia.org/wiki/Polyhedra_DBMS">Polyhedra</a>, <a href="https://en.wikipedia.org/wiki/Couchbase_Server">Couchbase Server</a>, <a href="https://en.wikipedia.org/wiki/Snowflake_Computing">Snowflake Computing</a>, <a href="https://en.wikipedia.org/wiki/Virtuoso_Universal_Server">OpenLink Virtuoso</a></td></tr> <tr> <td><pre>SELECT * from T 
+WHERE ROWNUM &lt;= 10
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/Oracle_database">Oracle</a></td></tr> <tr> <td><code>SELECT <strong>FIRST 10</strong> * from T </code></td> <td><a href="https://en.wikipedia.org/wiki/Ingres_(database)">Ingres</a></td></tr> <tr> <td><code>SELECT <strong>FIRST 10</strong> * FROM T order by a </code></td> <td><a href="https://en.wikipedia.org/wiki/IBM_Informix">Informix</a></td></tr> <tr> <td><code>SELECT <strong>SKIP 20 FIRST 10</strong> * FROM T order by c, d </code></td> <td><a href="https://en.wikipedia.org/wiki/IBM_Informix">Informix</a> (row numbers are filtered after order by is evaluated. SKIP clause was introduced in a v10.00.xC4 fixpack)</td></tr> <tr> <td><code>SELECT <strong>TOP 10</strong> * FROM T</code></td> <td><a href="https://en.wikipedia.org/wiki/Microsoft_SQL_Server">MS SQL Server</a>, <a href="https://en.wikipedia.org/wiki/Adaptive_Server_Enterprise">SAP ASE</a>, <a href="https://en.wikipedia.org/wiki/Microsoft_Access">MS Access</a>, <a href="https://en.wikipedia.org/wiki/SAP_IQ">SAP IQ</a>, <a href="https://en.wikipedia.org/wiki/Teradata">Teradata</a></td></tr> <tr> <td><pre>SELECT * FROM T 
+SAMPLE 10
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/Teradata">Teradata</a></td></tr> <tr> <td><code>SELECT <strong>TOP 20, 10</strong> * FROM T</code></td> <td><a href="https://en.wikipedia.org/wiki/Virtuoso_Universal_Server">OpenLink Virtuoso</a> (skips 20, delivers next 10)</td></tr> <tr> <td><code>SELECT <strong>TOP 10 START AT 20</strong> * FROM T</code></td> <td><a href="https://en.wikipedia.org/wiki/SQL_Anywhere">SAP SQL Anywhere</a> (also supports the standard, since version 9.0.1)</td></tr> <tr> <td><code>SELECT <strong>FIRST 10 SKIP 20</strong> * FROM T</code></td> <td><a href="https://en.wikipedia.org/wiki/Firebird_(database_server)">Firebird</a></td></tr> <tr> <td><pre>SELECT * FROM T
+ROWS 20 TO 30
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/Firebird_(database_server)">Firebird</a> (since version 2.1)</td></tr> <tr> <td><pre>SELECT * FROM T
+WHERE ID_T &gt; 10 FETCH FIRST 10 ROWS ONLY
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/IBM_Db2">IBM Db2</a></td></tr> <tr> <td><pre>SELECT * FROM T
+WHERE ID_T &gt; 20 FETCH FIRST 10 ROWS ONLY
+</pre></td> <td><a href="https://en.wikipedia.org/wiki/IBM_Db2">IBM Db2</a> (new rows are filtered after comparing with key column of table T)</td></tr> </tbody></table><h3>Rows Pagination</h3><p><strong>Rows Pagination</strong> is an approach used to limit and display only a part of the total data of a query in the database. Instead of showing hundreds or thousands of rows at the same time, the server is requested only one page (a limited set of rows, per example only 10 rows), and the user starts navigating by requesting the next page, and then the next one, and so on. It is very useful, specially in web systems, where there is no dedicated connection between the client and the server, so the client does not have to wait to read and display all the rows of the server.</p><h4>Data in Pagination approach</h4><ul><li><code>{rows}</code> = Number of rows in a page</li> <li><code>{page_number}</code> = Number of the current page</li> <li><code>{begin_base_0}</code> = Number of the row - 1 where the page starts = (page_number-1) * rows</li></ul><h4>Simplest method (but very inefficient)</h4><ol><li>Select all rows from the database</li> <li>Read all rows but send to display only when the row_number of the rows read is between <code>{begin_base_0 + 1}</code> and <code>{begin_base_0 + rows}</code></li></ol><pre>Select * 
+from {table} 
+order by {unique_key}
+</pre><h4>Other simple method (a little more efficient than read all rows)</h4><ol><li>Select all the rows from the beginning of the table to the last row to display (<code>{begin_base_0 + rows}</code>)</li> <li>Read the <code>{begin_base_0 + rows}</code> rows but send to display only when the row_number of the rows read is greater than <code>{begin_base_0}</code></li></ol><table> <tbody><tr> <th>SQL</th> <th>Dialect</th></tr> <tr> <td> <pre>select *
+from {table}
+order by {unique_key}
+FETCH FIRST {begin_base_0 + rows} ROWS ONLY
+</pre></td> <td>SQL ANSI 2008<br>PostgreSQL<br>SQL Server 2012<br>Derby<br>Oracle 12c<br>DB2 12<br>Mimer SQL</td></tr> <tr> <td> <pre>Select *
+from {table}
+order by {unique_key}
+LIMIT {begin_base_0 + rows}
+</pre></td> <td>MySQL<br>SQLite</td></tr> <tr> <td> <pre>Select TOP {begin_base_0 + rows} * 
+from {table} 
+order by {unique_key}
+</pre></td> <td>SQL Server 2005</td></tr> <tr> <td> <pre>Select *
+from {table}
+order by {unique_key}
+ROWS LIMIT {begin_base_0 + rows}
+</pre></td> <td>Sybase, ASE 16 SP2</td></tr> <tr> <td> <pre>SET ROWCOUNT {begin_base_0 + rows}
+Select * 
+from {table} 
+order by {unique_key}
+SET ROWCOUNT 0
+</pre></td> <td>Sybase, SQL Server 2000</td></tr> <tr> <td> <pre>Select *
+    FROM (
+        SELECT * 
+        FROM {table} 
+        ORDER BY {unique_key}
+    ) a 
+where rownum &lt;= {begin_base_0 + rows}
+</pre></td> <td>Oracle 11</td></tr> </tbody></table><h4>Method with positioning</h4><ol><li>Select only <code>{rows}</code> rows starting from the next row to display (<code>{begin_base_0 + 1}</code>)</li> <li>Read and send to display all the rows read from the database</li></ol><table> <tbody><tr> <th>SQL</th> <th>Dialect</th></tr> <tr> <td> <pre>Select *
+from {table}
+order by {unique_key}
+OFFSET {begin_base_0} ROWS
+FETCH NEXT {rows} ROWS ONLY
+</pre></td> <td>SQL ANSI 2008<br>PostgreSQL<br>SQL Server 2012<br>Derby<br>Oracle 12c<br>DB2 12<br>Mimer SQL</td></tr> <tr> <td> <pre>Select *
+from {table}
+order by {unique_key}
+LIMIT {rows} OFFSET {begin_base_0}
+</pre></td> <td>MySQL<br>MariaDB<br>PostgreSQL<br>SQLite</td></tr> <tr> <td> <pre>Select * 
+from {table} 
+order by {unique_key}
+LIMIT {begin_base_0}, {rows}
+</pre></td> <td>MySQL<br>MariaDB<br>SQLite</td></tr> <tr> <td> <pre>Select *
+from {table}
+order by {unique_key}
+ROWS LIMIT {rows} OFFSET {begin_base_0}
+</pre></td> <td>Sybase, ASE 16 SP2</td></tr> <tr> <td> <pre>Select TOP {begin_base_0 + rows}
+       *,  _offset=identity(10) 
+into #temp
+from {table}
+ORDER BY {unique_key} 
+select * from #temp where _offset &gt; {begin_base_0}
+DROP TABLE #temp
+</pre></td> <td>Sybase 12.5.3:</td></tr> <tr> <td> <pre>SET ROWCOUNT {begin_base_0 + rows}
+select *,  _offset=identity(10) 
+into #temp
+from {table}
+ORDER BY {unique_key} 
+select * from #temp where _offset &gt; {begin_base_0}
+DROP TABLE #temp
+SET ROWCOUNT 0
+</pre></td> <td>Sybase 12.5.2:</td></tr> <tr> <td> <pre>select TOP {rows} * 
+from (
+      select *, ROW_NUMBER() over (order by {unique_key}) as _offset
+      from {table}
+) xx 
+where _offset &gt; {begin_base_0}
+</pre> <p><br></p></td> <td>SQL Server 2005</td></tr> <tr> <td> <pre>SET ROWCOUNT {begin_base_0 + rows}
+select *,  _offset=identity(int,1,1) 
+into #temp
+from {table}
+ORDER BY {unique-key}
+select * from #temp where _offset &gt; {begin_base_0}
+DROP TABLE #temp
+SET ROWCOUNT 0
+</pre></td> <td>SQL Server 2000</td></tr> <tr> <td> <pre>SELECT * FROM (
+    SELECT rownum-1 as _offset, a.* 
+    FROM(
+        SELECT * 
+        FROM {table} 
+        ORDER BY {unique_key}
+    ) a 
+    WHERE rownum &lt;= {begin_base_0 + cant_regs}
+)
+WHERE _offset &gt;= {begin_base_0}
+</pre></td> <td>Oracle 11</td></tr> </tbody></table><h4>Method with filter (it is more sophisticated but necessary for very big dataset)</h4><ol><li>Select only then <code>{rows}</code> rows with filter: <ol><li>First Page: select only the first <code>{rows}</code> rows, depending on the type of database</li> <li>Next Page: select only the first <code>{rows}</code> rows, depending on the type of database, where the <code>{unique_key}</code> is greater than <code>{last_val}</code> (the value of the <code>{unique_key}</code> of the last row in the current page)</li> <li>Previous Page: sort the data in the reverse order, select only the first <code>{rows}</code> rows, where the <code>{unique_key}</code> is less than <code>{first_val}</code> (the value of the <code>{unique_key}</code> of the first row in the current page), and sort the result in the correct order</li></ol></li> <li>Read and send to display all the rows read from the database</li></ol><table> <tbody><tr> <th>First Page</th> <th>Next Page</th> <th>Previous Page</th> <th>Dialect</th></tr> <tr> <td> <pre>select *
+from {table} 
+order by {unique_key}
+FETCH FIRST {rows} ROWS ONLY
+</pre></td> <td> <pre>select * 
+from {table} 
+where {unique_key} &gt; {last_val}
+order by {unique_key}
+FETCH FIRST {rows} ROWS ONLY
+</pre></td> <td> <pre>select * 
+ from (
+   select * 
+   from {table} 
+   where {unique_key} &lt; {first_val}
+   order by {unique_key} DESC
+   FETCH FIRST {rows} ROWS ONLY
+ ) a
+ order by {unique_key}
+</pre></td> <td>SQL ANSI 2008<br>PostgreSQL<br>SQL Server 2012<br>Derby<br>Oracle 12c<br>DB2 12<br>Mimer SQL</td></tr> <tr> <td> <pre>select *
+from {table}
+order by {unique_key}
+LIMIT {rows}
+</pre></td> <td> <pre>select * 
+from {table} 
+where {unique_key} &gt; {last_val}
+order by {unique_key}
+LIMIT {rows}
+</pre></td> <td> <pre>select * 
+ from (
+   select * 
+   from {table} 
+   where {unique_key} &lt; {first_val}
+   order by {unique_key} DESC
+   LIMIT {rows}
+ ) a
+ order by {unique_key}
+</pre></td> <td>MySQL<br>SQLite</td></tr> <tr> <td> <pre>select TOP {rows} * 
+from {table} 
+order by {unique_key}
+</pre></td> <td> <pre>select TOP {rows} * 
+from {table} 
+where {unique_key} &gt; {last_val}
+order by {unique_key}
+</pre></td> <td> <pre>select * 
+ from (
+   select TOP {rows} * 
+   from {table} 
+   where {unique_key} &lt; {first_val}
+   order by {unique_key} DESC
+ ) a
+ order by {unique_key}
+</pre></td> <td>SQL Server 2005</td></tr> <tr> <td> <pre>SET ROWCOUNT {rows}
+select *
+from {table} 
+order by {unique_key}
+SET ROWCOUNT 0
+</pre></td> <td> <pre>SET ROWCOUNT {rows}
+select *
+from {table} 
+where {unique_key} &gt; {last_val}
+order by {unique_key}
+SET ROWCOUNT 0
+</pre></td> <td> <pre>SET ROWCOUNT {rows}
+ select *
+ from (
+   select * 
+   from {table} 
+   where {unique_key} &lt; {first_val}
+   order by {unique_key} DESC
+ ) a
+ order by {unique_key}
+ SET ROWCOUNT 0
+</pre></td> <td>Sybase, SQL Server 2000</td></tr> <tr> <td> <pre>select *
+from (
+    select * 
+    from {table} 
+    order by {unique_key}
+  ) a 
+where rownum &lt;= {rows}
+</pre></td> <td> <pre>select *
+from (
+  select * 
+  from {table} 
+  where {unique_key} &gt; {last_val}
+  order by {unique_key}
+) a 
+where rownum &lt;= {rows}
+</pre></td> <td> <pre>select * 
+ from (
+   select *
+   from (
+     select * 
+     from {table} 
+     where {unique_key} &lt; {first_val}
+     order by {unique_key} DESC
+   ) a1
+   where rownum &lt;= {rows}
+ ) a2
+ order by {unique_key}
+</pre></td> <td>Oracle 11</td></tr> </tbody></table><h2>Hierarchical query</h2><p>Some databases provide <a href="https://en.wikipedia.org/wiki/Hierarchical_query">specialised syntax</a> for <a href="https://en.wikipedia.org/wiki/Hierarchical_data">hierarchical data</a>.</p><p>A window function in <a href="https://en.wikipedia.org/wiki/SQL:2003">SQL:2003</a> is an <a href="https://en.wikipedia.org/wiki/Aggregate_function">aggregate function</a> applied to a partition of the result set.</p><p>For example,</p><pre> sum(population) OVER( PARTITION BY city )
+</pre><p>calculates the sum of the populations of all rows having the same <em>city</em> value as the current row.</p><p>Partitions are specified using the <strong>OVER</strong> clause which modifies the aggregate. Syntax:</p><pre>&lt;OVER_CLAUSE&gt; :: =
+    OVER ( [ PARTITION BY &lt;expr&gt;, ... ]
+           [ ORDER BY &lt;expression&gt; ] )
+</pre><p>The OVER clause can partition and order the result set. Ordering is used for order-relative functions such as row_number.</p><h2>Query evaluation ANSI</h2><p>The processing of a SELECT statement according to ANSI SQL would be the following:</p><ol><li><pre>select g.*
+from users u inner join groups g on g.Userid = u.Userid
+where u.LastName = 'Smith'
+and u.FirstName = 'John'
+</pre></li><li>the FROM clause is evaluated, a cross join or Cartesian product is produced for the first two tables in the FROM clause resulting in a virtual table as Vtable1</li><li>the ON clause is evaluated for vtable1; only records which meet the join condition g.Userid = u.Userid are inserted into Vtable2</li><li>If an outer join is specified, records which were dropped from vTable2 are added into VTable 3, for instance if the above query were: <pre>select u.*
+from users u left join groups g on g.Userid = u.Userid
+where u.LastName = 'Smith'
+and u.FirstName = 'John'
+</pre> all users who did not belong to any groups would be added back into Vtable3</li><li>the WHERE clause is evaluated, in this case only group information for user John Smith would be added to vTable4</li><li>the GROUP BY is evaluated; if the above query were: <pre>select g.GroupName, count(g.*) as NumberOfMembers
+from users u inner join groups g on g.Userid = u.Userid
+group by GroupName
+</pre> vTable5 would consist of members returned from vTable4 arranged by the grouping, in this case the GroupName</li><li>the HAVING clause is evaluated for groups for which the HAVING clause is true and inserted into vTable6. For example: <pre>select g.GroupName, count(g.*) as NumberOfMembers
+from users u inner join groups g on g.Userid = u.Userid
+group by GroupName
+having count(g.*) &gt; 5
+</pre></li><li>the SELECT list is evaluated and returned as Vtable 7</li><li>the DISTINCT clause is evaluated; duplicate rows are removed and returned as Vtable 8</li><li>the ORDER BY clause is evaluated, ordering the rows and returning VCursor9. This is a cursor and not a table because ANSI defines a cursor as an ordered set of rows (not relational).</li></ol><h2>Window function support by RDBMS vendors</h2><p>The implementation of window function features by vendors of relational databases and SQL engines differs wildly. Most databases support at least some flavour of window functions. However, when we take a closer look it becomes clear that most vendors only implement a subset of the standard. Let's take the powerful RANGE clause as an example. Only Oracle, DB2, Spark/Hive, and Google Big Query fully implement this feature. More recently, vendors have added new extensions to the standard, e.g. array aggregation functions. These are particularly useful in the context of running SQL against a distributed file system (Hadoop, Spark, Google BigQuery) where we have weaker data co-locality guarantees than on a distributed relational database (MPP). Rather than evenly distributing the data across all nodes, SQL engines running queries against a distributed filesystem can achieve data co-locality guarantees by nesting data and thus avoiding potentially expensive joins involving heavy shuffling across the network. User-defined aggregate functions that can be used in window functions are another extremely powerful feature.</p><h2>Generating data in T-SQL</h2><p>Method to generate data based on the union all</p><pre>select 1 a, 1 b union all
+select 1, 2 union all
+select 1, 3 union all
+select 2, 1 union all
+select 5, 1
+</pre><p>SQL Server 2008 supports the "row constructor" feature, specified in the <a href="https://en.wikipedia.org/wiki/SQL:1999">SQL:1999</a> standard</p><pre>select *
+from (values (1, 1), (1, 2), (1, 3), (2, 1), (5, 1)) as x(a, b)
+</pre>
+</body></html>

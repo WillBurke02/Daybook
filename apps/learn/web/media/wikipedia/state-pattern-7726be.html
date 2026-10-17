@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State pattern</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, State pattern. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/State_pattern <a href="https://en.wikipedia.org/wiki/State_pattern">https://en.wikipedia.org/wiki/State_pattern</a></p>
+<h1>State pattern</h1>
+<p>The <strong>state pattern</strong> is a <a href="https://en.wikipedia.org/wiki/Behavioral_pattern">behavioral</a> <a href="https://en.wikipedia.org/wiki/Software_design_pattern">software design pattern</a> that allows an object to alter its behavior when its internal state changes. This pattern is close to the concept of <a href="https://en.wikipedia.org/wiki/Finite-state_machine">finite-state machines</a>. The state pattern can be interpreted as a <a href="https://en.wikipedia.org/wiki/Strategy_pattern">strategy pattern</a>, which is able to switch a strategy through invocations of methods defined in the pattern's interface.</p><p>The state pattern is used in <a href="https://en.wikipedia.org/wiki/Computer_programming">computer programming</a> to encapsulate varying behavior for the same <a href="https://en.wikipedia.org/wiki/Object_(computer_science)">object</a>, based on its internal state. This can be a cleaner way for an object to change its behavior at runtime without resorting to conditional statements and thus improve maintainability.</p><h2>Overview</h2><p>The state design pattern is one of twenty-three <a href="https://en.wikipedia.org/wiki/Design_Patterns">design patterns documented by the Gang of Four</a> that describe how to solve recurring design problems. Such problems cover the design of flexible and reusable object-oriented software, such as objects that are easy to implement, change, test, and reuse.</p><p>The state pattern is set to solve two main problems:</p><ul><li>An object should change its behavior when its internal state changes.</li> <li>State-specific behavior should be defined independently. That is, adding new states should not affect the behavior of existing states.</li></ul><p>Implementing state-specific behavior directly within a class is inflexible because it commits the class to a particular behavior and makes it impossible to add a new state or change the behavior of an existing state later, independently from the class, without changing the class. In this, the pattern describes two solutions:</p><ul><li>Define separate (state) objects that encapsulate state-specific behavior for each state. That is, define an interface (state) for performing state-specific behavior, and define classes that implement the interface for each state.</li> <li>A class delegates state-specific behavior to its current state object instead of implementing state-specific behavior directly.</li></ul><p>This makes a class independent of how state-specific behavior is implemented. New states can be added by defining new state classes. A class can change its behavior at run-time by changing its current state object.</p><h2>Structure</h2><p>In the accompanying <a href="https://en.wikipedia.org/wiki/Unified_Modeling_Language">Unified Modeling Language</a> (UML) <a href="https://en.wikipedia.org/wiki/Class_diagram">class diagram</a>, the <code>Context</code> class doesn't implement state-specific behavior directly. Instead, <code>Context</code> refers to the <code>State</code> interface for performing state-specific behavior (<code>state.handle()</code>), which makes <code>Context</code> independent of how state-specific behavior is implemented. The <code>ConcreteStateA</code> and <code>ConcreteStateB</code> classes implement the <code>State</code> interface, that is, implement (encapsulate) the state-specific behavior for each state. The UML <a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagram</a> shows the run-time interactions:</p><p>The <code>Context</code> object delegates state-specific behavior to different <code>State</code> objects. First, <code>Context</code> calls <code>handle(this)</code> on its current (initial) state object (<code>ConcreteStateA</code>), which performs the operation and calls <code>setState(ConcreteStateB)</code> on <code>Context</code> to change context's current state to <code>ConcreteStateB</code>. The next time, <code>Context</code> again calls <code>handle(this)</code> on its current state object (<code>ConcreteStateB</code>), which performs the operation and changes context's current state to <code>ConcreteStateA</code>.</p><h2>Example</h2><p>This is a <a href="https://en.wikipedia.org/wiki/C++">C++</a> example demonstrating the state pattern.</p><pre>import std;
+
+using std::unique_ptr;
+
+// Abstract State
+class FanState {
+public:
+    virtual void handleButtonPress(class Fan&amp; fan) const = 0;
+    virtual ~FanState() = default;
+};
+
+// Context
+class Fan {
+private:
+    unique_ptr&lt;FanState&gt; currentState;
+public:
+    explicit Fan(unique_ptr&lt;FanState&gt; state):
+        currentState{state} {}
+
+    void setState(unique_ptr&lt;FanState&gt; state) noexcept {
+        currentState = state;
+    }
+
+    void pressButton() noexcept {
+        currentState-&gt;handleButtonPress(*this);
+    }
+};
+
+// Concrete States
+class OffState : public FanState {
+public:
+    void handleButtonPress(Fan&amp; fan) const override {
+        std::println("Fan is OFF -&gt; Switching to LOW speed.");
+        fan.setState(std::make_unique&lt;LowSpeedState&gt;());
+    }
+};
+
+class LowSpeedState : public FanState {
+public:
+    void handleButtonPress(Fan&amp; fan) const override {
+        std::println("Fan is on LOW speed -&gt; Switching to HIGH speed.");
+        fan.setState(std::make_unique&lt;HighSpeedState&gt;());
+    }
+};
+
+class HighSpeedState : public FanState {
+public:
+    void handleButtonPress(Fan&amp; fan) const override {
+        std::println("Fan is on HIGH speed -&gt; Turning OFF.");
+        fan.setState(std::make_unique&lt;OffState&gt;());
+    }
+};
+
+int main() {
+    Fan fan(std::unique_ptr&lt;OffState&gt;());
+
+    // Simulate pressing the button several times
+    fan.pressButton(); // OFF -&gt; LOW
+    fan.pressButton(); // LOW -&gt; HIGH
+    fan.pressButton(); // HIGH -&gt; OFF
+    fan.pressButton(); // OFF -&gt; LOW
+
+    return 0;
+}
+</pre>
+</body></html>

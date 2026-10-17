@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Composition over inheritance</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Composition over inheritance. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. As published, from https://en.wikipedia.org/wiki/Composition_over_inheritance <a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">https://en.wikipedia.org/wiki/Composition_over_inheritance</a></p>
+<h1>Composition over inheritance</h1>
+<p>In <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a>, <strong>composition over inheritance</strong> (sometimes <strong>composition with forwarding</strong> or <strong>composite reuse</strong>) is a common <a href="https://en.wikipedia.org/wiki/Design_pattern">design pattern</a> that tries to achieve <a href="https://en.wikipedia.org/wiki/Code_reuse">code reuse</a> without requiring <a href="https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)">inheritance</a>. Instead of having two child classes inherit functionality from a common parent, composition simulates inheritance by having the children include a copy of a "pseudo-parent" class as a field, which implements the functionality common to the two classes. Then, methods that would have been called on the child are instead called on the pseudo-parent, a technique called <strong>method forwarding</strong>.</p><p>Composition is generally used in languages where inheritance is unavailable or has an implementation that is considered inflexible, inconvenient, or inadequate (e.g. because a language lacks <a href="https://en.wikipedia.org/wiki/Multiple_inheritance">multiple inheritance</a>). However, many problems that are easily solved with inheritance are difficult to solve using only composition; as a result, inheritance and object composition typically work hand-in-hand, as discussed in the book <em><a href="https://en.wikipedia.org/wiki/Design_Patterns">Design Patterns</a></em> (1994).</p><h2>Example</h2><h3>Inheritance</h3><p>An example in <a href="https://en.wikipedia.org/wiki/C++">C++</a> follows:</p><pre>import std;
+
+using std::unique_ptr;
+using std::vector;
+
+class GameObject {
+public:
+    virtual void update() {
+        // no-op
+    }
+
+    virtual void draw() const {
+        // no-op
+    }
+
+    virtual void collide(vector&lt;GameObject&gt; objects) {
+        // no-op
+    }
+};
+
+class Visible : public GameObject {
+private:
+    unique_ptr&lt;Model&gt; model;
+public:
+    virtual void draw() const override {
+        // code to draw a model at the position of this object
+    }
+};
+
+class Solid : public GameObject {
+public:
+    virtual void collide(vector&lt;GameObject&gt; objects) override {
+        // code to check for and react to collisions with other objects
+    }
+};
+
+class Movable : public GameObject {
+public:
+    virtual void update() override {
+        // code to update the position of this object
+    }
+};
+</pre><p>Then, suppose we also have these concrete classes:</p><ul><li>class <code>Player</code> - which is <code>Solid</code>, <code>Movable</code> and <code>Visible</code></li> <li>class <code>Cloud</code> - which is <code>Movable</code> and <code>Visible</code>, but not <code>Solid</code></li> <li>class <code>Building</code> - which is <code>Solid</code> and <code>Visible</code>, but not <code>Movable</code></li> <li>class <code>Trap</code> - which is <code>Solid</code>, but neither <code>Visible</code> nor <code>Movable</code></li></ul><p>Note that multiple inheritance is dangerous if not implemented carefully because it can lead to the <a href="https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem">diamond problem</a>. One solution to this is to create classes such as <code>VisibleAndSolid</code>, <code>VisibleAndMovable</code>, <code>VisibleAndSolidAndMovable</code>, etc. for every needed combination; however, this leads to a large amount of repetitive code. C++ uses <a href="https://en.wikipedia.org/wiki/Virtual_inheritance">virtual inheritance</a> to solve the diamond problem of multiple inheritance.</p><h3>Composition and interfaces</h3><p>The C++ examples in this section demonstrate the principle of using composition and interfaces to achieve code reuse and polymorphism. Due to the C++ language not having a dedicated keyword to declare interfaces, the following C++ example uses inheritance from a pure <a href="https://en.wikipedia.org/wiki/Abstract_base_class">abstract base class</a>. For most purposes, this is functionally equivalent to the interfaces provided in other languages, such as <a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> and <a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#</a>.</p><p>Introduce an abstract class named <code>VisibilityDelegate</code>, with the subclasses <code>NotVisible</code> and <code>Visible</code>, which provides a means of drawing an object:</p><pre>class VisibilityDelegate {
+public:
+    virtual void draw() const = 0;
+};
+
+class NotVisible : public VisibilityDelegate {
+public:
+    virtual void draw() const override {
+        // no-op
+    }
+};
+
+class Visible : public VisibilityDelegate {
+public:
+    virtual void draw() const override {
+        // code to draw a model at the position of this object
+    }
+};
+</pre><p>Introduce an abstract class named <code>UpdateDelegate</code>, with the subclasses <code>NotMovable</code> and <code>Movable</code>, which provides a means of moving an object:</p><pre>class UpdateDelegate {
+public:
+    virtual void update() = 0;
+};
+
+class NotMovable : public UpdateDelegate {
+public:
+    virtual void update() override {
+        // no-op
+    }
+};
+
+class Movable : public UpdateDelegate {
+public:
+    virtual void update() override {
+        // code to update the position of this object
+    }
+};
+</pre><p>Introduce an abstract class named <code>CollisionDelegate</code>, with the subclasses <code>NotSolid</code> and <code>Solid</code>, which provides a means of colliding with an object:</p><pre>import std;
+
+using std::vector;
+
+class CollisionDelegate {
+public:
+    virtual void collide(vector&lt;GameObject&gt; objects) = 0;
+};
+
+class NotSolid : public CollisionDelegate {
+public:
+    virtual void collide(vector&lt;GameObject&gt; objects) override {
+        // no-op
+    }
+};
+
+class Solid : public CollisionDelegate {
+public:
+    virtual void collide(vector&lt;GameObject&gt; objects) override {
+        // code to check for and react to collisions with other objects
+    }
+};
+</pre><p>Finally, introduce a class named <code>GameObject</code> with members to control its visibility (using a <code>VisibilityDelegate</code>), movability (using an <code>UpdateDelegate</code>), and solidity (using a <code>CollisionDelegate</code>). This class has methods which delegate to its members, e.g. <code>update()</code> simply calls a method on the <code>UpdateDelegate</code>:</p><pre>import std;
+
+using std::unique_ptr;
+using std::vector;
+
+class GameObject {
+private:
+    unique_ptr&lt;VisibilityDelegate&gt; visibilityDelegate;
+    unique_ptr&lt;UpdateDelegate&gt; updateDelegate;
+    unique_ptr&lt;CollisionDelegate&gt; collisionDelegate;
+public:
+    GameObject(VisibilityDelegate* v, UpdateDelegate* u, CollisionDelegate* c):
+        visibilityDelegate{std::make_unique&lt;VisibilityDelegate&gt;(v)}, 
+        updateDelegate{std::make_unique&lt;UpdateDelegate&gt;(u)}, 
+        collisionDelegate{std::make_unique&lt;CollisionDelegate&gt;(c)} {}
+
+    void update() {
+        updateDelegate-&gt;update();
+    }
+
+    void draw() const {
+        visibilityDelegate-&gt;draw();
+    }
+
+    void collide(vector&lt;GameObject&gt; objects) {
+        collisionDelegate-&gt;collide(objects);
+    }
+};
+</pre><p>Then, concrete classes would look like:</p><pre>class Player : public GameObject {
+public:
+    Player(): 
+        GameObject(new Visible(), new Movable(), new Solid()) {}
+
+    // ...
+};
+
+class Smoke : public GameObject {
+public:
+    Smoke(): 
+        GameObject(new Visible(), new Movable(), new NotSolid()) {}
+
+    // ...
+};
+</pre><h2>Benefits</h2><p>To favor composition over inheritance is a design principle that gives the design higher flexibility. It is more natural to build business-domain classes out of various components than trying to find commonality between them and creating a family tree. For example, an accelerator pedal and a steering wheel share very few common <a href="https://en.wikipedia.org/wiki/Trait_(computer_programming)">traits</a>, yet both are vital components in a car. What they can do and how they can be used to benefit the car are easily defined. Composition also provides a more stable business domain in the long term as it is less prone to the quirks of the family members. In other words, it is better to compose what an object can do (<em><a href="https://en.wikipedia.org/wiki/Has-a">has-a</a></em>) than extend what it is (<em><a href="https://en.wikipedia.org/wiki/Is-a">is-a</a></em>).</p><p>Initial design is simplified by identifying system object behaviors in separate interfaces instead of creating a hierarchical relationship to distribute behaviors among business-domain classes via inheritance. This approach more easily accommodates future requirements changes that would otherwise require a complete restructuring of business-domain classes in the inheritance model. Additionally, it avoids problems often associated with relatively minor changes to an inheritance-based model that includes several generations of classes. Composition relation is more flexible as it may be changed on runtime, while sub-typing relations are static and need recompilation in many languages.</p><p>Some languages, notably <a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go</a> and <a href="https://en.wikipedia.org/wiki/Rust_(programming_language)">Rust</a>, use type composition exclusively.</p><h2>Drawbacks</h2><p>One common drawback of using composition instead of inheritance is that methods being provided by individual components may have to be implemented in the derived type, even if they are only <a href="https://en.wikipedia.org/wiki/Forwarding_(object-oriented_programming)">forwarding methods</a> (this is true in most programming languages, but not all; see § Avoiding drawbacks). In contrast, inheritance does not require all of the base class's methods to be re-implemented within the derived class. Rather, the derived class only needs to implement (override) the methods having different behavior than the base class methods. This can require significantly less programming effort if the base class contains many methods providing default behavior and only a few of them need to be overridden within the derived class.</p><p>Thus, the pattern of "composition over inheritance" should not be interpreted as a literal mantra or law, but rather a selectively applicable suggestion to be used where appropriate.</p><p>For example, in the C# code below, the variables and methods of the <code>Employee</code> base class are inherited by the <code>HourlyEmployee</code> and <code>SalariedEmployee</code> derived subclasses. Only the <code>Pay()</code> method needs to be implemented (specialized) by each derived subclass. The other methods are implemented by the base class itself, and are shared by all of its derived subclasses; they do not need to be re-implemented (overridden) or even mentioned in the subclass definitions.</p><p><a href="https://en.wikipedia.org/wiki/File:UML_class_Employee.svg"><img src="11e31806-500px-UML_class_Employee.svg.png" alt="UML class Employee.svg"></a></p><pre>// Base class
+public abstract class Employee
+{
+    // Properties
+    protected string Name { get; set; }
+    protected int ID { get; set; }
+    protected decimal PayRate { get; set; }
+    protected int HoursWorked { get; }
+
+    // Get pay for the current pay period
+    public abstract decimal Pay();
+}
+
+// Derived subclass
+public class HourlyEmployee : Employee
+{
+    // Get pay for the current pay period
+    public override decimal Pay()
+    {
+        // Time worked is in hours
+        return HoursWorked * PayRate;
+    }
+}
+
+// Derived subclass
+public class SalariedEmployee : Employee
+{
+    // Get pay for the current pay period
+    public override decimal Pay()
+    {
+        // Pay rate is annual salary instead of hourly rate
+        return HoursWorked * PayRate / 2087;
+    }
+}
+</pre><h3>Avoiding drawbacks</h3><p>This drawback can be avoided by using <a href="https://en.wikipedia.org/wiki/Traits_(computer_science)">traits</a>, <a href="https://en.wikipedia.org/wiki/Mixin">mixins</a>, (type) <a href="https://en.wikipedia.org/wiki/Embedding">embedding</a>, or <a href="https://en.wikipedia.org/wiki/Protocol_(object-oriented_programming)">protocol</a> extensions.</p><p>Some languages provide specific means to mitigate this:</p><ul><li><a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#</a> provides default interface methods since version 8.0 which allows to define body to interface member.</li> <li><a href="https://en.wikipedia.org/wiki/C++">C++</a> allows <code>virtual</code> methods (for specifying a <a href="https://en.wikipedia.org/wiki/Virtual_function">virtual function</a>) to have default implementations.</li> <li><a href="https://en.wikipedia.org/wiki/D_(programming_language)">D</a> provides an explicit "alias this" declaration within a type can forward into it every method and member of another contained type.</li> <li><a href="https://en.wikipedia.org/wiki/Dart_(programming_language)">Dart</a> provides mixins with default implementations that can be shared.</li> <li><a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go</a> type embedding avoids the need for forwarding methods.</li> <li><a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> provides default interface methods since version 8. Project Lombok supports delegation using the <code>@Delegate</code> annotation on the field, instead of copying and maintaining the names and types of all the methods from the delegated field.</li> <li><a href="https://en.wikipedia.org/wiki/Julia_(programming_language)">Julia</a> macros can be used to generate forwarding methods. Several implementations exist such as Lazy.jl and TypedDelegation.jl.</li> <li><a href="https://en.wikipedia.org/wiki/Kotlin_(programming_language)">Kotlin</a> includes the delegation pattern in the language syntax.</li> <li><a href="https://en.wikipedia.org/wiki/PHP">PHP</a> supports <a href="https://en.wikipedia.org/wiki/Traits_(computer_science)">traits</a>, since PHP 5.4.</li> <li><a href="https://en.wikipedia.org/wiki/Raku_(programming_language)">Raku</a> provides a <code>handles</code> trait to facilitate method forwarding.</li> <li><a href="https://en.wikipedia.org/wiki/Rust_(programming_language)">Rust</a> provides traits with default implementations, along with the <a href="https://doc.rust-lang.org/book/ch15-02-deref.html">Deref</a> trait and automatic dereferencing.</li> <li><a href="https://en.wikipedia.org/wiki/Scala_(programming_language)">Scala</a> (since version 3) provides an "export" clause to define aliases for selected members of an object.</li> <li><a href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a> extensions can be used to define a default implementation of a protocol on the protocol itself, rather than within an individual type's implementation.</li></ul><h2>Empirical studies</h2><p>A 2013 study of 93 open source Java programs (of varying size) found that:</p><blockquote><p>While there is not huge opportunity to replace inheritance with composition (...), the opportunity is significant (median of 2% of uses [of inheritance] are only internal reuse, and a further 22% are only external or internal reuse). Our results suggest there is no need for concern regarding abuse of inheritance (at least in open-source Java software), but they do highlight the question regarding use of composition versus inheritance. If there are significant costs associated with using inheritance when composition could be used, then our results suggest there is some cause for concern.</p></blockquote><p>— Tempero <em>et al.</em>, "What programmers do with inheritance in Java"</p>
+</body></html>
