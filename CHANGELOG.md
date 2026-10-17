@@ -1,5 +1,18 @@
 # Changes
 
+## 4.0.25 — 17 October 2026
+
+- **33 more lessons**, each with questions of its own. Software from the makers' own documentation:
+  C#, object-oriented design, async, testing, logging, WPF and MVVM, and clean architecture from
+  Microsoft Learn; Git from Pro Git; CI from GitHub Docs; HTTP and JavaScript from MDN. Process
+  capability from NIST's e-Handbook (with ISO 9001 and UKAS for the UK). From Wikipedia: OPC UA and
+  MQTT, EtherCAT, ISA-88 batch, Structured Text and IEC 61131-3, SFC and FBD, historians, real-time
+  systems, phased array and TOFD, bearings, ball screws, fatigue, fits, GD&T, drawings (with UK
+  first-angle projection and BS 8888), G-code, linear motors, power supplies, the oscilloscope and
+  servo valves. State machines from Lessons In Electric Circuits.
+- Code in imported lessons shows as a proper block, and is never read as maths.
+- Lessons imported earlier were cut again with the newer rules, so tables stay with their lead-ins.
+
 ## 4.0.24 — 16 October 2026
 
 - **13 more lessons**, with questions of their own. From UK sources: the EMC Regulations 2016 and the

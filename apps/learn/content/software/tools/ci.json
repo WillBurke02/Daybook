@@ -1,0 +1,110 @@
+{
+ "id": "software.tools.ci",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "ghdocs: Understanding GitHub Actions"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "GitHub Docs, Understanding GitHub Actions. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://docs.github.com/en/actions/get-started/understand-github-actions"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Understanding GitHub Actions",
+   "url": "media/ghdocs/understanding-github-actions-e9a4f5.html",
+   "by": "GitHub Docs, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Overview",
+   "html": "<p>GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.</p><p>GitHub Actions goes beyond just DevOps and lets you run workflows when other events happen in your repository. For example, you can run a workflow to automatically add the appropriate labels whenever someone creates a new issue in your repository.</p><p>GitHub provides Linux, Windows, and macOS virtual machines to run your workflows, or you can host your own self-hosted runners in your own data center or cloud infrastructure.</p>",
+   "body": "GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production. GitHub Actions goes beyond just DevOps and lets you run workflows when other events happen in your repository. For example, you can run a workflow to automatically add the appropriate labels whenever someone creates a new issue in your repository. GitHub provides Linux, Windows, and macOS virtual machines to run your workflows, or you can host your own self-hosted runners in your own data center or cloud infrastructure.",
+   "id": "ghdocs1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "The components of GitHub Actions",
+   "html": "<p>You can configure a GitHub Actions <strong>workflow</strong> to be triggered when an <strong>event</strong> occurs in your repository, such as a pull request being opened or an issue being created. Your workflow contains one or more <strong>jobs</strong> which can run in sequential order or in parallel. Each job will run inside its own virtual machine <strong>runner</strong>, or inside a container, and has one or more <strong>steps</strong> that either run a script that you define or run an <strong>action</strong>, which is a reusable extension that can simplify your workflow.</p><p><img src=\"media/ghdocs/ec5cf2f8-overview-actions-simple.png\" alt=\"Diagram of an event triggering Runner 1 to run Job 1, which triggers Runner 2 to run Job 2. Each of the jobs is broken into multiple steps.\"></p><h4>Workflows</h4><p>A <strong>workflow</strong> is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule.</p><p>Workflows are defined in the <code>.github/workflows</code> directory in a repository. A repository can have multiple workflows, each of which can perform a different set of tasks such as:</p><ul> <li>Building and testing pull requests</li> <li>Deploying your application every time a release is created</li> <li>Adding a label whenever a new issue is opened</li> </ul><p>You can reference a workflow within another workflow. For more information, see <a href=\"https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows\">Reuse workflows</a>.</p><p>For more information, see <a href=\"https://docs.github.com/en/actions/how-tos/write-workflows\">Writing workflows</a>.</p>",
+   "body": "You can configure a GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. Your workflow contains one or more jobs which can run in sequential order or in parallel. Each job will run inside its own virtual machine runner , or inside a container, and has one or more steps that either run a script that you define or run an action , which is a reusable extension that can simplify your workflow. Workflows A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule. Workflows are defined in the .github/workflows directory in a repository. A repository can have multiple workflows, each of which can perform a different set of tasks such as: Building and testing pull requests Deploying your application every time a release is created Adding a label whenever a new issue is opened You can reference a workflow within another workflow. For more information, see Reuse workflows . For more information, see Writing workflows .",
+   "id": "ghdocs1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Events",
+   "html": "<p>An <strong>event</strong> is a specific activity in a repository that triggers a <strong>workflow</strong> run. For example, an activity can originate from GitHub when someone creates a pull request, opens an issue, or pushes a commit to a repository. You can also trigger a workflow to run on a <a href=\"https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule\">schedule</a>, by <a href=\"https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event\">posting to a REST API</a>, or manually.</p><p>For a complete list of events that can be used to trigger workflows, see <a href=\"https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows\">Events that trigger workflows</a>.</p><h4>Jobs</h4><p>A <strong>job</strong> is a set of <strong>steps</strong> in a workflow that is executed on the same <strong>runner</strong>. Each step is either a shell script that will be executed, or an <strong>action</strong> that will be run. Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another. For example, you can have a step that builds your application followed by a step that tests the application that was built.</p><p>Steps run in order by default, but you can also run selected steps concurrently when your workflow benefits from parallel execution, such as starting a long-running service while later steps continue. For more information, see <a href=\"https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepsbackground\">Workflow syntax for GitHub Actions</a>.</p><p>You can configure a job's dependencies with other jobs; by default, jobs have no dependencies and run in parallel. When a job takes a dependency on another job, it waits for the dependent job to complete before running.</p>",
+   "body": "An event is a specific activity in a repository that triggers a workflow run. For example, an activity can originate from GitHub when someone creates a pull request, opens an issue, or pushes a commit to a repository. You can also trigger a workflow to run on a schedule , by posting to a REST API , or manually. For a complete list of events that can be used to trigger workflows, see Events that trigger workflows . Jobs A job is a set of steps in a workflow that is executed on the same runner . Each step is either a shell script that will be executed, or an action that will be run. Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another. For example, you can have a step that builds your application followed by a step that tests the application that was built. Steps run in order by default, but you can also run selected steps concurrently when your workflow benefits from parallel execution, such as starting a long-running service while later steps continue. For more information, see Workflow syntax for GitHub Actions . You can configure a job's dependencies with other jobs; by default, jobs have no dependencies and run in parallel. When a job takes a dependency on another job, it waits for the dependent job to complete before running.",
+   "id": "ghdocs1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Events",
+   "html": "<p>You can also use a <strong>matrix</strong> to run the same job multiple times, each with a different combination of variables—like operating systems or language versions.</p><p>For example, you might configure multiple build jobs for different architectures without any job dependencies and a packaging job that depends on those builds. The build jobs run in parallel, and once they complete successfully, the packaging job runs.</p><p>For more information, see <a href=\"https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do\">Choosing what your workflow does</a>.</p><h4>Actions</h4><p>An <strong>action</strong> is a pre-defined, reusable set of jobs or code that performs specific tasks within a <strong>workflow</strong>, reducing the amount of repetitive code you write in your workflow files. Actions can perform tasks such as:</p><ul> <li>Pulling your Git repository from GitHub</li> <li>Setting up the correct toolchain for your build environment</li> <li>Setting up authentication to your cloud provider</li> </ul><p>You can write your own actions, or you can find actions to use in your workflows in the GitHub Marketplace.</p><p>For more information on actions, see <a href=\"https://docs.github.com/en/actions/how-tos/reuse-automations\">Reusing automations</a>.</p>",
+   "body": "You can also use a matrix to run the same job multiple times, each with a different combination of variables—like operating systems or language versions. For example, you might configure multiple build jobs for different architectures without any job dependencies and a packaging job that depends on those builds. The build jobs run in parallel, and once they complete successfully, the packaging job runs. For more information, see Choosing what your workflow does . Actions An action is a pre-defined, reusable set of jobs or code that performs specific tasks within a workflow , reducing the amount of repetitive code you write in your workflow files. Actions can perform tasks such as: Pulling your Git repository from GitHub Setting up the correct toolchain for your build environment Setting up authentication to your cloud provider You can write your own actions, or you can find actions to use in your workflows in the GitHub Marketplace. For more information on actions, see Reusing automations .",
+   "id": "ghdocs1-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Runners",
+   "html": "<p>A <strong>runner</strong> is a server that runs your workflows when they're triggered. Each runner can run a single <strong>job</strong> at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your <strong>workflows</strong>. Each workflow run executes in a fresh, newly-provisioned virtual machine.</p><p>GitHub also offers larger runners, which are available in larger configurations. For more information, see <a href=\"https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners\">Using larger runners</a>.</p><p>If you need a different operating system or require a specific hardware configuration, you can host your own runners.</p><p>For more information about self-hosted runners, see <a href=\"https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners\">Managing self-hosted runners</a>.</p>",
+   "body": "A runner is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows . Each workflow run executes in a fresh, newly-provisioned virtual machine. GitHub also offers larger runners, which are available in larger configurations. For more information, see Using larger runners . If you need a different operating system or require a specific hardware configuration, you can host your own runners. For more information about self-hosted runners, see Managing self-hosted runners .",
+   "id": "ghdocs1-5"
+  },
+  {
+   "id": "add-yaml",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Where does a GitHub Actions workflow live?",
+   "options": [
+    "A YAML file in .github/workflows",
+    "A setting on the GitHub website only",
+    "A script in the repository root",
+    "On the runner's hard disk"
+   ],
+   "answer": 0,
+   "why": "Workflows are files in the repository, so they are versioned and reviewed like the code they build.",
+   "added": true
+  },
+  {
+   "id": "add-needs",
+   "type": "mcq",
+   "stage": "check",
+   "q": "A workflow has build and deploy jobs. How is deploy made to wait for build?",
+   "options": [
+    "deploy says needs: build",
+    "List deploy below build",
+    "Put both in one step",
+    "Name them 1 and 2"
+   ],
+   "answer": 0,
+   "why": "Jobs run in parallel unless one names another in `needs`. Then it waits, and is skipped if the job it needs fails.",
+   "added": true
+  },
+  {
+   "id": "add-runner",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "What is a runner in GitHub Actions?",
+   "options": [
+    "The machine a job runs on",
+    "A single command in a step",
+    "The event that starts a workflow",
+    "A reusable action"
+   ],
+   "answer": 0,
+   "why": "GitHub hosts Linux, Windows and macOS runners; a self-hosted runner can sit next to hardware for tests that need it.",
+   "added": true
+  }
+ ]
+}

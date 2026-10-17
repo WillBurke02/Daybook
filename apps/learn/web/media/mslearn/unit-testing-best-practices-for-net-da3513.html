@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit testing best practices for .NET</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Microsoft Learn, Unit testing best practices for .NET. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices">https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices</a></p>
+<h1>Unit testing best practices for .NET</h1>
+<p>  Note </p><p> Access to this page requires authorization. You can try signing in or changing directories. </p><p> Access to this page requires authorization. You can try changing directories. </p><p>There are numerous benefits of writing unit tests. They help with regression, provide documentation, and facilitate good design. But when unit tests are hard to read and brittle, they can wreak havoc on your code base. This article describes some best practices for designing unit tests to support your .NET Core and .NET Standard projects. You learn techniques to keep your tests resilient and easy to understand.</p><p>By <a href="https://reese.dev">John Reese</a> with special thanks to <a href="https://osherove.com/">Roy Osherove</a></p><h2>Benefits of unit testing</h2><p>The following sections describe several reasons to write unit tests for your .NET Core and .NET Standard projects.</p><h3>Less time performing functional tests</h3><p>Functional tests are expensive. They typically involve opening the application and performing a series of steps that you (or someone else) must follow in order to validate the expected behavior. These steps might not always be known to the tester. They have to reach out to someone more knowledgeable in the area to carry out the test. Testing itself can take seconds for trivial changes, or minutes for larger changes. Lastly, this process must be repeated for every change that you make in the system. Unit tests, on the other hand, take milliseconds, can be run at the press of a button, and don't necessarily require any knowledge of the system at large. The test runner determines whether the test passes or fails, not the individual.</p><h3>Protection against regression</h3><p>Regression defects are errors that are introduced when a change is made to the application. It's common for testers to not only test their new feature but also test features that existed beforehand to verify that existing features still function as expected. With unit testing, you can rerun your entire suite of tests after every build or even after you change a line of code. This approach helps to increase confidence that your new code doesn't break existing functionality.</p><h3>Executable documentation</h3><p>It might not always be obvious what a particular method does or how it behaves given a certain input. You might ask yourself: <em>How does this method behave if I pass it a blank string or null?</em> When you have a suite of well-named unit tests, each test should clearly explain the expected output for a given input. In addition, the test should be able to verify that it actually works.</p><h3>Less coupled code</h3><p>When code is tightly coupled, it can be difficult to unit test. Without creating unit tests for the code that you're writing, coupling might be less apparent. Writing tests for your code naturally decouples your code because it's more difficult to test otherwise.</p><h2>Characteristics of good unit tests</h2><p>There are several important characteristics that define a good unit test:</p><ul> <li><strong>Fast</strong>: It's not uncommon for mature projects to have thousands of unit tests. Unit tests should take little time to run. Milliseconds.</li> <li><strong>Isolated</strong>: Unit tests are standalone, can run in isolation, and have no dependencies on any outside factors, such as a file system or database.</li> <li><strong>Repeatable</strong>: Running a unit test should be consistent with its results. The test always returns the same result if you don't change anything in between runs.</li> <li><strong>Self-Checking</strong>: The test should automatically detect if it passed or failed without any human interaction.</li> <li><strong>Timely</strong>: A unit test shouldn't take a disproportionately long time to write compared to the code being tested. If you discover that testing the code takes a large amount of time compared to writing the code, consider a more testable design.</li> </ul><h2>Code coverage and code quality</h2><p>A high code coverage percentage is often associated with a higher quality of code. However, the measurement itself <em>can't</em> determine the quality of code. Setting an overly ambitious code coverage percentage goal can be counterproductive. Consider a complex project with thousands of conditional branches, and suppose you set a goal of 95% code coverage. Currently, the project maintains 90% code coverage. The amount of time it takes to account for all of the edge cases in the remaining 5% can be a massive undertaking, and the value proposition quickly diminishes.</p><p>A high code coverage percentage isn't an indicator of success, and it doesn't imply high code quality. It just represents the amount of code covered by unit tests. For more information, see <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage">unit testing code coverage</a>.</p><h2>Unit testing terminology</h2><p>Several terms are used frequently in the context of unit testing: <em>fake</em>, <em>mock</em>, and <em>stub</em>. Unfortunately, these terms can be misapplied, so it's important to understand the correct usage.</p><p>Note</p><p>Testing literature and tools use the terms <em>fake</em>, <em>stub</em>, and <em>mock</em> inconsistently. The following definitions represent common .NET usage where a test double can both return values and verify interactions. In classic xUnit and test double literature (for example, Fowler and Meszaros), those sources use these words more narrowly: a <em>stub</em> provides data, a <em>mock</em> verifies interactions, and a <em>fake</em> is a working alternative implementation.</p><ul> <li><p><strong>Fake</strong>: A fake is a generic term that can be used to describe either a stub or a mock object. Whether the object is a stub or a mock depends on the context in which the object is used. In other words, a fake can be a stub or a mock.</p> </li> <li><p><strong>Mock</strong>: A mock object is a fake object in the system that decides whether or not a unit test passes or fails. A mock begins as a fake and remains a fake until it enters an <code>Assert</code> operation.</p> </li> <li><p><strong>Stub</strong>: A stub is a controllable replacement for an existing dependency (or collaborator) in the system. By using a stub, you can test your code without dealing with the dependency directly. By default, a stub begins as a fake.</p> </li> </ul><p>Consider the following code:</p><pre><code>var mockOrder = new MockOrder();
+var purchase = new Purchase(mockOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(purchase.CanBeShipped);
+</code></pre><p>This code shows a stub referred to as a mock. But in this scenario, the stub is truly a stub. The purpose of the code is to pass the order as a means to instantiate the <code>Purchase</code> (the system under test) object. The class name <code>MockOrder</code> is misleading because the order is a stub and not a mock.</p><p>The following code shows a more accurate design:</p><pre><code>var stubOrder = new FakeOrder();
+var purchase = new Purchase(stubOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(purchase.CanBeShipped);
+</code></pre><p>When the class is renamed to <code>FakeOrder</code>, the class is more generic. The class can be used as a mock or a stub, according to the requirements of the test case. In the first example, the <code>FakeOrder</code> class is used as a stub, and it isn't used during the <code>Assert</code> operation. The code passes the <code>FakeOrder</code> class to the <code>Purchase</code> class just to satisfy the requirements of the constructor.</p><p>To use the class as a mock, you can update the code:</p><pre><code>var mockOrder = new FakeOrder();
+var purchase = new Purchase(mockOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(mockOrder.Validated);
+</code></pre><p>In this design, the code checks a property on the fake (asserting against it), and therefore, the <code>mockOrder</code> class is a mock.</p><p>Important</p><p>It's important to implement the terminology correctly. If you call your stubs "mocks," other developers are going to make false assumptions about your intent.</p><p>The main thing to remember about mocks versus stubs is that mocks are just like stubs, except for the <code>Assert</code> process. You run <code>Assert</code> operations against a mock object, but not against a stub.</p><h2>Best practices</h2><p>There are several important best practices to follow when writing unit tests. The following sections provide examples that show how to apply the best practices to your code.</p><h3>Avoid infrastructure dependencies</h3><p>Try not to introduce dependencies on infrastructure when writing unit tests. The dependencies make the tests slow and brittle and should be reserved for integration tests. You can avoid these dependencies in your application by following the <a href="https://deviq.com/principles/explicit-dependencies-principle/">Explicit Dependencies Principle</a> and by using <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview">.NET dependency injection</a>. You can also keep your unit tests in a separate project from your integration tests. This approach ensures your unit test project doesn't have references to or dependencies on infrastructure packages.</p><h3>Follow test naming standards</h3><p>The name of your test should consist of three parts:</p><ul> <li>Name of the method being tested</li> <li>Scenario under which the method is being tested</li> <li>Expected behavior when the scenario is invoked</li> </ul><p>Naming standards are important because they help to express the test purpose and application. Tests are more than just making sure your code works. They also provide documentation. Just by looking at the suite of unit tests, you should be able to infer the behavior of your code and not have to look at the code itself. Moreover, when tests fail, you can see exactly which scenarios don't meet your expectations.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Test_Single()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+</code></pre><h3>Arrange your tests</h3><p>The "Arrange, Act, Assert" pattern is a common approach for writing unit tests. As the name implies, the pattern consists of three main tasks:</p><ul> <li><strong>Arrange</strong> your objects, create, and configure them as necessary</li> <li><strong>Act</strong> on an object</li> <li><strong>Assert</strong> that something is as expected</li> </ul><p>When you follow the pattern, you can clearly separate what is being tested from the Arrange and Assert tasks. The pattern also helps to reduce the opportunity for assertions to intermix with code in the Act task.</p><p>Readability is one of the most important aspects when writing a unit test. Separating each pattern action within the test clearly highlights the dependencies required to call your code, how your code is called, and what you're trying to assert. While it might be possible to combine some steps and reduce the size of your test, the overall goal is to make the test as readable as possible.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Add_EmptyString_ReturnsZero()
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Assert
+    Assert.Equal(0, stringCalculator.Add(""));
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Fact]
+public void Add_EmptyString_ReturnsZero()
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Act
+    var actual = stringCalculator.Add("");
+
+    // Assert
+    Assert.Equal(0, actual);
+}
+</code></pre><h3>Write minimally passing tests</h3><p>The input for a unit test should be the simplest information needed to verify the behavior you're currently testing. The minimalist approach helps tests become more resilient to future changes in the codebase and focus on verifying the behavior over the implementation.</p><p>Tests that include more information than required to pass the current test have a higher chance of introducing errors into the test and can make the intent of the test less clear. When writing tests, you want to focus on the behavior. Setting extra properties on models or using nonzero values when not required, only detracts from what you're trying to confirm.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("42");
+
+    Assert.Equal(42, actual);
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+</code></pre><h3>Avoid magic strings</h3><p><em>Magic strings</em> are string values hard-coded directly in your unit tests without any code extra comment or context. These values make your code less readable and harder to maintain. Magic strings can cause confusion to the reader of your tests. If a string looks out of the ordinary, they might wonder why a certain value was chosen for a parameter or return value. This type of string value might lead them to take a closer look at the implementation details, rather than focus on the test.</p><p>Tip</p><p>Make your goal to express as much intent as possible in your unit test code. Rather than using magic strings, assign any hard-coded values to constants.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Add_BigNumber_ThrowsException()
+{
+    var stringCalculator = new StringCalculator();
+
+    Action actual = () =&gt; stringCalculator.Add("1001");
+
+    Assert.Throws&lt;OverflowException&gt;(actual);
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Fact]
+void Add_MaximumSumResult_ThrowsOverflowException()
+{
+    var stringCalculator = new StringCalculator();
+    const string MAXIMUM_RESULT = "1001";
+
+    Action actual = () =&gt; stringCalculator.Add(MAXIMUM_RESULT);
+
+    Assert.Throws&lt;OverflowException&gt;(actual);
+}
+</code></pre><h3>Avoid coding logic in unit tests</h3><p>When you write your unit tests, avoid manual string concatenation, logical conditions, such as <code>if</code>, <code>while</code>, <code>for</code>, and <code>switch</code>, and other conditions. If you include logic in your test suite, the chance of introducing bugs increases dramatically. The last place you want to find a bug is within your test suite. You should have a high level of confidence that your tests work, otherwise, you can't trust them. Tests that you don't trust, don't provide any value. When a test fails, you want to have a sense that something is wrong with your code and that it can't be ignored.</p><p>Tip</p><p>If adding logic in your test seems unavoidable, consider splitting the test into two or more different tests to limit the logic requirements.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Add_MultipleNumbers_ReturnsCorrectResults()
+{
+    var stringCalculator = new StringCalculator();
+    var expected = 0;
+    var testCases = new[]
+    {
+        "0,0,0",
+        "0,1,2",
+        "1,2,3"
+    };
+
+    foreach (var test in testCases)
+    {
+        Assert.Equal(expected, stringCalculator.Add(test));
+        expected += 3;
+    }
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Theory]
+[InlineData("0,0,0", 0)]
+[InlineData("0,1,2", 3)]
+[InlineData("1,2,3", 6)]
+public void Add_MultipleNumbers_ReturnsSumOfNumbers(string input, int expected)
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add(input);
+
+    Assert.Equal(expected, actual);
+}
+</code></pre><h3>Use helper methods instead of Setup and Teardown</h3><p>If you require a similar object or state for your tests, use a helper method rather than <code>Setup</code> and <code>Teardown</code> attributes, if they exist. Helper methods are preferred over these attributes for several reasons:</p><ul> <li>Less confusion when reading the tests because all code is visible from within each test</li> <li>Less chance of setting up too much or too little for the given test</li> <li>Less chance of sharing state between tests, which creates unwanted dependencies between them</li> </ul><p>In unit testing frameworks, the <code>Setup</code> attribute is called before each and every unit test within your test suite. Some programmers see this behavior as useful, but it often results in bloated and hard to read tests. Each test generally has different requirements for setup and execution. Unfortunately, the <code>Setup</code> attribute forces you to use the exact same requirements for each test.</p><p>Note</p><p>The <code>SetUp</code> and <code>TearDown</code> attributes are removed in <a href="https://xunit.net/">xUnit</a> version 2.x and later.</p><p><strong>Original code</strong></p><p><strong>Apply best practice</strong></p><pre><code>private readonly StringCalculator stringCalculator;
+public StringCalculatorTests()
+{
+    stringCalculator = new StringCalculator();
+}
+</code></pre><pre><code>[Fact]
+public void Add_TwoNumbers_ReturnsSumOfNumbers()
+{
+    var stringCalculator = CreateDefaultStringCalculator();
+
+    var actual = stringCalculator.Add("0,1");
+
+    Assert.Equal(1, actual);
+}
+</code></pre><pre><code>// More tests...
+</code></pre><pre><code>// More tests...
+</code></pre><pre><code>[Fact]
+public void Add_TwoNumbers_ReturnsSumOfNumbers()
+{
+    var result = stringCalculator.Add("0,1");
+
+    Assert.Equal(1, result);
+}
+</code></pre><pre><code>private StringCalculator CreateDefaultStringCalculator()
+{
+    return new StringCalculator();
+}
+</code></pre><h3>Avoid multiple Act tasks</h3><p>When you write your tests, try to include only one Act task per test. Some common approaches for implementing a single Act task include creating a separate test for each Act or using parameterized tests. There are several benefits to using a single Act task for each test:</p><ul> <li>You can easily discern which Act task is failing if the test fails.</li> <li>You can ensure the test is focused on just a single case.</li> <li>You gain a clear picture as to why your tests are failing.</li> </ul><p>Multiple Act tasks need to be individually asserted, and you can't guarantee that all Assert tasks execute. In most unit testing frameworks, after an Assert task fails in a unit test, all subsequent tests are automatically considered as failing. The process can be confusing because some working functionality might be interpreted as failing.</p><p><strong>Original code</strong></p><pre><code>[Fact]
+public void Add_EmptyEntries_ShouldBeTreatedAsZero()
+{
+    // Act
+    var actual1 = stringCalculator.Add("");
+    var actual2 = stringCalculator.Add(",");
+
+    // Assert
+    Assert.Equal(0, actual1);
+    Assert.Equal(0, actual2);
+}
+</code></pre><p><strong>Apply best practice</strong></p><pre><code>[Theory]
+[InlineData("", 0)]
+[InlineData(",", 0)]
+public void Add_EmptyEntries_ShouldBeTreatedAsZero(string input, int expected)
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Act
+    var actual = stringCalculator.Add(input);
+
+    // Assert
+    Assert.Equal(expected, actual);
+}
+</code></pre><h3>Validate private methods with public methods</h3><p>In most cases, you don't need to test a private method in your code. Private methods are an implementation detail and never exist in isolation. At some point in the development process, you introduce a public-facing method to call the private method as part of its implementation. When you write your unit tests, what you care about is the end result of the public method that calls into the private one.</p><p>Consider the following code scenario:</p><pre><code>public string ParseLogLine(string input)
+{
+    var sanitizedInput = TrimInput(input);
+    return sanitizedInput;
+}
+
+private string TrimInput(string input)
+{
+    return input.Trim();
+}
+</code></pre><p>In terms of testing, your first reaction might be to write a test for the <code>TrimInput</code> method to ensure it works as expected. However, it's possible the <code>ParseLogLine</code> method manipulates the <code>sanitizedInput</code> object in a way you don't expect. The unknown behavior might render your test against the <code>TrimInput</code> method useless.</p><p>A better test in this scenario is to verify the public-facing <code>ParseLogLine</code> method:</p><pre><code>public void ParseLogLine_StartsAndEndsWithSpace_ReturnsTrimmedResult()
+{
+    var parser = new Parser();
+
+    var result = parser.ParseLogLine(" a ");
+
+    Assert.Equals("a", result);
+}
+</code></pre><p>When you encounter a private method, locate the public method that calls the private method, and write your tests against the public method. Just because a private method returns an expected result, doesn't mean the system that eventually calls the private method uses the result correctly.</p><h3>Handle stub static references with seams</h3><p>One principle of a unit test is that it must have full control of the system under test. However, this principle can be problematic when production code includes calls to static references (for example, <code>DateTime.Now</code>).</p><p>Examine the following code scenario:</p><pre><code>public int GetDiscountedPrice(int price)
+{
+    if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
+    {
+        return price / 2;
+    }
+    else
+    {
+        return price;
+    }
+}
+</code></pre><p>Can you write a unit test for this code? You might try running an Assert task on the <code>price</code>:</p><pre><code>public void GetDiscountedPrice_NotTuesday_ReturnsFullPrice()
+{
+    var priceCalculator = new PriceCalculator();
+
+    var actual = priceCalculator.GetDiscountedPrice(2);
+
+    Assert.Equals(2, actual)
+}
+
+public void GetDiscountedPrice_OnTuesday_ReturnsHalfPrice()
+{
+    var priceCalculator = new PriceCalculator();
+
+    var actual = priceCalculator.GetDiscountedPrice(2);
+
+    Assert.Equals(1, actual);
+}
+</code></pre><p>Unfortunately, you quickly realize there are some problems with your test:</p><ul> <li>If the test suite runs on Tuesday, the second test passes, but the first test fails.</li> <li>If the test suite runs on any other day, the first test passes, but the second test fails.</li> </ul><p>To solve these problems, you need to introduce a <em>seam</em> into your production code. One approach is to wrap the code that you need to control in an interface and have the production code depend on that interface:</p><pre><code>public interface IDateTimeProvider
+{
+    DayOfWeek DayOfWeek();
+}
+
+public int GetDiscountedPrice(int price, IDateTimeProvider dateTimeProvider)
+{
+    if (dateTimeProvider.DayOfWeek() == DayOfWeek.Tuesday)
+    {
+        return price / 2;
+    }
+    else
+    {
+        return price;
+    }
+}
+</code></pre><p>You also need to write a new version of your test suite:</p><pre><code>public void GetDiscountedPrice_NotTuesday_ReturnsFullPrice()
+{
+    var priceCalculator = new PriceCalculator();
+    var dateTimeProviderStub = new Mock&lt;IDateTimeProvider&gt;();
+    dateTimeProviderStub.Setup(dtp =&gt; dtp.DayOfWeek()).Returns(DayOfWeek.Monday);
+
+    var actual = priceCalculator.GetDiscountedPrice(2, dateTimeProviderStub);
+
+    Assert.Equals(2, actual);
+}
+
+public void GetDiscountedPrice_OnTuesday_ReturnsHalfPrice()
+{
+    var priceCalculator = new PriceCalculator();
+    var dateTimeProviderStub = new Mock&lt;IDateTimeProvider&gt;();
+    dateTimeProviderStub.Setup(dtp =&gt; dtp.DayOfWeek()).Returns(DayOfWeek.Tuesday);
+
+    var actual = priceCalculator.GetDiscountedPrice(2, dateTimeProviderStub);
+
+    Assert.Equals(1, actual);
+}
+</code></pre><p>Now the test suite has full control over the <code>DateTime.Now</code> value, and can stub any value when calling into the method.</p><h2>Related links</h2><ul> <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage">Unit testing code coverage</a></li> </ul>
+</body></html>

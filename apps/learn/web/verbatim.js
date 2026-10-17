@@ -50,7 +50,7 @@ export function verbatim(html) {
 /** Maths a source wrote as TeX, \( inline \) and \[ displayed \], set as maths (the words stay as they were). */
 function typeset(box) {
   const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), found = [];
-  while (walker.nextNode()) if (/\\[([]/.test(walker.currentNode.data)) found.push(walker.currentNode);
+  while (walker.nextNode()) if (/\\[([]/.test(walker.currentNode.data) && !walker.currentNode.parentElement.closest('pre, code')) found.push(walker.currentNode);
   for (const node of found) {
     const parts = node.data.split(/(\\\([\s\S]+?\\\)|\\\[[\s\S]+?\\\])/);
     if (parts.length < 2) continue;

@@ -1,0 +1,152 @@
+{
+ "id": "software.web.historians",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikipedia: Operational historian",
+   "wikipedia: Time series database"
+  ]
+ },
+ "minutes": 13,
+ "sources": [
+  "Wikipedia contributors, Operational historian. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Operational_historian",
+  "Wikipedia contributors, Time series database. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Time_series_database"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Operational historian",
+   "url": "media/wikipedia/operational-historian-3f6773.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: Time series database",
+   "url": "media/wikipedia/time-series-database-c48e70.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Operational historian",
+   "html": "<p> In manufacturing, an <strong>operational historian</strong> is a <a href=\"https://en.wikipedia.org/wiki/Time_series_database\">time-series database</a> application that is developed for operational process data. Historian software is often embedded or used in conjunction with standard <a href=\"https://en.wikipedia.org/wiki/Distributed_control_system\">DCS</a> and <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">PLC</a> control systems to provide enhanced data capture, validation, compression, and aggregation capabilities. Historians have been deployed in almost every industry and contribute to functions such as supervisory control, performance monitoring, <a href=\"https://en.wikipedia.org/wiki/Quality_assurance\">quality assurance</a>, and, more recently, <a href=\"https://en.wikipedia.org/wiki/Machine_learning\">machine learning</a> applications which can learn from vast quantities of historical data.</p><p>These systems were originally developed to capture instrumentation and control data, which led many to use the term \"tag\" for a stream of process data, referring to the physical \"tags\" which had been placed on instrumentation for manually capturing data. Raw data may be accessed via <a href=\"https://en.wikipedia.org/wiki/OPC_HDA\">OPC HDA</a>, <a href=\"https://en.wikipedia.org/wiki/SQL\">SQL</a>, or <a href=\"https://en.wikipedia.org/wiki/REST_API\">REST API</a> interfaces.</p>",
+   "body": "In manufacturing, an operational historian is a time-series database application that is developed for operational process data. Historian software is often embedded or used in conjunction with standard DCS and PLC control systems to provide enhanced data capture, validation, compression, and aggregation capabilities. Historians have been deployed in almost every industry and contribute to functions such as supervisory control, performance monitoring, quality assurance , and, more recently, machine learning applications which can learn from vast quantities of historical data. These systems were originally developed to capture instrumentation and control data, which led many to use the term \"tag\" for a stream of process data, referring to the physical \"tags\" which had been placed on instrumentation for manually capturing data. Raw data may be accessed via OPC HDA , SQL , or REST API interfaces.",
+   "id": "wikipedia1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Operational Support",
+   "html": "<p>Operational historians are typically used within the manufacturing facility by engineers and operators for supervisory functions and analysis. An operational historian will typically capture all instrumentation and control data, whereas an enterprise historian that is deployed to support business functions will capture only a subset of the plant data.</p><p>Typically, these applications offer data access through dedicated APIs (Application Programming Interfaces) and SDKs (Software Development Kits) which offer high-performance read and write operations. These operate through vendor-specific or custom applications. Front-end tools for trending process data over time are the most common interfaces to these databases.</p><p>Because these applications are typically deployed next to or near the source of their process data, they are often marketed and sold as '<a href=\"https://en.wikipedia.org/wiki/Real-time_database\">real-time database</a> systems.' This distinction varies among vendors, who often have to make tradeoffs in performance between data capture and presentation, and application and analysis functionality.</p><p>The following is a list of typical challenges for operational historians:</p><ul><li>data collection from instrumentation and controls</li> <li>storage and archiving of very large volumes of data</li> <li>organization of data in the form of \"tags\" or \"points\"</li> <li>limiting of monitoring (alarms) and validation</li> <li>aggregation and interpolation</li> <li>manual data entry (MDE)</li></ul>",
+   "body": "Operational historians are typically used within the manufacturing facility by engineers and operators for supervisory functions and analysis. An operational historian will typically capture all instrumentation and control data, whereas an enterprise historian that is deployed to support business functions will capture only a subset of the plant data. Typically, these applications offer data access through dedicated APIs (Application Programming Interfaces) and SDKs (Software Development Kits) which offer high-performance read and write operations. These operate through vendor-specific or custom applications. Front-end tools for trending process data over time are the most common interfaces to these databases. Because these applications are typically deployed next to or near the source of their process data, they are often marketed and sold as ' real-time database systems.' This distinction varies among vendors, who often have to make tradeoffs in performance between data capture and presentation, and application and analysis functionality. The following is a list of typical challenges for operational historians: data collection from instrumentation and controls storage and archiving of very large volumes of data organization of data in the form of \"tags\" or \"points\" limiting of monitoring (alarms) and validation aggregation and interpolation manual data entry (MDE)",
+   "id": "wikipedia1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Data access",
+   "html": "<p>As opposed to enterprise historians, the <a href=\"https://en.wikipedia.org/wiki/Data_access_layer\">data access layer</a> in the operational historian is designed to offer sophisticated data fetching modes without complex information analysis facilities. The following settings are typically available for data access operations:</p><ul><li>Data scope (single point or tag, history based on time range, history based on sample count)</li> <li>Request modes (raw data, last-known value, aggregation, interpolation)</li> <li>Sampling (single point, all points without sampling, all points with interval sampling)</li> <li>Data omission (based on the sample quality, based on the sample value, based on the count)</li></ul><p>Even though the operational historians are rarely <a href=\"https://en.wikipedia.org/wiki/Relational_database_management_system\">relational database management systems</a>, they often offer <a href=\"https://en.wikipedia.org/wiki/SQL\">SQL</a>-based interfaces to query the database. In most of such implementations, the dialect does not follow the SQL standard in order to provide syntax for specifying data access operations parameters.</p>",
+   "body": "As opposed to enterprise historians, the data access layer in the operational historian is designed to offer sophisticated data fetching modes without complex information analysis facilities. The following settings are typically available for data access operations: Data scope (single point or tag, history based on time range, history based on sample count) Request modes (raw data, last-known value, aggregation, interpolation) Sampling (single point, all points without sampling, all points with interval sampling) Data omission (based on the sample quality, based on the sample value, based on the count) Even though the operational historians are rarely relational database management systems , they often offer SQL -based interfaces to query the database. In most of such implementations, the dialect does not follow the SQL standard in order to provide syntax for specifying data access operations parameters.",
+   "id": "wikipedia1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Time series database",
+   "html": "<p>A <strong>time series database (TSDB)</strong> is a software system optimized for handling <a href=\"https://en.wikipedia.org/wiki/Time_series\">time series</a> data—a sequence of data points indexed in chronological order. In various scientific and financial disciplines, these chronological sequences may be referred to as profiles, curves, traces, or trends. Early iterations of these databases were primarily associated with industrial applications, where they functioned as <a href=\"https://en.wikipedia.org/wiki/Data_historian\">data historians</a> to efficiently record measurements from physical sensors; however, modern implementations now span a much wider range of uses. Due to the high ingestion rates and sequential nature of this data, TSDB repositories heavily utilize specialized <a href=\"https://en.wikipedia.org/wiki/Compression_algorithm\">compression algorithms</a> to manage storage efficiently. While time-series data can be stored across various database types, systems designed around a temporal primary index differ structurally from <a href=\"https://en.wikipedia.org/wiki/Relational_database\">relational databases</a>, which optimize for discrete relationships using referential models.</p>",
+   "body": "A time series database (TSDB) is a software system optimized for handling time series data—a sequence of data points indexed in chronological order. In various scientific and financial disciplines, these chronological sequences may be referred to as profiles, curves, traces, or trends. Early iterations of these databases were primarily associated with industrial applications, where they functioned as data historians to efficiently record measurements from physical sensors; however, modern implementations now span a much wider range of uses. Due to the high ingestion rates and sequential nature of this data, TSDB repositories heavily utilize specialized compression algorithms to manage storage efficiently. While time-series data can be stored across various database types, systems designed around a temporal primary index differ structurally from relational databases , which optimize for discrete relationships using referential models.",
+   "id": "wikipedia2-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Overview",
+   "html": "<p>Compared to general-purpose datasets, time series datasets are highly uniform and scale rapidly, typically consisting of sequential timestamps mapped to specific metric values. Because individual entries rarely feature complex, cross-table relational dependencies, TSDBs do not require the overhead of traditional relational constraints. Furthermore, because these workloads seldom demand indefinite <a href=\"https://en.wikipedia.org/wiki/Data_retention\">data retention</a>, TSDBs can drastically reduce storage footprints and accelerate queries relative to general-purpose databases.</p><p>For example, the sequential uniformity of temporal data allows specialized compression algorithms—such as <a href=\"https://en.wikipedia.org/wiki/Delta_encoding\">delta encoding</a> or Gorilla compression—to achieve significantly higher data density than standard compression techniques. Additionally, while general-purpose systems are optimized for persistent data retention, TSDBs natively automate data lifecycle management by downsampling or dropping entire historical data partitions in bulk. Finally, specialized temporal indexing strategies further isolate time windows to maximize query performance.</p>",
+   "body": "Compared to general-purpose datasets, time series datasets are highly uniform and scale rapidly, typically consisting of sequential timestamps mapped to specific metric values. Because individual entries rarely feature complex, cross-table relational dependencies, TSDBs do not require the overhead of traditional relational constraints. Furthermore, because these workloads seldom demand indefinite data retention , TSDBs can drastically reduce storage footprints and accelerate queries relative to general-purpose databases. For example, the sequential uniformity of temporal data allows specialized compression algorithms—such as delta encoding or Gorilla compression—to achieve significantly higher data density than standard compression techniques. Additionally, while general-purpose systems are optimized for persistent data retention, TSDBs natively automate data lifecycle management by downsampling or dropping entire historical data partitions in bulk. Finally, specialized temporal indexing strategies further isolate time windows to maximize query performance.",
+   "id": "wikipedia2-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Workloads and design paradigms",
+   "html": "<p>Time series databases are commonly designed for append-only workloads, where massive volumes of sequential observations or discrete events are continuously ingested alongside corresponding timestamps. Purpose-built series management systems are specifically designed to ingest and process data from infrastructure monitoring, system automation, the <a href=\"https://en.wikipedia.org/wiki/Internet_of_things\">internet of things (IoT)</a>, and complex cyber-physical networks. In these environments, data streams are typically generated at extreme velocities and high volumes.</p><p>Primary design paradigms focus on maximizing write throughput, ensuring low-latency range queries, utilizing highly efficient data compression, and natively supporting multi-window temporal aggregations or automated downsampling. To facilitate multidimensional indexing, many implementations organize data using a schema composed of key-value tags, device IDs, or other metadata. This metadata structure allows applications to isolate and query telemetry based simultaneously on specific time intervals and source attributes.</p>",
+   "body": "Time series databases are commonly designed for append-only workloads, where massive volumes of sequential observations or discrete events are continuously ingested alongside corresponding timestamps. Purpose-built series management systems are specifically designed to ingest and process data from infrastructure monitoring, system automation, the internet of things (IoT) , and complex cyber-physical networks. In these environments, data streams are typically generated at extreme velocities and high volumes. Primary design paradigms focus on maximizing write throughput, ensuring low-latency range queries, utilizing highly efficient data compression, and natively supporting multi-window temporal aggregations or automated downsampling. To facilitate multidimensional indexing, many implementations organize data using a schema composed of key-value tags, device IDs, or other metadata. This metadata structure allows applications to isolate and query telemetry based simultaneously on specific time intervals and source attributes.",
+   "id": "wikipedia2-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Applications and workloads",
+   "html": "<p>Time series databases are deployed across diverse industries where continuous chronological data collection is critical. Common application areas include industrial automation monitoring, operational data historians, infrastructure and application performance monitoring (APM), IoT telemetry, smart energy grid management, financial market tick data tracking, and scientific experimental measurements.</p><p>Within telemetry and systems monitoring, time series database systems must ingest and index massive streams of sensor or metric data in real time. To support downstream analytical workflows, these databases natively execute continuous queries and support analytical tasks such as data exploration, real-time <a href=\"https://en.wikipedia.org/wiki/Anomaly_detection\">anomaly detection</a>, predictive trend analysis, and database gap-filling or <a href=\"https://en.wikipedia.org/wiki/Missing_data\">missing-value recovery</a>.</p>",
+   "body": "Time series databases are deployed across diverse industries where continuous chronological data collection is critical. Common application areas include industrial automation monitoring, operational data historians, infrastructure and application performance monitoring (APM), IoT telemetry, smart energy grid management, financial market tick data tracking, and scientific experimental measurements. Within telemetry and systems monitoring, time series database systems must ingest and index massive streams of sensor or metric data in real time. To support downstream analytical workflows, these databases natively execute continuous queries and support analytical tasks such as data exploration, real-time anomaly detection , predictive trend analysis, and database gap-filling or missing-value recovery .",
+   "id": "wikipedia2-4"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Analysis and machine learning",
+   "html": "<p>Time series databases frequently serve as the underlying storage and retrieval engines for downstream analytical pipelines, including forecasting, real-time anomaly detection, missing-value imputation, and <a href=\"https://en.wikipedia.org/wiki/Pattern_matching\">pattern matching</a>. To optimize performance and reduce data transfer overhead, certain modern time series systems support in-database analytics by embedding machine-learning functions directly into the database layer. This architecture allows operations to invoke forecasting or outlier detection algorithms natively through standard database query interfaces, such as specialized <a href=\"https://en.wikipedia.org/wiki/SQL\">SQL</a> extensions.</p><p>Research in temporal <a href=\"https://en.wikipedia.org/wiki/Data_science\">data science</a> increasingly utilizes large, pre-trained time series foundation models for complex forecasting and classification tasks. Within computer science literature, these <a href=\"https://en.wikipedia.org/wiki/Deep_learning\">deep learning</a> architectures are classified strictly as algorithmic analysis methodologies applied to temporal datasets, rather than native, defining characteristics of the underlying <a href=\"https://en.wikipedia.org/wiki/Database_engine\">database engine</a> architecture.</p>",
+   "body": "Time series databases frequently serve as the underlying storage and retrieval engines for downstream analytical pipelines, including forecasting, real-time anomaly detection, missing-value imputation, and pattern matching . To optimize performance and reduce data transfer overhead, certain modern time series systems support in-database analytics by embedding machine-learning functions directly into the database layer. This architecture allows operations to invoke forecasting or outlier detection algorithms natively through standard database query interfaces, such as specialized SQL extensions. Research in temporal data science increasingly utilizes large, pre-trained time series foundation models for complex forecasting and classification tasks. Within computer science literature, these deep learning architectures are classified strictly as algorithmic analysis methodologies applied to temporal datasets, rather than native, defining characteristics of the underlying database engine architecture.",
+   "id": "wikipedia2-5"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "List of time series databases",
+   "html": "<p>The following database systems have functionality optimized for handling <a href=\"https://en.wikipedia.org/wiki/Time_series\">time series</a> data.</p><table> <caption></caption> <tbody><tr> <th>Name</th><th>License</th><th>Language</th><th>References</th></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Apache_IoTDB\">Apache IoTDB</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Java_(programming_language)\">Java</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Apache_Kudu\">Apache Kudu</a></td><td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td><td><a href=\"https://en.wikipedia.org/wiki/C++\">C++</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Apache_Pinot\">Apache Pinot</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Java_(programming_language)\">Java</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/ClickHouse\">ClickHouse</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td> <td><a href=\"https://en.wikipedia.org/wiki/C++\">C++</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/CrateDB\">CrateDB</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Java_(programming_language)\">Java</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/EXtremeDB\">eXtremeDB</a></td> <td>Commercial</td> <td>SQL, <a href=\"https://en.wikipedia.org/wiki/Python_(programming_language)\">Python</a>, <a href=\"https://en.wikipedia.org/wiki/C_(programming_language)\">C</a> / <a href=\"https://en.wikipedia.org/wiki/C++\">C++</a>, <a href=\"https://en.wikipedia.org/wiki/Java_(programming_language)\">Java</a>, and <a href=\"https://en.wikipedia.org/wiki/C_Sharp_(programming_language)\">C#</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/FAME_(database)\">FAME (database)</a></td><td>Commercial</td><td><a href=\"https://en.wikipedia.org/wiki/C_(programming_language)\">C</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/InfluxDB\">InfluxDB</a></td><td><a href=\"https://en.wikipedia.org/wiki/MIT_License\">MIT</a>. Chronograf <a href=\"https://en.wikipedia.org/wiki/Affero_General_Public_License\">AGPLv3</a>, Clustering Commercial</td><td><a href=\"https://en.wikipedia.org/wiki/Go_(programming_language)\">Go</a> (version 2), <a href=\"https://en.wikipedia.org/wiki/Rust_(programming_language)\">Rust</a> (version 3)</td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/IBM_Informix\">Informix TimeSeries</a></td><td>Commercial</td><td><a href=\"https://en.wikipedia.org/wiki/C_(programming_language)\">C</a> / <a href=\"https://en.wikipedia.org/wiki/C++\">C++</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Kdb+\">Kx kdb+</a></td><td>Commercial</td><td><a href=\"https://en.wikipedia.org/wiki/Q_(programming_language_from_Kx_Systems)\">Q</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/MongoDB\">MongoDB</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Server_Side_Public_License\">Server Side Public License (SSPL)</a> v1.0</td> <td><a href=\"https://en.wikipedia.org/wiki/C++\">C++</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Prometheus_(software)\">Prometheus</a></td><td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td><td><a href=\"https://en.wikipedia.org/wiki/Go_(programming_language)\">Go</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/QuestDB\">QuestDB</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td> <td><a href=\"https://en.wikipedia.org/wiki/Java_(programming_language)\">Java</a>, <a href=\"https://en.wikipedia.org/wiki/C++\">C++</a>, <a href=\"https://en.wikipedia.org/wiki/Rust_(programming_language)\">Rust</a></td> <td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/Riak\">Riak</a>-TS</td><td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td><td><a href=\"https://en.wikipedia.org/wiki/Erlang_(programming_language)\">Erlang</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/RRDtool\">RRDtool</a></td><td><a href=\"https://en.wikipedia.org/wiki/GPLv2\">GPLv2</a></td><td><a href=\"https://en.wikipedia.org/wiki/C_(programming_language)\">C</a></td><td></td></tr> <tr> <td><a href=\"https://en.wikipedia.org/wiki/TimescaleDB\">TimescaleDB</a></td><td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td><td><a href=\"https://en.wikipedia.org/wiki/C_(programming_language)\">C</a></td><td></td></tr> <tr> <td>Whisper (<a href=\"https://en.wikipedia.org/wiki/Graphite_(software)\">Graphite</a>)</td><td><a href=\"https://en.wikipedia.org/wiki/Apache_License_2.0\">Apache License 2.0</a></td><td><a href=\"https://en.wikipedia.org/wiki/Python_(programming_language)\">Python</a></td><td></td></tr> </tbody></table>",
+   "body": "The following database systems have functionality optimized for handling time series data. Name License Language References Apache IoTDB Apache License 2.0 Java Apache Kudu Apache License 2.0 C++ Apache Pinot Apache License 2.0 Java ClickHouse Apache License 2.0 C++ CrateDB Apache License 2.0 Java eXtremeDB Commercial SQL, Python , C / C++ , Java , and C# FAME (database) Commercial C InfluxDB MIT . Chronograf AGPLv3 , Clustering Commercial Go (version 2), Rust (version 3) Informix TimeSeries Commercial C / C++ Kx kdb+ Commercial Q MongoDB Server Side Public License (SSPL) v1.0 C++ Prometheus Apache License 2.0 Go QuestDB Apache License 2.0 Java , C++ , Rust Riak -TS Apache License 2.0 Erlang RRDtool GPLv2 C TimescaleDB Apache License 2.0 C Whisper ( Graphite ) Apache License 2.0 Python",
+   "id": "wikipedia2-6"
+  },
+  {
+   "id": "add-deadband",
+   "type": "mcq",
+   "stage": "check",
+   "q": "Why does a process historian store a value only when it changes by more than a deadband?",
+   "options": [
+    "To save space while keeping the shape",
+    "To hide noisy instruments",
+    "Because PLCs send data slowly",
+    "To stop operators editing data"
+   ],
+   "answer": 0,
+   "why": "Most process values change slowly. Storing only significant changes (with the time) cuts storage many times over, and the trend can be redrawn to within the deadband.",
+   "added": true
+  },
+  {
+   "id": "add-tsdb",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What is a time-series database best at?",
+   "options": [
+    "Values stamped with time, queried by range",
+    "Linking customers to orders",
+    "Storing documents and drawings",
+    "Holding a single current value"
+   ],
+   "answer": 0,
+   "why": "Data arrives in time order and is read as ranges ('the last 8 hours of TT101'), often averaged into buckets. Time-series databases are built for that pattern.",
+   "added": true
+  },
+  {
+   "id": "add-hist-ts",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Where should a historian's timestamps ideally come from?",
+   "options": [
+    "As close to the measurement as possible",
+    "The time the report is run",
+    "The operator's PC clock",
+    "The time the data is backed up"
+   ],
+   "answer": 0,
+   "why": "A stamp taken at the source (the PLC or the instrument), from a synchronised clock, keeps events in the right order across machines. Stamping at the server adds network delays.",
+   "added": true
+  }
+ ]
+}

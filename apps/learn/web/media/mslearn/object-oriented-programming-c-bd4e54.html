@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Object-Oriented programming (C#)</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Microsoft Learn, Object-Oriented programming (C#). CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/oop <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/oop">https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/oop</a></p>
+<h1>Object-Oriented programming (C#)</h1>
+<p>  Note </p><p> Access to this page requires authorization. You can try signing in or changing directories. </p><p> Access to this page requires authorization. You can try changing directories. </p><p>C# is an object-oriented programming language. The four basic principles of object-oriented programming are:</p><ul> <li><em>Abstraction</em> Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.</li> <li><em>Encapsulation</em> Hiding the internal state and functionality of an object and only allowing access through a public set of functions.</li> <li><em>Inheritance</em> Ability to create new abstractions based on existing abstractions.</li> <li><em>Polymorphism</em> Ability to implement inherited properties or methods in different ways across multiple abstractions.</li> </ul><p>In the preceding tutorial, <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/classes">introduction to classes</a> you saw both <em>abstraction</em> and <em>encapsulation</em>. The <code>BankAccount</code> class provided an abstraction for the concept of a bank account. You could modify its implementation without affecting any of the code that used the <code>BankAccount</code> class. Both the <code>BankAccount</code> and <code>Transaction</code> classes provide encapsulation of the components needed to describe those concepts in code.</p><p>In this tutorial, you extend that application to make use of <em>inheritance</em> and <em>polymorphism</em> to add new features. You also add features to the <code>BankAccount</code> class, taking advantage of the <em>abstraction</em> and <em>encapsulation</em> techniques you learned in the preceding tutorial.</p><h2>Create different types of accounts</h2><p>After building this program, you get requests to add features to it. It works great in the situation where there's only one bank account type. Over time, needs change, and related account types are requested:</p><ul> <li>An interest earning account that accrues interest at the end of each month.</li> <li>A line of credit that can have a negative balance, but when there's a balance, there's an interest charge each month.</li> <li>A prepaid gift card account that starts with a single deposit, and only can be paid off. It can be refilled once at the start of each month.</li> </ul><p>All of these different accounts are similar to <code>BankAccount</code> class defined in the earlier tutorial. You could copy that code, rename the classes, and make modifications. That technique would work in the short term, but it would be more work over time. Any changes would be copied across all the affected classes.</p><p>Instead, you can create new bank account types that inherit methods and data from the <code>BankAccount</code> class created in the preceding tutorial. These new classes can extend the <code>BankAccount</code> class with the specific behavior needed for each type:</p><pre><code>public class InterestEarningAccount : BankAccount
+{
+}
+
+public class LineOfCreditAccount : BankAccount
+{
+}
+
+public class GiftCardAccount : BankAccount
+{
+}
+</code></pre><p>Each of these classes <em>inherits</em> the shared behavior from their shared <em>base class</em>, the <code>BankAccount</code> class. Write the implementations for new and different functionality in each of the <em>derived classes</em>. These derived classes already have all the behavior defined in the <code>BankAccount</code> class.</p><p>It's a good practice to create each new class in a different source file. In <a href="https://visualstudio.com">Visual Studio</a>, you can right-click on the project, and select <em>add class</em> to add a new class in a new file. In <a href="https://code.visualstudio.com">Visual Studio Code</a>, select <em>File</em> then <em>New</em> to create a new source file. In either tool, name the file to match the class: <em>InterestEarningAccount.cs</em>, <em>LineOfCreditAccount.cs</em>, and <em>GiftCardAccount.cs</em>.</p><p>When you create the classes as shown in the preceding sample, you find that none of your derived classes compile. A constructor is responsible for initializing an object. A derived class constructor must initialize the derived class, and provide instructions on how to initialize the base class object included in the derived class. The proper initialization normally happens without any extra code. The <code>BankAccount</code> class declares one public constructor with the following signature:</p><pre><code>public BankAccount(string name, decimal initialBalance)
+</code></pre><p>The compiler doesn't generate a default constructor when you define a constructor yourself. That means each derived class must explicitly call this constructor. You declare a constructor that can pass arguments to the base class constructor. The following code shows the constructor for the <code>InterestEarningAccount</code>:</p><pre><code>public InterestEarningAccount(string name, decimal initialBalance) : base(name, initialBalance)
+{
+}
+</code></pre><p>The parameters to this new constructor match the parameter type and names of the base class constructor. You use the <code>: base()</code> syntax to indicate a call to a base class constructor. Some classes define multiple constructors, and this syntax enables you to pick which base class constructor you call. Once you update the constructors, you can develop the code for each of the derived classes. The requirements for the new classes can be stated as follows:</p><ul> <li>An interest earning account: <ul> <li>Gets a credit of 2% of the month-ending-balance.</li> </ul> </li> <li>A line of credit: <ul> <li>Can have a negative balance, but not be greater in absolute value than the credit limit.</li> <li>Incurs an interest charge each month where the end of month balance isn't 0.</li> <li>Incurs a fee on each withdrawal that goes over the credit limit.</li> </ul> </li> <li>A gift card account: <ul> <li>Can be refilled with a specified amount once each month, on the last day of the month.</li> </ul> </li> </ul><p>You can see that all three of these account types have an action that takes places at the end of each month. However, each account type does different tasks. You use <em>polymorphism</em> to implement this code. Create a single <code>virtual</code> method in the <code>BankAccount</code> class:</p><pre><code>public virtual void PerformMonthEndTransactions() { }
+</code></pre><p>The preceding code shows how you use the <code>virtual</code> keyword to declare a method in the base class that a derived class can provide a different implementation for. A <code>virtual</code> method is a method where any derived class can choose to reimplement. When a derived class defines a new implementation, it's called <em>overriding the base class implementation</em>. The derived classes use the <code>override</code> keyword to define the new implementation. The <code>virtual</code> keyword specifies that derived classes can override the behavior. You can also declare <code>abstract</code> methods where derived classes must override the behavior. The base class doesn't provide an implementation for an <code>abstract</code> method. Next, you need to define the implementation for two of the new classes you created. Start with the <code>InterestEarningAccount</code>:</p><pre><code>public override void PerformMonthEndTransactions()
+{
+    if (Balance &gt; 500m)
+    {
+        decimal interest = Balance * 0.02m;
+        MakeDeposit(interest, DateTime.Now, "apply monthly interest");
+    }
+}
+</code></pre><p>Add the following code to the <code>LineOfCreditAccount</code>. The code negates the balance to compute a positive interest charge that is withdrawn from the account:</p><pre><code>public override void PerformMonthEndTransactions()
+{
+    if (Balance &lt; 0)
+    {
+        // Negate the balance to get a positive interest charge:
+        decimal interest = -Balance * 0.07m;
+        MakeWithdrawal(interest, DateTime.Now, "Charge monthly interest");
+    }
+}
+</code></pre><p>The <code>GiftCardAccount</code> class needs two changes to implement its month-end functionality. First, modify the constructor to include an optional amount to add each month:</p><pre><code>private readonly decimal _monthlyDeposit = 0m;
+
+public GiftCardAccount(string name, decimal initialBalance, decimal monthlyDeposit = 0) : base(name, initialBalance)
+    =&gt; _monthlyDeposit = monthlyDeposit;
+</code></pre><p>The constructor provides a default value for the <code>monthlyDeposit</code> value so callers can omit a <code>0</code> for no monthly deposit. Next, override the <code>PerformMonthEndTransactions</code> method to add the monthly deposit, if it was set to a nonzero value in the constructor:</p><pre><code>public override void PerformMonthEndTransactions()
+{
+    if (_monthlyDeposit != 0)
+    {
+        MakeDeposit(_monthlyDeposit, DateTime.Now, "Add monthly deposit");
+    }
+}
+</code></pre><p>The override applies the monthly deposit set in the constructor. Add the following code to the <code>Main</code> method. This code tests these changes for the <code>GiftCardAccount</code> and the <code>InterestEarningAccount</code>:</p><pre><code>var giftCard = new GiftCardAccount("gift card", 100, 50);
+giftCard.MakeWithdrawal(20, DateTime.Now, "get expensive coffee");
+giftCard.MakeWithdrawal(50, DateTime.Now, "buy groceries");
+giftCard.PerformMonthEndTransactions();
+// can make additional deposits:
+giftCard.MakeDeposit(27.50m, DateTime.Now, "add some additional spending money");
+Console.WriteLine(giftCard.GetAccountHistory());
+
+var savings = new InterestEarningAccount("savings account", 10000);
+savings.MakeDeposit(750, DateTime.Now, "save some money");
+savings.MakeDeposit(1250, DateTime.Now, "Add more savings");
+savings.MakeWithdrawal(250, DateTime.Now, "Needed to pay monthly bills");
+savings.PerformMonthEndTransactions();
+Console.WriteLine(savings.GetAccountHistory());
+</code></pre><p>Verify the results. Now, add a similar set of test code for the <code>LineOfCreditAccount</code>:</p><pre><code>var lineOfCredit = new LineOfCreditAccount("line of credit", 0);
+// How much is too much to borrow?
+lineOfCredit.MakeWithdrawal(1000m, DateTime.Now, "Take out monthly advance");
+lineOfCredit.MakeDeposit(50m, DateTime.Now, "Pay back small amount");
+lineOfCredit.MakeWithdrawal(5000m, DateTime.Now, "Emergency funds for repairs");
+lineOfCredit.MakeDeposit(150m, DateTime.Now, "Partial restoration on repairs");
+lineOfCredit.PerformMonthEndTransactions();
+Console.WriteLine(lineOfCredit.GetAccountHistory());
+</code></pre><p>Add the preceding code and run the program. The output should be something like the following error:</p><pre><code>Unhandled exception. System.ArgumentOutOfRangeException: Amount of deposit must be positive (Parameter 'amount')
+   at OOProgramming.BankAccount.MakeDeposit(Decimal amount, DateTime date, String note) in BankAccount.cs:line 42
+   at OOProgramming.BankAccount..ctor(String name, Decimal initialBalance) in BankAccount.cs:line 31
+   at OOProgramming.LineOfCreditAccount..ctor(String name, Decimal initialBalance) in LineOfCreditAccount.cs:line 9
+   at OOProgramming.Program.Main(String[] args) in Program.cs:line 29
+</code></pre><p>Note</p><p>The actual output includes the full path to the folder with the project. The folder names were omitted for brevity. Also, depending on your code format, the line numbers might be slightly different.</p><p>This code fails because the <code>BankAccount</code> assumes that the initial balance must be greater than 0. Another assumption baked into the <code>BankAccount</code> class is that the balance can't go negative. Instead, any withdrawal that overdraws the account is rejected. Both of those assumptions need to change. The line of credit account starts at 0, and generally has a negative balance. Also, if a customer borrows too much money, they incur a fee. The transaction is accepted, it just costs more. The first rule can be implemented by adding an optional argument to the <code>BankAccount</code> constructor that specifies the minimum balance. The default is <code>0</code>. The second rule requires a mechanism that enables derived classes to modify the default algorithm. In a sense, the base class "asks" the derived type what should happen when there's an overdraft. The default behavior is to reject the transaction by throwing an exception.</p><p>Let's start by adding a second constructor that includes an optional <code>minimumBalance</code> parameter. This new constructor does all the actions done by the existing constructor. Also, it sets the minimum balance property. You could copy the body of the existing constructor, but that means two locations to change in the future. Instead, you can use <em>constructor chaining</em> to have one constructor call another. The following code shows the two constructors and the new field:</p><pre><code>private readonly decimal _minimumBalance;
+
+public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+
+public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
+{
+    Number = s_accountNumberSeed.ToString();
+    s_accountNumberSeed++;
+
+    Owner = name;
+    _minimumBalance = minimumBalance;
+    if (initialBalance &gt; 0)
+        MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
+}
+</code></pre><p>The preceding code shows two new techniques. First, the <code>minimumBalance</code> field is marked as <code>readonly</code>. That means the value can't be changed after the object is constructed. Once a <code>BankAccount</code> is created, the <code>minimumBalance</code> can't change. Second, the constructor that takes two parameters uses <code>: this(name, initialBalance, 0) { }</code> as its implementation. The <code>: this()</code> expression calls the other constructor, the one with three parameters. This technique allows you to have a single implementation for initializing an object even though client code can choose one of many constructors.</p><p>This implementation calls <code>MakeDeposit</code> only if the initial balance is greater than <code>0</code>. That preserves the rule that deposits must be positive, yet lets the credit account open with a <code>0</code> balance.</p><p>Now that the <code>BankAccount</code> class has a read-only field for the minimum balance, the final change is to change the hard code <code>0</code> to <code>minimumBalance</code> in the <code>MakeWithdrawal</code> method:</p><pre><code>if (Balance - amount &lt; _minimumBalance)
+</code></pre><p>After extending the <code>BankAccount</code> class, you can modify the <code>LineOfCreditAccount</code> constructor to call the new base constructor, as shown in the following code:</p><pre><code>public LineOfCreditAccount(string name, decimal initialBalance, decimal creditLimit) : base(name, initialBalance, -creditLimit)
+{
+}
+</code></pre><p>Notice that the <code>LineOfCreditAccount</code> constructor changes the sign of the <code>creditLimit</code> parameter so it matches the meaning of the <code>minimumBalance</code> parameter.</p><h2>Different overdraft rules</h2><p>The last feature to add enables the <code>LineOfCreditAccount</code> to charge a fee for going over the credit limit instead of refusing the transaction.</p><p>One technique is to define a virtual function where you implement the required behavior. The <code>BankAccount</code> class refactors the <code>MakeWithdrawal</code> method into two methods. The new method does the specified action when the withdrawal takes the balance below the minimum. The existing <code>MakeWithdrawal</code> method has the following code:</p><pre><code>public void MakeWithdrawal(decimal amount, DateTime date, string note)
+{
+    if (amount &lt;= 0)
+    {
+        throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
+    }
+    if (Balance - amount &lt; _minimumBalance)
+    {
+        throw new InvalidOperationException("Not sufficient funds for this withdrawal");
+    }
+    var withdrawal = new Transaction(-amount, date, note);
+    _allTransactions.Add(withdrawal);
+}
+</code></pre><p>Replace it with the following code:</p><pre><code>public void MakeWithdrawal(decimal amount, DateTime date, string note)
+{
+    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(amount);
+    Transaction? overdraftTransaction = CheckWithdrawalLimit(Balance - amount &lt; _minimumBalance);
+    Transaction? withdrawal = new(-amount, date, note);
+    _allTransactions.Add(withdrawal);
+    if (overdraftTransaction != null)
+        _allTransactions.Add(overdraftTransaction);
+}
+
+protected virtual Transaction? CheckWithdrawalLimit(bool isOverdrawn)
+{
+    if (isOverdrawn)
+    {
+        throw new InvalidOperationException("Not sufficient funds for this withdrawal");
+    }
+    else
+    {
+        return default;
+    }
+}
+</code></pre><p>The added method is <code>protected</code>, which means that it can be called only from derived classes. That declaration prevents other clients from calling the method. It's also <code>virtual</code> so that derived classes can change the behavior. The return type is a <code>Transaction?</code>. The <code>?</code> annotation indicates that the method can return <code>null</code>. Add the following implementation in the <code>LineOfCreditAccount</code>. This code charges a fee when the withdrawal limit is exceeded:</p><pre><code>protected override Transaction? CheckWithdrawalLimit(bool isOverdrawn) =&gt;
+    isOverdrawn
+    ? new Transaction(-20, DateTime.Now, "Apply overdraft fee")
+    : default;
+</code></pre><p>The override returns a fee transaction when the account is overdrawn. If the withdrawal doesn't go over the limit, the method returns a <code>null</code> transaction. That indicates there's no fee. Test these changes by adding the following code to your <code>Main</code> method in the <code>Program</code> class:</p><pre><code>var lineOfCredit = new LineOfCreditAccount("line of credit", 0, 2000);
+// How much is too much to borrow?
+lineOfCredit.MakeWithdrawal(1000m, DateTime.Now, "Take out monthly advance");
+lineOfCredit.MakeDeposit(50m, DateTime.Now, "Pay back small amount");
+lineOfCredit.MakeWithdrawal(5000m, DateTime.Now, "Emergency funds for repairs");
+lineOfCredit.MakeDeposit(150m, DateTime.Now, "Partial restoration on repairs");
+lineOfCredit.PerformMonthEndTransactions();
+Console.WriteLine(lineOfCredit.GetAccountHistory());
+</code></pre><p>Run the program, and check the results.</p><h2>Summary</h2><p>If you got stuck, you can see the source for this tutorial <a href="https://github.com/dotnet/docs/tree/main/docs/csharp/fundamentals/tutorials/snippets/object-oriented-programming">in our GitHub repo</a>.</p><p>This tutorial demonstrated many of the techniques used in Object-Oriented programming:</p><ul> <li>You used <em>Abstraction</em> when you defined classes for each of the different account types. Those classes described the behavior for that type of account.</li> <li>You used <em>Encapsulation</em> when you kept many details <code>private</code> in each class.</li> <li>You used <em>Inheritance</em> when you used the implementation already created in the <code>BankAccount</code> class to save code.</li> <li>You used <em>Polymorphism</em> when you created <code>virtual</code> methods that derived classes could override to create specific behavior for that account type.</li> </ul>
+</body></html>

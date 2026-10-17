@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Structured text</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Wikipedia contributors, Structured text. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Structured_text <a href="https://en.wikipedia.org/wiki/Structured_text">https://en.wikipedia.org/wiki/Structured_text</a></p>
+<h1>Structured text</h1>
+<p><strong>Structured text</strong>, abbreviated as <strong>ST</strong> or <strong>STX</strong>, is one of the five languages supported by the <a href="https://en.wikipedia.org/wiki/IEC_61131-3">IEC 61131-3</a> standard, designed for <a href="https://en.wikipedia.org/wiki/Programmable_logic_controller">programmable logic controllers</a> (PLCs). It is a high-level language that is <a href="https://en.wikipedia.org/wiki/Block_(programming)">block structured</a> and syntactically resembles <a href="https://en.wikipedia.org/wiki/Pascal_(programming_language)">Pascal</a>, on which it is based. All of the languages share <a href="https://en.wikipedia.org/wiki/IEC61131_Common_Elements">IEC61131 Common Elements</a>. The variables and function calls are defined by the common elements so different languages within the IEC 61131-3 standard can be used in the same program.</p><p>Complex statements and nested instructions are supported:</p><ul><li>Iteration loops (REPEAT-UNTIL; WHILE-DO)</li> <li>Conditional execution (IF-THEN-ELSE; CASE)</li> <li>Functions (SQRT(), SIN())</li></ul><h2>Sample program</h2><pre>(* simple state machine *)
+TxtState := STATES[StateMachine];
+
+CASE StateMachine OF
+   1: ClosingValve();
+      StateMachine := 2;
+   2: OpeningValve();
+ELSE
+    BadCase();
+END_CASE;
+</pre><p>Unlike in some other programming languages, there is no <a href="https://en.wikipedia.org/wiki/Switch_statement#Fall_through">fall through</a> for the CASE statement: the first matching condition is entered, and after running its statements, the CASE block is left without checking other conditions.</p><h3>Additional ST programming examples</h3><pre>// PLC configuration
+CONFIGURATION DefaultCfg
+    VAR_GLOBAL
+        b_Start_Stop  : BOOL;         // Global variable to represent a boolean.
+        b_ON_OFF      : BOOL;         // Global variable to represent a boolean.
+        Start_Stop AT %IX0.0:BOOL;    // Digital input of the PLC (Address 0.0)
+        ON_OFF     AT %QX0.0:BOOL;    // Digital output of the PLC (Address 0.0). (Coil)
+    END_VAR
+
+    // Schedule the main program to be executed every 20 ms
+    TASK Tick(INTERVAL := t#20ms);
+
+    PROGRAM Main WITH Tick : Monitor_Start_Stop;
+END_CONFIGURATION
+
+PROGRAM Monitor_Start_Stop          // Actual Program
+    VAR_EXTERNAL
+        Start_Stop  : BOOL;
+        ON_OFF      : BOOL;
+    END_VAR
+    VAR                             // Temporary variables for logic handling
+        ONS_Trig    : BOOL;
+        Rising_ONS  : BOOL;
+    END_VAR
+
+    // Start of Logic
+    // Catch the Rising Edge One Shot of the Start_Stop input
+    ONS_Trig    := Start_Stop AND NOT Rising_ONS;
+    
+    // Main Logic for Run_Contact -- Toggle ON / Toggle OFF ---
+    ON_OFF := (ONS_Trig AND NOT ON_OFF) OR (ON_OFF AND NOT ONS_Trig);
+
+    // Rising One Shot logic   
+    Rising_ONS := Start_Stop;
+END_PROGRAM
+</pre><h4>Function block example</h4><pre>//=======================================================================
+// Function Block Timed Counter :  Incremental count of the timed interval
+//=======================================================================
+FUNCTION_BLOCK FB_Timed_Counter
+    VAR_INPUT
+        Execute         : BOOL := FALSE;        // Trigger signal to begin Timed Counting
+        Time_Increment  : REAL := 1.25;         // Enter Cycle Time (Seconds) between counts
+        Count_Cycles    : INT  := 20;           // Number of Desired Count Cycles
+    END_VAR
+    
+    VAR_OUTPUT
+        Timer_Done_Bit  : BOOL := FALSE;        // One Shot Bit indicating Timer Cycle Done
+        Count_Complete  : BOOL := FALSE;        // Output Bit indicating the Count is complete            
+        Current_Count   : INT  := 0;            // Accumulating Value of Counter
+    END_VAR
+    
+    VAR
+        CycleTimer      : TON;                  // Timer FB from Command Library
+        CycleCounter    : CTU;                  // Counter FB from Command Library
+        TimerPreset     : TIME;                 // Converted Time_Increment in Seconds to MS
+    END_VAR
+        
+    // Start of Function Block programming
+    TimerPreset := REAL_TO_TIME(in := Time_Increment) * 1000;
+
+    CycleTimer(
+        in := Execute AND NOT CycleTimer.Q,
+        pt := TimerPreset);
+
+    Timer_Done_Bit := CycleTimer.Q;
+    
+    CycleCounter(
+        cu := CycleTimer.Q,
+        r := NOT Execute,
+        pv := Count_Cycles);
+
+    Current_Count := CycleCounter.cv;
+    Count_Complete := CycleCounter.q;
+    
+END_FUNCTION_BLOCK
+</pre>
+</body></html>

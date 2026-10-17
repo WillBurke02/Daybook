@@ -1,0 +1,112 @@
+{
+ "id": "plc.lang.fbd-sfc",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikipedia: Sequential function chart",
+   "wikipedia: Function block diagram"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "Wikipedia contributors, Sequential function chart. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Sequential_function_chart",
+  "Wikipedia contributors, Function block diagram. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/Function_block_diagram"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: Sequential function chart",
+   "url": "media/wikipedia/sequential-function-chart-76d729.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  },
+  {
+   "kind": "read",
+   "title": "The original: Function block diagram",
+   "url": "media/wikipedia/function-block-diagram-e9ddb3.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Sequential function chart",
+   "html": "<p><strong>Sequential function chart</strong> (<strong>SFC</strong>) is a <a href=\"https://en.wikipedia.org/wiki/Visual_programming_language\">visual programming language</a> used for <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">programmable logic controllers</a> (PLCs). It is one of the five languages defined by <a href=\"https://en.wikipedia.org/wiki/IEC_61131-3\">IEC 61131-3</a> standard. The SFC standard is defined as <em>Preparation of function charts for control systems</em>, and was based on <a href=\"https://en.wikipedia.org/wiki/GRAFCET?action=edit&amp;redlink=1\">GRAFCET</a> (itself based on binary <a href=\"https://en.wikipedia.org/wiki/Petri_net\">Petri nets</a>).</p><p>It can be used to program processes that can be split into steps.</p><p>Main components of SFC are:</p><ul><li>Steps with associated actions;</li> <li>Transitions with associated logic conditions;</li> <li>Directed links between steps and transitions.</li></ul><p>Steps in an SFC diagram can be active or inactive. Actions are only executed for active steps. A step can be active for one of two motives:</p><ul><li>It is an initial step as specified by the programmer.</li> <li>It was activated during a scan cycle and not deactivated since.</li></ul><p>Steps are activated when all steps above it are active and the connecting transition is superable (i.e. its associated condition is true). When a transition is passed, all steps above are deactivated at once and <strong>after</strong> all steps below are activated at once.</p>",
+   "body": "Sequential function chart ( SFC ) is a visual programming language used for programmable logic controllers (PLCs). It is one of the five languages defined by IEC 61131-3 standard. The SFC standard is defined as Preparation of function charts for control systems , and was based on GRAFCET (itself based on binary Petri nets ). It can be used to program processes that can be split into steps. Main components of SFC are: Steps with associated actions; Transitions with associated logic conditions; Directed links between steps and transitions. Steps in an SFC diagram can be active or inactive. Actions are only executed for active steps. A step can be active for one of two motives: It is an initial step as specified by the programmer. It was activated during a scan cycle and not deactivated since. Steps are activated when all steps above it are active and the connecting transition is superable (i.e. its associated condition is true). When a transition is passed, all steps above are deactivated at once and after all steps below are activated at once.",
+   "id": "wikipedia1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Sequential function chart",
+   "html": "<p>Actions associated with steps can be of several types, the most relevant ones being Continuous (N), Set (S), and Reset (R). Apart from the obvious meaning of Set and Reset, an N action ensures that its target variable is set to 1 as long as the step is active. An SFC rule states that if two steps have an N action on the same target, the variable must never be reset to 0. It is also possible to insert LD (<a href=\"https://en.wikipedia.org/wiki/Ladder_logic\">Ladder Diagram</a>) actions inside an SFC program (and this is the standard way, for instance, to work on integer variables).</p><p>SFC is an inherently <a href=\"https://en.wikipedia.org/wiki/Parallel_programming_language\">parallel programming language</a> in that multiple control flows — Program Organization Units (POUs) in the standard's parlance — can be active at once.</p><p>Non-standard extensions to the language include macroactions: i.e. actions inside a program unit that influence the state of another program unit. The most relevant such macroaction is \"forcing\", in which a POU can decide the active steps of another POU.</p>",
+   "body": "Actions associated with steps can be of several types, the most relevant ones being Continuous (N), Set (S), and Reset (R). Apart from the obvious meaning of Set and Reset, an N action ensures that its target variable is set to 1 as long as the step is active. An SFC rule states that if two steps have an N action on the same target, the variable must never be reset to 0. It is also possible to insert LD ( Ladder Diagram ) actions inside an SFC program (and this is the standard way, for instance, to work on integer variables). SFC is an inherently parallel programming language in that multiple control flows — Program Organization Units (POUs) in the standard's parlance — can be active at once. Non-standard extensions to the language include macroactions: i.e. actions inside a program unit that influence the state of another program unit. The most relevant such macroaction is \"forcing\", in which a POU can decide the active steps of another POU.",
+   "id": "wikipedia1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Function block diagram",
+   "html": "<p>The <strong>function block diagram</strong> (<strong>FBD</strong>) is a <a href=\"https://en.wikipedia.org/wiki/Visual_programming_language\">graphical language</a> for <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">programmable logic controller</a> design, that can describe the function between input variables and output variables. A function is described as a set of elementary blocks. Input and output variables are connected to blocks by connection lines.</p><h4>Design</h4><p>Inputs and outputs of the blocks are wired together with connection lines or links. Single lines may be used to connect two logical points of the diagram:</p><ul><li>An input variable and an input of a block</li> <li>An output of a block and an input of another block</li> <li>An output of a block and an output variable</li></ul><p>The connection is oriented, meaning that the line carries associated data from the left end to the right end. The left and right ends of the connection line must be of the same type.</p><p>Multiple right connection, also called divergence, can be used to broadcast information from its left end to each of its right ends. All ends of the connection must be of the same type.</p>",
+   "body": "The function block diagram ( FBD ) is a graphical language for programmable logic controller design, that can describe the function between input variables and output variables. A function is described as a set of elementary blocks. Input and output variables are connected to blocks by connection lines. Design Inputs and outputs of the blocks are wired together with connection lines or links. Single lines may be used to connect two logical points of the diagram: An input variable and an input of a block An output of a block and an input of another block An output of a block and an output variable The connection is oriented, meaning that the line carries associated data from the left end to the right end. The left and right ends of the connection line must be of the same type. Multiple right connection, also called divergence, can be used to broadcast information from its left end to each of its right ends. All ends of the connection must be of the same type.",
+   "id": "wikipedia2-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Language",
+   "html": "<p>Function Block Diagram is one of five languages for <a href=\"https://en.wikipedia.org/wiki/Logic\">logic</a> or <a href=\"https://en.wikipedia.org/wiki/Control_theory\">control</a> <a href=\"https://en.wikipedia.org/wiki/Computer_configuration\">configuration</a> supported by standard <a href=\"https://en.wikipedia.org/wiki/IEC_61131-3\">IEC 61131-3</a> for a <a href=\"https://en.wikipedia.org/wiki/Control_system\">control system</a> such as a <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">programmable logic controller</a> (PLC) or a <a href=\"https://en.wikipedia.org/wiki/Distributed_Control_System\">Distributed Control System</a> (DCS). The other supported languages are <a href=\"https://en.wikipedia.org/wiki/Ladder_logic\">ladder logic</a>, <a href=\"https://en.wikipedia.org/wiki/Sequential_function_chart\">sequential function chart</a>, <a href=\"https://en.wikipedia.org/wiki/Structured_text\">structured text</a>, and <a href=\"https://en.wikipedia.org/wiki/Instruction_list\">instruction list</a>.</p>",
+   "body": "Function Block Diagram is one of five languages for logic or control configuration supported by standard IEC 61131-3 for a control system such as a programmable logic controller (PLC) or a Distributed Control System (DCS). The other supported languages are ladder logic , sequential function chart , structured text , and instruction list .",
+   "id": "wikipedia2-2"
+  },
+  {
+   "id": "add-sfc-parts",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What are the two basic elements of a Sequential Function Chart?",
+   "options": [
+    "Steps and transitions",
+    "Rungs and coils",
+    "Blocks and wires",
+    "Tasks and interrupts"
+   ],
+   "answer": 0,
+   "why": "A step holds actions while it is active; a transition holds the condition to move on. Steps and transitions alternate down the chart.",
+   "added": true
+  },
+  {
+   "id": "add-sfc-par",
+   "type": "mcq",
+   "stage": "check",
+   "q": "In SFC, what does a double horizontal line after a transition mean?",
+   "options": [
+    "The branches below run at the same time",
+    "Only one branch below will run",
+    "The sequence ends here",
+    "The step repeats"
+   ],
+   "answer": 0,
+   "why": "A double line is a simultaneous divergence: every branch starts together, and they meet again at another double line when all have finished. A single line with a transition on each branch picks one of them.",
+   "added": true
+  },
+  {
+   "id": "add-fbd-use",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "Where is Function Block Diagram most at home?",
+   "options": [
+    "Continuous control: PID, scaling, alarms",
+    "Long sequences with many steps",
+    "Text and string handling",
+    "Writing drivers"
+   ],
+   "answer": 0,
+   "why": "FBD shows signals flowing between blocks, like a process control drawing, so analogue control reads naturally in it.",
+   "added": true
+  }
+ ]
+}

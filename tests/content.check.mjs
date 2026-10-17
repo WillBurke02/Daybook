@@ -69,7 +69,10 @@ function machineOf(at, w) {
 const ids = ast => !ast || typeof ast !== 'object' ? [] : ast.k === 'id' ? [ast.v] : Object.values(ast).flatMap(ids);
 
 // ---- maths that fails to parse shows as an error box: none allowed ----
-const texts = c => Object.entries(c).flatMap(([k, v]) => typeof v === 'string' && !['id', 'type', 'answer', 'code'].includes(k) ? [v]
+// an imported card shows its html (code in it is not maths), not the plain-text copy kept in body
+const texts = c => Object.entries(c).flatMap(([k, v]) => k === 'body' && c.html ? []
+  : typeof v === 'string' && /html$/.test(k) ? [v.replace(/<(pre|code)\b[\s\S]*?<\/\1>/g, '')]
+  : typeof v === 'string' && !['id', 'type', 'answer', 'code'].includes(k) ? [v]
   : Array.isArray(v) ? v.flatMap(x => typeof x === 'string' ? [x] : Array.isArray(x) ? x.filter(y => typeof y === 'string') : x && typeof x === 'object' ? texts(x) : [])
   : v && typeof v === 'object' && k !== 'vars' && k !== 'let' && k !== 'params' && k !== 'tests' ? texts(v) : []);
 function mathOK(where, card, values) {

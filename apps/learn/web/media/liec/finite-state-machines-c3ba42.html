@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finite-state machines</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Tony R. Kuphaldt, Lessons In Electric Circuits, Finite-state machines. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_16.html <a href="https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_16.html">https://www.ibiblio.org/kuphaldt/electricCircuits/Digital/DIGI_16.html</a></p>
+<h1>Finite-state machines</h1>
+<h2>Finite-state machines</h2><p> Feedback is a fascinating engineering principle. It can turn a rather simple device or process into something substantially more complex. We've seen the effects of feedback intentionally integrated into circuit designs with some rather astounding effects: </p><ul> <li>Comparator + negative feedback -----------&gt; controllable-gain amplifier</li> <li>Comparator + positive feedback -----------&gt; comparator with hysteresis</li> <li>Combinational logic + positive feedback --&gt; multivibrator</li> </ul><p> In the field of process instrumentation, feedback is used to transform a simple measurement system into something capable of control: </p><ul> <li>Measurement system + negative feedback ---&gt; closed-loop control system</li> </ul><p> Feedback, both positive and negative, has the tendency to add whole new dynamics to the operation of a device or system. Sometimes, these new dynamics find useful application, while other times they are merely interesting. With look-up tables programmed into memory devices, feedback from the data outputs back to the address inputs creates a whole new type of device: the <em>Finite State Machine</em>, or <em>FSM</em>: </p><p> <img src="45946eab-04220.png" alt=""> </p><p> The above circuit illustrates the basic idea: the data stored at each address becomes the next storage location that the ROM gets addressed to. The result is a specific sequence of binary numbers (following the sequence programmed into the ROM) at the output, over time. To avoid signal timing problems, though, we need to connect the data outputs back to the address inputs through a 4-bit D-type flip-flop, so that the sequence takes place step by step to the beat of a controlled clock pulse: </p><p> <img src="7c110c8e-04221.png" alt=""> </p><p> An analogy for the workings of such a device might be an array of post-office boxes, each one with an identifying number on the door (the address), and each one containing a piece of paper with the address of another P.O. box written on it (the data). A person, opening the first P.O. box, would find in it the address of the next P.O. box to open. By storing a particular pattern of addresses in the P.O. boxes, we can dictate the sequence in which each box gets opened, and therefore the sequence of which paper gets read. </p><p> Having 16 addressable memory locations in the ROM, this Finite State Machine would have 16 different stable "states" in which it could latch. In each of those states, the identity of the next state would be programmed in to the ROM, awaiting the signal of the next clock pulse to be fed back to the ROM as an address. One useful application of such an FSM would be to generate an arbitrary count sequence, such as Gray Code: </p><pre>
+Address  -----&gt; Data          Gray Code count sequence:
+0000   -------&gt; 0001                 0   0000
+0001   -------&gt; 0011                 1   0001
+0010   -------&gt; 0110                 2   0011
+0011   -------&gt; 0010                 3   0010
+0100   -------&gt; 1100                 4   0110
+0101   -------&gt; 0100                 5   0111
+0110   -------&gt; 0111                 6   0101
+0111   -------&gt; 0101                 7   0100
+1000   -------&gt; 0000                 8   1100
+1001   -------&gt; 1000                 9   1101
+1010   -------&gt; 1011                10   1111
+1011   -------&gt; 1001                11   1110
+1100   -------&gt; 1101                12   1010
+1101   -------&gt; 1111                13   1011
+1110   -------&gt; 1010                14   1001
+1111   -------&gt; 1110                15   1000
+</pre><p> Try to follow the Gray Code count sequence as the FSM would do it: starting at 0000, follow the data stored at that address (0001) to the next address, and so on (0011), and so on (0010), and so on (0110), etc. The result, for the program table shown, is that the sequence of addressing jumps around from address to address in what looks like a haphazard fashion, but when you check each address that is accessed, you will find that it follows the correct order for 4-bit Gray code. When the FSM arrives at its last programmed state (address 1000), the data stored there is 0000, which starts the whole sequence over again at address 0000 in step with the next clock pulse. </p><p> We could expand on the capabilities of the above circuit by using a ROM with more address lines, and adding more programming data: </p><p> <img src="58d09d7d-04222.png" alt=""> </p><p> Now, just like the look-up table adder circuit that we turned into an Arithmetic Logic Unit (+, -, x, / functions) by utilizing more address lines as "function control" inputs, this FSM counter can be used to generate more than one count sequence, a different sequence programmed for the four feedback bits (A0 through A3) for each of the two function control line input combinations (A4 = 0 or 1). </p><pre>
+Address  -----&gt; Data            Address  -----&gt; Data 
+00000  -------&gt; 0001            10000  -------&gt; 0001 
+00001  -------&gt; 0010            10001  -------&gt; 0011 
+00010  -------&gt; 0011            10010  -------&gt; 0110 
+00011  -------&gt; 0100            10011  -------&gt; 0010 
+00100  -------&gt; 0101            10100  -------&gt; 1100 
+00101  -------&gt; 0110            10101  -------&gt; 0100 
+00110  -------&gt; 0111            10110  -------&gt; 0111 
+00111  -------&gt; 1000            10111  -------&gt; 0101 
+01000  -------&gt; 1001            11000  -------&gt; 0000 
+01001  -------&gt; 1010            11001  -------&gt; 1000 
+01010  -------&gt; 1011            11010  -------&gt; 1011 
+01011  -------&gt; 1100            11011  -------&gt; 1001 
+01100  -------&gt; 1101            11100  -------&gt; 1101 
+01101  -------&gt; 1110            11101  -------&gt; 1111 
+01110  -------&gt; 1111            11110  -------&gt; 1010 
+01111  -------&gt; 0000            11111  -------&gt; 1110 
+</pre><p> If A4 is 0, the FSM counts in binary; if A4 is 1, the FSM counts in Gray Code. In either case, the counting sequence is arbitrary: determined by the whim of the programmer. For that matter, the counting sequence doesn't even have to have 16 steps, as the programmer may decide to have the sequence recycle to 0000 at any one of the steps at all. It is a completely flexible counting device, the behavior strictly determined by the software (programming) in the ROM. </p><p> We can expand on the capabilities of the FSM even more by utilizing a ROM chip with additional address input and data output lines. Take the following circuit, for example: </p><p> <img src="240ac01e-04223.png" alt=""> </p><p> Here, the D0 through D3 data outputs are used exclusively for feedback to the A0 through A3 address lines. Date output lines D4 through D7 can be programmed to output something other than the FSM's "state" value. Being that four data output bits are being fed back to four address bits, this is still a 16-state device. However, having the output data come from other data output lines gives the programmer more freedom to configure functions than before. In other words, this device can do far more than just count! The programmed output of this FSM is dependent not only upon the state of the feedback address lines (A0 through A3), but also the states of the input lines (A4 through A7). The D-type flip/flop's clock signal input does not have to come from a pulse generator, either. To make things more interesting, the flip/flop could be wired up to clock on some external event, so that the FSM goes to the next state only when an input signal tells it to. </p><p> Now we have a device that better fulfills the meaning of the word "programmable." The data written to the ROM is a program in the truest sense: the outputs follow a pre-established order based on the inputs to the device and which "step" the device is on in its sequence. This is very close to the operating design of the <em>Turing Machine</em>, a theoretical computing device invented by Alan Turing, mathematically proven to be able to solve any known arithmetic problem, given enough memory capacity. </p>
+</body></html>

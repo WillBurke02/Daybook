@@ -1,0 +1,137 @@
+{
+ "id": "materials.processes.machining",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikipedia: G-code"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "Wikipedia contributors, G-code. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/G-code"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: G-code",
+   "url": "media/wikipedia/g-code-b3e0fb.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "G-code",
+   "html": "<p><strong>G-code</strong> (abbreviation for <strong>geometric code</strong>; also called <strong>RS-274</strong>, standardized today in <strong>ISO 6983-1</strong>) is the most widely used <a href=\"https://en.wikipedia.org/wiki/Computer_numerical_control\">computer numerical control</a> (CNC) and <a href=\"https://en.wikipedia.org/wiki/3D_printing\">3D printing</a> <a href=\"https://en.wikipedia.org/wiki/Programming_language\">programming language</a>. It is used mainly in <a href=\"https://en.wikipedia.org/wiki/Computer-aided_manufacturing\">computer-aided manufacturing</a> to control automated <a href=\"https://en.wikipedia.org/wiki/Machine_tool\">machine tools</a>, as well as for <a href=\"https://en.wikipedia.org/wiki/Slicer_(3D_printing)\">3D-printer slicer applications</a>. G-code has many variants.</p><p>G-code instructions are provided to a <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">machine controller</a> (industrial computer) that tells the motors where to move, how fast to move, and what path to follow. The two most common situations are that, within a machine tool such as a <a href=\"https://en.wikipedia.org/wiki/Metal_lathe\">lathe</a> or <a href=\"https://en.wikipedia.org/wiki/Milling_(machining)\">mill</a>, a <a href=\"https://en.wikipedia.org/wiki/Cutting_tool_(machining)\">cutting tool</a> is moved according to these instructions through a toolpath cutting away material to leave only the finished workpiece and/or an unfinished workpiece is precisely positioned in any of up to nine axes around the three dimensions relative to a toolpath and, either or both can move relative to each other. The same concept also extends to noncutting tools such as <a href=\"https://en.wikipedia.org/wiki/Forming_(metalworking)\">forming</a> or <a href=\"https://en.wikipedia.org/wiki/Burnishing_(metal)\">burnishing</a> tools, <a href=\"https://en.wikipedia.org/wiki/Gerber_format\">photoplotting</a>, additive methods such as 3D printing, and measuring instruments.</p>",
+   "body": "G-code (abbreviation for geometric code ; also called RS-274 , standardized today in ISO 6983-1 ) is the most widely used computer numerical control (CNC) and 3D printing programming language . It is used mainly in computer-aided manufacturing to control automated machine tools , as well as for 3D-printer slicer applications . G-code has many variants. G-code instructions are provided to a machine controller (industrial computer) that tells the motors where to move, how fast to move, and what path to follow. The two most common situations are that, within a machine tool such as a lathe or mill , a cutting tool is moved according to these instructions through a toolpath cutting away material to leave only the finished workpiece and/or an unfinished workpiece is precisely positioned in any of up to nine axes around the three dimensions relative to a toolpath and, either or both can move relative to each other. The same concept also extends to noncutting tools such as forming or burnishing tools, photoplotting , additive methods such as 3D printing, and measuring instruments.",
+   "id": "wikipedia1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "History",
+   "html": "<p>The first implementation of a numerical control programming language was developed at the <a href=\"https://en.wikipedia.org/wiki/MIT_Servomechanisms_Laboratory\">MIT Servomechanisms Laboratory</a> in the 1950s. In the decades that followed, many implementations were developed by numerous organizations, both commercial and noncommercial. Elements of G-code had often been used in these implementations. The first <a href=\"https://en.wikipedia.org/wiki/Technical_standard\">standardized</a> version of G-code used in the United States, <em>RS-274</em>, was published in 1963 by the <a href=\"https://en.wikipedia.org/wiki/Electronic_Industries_Alliance\">Electronic Industries Alliance</a> (EIA; then known as Electronic Industries Association). In 1974, EIA approved <em>RS-274-C</em>, which merged <em>RS-273</em> (variable block for positioning and straight cut) and <em>RS-274-B</em> (variable block for contouring and contouring/positioning). A final revision of <em>RS-274</em> was approved in 1979, as <em>RS-274-D</em>. In other countries, the standard <em><a href=\"https://en.wikipedia.org/wiki/International_Organization_for_Standardization\">ISO</a> 6983</em> (finalized in 1982) is often used, but many European countries use other standards. For example, <em><a href=\"https://en.wikipedia.org/wiki/Deutsches_Institut_für_Normung\">DIN</a> 66025</em> is used in Germany, and PN-73M-55256 and PN-93/M-55251 were formerly used in Poland.</p><p>From the 1970s to 1990s, many CNC machine tool builders attempted to overcome compatibility difficulties by standardizing on machine tool controllers built by <a href=\"https://en.wikipedia.org/wiki/Fanuc\">Fanuc</a>. <a href=\"https://en.wikipedia.org/wiki/Siemens\">Siemens</a> was another market dominator in CNC controls, especially in Europe. In the 2010s, controller differences and incompatibility were mitigated with the widespread adoption of <a href=\"https://en.wikipedia.org/wiki/CAD\">CAD</a>/<a href=\"https://en.wikipedia.org/wiki/Computer-aided_manufacturing\">CAM</a> applications that could output the appropriate G-code to operate a specific machine through a software tool called a <a href=\"https://en.wikipedia.org/wiki/Post-processor\">post-processor</a> (sometimes shortened to \"post\").</p>",
+   "body": "The first implementation of a numerical control programming language was developed at the MIT Servomechanisms Laboratory in the 1950s. In the decades that followed, many implementations were developed by numerous organizations, both commercial and noncommercial. Elements of G-code had often been used in these implementations. The first standardized version of G-code used in the United States, RS-274 , was published in 1963 by the Electronic Industries Alliance (EIA; then known as Electronic Industries Association). In 1974, EIA approved RS-274-C , which merged RS-273 (variable block for positioning and straight cut) and RS-274-B (variable block for contouring and contouring/positioning). A final revision of RS-274 was approved in 1979, as RS-274-D . In other countries, the standard ISO 6983 (finalized in 1982) is often used, but many European countries use other standards. For example, DIN 66025 is used in Germany, and PN-73M-55256 and PN-93/M-55251 were formerly used in Poland. From the 1970s to 1990s, many CNC machine tool builders attempted to overcome compatibility difficulties by standardizing on machine tool controllers built by Fanuc . Siemens was another market dominator in CNC controls, especially in Europe. In the 2010s, controller differences and incompatibility were mitigated with the widespread adoption of CAD / CAM applications that could output the appropriate G-code to operate a specific machine through a software tool called a post-processor (sometimes shortened to \"post\").",
+   "id": "wikipedia1-2"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Syntax",
+   "html": "<p>G-code began as a limited language that lacked constructs such as loops, conditional operators, and programmer-declared variables with <a href=\"https://en.wikipedia.org/wiki/Natural_language\">natural</a>-word-including names (or the expressions in which to use them). It was unable to encode logic but was just a way to \"connect the dots\" where the programmer figured out many of the dots' locations longhand. The latest implementations of G-code include macro language capabilities somewhat closer to a <a href=\"https://en.wikipedia.org/wiki/High-level_programming_language\">high-level programming language</a>. Additionally, all primary manufacturers (e.g., <a href=\"https://en.wikipedia.org/wiki/Fanuc\">Fanuc</a>, <a href=\"https://en.wikipedia.org/wiki/Siemens_Digital_Industries_Software\">Siemens Digital Industries Software</a>, <a href=\"https://en.wikipedia.org/wiki/Heidenhain\">Heidenhain</a>) provide access to <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">programmable logic controller</a> (PLC) data, such as axis positioning data and tool data, via variables used by NC programs. These constructs make it easier to develop automation applications.</p>",
+   "body": "G-code began as a limited language that lacked constructs such as loops, conditional operators, and programmer-declared variables with natural -word-including names (or the expressions in which to use them). It was unable to encode logic but was just a way to \"connect the dots\" where the programmer figured out many of the dots' locations longhand. The latest implementations of G-code include macro language capabilities somewhat closer to a high-level programming language . Additionally, all primary manufacturers (e.g., Fanuc , Siemens Digital Industries Software , Heidenhain ) provide access to programmable logic controller (PLC) data, such as axis positioning data and tool data, via variables used by NC programs. These constructs make it easier to develop automation applications.",
+   "id": "wikipedia1-3"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "Extensions and variations",
+   "html": "<p>Extensions and variations have been added independently by control manufacturers and machine tool manufacturers, and operators of a specific controller must be aware of the differences between each manufacturer's product.</p><p>One standardized version of G-code, known as <em>BCL</em> (Binary Cutter Language), is used only on very few machines. Developed at MIT, BCL was developed to control CNC machines in terms of straight lines and arcs.</p><p>Some CNC machines use \"conversational\" programming, which is a <a href=\"https://en.wikipedia.org/wiki/Wizard_(software)\">wizard</a>-like programming mode that either hides G-code or completely bypasses the use of G-code. Some popular examples are Okuma's Advanced One Touch (AOT), Southwestern Industries' ProtoTRAK, Mazak's Mazatrol, Hurco's Ultimax and Winmax, Haas' Intuitive Programming System (IPS), and Mori Seiki's CAPS conversational software.</p>",
+   "body": "Extensions and variations have been added independently by control manufacturers and machine tool manufacturers, and operators of a specific controller must be aware of the differences between each manufacturer's product. One standardized version of G-code, known as BCL (Binary Cutter Language), is used only on very few machines. Developed at MIT, BCL was developed to control CNC machines in terms of straight lines and arcs. Some CNC machines use \"conversational\" programming, which is a wizard -like programming mode that either hides G-code or completely bypasses the use of G-code. Some popular examples are Okuma's Advanced One Touch (AOT), Southwestern Industries' ProtoTRAK, Mazak's Mazatrol, Hurco's Ultimax and Winmax, Haas' Intuitive Programming System (IPS), and Mori Seiki's CAPS conversational software.",
+   "id": "wikipedia1-4"
+  },
+  {
+   "id": "add-g0g1",
+   "type": "mcq",
+   "stage": "check",
+   "q": "What is the difference between G00 and G01?",
+   "options": [
+    "G00 rapids; G01 cuts at the feed rate",
+    "G00 cuts; G01 rapids",
+    "G00 is in mm; G01 in inches",
+    "G00 is a circle; G01 a line"
+   ],
+   "answer": 0,
+   "why": "G00 moves as fast as the machine can, for positioning in the air. G01 is a straight cutting move at the programmed F feed rate. A G00 into the work is a crash.",
+   "added": true
+  },
+  {
+   "id": "add-rpm",
+   "type": "numeric",
+   "stage": "check",
+   "q": "A {d} mm cutter should run at a cutting speed of {vc} m/min. What spindle speed is that?",
+   "vars": {
+    "d": {
+     "pick": [
+      6,
+      10,
+      12,
+      20
+     ]
+    },
+    "vc": {
+     "pick": [
+      80,
+      120,
+      200
+     ]
+    }
+   },
+   "answer": "vc * 1000 / (PI() * d)",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "work": "$n = 1000 \\, v_c \\div (\\pi D) = 1000 \\times {vc} \\div (\\pi \\times {d}) = {answer:4}$ rpm",
+   "why": "The cutting speed is the speed of the cutter's edge; one revolution moves the edge πD. The 1000 turns metres into millimetres.",
+   "hint": "n = 1000 vc ÷ (π D).",
+   "added": true
+  },
+  {
+   "id": "add-feed",
+   "type": "numeric",
+   "stage": "practise",
+   "q": "A {z}-flute end mill runs at {n} rpm with a chip load of {fz} mm per tooth. What is the table feed?",
+   "vars": {
+    "z": {
+     "pick": [
+      2,
+      3,
+      4
+     ]
+    },
+    "n": {
+     "pick": [
+      3000,
+      6000,
+      8000
+     ]
+    },
+    "fz": {
+     "pick": [
+      0.02,
+      0.05,
+      0.08
+     ]
+    }
+   },
+   "answer": "z * n * fz",
+   "unit": "mm/min",
+   "tolerance": 0.01,
+   "work": "${z} \\times {n} \\times {fz} = {answer:4}$ mm/min",
+   "why": "Each tooth takes fz per revolution. Too small a chip load rubs and work-hardens; too large breaks the tool.",
+   "added": true
+  }
+ ]
+}

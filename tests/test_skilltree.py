@@ -41,9 +41,10 @@ db.execute("DELETE FROM lesson_state WHERE lesson_id = ?", (AC,))
 ts = {t["id"]: t for t in R("GET", "tracks")["tracks"]}
 assert set(ts) == {"vfd-conveyor", "plc-faults", "servo-axis", "a-level-pure", "instrument-loop", "control-panel"}
 vfd = ts["vfd-conveyor"]
-assert vfd["total"] == 12 and vfd["written"] + vfd["unwritten"] == 12 and vfd["unwritten"] > 0, vfd   # counts follow the content
-assert vfd["stops"][0]["can"] == "Isolate and prove dead" and vfd["left"] is None and vfd["left_written"] > 0, \
-    "blocked: no time estimate while lessons are unwritten"
+assert vfd["total"] == 12 and vfd["written"] + vfd["unwritten"] == 12, vfd   # counts follow the content
+assert vfd["stops"][0]["can"] == "Isolate and prove dead"
+blocked = next(t for t in ts.values() if t["unwritten"])          # (whichever track still waits on a lesson)
+assert blocked["left"] is None and blocked["left_written"] > 0, "blocked: no time estimate while lessons are unwritten"
 assert vfd["next"]["written"] and vfd["next"]["state"] in ("ready", "going")
 assert R("POST", "goal", {"track": "vfd-conveyor"})["goal"]["id"] == "vfd-conveyor"
 plan = R("GET", "plan")

@@ -1,0 +1,86 @@
+{
+ "id": "instrumentation.loops.batch",
+ "imported": {
+  "from": "pages",
+  "sections": [
+   "wikipedia: ISA-88"
+  ]
+ },
+ "minutes": 10,
+ "sources": [
+  "Wikipedia contributors, ISA-88. CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Imported as published, from https://en.wikipedia.org/wiki/ISA-88"
+ ],
+ "resources": [
+  {
+   "kind": "read",
+   "title": "The original: ISA-88",
+   "url": "media/wikipedia/isa-88-36b3e5.html",
+   "by": "Wikipedia contributors, as published",
+   "when": "during",
+   "note": "The part as published: this lesson's cards are its words, cut into parts"
+  }
+ ],
+ "cards": [
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "ISA-88",
+   "html": "<p><strong>ANSI/ISA-88</strong>, is a standard addressing batch <a href=\"https://en.wikipedia.org/wiki/Process_control\">process control</a>. It is a design philosophy for describing equipment and procedures. It is not a standard for software and is equally applicable to manual processes. It was approved by the <a href=\"https://en.wikipedia.org/wiki/Instrumentation,_Systems,_and_Automation_Society\">ISA</a> in 1995 and updated in 2010. Its original version was adopted by the IEC in 1997 as IEC 61512-1.</p><h4>Parts of the S88 standard</h4><ul><li>Models and terminology</li> <li>Data structures and guidelines for languages</li> <li>General and site recipe models and representation</li> <li>Batch Production Records</li> <li>Machine and Unit States: An Implementation Example of ISA-88</li></ul><p>S88 provides a consistent set of standards and terminology for batch control and defines the physical model, procedures, and recipes. The standard sought to address the following problems: lack of a universal model for batch control, difficulty in communicating user requirement, integration among batch automation suppliers, and difficulty in batch-control configuration.</p><p>The standard defines a <em>process model</em> that consists of a <em>process</em> that consists of an ordered set of <em>process stages</em> that consist of an ordered set of <em>process operations</em> that consist of an ordered set of <em>process actions.</em></p><p>The <em>physical model</em> begins with the <em>enterprise</em>, which may contain a <em>site</em>, which may contain <em>areas</em>, which may contain <em>process cells</em>, which must contain a <em>unit</em>, which may contain <em>equipment modules</em>, which may contain <em>control modules</em>. Some of these levels may be excluded, but not the Unit.</p>",
+   "body": "ANSI/ISA-88 , is a standard addressing batch process control . It is a design philosophy for describing equipment and procedures. It is not a standard for software and is equally applicable to manual processes. It was approved by the ISA in 1995 and updated in 2010. Its original version was adopted by the IEC in 1997 as IEC 61512-1. Parts of the S88 standard Models and terminology Data structures and guidelines for languages General and site recipe models and representation Batch Production Records Machine and Unit States: An Implementation Example of ISA-88 S88 provides a consistent set of standards and terminology for batch control and defines the physical model, procedures, and recipes. The standard sought to address the following problems: lack of a universal model for batch control, difficulty in communicating user requirement, integration among batch automation suppliers, and difficulty in batch-control configuration. The standard defines a process model that consists of a process that consists of an ordered set of process stages that consist of an ordered set of process operations that consist of an ordered set of process actions. The physical model begins with the enterprise , which may contain a site , which may contain areas , which may contain process cells , which must contain a unit , which may contain equipment modules , which may contain control modules . Some of these levels may be excluded, but not the Unit.",
+   "id": "wikipedia1-1"
+  },
+  {
+   "type": "concept",
+   "stage": "learn",
+   "title": "ISA-88",
+   "html": "<p>The <em>procedural control model</em> consists of <em>recipe procedures</em>, which consist of an ordered set of <em>unit procedures</em>, which consist of an ordered set of <em>operations</em>, which consist of an ordered set of <em>phases.</em> Some of these levels may be excluded.</p><p>Recipes can have the following types: general, site, master, control. The contents of the recipe include: header, formula, equipment requirements, procedure, and other information required to make the recipe.</p><h4>Implemented in other standards</h4><p>Like in <a href=\"https://en.wikipedia.org/wiki/Packml\">Packml</a>, the Machine and Unit States described by this standard are implemented in other standards.</p>",
+   "body": "The procedural control model consists of recipe procedures , which consist of an ordered set of unit procedures , which consist of an ordered set of operations , which consist of an ordered set of phases. Some of these levels may be excluded. Recipes can have the following types: general, site, master, control. The contents of the recipe include: header, formula, equipment requirements, procedure, and other information required to make the recipe. Implemented in other standards Like in Packml , the Machine and Unit States described by this standard are implemented in other standards.",
+   "id": "wikipedia1-2"
+  },
+  {
+   "id": "add-s88-levels",
+   "type": "mcq",
+   "stage": "check",
+   "q": "In ISA-88's procedural model, which list goes from largest to smallest?",
+   "options": [
+    "Procedure, unit procedure, operation, phase",
+    "Phase, operation, unit procedure, procedure",
+    "Operation, phase, procedure, unit procedure",
+    "Unit procedure, procedure, phase, operation"
+   ],
+   "answer": 0,
+   "why": "A recipe's procedure is made of unit procedures (one per unit), which are made of operations, made of phases. The phase is the smallest piece the equipment carries out, such as 'charge water' or 'heat to 80 °C'.",
+   "added": true
+  },
+  {
+   "id": "add-s88-recipe",
+   "type": "mcq",
+   "stage": "check",
+   "q": "ISA-88 keeps the recipe apart from the equipment control. What does that allow?",
+   "options": [
+    "New products with no PLC changes",
+    "Faster PLC scan times",
+    "Fewer instruments on the plant",
+    "No need for interlocks"
+   ],
+   "answer": 0,
+   "why": "The equipment offers phases; the recipe says which phases to run, in what order, with what parameters. A new product is a new recipe, not new PLC code.",
+   "added": true
+  },
+  {
+   "id": "add-batch-unit",
+   "type": "mcq",
+   "stage": "practise",
+   "q": "In ISA-88 terms, what is a 'unit'?",
+   "options": [
+    "Equipment doing one step on a batch",
+    "One instrument loop and its valve",
+    "A single valve",
+    "A product's quantity"
+   ],
+   "answer": 0,
+   "why": "A unit, such as a reactor or a mixer with its valves and instruments, holds one batch at a time and carries out its processing.",
+   "added": true
+  }
+ ]
+}

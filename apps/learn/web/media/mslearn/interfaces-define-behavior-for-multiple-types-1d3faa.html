@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interfaces - define behavior for multiple types</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Microsoft Learn, Interfaces - define behavior for multiple types. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces">https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces</a></p>
+<h1>Interfaces - define behavior for multiple types</h1>
+<p>  Note </p><p> Access to this page requires authorization. You can try signing in or changing directories. </p><p> Access to this page requires authorization. You can try changing directories. </p><p>Tip</p><p><strong>New to developing software?</strong> Start with the <a href="https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/">Get started</a> tutorials first. You'll encounter interfaces once you need to define shared behavior across unrelated types.</p><p><strong>Experienced in another language?</strong> C# interfaces are similar to interfaces in Java or protocols in Swift. Skim the explicit implementation section for C#-specific patterns.</p><p>An <em>interface</em> defines a contract: a group of related methods, properties, events, and indexers that a <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/class"><code>class</code></a> or <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct"><code>struct</code></a> must implement. Interfaces let a single type implement multiple contracts, which is important because C# doesn't support multiple inheritance of classes. Structs can't inherit from other structs or classes, so interfaces are the only way to add shared behavior across struct types.</p><p>The following example declares an interface and a class that implements it:</p><pre><code>interface IEquatable&lt;T&gt;
+{
+    bool Equals(T obj);
+}
+</code></pre><pre><code>public class Car : IEquatable&lt;Car&gt;
+{
+    public string? Make { get; set; }
+    public string? Model { get; set; }
+    public string? Year { get; set; }
+
+    public bool Equals(Car? car) =&gt;
+        car is not null &amp;&amp;
+        (Make, Model, Year) == (car.Make, car.Model, car.Year);
+}
+</code></pre><p>Any class or struct that implements <a href="https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a> must provide an <code>Equals</code> method that matches the interface signature. You can count on any <code>IEquatable&lt;T&gt;</code> implementation to support equality comparison, regardless of the concrete type. That predictability is the core value of interfaces.</p><h2>Declare an interface</h2><p>Define an interface with the <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface"><code>interface</code></a> keyword. By convention, interface names begin with a capital <code>I</code>:</p><pre><code>interface ILogger
+{
+    void Log(string message);
+    string Name { get; }
+}
+</code></pre><p>Interfaces can contain methods, properties, events, and indexers. An interface can't contain instance fields, instance constructors, or finalizers. Members are <code>public</code> by default. You can specify other accessibility modifiers when needed. For example, use <code>internal</code> for members that shouldn't be visible outside the assembly.</p><h2>Implement an interface</h2><p>A class or struct lists the interfaces it implements after a colon in its declaration. The class must provide an implementation for every member declared in the interface:</p><pre><code>public class ConsoleLogger : ILogger
+{
+    public string Name =&gt; "Console";
+
+    public void Log(string message) =&gt;
+        Console.WriteLine($"[{Name}] {message}");
+}
+
+public class FileLogger : ILogger
+{
+    public string Name =&gt; "File";
+
+    public void Log(string message)
+    {
+        // In a real app, write to a file
+        Console.WriteLine($"[{Name}] Writing to file: {message}");
+    }
+}
+</code></pre><p>A class can implement multiple interfaces, separated by commas. It must provide implementations for all members from every interface it lists.</p><h3>Explicit implementation</h3><p>Sometimes you need to implement an interface member without making it part of the class's public API. <em>Explicit implementation</em> qualifies the member with the interface name. The member is only accessible through a variable of the interface type:</p><pre><code>interface IMetric
+{
+    double GetDistance(); // Returns meters
+}
+
+interface IImperial
+{
+    double GetDistance(); // Returns feet
+}
+
+public class Runway(double meters) : IMetric, IImperial
+{
+    // Explicit implementation for IMetric
+    double IMetric.GetDistance() =&gt; meters;
+
+    // Explicit implementation for IImperial
+    double IImperial.GetDistance() =&gt; meters * 3.28084;
+}
+</code></pre><p>Explicit implementation is useful when two interfaces declare members with the same name, or when you want to keep the class's public surface clean. For more detail, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation">Explicit Interface Implementation</a>.</p><h2>Interface inheritance</h2><p>Interfaces can inherit from one or more other interfaces. A class that implements a derived interface must implement all members from the derived interface and all of its base interfaces:</p><pre><code>interface IDrawable
+{
+    void Draw();
+}
+
+interface IShape : IDrawable
+{
+    double Area { get; }
+}
+
+public class Circle(double radius) : IShape
+{
+    public double Area =&gt; Math.PI * radius * radius;
+
+    public void Draw() =&gt;
+        Console.WriteLine($"Drawing circle with area {Area:F2}");
+}
+</code></pre><p>A class that implements <code>IShape</code> can be implicitly converted to <code>IDrawable</code>, because <code>IShape</code> inherits from it.</p><h2>Interfaces vs. abstract classes</h2><p>Both interfaces and abstract classes define contracts that derived types must fulfill.</p><ul> <li><strong>Use an abstract class</strong> when related types share state (fields), constructors, or non-public members. Abstract classes let you evolve a hierarchy by adding new members with default behavior without breaking existing derived types.</li> <li><strong>Use an interface</strong> when a type needs to fulfill a contract that cuts across unrelated hierarchies, or when it needs to implement multiple contracts. Interfaces can't declare instance fields or constructors, so they're best suited for adding capabilities to types that already have a base class. For advanced scenarios, interfaces also support default member implementations.</li> </ul><p>A class can inherit from only one base class but can implement multiple interfaces. That distinction often makes interfaces the better choice for defining capabilities that cut across type hierarchies.</p><h2>Working with internal interfaces</h2><p>You can typically implement an internal interface with public members, as long as all types in the interface signature are publicly accessible. When an interface uses internal types in its member signatures, you must use explicit implementation because the implementing member can't be public while exposing internal types:</p><pre><code>internal class InternalConfiguration
+{
+    public string Setting { get; set; } = "";
+}
+
+internal interface ILoggable
+{
+    void Log(string message);
+}
+
+internal interface IConfigurable
+{
+    void Configure(InternalConfiguration config);
+}
+
+public class ServiceImplementation : ILoggable, IConfigurable
+{
+    // Implicit implementation: ILoggable uses only public types in its signature
+    public void Log(string message) =&gt;
+        Console.WriteLine($"Log: {message}");
+
+    // Explicit implementation: IConfigurable uses internal types
+    void IConfigurable.Configure(InternalConfiguration config) =&gt;
+        Console.WriteLine($"Configured with: {config.Setting}");
+}
+</code></pre><p>In the preceding example, <code>IConfigurable</code> uses an internal type <code>InternalConfiguration</code> in its method signature. <code>ServiceImplementation</code> uses explicit implementation for that member. In contrast, <code>ILoggable</code> uses only public types (<code>string</code>) in its signature and can be implemented implicitly.</p><h2>Default interface members and static abstract members</h2><p>Interfaces support two advanced features that go beyond basic contracts:</p><ul> <li><strong>Default interface members</strong> let an interface provide a method body. Implementing types inherit the default implementation and can optionally override it. For more information, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interface-implementation/default-interface-methods-versions">default interface methods</a>.</li> <li><strong>Static abstract members</strong> require implementing types to provide a static member, which is useful for defining operator contracts or factory patterns. For more information, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface#static-abstract-and-virtual-members">static abstract members in interfaces</a>.</li> </ul><p>Both features are covered in the article on <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface">interfaces</a> in the language reference. Most everyday interface usage involves the declaring and implementing patterns described earlier in this article.</p><h2>Interfaces summary</h2><ul> <li>An interface defines a contract of methods, properties, events, and indexers.</li> <li>A class or struct that implements an interface must provide implementations for all declared members (unless the interface provides a default implementation).</li> <li>You can't instantiate an interface directly.</li> <li>A class or struct can implement multiple interfaces. A class can inherit a base class and also implement one or more interfaces.</li> <li>Interface names conventionally start with <code>I</code>.</li> </ul>
+</body></html>

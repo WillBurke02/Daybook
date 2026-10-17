@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generic types and methods</title>
+<link rel="stylesheet" href="../../../ui/tokens.css">
+<style>body{max-width:820px;margin:0 auto;padding:24px 18px 60px;background:var(--panel);color:var(--ink);font:16px/1.6 var(--sans)}
+img{max-width:100%;height:auto} table{border-collapse:collapse;margin:12px 0} td,th{border:1px solid var(--rule);padding:4px 8px}
+.credit{font-size:13px;color:var(--ink-3)}</style></head><body>
+<p class="credit">The original, as published: Microsoft Learn, Generic types and methods. CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Imported as published, from https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics">https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics</a></p>
+<h1>Generic types and methods</h1>
+<p>  Note </p><p> Access to this page requires authorization. You can try signing in or changing directories. </p><p> Access to this page requires authorization. You can try changing directories. </p><p>Tip</p><p><strong>New to developing software?</strong> Start with the <a href="https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/">Get started</a> tutorials first. You'll encounter generics as soon as you use collections like <code>List&lt;T&gt;</code>.</p><p><strong>Experienced in another language?</strong> C# generics are similar to generics in Java or templates in C++, but with full runtime type information and no type erasure. Skim the collection expressions and covariance and contravariance sections for C#-specific patterns.</p><p><em>Generics</em> let you write code that works with any type while keeping full type safety. Instead of writing separate classes or methods for <code>int</code>, <code>string</code>, and every other type you need, write one version with one or more <em>type parameters</em> (such as <code>T</code>, or <code>TKey</code> and <code>TValue</code>) and specify the actual types when you use it. The compiler checks types at compile time, so you don't need runtime casts or risk <code>InvalidCastException</code>.</p><p>You encounter generics constantly in everyday C#. Collections, async return types, delegates, and LINQ all rely on generic types:</p><pre><code>List&lt;int&gt; scores = [95, 87, 72, 91];
+Dictionary&lt;string, decimal&gt; prices = new()
+{
+    ["Widget"] = 19.99m,
+    ["Gadget"] = 29.99m
+};
+Task&lt;string&gt; greeting = Task.FromResult("Hello, generics!");
+Func&lt;int, bool&gt; isPositive = n =&gt; n &gt; 0;
+
+Console.WriteLine($"First score: {scores[0]}");
+Console.WriteLine($"Widget price: {prices["Widget"]:C}");
+Console.WriteLine($"Greeting: {await greeting}");
+Console.WriteLine($"Is 5 positive? {isPositive(5)}");
+</code></pre><p>In each case, the type argument in angle brackets (<code>&lt;int&gt;</code>, <code>&lt;string&gt;</code>, <code>&lt;decimal&gt;</code>) tells the generic type what kind of data it holds or operates on. The compiler enforces type safety. You can't accidentally add a <code>string</code> to a <code>List&lt;int&gt;</code>.</p><h2>Consuming generic types</h2><p>More often, you <em>consume</em> generic types from the .NET class library rather than creating your own. The following sections show the most common generic types you'll use.</p><h3>Generic collections</h3><p>The <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic">System.Collections.Generic</a> namespace provides type-safe collection classes. Always use these collections instead of nongeneric collections like <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.arraylist">ArrayList</a>:</p><pre><code>// A strongly typed list of strings
+List&lt;string&gt; names = ["Alice", "Bob", "Carol"];
+names.Add("Dave");
+// names.Add(42); // Compile-time error: can't add an int to List&lt;string&gt;
+
+// A dictionary mapping string keys to int values
+var inventory = new Dictionary&lt;string, int&gt;
+{
+    ["Apples"] = 50,
+    ["Oranges"] = 30
+};
+inventory["Bananas"] = 25;
+
+// A set that prevents duplicates
+HashSet&lt;int&gt; uniqueIds = [1, 2, 3, 1, 2];
+Console.WriteLine($"Unique count: {uniqueIds.Count}"); // 3
+
+// A FIFO queue
+Queue&lt;string&gt; tasks = new();
+tasks.Enqueue("Build");
+tasks.Enqueue("Test");
+Console.WriteLine($"Next task: {tasks.Dequeue()}"); // Build
+</code></pre><p>Generic collections prevent type errors at runtime because the errors surface at compile time instead. These collections also avoid boxing for value types, which improves performance.</p><h3>Generic methods</h3><p>A generic method declares its own type parameter. The compiler often <em>infers</em> the type argument from the values you pass, so you don't need to specify it explicitly:</p><pre><code>static void Print&lt;T&gt;(T value) =&gt;
+    Console.WriteLine($"Value: {value}");
+
+Print(42);        // Compiler infers T as int
+Print("hello");   // Compiler infers T as string
+Print(3.14);      // Compiler infers T as double
+</code></pre><p>In the call <code>Print(42)</code>, the compiler infers <code>T</code> as <code>int</code> from the argument. You can write <code>Print&lt;int&gt;(42)</code> explicitly, but type inference keeps the code cleaner.</p><h2>Collection expressions</h2><p>Collection expressions (C# 12) provide a concise syntax for creating collections. Use square brackets instead of constructor calls or initializer syntax:</p><pre><code>// Create a list with a collection expression
+List&lt;string&gt; fruits = ["Apple", "Banana", "Cherry"];
+
+// Create an array
+int[] numbers = [1, 2, 3, 4, 5];
+
+// Works with any supported collection type
+IReadOnlyList&lt;double&gt; temperatures = [72.0, 68.5, 75.3];
+
+Console.WriteLine($"Fruits: {string.Join(", ", fruits)}");
+Console.WriteLine($"Numbers: {string.Join(", ", numbers)}");
+Console.WriteLine($"Temps: {string.Join(", ", temperatures)}");
+</code></pre><p>The <em>spread operator</em> (<code>..</code>) inlines the elements of one collection into another, which is useful for combining sequences:</p><pre><code>List&lt;int&gt; first = [1, 2, 3];
+List&lt;int&gt; second = [4, 5, 6];
+
+// Spread both lists into a new combined list
+List&lt;int&gt; combined = [.. first, .. second];
+Console.WriteLine(string.Join(", ", combined));
+// Output: 1, 2, 3, 4, 5, 6
+
+// Add extra elements alongside spreads
+List&lt;int&gt; withExtras = [0, .. first, 99, .. second];
+Console.WriteLine(string.Join(", ", withExtras));
+// Output: 0, 1, 2, 3, 99, 4, 5, 6
+</code></pre><p>Collection expressions work with arrays, <code>List&lt;T&gt;</code>, <code>Span&lt;T&gt;</code>, <code>ImmutableArray&lt;T&gt;</code>, and any type that supports the collection builder pattern. For the complete syntax reference, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions">Collection expressions</a>.</p><h2>Dictionary initialization</h2><p>You can initialize dictionaries concisely with indexer initializers. This syntax uses square brackets to set key-value pairs:</p><pre><code>Dictionary&lt;string, int&gt; scores = new()
+{
+    ["Alice"] = 95,
+    ["Bob"] = 87,
+    ["Carol"] = 92
+};
+
+foreach (var (name, score) in scores)
+{
+    Console.WriteLine($"{name}: {score}");
+}
+</code></pre><p>You can merge dictionaries by copying one and applying overrides:</p><pre><code>Dictionary&lt;string, int&gt; defaults = new()
+{
+    ["Timeout"] = 30,
+    ["Retries"] = 3
+};
+Dictionary&lt;string, int&gt; overrides = new()
+{
+    ["Timeout"] = 60
+};
+
+// Merge defaults and overrides into a new dictionary
+Dictionary&lt;string, int&gt; config = new(defaults);
+foreach (var (key, value) in overrides)
+{
+    config[key] = value;
+}
+
+Console.WriteLine($"Timeout: {config["Timeout"]}");  // 60
+Console.WriteLine($"Retries: {config["Retries"]}");   // 3
+</code></pre><h2>Type constraints</h2><p><em>Constraints</em> restrict which type arguments a generic type or method accepts. Constraints let you call methods or access properties on the type parameter that wouldn't be available on <code>object</code> alone:</p><pre><code>static T Max&lt;T&gt;(T a, T b) where T : IComparable&lt;T&gt; =&gt;
+    a.CompareTo(b) &gt;= 0 ? a : b;
+
+Console.WriteLine(Max(3, 7));          // 7
+Console.WriteLine(Max("apple", "banana")); // banana
+
+static T CreateDefault&lt;T&gt;() where T : new() =&gt; new T();
+
+var list = CreateDefault&lt;List&lt;int&gt;&gt;(); // Creates an empty List&lt;int&gt;
+Console.WriteLine($"Empty list count: {list.Count}"); // 0
+</code></pre><p>The most common constraints are:</p><table> <thead> <tr> <th>Constraint</th> <th>Meaning</th> </tr> </thead> <tbody> <tr> <td><code>where T : class</code></td> <td><code>T</code> must be a reference type</td> </tr> <tr> <td><code>where T : struct</code></td> <td><code>T</code> must be a non-nullable value type</td> </tr> <tr> <td><code>where T : new()</code></td> <td><code>T</code> must have a public parameterless constructor</td> </tr> <tr> <td><code>where T : BaseClass</code></td> <td><code>T</code> must derive from <code>BaseClass</code></td> </tr> <tr> <td><code>where T : IInterface</code></td> <td><code>T</code> must implement <code>IInterface</code></td> </tr> </tbody> </table><p>You can combine constraints: <code>where T : class, IComparable&lt;T&gt;, new()</code>. Less common constraints include <code>where T : System.Enum</code>, <code>where T : System.Delegate</code>, and <code>where T : unmanaged</code> for specialized scenarios. For the complete list, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters">Constraints on type parameters</a>.</p><h2>Covariance and contravariance</h2><p><em>Covariance</em> and <em>contravariance</em> describe how generic types behave with inheritance. They determine whether you can use a more derived or less derived type argument than originally specified:</p><pre><code>// Covariance: IEnumerable&lt;Dog&gt; can be used as IEnumerable&lt;Animal&gt;
+// because IEnumerable&lt;out T&gt; is covariant
+List&lt;Dog&gt; dogs = [new("Rex"), new("Buddy")];
+IEnumerable&lt;Animal&gt; animals = dogs; // Allowed because Dog derives from Animal
+
+foreach (var animal in animals)
+{
+    Console.WriteLine(animal.Name);
+}
+
+// Contravariance: Action&lt;Animal&gt; can be used as Action&lt;Dog&gt;
+// because Action&lt;in T&gt; is contravariant
+Action&lt;Animal&gt; printAnimal = a =&gt; Console.WriteLine($"Animal: {a.Name}");
+Action&lt;Dog&gt; printDog = printAnimal; // Allowed because any Animal handler can handle Dog
+
+printDog(new Dog("Spot"));
+</code></pre><ul> <li><strong>Covariance</strong> (<code>out T</code>): An <code>IEnumerable&lt;Dog&gt;</code> can be used where <code>IEnumerable&lt;Animal&gt;</code> is expected because <code>Dog</code> derives from <code>Animal</code>. The <code>out</code> keyword on the type parameter enables this. Covariant type parameters can only appear in output positions (return types).</li> <li><strong>Contravariance</strong> (<code>in T</code>): An <code>Action&lt;Animal&gt;</code> can be used where <code>Action&lt;Dog&gt;</code> is expected because any action that handles <code>Animal</code> can also handle <code>Dog</code>. The <code>in</code> keyword enables this. Contravariant type parameters can only appear in input positions (parameters).</li> </ul><p>Many built-in interfaces and delegates are already variant: <code>IEnumerable&lt;out T&gt;</code>, <code>IReadOnlyList&lt;out T&gt;</code>, <code>Func&lt;out TResult&gt;</code>, and <code>Action&lt;in T&gt;</code>. You benefit from variance automatically when working with these types. For an in-depth treatment of designing variant interfaces and delegates, see <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/covariance-contravariance/">Covariance and contravariance</a>.</p><h2>Create your own generic types</h2><p>You can define your own generic classes, structs, interfaces, and methods. The following example shows a simple generic linked list for illustration. In practice, use <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">List&lt;T&gt;</a> or another built-in collection:</p><pre><code>public class GenericList&lt;T&gt;
+{
+    private class Node(T data)
+    {
+        public T Data { get; set; } = data;
+        public Node? Next { get; set; }
+    }
+
+    private Node? head;
+
+    public void AddHead(T data)
+    {
+        var node = new Node(data) { Next = head };
+        head = node;
+    }
+
+    public IEnumerator&lt;T&gt; GetEnumerator()
+    {
+        var current = head;
+        while (current is not null)
+        {
+            yield return current.Data;
+            current = current.Next;
+        }
+    }
+}
+</code></pre><pre><code>var list = new GenericList&lt;int&gt;();
+for (var i = 0; i &lt; 5; i++)
+{
+    list.AddHead(i);
+}
+
+foreach (var item in list)
+{
+    Console.Write($"{item} ");
+}
+Console.WriteLine();
+// Output: 4 3 2 1 0
+</code></pre><p>Generic types aren't limited to classes. You can define generic <code>interface</code>, <code>struct</code>, and <code>record</code> types. For more information about designing generic algorithms and complex constraint combinations, see <a href="https://learn.microsoft.com/en-us/dotnet/standard/generics/">Generics in .NET</a>.</p>
+</body></html>
