@@ -1,5 +1,14 @@
 # Changes
 
+## 4.0.29 — 18 October 2026
+
+- **Less wasted space**: the figures at the top of Hours and pay, Spending and the other apps were
+  being drawn as tall boxes meant only for Home's Tiles view. They are compact again, so more fits on
+  a screen, above all on the phone. Home also uses more of a very wide screen.
+- Learn's Today page no longer scrolls sideways on a phone (the feed-weights table now scrolls on its own).
+- Home's bills list says "due this week, and any late", and marks a bill not yet ticked off as late
+  instead of listing an old date under "the next 7 days".
+
 ## 4.0.28 — 18 October 2026
 
 - **Faster everywhere**: every request to the Pi was waiting about 40 ms for nothing (the network

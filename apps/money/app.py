@@ -186,8 +186,10 @@ def home(db):
                 {"label": "Hours this week", "value": f"{hours:.2f}h", "href": f"#/hours?p=week:{today.isoformat()}"}]
             + ([{"label": "Last payslip", "value": money(last["net"]), "sub": f"net, paid {_uk(last['pay_date'])}",
                  "href": f"#/pay?slip={last['pay_date']}"}] if last else []),
-            "items_title": "Bills in the next 7 days", "items_empty": "None due.",
-            "items": [{"when": _uk(r["next_due"])[:5], "text": r["title"], "value": money(r["amount"]) if r["amount"] else "",
+            "items_title": "Bills due this week, and any late", "items_empty": "None due.",
+            # a bill not yet ticked off keeps its old date: shown, but called late
+            "items": [{"when": _uk(r["next_due"])[:5], "text": r["title"] + (" (late)" if r["next_due"] < today.isoformat() else ""),
+                       "value": money(r["amount"]) if r["amount"] else "",
                        "href": "#/reminders"} for r in bills],
             "links": [{"label": "Overview", "href": "#/overview"}, {"label": "+ Hours", "href": "#/hours?add=today"}]}
 

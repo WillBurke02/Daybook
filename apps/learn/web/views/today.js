@@ -182,8 +182,8 @@ const settingsPanel = { title: 'Feed settings', w: 12, deps: ['setting'], async 
   body.append(
     el('div', { class: 'row mid' }, el('span', {}, 'Daily goal'), goal, kindSel,
       el('label', { class: 'c' }, remind, 'A daily “review in Learn” in the calendar feed, with an alert at '), remindAt),
-    el('table', { class: 'g lsubjects' }, el('thead', {}, el('tr', {}, el('th', {}, 'In the feed'), el('th', { class: 'n' }, 'Written'), el('th', { class: 'n' }, 'Weight'))),
-      el('tbody', {}, rows.map(r => r.tr))),
+    el('div', { class: 'tscroll' }, el('table', { class: 'g lsubjects' }, el('thead', {}, el('tr', {}, el('th', {}, 'In the feed'), el('th', { class: 'n' }, 'Written'), el('th', { class: 'n' }, 'Weight'))),
+      el('tbody', {}, rows.map(r => r.tr)))),
     el('p', { class: 'note' }, 'A weight of 2 gives a subject twice as many cards as 1.'));
 } };
 

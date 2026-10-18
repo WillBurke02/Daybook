@@ -862,18 +862,18 @@ body.arranging .hcard { outline: 2px dashed var(--rule); outline-offset: 3px; cu
 .hlist .item .d { color: var(--ink-3); font-size: 12.5px; }
 .quickbox .row { justify-content: flex-end; gap: 6px; margin-top: 6px; }
 .quickbox { display: block; }
-/* Tiles */
+/* Home's Tiles view (only there: apps have their own .tile figures) */
 .tiles2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; grid-auto-flow: dense; }
-.tile { background: var(--raised); border: 1px solid var(--rule-soft); border-radius: 16px; padding: 14px; min-height: 124px;
+.tiles2 .tile { background: var(--raised); border: 1px solid var(--rule-soft); border-radius: 16px; padding: 14px; min-height: 124px;
         display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.tile.wide { grid-column: span 2; }
-.tile .tt { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
-.tile > .hfig { border: 0; padding: 0; min-width: 0; background: none; margin-top: auto; }
-.tile > .hfig b { font-size: 26px; }
-.tile .tools { display: flex; gap: 4px; align-items: center; margin-top: auto; flex-wrap: wrap; }
-.tile.off { opacity: .4; }
-body.arranging .tile { outline: 2px dashed var(--rule); outline-offset: 3px; }
-@media (max-width: 700px) { .tiles2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .tile { padding: 12px; } }
+.tiles2 .tile.wide { grid-column: span 2; }
+.tiles2 .tile .tt { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+.tiles2 .tile > .hfig { border: 0; padding: 0; min-width: 0; background: none; margin-top: auto; }
+.tiles2 .tile > .hfig b { font-size: 26px; }
+.tiles2 .tile .tools { display: flex; gap: 4px; align-items: center; margin-top: auto; flex-wrap: wrap; }
+.tiles2 .tile.off { opacity: .4; }
+body.arranging .tiles2 .tile { outline: 2px dashed var(--rule); outline-offset: 3px; }
+@media (max-width: 700px) { .tiles2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .tiles2 .tile { padding: 12px; } }
 /* Timeline */
 .vtimeline { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
 .vtimeline .main { flex: 999 1 520px; min-width: 0; display: grid; gap: 12px; }
@@ -1650,3 +1650,5 @@ dialog.gview { width: min(1200px, 96vw); max-width: 96vw; }
 .tfilters { margin-bottom: 10px; }
 .ttext { white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
 .ttext.open { display: block; -webkit-line-clamp: unset; }
+.tscroll { overflow-x: auto; max-width: 100%; }
+@media (min-width: 2200px) { .homepage { max-width: 1680px; } }
