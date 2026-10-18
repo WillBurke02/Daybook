@@ -27,6 +27,7 @@ import mimetypes
 import os
 import posixpath
 import re
+import socket
 import sqlite3
 import sys
 import threading
@@ -103,6 +104,15 @@ class Handler(BaseHTTPRequestHandler):
     server_version = "daybook/" + _db.APP_VERSION
     protocol_version = "HTTP/1.1"
     _renew = None                             # a fresh sign-in cookie to send with this response
+
+    def setup(self):
+        super().setup()
+        # headers and body leave as two writes; without this the body waits for the client's delayed
+        # ACK of the headers (Nagle's algorithm): about 40 ms added to every request
+        try:
+            self.connection.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        except OSError:
+            pass
 
     def log_message(self, fmt, *a):
         if _suite.env("VERBOSE"):

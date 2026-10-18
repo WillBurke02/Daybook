@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.28 — 18 October 2026
+
+- **Faster everywhere**: every request to the Pi was waiting about 40 ms for nothing (the network
+  holding back the reply until the browser acknowledged its first half). Turned off: a call that took
+  45 ms now takes 6 to 10, and pages open 35 to 45% sooner on a PC.
+
 ## 4.0.27 — 18 October 2026
 
 From the suggestions box:
