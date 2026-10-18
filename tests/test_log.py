@@ -143,6 +143,11 @@ ph = R("GET", "photos")
 assert ph["items"] and all(i["type"] in ("photo", "video") and i["day"] for i in ph["items"]) and "data" not in ph["items"][0]
 assert all("#site" in (i["text"] or "").lower() for i in R("GET", "photos", q={"tag": ["site"]})["items"])
 assert not R("GET", "photos", q={"tag": ["siemens"]})["items"], "a tag with no photos has none"
+assert all(i["type"] == "photo" for i in R("GET", "photos", q={"type": ["photo"]})["items"]) and not R("GET", "photos", q={"type": ["video"]})["items"]
+mo = R("GET", "photos/months")["months"]
+assert sum(m["n"] for m in mo) == len(ph["items"]) and all(i["day"] <= "2026-09-10" for i in R("GET", "photos", q={"to": ["2026-09-10"]})["items"])
+assert all(l["kind"] == "day" for d in R("GET", "timeline", q={"kind": ["day"]})["days"] for l in d["lines"])
+assert all(l["photos"] or l["videos"] for d in R("GET", "timeline", q={"media": ["1"]})["days"] for l in d["lines"])   # only entries with media
 print("ok — timeline, calendar, tags, rename, print, search")
 
 # === reminders: !fri in an entry, from the entry's own day =========================================

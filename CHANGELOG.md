@@ -1,5 +1,22 @@
 # Changes
 
+## 4.0.27 — 18 October 2026
+
+From the suggestions box:
+
+- **Admin from Home**: an Admin button at the top of Home, and in its menu, straight links to setting
+  up the phone and connecting GitHub.
+- **Step-by-step guides in Admin.** GitHub: make the private repository, make the token (exactly which
+  boxes to tick), fill in, test, with a tick against each step done. The phone: the Home Screen app,
+  the widget (Scriptable, where to tap), the two Shortcuts, and the calendar subscription, each with
+  its own key beside its steps.
+- **Photos in Log**: a section a month with its count, bigger tiles on a big screen, All / Photos /
+  Videos, jump to any month, more tags, and the next page loads as you scroll. A photo opens large and
+  ← and → (or a swipe on the phone) step through the rest.
+- **Timeline**: up to four lines of each entry (tap for the rest), and All / Work / Diary / With photos.
+- **Learn**: a question about a widget you set yourself no longer accepts settings that make the
+  answer 0 (such as an encoder at 0 rpm).
+
 ## 4.0.26 — 17 October 2026
 
 - **18 more lessons**, each with questions of its own: block diagrams, Bode plots, stability, digital

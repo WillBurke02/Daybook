@@ -1620,3 +1620,33 @@ body.sheeted .tabbar { display: none; }
 .lhome-first { display: grid; gap: 8px; margin: 18px 26px 0; padding: 16px 18px; border: 2px solid var(--accent); border-radius: 12px; }
 .lhome-first h2 { margin: 0; font: 700 20px var(--sans); }
 .lpart { display: grid; gap: 10px; }
+
+/* Admin's step-by-step guides (GitHub, the phone) */
+.guide-h { font: 600 14px/1.3 var(--sans); margin: 14px 0 2px; }
+ol.guide { margin: 4px 0 8px; padding-left: 22px; }
+ol.guide > li { margin: 4px 0; line-height: 1.45; }
+ol.guide ul { margin: 4px 0; padding-left: 18px; }
+.homecog { display: inline-flex; align-items: center; gap: 4px; }
+.homecog svg { width: 15px; height: 15px; }
+
+/* a photo at a time, ← and → to step (media.js viewGallery) */
+dialog.gview { width: min(1200px, 96vw); max-width: 96vw; }
+.gallery { position: relative; display: grid; place-items: center; min-height: 40vh; }
+.gallery img.full { max-height: 78vh; transition: opacity .12s; touch-action: pan-y; }
+.gallery img.loading { opacity: .35; }
+.gallery .gnav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 64px; border: 0; border-radius: 10px;
+  background: rgba(0,0,0,.45); color: #fff; font: 400 34px/1 var(--sans); cursor: pointer; }
+.gallery .gnav.prev { left: 4px; } .gallery .gnav.next { right: 4px; }
+.gallery .gnav:disabled { opacity: .25; cursor: default; }
+.gtitle { font-weight: 600; overflow-wrap: anywhere; }
+
+/* Log: photos a month at a time, bigger on a big screen; the timeline's filters, and up to four lines an entry */
+.photobar { gap: 8px; margin-bottom: 8px; align-items: center; }
+.photobar select { max-width: 220px; }
+.pmonth { margin: 4px 0 18px; }
+.pmonth h3 { margin: 0 0 8px; font: 600 17px var(--serif); position: sticky; top: 0; background: var(--panel); padding: 4px 0; z-index: 1; }
+@media (min-width: 1400px) { .photogrid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; } }
+@media (min-width: 2000px) { .photogrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
+.tfilters { margin-bottom: 10px; }
+.ttext { white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+.ttext.open { display: block; -webkit-line-clamp: unset; }

@@ -11,7 +11,9 @@ import { banner } from './pages.js';
 import { FONTS, TABLE_STYLES } from './layout.js';
 import { randomTheme } from '../ui/palette.js';
 
-const panel = (title, w, ...kids) => el('section', { class: 'panel' + (w < 6 ? ' narrow' : ''), style: `--w:${w}` },
+// each panel can be linked to: #/admin?panel=github (the id is its title's words)
+const panel = (title, w, ...kids) => el('section', { class: 'panel' + (w < 6 ? ' narrow' : ''), style: `--w:${w}`,
+  id: 'p-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') },
   el('header', {}, el('h2', {}, title)), el('div', { class: 'body' }, ...kids));
 let APP, PAGES;
 
@@ -460,9 +462,22 @@ function github() {
       try { out.textContent = await fn(); } catch (x) { out.textContent = x.message; }
       e.target.disabled = false;
     };
+    const tick = ok => el('span', { class: ok ? 'cre' : 'muted', 'aria-hidden': 'true' }, ok ? '✓ ' : '○ ');
+    const link = (href, words) => el('a', { href, target: '_blank', rel: 'noopener' }, words);
     box.replaceChildren(
-      el('p', { class: 'note' }, 'Shows your GitHub activity in Log and backs Log up daily to a private repository as Markdown. ',
-        'Token: read access to your repositories, and Contents write on the backup one.'),
+      el('p', { class: 'note' }, 'Shows your GitHub activity on each day in Log, and backs Log up every day to a private repository as Markdown.'),
+      el('ol', { class: 'guide' },
+        el('li', {}, tick(g.repo), el('strong', {}, 'Make a private repository'), ' for the backup: ',
+          link('https://github.com/new?name=daybook-log&visibility=private', 'github.com/new'), ' (named daybook-log, Private, nothing else ticked).'),
+        el('li', {}, tick(g.token), el('strong', {}, 'Make a token'), ': ',
+          link('https://github.com/settings/personal-access-tokens/new', 'Settings → Developer settings → Fine-grained tokens → Generate new token'), '.',
+          el('ul', {},
+            el('li', {}, 'Name: Daybook. Expiration: a year (Daybook says here when it stops working).'),
+            el('li', {}, 'Repository access: ', el('strong', {}, 'Only select repositories'), ', and pick daybook-log. Add any private ones whose activity you want in Log.'),
+            el('li', {}, 'Repository permissions: ', el('strong', {}, 'Contents → Read and write'), '. Metadata (read) is added by itself.'),
+            el('li', {}, 'Generate it and copy it: GitHub shows it once.'))),
+        el('li', {}, tick(g.user && g.token && g.repo), el('strong', {}, 'Fill in the three boxes below'), ' and Save: your username, the token, and the repository as you/daybook-log.'),
+        el('li', {}, tick(g.backed_up), el('strong', {}, 'Press Back up now'), ' to check it works. After that it runs by itself once a day.')),
       el('label', {}, 'Username ', user), el('label', {}, 'Token ', token), el('label', {}, 'Back up to ', repo),
       el('div', { class: 'row' },
         el('button', { class: 'btn sm', onclick: run('Saving', async () => {
@@ -648,20 +663,37 @@ function keys() {
     const quick = `${location.origin}/log/api/quick`;
     const reset = name => () => dialog('Make a new key?', el('p', {}, 'The old key stops working.'),
       [{ label: 'Make a new key', cls: 'btn danger', fn: async () => { await suite.token(name, true); draw(); } }]);
+    const h = words => el('h3', { class: 'guide-h' }, words);
     box.replaceChildren(
-      row('Calendar feed', feed, reset('cal'), el('a', { class: 'btn plain sm', href: feed + '?download=1' }, 'Download .ics')),
-      el('p', { class: 'note' }, 'Subscribe to it in your phone’s calendar or Outlook; keep it private. Google Calendar cannot reach a Tailscale address. ',
-        'On an iPhone, turn off Remove Alerts for this subscription (Settings → Calendar → Calendar Accounts).'),
+      el('p', { class: 'note' }, 'Each part works on its own; do them in any order. The phone needs Tailscale on, as for opening Daybook.'),
+      h('1. Daybook as an app on the Home Screen'),
+      el('ol', { class: 'guide' },
+        el('li', {}, 'On the iPhone, open ', el('code', {}, location.origin), ' in ', el('strong', {}, 'Safari'), ' and sign in.'),
+        el('li', {}, 'Tap Share (the square with the arrow), then ', el('strong', {}, 'Add to Home Screen'), ', then Add.'),
+        el('li', {}, 'Open it from that icon from now on: it opens full screen, and keeps working when the Pi cannot be reached.'),
+        el('li', {}, 'For one app straight away (Hours and pay, Spending, Log, Learn), open that app first, then Add to Home Screen.')),
+      h('2. A widget with today’s figures'),
+      row('Phone widget', figures, reset('widget'),
+        el('button', { class: 'btn plain sm', onclick: () => copy(widgetScript(figures)) }, 'Copy script')),
+      el('ol', { class: 'guide' },
+        el('li', {}, 'Install ', el('a', { href: 'https://apps.apple.com/app/scriptable/id1405459188', target: '_blank', rel: 'noopener' }, 'Scriptable'), ' from the App Store (free).'),
+        el('li', {}, 'Press ', el('strong', {}, 'Copy script'), ' just above. Easiest with this page open on the phone itself.'),
+        el('li', {}, 'In Scriptable, tap +, paste, and name it Daybook at the top. Run it once: the figures should show.'),
+        el('li', {}, 'On the Home Screen, press and hold an empty spot, tap ', el('strong', {}, 'Edit → Add Widget'), ', pick Scriptable, choose a size, Add Widget.'),
+        el('li', {}, 'Press and hold the new widget, ', el('strong', {}, 'Edit Widget'), ': Script = Daybook. Parameter: leave it empty for every app, or type money, learn or log for one.'),
+        el('li', {}, 'Tapping the widget opens Daybook. It refreshes about every 15 minutes (iOS decides exactly when).')),
+      h('3. Shortcuts: dictate to Log, share photos to Log'),
       row('Phone capture key', cap.token, reset('capture')),
-      el('div', { class: 'note' }, 'iPhone Shortcut to add to Log:',
-        el('ol', {},
+      el('p', { class: 'note' }, 'In the Shortcuts app, tap + for a new shortcut and add these actions in order. The key is already in the steps.'),
+      el('div', { class: 'note' }, el('strong', {}, 'Log (say it, and it goes into today):'),
+        el('ol', { class: 'guide' },
           el('li', {}, 'Add ', el('strong', {}, 'Dictate Text'), ' (or ', el('strong', {}, 'Ask for Input'), ' to type).'),
           el('li', {}, 'Add ', el('strong', {}, 'Get Contents of URL'), ': the URL ', el('code', {}, quick), '; Method POST; Headers ',
             el('code', {}, 'Authorization'), ' = ', el('code', {}, `Bearer ${cap.token}`), ' and ', el('code', {}, 'X-Daybook'), ' = ',
             el('code', {}, '1'), '; Request Body JSON, with a Text field ', el('code', {}, 'text'), ' set to the Dictated Text.'),
-          el('li', {}, 'Name it Log.'))),
-      el('div', { class: 'note' }, 'Shortcut to share photos to Log:',
-        el('ol', {},
+          el('li', {}, 'Name it Log. “Hey Siri, Log” then runs it.'))),
+      el('div', { class: 'note' }, el('strong', {}, 'Share to Log (from Photos, with a note):'),
+        el('ol', { class: 'guide' },
           el('li', {}, 'In its details (ⓘ), turn on ', el('strong', {}, 'Show in Share Sheet'), ' and have it receive ', el('strong', {}, 'Images'), '.'),
           el('li', {}, 'Add ', el('strong', {}, 'Convert Image'), ' to JPEG, then ', el('strong', {}, 'Resize Image'), ' by Longest Edge to 1600.'),
           el('li', {}, 'Add ', el('strong', {}, 'Ask for Input'), ' (Text) for a note. Optional.'),
@@ -669,12 +701,15 @@ function keys() {
             '; Method POST; Header ', el('code', {}, 'Authorization'), ' = ', el('code', {}, `Bearer ${cap.token}`),
             '; Request Body Form, with a Text field ', el('code', {}, 'text'), ' set to the Provided Input and a File field ',
             el('code', {}, 'photo'), ' set to the Resized Image.'),
-          el('li', {}, 'Name it Share to Log.'))),
-      row('Phone widget', figures, reset('widget'),
-        el('button', { class: 'btn plain sm', onclick: () => copy(widgetScript(figures)) }, 'Copy script')),
-      el('p', { class: 'note' }, 'Needs the Scriptable app. Paste the script into a new script, then add a Scriptable widget. ',
-        'Set its Parameter to money, learn or log for one app.'));
+          el('li', {}, 'Name it Share to Log. It now shows in the Share button in Photos.'))),
+      h('4. Calendar: shifts, reminders and alerts in the phone’s calendar'),
+      row('Calendar feed', feed, reset('cal'), el('a', { class: 'btn plain sm', href: feed + '?download=1' }, 'Download .ics')),
+      el('ol', { class: 'guide' },
+        el('li', {}, 'Copy the feed address above. Keep it private: anyone with it can read the calendar.'),
+        el('li', {}, 'iPhone: ', el('strong', {}, 'Settings → Calendar → Calendar Accounts → Add Account → Other → Add Subscribed Calendar'), ', paste it, Next, Save.'),
+        el('li', {}, 'Turn off ', el('strong', {}, 'Remove Alerts'), ' for this subscription, or Daybook’s alerts will not sound.'),
+        el('li', {}, 'Outlook works the same way (Add calendar → Subscribe from web). Google Calendar cannot reach a Tailscale address.')));
   };
   draw();
-  return panel('Calendar feed and phone', 6, box);
+  return panel('Phone and calendar', 6, box);
 }

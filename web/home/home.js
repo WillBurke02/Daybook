@@ -269,6 +269,8 @@ async function start() {
   appbar($('.appbar'), state.meta.doors, 'home', { custom: 'Arrange' });
   tabbar($('.tabbar'), state.meta.doors, 'home');
   $('.appbar .burger').hidden = true;
+  const admin = (panel = '') => `/${state.meta.apps[0].name}/#/admin${panel ? '?panel=' + panel : ''}`;
+  $('.appbar .more').before(el('a', { class: 'btn plain sm homecog', href: admin(), title: 'Password, keys, the phone, GitHub, backups' }, icon('cog'), el('span', {}, 'Admin')));
   $('.appbar .custom').addEventListener('click', e => {
     arranging = !arranging;
     e.currentTarget.setAttribute('aria-pressed', String(arranging));
@@ -281,6 +283,9 @@ async function start() {
              fn: () => useTheme(m.v) })) },
            { label: 'Home shows', sub: VIEWS.map(o => ({ label: o.label, on: view() === o.v, fn: () => pick(o.v) })) },
            '-', ...state.meta.doors.map(a => ({ label: `Open ${a.title}`, fn: () => { location.href = `/${a.name}/`; } })),
+           '-', { label: 'Admin', fn: () => { location.href = admin(); } },
+           { label: 'Set up the phone (app, widget, shortcuts)', fn: () => { location.href = admin('phone-and-calendar'); } },
+           { label: 'Connect GitHub', fn: () => { location.href = admin('github'); } },
            '-', { label: 'Lock (sign out here)', fn: async () => { await suite.logout(); location.href = '/login'; } }],
           r.right - 240, r.bottom + 4);
   });

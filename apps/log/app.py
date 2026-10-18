@@ -458,36 +458,49 @@ def route(db, method, p, query, body, ctx):
     if p[:1] == ["github"]:
         return _github(db, method, p[1:], body)
 
-    if p == ["photos"] and method == "GET":         # every photo and video, newest first; one tag's, if asked
-        tag = (g("tag") or "").lower().lstrip("#")
+    if p[:1] == ["photos"] and method == "GET":     # every photo and video, newest first; one tag's, one kind, up to a day
+        tag, kind = (g("tag") or "").lower().lstrip("#"), g("type") or ""
+        where, args = "", []
+        if tag:
+            where, args = where + " AND e.tags LIKE ?", args + [f"% {tag} %"]
+        if g("to"):                                # a month picked: from its last day back
+            where, args = where + " AND e.day <= ?", args + [g("to")]
+        both = ("SELECT a.id, 'photo' AS type, a.thumb, NULL AS duration_s, e.id AS entry_id, e.day, e.at, e.text "
+                f"  FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE a.type = 'photo' {where} AND ? IN ('', 'photo') "
+                "UNION ALL SELECT c.id, 'video', c.thumb, c.duration_s, e.id, e.day, e.at, e.text "
+                f"  FROM clip c JOIN entry e ON e.id = c.entry_id WHERE 1 {where} AND ? IN ('', 'video')")
+        args = args + [kind] + args + [kind]
+        if p == ["photos", "months"]:              # how many in each month, for jumping about
+            return 200, {"months": [dict(r) for r in db.execute(
+                f"SELECT substr(day, 1, 7) AS month, COUNT(*) AS n FROM ({both}) GROUP BY month ORDER BY month DESC", args)]}
         off, limit = int(g("offset", 0)), min(int(g("limit", 60)), 200)
-        where, args = ("AND e.tags LIKE ?", [f"% {tag} %"]) if tag else ("", [])
         rows = [dict(r) for r in db.execute(
-            "SELECT * FROM (SELECT a.id, 'photo' AS type, a.thumb, NULL AS duration_s, e.id AS entry_id, e.day, e.at, e.text "
-            f"  FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE a.type = 'photo' {where} "
-            "UNION ALL SELECT c.id, 'video', c.thumb, c.duration_s, e.id, e.day, e.at, e.text "
-            f"  FROM clip c JOIN entry e ON e.id = c.entry_id WHERE 1 {where}) "
-            "ORDER BY day DESC, COALESCE(at, '99:99') DESC, id DESC LIMIT ? OFFSET ?", args + args + [limit + 1, off])]
+            f"SELECT * FROM ({both}) ORDER BY day DESC, COALESCE(at, '99:99') DESC, id DESC LIMIT ? OFFSET ?", args + [limit + 1, off])]
         return 200, {"items": rows[:limit], "more": len(rows) > limit}
 
     if p == ["timeline"] and method == "GET":
         before, tag = g("before", "9999-12-31"), (g("tag") or "").lower().lstrip("#")
         limit = min(int(g("limit", 30)), 200)
-        where, args = "day < ?", [before]
+        # only some entries: a tag, work or diary, those with photos or videos
+        only, oargs = "", []
         if tag:
-            where += " AND tags LIKE ?"
-            args.append(f"% {tag} %")
-        days = [r[0] for r in db.execute(f"SELECT DISTINCT day FROM entry WHERE {where} ORDER BY day DESC LIMIT ?",
-                                         args + [limit])]
+            only, oargs = only + " AND tags LIKE ?", oargs + [f"% {tag} %"]
+        if g("kind") in ("work", "day"):
+            only, oargs = only + " AND kind = ?", oargs + [g("kind")]
+        if g("media"):
+            only += (" AND (id IN (SELECT entry_id FROM attachment WHERE type = 'photo')"
+                     " OR id IN (SELECT entry_id FROM clip))")
+        days = [r[0] for r in db.execute(f"SELECT DISTINCT day FROM entry WHERE day < ? {only} ORDER BY day DESC LIMIT ?",
+                                         [before] + oargs + [limit])]
         out = []
         for d in days:
-            rows = db.execute(f"SELECT * FROM v_entry WHERE day = ? {'AND tags LIKE ?' if tag else ''} "
-                              "ORDER BY kind = 'work', COALESCE(at, '99:99'), id", [d] + ([f"% {tag} %"] if tag else [])).fetchall()
+            rows = db.execute(f"SELECT * FROM v_entry WHERE day = ? {only} "
+                              "ORDER BY kind = 'work', COALESCE(at, '99:99'), id", [d] + oargs).fetchall()
             thumbs = [r[0] for r in db.execute(
                 "SELECT a.thumb FROM attachment a JOIN entry e ON e.id = a.entry_id WHERE e.day = ? AND a.thumb IS NOT NULL "
                 "ORDER BY a.id LIMIT 6", (d,))]
             out.append({"day": d, "thumbs": thumbs,
-                        "lines": [{"at": r["at"], "kind": r["kind"], "text": (r["text"] or "").strip().split("\n")[0][:160],
+                        "lines": [{"at": r["at"], "kind": r["kind"], "text": (r["text"] or "").strip()[:600],   # the page shows 4 lines
                                    "photos": r["photos"], "voices": r["voices"], "videos": r["videos"]} for r in rows]})
         note = db.execute("SELECT note FROM tag_note WHERE tag = ?", (tag,)).fetchone() if tag else None
         return 200, {"days": out, "more": len(days) == limit, "note": note[0] if note else None}

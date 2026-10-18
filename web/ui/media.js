@@ -126,6 +126,40 @@ export function viewImage(src, title) {
   Promise.resolve(src).then(s => { if (s) img.src = s; });
 }
 
+/** Photos one after another: ← and → (or a swipe, or the buttons) step through, Esc closes.
+ *  items: [{src: () => url or a promise of one, title, href}]; more(): fetches the next page, returns how many came. */
+export function viewGallery(items, at, { more } = {}) {
+  let i = at, seq = 0;
+  const img = el('img', { class: 'full', alt: '' });
+  const count = el('span', { class: 'muted small num' }), what = el('span', { class: 'gtitle' });
+  const step = async n => {
+    if (i + n >= items.length && more) await more();          // past the last loaded: the next page first
+    if (i + n < 0 || i + n >= items.length) return;
+    i += n; show();
+  };
+  const prev = el('button', { class: 'gnav prev', type: 'button', 'aria-label': 'Previous photo', onclick: () => step(-1) }, '‹');
+  const next = el('button', { class: 'gnav next', type: 'button', 'aria-label': 'Next photo', onclick: () => step(1) }, '›');
+  const show = async () => {
+    const it = items[i], mine = ++seq;
+    what.textContent = it.title; img.alt = it.title; count.textContent = `${i + 1} of ${items.length}${more ? '+' : ''}`;
+    prev.disabled = i === 0;
+    img.classList.add('loading');
+    const s = await it.src();
+    if (mine === seq && s) { img.src = s; img.classList.remove('loading'); }
+    // the neighbours, so the next step is instant
+    [items[i + 1], items[i - 1]].forEach(n => n && Promise.resolve(n.src()).catch(() => {}));
+  };
+  const d = dialog(el('div', { class: 'row mid' }, what, el('span', { class: 'spacer' }), count),
+    el('div', { class: 'gallery' }, prev, img, next), [{ label: 'Open the entry', cls: 'btn plain', fn: () => { if (items[i].href) location.hash = items[i].href.replace(/^#/, ''); } }]);
+  d.classList.add('gview');
+  d.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); step(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); } });
+  let x0 = null;                                               // a swipe left or right on a phone
+  img.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  img.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); });
+  show();
+  return d;
+}
+
 /** A PDF, opened in the browser's own viewer. */
 export async function viewPdf(dataUrl) {
   const blob = await blobOf(dataUrl);

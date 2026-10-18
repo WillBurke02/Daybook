@@ -137,6 +137,8 @@ const TYPES = {
     const go = () => {
       const given = read(input.value, c.unit);
       if (!isFinite(given)) { flash('Enter a number, e.g. 5920, 1.18e-3 or 4.7k'); input.focus(); return; }
+      // a question about a widget you set yourself: settings that make the answer 0 (speed 0, say) prove nothing
+      if (c.live && !Number(values.answer)) { flash('As set, the answer is 0. Move the controls off zero, then answer.'); return; }
       const v = values.answer, correct = right(given, v, c);
       input.disabled = check.disabled = true;
       input.classList.add(correct ? 'right' : 'wrong');
@@ -281,7 +283,7 @@ const TYPES = {
     // first, even wrongly, makes what you then see stick (the prequestion effect).
     const p = c.predict;
     let predicted = p ? null : -1, guess = null;
-    const inner = { ...c.ask, id: c.id }, ask = el('div', { class: 'ask', hidden: !!p });
+    const inner = { ...c.ask, id: c.id, live: true }, ask = el('div', { class: 'ask', hidden: !!p });
     if (p) {
       w.inert = true;
       w.classList.add('locked');

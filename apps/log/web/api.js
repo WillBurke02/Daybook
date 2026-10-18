@@ -11,6 +11,7 @@ export const api = {
   print:    (from, to) => get(`print${qs({ from, to })}`),
   renameTag: (from, to) => send('tag/rename', { from, to }),
   photos:   q => get(`photos${qs(q)}`),
+  photoMonths: q => get(`photos/months${qs(q)}`),
   github:   () => get('github'),
   githubSave: b => send('github', b),
   githubPull: () => send('github/pull', {}),
