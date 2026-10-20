@@ -16,6 +16,7 @@
     python3 daybook.py sync --folder PATH --code CODE      join from another computer
     python3 daybook.py sync                one round now, and what it did
     python3 daybook.py update              take the newest release from GitHub (--check, --rollback)
+    python3 daybook.py restore --repo you/daybook-log     a new computer from the encrypted backup on GitHub (Log's Admin → GitHub)
     python3 daybook.py learn-import        open textbooks into Learn, as published (apps/learn/content/imports.json)
 """
 import argparse
@@ -343,6 +344,23 @@ def cmd_sync(a):
     return 0
 
 
+def cmd_restore(a):
+    """Everything back from the encrypted backup Log makes on GitHub, into an empty data folder."""
+    from apps.log import github
+    _setup(a)
+    if any(f.endswith(".db") for f in os.listdir(SUITE.data)):
+        raise _db.Stop(f"{SUITE.data} already has databases. Restore into an empty folder (--data <folder>), "
+                       "or move them aside first.")
+    token = a.token or _suite.env("GITHUB_TOKEN") or getpass.getpass("GitHub token: ")
+    try:
+        key = _sync.key_of(a.code or input("Backup code (Log's Admin → GitHub): "))
+        for p in github.restore_all(token, a.repo, key, SUITE.data):
+            print(f"restored {p}")
+    except ValueError as e:
+        raise _db.Stop(str(e))
+    print("Done. Start Daybook as before: the password and the phone's keys are the ones in the backup.")
+
+
 def cmd_learn_import(a):
     """Open textbooks into Learn as published (apps/learn/content/imports.json). It fetches from GitHub."""
     from apps.learn import openstax
@@ -422,6 +440,10 @@ def main(argv=None):
     s = add("update"); s.set_defaults(fn=cmd_update)
     s.add_argument("--check", action="store_true", help="only say whether there is newer code")
     s.add_argument("--rollback", action="store_true", help="put back the code from before the last update")
+    s = add("restore"); s.set_defaults(fn=cmd_restore)
+    s.add_argument("--repo", required=True, metavar="OWNER/REPO", help="the repository Log backs up to")
+    s.add_argument("--token", help="a token that can read it (asked for if not given, or DAYBOOK_GITHUB_TOKEN)")
+    s.add_argument("--code", help="the backup code (asked for if not given)")
     s = add("learn-import"); s.set_defaults(fn=cmd_learn_import)
     s.add_argument("lessons", nargs="*", help="only these lessons (ids); all of them if none")
     s = add("import"); s.set_defaults(fn=cmd_import)

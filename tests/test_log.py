@@ -252,6 +252,57 @@ log.clip_in(db, vid, "video/mp4", b"x")                      # the next one in c
 assert not one("SELECT 1 FROM clip_data WHERE clip_id = ?", cid), "a video gone 30 days is cleared"
 print("ok — videos: raw, in pieces, only videos, delete and undo, the limit")
 
+# === everything, encrypted, on a branch of its own (a fake of GitHub's git database here) ===========
+git = {"blobs": {}, "trees": {}, "commits": {}, "refs": {}}
+def gitfake(token, method, path, body=None, timeout=30):
+    p = path.split("/repos/me/log/git/", 1)[1]
+    if method == "POST" and p in ("blobs", "trees", "commits"):
+        sha = f"{p}{len(git[p])}"
+        git[p][sha] = body
+        return {"sha": sha}
+    if method == "GET" and p.startswith("blobs/"):
+        return git["blobs"][p[6:]]
+    if method == "GET" and p.startswith("trees/"):
+        ref = git["refs"].get(p[6:].split("?")[0])
+        return {"tree": [dict(x) for x in git["trees"][git["commits"][ref]["tree"]]["tree"]]} if ref else None
+    if method == "PATCH" and p.startswith("refs/heads/"):
+        if p[11:] not in git["refs"]:
+            raise ValueError("GitHub said 422 Unprocessable Entity")
+        git["refs"][p[11:]] = body["sha"]
+        return {}
+    if method == "POST" and p == "refs":
+        git["refs"][body["ref"][11:]] = body["sha"]
+        return {}
+    raise AssertionError(path)
+gh._gh = gitfake
+db.commit()
+db.execute("INSERT INTO attachment (entry_id, type, data) VALUES (?, 'voice', ?)", (sh["id"], WEBM)); db.commit()
+KEY, courses = bytes(range(20)), os.path.join(tmp.name, "courses")
+os.makedirs(os.path.join(courses, "deck"))
+open(os.path.join(courses, "deck", "course.json"), "w").write('{"title": "Mine"}')
+media = one("SELECT (SELECT COUNT(DISTINCT data) FROM attachment) + (SELECT COUNT(*) FROM clip_data) n")["n"]
+assert gh.backup_all("t0k", "me/log", KEY, {"log.db": DB}, courses)[0] == media + 2, "each photo, voice note and video, the database, the courses"
+sealed = b"".join(base64.b64decode(b["content"]) for b in git["blobs"].values())
+assert b"gallery" not in sealed and b"/9j/4AAQ" not in sealed and b"Mine" not in sealed, "nothing readable on GitHub"
+assert gh.backup_all("t0k", "me/log", KEY, {"log.db": DB}, courses)[0] == 2, "the next day: the media are there already"
+assert len(git["commits"]) == 2 and not git["commits"]["commits1"]["parents"], "one commit on the branch, replaced"
+back = os.path.join(tmp.name, "back")
+os.makedirs(back)
+gh.restore_all("t0k", "me/log", KEY, back)
+rb = sqlite3.connect(os.path.join(back, "log.db"))
+for sql in ("SELECT id, data FROM attachment ORDER BY id", "SELECT clip_id, data, gone FROM clip_data ORDER BY clip_id",
+            "SELECT id, text FROM entry ORDER BY id"):
+    assert rb.execute(sql).fetchall() == [tuple(r) for r in db.execute(sql)], sql
+assert not rb.execute("SELECT 1 FROM sqlite_master WHERE name = 'backup_media'").fetchone() and rb.execute("PRAGMA quick_check").fetchone()[0] == "ok"
+rb.close()
+assert open(os.path.join(back, "courses", "deck", "course.json")).read() == '{"title": "Mine"}'
+try:
+    gh.restore_all("t0k", "me/log", bytes(20), tempfile.mkdtemp())
+    raise SystemExit("FAIL: opened with the wrong code")
+except ValueError as e:
+    assert "does not open" in str(e)
+print("ok — everything encrypted on GitHub: media once each, one commit, restored the same")
+
 # === Home =============================================================================
 R("POST", "quick", {"text": "Today's first", "at": "08:00"})
 h = R("GET", "home")

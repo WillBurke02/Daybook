@@ -446,7 +446,7 @@ function password() {
     el('p', { class: 'note' }, 'One password opens every app. Changing it signs every other device out.'));
 }
 
-// --- GitHub, for Log: your activity on each day, and Log backed up as Markdown to a private repository ---
+// --- GitHub, for Log: your activity on each day, Log as Markdown, and everything encrypted, in a private repository ---
 function github() {
   if (!state.meta.apps.some(a => a.name === 'log')) return null;
   const log = appApi('log'), box = el('div', { class: 'stack' });
@@ -465,7 +465,7 @@ function github() {
     const tick = ok => el('span', { class: ok ? 'cre' : 'muted', 'aria-hidden': 'true' }, ok ? '✓ ' : '○ ');
     const link = (href, words) => el('a', { href, target: '_blank', rel: 'noopener' }, words);
     box.replaceChildren(
-      el('p', { class: 'note' }, 'Shows your GitHub activity on each day in Log, and backs Log up every day to a private repository as Markdown.'),
+      el('p', { class: 'note' }, 'Shows your GitHub activity on each day in Log, and backs up to a private repository every day: Log as Markdown you can read there, and everything (all the apps, Log\'s photos, voice notes and videos, your settings) encrypted.'),
       el('ol', { class: 'guide' },
         el('li', {}, tick(g.repo), el('strong', {}, 'Make a private repository'), ' for the backup: ',
           link('https://github.com/new?name=daybook-log&visibility=private', 'github.com/new'), ' (named daybook-log, Private, nothing else ticked).'),
@@ -484,10 +484,18 @@ function github() {
           await log.send('github', { user: user.value, repo: repo.value, ...(token.value ? { token: token.value } : {}) }); draw(); return 'Saved';
         }) }, 'Save'),
         g.user && g.token ? el('button', { class: 'btn plain sm', onclick: run('Asking GitHub', async () => `${(await log.send('github/pull', {})).added} new from GitHub`) }, 'Fetch activity now') : null,
-        g.repo && g.token ? el('button', { class: 'btn plain sm', onclick: run('Backing up', async () => `${(await log.send('github/backup', {})).files} file(s) sent to ${g.repo}`) }, 'Back up now') : null,
+        g.repo && g.token ? el('button', { class: 'btn plain sm', onclick: run('Backing up', async () => { const r = await log.send('github/backup', {}); setTimeout(draw, 3000); return `Log: ${r.files} file(s) sent to ${g.repo}. Everything else is on its way: below says when it is done.`; }) }, 'Back up now') : null,
         g.token ? el('button', { class: 'btn plain sm', onclick: run('Forgetting', async () => { await log.send('github', { user: g.user, repo: g.repo, token: '' }); draw(); return 'Token forgotten'; }) }, 'Forget the token') : null),
       out,
-      el('p', { class: 'note' }, [g.pulled ? `Activity fetched ${g.pulled} (${g.events} kept)` : '', g.backed_up ? `backed up ${g.backed_up}` : ''].filter(Boolean).join('; ')));
+      el('p', { class: 'note' }, [g.pulled ? `Activity fetched ${g.pulled} (${g.events} kept)` : '', g.backed_up ? `backed up ${g.backed_up}` : ''].filter(Boolean).join('; ')),
+      g.code ? el('div', { class: 'stack' },
+        el('h3', { class: 'guide-h' }, 'Everything, encrypted'),
+        el('p', { class: 'note' }, `Each day every database goes to the branch daybook-backup of ${g.repo}, encrypted with this code, with each photo and video sent once. GitHub cannot read it, and nor can anyone without the code.`),
+        el('p', {}, el('strong', {}, 'Backup code: '), el('code', {}, g.code)),
+        el('p', { class: 'note' }, el('strong', {}, 'Keep it in your password manager now.'), ' Without it the backup cannot be opened, and the only other copy is on this computer.'),
+        el('p', { class: 'note', 'aria-live': 'polite' }, g.running ? 'Backing up everything now… (the first time, with a lot of photos and videos, takes a few minutes)' : g.everything ? `Last: ${g.everything}` : 'Not yet: press Back up now.'),
+        el('p', { class: 'note' }, 'To bring it all back on a new Pi: clone Daybook, then ', el('code', {}, `python3 daybook.py restore --repo ${g.repo}`), ' (it asks for the token and this code).')) : null);
+    if (g.running) setTimeout(draw, 10000);
   };
   draw();
   return panel('GitHub', 6, box);

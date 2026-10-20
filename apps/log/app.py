@@ -6,6 +6,8 @@ calendar feed. Bills and anything else that comes round live in Money.
 import base64
 import os
 import re
+import secrets
+import threading
 from datetime import date, datetime, timedelta
 
 from core import db as _db
@@ -27,7 +29,9 @@ LABELS = {"entry": "entry", "attachment": "attachment", "clip": "video"}
 SHARE_MAX = 25 * 1024 * 1024        # one shared file; larger ones are refused, not truncated
 CLIP_MAX = 60 * 1024 * 1024         # one video: about a minute from a phone; trim a longer one there first
 CLIP_KEEP = 30                      # days a deleted video's bytes wait, in case the delete is undone
-SYNC_SKIP = ("inbox",)              # a shared photo waits here until Log files it; the filed one syncs
+# a shared photo waits in inbox until Log files it, and the filed one syncs. A video's bytes do not:
+# sync's files are JSON, which cannot hold raw bytes (saving a video failed with sync on)
+SYNC_SKIP = ("inbox", "clip_data")
 
 SEARCH = [
     ("entry", "SELECT e.id, e.day AS date, e.at, e.kind, e.text, e.tags, "
@@ -232,7 +236,7 @@ def share(db, fields, files):
     return f"/log/#/day?d={date.today().isoformat()}"
 
 
-# --- GitHub: your activity on each day, and Log backed up as Markdown (github.py) --------------------
+# --- GitHub: your activity on each day, Log as Markdown, everything encrypted (github.py) --------------
 
 def _github_cfg(db, need_repo=False):
     from core import suite as _suite              # the token is the suite's, in suite.db: never in log.db, never synced
@@ -245,12 +249,14 @@ def _github_cfg(db, need_repo=False):
 
 def _github(db, method, p, body):
     from . import github
-    from core import suite as _suite
+    from core import suite as _suite, sync as _sync
     st = _db.settings(db)
     if p == [] and method == "GET":
         return 200, {"user": st.get("github_user"), "repo": st.get("github_repo"), "token": bool(_suite.secret("github")),
                      "pulled": st.get("github_pulled"), "backed_up": st.get("github_backed_up"),
-                     "events": db.execute("SELECT COUNT(*) FROM gh_event").fetchone()[0]}
+                     "events": db.execute("SELECT COUNT(*) FROM gh_event").fetchone()[0],
+                     "everything": st.get("github_everything"), "running": _everything.locked(),
+                     "code": _sync.code_of(_backup_key()) if st.get("github_repo") and _suite.secret("github") else None}
     if p == [] and method == "POST":
         repo = (body.get("repo") or "").strip().removeprefix("https://github.com/").strip("/")
         if repo and not re.fullmatch(r"[\w.-]+/[\w.-]+", repo):
@@ -271,14 +277,49 @@ def _github(db, method, p, body):
             return 200, {"added": github.pull(db, user, token)}
         if p == ["backup"] and method == "POST":
             _, repo, token = _github_cfg(db, need_repo=True)
-            return 200, {"files": github.backup(db, token, repo)}
+            files = github.backup(db, token, repo)
+            threading.Thread(target=back_up_everything, args=(repo, token), daemon=True).start()     # the first takes minutes
+            return 200, {"files": files}
     except ValueError as e:
         raise Err(400, str(e))
     raise Err(404, "no such endpoint")
 
 
+_everything = threading.Lock()
+
+
+def _backup_key():
+    """The key everything is encrypted with, made the first time; Admin shows it as the backup code."""
+    from core import suite as _suite
+    return bytes.fromhex(_suite._secret("backup", lambda: secrets.token_bytes(20).hex()))
+
+
+def back_up_everything(repo, token):
+    """Every database, encrypted, to the repository's daybook-backup branch (github.backup_all). How it went
+    is kept in Log's settings for Admin to show. One at a time."""
+    from . import github
+    from core import suite as _suite
+    if not _everything.acquire(blocking=False):
+        return
+    try:
+        dbs = {"suite.db": _suite.store_path(), **{os.path.basename(p): p for p in map(_suite.path, _suite.SUITE.apps)}}
+        try:
+            n, size = github.backup_all(token, repo, _backup_key(), dbs, os.path.join(_suite.SUITE.data, "courses"))
+            note = f"{datetime.now():%Y-%m-%d %H:%M}, {n} file(s) sent ({size / 1e6:.1f} MB)"
+        except Exception as e:                    # it runs in the background: whatever went wrong shows in Admin
+            note = f"failed {datetime.now():%Y-%m-%d %H:%M}: {e}"
+        db = _db.connect(_suite.path("log"))
+        try:
+            db.execute("INSERT OR REPLACE INTO setting (key, value) VALUES ('github_everything', ?)", (note,))
+            db.commit()
+        finally:
+            db.close()
+    finally:
+        _everything.release()
+
+
 def daily(db):
-    """Once a day on a server left running (the Pi): fetch your GitHub activity, and back Log up there."""
+    """Once a day on a server left running (the Pi): fetch your GitHub activity, and back Log, then everything, up there."""
     from . import github
     try:
         user, repo, token = _github_cfg(db)
@@ -288,6 +329,7 @@ def daily(db):
         github.pull(db, user, token)
         if repo:
             github.backup(db, token, repo)
+            back_up_everything(repo, token)
     except ValueError:
         pass                                      # GitHub not reached: tomorrow, or the buttons in Admin
 

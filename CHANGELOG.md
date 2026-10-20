@@ -1,5 +1,18 @@
 # Changes
 
+## 4.0.30 — 20 October 2026
+
+- **Everything backed up to GitHub, encrypted**: besides Log as Markdown, the daily GitHub backup
+  now sends every database (Hours and pay, Spending, Log, Learn, your settings), Log's photos,
+  voice notes and videos, and imported courses, encrypted with a backup code shown in Admin →
+  GitHub. Each photo and video goes once; after that a day's backup sends only what changed, and
+  the repository keeps the latest copy rather than piling up old ones. Keep the code in your
+  password manager.
+- **Restore on a new computer**: `python3 daybook.py restore --repo you/daybook-log` brings it all
+  back, photos included, with the same password and phone keys.
+- With sync between computers switched on, saving a video in Log failed. Videos now stay on the
+  computer they were added on, and everything else still syncs.
+
 ## 4.0.29 — 18 October 2026
 
 - **Less wasted space**: the figures at the top of Hours and pay, Spending and the other apps were

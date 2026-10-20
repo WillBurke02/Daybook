@@ -118,8 +118,12 @@ the Log box, so far today), **Tiles** (every figure and list as a tile, arranged
 The day page has the diary (one a day) and the work entries in time order.
 Type in the box at the top of any page; `#words` are tags, and `!fri`, `!tomorrow 9:00`,
 `!16/10` or `!3d` makes the entry a reminder on that day (in Log and, with an alert, the calendar feed).
-With Admin → GitHub set up, each day also shows your GitHub activity, and Log is backed up once a
-day to a private repository as Markdown, a file a month. Photos are shrunk to
+With Admin → GitHub set up, each day also shows your GitHub activity, and once a day a private
+repository gets Log as Markdown (a file a month, readable there) and **everything**, encrypted with
+the backup code Admin shows: every app's database, your settings, Log's photos, voice notes and
+videos (each sent once), and imported courses, on the branch `daybook-backup`. On a new computer,
+`python3 daybook.py restore --repo you/daybook-log` (it asks for the token and the code) brings it
+all back into an empty `data` folder. Keep the code in your password manager. Photos are shrunk to
 1600 px; paste a screenshot with Ctrl+V or drop a file. Voice notes record in
 the browser. The day also shows that day's shifts from Money. Timeline, a
 calendar with a dot for each entry, tags, search and print (a day or a range).
