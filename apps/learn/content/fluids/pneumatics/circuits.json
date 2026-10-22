@@ -558,6 +558,96 @@
    "why": "Force is pressure times the piston area. Retracting, the rod's area is lost, so the force is less; and friction takes some 10% in practice.",
    "hint": "Bore in metres, radius is half.",
    "added": true
+  },
+  {
+   "id": "ps-goal",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.5,
+   "intro": "This press-fit station needs at least **1.5 kN** from cylinder B (63 mm bore) on every part. Someone has turned the regulator down to 3 bar and the parts are coming out bad. Air costs money, roughly 7% more energy for every extra bar, so find the lowest setting that works, then run it.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "press-station",
+     "set": {
+      "reg": 3
+     },
+     "controls": [
+      "start",
+      "stop",
+      "reset",
+      "reg"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Good parts, at the lowest pressure that gives them.",
+    "pass": "AND(force >= 1.5, reg <= 5, plc.Good >= 2)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "reg": 5
+      }
+     },
+     {
+      "at": 0.4,
+      "press": "start"
+     }
+    ],
+    "fails": [
+     [
+      "force < 1.5",
+      "At {reg:1} bar B pushes {force:2} kN: short of 1.5 kN."
+     ],
+     [
+      "reg > 5",
+      "That works, but {reg:1} bar is more than it needs."
+     ],
+     [
+      "plc.Good < 2",
+      "Now run it: press Start and let it press a couple of parts."
+     ]
+    ],
+    "hint": "F = pA. A 63 mm bore has an area of about 3117 mm², and 1 bar is 0.1 N/mm².",
+    "why": "$p = F/A = 1500 \\div 3117 = 0.48$ N/mm², 4.8 bar; the next step up on the regulator is 5 bar, giving 1.56 kN. In practice you would allow a margin for the pressure dropping when other machines draw air."
+   },
+   "added": true,
+   "after": "add-cyl-force"
+  },
+  {
+   "id": "ps-diag",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.8,
+   "intro": "This clamp-and-press station has been reported as \"not right\". Run it: Start, watch the cylinders and their reed switches, the valve solenoids, the PLC's step and the counts. Reset clears an alarm.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "press-station",
+     "controls": [
+      "start",
+      "stop",
+      "reset"
+     ]
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "a1-reed",
+     "b-coil",
+     "b-flow",
+     "silencer",
+     "low-air",
+     "none"
+    ],
+    "why": "The step it stops at says which movement failed. Then: did the output come on (the solenoid's LED)? Did the cylinder move at all, slowly, or fully? Did its reed switch see it? Slow one way only points to that side's flow control or exhaust; nothing at all with the output on points to the coil."
+   },
+   "added": true,
+   "after": "add-cyl-force"
   }
  ]
 }

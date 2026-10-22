@@ -1526,6 +1526,14 @@ body.sheeted .tabbar { display: none; }
 .points label { display: flex; gap: 8px; align-items: flex-start; }
 .points label .rich p { margin: 0; }
 .lcard .spot { display: grid; gap: 6px; margin: 8px 0; }
+.lcard .sortit { display: grid; gap: 6px; margin: 8px 0; }
+.lcard .sortit .srow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--raised); }
+.lcard .sortit .srow > .rich { flex: 1 1 10em; font-size: 15px; }
+.lcard .sortit .srow .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.lcard .sortit .srow .chip { min-height: 36px; padding: 4px 12px; }
+.lcard .sortit .srow .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.lcard .sortit .srow.right { border-color: var(--credit); background: color-mix(in srgb, var(--credit) 13%, var(--raised)); }
+.lcard .sortit .srow.wrong { border-color: var(--debit); background: color-mix(in srgb, var(--debit) 13%, var(--raised)); }
 .lcard .spot.mono code { white-space: pre; font: 13px var(--mono); background: none; }
 .lend .bench { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; margin: 6px 0; background: var(--raised); }
 .lcard .pics { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }

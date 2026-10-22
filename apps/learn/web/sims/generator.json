@@ -76,6 +76,13 @@
         "coil": "0.5"
       },
       "why": "The peak is half of NABω at every speed, and the coil gets hot even with the lamp off: the shorted turns carry a big circulating current of their own. A weak magnet would also lower the voltage, but would not heat the coil."
+    },
+    "brush-worn": {
+      "label": "A brush is worn short: it keeps losing contact",
+      "set": {
+        "brush": "IF(MOD(t, 0.9) < 0.15, 0, 1)"
+      },
+      "why": "The output comes and goes: the lamp flickers and the trace drops to zero for a moment, over and over, while the speed, the field and the coil are steady. The EMF is still made in the coil; it is the sliding contact that takes it out that keeps breaking. Replace the brushes, and check the slip rings are clean and round."
     }
   },
   "script": [

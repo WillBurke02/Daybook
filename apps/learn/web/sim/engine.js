@@ -16,6 +16,7 @@
 // a = b, a <> b, MIN, MAX, ABS, SQRT, SIN, MOD, PI(); true is 1 and false 0.
 import { parse } from '../core/formula.js';
 import { BLOCKS } from './blocks.js';
+import { expand } from './kits.js';
 
 // ---- formulas, compiled once to plain functions of the scene's values ------------------------------
 
@@ -234,7 +235,7 @@ export function viewFormulas(scene) {
     for (const m of String(p.label || '').matchAll(/\{([\w.]+)(?::\d)?\}/g)) out.push([`${w} label`, m[1], item]);
     walk(p.parts, w, item);
   });
-  walk(scene.view?.parts, 'view', false);
+  walk(expand(scene.view?.parts), 'view', false);
   for (const [n, s] of (scene.show || []).entries()) for (const k of ['value', 'on']) if (s[k] != null) out.push([`show ${n + 1} ${k}`, s[k], false]);
   for (const [n, l] of (scene.trend?.lines || []).entries()) out.push([`trend line ${n + 1}`, l.value, false]);
   return out;
@@ -246,13 +247,15 @@ export function check(scene) {
   let sim;
   try { sim = build(scene); } catch (e) { return [e.message]; }
   const known = sim.known;
-  for (const [w, src, item] of viewFormulas(scene))
+  let vf = [];
+  try { vf = viewFormulas(scene); } catch (e) { bad('view', e.message); }
+  for (const [w, src, item] of vf)
     try { formula(src, item ? n => known.has(n) || /^item\.\w+$/.test(n) : known); } catch (e) { bad(w, e.message); }
   const walk = parts => (parts || []).forEach(p => {
     for (const k of ['press', 'toggle']) if (p[k] && !scene.inputs?.[p[k]]) bad(`part ${p.id || p.shape}`, `${k}s ${p[k]}, which is not an input`);
     walk(p.parts);
   });
-  walk(scene.view?.parts);
+  try { walk(expand(scene.view?.parts)); } catch (e) { bad('view', e.message); }
   // it runs: its script (or ten seconds of nothing), then every fault the same way, without a value going bad
   const runs = [[null, sim]];
   for (const f of Object.keys(scene.faults || {})) {

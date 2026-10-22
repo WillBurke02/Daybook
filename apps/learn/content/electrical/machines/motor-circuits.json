@@ -414,6 +414,92 @@
    "why": "The plate's kW is shaft output, so divide by efficiency for the electrical input, then by √3 V cos φ. In practice set the overload to the plate's full-load current, which this calculation should match.",
    "hint": "Output power, efficiency and power factor all go under the line.",
    "added": true
+  },
+  {
+   "id": "sd-goal",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.0,
+   "intro": "A star-delta starter on an 11 kW fan. KT1, the timer relay that changes it from star to delta, has been set to 1 s. Set it so the changeover comes once the fan is nearly up to speed, then start it.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "star-delta",
+     "controls": [
+      "start",
+      "stop",
+      "kt_set"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "Into delta with a peak current under 60 A.",
+    "pass": "AND(plc.H1, ipk < 60)",
+    "solution": [
+     {
+      "at": 0.1,
+      "set": {
+       "kt_set": 6
+      }
+     },
+     {
+      "at": 0.3,
+      "press": "start"
+     }
+    ],
+    "fails": [
+     [
+      "NOT(plc.K1)",
+      "Set the dial, then press Start."
+     ],
+     [
+      "ipk >= 60",
+      "The peak was {ipk:0} A: it changed to delta before the fan was up to speed. Stop, set KT1 longer, and start again."
+     ],
+     [
+      "NOT(plc.H1)",
+      "Wait for it to change to delta."
+     ]
+    ],
+    "hint": "Watch how long the fan takes to get up to speed in star.",
+    "why": "In star it takes about 6 s to get near full speed. Change over then and the second peak is small, about 50 A. Change over early and it is nearly a direct-on-line start, well over 100 A, and the star start has gained nothing. Set it too long and the motor labours in star with a third of its torque."
+   },
+   "added": true,
+   "after": "add-ol-num"
+  },
+  {
+   "id": "sd-diag",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.4,
+   "intro": "This star-delta starter has been reported as \"not right\". Start it and watch: the current, the speed, which contactors pull in and when, the ladder, and the timer and fuses in the cabinet.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "star-delta",
+     "controls": [
+      "start",
+      "stop",
+      "reset"
+     ]
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong with it?",
+    "faults": [
+     "timer-short",
+     "timer-long",
+     "k3-coil-open",
+     "k2-welded",
+     "phase-lost",
+     "none"
+    ],
+    "why": "Follow the sequence: K1 and K2 in (star), KT1 times out, K2 out, K3 in (delta). Where it goes wrong tells you where to look: the timer, a contactor that will not pull in, one that will not drop out, or the supply."
+   },
+   "added": true,
+   "after": "add-ol-num"
   }
  ]
 }

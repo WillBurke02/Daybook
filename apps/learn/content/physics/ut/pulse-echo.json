@@ -603,6 +603,86 @@
    }
   },
   {
+   "id": "ut-goal",
+   "type": "widget",
+   "stage": "practise",
+   "level": 5.5,
+   "intro": "A 25 mm steel plate has a lamination (a flat split, parallel to the surface) somewhere along it. Find it with the probe, then set the gain so its echo stands at 80% of the screen's height, the usual reference.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "ut-plate",
+     "controls": [
+      "x",
+      "gain"
+     ]
+    }
+   },
+   "ask": {
+    "type": "goal",
+    "q": "The lamination's echo at 80% screen height (within 5%).",
+    "pass": "AND(ut.fd > 15, ut.fd < 19, ABS(ut.fa - 80) < 5)",
+    "solution": [
+     {
+      "at": 0.2,
+      "set": {
+       "x": 180,
+       "gain": 32
+      }
+     }
+    ],
+    "fails": [
+     [
+      "ut.fd = 0",
+      "There is no flaw echo under the probe: move it along the plate and watch for an echo before the back wall."
+     ],
+     [
+      "OR(ut.fd < 15, ut.fd > 19)",
+      "That echo is at {ut.fd:1} mm: a different, smaller reflector. Keep looking."
+     ],
+     [
+      "ut.fa >= 85",
+      "{ut.fa:0}% is too tall: take some gain off."
+     ],
+     [
+      "ut.fa <= 75",
+      "{ut.fa:0}% is too short: centre the probe on it, then add gain."
+     ]
+    ],
+    "hint": "Over a lamination the back wall all but vanishes, and a tall echo appears part way down. Every 6 dB doubles the height.",
+    "why": "It is at about 180 mm along, 17 mm down: there the echo is tall and the back wall almost disappears, because the lamination shades it. At 30 dB the echo is about 64%; 2 dB more (×1.26) brings it to 80%."
+   }
+  },
+  {
+   "id": "ut-diag",
+   "type": "widget",
+   "stage": "practise",
+   "level": 6.0,
+   "intro": "Before testing, check the set-up on this plate, which is 25.0 mm thick by micrometer. Something may be wrong with the flaw detector, its calibration or the probe. Move the probe, read the depths, change the gain.",
+   "widget": {
+    "name": "sim",
+    "params": {
+     "scene": "ut-plate",
+     "controls": [
+      "x",
+      "gain"
+     ]
+    }
+   },
+   "ask": {
+    "type": "diagnose",
+    "q": "What is wrong?",
+    "faults": [
+     "wrong-block",
+     "zero-off",
+     "dry",
+     "dead-probe",
+     "none"
+    ],
+    "why": "On a plate of known thickness, the back wall should read 25.0 mm and its repeat 50.0 mm. If both are out by the same amount, it is the zero; if the gap between them is wrong too, it is the velocity. No back wall but an initial pulse: no sound getting in. Nothing at all: nothing being sent."
+   }
+  },
+  {
    "id": "through-trans",
    "type": "numeric",
    "stage": "mix",

@@ -1,5 +1,32 @@
 # Changes
 
+## 4.0.41 — 22 October 2026
+
+- **Four new machines** to run, fault-find and set up, in Play and in their lessons:
+  - **A centrifugal pump set** (Pumps and fans): suction and discharge valves, a strainer, PI-1 and PI-2, a flow
+    meter, a header tank 10 m up. It meets its system curve, cavitates when starved, makes its shut-off head
+    against a closed path, and heats up doing it. Faults: a blocked strainer, a stuck non-return valve, a worn
+    impeller, turning backwards, air-bound.
+  - **A star-delta starter** on an 11 kW fan (Motor circuits): K1, K2, K3, timer KT1 and F2 in the windings,
+    with the ladder live. A third of the current in star, and the changeover peak. Faults: the timer too short
+    or too long, K3's coil open, K2 welded, a blown fuse.
+  - **A flaw detector on a steel plate** (Pulse-echo), with a live A-scan: move the probe, set the gain. Faults:
+    calibrated on the wrong block, the zero wrong, no couplant, a dead probe.
+  - **A pneumatic clamp and press** run by a PLC sequence (Pneumatic circuits): reed switches, 5/2 valves, a
+    regulator and a watchdog alarm. Faults: a slipped reed switch, an open solenoid coil, a flow control shut
+    down, a blocked silencer, the regulator turned down.
+  - Each has a find-the-fault and a make-it-work card in its lesson.
+- **More faults on the old machines**: a reversed conveyor motor, a worn generator brush, a welded thermostat,
+  a lost phase on the DOL starter, a servo's gain turned down, a seized damper, and a valve that moves the wrong
+  way. In Play, a whole machine now offers five of its faults (or none) at a time.
+- **Sort it**: a new kind of card. Tap each item's group: fits (clearance, transition, interference), earthing
+  systems, transverse and longitudinal waves, what a sensor measures, NDT methods, PLC languages, protective
+  devices, ferrous metals, load types, risk controls, pneumatic valves, SI units. Twelve of them, in their
+  lessons and in Play's Puzzles.
+- Behind it: kits, so a machine's 3D view is built from a motor, pump, pipe, valve, gauge, panel, contactor or
+  cylinder in a line each; a pump block and a flaw-detector block for the simulator; motors that can run in
+  star or on two phases; and an A-scan screen for a machine's panel.
+
 ## 4.0.40 — 22 October 2026
 
 - **Play**: a new page in Learn (and a tile on Today) for a minute or two of something hands-on instead of

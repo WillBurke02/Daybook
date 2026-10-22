@@ -141,6 +141,13 @@
       "set": {
         "f2set": 5
       }
+    },
+    "phase-lost": {
+      "label": "One supply phase is lost (a blown fuse upstream)",
+      "set": {
+        "m.phases": 2
+      },
+      "why": "K1 pulls in, but the fan only hums and does not turn, drawing a high current, and F2 trips. On two phases a three-phase motor has no starting torque. If it had already been running, it would carry on, slower and with about √3 times the current. Check the voltage on all three phases ahead of K1."
     }
   },
   "script": [

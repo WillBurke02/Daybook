@@ -1,0 +1,457 @@
+{
+  "title": "A flaw detector and a 0° probe on a steel plate",
+  "about": "A 5 MHz, 10 mm straight (0°) probe on a steel plate 300 mm long and 25.0 mm thick (checked with a micrometer). Sound travels at 5920 m/s in it. The flaw detector times each echo and turns the time into a depth using the velocity and zero it was calibrated with. The A-scan shows the initial pulse at 0, an echo from anything under the probe, the back wall at 25 mm and its repeat at 50 mm. Move the probe along the plate, and set the gain: 6 dB doubles every echo's height. The cut-away shows what is inside; a real plate does not.",
+  "dt": 0.01,
+  "inputs": {
+    "x": {
+      "slider": "Probe position",
+      "min": 0,
+      "max": 300,
+      "step": 1,
+      "value": 30,
+      "unit": "mm"
+    },
+    "gain": {
+      "slider": "Gain",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "value": 30,
+      "unit": "dB"
+    },
+    "cut": {
+      "switch": "Show a cut-away"
+    }
+  },
+  "let": {
+    "gel": "1"
+  },
+  "blocks": {
+    "ut": {
+      "type": "ut",
+      "x": "x",
+      "gain": "gain",
+      "couplant": "gel",
+      "T": 25,
+      "range": 60,
+      "flaws": [
+        [
+          70,
+          8,
+          6,
+          0.6
+        ],
+        [
+          180,
+          17,
+          14,
+          0.8
+        ],
+        [
+          240,
+          12,
+          4,
+          0.35
+        ]
+      ]
+    }
+  },
+  "faults": {
+    "wrong-block": {
+      "label": "It was calibrated on the wrong block (aluminium, 6320 m/s, not steel)",
+      "set": {
+        "ut.vset": 6320
+      },
+      "why": "Every depth reads about 7% too deep: the 25.0 mm back wall reads 26.7 mm, and its repeat 53.4 mm, so even the gap between the two back-wall echoes is 26.7 mm. A velocity error scales every reading. The instrument divides the time by the speed it thinks the sound goes at; aluminium's is faster than steel's. Calibrate on a steel block, or set 5920 m/s."
+    },
+    "zero-off": {
+      "label": "Its zero (the probe delay) is wrong: everything reads 3 mm deep",
+      "set": {
+        "ut.zero": 3
+      },
+      "why": "The back wall reads 28.0 mm, not 25.0, but its repeat reads 53.0 mm: the gap between the two is still 25.0 mm. Every echo is shifted by the same amount, which is a zero error: the time the sound spends in the probe's wear face and delay has not been taken off. Set the zero on a block of known thickness, using two back-wall echoes."
+    },
+    "dry": {
+      "label": "There is no couplant: the probe is dry on the plate",
+      "set": {
+        "gel": "0.04"
+      },
+      "why": "The initial pulse is there, so the probe and cable work, but almost nothing else: no back wall anywhere along the plate. A film of air reflects nearly all the sound, so none gets in. Put couplant (gel, oil or water) under the probe."
+    },
+    "dead-probe": {
+      "label": "The probe or its cable is dead (no pulse at all)",
+      "set": {
+        "ut.crystal": 0
+      },
+      "why": "The screen is flat: not even the initial pulse or the grass of noise, at any gain. With no couplant the initial pulse would still show. Swap the cable first (the commonest cause), then the probe, and check the probe's connector."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "set": {
+        "x": 30
+      },
+      "say": "On sound plate: the initial pulse at 0, the back wall at 25 mm and its repeat at 50."
+    },
+    {
+      "at": 3,
+      "set": {
+        "x": 70
+      },
+      "say": "Over a small flaw 8 mm down: an echo at 8 mm, and the back wall a little lower, as the flaw shades part of the beam."
+    },
+    {
+      "at": 6,
+      "set": {
+        "x": 180
+      },
+      "say": "Over a lamination, wide and flat, 17 mm down: a tall echo at 17 mm, and the back wall almost gone in its shadow."
+    },
+    {
+      "at": 9,
+      "set": {
+        "gain": 42
+      },
+      "say": "12 dB more gain: every echo is four times as tall, and the tallest are cut off at the top of the screen (saturated)."
+    },
+    {
+      "at": 12,
+      "set": {
+        "gain": 30,
+        "x": 240
+      },
+      "say": "A small inclusion 12 mm down: a smaller echo. How tall an echo is depends on how big the reflector is and how it faces the beam."
+    }
+  ],
+  "show": [
+    {
+      "ascan": "A-scan",
+      "value": "ut.trace",
+      "x": [
+        0,
+        60
+      ],
+      "xlabel": "depth (mm)"
+    },
+    {
+      "read": "Back wall reads",
+      "value": "IF(ut.on, ut.bw, 0)",
+      "unit": "mm",
+      "dp": 1
+    },
+    {
+      "read": "Flaw echo at",
+      "value": "ut.fd",
+      "unit": "mm",
+      "dp": 1
+    },
+    {
+      "read": "its height",
+      "value": "ut.fa",
+      "unit": "% FSH",
+      "dp": 0
+    }
+  ],
+  "trend": null,
+  "view": {
+    "camera": {
+      "target": [
+        -0.05,
+        0.8,
+        0
+      ],
+      "yaw": 8,
+      "pitch": 16,
+      "dist": 1.55
+    },
+    "floor": 4,
+    "parts": [
+      {
+        "id": "bench",
+        "kit": "table",
+        "size": [
+          1.6,
+          0.7,
+          0.7
+        ],
+        "color": "frame"
+      },
+      {
+        "id": "plate",
+        "at": [
+          0.0,
+          0.775,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              1.2,
+              0.15,
+              0.3
+            ],
+            "color": "steel",
+            "show": "NOT(cut)"
+          },
+          {
+            "shape": "box",
+            "size": [
+              1.2,
+              0.15,
+              0.3
+            ],
+            "color": "steel",
+            "alpha": 0.3,
+            "show": "cut",
+            "shadow": false
+          }
+        ],
+        "label": "Steel, 25.0 mm thick (drawn thicker)",
+        "label_at": [
+          0.4,
+          -0.1,
+          0.2
+        ]
+      },
+      {
+        "shape": "box",
+        "size": [
+          0.024,
+          0.008,
+          0.1
+        ],
+        "at": [
+          -0.31999999999999995,
+          0.8019999999999999,
+          0
+        ],
+        "color": "red",
+        "show": "cut"
+      },
+      {
+        "shape": "box",
+        "size": [
+          0.056,
+          0.008,
+          0.1
+        ],
+        "at": [
+          0.12,
+          0.748,
+          0
+        ],
+        "color": "red",
+        "show": "cut"
+      },
+      {
+        "shape": "box",
+        "size": [
+          0.016,
+          0.008,
+          0.1
+        ],
+        "at": [
+          0.36,
+          0.778,
+          0
+        ],
+        "color": "red",
+        "show": "cut"
+      },
+      {
+        "id": "probe",
+        "at": [
+          -0.6,
+          0.85,
+          0
+        ],
+        "move": {
+          "x": "x * 0.004"
+        },
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.045,
+              0.002,
+              0.045
+            ],
+            "at": [
+              0,
+              0.001,
+              0
+            ],
+            "color": "water",
+            "alpha": 0.6,
+            "show": "gel > 0.5"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.04,
+              0.06,
+              0.04
+            ],
+            "at": [
+              0,
+              0.032,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.018,
+              0.03,
+              0.018
+            ],
+            "at": [
+              0,
+              0.075,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.008,
+              0.25,
+              0.008
+            ],
+            "at": [
+              0,
+              0.08,
+              -0.125
+            ],
+            "rot": [
+              90,
+              0,
+              0
+            ],
+            "color": "cable"
+          },
+          {
+            "shape": "cone",
+            "size": [
+              0.05,
+              0.15,
+              0.05
+            ],
+            "at": [
+              0,
+              -0.075,
+              0
+            ],
+            "rot": [
+              180,
+              0,
+              0
+            ],
+            "color": "yellow",
+            "alpha": 0.35,
+            "show": "AND(ut.on, cut)",
+            "shadow": false
+          }
+        ],
+        "label": "Probe {x:0} mm",
+        "label_at": [
+          0,
+          0.13,
+          0
+        ]
+      },
+      {
+        "id": "scale",
+        "shape": "box",
+        "size": [
+          1.2,
+          0.002,
+          0.02
+        ],
+        "at": [
+          0.0,
+          0.851,
+          0.13
+        ],
+        "color": "white"
+      },
+      {
+        "id": "ticks",
+        "shape": "box",
+        "size": [
+          0.003,
+          0.003,
+          0.03
+        ],
+        "at": [
+          -0.6,
+          0.852,
+          0.13
+        ],
+        "color": "dark",
+        "repeat": {
+          "n": 7,
+          "step": [
+            0.2,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "id": "set",
+        "at": [
+          0.45,
+          0.82,
+          -0.27
+        ],
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.3,
+              0.18,
+              0.08
+            ],
+            "rot": [
+              -15,
+              -20,
+              0
+            ],
+            "color": "#f2c200"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.2,
+              0.12,
+              0.01
+            ],
+            "at": [
+              0,
+              0.01,
+              0.042
+            ],
+            "rot": [
+              -15,
+              -20,
+              0
+            ],
+            "color": "#1d3b5c",
+            "lit": "ut.on"
+          }
+        ],
+        "label": "Flaw detector",
+        "label_at": [
+          0,
+          0.13,
+          0
+        ]
+      }
+    ]
+  }
+}

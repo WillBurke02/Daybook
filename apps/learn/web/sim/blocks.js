@@ -129,7 +129,7 @@ export const BLOCKS = {
  *  % of the rated rise (100 running at rated current for good; over about 150 the insulation is ageing fast),
  *  warming as I² with time constant tau (s). */
   motor: {
-    in: { f: 50, on: 1, load: 0, pull: 0, kw: 1.5, rpm: 1430, poles: 4, J: 0, tk: 2.5, lrt: 2, lrc: 6, Ir: 0, tau: 600 },
+    in: { f: 50, on: 1, load: 0, pull: 0, kw: 1.5, rpm: 1430, poles: 4, J: 0, tk: 2.5, lrt: 2, lrc: 6, Ir: 0, tau: 600, star: 0, phases: 3 },
     out: { n: 0, fn: 0, T: 0, I: 0, P: 0, slip: 0, turns: 0, Tr: 0, Ir: 0, kw: 0, heat: 0, _w: 0 },
     start(o, i) { o.Tr = i.kw * 1000 / (i.rpm * Math.PI / 30); o.Ir = i.Ir || i.kw * 2; o.kw = i.kw; },
     step(o, i, dt) {
@@ -139,11 +139,13 @@ export const BLOCKS = {
       const kloss = dn => dn === 0 ? 0 : 2 * i.tk * Tr / (dn / dk + dk / dn);
       const k0 = kloss(ns50), rot = dn => Math.abs(dn) / dnr * Math.sqrt(1 + (dnr / dk) ** 2) / Math.sqrt(1 + (dn / dk) ** 2);
       const r0 = rot(ns50), i0 = 0.4, rlr = Math.sqrt((i.lrc ** 2 - i0 * i0) / (1 - i0 * i0));
-      const weak = Math.min(1, (50 / Math.max(Math.abs(i.f), 1e-9)) ** 2);   // above 50 Hz the field weakens
+      // in star, each winding has 1/√3 of the voltage: a third of the torque, and a third of the line current.
+      // On two phases (a fuse gone) it has no starting torque, and running it pulls about half, for √3 the current.
+      const weak = Math.min(1, (50 / Math.max(Math.abs(i.f), 1e-9)) ** 2) * (i.star ? 1 / 3 : 1);   // above 50 Hz the field weakens
       const torque = w => {
         if (!i.on) return 0;
         const dn = 120 * i.f / p - rpm(w), s = Math.min(1, Math.abs(dn) / ns50);
-        return (kloss(dn) + Math.sign(dn) * (i.lrt * Tr - k0) * s * s) * weak;
+        return (kloss(dn) + Math.sign(dn) * (i.lrt * Tr - k0) * s * s) * weak * (i.phases < 3 ? 0.5 * (1 - s) : 1);
       };
       const w = o._w, Te = torque(w), h = 0.05;
       const k = Math.min(0, (torque(w + h) - torque(w - h)) / (2 * h));     // stiff near synchronous speed: step it implicitly
@@ -158,7 +160,7 @@ export const BLOCKS = {
       o.n = rpm(w2); o.fn = o.n * p / 120; o.T = torque(w2); o.P = o.T * w2 / 1000; o.turns += w2 * dt / (2 * Math.PI);
       o.slip = i.f ? 100 * dn / (120 * i.f / p) : 0;
       const ir = rot(dn) + (rlr - r0) * s * s;
-      o.I = i.on ? Ir * Math.sqrt(i0 * i0 + (1 - i0 * i0) * ir * ir) : 0;
+      o.I = i.on ? Ir * Math.sqrt(i0 * i0 + (1 - i0 * i0) * ir * ir) * (i.star ? 1 / 3 : 1) * (i.phases < 3 ? Math.sqrt(3) : 1) : 0;
       o.heat += (100 * (o.I / Ir) ** 2 - o.heat) * Math.min(1, dt / i.tau);    // its windings' temperature rise, % of rated
     },
   },
@@ -281,6 +283,87 @@ export const BLOCKS = {
       o.over = o.level > i.height ? 1 : 0;
       o.level = sat(o.level, 0, i.height);
       o.pct = 100 * o.level / i.height; o.vol = o.level * i.area * 1000; o.empty = o.level <= 1e-4 ? 1 : 0;
+    },
+  },
+
+  /** A centrifugal pump in its pipework (water), worked out each step. Its curve, H = h0 (n/n0)² − (h0/qmax²) Q², meets
+   *  the system's, static + losses × Q²: pipe friction (hf metres at qbep), the discharge valve (open, 0–1: its loss grows
+   *  as 1/open²) and the suction side (0.3 m at qbep fully open, more as the suction valve or strainer closes).
+   *  On the suction side, NPSH available (10.3 m of atmosphere + the suction head hs − the suction losses − 0.25 m of
+   *  vapour pressure) against NPSH required (npshr at qbep, rising with Q²): short of it, the pump cavitates (cav 0–1),
+   *  its head falls away and it rattles. Q m³/h, heads m, pressures bar(g) (Ps below 0 is a vacuum).
+   *  n: shaft speed (rpm, from its motor); T the torque it takes (the motor's load). P shaft power (kW), about
+   *  45% of full at no flow and pbep at qbep, as a real one; eff = water power / shaft power.
+   *  prime 0: air-bound, no flow; rev 1: turning backwards (about 40% of the head); wear 0–1: a worn impeller.
+   *  temp: how much the water in the casing has warmed (°C), the power not carried off by the flow; kept fast (mass 0.5 kg). */
+  pump: {
+    in: { n: 0, n0: 2900, h0: 40, qmax: 75, qbep: 36, pbep: 4.3, static: 10, hf: 20, open: 1, suction: 1, hs: 2, npshr: 3, prime: 1, rev: 0, wear: 0, tau: 0.4 },
+    out: { Q: 0, H: 0, Ps: 0, Pd: 0, P: 0, T: 0, eff: 0, cav: 0, npsha: 0, temp: 0, _q: 0 },
+    step(o, i, dt, sim) {
+      const r = Math.abs(i.n) / i.n0, b = i.h0 / i.qmax ** 2, kf = i.hf / i.qbep ** 2;
+      const kv = 2 * kf * (1 / Math.max(i.open, 0.001) ** 2 - 1), ks = 0.3 / i.qbep ** 2 / Math.max(i.suction, 0.02) ** 2;
+      const h0 = i.h0 * r * r * (1 - 0.35 * i.wear) * (i.rev ? 0.4 : 1) * (i.prime ? 1 : 0.03);
+      let cav = 0, q = 0;
+      for (let k = 0; k < 12; k++) {          // the flow, and the cavitation it brings on, settled together
+        const q2 = (h0 * (1 - 0.7 * cav) - i.static) / (b + kf + kv + ks);
+        q = q2 > 0 && i.open > 0 ? Math.sqrt(q2) : 0;
+        const short = i.npshr * (0.4 + 0.6 * (q / i.qbep) ** 2) - (10.3 + i.hs - ks * q * q - 0.25);
+        cav = 0.5 * cav + 0.5 * sat(short / 3, 0, 1);
+      }
+      o._q += (q - o._q) * Math.min(1, dt / i.tau);
+      o.Q = o._q; o.cav = r > 0.2 ? cav : 0;
+      o.npsha = 10.3 + i.hs - ks * o.Q ** 2 - 0.25;
+      o.H = Math.max(0, h0 * (1 - 0.7 * o.cav) - b * o.Q ** 2);
+      const rattle = o.cav * 0.25 * Math.sin(sim.t * 53) * Math.sin(sim.t * 7.3);
+      o.Ps = (i.hs - ks * o.Q ** 2) / 10.2;
+      o.Pd = o.Ps + o.H / 10.2 + rattle;
+      const qn = r > 0 ? Math.min(1.3, o.Q / (i.qbep * r)) : 0;
+      o.P = i.pbep * r ** 3 * (0.45 + 0.55 * qn) * (i.prime ? 1 : 0.3) * (i.rev ? 0.8 : 1);
+      const water = 9.81 * o.Q / 3600 * o.H;
+      o.eff = o.P > 0.01 ? Math.min(1, water / o.P) : 0;
+      o.T = (i.n >= 0 ? 1 : -1) * i.pbep * 1000 / (i.n0 * Math.PI / 30) * r * r * (0.45 + 0.55 * qn) * (i.prime ? 1 : 0.3) * (i.rev ? 0.8 : 1);
+      o.temp += dt * ((o.P - water) * 1000 / (0.5 * 4186) - o.Q / 3.6 / 0.5 * o.temp - 0.02 * o.temp);
+    },
+  },
+
+  /** An ultrasonic flaw detector and a straight (0°) probe on a plate (mm). x: where the probe sits along it. The
+   *  instrument turns time into depth with its velocity setting vset (and its zero, the probe delay): set wrongly, every
+   *  depth is out, by a ratio (velocity) or by the same amount (zero). Echoes: the back wall at T, and each flaw under
+   *  the beam, flaws: [[x, depth, width, size 0–1]], its height by how much of it the beam (beam mm wide) covers;
+   *  a flaw shadows the back wall. Heights in % of full screen: the back wall is 80% at gain = ref (dB), and every
+   *  6 dB doubles them, up to 100% (saturated). couplant 0–1 (dry: almost nothing goes in), crystal 0: a dead probe.
+   *  Out: bw, bwa (the back wall's depth as read and its height), fd, fa (the biggest flaw echo), trace (the A-scan). */
+  ut: {
+    in: { x: 150, v: 5920, vset: 5920, zero: 0, T: 25, gain: 30, ref: 30, couplant: 1, crystal: 1, beam: 10, range: 60, length: 300, flaws: [] },
+    text: ['flaws'],
+    out: { bw: 0, bwa: 0, fd: 0, fa: 0, on: 0, trace: [] },
+    step(o, i) {
+      const g = 10 ** ((i.gain - i.ref) / 20), into = i.x >= 0 && i.x <= i.length ? i.couplant * i.crystal : 0;
+      const read = d => d * i.vset / i.v + i.zero;            // what the screen says for a true depth d
+      const amp = a => Math.min(100, a * g);
+      let shadow = 0, best = null;
+      const echoes = [];
+      for (const [fx, fdp, fw, size] of i.flaws || []) {
+        const cover = sat((fw / 2 + i.beam / 2 - Math.abs(i.x - fx)) / Math.min(fw, i.beam), 0, 1);
+        if (!cover) continue;
+        const a = 80 * size * cover * into;
+        shadow = Math.max(shadow, size * cover);
+        echoes.push([read(fdp), a]);
+        if (!best || a > best[1]) best = [read(fdp), a];
+      }
+      const bwa = 80 * into * (1 - 0.85 * shadow);
+      echoes.push([read(i.T), bwa], [read(2 * i.T), bwa * 0.45]);
+      o.bw = into ? read(i.T) : 0; o.bwa = amp(bwa); o.on = into > 0.5 ? 1 : 0;
+      o.fd = best && best[1] * g > 5 ? best[0] : 0; o.fa = best ? amp(best[1]) : 0;
+      const pts = [], n = 240;
+      for (let k = 0; k <= n; k++) {
+        const d = i.range * k / n;
+        let y = i.crystal ? 100 * Math.exp(-d / 0.8) * Math.min(1, g * 2) : 0;          // the initial pulse, and its dead zone
+        for (const [at, a] of echoes) y += a * g * Math.exp(-(((d - at) / 0.35) ** 2));
+        y += i.crystal ? 2.5 * g * Math.abs(Math.sin(k * 12.9898 + i.x * 0.37) * Math.sin(k * 4.1)) : 0;   // grass
+        pts.push([d, Math.min(100, y)]);
+      }
+      o.trace = pts;
     },
   },
 

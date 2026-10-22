@@ -160,6 +160,13 @@
         "stall": 0,
         "m1.J": 0.05
       }
+    },
+    "motor-reversed": {
+      "label": "The motor runs backwards (two of its phases are swapped)",
+      "set": {
+        "m1.f": "-vfd.f"
+      },
+      "why": "Start, and the drive runs normally, at the right frequency and current, but the belt carries the boxes back towards the loading end, where they pile up, and nothing ever reaches PE1. The drive says 50 Hz forwards, so two of the three wires from the drive to the motor are the wrong way round. Swap two phases at the motor, with the drive isolated and its DC bus discharged."
     }
   },
   "script": [

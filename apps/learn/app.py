@@ -42,7 +42,7 @@ OTHERS = ("money", "log")
 LABELS = {"card": "card", "card_state": "review", "lesson_state": "lesson place", "study": "study time"}
 # the courses are files, loaded on every start; only your own subjects, lessons and cards sync
 SYNC_WHERE = {t: "{r}.source <> 'file'" for t in ("subject", "unit", "lesson", "card")}
-TYPES = ("concept", "widget", "mcq", "numeric", "steps", "order", "match", "flash", "code", "explain", "spot")
+TYPES = ("concept", "widget", "mcq", "numeric", "steps", "order", "match", "flash", "code", "explain", "spot", "sort")
 
 SEARCH = [
     ("card", "SELECT c.id, c.lesson_id, c.type, c.text, l.title AS lesson, s.title AS subject FROM card c "
@@ -485,7 +485,7 @@ def warmup(db, lesson, n=3):
     return [_card(r, "warmup") for r in rows[:n]]
 
 
-MIXABLE = ("mcq", "numeric", "order", "match", "spot")
+MIXABLE = ("mcq", "numeric", "order", "match", "spot", "sort")
 
 
 def mixed(db, lesson, cards, n=3, rng=random):
@@ -524,7 +524,7 @@ def practice(db, lessons, n=10, rng=random):
 # Play: sims and puzzles to pick up for a minute, for fun. Nothing here is recorded or scheduled.
 PLAY = {"fault": lambda c, d: c == "widget" and (d.get("ask") or {}).get("type") == "diagnose",
         "goal": lambda c, d: c == "widget" and (d.get("ask") or {}).get("type") == "goal",
-        "puzzle": lambda c, d: c in ("spot", "order", "code", "match")}
+        "puzzle": lambda c, d: c in ("spot", "order", "code", "match", "sort")}
 
 
 def play(db, kind, n=5, exclude=(), rng=random):
@@ -533,7 +533,7 @@ def play(db, kind, n=5, exclude=(), rng=random):
     if not test:
         raise Err(400, f"no game called {kind}")
     started = {r[0] for r in db.execute("SELECT DISTINCT c.lesson_id FROM card c JOIN card_state s ON s.card_id = c.id WHERE s.reps > 0")}
-    rows = [r for r in db.execute(CARD_SQL + "WHERE c.type IN ('widget', 'spot', 'order', 'code', 'match')")
+    rows = [r for r in db.execute(CARD_SQL + "WHERE c.type IN ('widget', 'spot', 'order', 'code', 'match', 'sort')")
             if r["id"] not in exclude and test(r["type"], json.loads(r["data"]))]
     rows.sort(key=lambda r: (r["lesson_id"] not in started, rng.random()))
     cards = [_card(r, "play") for r in rows]
@@ -552,7 +552,8 @@ def scene_faults(folder=os.path.join(HERE, "web", "sims")):
                         "why": "play", "state": None, "card": {
                             "type": "widget", "intro": sc.get("about", "") + " It may have any one of its faults, or none.",
                             "widget": {"name": "sim", "params": {"scene": f[:-5], "trend": False}},
-                            "ask": {"type": "diagnose", "q": "What is wrong with it?", "faults": [*sc["faults"], "none"],
+                            "ask": {"type": "diagnose", "q": "What is wrong with it?",   # five of its faults, or none: six fit a phone
+                                    "faults": [*random.sample(list(sc["faults"]), min(5, len(sc["faults"]))), "none"],
                                     "why": "See the symptom for yourself, then split the system in half: does the control ask for it, "
                                            "does the power side follow, does the machine follow the power?"}}})
     random.shuffle(out)
@@ -1007,7 +1008,7 @@ def continue_at(db, goal=None, by=None):
 
 # A card's time, roughly, in seconds; a lesson's own minutes scale them so the parts add up to it.
 CARD_SECONDS = {"concept": 40, "flash": 25, "mcq": 35, "numeric": 75, "widget": 90, "order": 50, "match": 50,
-                "steps": 120, "code": 180, "explain": 90, "spot": 60}
+                "steps": 120, "code": 180, "explain": 90, "spot": 60, "sort": 60}
 
 
 def parts(cards, minutes=None, aim=6.5 * 60):

@@ -1,0 +1,641 @@
+{
+  "title": "A pneumatic clamp and press, run by a PLC",
+  "about": "A press-fit station. Cylinder A (32 mm bore) clamps the part, on a single-solenoid 5/2 valve with a spring return. Cylinder B (63 mm bore) presses, on a double-solenoid 5/2 valve: YB+ sends it down, YB− brings it back. Reed switches on the cylinders tell the PLC where they are: a0 and a1, b0 and b1. The PLC steps through A+ B+ B− A−, and a step that takes over 3 s stops it with an alarm. The air comes through a filter-regulator set to 6 bar: B's force is the pressure times its area, about 1.87 kN at 6 bar, and a part pressed with less than 1.5 kN is counted bad. Exhaust air leaves through silencers.",
+  "dt": 0.002,
+  "inputs": {
+    "start": {
+      "button": "Start",
+      "color": "green"
+    },
+    "stop": {
+      "button": "Stop",
+      "nc": 1,
+      "color": "red"
+    },
+    "reset": {
+      "button": "Reset",
+      "color": "blue"
+    },
+    "reg": {
+      "slider": "Regulator",
+      "min": 0,
+      "max": 8,
+      "step": 0.5,
+      "value": 6,
+      "unit": "bar",
+      "hidden": true
+    }
+  },
+  "let": {
+    "a1_ok": "1",
+    "bcoil": "1",
+    "bflow": "1",
+    "silencer": "1",
+    "a1": "AND(a.ext, a1_ok)",
+    "force": "reg * 0.3117"
+  },
+  "blocks": {
+    "plc": {
+      "type": "plc",
+      "scan_ms": 10,
+      "src": "(* The sequence A+ B+ B- A-: clamp, press, lift, unclamp, then again while Running.\n   Each step waits for its reed switch. A step that takes over 3 s stops the cycle and raises Alarm. *)\nVAR Step : INT; Last : INT; Dog : TON; Alarm : BOOL; Running : BOOL;\n    YA : BOOL; YBp : BOOL; YBm : BOOL; Good : INT; Bad : INT; END_VAR\nRunning := (Start OR Running) AND Stop AND NOT Alarm;\nIF Reset THEN Alarm := FALSE; Step := 0; END_IF;\nCASE Step OF\n  0: IF Running AND a0 AND b0 THEN Step := 1; END_IF;\n  1: IF a1 THEN Step := 2; END_IF;\n  2: IF b1 THEN\n       IF ForceOK THEN Good := Good + 1; ELSE Bad := Bad + 1; END_IF;\n       Step := 3;\n     END_IF;\n  3: IF b0 THEN Step := 4; END_IF;\n  4: IF a0 THEN Step := 0; END_IF;\nEND_CASE;\nIF Step <> Last THEN Dog(IN := FALSE, PT := T#3s); Last := Step; END_IF;\nDog(IN := Step > 0, PT := T#3s);\nIF Dog.Q THEN Alarm := TRUE; END_IF;\nYA := Step >= 1 AND Step <= 3;\nYBp := Step = 2 AND NOT Alarm;\nYBm := Step = 3 OR Alarm;",
+      "inputs": {
+        "Start": "start",
+        "Stop": "stop",
+        "Reset": "reset",
+        "a0": "a.ret",
+        "a1": "a1",
+        "b0": "b.ret",
+        "b1": "b.ext",
+        "ForceOK": "force >= 1.5"
+      },
+      "outputs": [
+        "YA",
+        "YBp",
+        "YBm",
+        "Alarm",
+        "Running"
+      ]
+    },
+    "a": {
+      "type": "cylinder",
+      "extend": "plc.YA",
+      "stroke": 0.08,
+      "speed": "0.25 * SQRT(MAX(0, reg - 1) / 5)",
+      "air": "reg > 0.5"
+    },
+    "b": {
+      "type": "cylinder",
+      "extend": "AND(plc.YBp, bcoil)",
+      "retract": "plc.YBm",
+      "stroke": 0.1,
+      "speed": "0.2 * SQRT(MAX(0, reg - 1) / 5) * bflow",
+      "back": "0.25 * SQRT(MAX(0, reg - 1) / 5) * silencer",
+      "air": "reg > 0.5"
+    }
+  },
+  "faults": {
+    "a1-reed": {
+      "label": "Reed switch a1 has slipped along A's barrel: it never sees A out",
+      "set": {
+        "a1_ok": "0"
+      },
+      "why": "A clamps, and then nothing: B never comes down, and 3 s later the alarm comes on at step 1. In the PLC, YA is on and a0 has gone off, so A has moved, but a1 never comes on. Look at a1's LED: it stays dark with A fully out. Slide the switch back to where the piston's magnet stops, and clamp it."
+    },
+    "b-coil": {
+      "label": "Valve B's YB+ solenoid coil is open circuit",
+      "set": {
+        "bcoil": "0"
+      },
+      "why": "A clamps, the PLC sets YB+ (step 2), and B does not move at all; the alarm comes on 3 s later. The output is on but nothing happens: check for 24 V at the coil's plug, then the coil. Most valves have a manual override button to prove the valve and cylinder work without the coil."
+    },
+    "b-flow": {
+      "label": "B's flow control is screwed almost shut",
+      "set": {
+        "bflow": "0.08"
+      },
+      "why": "B comes down, but crawling, and the alarm stops it at step 2 before it gets there. It moves, so the solenoid and valve work; it is slow in one direction only, so the air supply is fine. A meter-out flow control on B has been closed down. Open it until B comes down in about half a second."
+    },
+    "silencer": {
+      "label": "B's exhaust silencer is blocked",
+      "set": {
+        "silencer": "0.08"
+      },
+      "why": "B goes down at the normal speed, but creeps back up, and the alarm stops the cycle at step 3. Coming up, the air under the piston has to get out through the valve's exhaust port, and its silencer is clogged with oil and dirt. Replace the silencer; the oil means the filter or the compressor's drain needs looking at too."
+    },
+    "low-air": {
+      "label": "The regulator has been turned down to 3 bar",
+      "set": {
+        "reg": 3
+      },
+      "why": "The cycle runs, a little slowly, with no alarm, but every part is counted bad. B's force is pressure times area: 3 bar on a 63 mm piston is about 0.94 kN, short of the 1.5 kN a part needs. The regulator's gauge says 3 bar. Set it back to 6 bar and lock it."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "press": "start",
+      "say": "Start: Running seals in, and with A and B both home (a0 and b0 on), step 1: YA sends A out to clamp the part."
+    },
+    {
+      "at": 1.3,
+      "say": "a1 sees A out: step 2, YB+ sends B down to press."
+    },
+    {
+      "at": 2.1,
+      "say": "b1 sees B down, with 6 bar on it: about 1.87 kN, so the part counts good. Step 3: YB− brings B back up."
+    },
+    {
+      "at": 3.0,
+      "say": "b0: step 4, YA goes off and A's spring-return valve brings it back. a0: round again."
+    },
+    {
+      "at": 8,
+      "press": "stop",
+      "say": "Stop: Running drops. The cycle in hand finishes and it stops with both cylinders home."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Running",
+      "on": "plc.Running",
+      "color": "green"
+    },
+    {
+      "lamp": "Alarm",
+      "on": "plc.Alarm",
+      "color": "red"
+    },
+    {
+      "read": "Step",
+      "value": "plc.Step",
+      "dp": 0
+    },
+    {
+      "read": "Air",
+      "value": "reg",
+      "unit": "bar",
+      "dp": 1
+    },
+    {
+      "read": "B's force",
+      "value": "force",
+      "unit": "kN",
+      "dp": 2
+    },
+    {
+      "read": "Good",
+      "value": "plc.Good",
+      "dp": 0
+    },
+    {
+      "read": "Bad",
+      "value": "plc.Bad",
+      "dp": 0
+    }
+  ],
+  "trend": {
+    "span": 10,
+    "y": [
+      0,
+      110
+    ],
+    "lines": [
+      {
+        "value": "a.pos * 1000",
+        "label": "A (mm)"
+      },
+      {
+        "value": "b.pos * 1000",
+        "label": "B (mm)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0,
+        0.98,
+        0
+      ],
+      "yaw": 16,
+      "pitch": 14,
+      "dist": 1.6
+    },
+    "floor": 4,
+    "parts": [
+      {
+        "id": "bench",
+        "kit": "table",
+        "size": [
+          1.1,
+          0.75,
+          0.6
+        ]
+      },
+      {
+        "id": "part",
+        "shape": "box",
+        "size": [
+          0.1,
+          0.1,
+          0.1
+        ],
+        "at": [
+          0.1,
+          0.8,
+          0
+        ],
+        "color": "brass",
+        "label": "Part",
+        "label_at": [
+          0,
+          0,
+          0.1
+        ]
+      },
+      {
+        "id": "stop",
+        "shape": "box",
+        "size": [
+          0.03,
+          0.1,
+          0.14
+        ],
+        "at": [
+          0.17,
+          0.8,
+          0
+        ],
+        "color": "dark"
+      },
+      {
+        "id": "a",
+        "kit": "cylinder",
+        "at": [
+          -0.22,
+          0.8,
+          0
+        ],
+        "bore": 0.032,
+        "stroke": 0.08,
+        "pos": "a.pos",
+        "reeds": [
+          {
+            "at": 0,
+            "lit": "a.ret"
+          },
+          {
+            "at": 0.08,
+            "lit": "a1"
+          }
+        ],
+        "label": "A",
+        "label_at": [
+          0.07,
+          0.06,
+          0
+        ]
+      },
+      {
+        "id": "jaw",
+        "shape": "box",
+        "size": [
+          0.02,
+          0.09,
+          0.12
+        ],
+        "at": [
+          -0.04,
+          0.8,
+          0
+        ],
+        "move": {
+          "x": "a.pos"
+        },
+        "color": "orange"
+      },
+      {
+        "id": "frame",
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.45,
+              0.04
+            ],
+            "at": [
+              -0.05,
+              0.975,
+              -0.15
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.45,
+              0.04
+            ],
+            "at": [
+              0.25,
+              0.975,
+              -0.15
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.34,
+              0.05,
+              0.08
+            ],
+            "at": [
+              0.1,
+              1.2,
+              -0.12
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.1,
+              0.05,
+              0.16
+            ],
+            "at": [
+              0.1,
+              1.2,
+              -0.04
+            ],
+            "color": "frame"
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "kit": "cylinder",
+        "at": [
+          0.1,
+          1.165,
+          0
+        ],
+        "rot": [
+          0,
+          0,
+          -90
+        ],
+        "bore": 0.063,
+        "stroke": 0.1,
+        "pos": "b.pos",
+        "reeds": [
+          {
+            "at": 0,
+            "lit": "b.ret"
+          },
+          {
+            "at": 0.1,
+            "lit": "b.ext"
+          }
+        ],
+        "label": "B",
+        "label_at": [
+          0.07,
+          -0.1,
+          0
+        ]
+      },
+      {
+        "id": "head",
+        "shape": "box",
+        "size": [
+          0.08,
+          0.03,
+          0.08
+        ],
+        "at": [
+          0.1,
+          0.96,
+          0
+        ],
+        "move": {
+          "y": "-b.pos"
+        },
+        "color": "dark"
+      },
+      {
+        "id": "valves",
+        "at": [
+          -0.32,
+          0.8,
+          -0.2
+        ],
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.2,
+              0.05,
+              0.06
+            ],
+            "color": "dark"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.06,
+              0.05
+            ],
+            "at": [
+              -0.06,
+              0.05,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.04,
+              0.06,
+              0.05
+            ],
+            "at": [
+              0.04,
+              0.05,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.03,
+              0.03
+            ],
+            "at": [
+              -0.06,
+              0.05,
+              0.03
+            ],
+            "color": "amber",
+            "lit": "plc.YA"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.03,
+              0.03
+            ],
+            "at": [
+              0.0,
+              0.05,
+              0.03
+            ],
+            "color": "amber",
+            "lit": "plc.YBp"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.025,
+              0.03,
+              0.03
+            ],
+            "at": [
+              0.08,
+              0.05,
+              0.03
+            ],
+            "color": "amber",
+            "lit": "plc.YBm"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.025,
+              0.04,
+              0.025
+            ],
+            "at": [
+              0.04,
+              -0.045,
+              0.02
+            ],
+            "color": "#bbbbbb"
+          }
+        ],
+        "label": "Valves: YA · YB+ · YB−",
+        "label_at": [
+          0,
+          0.11,
+          0
+        ]
+      },
+      {
+        "id": "frl",
+        "at": [
+          -0.48,
+          1.0,
+          -0.2
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.06,
+              0.16,
+              0.06
+            ],
+            "color": "glass",
+            "alpha": 0.6
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.07,
+              0.06,
+              0.07
+            ],
+            "at": [
+              0,
+              0.1,
+              0
+            ],
+            "color": "dark"
+          },
+          {
+            "kit": "gauge",
+            "at": [
+              0,
+              0.1,
+              0.06
+            ],
+            "value": "reg",
+            "max": 10,
+            "d": 0.07
+          }
+        ],
+        "label": "Regulator {reg:1} bar",
+        "label_at": [
+          0,
+          0.2,
+          0
+        ]
+      },
+      {
+        "id": "hoses",
+        "kit": "pipe",
+        "d": 0.008,
+        "color": "blue",
+        "path": [
+          [
+            -0.4,
+            0.82,
+            -0.2
+          ],
+          [
+            -0.4,
+            0.82,
+            0
+          ],
+          [
+            -0.22,
+            0.82,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "station",
+        "kit": "panel",
+        "at": [
+          0.45,
+          0.93,
+          0.18
+        ],
+        "size": [
+          0.15,
+          0.3,
+          0.05
+        ],
+        "cols": 2,
+        "items": [
+          {
+            "press": "start",
+            "color": "green"
+          },
+          {
+            "press": "stop",
+            "color": "red"
+          },
+          {
+            "press": "reset",
+            "color": "blue"
+          },
+          {
+            "lit": "plc.Running",
+            "color": "green"
+          },
+          {
+            "lit": "plc.Alarm",
+            "color": "red"
+          }
+        ],
+        "label": "Start · Stop · Reset",
+        "label_at": [
+          0,
+          0.24,
+          0
+        ]
+      }
+    ]
+  }
+}

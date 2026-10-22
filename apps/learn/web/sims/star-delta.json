@@ -1,0 +1,869 @@
+{
+  "title": "A star-delta starter for a fan",
+  "about": "An 11 kW, 4-pole fan motor (1460 rpm, 21 A full-load current) on a star-delta starter. Main contactor K1 feeds one end of each winding; star contactor K2 joins the other ends together; delta contactor K3 joins each to the next phase. In star each winding has 230 V instead of 400 V: a third of the starting current, and a third of the torque. Timer KT1 (set on its dial) changes it over to delta. K2 and K3 are interlocked: neither can close while the other is in. Overload F2 is in the windings' circuit, so it is set to 0.58 × 21 = 12.2 A. The fan is drawn turning 25 times slower than it does, and F2 is a fast relay (class 2), so it trips sooner than the usual class 10 would.",
+  "plc_label": "The control circuit (contactors and a timer relay, drawn as a ladder), live",
+  "dt": 0.002,
+  "inputs": {
+    "start": {
+      "button": "Start (S1)",
+      "color": "green"
+    },
+    "stop": {
+      "button": "Stop (S0)",
+      "nc": 1,
+      "color": "red"
+    },
+    "reset": {
+      "button": "Reset F2",
+      "color": "blue"
+    },
+    "kt_set": {
+      "slider": "KT1 timer dial",
+      "min": 0.5,
+      "max": 20,
+      "step": 0.5,
+      "value": 6,
+      "unit": "s",
+      "hidden": true
+    },
+    "f2set": {
+      "slider": "F2 set current",
+      "min": 5,
+      "max": 25,
+      "step": 0.1,
+      "value": 12.2,
+      "unit": "A",
+      "hidden": true
+    }
+  },
+  "let": {
+    "k3_ok": "1",
+    "k2_weld": "0",
+    "ph_ok": "1",
+    "k1": "c1.y > 0.5",
+    "k2": "OR(c2.y > 0.5, k2_weld)",
+    "k3": "c3.y > 0.5",
+    "kt0": "IF(k1, kt0, t)",
+    "kt": "AND(k1, t - kt0 >= kt_set)",
+    "ipk": "IF(start, 0, MAX(ipk, m.I))"
+  },
+  "blocks": {
+    "plc": {
+      "type": "plc",
+      "scan_ms": 2,
+      "ladder": [
+        {
+          "note": "K1 main: Start or its seal-in, Stop, F2",
+          "logic": "(Start OR K1_Aux) AND Stop_OK AND F2_OK",
+          "out": "K1"
+        },
+        {
+          "note": "K2 star: until KT1 times out; not with K3",
+          "logic": "K1_Aux AND NOT KT AND NOT K3_Aux",
+          "out": "K2"
+        },
+        {
+          "note": "K3 delta: after KT1; not with K2",
+          "logic": "K1_Aux AND KT AND NOT K2_Aux",
+          "out": "K3"
+        },
+        {
+          "note": "H1 Run: lit in delta",
+          "logic": "K3_Aux",
+          "out": "H1"
+        },
+        {
+          "note": "H2 Tripped: F2's 97–98",
+          "logic": "F2_Trip",
+          "out": "H2"
+        }
+      ],
+      "inputs": {
+        "Start": "start",
+        "Stop_OK": "stop",
+        "F2_OK": "f2.nc",
+        "K1_Aux": "k1",
+        "K2_Aux": "k2",
+        "K3_Aux": "k3",
+        "KT": "kt",
+        "F2_Trip": "f2.no"
+      },
+      "outputs": [
+        "K1",
+        "K2",
+        "K3",
+        "H1",
+        "H2"
+      ]
+    },
+    "c1": {
+      "type": "lag",
+      "x": "plc.K1",
+      "tau": 0.015
+    },
+    "c2": {
+      "type": "lag",
+      "x": "plc.K2",
+      "tau": 0.015
+    },
+    "c3": {
+      "type": "lag",
+      "x": "AND(plc.K3, k3_ok)",
+      "tau": 0.015
+    },
+    "m": {
+      "type": "motor",
+      "f": 50,
+      "on": "AND(k1, OR(k2, k3))",
+      "star": "AND(k2, NOT(k3))",
+      "phases": "IF(ph_ok, 3, 2)",
+      "kw": 11,
+      "rpm": 1460,
+      "poles": 4,
+      "Ir": 21,
+      "J": 1.0,
+      "tk": 2.8,
+      "lrc": 7,
+      "lrt": 2.2,
+      "load": "m.Tr * 0.85 * (m.n / 1460)^2"
+    },
+    "f2": {
+      "type": "overload",
+      "I": "IF(k3, m.I / SQRT(3), m.I)",
+      "set": "f2set",
+      "class": 2,
+      "reset": "reset"
+    }
+  },
+  "faults": {
+    "timer-short": {
+      "label": "KT1 is set far too short (0.5 s)",
+      "set": {
+        "kt_set": 0.5
+      },
+      "why": "It changes to delta about half a second after Start, long before the fan is up to speed, so the motor takes nearly its direct-on-line current anyway: the peak is well over 100 A, against about 50 A when it changes over near full speed. The star start has gained nothing. Read KT1's dial: set it to about the time the motor takes to reach speed in star, here 6 s."
+    },
+    "timer-long": {
+      "label": "KT1 is set far too long (20 s)",
+      "set": {
+        "kt_set": 20
+      },
+      "why": "It sits in star for 20 s. The fan gets up to about 1385 rpm and stays there: in star the motor has only a third of its torque, which is not enough for the fan's full load, so it runs with a lot of slip, a high winding current and getting hot. Then it changes to delta. Read KT1's dial; set it to about the run-up time."
+    },
+    "k3-coil-open": {
+      "label": "K3's coil is open circuit (burnt out, or a wire off)",
+      "set": {
+        "k3_ok": "0"
+      },
+      "why": "It starts in star, then at the changeover it loses power and coasts down, with H1 never lit. In the ladder, KT1 times out, K2 drops and K3's rung is made: the logic asks for delta, but K3 does not pull in, so the motor has K1 and nothing to complete its windings. Isolate, then check K3's coil (A1–A2) and its wires."
+    },
+    "k2-welded": {
+      "label": "K2's main contacts have welded shut",
+      "set": {
+        "k2_weld": "1"
+      },
+      "why": "It starts in star and never changes over: KT1 times out, but K3's rung stays open because K2's auxiliary contact still says K2 is in. That is the interlock doing its job: K3 closing with K2 still in would short the supply. Stuck in star, the fan runs slow and the windings overheat until F2 trips. Isolate and check K2: contacts weld after heavy currents or chattering."
+    },
+    "phase-lost": {
+      "label": "One supply fuse has blown (it is on two phases)",
+      "set": {
+        "ph_ok": "0"
+      },
+      "why": "K1 and K2 pull in, but the motor only hums and does not turn, drawing a high current, until F2 trips a few seconds later. On two phases a three-phase motor has no starting torque (a running one keeps going, but hot). Look at the fuses: one shows its red indicator. Find why it blew before replacing it."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "press": "start",
+      "say": "Start: K1 and K2 pull in. The windings are in star, each on 230 V: about a third of the direct-on-line current (here about 50 A) and a third of the torque."
+    },
+    {
+      "at": 3.5,
+      "say": "The fan speeds up. As the speed rises, the current falls."
+    },
+    {
+      "at": 6.6,
+      "say": "KT1 times out: K2 drops, and once its auxiliary contact shows it is out, K3 pulls in. The windings are now in delta, on 400 V. There is a second, smaller peak of current: smaller the nearer full speed it changes over."
+    },
+    {
+      "at": 10,
+      "say": "Running in delta at about 1466 rpm, 19 A. H1 is lit."
+    },
+    {
+      "at": 13,
+      "press": "stop",
+      "say": "Stop: K1 and K3 drop out and the fan coasts down."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "H1 Run",
+      "on": "plc.H1",
+      "color": "green"
+    },
+    {
+      "lamp": "H2 Tripped",
+      "on": "plc.H2",
+      "color": "amber"
+    },
+    {
+      "lamp": "K2 star",
+      "on": "k2",
+      "color": "white"
+    },
+    {
+      "lamp": "K3 delta",
+      "on": "k3",
+      "color": "white"
+    },
+    {
+      "read": "Current",
+      "value": "m.I",
+      "unit": "A",
+      "dp": 0
+    },
+    {
+      "read": "Peak since Start",
+      "value": "ipk",
+      "unit": "A",
+      "dp": 0
+    },
+    {
+      "read": "Speed",
+      "value": "m.n",
+      "unit": "rpm",
+      "dp": 0
+    },
+    {
+      "meter": "F2 heat",
+      "value": "f2.heat",
+      "max": 100,
+      "unit": "%",
+      "dp": 0
+    }
+  ],
+  "trend": {
+    "span": 20,
+    "y": [
+      0,
+      150
+    ],
+    "lines": [
+      {
+        "value": "m.I",
+        "label": "current (A)"
+      },
+      {
+        "value": "m.n / 10",
+        "label": "speed (rpm ÷ 10)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        -0.05,
+        0.8,
+        0
+      ],
+      "yaw": 12,
+      "pitch": 10,
+      "dist": 2.5
+    },
+    "floor": 5,
+    "parts": [
+      {
+        "id": "cabinet",
+        "at": [
+          -0.6,
+          1.1,
+          -0.1
+        ],
+        "parts": [
+          {
+            "shape": "box",
+            "size": [
+              0.7,
+              0.9,
+              0.02
+            ],
+            "at": [
+              0,
+              0,
+              -0.12
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.9,
+              0.25
+            ],
+            "at": [
+              -0.35,
+              0,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.02,
+              0.9,
+              0.25
+            ],
+            "at": [
+              0.35,
+              0,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.7,
+              0.02,
+              0.25
+            ],
+            "at": [
+              0,
+              0.45,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.7,
+              0.02,
+              0.25
+            ],
+            "at": [
+              0,
+              -0.45,
+              0
+            ],
+            "color": "grey"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.62,
+              0.035,
+              0.01
+            ],
+            "at": [
+              0,
+              0.12,
+              -0.1
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.62,
+              0.035,
+              0.01
+            ],
+            "at": [
+              0,
+              -0.2,
+              -0.1
+            ],
+            "color": "steel"
+          },
+          {
+            "id": "fuses",
+            "at": [
+              -0.2,
+              0.3,
+              -0.06
+            ],
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.16,
+                  0.09,
+                  0.07
+                ],
+                "color": "dark"
+              },
+              {
+                "shape": "cyl",
+                "size": [
+                  0.03,
+                  0.07,
+                  0.03
+                ],
+                "at": [
+                  -0.05,
+                  0,
+                  0.04
+                ],
+                "color": "white"
+              },
+              {
+                "shape": "cyl",
+                "size": [
+                  0.03,
+                  0.07,
+                  0.03
+                ],
+                "at": [
+                  0,
+                  0,
+                  0.04
+                ],
+                "color": "white"
+              },
+              {
+                "shape": "cyl",
+                "size": [
+                  0.03,
+                  0.07,
+                  0.03
+                ],
+                "at": [
+                  0.05,
+                  0,
+                  0.04
+                ],
+                "color": "white"
+              },
+              {
+                "shape": "sphere",
+                "size": [
+                  0.015,
+                  0.015,
+                  0.015
+                ],
+                "at": [
+                  0.05,
+                  0.038,
+                  0.055
+                ],
+                "color": "red",
+                "lit": "1 - ph_ok"
+              }
+            ],
+            "label": "F1",
+            "label_at": [
+              0,
+              0.08,
+              0
+            ]
+          },
+          {
+            "kit": "contactor",
+            "at": [
+              -0.2,
+              0.12,
+              -0.06
+            ],
+            "lit": "k1",
+            "label": "K1",
+            "label_at": [
+              0,
+              0.07,
+              0
+            ]
+          },
+          {
+            "kit": "contactor",
+            "at": [
+              0.0,
+              0.12,
+              -0.06
+            ],
+            "lit": "k2",
+            "label": "K2",
+            "label_at": [
+              0,
+              0.07,
+              0
+            ]
+          },
+          {
+            "kit": "contactor",
+            "at": [
+              0.2,
+              0.12,
+              -0.06
+            ],
+            "lit": "k3",
+            "label": "K3",
+            "label_at": [
+              0,
+              0.07,
+              0
+            ]
+          },
+          {
+            "id": "f2",
+            "at": [
+              -0.2,
+              -0.2,
+              -0.06
+            ],
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.05,
+                  0.07,
+                  0.07
+                ],
+                "color": "grey"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.025,
+                  0.012,
+                  0.006
+                ],
+                "at": [
+                  0,
+                  0.018,
+                  0.037
+                ],
+                "color": "amber",
+                "lit": "f2.trip"
+              },
+              {
+                "shape": "cyl",
+                "size": [
+                  0.016,
+                  0.015,
+                  0.016
+                ],
+                "at": [
+                  0.012,
+                  -0.015,
+                  0.04
+                ],
+                "rot": [
+                  90,
+                  0,
+                  0
+                ],
+                "color": "blue",
+                "press": "reset"
+              }
+            ],
+            "label": "F2 {f2set:1} A",
+            "label_at": [
+              0,
+              -0.07,
+              0
+            ]
+          },
+          {
+            "id": "kt1",
+            "at": [
+              0.12,
+              -0.2,
+              -0.06
+            ],
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.025,
+                  0.08,
+                  0.065
+                ],
+                "color": "grey"
+              },
+              {
+                "shape": "cyl",
+                "size": [
+                  0.02,
+                  0.01,
+                  0.02
+                ],
+                "at": [
+                  0,
+                  0.012,
+                  0.035
+                ],
+                "rot": [
+                  90,
+                  0,
+                  0
+                ],
+                "color": "white"
+              },
+              {
+                "shape": "sphere",
+                "size": [
+                  0.008,
+                  0.008,
+                  0.008
+                ],
+                "at": [
+                  0,
+                  -0.02,
+                  0.035
+                ],
+                "color": "green",
+                "lit": "k1"
+              }
+            ],
+            "label": "KT1 {kt_set:1} s",
+            "label_at": [
+              0.05,
+              0.07,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "id": "door",
+        "kit": "panel",
+        "at": [
+          -0.6,
+          0.45,
+          0.25
+        ],
+        "size": [
+          0.4,
+          0.22,
+          0.05
+        ],
+        "cols": 4,
+        "legs": 0.34,
+        "items": [
+          {
+            "press": "start",
+            "color": "green"
+          },
+          {
+            "press": "stop",
+            "color": "red"
+          },
+          {
+            "lit": "plc.H1",
+            "color": "green"
+          },
+          {
+            "lit": "plc.H2",
+            "color": "amber"
+          }
+        ],
+        "label": "Start · Stop · Run · Tripped",
+        "label_at": [
+          0,
+          0.17,
+          0
+        ]
+      },
+      {
+        "id": "cable",
+        "kit": "pipe",
+        "d": 0.025,
+        "color": "cable",
+        "path": [
+          [
+            -0.35,
+            0.68,
+            -0.15
+          ],
+          [
+            0.25,
+            0.68,
+            -0.15
+          ],
+          [
+            0.25,
+            0.42,
+            -0.15
+          ],
+          [
+            0.25,
+            0.42,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "motor",
+        "kit": "motor",
+        "at": [
+          0.25,
+          0.25,
+          0
+        ],
+        "d": 0.3,
+        "len": 0.42,
+        "turns": "m.turns",
+        "lit": "AND(k1, OR(k2, k3))",
+        "label": "M1 11 kW · {m.n:0} rpm",
+        "label_at": [
+          0,
+          0.33,
+          0
+        ]
+      },
+      {
+        "id": "mfeet",
+        "shape": "box",
+        "size": [
+          0.38,
+          0.1,
+          0.3
+        ],
+        "at": [
+          0.25,
+          0.05,
+          0
+        ],
+        "color": "dark"
+      },
+      {
+        "id": "fan",
+        "at": [
+          0.75,
+          0.42,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.62,
+              0.22,
+              0.62
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "steel",
+            "alpha": 0.25,
+            "shadow": false
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.42,
+              0.3
+            ],
+            "at": [
+              0,
+              -0.21,
+              0
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.14,
+              0.1
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "dark",
+            "turn": {
+              "x": "m.turns * 360 / 25"
+            },
+            "parts": [
+              {
+                "shape": "box",
+                "size": [
+                  0.03,
+                  0.27,
+                  0.1
+                ],
+                "at": [
+                  0,
+                  0.16,
+                  0
+                ],
+                "rot": [
+                  0,
+                  25,
+                  0
+                ],
+                "color": "blue"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.03,
+                  0.27,
+                  0.1
+                ],
+                "at": [
+                  0,
+                  -0.16,
+                  0
+                ],
+                "rot": [
+                  0,
+                  25,
+                  0
+                ],
+                "color": "blue"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.03,
+                  0.1,
+                  0.27
+                ],
+                "at": [
+                  0,
+                  0,
+                  0.16
+                ],
+                "rot": [
+                  25,
+                  0,
+                  0
+                ],
+                "color": "blue"
+              },
+              {
+                "shape": "box",
+                "size": [
+                  0.03,
+                  0.1,
+                  0.27
+                ],
+                "at": [
+                  0,
+                  0,
+                  -0.16
+                ],
+                "rot": [
+                  25,
+                  0,
+                  0
+                ],
+                "color": "blue"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

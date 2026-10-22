@@ -178,3 +178,43 @@ const machine = (blocks, inputs = {}, extra = {}) => E.build({ inputs, blocks, .
   assert.match(E.solves(scene, {}, { pass: 'tk.level >= 0', solution: [] }).why, /before anything/);
   console.log('ok — goal checks: solved by its solution, not before');
 }
+
+// ---- star-delta: a third of the current and torque; two phases: no starting torque ----
+{
+  const dol = machine({ m: { type: 'motor', load: 'm.Tr', J: 0.01 } }), star = machine({ m: { type: 'motor', star: 1, load: 0, J: 0.01 } });
+  E.run(dol, 0.01); E.run(star, 0.01);
+  near(star.env['m.I'] / dol.env['m.I'], 1 / 3, 0.02, 'star takes a third of the line current');
+  near(star.env['m.T'] / dol.env['m.T'], 1 / 3, 0.02, 'and gives a third of the torque');
+  const two = machine({ m: { type: 'motor', phases: 2, J: 0.01 } });
+  E.run(two, 1);
+  assert.equal(two.env['m.n'], 0, 'on two phases it does not start');
+  assert.ok(two.env['m.I'] > 6 * two.env['m.Ir'], 'and draws a high current');
+  console.log('ok — motor in star, and on two phases');
+}
+
+// ---- a centrifugal pump against its system: the operating point, shut-off, cavitation, power ----
+{
+  const pump = pp => machine({ m: { type: 'motor', kw: 5.5, rpm: 2900, poles: 2, Ir: 10.4, J: 0.06, load: 'pp.T' }, pp: { type: 'pump', n: 'm.n', ...pp } });
+  const open = pump({}), shut = pump({ open: 0 }), starved = pump({ suction: 0.12 });
+  for (const s of [open, shut, starved]) E.run(s, 10);
+  near(open.env['pp.Q'], 36, 2, 'wide open, near its best-efficiency flow');
+  near(open.env['pp.eff'], 0.7, 0.05, 'at about 70% efficiency');
+  assert.equal(shut.env['pp.Q'], 0, 'a shut valve: no flow');
+  near(shut.env['pp.H'], 40 * (shut.env['m.n'] / 2900) ** 2, 0.5, 'and the shut-off head');
+  assert.ok(shut.env['pp.P'] < open.env['pp.P'], 'a centrifugal pump takes less power at no flow');
+  assert.ok(shut.env['pp.temp'] > 5, 'and the water in it heats up');
+  assert.ok(starved.env['pp.cav'] > 0.1 && starved.env['pp.Ps'] < -0.5 && starved.env['pp.Q'] < open.env['pp.Q'], 'a starved suction cavitates');
+  console.log('ok — pump: operating point, shut-off head, cavitation');
+}
+
+// ---- a flaw detector: depth from time with its velocity and zero; 6 dB doubles an echo ----
+{
+  const ut = u => { const s = machine({ ut: { type: 'ut', x: 50, T: 25, flaws: [[50, 10, 10, 0.5]], ...u } }); E.run(s, 0.01); return s.env; };
+  const ok = ut({}), fast = ut({ vset: 6320 }), zero = ut({ zero: 2 }), more = ut({ gain: 36 });
+  assert.equal(ok['ut.bw'], 25); assert.equal(ok['ut.fd'], 10);
+  near(fast['ut.bw'], 25 * 6320 / 5920, 0.01, 'the wrong velocity scales every depth');
+  assert.equal(zero['ut.bw'], 27); assert.equal(zero['ut.fd'], 12);
+  near(more['ut.fa'] / ok['ut.fa'], 2, 0.01, '6 dB doubles an echo');
+  assert.equal(ut({ couplant: 0 })['ut.bwa'], 0, 'no couplant, no sound in');
+  console.log('ok — flaw detector: velocity, zero, gain, couplant');
+}

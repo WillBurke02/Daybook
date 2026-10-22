@@ -6,7 +6,8 @@
 //   {switch: 'Auto'} | {slider: 'Speed', min, max, step, value, unit} | {select: 'Mode', options: [[0, 'Off'], …], value} }
 //   hidden: true leaves one off the panel unless a card's controls list names it (a drive's parameters, say)
 // scene.show = [ {lamp: 'Running', on: formula, color: 'green'} | {read: 'Frequency', value: formula, unit: 'Hz', dp: 1}
-//   | {meter: 'Overload', value: formula, max: 100, unit: '%'} ]
+//   | {meter: 'Overload', value: formula, max: 100, unit: '%'}
+//   | {ascan: 'A-scan', value: formula giving [[x, y], …] (a ut block's trace), x: [0, 60], xlabel: 'depth (mm)'} ]  a screen
 // scene.trend = { span: 10 (s), y: [lo, hi] (or worked out), lines: [{value: formula, label: 'f (Hz)'}] }
 // scene.plc_label: what the PLC's section is called (a hard-wired circuit drawn as a ladder is not a PLC)
 import { el } from '../core/dom.js';
@@ -71,7 +72,16 @@ export function panel(get, opts = {}) {
   const sliders = inputs.filter(([, i]) => i.slider || i.select).map(control);
 
   // ---- what it shows ----
-  const reads = (scene.show || []).map(r => {
+  // a screen: an instrument's trace, redrawn as it changes (a flaw detector's A-scan)
+  const screens = (scene.show || []).filter(r => r.ascan).map(r => {
+    const f = formula(r.value, known), box = el('div', { class: 'wscreen calc s3trend' });
+    return { el: box, set: e => {
+      const P = plot({ x: r.x || [0, 100], y: [0, 100], xlabel: r.xlabel || 'depth (mm)', ylabel: '% screen height', w: 760, h: 220, label: r.ascan });
+      P.layer.append(s('path', { class: 'trace k0', d: path(f(e) || [], P.X, P.Y) }));
+      put(box, P.svg);
+    } };
+  });
+  const reads = (scene.show || []).filter(r => !r.ascan).map(r => {
     const f = formula(r.value ?? r.on, known);
     if (r.lamp) {
       const lamp = el('span', { class: `lamp ${r.color || ''}` });
@@ -131,13 +141,14 @@ export function panel(get, opts = {}) {
   const root = el('div', { class: 's3panel' },
     buttons.length ? el('div', { class: 's3buttons' }, buttons) : null,
     sliders.length ? el('div', { class: 'wcontrols' }, sliders) : null,
-    readBox, trendBox, plcBox);
+    readBox, ...screens.map(x => x.el), trendBox, plcBox);
   let n = 0;
   return {
     el: root,
     update(e) {
       syncs.forEach(f => f());
       reads.forEach(r => r.set(e));
+      screens.forEach(r => r.set(e));
       if (trendBox) drawTrend(e);
       if (drawPlc && (plcBox.open || n % 5 === 0)) drawPlc();
       n++;

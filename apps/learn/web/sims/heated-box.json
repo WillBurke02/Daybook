@@ -100,6 +100,13 @@
         "filter": "0.2"
       },
       "why": "The thermostat calls and the fan turns, but little air gets through: the heat going out with the air is a fifth of what the fan's rating gives, and the temperature still climbs, only more slowly. Look at the filter mats."
+    },
+    "stat-welded": {
+      "label": "The thermostat's contact has welded shut: the fan never stops",
+      "set": {
+        "call": "IF(mode = 0, 0, 1)"
+      },
+      "why": "In Thermostat mode the fan runs all the time, even when the enclosure is well below its set point. The cabinet is cool, so nothing overheats, but the filter clogs much sooner and dust is drawn in day and night. The thermostat should switch the fan off a degree or so below its setting; its contact is stuck closed."
     }
   },
   "script": [

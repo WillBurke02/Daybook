@@ -14,7 +14,7 @@ const tpl = await load('apps/learn/web/template.js');
 const st = await load('apps/learn/web/st.js');
 const { tex, split } = await load('web/ui/math.js');
 const { parse, key } = await load('web/core/formula.js');
-const TYPES = ['concept', 'widget', 'mcq', 'numeric', 'steps', 'order', 'match', 'flash', 'code', 'explain', 'spot'];
+const TYPES = ['concept', 'widget', 'mcq', 'numeric', 'steps', 'order', 'match', 'flash', 'code', 'explain', 'spot', 'sort'];
 
 const files = dir => readdirSync(dir).flatMap(f => statSync(join(dir, f)).isDirectory() ? files(join(dir, f)) : [join(dir, f)]);
 const lessons = new Map(), problems = [];
@@ -182,6 +182,14 @@ for (const file of files(CONTENT).filter(f => f.endsWith('.json') && !f.endsWith
       if (!c.q || !c.model) bad(at, 'explain the step: a question (q) and a model answer (model)');
       if (c.points && !(Array.isArray(c.points) && c.points.length >= 2 && c.points.length <= 6 && c.points.every(p => typeof p === 'string')))
         bad(at, 'explain: points are 2 to 6 things a good answer says');
+    }
+    if (c.type === 'sort') {
+      const nb = Array.isArray(c.bins) ? c.bins.length : 0;
+      if (!c.q || nb < 2 || nb > 4) bad(at, 'sort it: a question (q) and 2 to 4 bins');
+      else if (!(Array.isArray(c.items) && c.items.length >= 4 && c.items.length <= 10 && c.items.every(i => Array.isArray(i) && i.length === 2 && Number.isInteger(i[1]) && i[1] >= 0 && i[1] < nb)))
+        bad(at, 'sort it: 4 to 10 items, each [text, the index of its bin]');
+      else if (c.bins.some((b, k) => !c.items.some(i => i[1] === k))) bad(at, 'sort it: every bin has at least one item');
+      if (!c.why) bad(at, 'sort it: why each goes where it does');
     }
     if (c.type === 'spot') {
       if (!(Array.isArray(c.lines) && c.lines.length >= 3 && c.lines.length <= 9)) bad(at, 'spot the mistake: 3 to 9 lines');

@@ -1,0 +1,756 @@
+{
+  "title": "A centrifugal pump: suction, discharge and its gauges",
+  "about": "An end-suction centrifugal pump on a 5.5 kW, 2-pole motor (2900 rpm, 10.4 A), started direct on line. It draws water from a supply tank 2 m above it (a flooded suction), through a suction valve and a strainer, and pumps it 10 m up to a header tank, through a flow meter, a non-return valve and the discharge valve. PI-1 reads the suction pressure, PI-2 the discharge. The cast arrow on the casing shows which way the shaft should turn. The tanks are drawn much closer than they are, the shaft turns 25 times slower than it does, and the water in the casing warms far faster than in a real pump.",
+  "dt": 0.002,
+  "inputs": {
+    "start": {
+      "button": "Start",
+      "color": "green"
+    },
+    "stop": {
+      "button": "Stop",
+      "nc": 1,
+      "color": "red"
+    },
+    "vent": {
+      "button": "Vent the casing"
+    },
+    "dv": {
+      "slider": "Discharge valve",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "value": 100,
+      "unit": "% open"
+    },
+    "sv": {
+      "slider": "Suction valve",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "value": 100,
+      "unit": "% open"
+    }
+  },
+  "let": {
+    "strainer": "1",
+    "nrv": "1",
+    "wear": "0",
+    "phase_ok": "1",
+    "primed0": "1",
+    "primed": "IF(t < 0.01, primed0, IF(vent, 1, primed))",
+    "run": "AND(OR(start, run), stop)",
+    "dir": "IF(phase_ok, 1, -1)"
+  },
+  "blocks": {
+    "m": {
+      "type": "motor",
+      "f": 50,
+      "on": "run",
+      "kw": 5.5,
+      "rpm": 2900,
+      "poles": 2,
+      "Ir": 10.4,
+      "J": 0.06,
+      "load": "pp.T"
+    },
+    "pp": {
+      "type": "pump",
+      "n": "m.n",
+      "open": "dv / 100 * nrv",
+      "suction": "sv / 100 * strainer",
+      "prime": "primed",
+      "rev": "1 - phase_ok",
+      "wear": "wear"
+    }
+  },
+  "faults": {
+    "strainer-blocked": {
+      "label": "The suction strainer is badly blocked",
+      "set": {
+        "strainer": "0.12"
+      },
+      "why": "It rattles, as if pumping gravel: that is cavitation. PI-1 shows a deep vacuum (about −0.9 bar against +0.2 bar normally), the flow is well down and PI-2 swings about. Too much is lost on the suction side, so the pressure at the impeller's eye falls to the water's vapour pressure and bubbles form and collapse. The suction valve is fully open, so look at the strainer. Cavitation pits an impeller in hours."
+    },
+    "nrv-stuck": {
+      "label": "The non-return valve on the discharge is stuck shut",
+      "set": {
+        "nrv": "0"
+      },
+      "why": "No flow at all, yet PI-2 reads the pump's full shut-off pressure (about 4.3 bar) and the motor runs, drawing about half its current. The pump is making pressure against a closed path, the same as a shut discharge valve, but the valve is open. The casing temperature climbs: with no flow, all its power goes into heating the water in it. Shut down before the seal is cooked."
+    },
+    "worn-impeller": {
+      "label": "The impeller is worn",
+      "set": {
+        "wear": "0.6"
+      },
+      "why": "Everything is a little down: flow, discharge pressure and current, with a normal suction pressure, no noise and the right rotation. A worn impeller (or a worn wear ring, letting water slip back round) makes less head, so the pump meets the system at a lower flow. Compare PI-2 with the pump's curve at that flow, or with what it read when new."
+    },
+    "reversed": {
+      "label": "It is turning backwards (two supply phases swapped)",
+      "set": {
+        "phase_ok": "0"
+      },
+      "why": "The flow and the discharge pressure are about half what they should be, and the current is low, but there is no noise. Look at the coupling: it turns against the cast arrow. A centrifugal pump turning backwards still pumps, but poorly, so it is easily missed. Swap two of the three supply phases at the motor."
+    },
+    "air-bound": {
+      "label": "The casing is full of air (it has lost its prime)",
+      "set": {
+        "primed0": "0"
+      },
+      "why": "The motor runs at full speed and light current, but PI-2 hardly moves and there is no flow. An impeller spinning in air cannot make pressure: the head a pump makes is in metres of whatever it is full of, and air weighs about 800 times less than water. Press Vent the casing: the air goes, water fills it, and it pumps. Running dry also burns the mechanical seal."
+    }
+  },
+  "script": [
+    {
+      "at": 0.5,
+      "press": "start",
+      "say": "Start: the motor is put straight on to the supply. With the discharge valve open, the pump runs out to about 36 m³/h at 3.2 bar: where its curve meets the system's."
+    },
+    {
+      "at": 5,
+      "set": {
+        "dv": 50
+      },
+      "say": "Throttling the discharge valve to half open adds loss to the system: the flow falls, the pressure at PI-2 rises up the pump's curve, and the current falls. A centrifugal pump takes less power at less flow."
+    },
+    {
+      "at": 10,
+      "set": {
+        "dv": 0
+      },
+      "say": "Discharge valve shut: no flow, and PI-2 shows the shut-off pressure, the top of the curve. All the power now heats the water in the casing. A few seconds is fine; minutes is not."
+    },
+    {
+      "at": 15,
+      "set": {
+        "dv": 100
+      },
+      "say": "Open again: the flow comes back, and the water carries the heat away."
+    },
+    {
+      "at": 20,
+      "press": "stop",
+      "say": "Stop. The non-return valve shuts as the flow stops, so the header tank does not drain back through the pump."
+    }
+  ],
+  "show": [
+    {
+      "lamp": "Running",
+      "on": "run",
+      "color": "green"
+    },
+    {
+      "read": "Flow FT-1",
+      "value": "pp.Q",
+      "unit": "m³/h",
+      "dp": 1
+    },
+    {
+      "read": "Suction PI-1",
+      "value": "pp.Ps",
+      "unit": "bar",
+      "dp": 2
+    },
+    {
+      "read": "Discharge PI-2",
+      "value": "pp.Pd",
+      "unit": "bar",
+      "dp": 2
+    },
+    {
+      "read": "Current",
+      "value": "m.I",
+      "unit": "A",
+      "dp": 1
+    },
+    {
+      "read": "Casing",
+      "value": "15 + pp.temp",
+      "unit": "°C",
+      "dp": 0
+    },
+    {
+      "read": "Sound",
+      "value": "IF(pp.cav > 0.05, \"a rattle, like gravel\", IF(m.n > 300, \"a steady hum\", \"quiet\"))"
+    }
+  ],
+  "trend": {
+    "span": 30,
+    "y": [
+      0,
+      45
+    ],
+    "lines": [
+      {
+        "value": "pp.Q",
+        "label": "flow (m³/h)"
+      },
+      {
+        "value": "pp.Pd * 10",
+        "label": "PI-2 (bar × 10)"
+      },
+      {
+        "value": "m.I * 2",
+        "label": "current (A × 2)"
+      }
+    ]
+  },
+  "view": {
+    "camera": {
+      "target": [
+        0.1,
+        0.95,
+        0
+      ],
+      "yaw": 18,
+      "pitch": 16,
+      "dist": 4.9
+    },
+    "floor": 6,
+    "parts": [
+      {
+        "id": "base",
+        "shape": "box",
+        "size": [
+          1.05,
+          0.06,
+          0.4
+        ],
+        "at": [
+          0.22,
+          0.03,
+          0
+        ],
+        "color": "dark"
+      },
+      {
+        "id": "pump",
+        "kit": "pump",
+        "at": [
+          0,
+          0.3,
+          0
+        ],
+        "d": 0.24,
+        "turns": "m.turns * dir",
+        "label": "P-1",
+        "label_at": [
+          0,
+          0.25,
+          0.15
+        ],
+        "parts": [
+          {
+            "shape": "cone",
+            "size": [
+              0.05,
+              0.08,
+              0.05
+            ],
+            "at": [
+              0,
+              0.07,
+              0.125
+            ],
+            "rot": [
+              0,
+              0,
+              -90
+            ],
+            "color": "white"
+          }
+        ]
+      },
+      {
+        "id": "motor",
+        "kit": "motor",
+        "at": [
+          0.6,
+          0.3,
+          0
+        ],
+        "rot": [
+          0,
+          180,
+          0
+        ],
+        "d": 0.22,
+        "len": 0.34,
+        "turns": "m.turns * dir",
+        "lit": "run",
+        "label": "M1 {m.I:1} A",
+        "label_at": [
+          0,
+          0.25,
+          0
+        ]
+      },
+      {
+        "id": "pedestal",
+        "shape": "box",
+        "size": [
+          0.3,
+          0.13,
+          0.25
+        ],
+        "at": [
+          0.6,
+          0.12,
+          0
+        ],
+        "color": "dark"
+      },
+      {
+        "id": "supply",
+        "at": [
+          -1.6,
+          0,
+          0
+        ],
+        "parts": [
+          {
+            "kit": "table",
+            "size": [
+              0.6,
+              0.95,
+              0.6
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.55,
+              0.7,
+              0.55
+            ],
+            "at": [
+              0,
+              1.3,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "at": [
+              0,
+              1.27,
+              0
+            ],
+            "color": "water",
+            "alpha": 0.5,
+            "shadow": false
+          }
+        ],
+        "label": "Supply tank (2 m above the pump)",
+        "label_at": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      {
+        "id": "suction",
+        "kit": "pipe",
+        "d": 0.075,
+        "path": [
+          [
+            -1.6,
+            0.95,
+            0
+          ],
+          [
+            -1.6,
+            0.3,
+            0
+          ],
+          [
+            -0.17,
+            0.3,
+            0
+          ]
+        ],
+        "full": "primed"
+      },
+      {
+        "id": "sv",
+        "kit": "valve",
+        "at": [
+          -1.15,
+          0.3,
+          0
+        ],
+        "d": 0.06,
+        "handle": "lever",
+        "open": "sv / 100",
+        "label": "Suction valve {sv:0}%",
+        "label_at": [
+          0,
+          0.2,
+          0
+        ]
+      },
+      {
+        "id": "strainer",
+        "at": [
+          -0.75,
+          0.3,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.13,
+              0.16,
+              0.13
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "cyl",
+            "size": [
+              0.09,
+              0.2,
+              0.09
+            ],
+            "at": [
+              0,
+              -0.12,
+              0.05
+            ],
+            "rot": [
+              -35,
+              0,
+              0
+            ],
+            "color": "steel"
+          }
+        ],
+        "label": "Strainer",
+        "label_at": [
+          0,
+          -0.22,
+          0.1
+        ]
+      },
+      {
+        "id": "pi1",
+        "at": [
+          -0.42,
+          0.3,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.02,
+              0.16,
+              0.02
+            ],
+            "at": [
+              0,
+              0.08,
+              0
+            ],
+            "color": "brass"
+          },
+          {
+            "kit": "gauge",
+            "at": [
+              0,
+              0.22,
+              0
+            ],
+            "value": "pp.Ps",
+            "min": -1,
+            "max": 1,
+            "d": 0.1
+          }
+        ],
+        "label": "PI-1 {pp.Ps:2} bar",
+        "label_at": [
+          0,
+          0.33,
+          0
+        ]
+      },
+      {
+        "id": "discharge",
+        "kit": "pipe",
+        "d": 0.065,
+        "path": [
+          [
+            0,
+            0.48,
+            0
+          ],
+          [
+            0,
+            1.0,
+            0
+          ],
+          [
+            1.6,
+            1.0,
+            0
+          ],
+          [
+            1.6,
+            2.0,
+            0
+          ]
+        ],
+        "full": "pp.Q > 0.5"
+      },
+      {
+        "id": "pi2",
+        "at": [
+          0,
+          0.75,
+          0.045
+        ],
+        "parts": [
+          {
+            "kit": "gauge",
+            "at": [
+              0,
+              0,
+              0.06
+            ],
+            "value": "pp.Pd",
+            "max": 6,
+            "d": 0.1
+          }
+        ],
+        "label": "PI-2 {pp.Pd:2} bar",
+        "label_at": [
+          -0.2,
+          0.05,
+          0.06
+        ]
+      },
+      {
+        "id": "ft1",
+        "at": [
+          0.45,
+          1.0,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.1,
+              0.2,
+              0.1
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "blue"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.09,
+              0.1,
+              0.08
+            ],
+            "at": [
+              0,
+              0.1,
+              0
+            ],
+            "color": "grey"
+          }
+        ],
+        "label": "FT-1 {pp.Q:1} m³/h",
+        "label_at": [
+          0,
+          0.2,
+          0
+        ]
+      },
+      {
+        "id": "nrv",
+        "at": [
+          0.8,
+          1.0,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.13,
+              0.15,
+              0.13
+            ],
+            "rot": [
+              0,
+              0,
+              90
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.08,
+              0.05,
+              0.1
+            ],
+            "at": [
+              0,
+              0.07,
+              0
+            ],
+            "color": "steel"
+          }
+        ],
+        "label": "NRV",
+        "label_at": [
+          0,
+          0.15,
+          0
+        ]
+      },
+      {
+        "id": "dv",
+        "kit": "valve",
+        "at": [
+          1.15,
+          1.0,
+          0
+        ],
+        "d": 0.055,
+        "open": "dv / 100",
+        "label": "Discharge valve {dv:0}%",
+        "label_at": [
+          0,
+          0.25,
+          0
+        ]
+      },
+      {
+        "id": "header",
+        "at": [
+          1.6,
+          2.0,
+          0
+        ],
+        "parts": [
+          {
+            "shape": "cyl",
+            "size": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "at": [
+              0,
+              0.25,
+              0
+            ],
+            "color": "steel"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              2.0,
+              0.05
+            ],
+            "at": [
+              -0.18,
+              -0.75,
+              -0.18
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              2.0,
+              0.05
+            ],
+            "at": [
+              0.18,
+              -0.75,
+              -0.18
+            ],
+            "color": "frame"
+          },
+          {
+            "shape": "box",
+            "size": [
+              0.05,
+              2.0,
+              0.05
+            ],
+            "at": [
+              0.18,
+              -0.75,
+              0.18
+            ],
+            "color": "frame"
+          }
+        ],
+        "label": "Header tank (10 m up)",
+        "label_at": [
+          -0.55,
+          0.2,
+          0
+        ]
+      },
+      {
+        "id": "station",
+        "kit": "panel",
+        "at": [
+          -0.55,
+          1.05,
+          -0.55
+        ],
+        "size": [
+          0.3,
+          0.25,
+          0.12
+        ],
+        "cols": 3,
+        "legs": 0.9,
+        "items": [
+          {
+            "press": "start",
+            "color": "green"
+          },
+          {
+            "press": "stop",
+            "color": "red"
+          },
+          {
+            "lit": "run",
+            "color": "green"
+          }
+        ],
+        "label": "Start · Stop · Running",
+        "label_at": [
+          0,
+          0.2,
+          0
+        ]
+      }
+    ]
+  }
+}

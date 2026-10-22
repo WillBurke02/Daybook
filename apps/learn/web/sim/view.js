@@ -17,6 +17,7 @@
 // ponytail: shadows fall on the floor only; no textures or collisions; see-through parts are drawn last, farthest first.
 import { formula } from './engine.js';
 import { fill } from '../template.js';
+import { expand } from './kits.js';
 
 export const COLORS = {
   steel: '#a3acb5', dark: '#3b4148', frame: '#58738f', belt: '#2b2e33', rubber: '#1d1f22', black: '#16181b',
@@ -153,7 +154,7 @@ void main() { vec3 n = normalize(vn); if (!gl_FrontFacing) n = -n;
 export function view3d(canvas, scene, known, hooks = {}) {
   const gl = canvas.getContext('webgl', { antialias: true, alpha: false, stencil: true });
   if (!gl) return null;
-  const v = scene.view || {}, parts = v.parts || [];
+  const v = scene.view || {}, parts = expand(v.parts || []);
   prepare(parts, known);
   const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
   const prog = gl.createProgram();

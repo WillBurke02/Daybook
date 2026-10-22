@@ -192,6 +192,29 @@ const TYPES = {
     };
   },
 
+  // Sort it: each item into one of two to four bins, by a tap on the bin's name beside it (a finger, not a drag).
+  sort(c, face, done, values) {
+    add(face, rich(c.q, values), el('p', { class: 'muted small' }, 'Put each one in its group.'));
+    const items = shuffle(c.items.map(([t, bin]) => ({ t, bin, put: null })));
+    let checked = false;
+    const rows = el('div', { class: 'sortit' });
+    const draw_ = () => rows.replaceChildren(...items.map(x => el('div', { class: 'srow' + (checked ? (x.put === x.bin ? ' right' : ' wrong') : '') },
+      rich(x.t, values),
+      el('span', { class: 'seg' }, c.bins.map((b, k) => el('button', { type: 'button', class: 'chip', disabled: checked,
+        'aria-pressed': String(x.put === k), onclick: () => { x.put = k; draw_(); check.disabled = items.some(y => y.put == null); } }, b))),
+      checked && x.put !== x.bin ? el('span', { class: 'small' }, `→ ${c.bins[x.bin]}`) : null)));
+    const key = () => c.bins.map((b, k) => `${b}: ${c.items.filter(([, i]) => i === k).map(([t]) => plain(t, values)).join(', ')}`).join('\n');
+    const check = el('button', { class: 'btn', type: 'button', disabled: true, onclick: () => {
+      checked = true; check.disabled = true;
+      const correct = items.every(x => x.put === x.bin);
+      draw_();
+      done({ correct, rating: ratingFor(correct), why: c.why, answer: correct ? null : key(), mistake: { front: plain(c.q, values), back: key() } });
+    } }, 'Check');
+    draw_();
+    add(face, rows, el('div', { class: 'row' }, check));
+    return e => { if (e.key === 'Enter' && !check.disabled) { check.click(); return true; } };
+  },
+
   order(c, face, done, values) {
     add(face, rich(c.q, values), el('p', { class: 'muted small' }, 'Drag them into order, or use ↑ ↓.'));
     let items = shuffle(c.items.map((t, i) => ({ t, i })));
@@ -497,7 +520,7 @@ const MACHINE = {
 
 const SURE = [[0, 'Guess'], [1, 'Think so'], [2, 'Sure']];
 // the kinds of card whose answer is marked, not self-rated: "how sure?" is asked of these
-const MARKED = new Set(['mcq', 'numeric', 'order', 'match', 'code', 'widget', 'spot']);
+const MARKED = new Set(['mcq', 'numeric', 'order', 'match', 'code', 'widget', 'spot', 'sort']);
 
 /** Read aloud in the browser's own voice: for the drive or the walk. Null where there is no speech. */
 export function listenButton(text) {

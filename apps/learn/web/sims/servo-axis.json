@@ -187,6 +187,13 @@
       "set": {
         "ff": 0
       }
+    },
+    "kp-low": {
+      "label": "The position loop gain Kv has been turned right down",
+      "set": {
+        "kp": 1
+      },
+      "why": "It homes and moves, but softly: the following error is several times its normal size, it takes over a second longer to settle at the end of a move, and with the load pushing on it, it can sit just outside the in-position window, so the move never reports done. The position loop pushes in proportion to the error: with little gain it needs a bigger error to push as hard. Feed-forward hides most of it at steady speed; the starts and stops show it. Set Kv back to about 30 per second."
     }
   },
   "script": [

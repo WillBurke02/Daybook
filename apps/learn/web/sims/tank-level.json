@@ -211,6 +211,13 @@
       "set": {
         "lsh.stuck": 1
       }
+    },
+    "valve-reversed": {
+      "label": "LV-101 moves the opposite way to its signal (an air-to-close valve fitted where it should be air-to-open)",
+      "set": {
+        "lv.x": "IF(valve_ok, 100 - plc.Valve, lv.y)"
+      },
+      "why": "The level runs away to a trip, as with a controller set to the wrong action, but here LIC-101's output and LV-101's position disagree: as the level rises the output falls to 0%, and the valve opens wide. The controller is right; the valve is not. Fail-safe matters too: on loss of air this valve opens and fills the tank. Fit the right actuator, or reverse it; do not fix it by changing the controller's action."
     }
   },
   "script": [
