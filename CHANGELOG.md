@@ -2,7 +2,7 @@
 
 ## 4.0.35 — 22 October 2026
 
-- **Questions inside the Instrumentation book lessons**: all 18 now ask after each section, 151 new
+- **Questions inside the Instrumentation book lessons**: all 18 now ask after each section, 102 new
   questions: the 4–20 mA chain, RTDs and thermocouples, pressure, level and magflow, load cells (with a worked
   and a faded weighing example), valves and actuators, calibration, ADCs and aliasing, step tests and tuning,
   cascade, ratio and split-range control, alarm rates, and the control theory lessons (block diagrams, second
@@ -17,7 +17,7 @@
 ## 4.0.33 — 22 October 2026
 
 - **Questions inside the PLC book lessons**: SFC and FBD, Structured Text, state machines, HMIs, Modbus,
-  analogue scaling, PID blocks and machine safety now ask after each section: 64 new questions. Among them,
+  analogue scaling, PID blocks and machine safety now ask after each section: 46 new questions. Among them,
   three Structured Text programs to finish and run against tests (an on-delay timer, counting presses with
   R_TRIG, a CASE sequence for a conveyor), Modbus relative addresses, scaling with a live zero (with a worked
   and a faded example, and a mistake to spot), a P-only controller's output, and ISO 13849 categories.
