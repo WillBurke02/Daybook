@@ -190,7 +190,7 @@ db.execute("UPDATE setting SET value='minutes' WHERE key='goal_kind'")
 t = learn.today_counts(db)
 assert t["done"] >= 25 and t["minutes"] >= 25, "the study timer counts towards a goal in minutes"
 h = learn.home(db)
-assert h["ring"]["label"] == "minutes today" and h["figures"][0]["label"] == "Due"
+assert h["ring"]["label"] == "minutes today" and h["figures"][0]["label"] == "Review"
 assert learn.calendar(db, "2026-01-01", "2030-12-31") == [], "no reminder unless switched on"
 db.execute("UPDATE setting SET value='1' WHERE key='review_reminder'")
 ev = learn.calendar(db, date.today().isoformat(), (date.today() + timedelta(days=6)).isoformat())
@@ -329,6 +329,15 @@ assert ls["learned"] and one("SELECT COUNT(*) n FROM v_card WHERE lesson_id='plc
                             "AND source='file' AND COALESCE(stage,'') <> 'calibrate'")["n"] == 0, "every card starts as a review"
 assert all(f["id"] != "plc.basics.scan-cycle" for f in learn.frontier(db, "plc")), "a learned lesson is off the frontier"
 print("ok — test out")
+
+# === interleaving: a lesson with no mix stage gets questions met before, from its subject, before its check ===
+for cid in [r[0] for r in db.execute("SELECT id FROM card WHERE lesson_id = 'plc.basics.ladder' AND type IN ('mcq', 'numeric')")][:4]:
+    R("POST", "answer", {"card_id": cid, "mode": "lesson", "correct": True, "ms": 1000})
+mx = R("GET", "lesson", q={"id": ["plc.lang.fbd-sfc"]})["mixed"]
+assert 1 <= len(mx) <= 3 and all(c["lesson_id"] != "plc.lang.fbd-sfc" and c["subject_id"] == "plc" and c["why"] == "mixed" for c in mx), mx
+assert len({c["lesson_id"] for c in mx}) == len(mx), "one a lesson"
+assert R("GET", "lesson", q={"id": ["physics.ut.pulse-echo"]})["mixed"] == [], "it has a mix stage of its own"
+print("ok — interleaving: mixed in from earlier lessons")
 
 # === reports and the rework list ===
 R("POST", "report", {"card_id": card, "note": "the answer looks wrong"})

@@ -51,7 +51,7 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study', '
   const reviewMin = Math.max(1, Math.round(Math.min(t.due, 30) * 0.4));
   const fading = t.fading || [];
   const starts = [
-    t.due ? ['Review', `${t.due} due`, `${reviewMin} min`, '#/review'] : ['Feed', 'what is new and due', '5 min', '#/feed'],
+    t.due ? ['Review', t.due > 30 ? 'a round, the most at risk first' : `${t.due} card${t.due === 1 ? '' : 's'}`, `${reviewMin} min`, '#/review'] : ['Feed', 'what is new and due', '5 min', '#/feed'],
     fading.length ? ['Keep it fresh', `${fading.length} fading skill${fading.length === 1 ? '' : 's'}: ${fading[0].can}`, '5 min',
                      `#/practice?lessons=${encodeURIComponent(fading.map(f => f.id).join(','))}`]
       : t.due ? ['Feed', 'what is new and due', '5 min', '#/feed'] : ['Find my level', 'a subject you have not placed', '10 min', '#/calibrate'],

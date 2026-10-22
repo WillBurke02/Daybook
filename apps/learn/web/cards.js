@@ -8,7 +8,7 @@ import { api } from './api.js';
 import { el, flash, dialog } from './core/dom.js';
 import { state } from './core/state.js';
 import { tex, split } from './ui/math.js';
-import { draw, compute, fill, read, right, fmt } from './template.js';
+import { draw, compute, fill, read, right, fmt, slip } from './template.js';
 import { compile, machine, scan, test } from './st.js';
 import { formulaHelp, mathsOf } from './formulas.js';
 import { toggle } from './tools.js';
@@ -142,8 +142,9 @@ const TYPES = {
       const v = values.answer, correct = right(given, v, c);
       input.disabled = check.disabled = true;
       input.classList.add(correct ? 'right' : 'wrong');
-      const shown = `${fmt(v)}${c.unit ? ' ' + c.unit : ''}`;
-      done({ correct, rating: ratingFor(correct), answer: shown, work: c.work ? fill(c.work, values) : null, why: c.why ? fill(c.why, values) : null,
+      const shown = `${fmt(v)}${c.unit ? ' ' + c.unit : ''}`, said = correct ? null : slip(given, v, c);
+      const work = [said ? `**${said}**` : null, c.work ? fill(c.work, values) : null].filter(Boolean).join('\n\n') || null;
+      done({ correct, rating: ratingFor(correct), answer: shown, work, why: c.why ? fill(c.why, values) : null,
              mistake: { front: plain(c.q, values), back: `${shown}${c.work ? '\n\n' + plain(c.work, values) : ''}${c.why ? '\n\n' + c.why : ''}` } });
     };
     check.addEventListener('click', go);
@@ -436,7 +437,7 @@ const TYPES = {
 
 // ---- the frame ------------------------------------------------------------------------------
 
-const WHY = { review: 'Review', new: 'New', practice: 'Practice', lesson: '', warmup: 'Warm-up', refresher: 'Refresher',
+const WHY = { review: 'Review', new: 'New', practice: 'Practice', lesson: '', warmup: 'Warm-up', refresher: 'Refresher', mixed: 'Mixed in',
               struggle: 'Coming back', calibrate: '', checkpoint: 'Checkpoint', testout: 'Test out', comeback: 'Comeback', again: 'Again' };
 // ---- what a widget card can ask of a machine (the sim widget) -------------------------------------------
 // Each gets the widget's handle (a promise): {faults, test(formula), restart(script)}.

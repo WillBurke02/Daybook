@@ -45,6 +45,14 @@ const st = await load('apps/learn/web/st.js');
   assert.ok(tpl.right(0, 0) && !tpl.right(0.1, 0) && !tpl.right(NaN, 1));
   assert.equal(tpl.fmt(0.00118343), '0.001183'); assert.equal(tpl.fmt(5920), '5920'); assert.equal(tpl.fmt(46480000), '4.65e7');
   assert.equal(tpl.fmt(1 / 3), '0.3333'); assert.equal(tpl.fmt(2.5, 2), '2.50');
+  // a wrong answer says what it most likely got wrong; a right one or a wild one says nothing
+  assert.match(tpl.slip(29600, 29.6), /1,000 times too big/);
+  assert.match(tpl.slip(0.296, 29.6), /100 times too small/);
+  assert.match(tpl.slip(59.2, 29.6), /twice/);
+  assert.match(tpl.slip(-29.6, 29.6), /wrong sign/);
+  assert.match(tpl.slip(400 / Math.sqrt(3) * Math.sqrt(3) * Math.sqrt(3), 400), /√3/);
+  assert.match(tpl.slip(31.5, 29.6), /Round only at the end/);
+  assert.equal(tpl.slip(29.7, 29.6), null); assert.equal(tpl.slip(7, 29.6), null); assert.equal(tpl.slip(3, 0), null);
 }
 console.log('ok — question templates');
 

@@ -156,6 +156,9 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
     if (ahead && c.stage === 'example' && c.type === 'steps') examples.push(c); else cards.push(c);
   }
   const warm = got.warmup.map(c => ({ ...c, stage: 'warmup' }));
+  // questions from earlier lessons, mixed in before the check where the lesson has no mix stage of its own
+  const check = cards.findIndex(c => c.stage === 'check');
+  if (got.mixed?.length) cards.splice(check < 0 ? cards.length : check, 0, ...got.mixed.map(c => ({ ...c, stage: 'mix' })));
   const seq = [...warm, ...cards];
   const at = ctx.params.card ? seq.findIndex(c => c.id === ctx.params.card) : -1;
   let pos = at >= 0 ? at : -1;
@@ -164,7 +167,7 @@ const lessonPanel = { title: 'Lesson', w: 12, async render(body, ctx) {
   // the lesson in parts of 5 to 8 minutes: a pause between them, so a part fits the time you have
   const parts = got.parts || [];
   const startsPart = new Map(parts.map((p, k) => [got.cards[p.from]?.id, k]));
-  const extra = c => c.why === 'again' || c.why === 'refresher' || c.stage === 'warmup';    // put in, not the lesson's own
+  const extra = c => c.why === 'again' || c.why === 'refresher' || c.why === 'mixed' || c.stage === 'warmup';    // put in, not the lesson's own
   const partOf = i => { let k = 0; for (let j = 0; j <= i && j < seq.length; j++) if (startsPart.has(seq[j].id) && !extra(seq[j])) k = startsPart.get(seq[j].id); return k; };
   const paused = new Set();
   const step = () => {                            // forward one card, pausing at the start of a part

@@ -289,7 +289,8 @@ def home(db):
                       "WHERE s.finished IS NULL ORDER BY COALESCE(s.seen, s.started) DESC LIMIT 1").fetchone()
     unit = "cards" if t["goal_kind"] == "cards" else "minutes"
     return {"ring": {"done": int(t["done"]), "goal": int(t["goal"]), "label": f"{unit} today"},
-            "figures": [{"label": "Due", "value": str(t["due"]), "sub": "to review", "href": "#/review" if t["due"] else "#/today"},
+            "figures": [{"label": "Review", "value": f"{max(1, round(min(t['due'], 30) * 0.4))} min" if t["due"] else "none",
+                         "sub": "a round, most at risk first" if t["due"] > 30 else f"{t['due']} due" if t["due"] else "due now", "href": "#/review" if t["due"] else "#/today"},
                         {"label": "Streak", "value": f"{t['streak']} day{'s' if t['streak'] != 1 else ''}", "href": "#/stats"}],
             "links": [{"label": "Start the feed", "href": "#/feed"}]
                      + ([{"label": "Review", "href": "#/review"}] if t["due"] else [])
@@ -458,8 +459,12 @@ def feed(db, n=10, exclude=(), subjects=None, rng=random, at=0):
 
 
 def due_cards(db, limit=200):
-    return [_card(r, "review") for r in db.execute(CARD_SQL + "WHERE v.asks AND v.due IS NOT NULL AND v.due <= ? "
-                                                              "ORDER BY v.struggle DESC, v.due LIMIT ?", (_now(), limit))]
+    """What is due, the most at risk first: struggles, then the lowest chance of recall now (a card met once and
+    long overdue before one nearly solid), so a round that stops early has done the ones that matter."""
+    now = datetime.now()
+    rows = sorted(db.execute(CARD_SQL + "WHERE v.asks AND v.due IS NOT NULL AND v.due <= ?", (_now(),)),
+                  key=lambda r: (-(r["struggle"] or 0), _recall(r, now) if r["stability"] else -1, r["due"]))
+    return [_card(r, "review") for r in rows[:limit]]
 
 
 def lesson_cards(db, lesson_id):
@@ -478,6 +483,34 @@ def warmup(db, lesson, n=3):
     now = datetime.now()
     rows.sort(key=lambda r: _recall(r, now))
     return [_card(r, "warmup") for r in rows[:n]]
+
+
+MIXABLE = ("mcq", "numeric", "order", "match", "spot")
+
+
+def mixed(db, lesson, cards, n=3, rng=random):
+    """Mixed in before a lesson's check, where it has no mix stage of its own: a few questions you have met from
+    the lessons it builds on, then the rest of its subject, the least solid first, so you have to tell which
+    rule a problem needs rather than use the one just taught (interleaving)."""
+    if any(c.get("stage") == "mix" for c in cards):
+        return []
+    pre = set(json.loads(lesson["prereq"] or "[]"))
+    rows = [r for r in db.execute(CARD_SQL + f"WHERE c.type IN ({','.join('?' * len(MIXABLE))}) AND c.lesson_id <> ? AND v.subject_id = ? "
+                                             "AND v.reps > 0 AND c.source <> 'mistake' AND COALESCE(v.stage, '') <> 'calibrate'",
+                                  (*MIXABLE, lesson["id"], lesson["subject_id"]))]
+    rows += [r for r in db.execute(CARD_SQL + f"WHERE c.type IN ({','.join('?' * len(MIXABLE))}) AND c.lesson_id IN ({','.join('?' * len(pre))}) "
+                                              "AND v.subject_id <> ? AND v.reps > 0 AND c.source <> 'mistake'",
+                                   (*MIXABLE, *pre, lesson["subject_id"]))] if pre else []
+    now = datetime.now()
+    rows.sort(key=lambda r: (r["lesson_id"] not in pre, _recall(r, now) + rng.random() * 0.3))
+    out, seen = [], set()
+    for r in rows:                                     # one a lesson, so the mix is mixed
+        if r["lesson_id"] not in seen:
+            seen.add(r["lesson_id"])
+            out.append(_card(r, "mixed"))
+        if len(out) == n:
+            break
+    return out
 
 
 def practice(db, lessons, n=10, rng=random):
@@ -842,10 +875,12 @@ def comeback(db, days=7):
 
 def checks_passed(db, lesson_id):
     """Every final-check card right the last time it was answered, on any day and in any mode
-    but placement (a lesson with no check cards has nothing to pass: None)."""
-    checks = [r[0] for r in db.execute("SELECT id FROM card WHERE lesson_id = ? AND stage = 'check'", (lesson_id,))]
-    if not checks:
+    but placement (a lesson with no check cards has nothing to pass: None). A self-rated card
+    (flash, explain) only counts in a lesson with no marked one: tapping Good proves nothing."""
+    rows = db.execute("SELECT id, type FROM card WHERE lesson_id = ? AND stage = 'check'", (lesson_id,)).fetchall()
+    if not rows:
         return None
+    checks = [r[0] for r in rows if r[1] not in SELF_RATED] or [r[0] for r in rows]
     for cid in checks:
         last = db.execute("SELECT correct FROM answer WHERE card_id = ? AND mode NOT IN ('calibrate', 'testout') "
                           "ORDER BY id DESC LIMIT 1", (cid,)).fetchone()
@@ -1036,7 +1071,7 @@ def route(db, method, p, query, body, ctx):
         return 200, {"lesson": {**dict(les), **{k_: (json.loads(full[k_]) if full[k_] and k_ != "summary" else full[k_])
                                                 for k_ in ("goals", "summary", "resources", "sources", "bench")}},
                      "cards": (cards := lesson_cards(db, lid)), "parts": parts(cards, les["minutes"]),
-                     "prereq": pre, "warmup": warmup(db, les),
+                     "prereq": pre, "warmup": warmup(db, les), "mixed": mixed(db, les, cards),
                      "you": _level.describe(k["theta"], k["sd"]) if k else None, "notes": notes[0] if notes else None}
     if p[:2] == ["lesson", "place"] and method == "POST":
         lid = body.get("lesson_id")

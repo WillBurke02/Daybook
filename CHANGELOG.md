@@ -1,5 +1,21 @@
 # Changes
 
+## 4.0.31 — 22 October 2026
+
+- **Learn audit**: every lesson judged on how well it makes you learn (LEARN-AUDIT.md), with what would
+  help most, in order. The first fixes are below; the rest follow in the next versions.
+- **A wrong number now says what went wrong**: if the digits are right but the answer is 1000 times out,
+  it says to check the units and prefixes; twice or half, 60 times (minutes and seconds), 2π, √2 (peak and
+  RMS), √3 (line and phase), the wrong sign, or rounded too early: each gets its own line above the working.
+- **Mixed in**: a lesson with no mix stage of its own now has up to three questions you have met before, from
+  the lessons it builds on and then the rest of its subject, just before its check. Telling which rule a
+  problem needs is the skill; a lesson that only asks about itself never tests it.
+- **Review is a 12-minute round**, the cards most at risk of being forgotten first (struggles, then the lowest
+  chance of remembering now). When the round ends, the rest wait, or you can start another. Today and Home
+  show the minutes rather than a count like "257 due".
+- **A lesson is learned on its marked questions**: tapping Good on a flash card no longer passes a lesson's
+  final check where the lesson has marked check questions. Lessons already learned stay learned.
+
 ## 4.0.30 — 20 October 2026
 
 - **Everything backed up to GitHub, encrypted**: besides Log as Markdown, the daily GitHub backup

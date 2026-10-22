@@ -50,20 +50,33 @@ export function runner(body, ctx, { mode, next, empty, counter }) {
   return step();
 }
 
+// A review is a round of about twelve minutes, most at risk of being forgotten first (the server's order):
+// however many are due, a round is the same size, and another can follow.
+const ROUND_MS = 12 * 60e3;
+
 const reviewPanel = { title: 'Review', w: 12, async render(body, ctx) {
   const comeback = ctx.params.mode === 'comeback';
   let queue = comeback ? await api.comeback() : await api.due();
-  ctx.setTitle(comeback ? `Weekly comeback · ${queue.length} from this week` : queue.length ? `Review · ${queue.length} due` : 'Review');
+  const t0 = Date.now();
+  ctx.setTitle(comeback ? `Weekly comeback · ${queue.length} from this week` : queue.length ? 'Review · a 12-minute round' : 'Review');
   await runner(body, ctx, {
     mode: comeback ? 'comeback' : 'review',
     counter: ({ done, right }) => `${done} done · ${right} right`,
-    next: async () => { if (!queue.length && !comeback) queue = await api.due(); return queue.shift(); },   // a missed one's flash card is due at once
+    next: async () => {
+      if (!comeback && Date.now() - t0 > ROUND_MS) return null;           // the round is over; the rest wait
+      if (!queue.length && !comeback) queue = await api.due();            // a missed one's flash card is due at once
+      return queue.shift();
+    },
     empty: async ({ done, right }) => {
-      const soon = await api.view('v_card', { asks: 1, due__gt: stamp(new Date()), order: 'due', limit: 1 });
+      const left = comeback ? [] : await api.due();
+      const soon = left.length ? [] : await api.view('v_card', { asks: 1, due__gt: stamp(new Date()), order: 'due', limit: 1 });
       return el('div', { class: 'lcard' },
-        el('h3', {}, done ? `All done: ${done} ${comeback ? 'gone over' : 'reviewed'}, ${right} right.` : comeback ? 'No misses this week.' : 'Nothing is due.'),
-        el('p', { class: 'muted' }, soon.length ? `The next card is due ${when(soon[0].due)}.` : 'Cards come due once you have answered them in the feed or a lesson.'),
-        el('div', { class: 'row' }, el('a', { class: 'btn', href: '#/feed' }, 'The feed'), el('a', { class: 'btn plain', href: '#/today' }, 'Today')));
+        el('h3', {}, done ? `${left.length ? 'Round done' : 'All done'}: ${done} ${comeback ? 'gone over' : 'reviewed'}, ${right} right.`
+          : comeback ? 'No misses this week.' : 'Nothing is due.'),
+        el('p', { class: 'muted' }, left.length ? 'The rest can wait: the most at risk came first. Another round now, or come back later.'
+          : soon.length ? `The next card is due ${when(soon[0].due)}.` : 'Cards come due once you have answered them in the feed or a lesson.'),
+        el('div', { class: 'row' }, left.length ? el('button', { class: 'btn', type: 'button', onclick: () => ctx.refresh() }, 'Another round') : null,
+          el('a', { class: left.length ? 'btn plain' : 'btn', href: '#/feed' }, 'The feed'), el('a', { class: 'btn plain', href: '#/today' }, 'Today')));
     },
   });
 } };

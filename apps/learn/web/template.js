@@ -67,6 +67,39 @@ export function read(typed, unit = '') {
   return r.value !== undefined && r.unit && r.unit === base ? r.value * 10 ** -up : NaN;
 }
 
+// The slips people make with numbers, as the factor the answer is out by and what to check.
+// ponytail: a fixed list; a card's own likely mistakes (its formula done wrong) would go in the card if this falls short.
+const SLIPS = [
+  [-1, 'Right size, wrong sign. Check which way round the subtraction goes, or which direction is positive.'],
+  [2, 'Your answer is twice the right one. Is there a halving you missed (there and back, a diameter to a radius)?'],
+  [0.5, 'Your answer is half the right one. Did you halve where you should not, or miss a factor of 2?'],
+  [60, 'Your answer is 60 times too big: minutes and seconds (or rpm and revolutions a second) are mixed up.'],
+  [1 / 60, 'Your answer is 60 times too small: minutes and seconds (or rpm and revolutions a second) are mixed up.'],
+  [2 * Math.PI, 'Out by 2π (about 6.28): radians a second and revolutions a second are mixed up.'],
+  [1 / (2 * Math.PI), 'Out by 2π (about 6.28): radians a second and revolutions a second are mixed up.'],
+  [Math.SQRT2, 'Out by √2 (1.41): peak and RMS are mixed up.'], [Math.SQRT1_2, 'Out by √2 (1.41): peak and RMS are mixed up.'],
+  [Math.sqrt(3), 'Out by √3 (1.73): a line value and a phase value are mixed up.'],
+  [1 / Math.sqrt(3), 'Out by √3 (1.73): a line value and a phase value are mixed up.'],
+  [3.6, 'Out by 3.6: km/h and m/s are mixed up.'], [1 / 3.6, 'Out by 3.6: km/h and m/s are mixed up.'],
+];
+
+/** What a wrong answer most likely got wrong, in a sentence, or null: the right digits with the point in the
+ *  wrong place (a unit or prefix), a factor of 2, 60, 2π, √2, √3, the sign, or just rounded too early. */
+export function slip(given, want, card = {}) {
+  if (!isFinite(given) || !want || right(given, want, card)) return null;
+  const tol = Math.max(card.tolerance ?? 0.02, card.abs != null ? Math.abs(card.abs / want) : 0, 0.005);
+  const near = f => Math.abs(given - want * f) <= Math.abs(want * f) * tol;
+  for (let k = 1; k <= 9; k++) for (const s of [1, -1]) if (near(10 ** (s * k))) {
+    const n = (10 ** k).toLocaleString('en-GB'), big = s > 0 ? 'big' : 'small';
+    return k === 2 ? `Your answer is 100 times too ${big}: a percentage and a fraction (50% is 0.5) or cm and m are mixed up.`
+      : `The digits are right but your answer is ${n} times too ${big}: check the decimal point, the units and the prefixes (mm or m, µs or s, k or M).`;
+  }
+  for (const [f, say] of SLIPS) if (near(f)) return say;
+  if (Math.abs(want) > 1e-9 && Math.abs(Math.log10(Math.abs(want))) > 0.2 && near(1 / want / want)) return 'That is the answer upside down: the fraction is flipped.';
+  if (Math.abs(given - want) <= Math.abs(want) * 0.1) return 'Close, but outside what is allowed. Round only at the end, and keep every figure until then.';
+  return null;
+}
+
 /** Right if within the card's tolerance: relative (default 2%) or absolute. */
 export function right(given, want, card = {}) {
   if (!isFinite(given)) return false;

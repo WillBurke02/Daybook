@@ -97,6 +97,17 @@ got = R("POST", "answer", {"card_id": checks[-1], "mode": "review", "correct": T
 assert got and got["lesson"] == les, got
 assert skilltree.lessons(db)[les]["learned"], "learned through the feed and Review, never opened in the player"
 assert R("POST", "answer", {"card_id": checks[0], "mode": "feed", "correct": True, "ms": 1000})["learned"] is None, "once"
+# a self-rated check card (flash) is not needed, and not enough, where the lesson has marked ones
+les = "drives.control.pid"
+rows = db.execute("SELECT id, type FROM card WHERE lesson_id = ? AND stage = 'check'", (les,)).fetchall()
+assert {"flash"} < {r[1] for r in rows}, rows
+for cid, typ in rows:
+    if typ == "flash":
+        R("POST", "answer", {"card_id": cid, "mode": "feed", "rating": "again", "correct": False, "ms": 1000})
+for cid, typ in rows:
+    if typ != "flash":
+        got = R("POST", "answer", {"card_id": cid, "mode": "feed", "correct": True, "ms": 1000})["learned"]
+assert got and got["lesson"] == les, "learned on its marked check cards, a missed flash card aside"
 cal = db.execute("SELECT id FROM card WHERE stage = 'check' AND lesson_id = 'plc.basics.scan-cycle'").fetchone()[0]
 assert R("POST", "answer", {"card_id": cal, "mode": "testout", "correct": True, "ms": 1000})["learned"] is None, \
     "a placement answer is not a lesson passed"
