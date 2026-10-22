@@ -56,6 +56,22 @@
    "id": "ox1-2"
   },
   {
+   "id": "q-out-of-phase",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two identical waves meet exactly crest to trough. What is the result?",
+   "options": [
+    "They cancel: no disturbance",
+    "A wave twice as tall",
+    "A wave of twice the frequency",
+    "A standing wave"
+   ],
+   "answer": 0,
+   "why": "Pure destructive interference: at every point the displacements are equal and opposite and add to zero. In phase (crest to crest) they would add to twice the amplitude.",
+   "added": true,
+   "after": "ox1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Superposition and Interference",
@@ -88,6 +104,22 @@
    "id": "ox1-6"
   },
   {
+   "id": "q-node",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a standing wave, what is a node?",
+   "options": [
+    "A point that does not move",
+    "The point of largest movement",
+    "Where the wave turns back",
+    "The middle of each wavelength"
+   ],
+   "answer": 0,
+   "why": "Nodes are fixed points, where the two opposite-going waves always cancel. Antinodes, halfway between, swing the most. Nodes are half a wavelength apart.",
+   "added": true,
+   "after": "ox1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Beats",
@@ -110,6 +142,37 @@
    "html": "<p>While beats may sometimes be annoying in audible sounds, we will find that beats have many applications. Observing beats is a very useful way to compare similar frequencies. There are applications of beats as apparently disparate as in ultrasonic imaging and radar speed traps.</p><div class=\"exercise\"><h4>Check Your Understanding</h4>\n\n    <div class=\"problem\"><p>Imagine you are holding one end of a jump rope, and your friend holds the other. If your friend holds her end still, you can move your end up and down, creating a transverse wave. If your friend then begins to move her end up and down, generating a wave in the opposite direction, what resultant wave forms would you expect to see in the jump rope?</p></div>\n<div class=\"solution\">    <p>The rope would alternate between having waves with amplitudes two times the original amplitude and reaching equilibrium with no amplitude at all. The wavelengths will result in both constructive and destructive interference</p></div>\n</div><div class=\"exercise\"><h4>Check Your Understanding</h4>\n<div class=\"problem\"><p>Define nodes and antinodes.</p></div>\n<div class=\"solution\">    <p>Nodes are areas of wave interference where there is no motion. Antinodes are areas of wave interference where the motion is at its maximum point.</p></div>\n  </div><div class=\"exercise\"><h4>Check Your Understanding</h4><div class=\"problem\"><p>You hook up a stereo system. When you test the system, you notice that in one corner of the room, the sounds seem dull. In another area, the sounds seem excessively loud. Describe how the sound moving about the room could result in these effects.</p></div>\n<div class=\"solution\">    <p>With multiple speakers putting out sounds into the room, and these sounds bouncing off walls, there is bound to be some wave interference. In the dull areas, the interference is probably mostly destructive. In the louder areas, the interference is probably mostly constructive.</p></div>\n  </div>",
    "body": "While beats may sometimes be annoying in audible sounds, we will find that beats have many applications. Observing beats is a very useful way to compare similar frequencies. There are applications of beats as apparently disparate as in ultrasonic imaging and radar speed traps. Check Your Understanding Imagine you are holding one end of a jump rope, and your friend holds the other. If your friend holds her end still, you can move your end up and down, creating a transverse wave. If your friend then begins to move her end up and down, generating a wave in the opposite direction, what resultant wave forms would you expect to see in the jump rope? The rope would alternate between having waves with amplitudes two times the original amplitude and reaching equilibrium with no amplitude at all. The wavelengths will result in both constructive and destructive interference Check Your Understanding Define nodes and antinodes. Nodes are areas of wave interference where there is no motion. Antinodes are areas of wave interference where the motion is at its maximum point. Check Your Understanding You hook up a stereo system. When you test the system, you notice that in one corner of the room, the sounds seem dull. In another area, the sounds seem excessively loud. Describe how the sound moving about the room could result in these effects. With multiple speakers putting out sounds into the room, and these sounds bouncing off walls, there is bound to be some wave interference. In the dull areas, the interference is probably mostly destructive. In the louder areas, the interference is probably mostly constructive.",
    "id": "ox1-9"
+  },
+  {
+   "id": "q-beats",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Two motors run close together at {a} Hz and {b} Hz. How many times a second does the noise swell?",
+   "vars": {
+    "a": {
+     "pick": [
+      48,
+      49,
+      50
+     ]
+    },
+    "b": {
+     "pick": [
+      44,
+      45,
+      46,
+      47
+     ]
+    }
+   },
+   "answer": "ABS(a - b)",
+   "unit": "Hz",
+   "tolerance": 0.01,
+   "work": "$f_B = |f_1 - f_2| = |{a} - {b}| = {answer}$ Hz",
+   "why": "The beat frequency is the difference between the two. The note heard is their average.",
+   "hint": "The difference.",
+   "added": true,
+   "after": "ox1-9"
   },
   {
    "type": "concept",
@@ -201,6 +264,22 @@
    "html": "<p>Now let us look for a pattern in the resonant frequencies for a simple tube that is closed at one end. The fundamental has <math><mrow><mrow><mrow><mi>λ</mi><mo stretchy=\"false\">=</mo><mn>4</mn><mi>L</mi></mrow></mrow></mrow></math>, and frequency is related to wavelength and the speed of sound as given by:</p><div class=\"eq\"><math><mrow><mrow><mrow><msub><mi>v</mi><mrow><mn>w</mn></mrow></msub><mo stretchy=\"false\">=</mo><mi>fλ.</mi></mrow></mrow></mrow></math></div><p>Solving for <math><mrow><mrow><mi>f</mi></mrow></mrow></math> in this equation gives</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mi>f</mi><mo stretchy=\"false\">=</mo><mfrac><msub><mi>v</mi><mrow><mn>w</mn></mrow></msub><mi>λ</mi></mfrac></mrow><mo stretchy=\"false\">=</mo><mfrac><msub><mi>v</mi><mrow><mn>w</mn></mrow></msub><mrow><mn>4</mn><mi>L</mi></mrow></mfrac></mrow><mo>,</mo></mrow><mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>v</mi><mrow><mn>w</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the speed of sound in air. Similarly, the first overtone has <math><mrow><mrow><mrow><mi>λ</mi><mo>′</mo><mo stretchy=\"false\">=</mo><mrow><mn>4</mn><mi>L</mi><mo stretchy=\"false\">/</mo><mn>3</mn></mrow></mrow></mrow></mrow></math> (see the figure), so that</p><div class=\"eq\"><math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mi>f</mi>\n                  <mrow>\n                  <mo>′</mo>\n                    <mo stretchy=\"false\">=</mo>\n                    <mn>3</mn>\n                  </mrow>\n                  <mrow>\n                    <mfrac>\n                      <msub>\n                        <mi>v</mi>\n\n                          <mrow>\n                            <mn>w</mn>\n                          </mrow>\n\n                      </msub>\n<mrow>\n                      <mn>4</mn><mi>L</mi></mrow>\n                    </mfrac>\n                    <mo stretchy=\"false\">=</mo>\n                    <mn>3</mn><mi>f</mi><mo>.</mo>\n                  </mrow>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math></div><p>Because <math><mrow><mrow><mrow><mi>f</mi><mo>′</mo><mo stretchy=\"false\">=</mo><mn>3</mn><mi>f</mi></mrow></mrow></mrow></math>, we call the first overtone the third harmonic. Continuing this process, we see a pattern that can be generalized in a single expression. The resonant frequencies of a tube closed at one end are</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><msub><mi>f</mi><mrow><mi>n</mi></mrow></msub><mo stretchy=\"false\">=</mo><mi>n</mi></mrow><mfrac><msub><mi>v</mi><mrow><mn>w</mn></mrow></msub><mrow><mn>4</mn><mi>L</mi></mrow></mfrac>\n\n<mrow><mtext>,</mtext><mspace width=\"0.25em\"></mspace><mi>n</mi><mo stretchy=\"false\">=</mo><mn>1,3,5</mn></mrow><mtext>,</mtext></mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>f</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the fundamental, <math><mrow><mrow><msub><mi>f</mi><mrow><mn>3</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the first overtone, and so on. It is interesting that the resonant frequencies depend on the speed of sound and, hence, on temperature. This dependence is the reason why musicians commonly bring their wind instruments to room temperature before playing them together with other types of instruments.</p>",
    "body": "Now let us look for a pattern in the resonant frequencies for a simple tube that is closed at one end. The fundamental has λ = 4 L , and frequency is related to wavelength and the speed of sound as given by: v w = fλ. Solving for f in this equation gives f = v w λ = v w 4 L , where v w is the speed of sound in air. Similarly, the first overtone has λ ′ = 4 L / 3 (see the figure), so that f ′ = 3 v w 4 L = 3 f . Because f ′ = 3 f , we call the first overtone the third harmonic. Continuing this process, we see a pattern that can be generalized in a single expression. The resonant frequencies of a tube closed at one end are f n = n v w 4 L , n = 1,3,5 , where f 1 is the fundamental, f 3 is the first overtone, and so on. It is interesting that the resonant frequencies depend on the speed of sound and, hence, on temperature. This dependence is the reason why musicians commonly bring their wind instruments to room temperature before playing them together with other types of instruments.",
    "id": "ox2-6"
+  },
+  {
+   "id": "q-closed-tube",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A tube closed at one end resonates at its fundamental. How long is the tube compared with the wavelength?",
+   "options": [
+    "A quarter of a wavelength",
+    "Half a wavelength",
+    "One wavelength",
+    "Two wavelengths"
+   ],
+   "answer": 0,
+   "why": "There must be a node at the closed end and an antinode at the open end: the shortest fit is a quarter wave, so $\\lambda = 4L$. A tube open at both ends has antinodes at both, so $\\lambda = 2L$.",
+   "added": true,
+   "after": "ox2-6"
   },
   {
    "type": "concept",

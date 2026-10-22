@@ -56,6 +56,22 @@
    "id": "ox1-2"
   },
   {
+   "id": "q-water-moves",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A wave passes along a rope. What travels along the rope?",
+   "options": [
+    "Energy, not the rope itself",
+    "The rope, a little each cycle",
+    "Both the rope and the energy",
+    "Nothing: it only looks like movement"
+   ],
+   "answer": 0,
+   "why": "Each bit of rope moves up and down about where it was. The disturbance, and the energy in it, moves along. Far out at sea, water particles move in circles and stay put in the same way.",
+   "added": true,
+   "after": "ox1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Waves",
@@ -72,6 +88,39 @@
    "id": "ox1-4"
   },
   {
+   "id": "q-v-num",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Wave crests are {lam} m apart and pass a post every {t} s. What is the wave speed?",
+   "vars": {
+    "lam": {
+     "pick": [
+      2,
+      5,
+      8,
+      10,
+      12
+     ]
+    },
+    "t": {
+     "pick": [
+      0.5,
+      2,
+      4,
+      5
+     ]
+    }
+   },
+   "answer": "lam / t",
+   "unit": "m/s",
+   "tolerance": 0.01,
+   "work": "$f = 1/T = 1 \\div {t}$; $v = f\\lambda = {lam} \\div {t} = {answer}$ m/s",
+   "why": "One wavelength passes in one period, so $v = \\lambda/T = f\\lambda$.",
+   "hint": "Wavelength ÷ period.",
+   "added": true,
+   "after": "ox1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Transverse and Longitudinal Waves",
@@ -86,6 +135,22 @@
    "html": "<figure><img src=\"media/openstax/college-physics-2e/Figure_17_09_05a.jpg\" alt=\"The figure shows a guitar connected to an amplifier and a man holding a sheet of paper facing the speaker attached to the amplifier. The strings of the guitar when played cause transverse waves. On the other hand, the sound of the guitar creates ripples on the sheet of paper causing it to rattle in a direction that shows that the sound waves are longitudinal.\"><figcaption>The wave on a guitar string is transverse. The sound wave rattles a sheet of paper in a direction that shows the sound wave is longitudinal.</figcaption></figure><p>Earthquake waves under Earth’s surface also have both longitudinal and transverse components (called compressional or P-waves and shear or S-waves, respectively). These components have important individual characteristics—they propagate at different speeds, for example. Earthquakes also have surface waves that are similar to surface waves on water.</p><div class=\"exercise\"><h4>Check Your Understanding</h4>\n\n        <div class=\"problem\"><p>Why is it important to differentiate between longitudinal and transverse waves?</p></div>\n<div class=\"solution\">        <p>In the different types of waves, energy can propagate in a different direction relative to the motion of the wave. This is important to understand how different types of waves affect the materials around them.</p></div>\n</div><div class=\"note interactive\"><h4>Wave on a String</h4>\n<p>Watch a string vibrate in slow motion. Wiggle the end of the string and make waves, or adjust the frequency and amplitude of an oscillator. Adjust the damping and tension. The end can be fixed, loose, or open.</p>\n\n</div>",
    "body": "The wave on a guitar string is transverse. The sound wave rattles a sheet of paper in a direction that shows the sound wave is longitudinal. Earthquake waves under Earth’s surface also have both longitudinal and transverse components (called compressional or P-waves and shear or S-waves, respectively). These components have important individual characteristics—they propagate at different speeds, for example. Earthquakes also have surface waves that are similar to surface waves on water. Check Your Understanding Why is it important to differentiate between longitudinal and transverse waves? In the different types of waves, energy can propagate in a different direction relative to the motion of the wave. This is important to understand how different types of waves affect the materials around them. Wave on a String Watch a string vibrate in slow motion. Wiggle the end of the string and make waves, or adjust the frequency and amplitude of an oscillator. Adjust the damping and tension. The end can be fixed, loose, or open.",
    "id": "ox1-6"
+  },
+  {
+   "id": "q-trans-long",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which of these is a longitudinal wave?",
+   "why": "Longitudinal: the disturbance is along the direction of travel, as squeezes and stretches. Transverse: across it. Fluids carry only longitudinal waves; solids carry both, which is why UT has compression and shear probes.",
+   "added": true,
+   "after": "ox1-6",
+   "options": [
+    "Sound in air",
+    "A wave on a guitar string",
+    "A shear wave in steel",
+    "A ripple on a pond"
+   ],
+   "answer": 0
   },
   {
    "type": "concept",
@@ -169,6 +234,22 @@
    "html": "<p>The speed of sound can change when sound travels from one medium to another. However, the frequency usually remains the same because it is like a driven oscillation and has the frequency of the original source. If\n\n<math><mrow><mrow><msub><mi>v</mi><mtext>w</mtext></msub></mrow><mrow></mrow></mrow></math>\n\nchanges and <math><mrow><mrow><mi>f</mi></mrow></mrow></math> remains the same, then the wavelength\n\n<math><mrow><mrow><mi>λ</mi></mrow></mrow></math>\n\nmust change. That is, because\n\n<math><mrow><mrow><msub><mi>v</mi><mtext>w</mtext></msub><mo stretchy=\"false\">=</mo><mi>fλ</mi></mrow></mrow></math>,\n\nthe higher the speed of a sound, the greater its wavelength for a given frequency.</p><div class=\"note\"><h4>Making Connections: Take-Home Investigation—Voice as a Sound Wave</h4>\n\n    <p>Suspend a sheet of paper so that the top edge of the paper is fixed and the bottom edge is free to move. You could tape the top edge of the paper to the edge of a table. Gently blow near the edge of the bottom of the sheet and note how the sheet moves. Speak softly and then louder such that the sounds hit the edge of the bottom of the paper, and note how the sheet moves. Explain the effects.</p>\n    </div><div class=\"exercise\"><h4>Check Your Understanding</h4>\n<div class=\"problem\">\n<p>\nImagine you observe two fireworks explode. You hear the explosion of one as soon as you see it. However, you see the other firework for several milliseconds before you hear the explosion. Explain why this is so.\n</p>\n</div>\n\n<div class=\"solution\">\n<p>\nSound and light both travel at definite speeds. The speed of sound is slower than the speed of light. The first firework is probably very close by, so the speed difference is not noticeable. The second firework is farther away, so the light arrives at your eyes noticeably sooner than the sound wave arrives at your ears.\n</p>\n</div>\n</div>",
    "body": "The speed of sound can change when sound travels from one medium to another. However, the frequency usually remains the same because it is like a driven oscillation and has the frequency of the original source. If v w changes and f remains the same, then the wavelength λ must change. That is, because v w = fλ , the higher the speed of a sound, the greater its wavelength for a given frequency. Making Connections: Take-Home Investigation—Voice as a Sound Wave Suspend a sheet of paper so that the top edge of the paper is fixed and the bottom edge is free to move. You could tape the top edge of the paper to the edge of a table. Gently blow near the edge of the bottom of the sheet and note how the sheet moves. Speak softly and then louder such that the sounds hit the edge of the bottom of the paper, and note how the sheet moves. Explain the effects. Check Your Understanding Imagine you observe two fireworks explode. You hear the explosion of one as soon as you see it. However, you see the other firework for several milliseconds before you hear the explosion. Explain why this is so. Sound and light both travel at definite speeds. The speed of sound is slower than the speed of light. The first firework is probably very close by, so the speed difference is not noticeable. The second firework is farther away, so the light arrives at your eyes noticeably sooner than the sound wave arrives at your ears.",
    "id": "ox2-6"
+  },
+  {
+   "id": "q-new-medium",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Sound passes from air into water, where it travels about four times faster. What changes?",
+   "options": [
+    "The wavelength, about four times longer",
+    "The frequency, four times higher",
+    "Both frequency and wavelength",
+    "Nothing"
+   ],
+   "answer": 0,
+   "why": "The frequency is set by the source and stays the same. With $v = f\\lambda$, a faster medium must mean a longer wavelength.",
+   "added": true,
+   "after": "ox2-6"
   },
   {
    "type": "concept",

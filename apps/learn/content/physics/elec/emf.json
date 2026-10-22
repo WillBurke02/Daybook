@@ -60,6 +60,22 @@
    "id": "ox1-3"
   },
   {
+   "id": "q-truck",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A truck battery and a motorcycle battery are both 12 V lead-acid. Why can the truck battery give far more current?",
+   "options": [
+    "Lower internal resistance",
+    "Higher EMF",
+    "Thicker cables",
+    "Higher terminal voltage"
+   ],
+   "answer": 0,
+   "why": "Same chemistry, same EMF. The bigger battery has more plate area, so a smaller internal resistance: less voltage is lost inside it at a high current.",
+   "added": true,
+   "after": "ox1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Internal Resistance",
@@ -82,6 +98,45 @@
    "html": "<p>The voltage output of a device is measured across its terminals and, thus, is called its <strong>terminal voltage</strong><math><mrow><mrow><mspace width=\"0.25em\"></mspace><mi>V</mi></mrow></mrow></math>. Terminal voltage is given by</p><div class=\"eq\"><math><mrow><mrow><mrow><mi>V</mi><mo stretchy=\"false\">=</mo><mrow><mtext>emf</mtext><mo stretchy=\"false\">−</mo><mstyle><mrow><mtext>Ir</mtext></mrow></mstyle></mrow></mrow></mrow><mrow></mrow><mo>,</mo></mrow></math></div><p>where <math><mrow><mrow><mi>r</mi></mrow></mrow></math> is the internal resistance and <math><mrow><mrow><mi>I</mi></mrow></mrow></math> is the current flowing at the time of the measurement.</p><p><math><mrow><mrow><mi>I</mi></mrow></mrow></math> is positive if current flows away from the positive terminal, as shown in the figure. You can see that the larger the current, the smaller the terminal voltage. And it is likewise true that the larger the internal resistance, the smaller the terminal voltage.</p><p>Suppose a load resistance <math><mrow><mrow><msub><mi>R</mi><mrow><mtext>load</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> is connected to a voltage source, as in the figure. Since the resistances are in series, the total resistance in the circuit is <math><mrow><mrow><mrow><msub><mi>R</mi><mrow><mtext>load</mtext></mrow></msub><mo stretchy=\"false\">+</mo><mi>r</mi></mrow></mrow></mrow></math>. Thus the current is given by Ohm’s law to be</p><div class=\"eq\"><math><mrow><mrow><mrow><mi>I</mi><mo stretchy=\"false\">=</mo><mfrac><mtext>emf</mtext><mrow><msub><mi>R</mi><mrow><mtext>load</mtext></mrow></msub><mo stretchy=\"false\">+</mo><mi>r</mi></mrow></mfrac></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div><figure><img src=\"media/openstax/college-physics-2e/Figure_22_02_05.jpg\" alt=\"This schematic drawing of an electrical circuit shows an e m f, labeled as script E, driving a current through a resistive load R sub load and through the internal resistance r of the voltage source. The current is shown flowing in a clockwise direction from the positive end of the source.\"><figcaption>Schematic of a voltage source and its load <math><mrow><mrow><msub><mi>R</mi><mrow><mtext>load</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>. Since the internal resistance <math><mrow><mrow><mi>r</mi></mrow></mrow></math> is in series with the load, it can significantly affect the terminal voltage and current delivered to the load.  (Note that the script E stands for emf.)</figcaption></figure><p>We see from this expression that the smaller the internal resistance <math><mrow><mrow><mi>r</mi></mrow></mrow></math>, the greater the current the voltage source supplies to its load <math><mrow><mrow><msub><mi>R</mi><mrow><mtext>load</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>. As batteries are depleted, <math><mrow><mrow><mi>r</mi></mrow></mrow></math> increases. If <math><mrow><mrow><mi>r</mi></mrow></mrow></math> becomes a significant fraction of the load resistance, then the current is significantly reduced, as the following example illustrates.</p>",
    "body": "The voltage output of a device is measured across its terminals and, thus, is called its terminal voltage V . Terminal voltage is given by V = emf − Ir , where r is the internal resistance and I is the current flowing at the time of the measurement. I is positive if current flows away from the positive terminal, as shown in the figure. You can see that the larger the current, the smaller the terminal voltage. And it is likewise true that the larger the internal resistance, the smaller the terminal voltage. Suppose a load resistance R load is connected to a voltage source, as in the figure. Since the resistances are in series, the total resistance in the circuit is R load + r . Thus the current is given by Ohm’s law to be I = emf R load + r . Schematic of a voltage source and its load R load . Since the internal resistance r is in series with the load, it can significantly affect the terminal voltage and current delivered to the load. (Note that the script E stands for emf.) We see from this expression that the smaller the internal resistance r , the greater the current the voltage source supplies to its load R load . As batteries are depleted, r increases. If r becomes a significant fraction of the load resistance, then the current is significantly reduced, as the following example illustrates.",
    "id": "ox1-6"
+  },
+  {
+   "id": "q-vt",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A battery has an EMF of {e} V and an internal resistance of {r} Ω. What is its terminal voltage when it supplies {i} A?",
+   "vars": {
+    "e": {
+     "pick": [
+      12,
+      24,
+      48
+     ]
+    },
+    "r": {
+     "pick": [
+      0.02,
+      0.05,
+      0.1,
+      0.2
+     ]
+    },
+    "i": {
+     "pick": [
+      5,
+      10,
+      20,
+      40
+     ]
+    }
+   },
+   "answer": "e - i * r",
+   "unit": "V",
+   "tolerance": 0.005,
+   "work": "$V = \\varepsilon - Ir = {e} - {i} \\times {r} = {answer}$ V",
+   "why": "Some of the EMF is used driving the current through the battery itself. The more current, the more is lost: $Ir$.",
+   "hint": "EMF minus current × internal resistance.",
+   "added": true,
+   "after": "ox1-6"
   },
   {
    "type": "concept",
@@ -124,6 +179,22 @@
    "id": "ox1-11"
   },
   {
+   "id": "q-series-src",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two cells, each 1.5 V with 0.1 Ω internal resistance, are put in series, the same way round. What do you get?",
+   "options": [
+    "3.0 V with 0.2 Ω",
+    "3.0 V with 0.1 Ω",
+    "1.5 V with 0.05 Ω",
+    "1.5 V with 0.2 Ω"
+   ],
+   "answer": 0,
+   "why": "In series the EMFs add (taking direction into account) and so do the internal resistances. Turn one round and the EMFs subtract, as in a battery charger.",
+   "added": true,
+   "after": "ox1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Multiple Voltage Sources",
@@ -162,6 +233,22 @@
    "html": "<div class=\"note\">\n    <h4>Take-Home Experiment: Virtual Solar Cells</h4>\n    <p>One can assemble a “virtual” solar cell array by using playing cards, or business or index cards, to represent a solar cell. Combinations of these cards in series and/or parallel can model the required array output. Assume each card has an output of 0.5 V and a current (under bright light) of 2 A. Using your cards, how would you arrange them to produce an output of 6 A at 3 V (18 W)?</p>\n    <p>Suppose you were told that you needed only 18 W (but no required voltage). Would you need more cards to make this arrangement?</p>\n    </div>",
    "body": "Take-Home Experiment: Virtual Solar Cells One can assemble a “virtual” solar cell array by using playing cards, or business or index cards, to represent a solar cell. Combinations of these cards in series and/or parallel can model the required array output. Assume each card has an output of 0.5 V and a current (under bright light) of 2 A. Using your cards, how would you arrange them to produce an output of 6 A at 3 V (18 W)? Suppose you were told that you needed only 18 W (but no required voltage). Would you need more cards to make this arrangement?",
    "id": "ox1-16"
+  },
+  {
+   "id": "q-solar",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Solar cells give a small voltage each. How are they wired to get a higher voltage?",
+   "options": [
+    "In series",
+    "In parallel",
+    "Either way",
+    "Through a resistor"
+   ],
+   "answer": 0,
+   "why": "Series adds the voltages; parallel adds the currents. Arrays use both: strings in series for voltage, strings in parallel for current.",
+   "added": true,
+   "after": "ox1-16"
   },
   {
    "type": "concept",

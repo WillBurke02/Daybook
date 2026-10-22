@@ -50,6 +50,22 @@
    "id": "ox1-3"
   },
   {
+   "id": "q-acc-prec",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A 10.00 mm gauge block measures 10.31, 10.32 and 10.31 mm. The readings are:",
+   "options": [
+    "Precise but not accurate",
+    "Accurate but not precise",
+    "Both accurate and precise",
+    "Neither"
+   ],
+   "answer": 0,
+   "why": "They agree closely with each other (precise) but are all about 0.3 mm off the true value (not accurate): a sign of a systematic error, such as a zero error or a worn anvil.",
+   "added": true,
+   "after": "ox1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Accuracy, Precision, and Uncertainty",
@@ -74,6 +90,38 @@
    "id": "ox1-6"
   },
   {
+   "id": "q-pct",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A length is measured as {l} ± {d} mm. What is the percentage uncertainty?",
+   "vars": {
+    "l": {
+     "pick": [
+      25,
+      48,
+      120,
+      250,
+      400
+     ]
+    },
+    "d": {
+     "pick": [
+      0.1,
+      0.2,
+      0.5,
+      1
+     ]
+    }
+   },
+   "answer": "d / l * 100",
+   "unit": "%",
+   "work": "${d} \\div {l} \\times 100 = {answer}$%",
+   "why": "%unc = δA ÷ A × 100. The same ±0.5 mm matters far more on 25 mm than on 400 mm.",
+   "hint": "Uncertainty ÷ value × 100.",
+   "added": true,
+   "after": "ox1-6"
+  },
+  {
    "type": "concept",
    "stage": "example",
    "title": "Example: Calculating Percent Uncertainty: A Bag of Apples",
@@ -88,6 +136,22 @@
    "html": "<p>There is an uncertainty in anything calculated from measured quantities. For example, the area of a floor calculated from measurements of its length and width has an uncertainty because the length and width have uncertainties. How big is the uncertainty in something you calculate by multiplication or division? If the measurements going into the calculation have small uncertainties (a few percent or less), then the <strong>method of adding percents</strong> can be used for multiplication or division. This method says that <em>the percent uncertainty in a quantity calculated by multiplication or division is the sum of the percent uncertainties in the items used to make the calculation</em>. For example, if a floor has a length of <math><mrow><mrow><mrow><mn>4</mn><mtext>.</mtext><mtext>00</mtext><mspace width=\"0.25em\"></mspace><mtext> m</mtext></mrow></mrow></mrow></math> and a width of <math><mrow><mrow><mrow><mn>3</mn><mtext>.</mtext><mtext>00</mtext><mspace width=\"0.25em\"></mspace><mtext> m</mtext></mrow></mrow></mrow></math>, with uncertainties of <math><mrow><mrow><mrow><mn>2%</mn><mtext></mtext></mrow></mrow></mrow></math> and <math><mrow><mrow><mrow><mn>1%</mn><mtext></mtext></mrow></mrow></mrow></math>, respectively, then the area of the floor is <math><mrow><mrow><mrow><mtext>12</mtext><mtext>.</mtext><mn>0</mn><mspace width=\"0.25em\"></mspace><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math> and has an uncertainty of <math><mrow><mrow><mrow><mn>3%</mn><mtext></mtext></mrow></mrow></mrow></math>. (Expressed as an area this is <math><mrow><mrow><mrow><mn>0</mn><mtext>.</mtext><mtext>36</mtext><mspace width=\"0.25em\"></mspace><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math>, which we round to <math><mrow><mrow><mrow><mn>0</mn><mtext>.</mtext><mn>4</mn><mspace width=\"0.25em\"></mspace><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math> since the area of the floor is given to a tenth of a square meter.)</p><div class=\"exercise\"><h4>Check Your Understanding</h4>\n\n    <div class=\"problem\">\n   <p>A high school track coach has just purchased a new stopwatch. The stopwatch manual states that the stopwatch has an uncertainty of ±0.05 s. The team&#x27;s top sprinter clocked a 100 meter sprint at 12.04 seconds last week and at 11.96 seconds this week. Can we conclude that this week&#x27;s time was faster?</p></div>\n<div class=\"solution\">\n\n    <p>No, the uncertainty in the stopwatch is too great to effectively differentiate between the sprint times.</p>\n    </div></div>",
    "body": "There is an uncertainty in anything calculated from measured quantities. For example, the area of a floor calculated from measurements of its length and width has an uncertainty because the length and width have uncertainties. How big is the uncertainty in something you calculate by multiplication or division? If the measurements going into the calculation have small uncertainties (a few percent or less), then the method of adding percents can be used for multiplication or division. This method says that the percent uncertainty in a quantity calculated by multiplication or division is the sum of the percent uncertainties in the items used to make the calculation . For example, if a floor has a length of 4 . 00 m and a width of 3 . 00 m , with uncertainties of 2% and 1% , respectively, then the area of the floor is 12 . 0 m 2 and has an uncertainty of 3% . (Expressed as an area this is 0 . 36 m 2 , which we round to 0 . 4 m 2 since the area of the floor is given to a tenth of a square meter.) Check Your Understanding A high school track coach has just purchased a new stopwatch. The stopwatch manual states that the stopwatch has an uncertainty of ±0.05 s. The team&#x27;s top sprinter clocked a 100 meter sprint at 12.04 seconds last week and at 11.96 seconds this week. Can we conclude that this week&#x27;s time was faster? No, the uncertainty in the stopwatch is too great to effectively differentiate between the sprint times.",
    "id": "ox1-8"
+  },
+  {
+   "id": "q-mult-unc",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A floor's length has 2% uncertainty and its width 3%. About what is the uncertainty in its area?",
+   "options": [
+    "5%",
+    "6%",
+    "1%",
+    "3%"
+   ],
+   "answer": 0,
+   "why": "When quantities are multiplied or divided, their percentage uncertainties add: 2% + 3% = 5%.",
+   "added": true,
+   "after": "ox1-8"
   },
   {
    "type": "concept",
@@ -106,6 +170,22 @@
    "id": "ox1-10"
   },
   {
+   "id": "q-sigfig",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How many significant figures are in 0.0520?",
+   "options": [
+    "3",
+    "2",
+    "4",
+    "5"
+   ],
+   "answer": 0,
+   "why": "The leading zeros only place the decimal point. The 5 and the 2 count, and so does the final zero, since it was written on purpose: it says the value is known to that place.",
+   "added": true,
+   "after": "ox1-10"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Significant Figures in Calculations",
@@ -120,6 +200,22 @@
    "html": "<div class=\"eq\"><math>\n        \n          <mrow>\n            <mrow>\n              <mtable>\n  \n  <mtr>\n    <mtd><mphantom>\n<mo stretchy=\"false\">+</mo>\n<mn>1</mn>\n</mphantom>\n          <mn>7.56</mn>\n          <mphantom>\n            <mn>0</mn>\n          </mphantom>\n          <mspace width=\"0.25em\"></mspace>\n          <mtext>kg</mtext>\n<mphantom>\n      <mo stretchy=\"false\">=</mo>\n      <mn>15.2</mn>\n      <mspace width=\"0.25em\"></mspace>\n      <mtext>kg</mtext>\n      <mtext>.</mtext>\n</mphantom>\n    </mtd></mtr>\n\n  \n  <mtr>\n    <mtd><mo stretchy=\"false\">-</mo>\n<mphantom>\n<mn>1</mn>\n</mphantom>\n          <mn>6.052</mn>\n          <mspace width=\"0.25em\"></mspace>\n          <mtext>kg</mtext>\n<mphantom>\n      <mo stretchy=\"false\">=</mo>\n      <mn>15.2</mn>\n      <mspace width=\"0.25em\"></mspace>\n      <mtext>kg</mtext>\n      <mtext>.</mtext>\n</mphantom>\n    </mtd></mtr>\n  \n  <mtr>\n    <mtd><mfrac>\n        <mrow>\n          <mo stretchy=\"false\">+</mo>\n          <mn>13.7</mn>\n          <mphantom>\n            <mn>00</mn>\n          </mphantom>\n          <mspace width=\"0.25em\"></mspace>\n          <mtext>kg</mtext>\n        </mrow>\n        <mrow>\n          <mphantom>\n            <mo>+</mo>\n          </mphantom>\n          <mn>15.208</mn>\n          <mspace width=\"0.25em\"></mspace>\n          <mtext>kg</mtext>\n        </mrow>\n      </mfrac>\n      <mo stretchy=\"false\">=</mo>\n      <mn>15.2</mn>\n      <mspace width=\"0.25em\"></mspace>\n      <mtext>kg</mtext>\n      <mtext>.</mtext>\n    </mtd></mtr>\n              </mtable>\n            </mrow>\n          </mrow>\n      </math></div><p>Next, we identify the least precise measurement: 13.7 kg. This measurement is expressed to the 0.1 decimal place, so our final answer must also be expressed to the 0.1 decimal place. Thus, the answer is rounded to the tenths place, giving us 15.2 kg.</p>",
    "body": "+ 1 7.56 0 kg = 15.2 kg . - 1 6.052 kg = 15.2 kg . + 13.7 00 kg + 15.208 kg = 15.2 kg . Next, we identify the least precise measurement: 13.7 kg. This measurement is expressed to the 0.1 decimal place, so our final answer must also be expressed to the 0.1 decimal place. Thus, the answer is rounded to the tenths place, giving us 15.2 kg.",
    "id": "ox1-12"
+  },
+  {
+   "id": "q-add-dp",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two masses, 2.5 kg and 13.72 kg, are added. How should the answer be written?",
+   "options": [
+    "16.2 kg",
+    "16.22 kg",
+    "16 kg",
+    "16.220 kg"
+   ],
+   "answer": 0,
+   "why": "For adding and subtracting, the answer keeps the decimal places of the least precise value: 2.5 is to 0.1 kg, so 16.22 rounds to 16.2. For multiplying, count significant figures instead.",
+   "added": true,
+   "after": "ox1-12"
   },
   {
    "type": "concept",

@@ -78,6 +78,22 @@
    "id": "wikipedia1-7"
   },
   {
+   "id": "q-x10-probe",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why are ×10 probes the usual choice over ×1?",
+   "options": [
+    "They load the circuit far less",
+    "They make signals bigger",
+    "They need no earth clip",
+    "They remove noise completely"
+   ],
+   "answer": 0,
+   "why": "The 9 MΩ in the probe and the scope's 1 MΩ make a 10:1 divider: the circuit sees about 10 MΩ and much less capacitance, so it is disturbed less. The cost is a signal ten times smaller on screen.",
+   "added": true,
+   "after": "wikipedia1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Size and portability",
@@ -182,6 +198,22 @@
    "id": "wikipedia1-20"
   },
   {
+   "id": "q-trigger",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The scope is in normal trigger mode and the screen is blank. What is the likely reason?",
+   "options": [
+    "Nothing is crossing the trigger level",
+    "The probe is ×10",
+    "The time base is too slow",
+    "The scope is in X-Y mode"
+   ],
+   "answer": 0,
+   "why": "Normal mode sweeps only when the signal crosses the trigger level. Auto mode free-runs when there are no triggers, so a trace always shows: a good first step to find the signal, then set the level.",
+   "added": true,
+   "after": "wikipedia1-20"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Single sweeps",
@@ -238,6 +270,22 @@
    "id": "wikipedia1-27"
   },
   {
+   "id": "q-xy",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does X-Y mode plot?",
+   "options": [
+    "One voltage against another",
+    "Voltage against time",
+    "Two signals over time",
+    "Frequency against amplitude"
+   ],
+   "answer": 0,
+   "why": "Channel 1 moves the spot sideways, channel 2 up and down, with no time base. It draws I-V curves of diodes and shows phase between two signals.",
+   "added": true,
+   "after": "wikipedia1-27"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Z input",
@@ -260,6 +308,31 @@
    "html": "<p>For example, an oscilloscope with a rise time of 1 nanosecond would have a bandwidth of 350 MHz.</p><p>In analog instruments, the bandwidth of the oscilloscope is limited by the vertical amplifiers and the CRT or other display subsystem. In digital instruments, the sampling rate of the <a href=\"https://en.wikipedia.org/wiki/Analog-to-digital_converter\">analog-to-digital converter</a> (ADC) is a factor, but the stated analog bandwidth (and therefore the overall bandwidth of the instrument) is usually less than the ADC's <a href=\"https://en.wikipedia.org/wiki/Nyquist_frequency\">Nyquist frequency</a>. This is due to limitations in the analog signal amplifier, deliberate design of the <a href=\"https://en.wikipedia.org/wiki/Anti-aliasing_filter\">anti-aliasing filter</a> that precedes the ADC, or both.</p><p>For a digital oscilloscope, a rule of thumb is that the continuous sampling rate should be ten times the highest frequency desired to resolve; for example a 20 megasample/second rate would be applicable for measuring signals up to about 2 MHz. This lets the anti-aliasing filter be designed with a 3 dB down point of 2 MHz and an effective cutoff at 10 MHz (the Nyquist frequency), avoiding the artifacts of a very steep <a href=\"https://en.wikipedia.org/wiki/Brick-wall_filter\">(\"brick-wall\") filter</a>.</p><p>A <a href=\"https://en.wikipedia.org/wiki/Oscilloscope_types#Digital_sampling_oscilloscopes\">sampling oscilloscope</a> can display signals of considerably higher frequency than the sampling rate if the signals are exactly, or nearly, repetitive. It does this by taking one sample from each successive repetition of the input waveform, each sample being at an increased time interval from the trigger event. The waveform is then displayed from these collected samples. This mechanism is referred to as \"equivalent-time sampling\". Some oscilloscopes can operate in either this mode or in the more traditional \"real-time\" mode at the operator's choice.</p>",
    "body": "For example, an oscilloscope with a rise time of 1 nanosecond would have a bandwidth of 350 MHz. In analog instruments, the bandwidth of the oscilloscope is limited by the vertical amplifiers and the CRT or other display subsystem. In digital instruments, the sampling rate of the analog-to-digital converter (ADC) is a factor, but the stated analog bandwidth (and therefore the overall bandwidth of the instrument) is usually less than the ADC's Nyquist frequency . This is due to limitations in the analog signal amplifier, deliberate design of the anti-aliasing filter that precedes the ADC, or both. For a digital oscilloscope, a rule of thumb is that the continuous sampling rate should be ten times the highest frequency desired to resolve; for example a 20 megasample/second rate would be applicable for measuring signals up to about 2 MHz. This lets the anti-aliasing filter be designed with a 3 dB down point of 2 MHz and an effective cutoff at 10 MHz (the Nyquist frequency), avoiding the artifacts of a very steep (\"brick-wall\") filter . A sampling oscilloscope can display signals of considerably higher frequency than the sampling rate if the signals are exactly, or nearly, repetitive. It does this by taking one sample from each successive repetition of the input waveform, each sample being at an increased time interval from the trigger event. The waveform is then displayed from these collected samples. This mechanism is referred to as \"equivalent-time sampling\". Some oscilloscopes can operate in either this mode or in the more traditional \"real-time\" mode at the operator's choice.",
    "id": "wikipedia1-30"
+  },
+  {
+   "id": "q-bw",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A scope's rise time is {tr} ns. Roughly what is its bandwidth, in MHz?",
+   "vars": {
+    "tr": {
+     "pick": [
+      0.35,
+      0.7,
+      1,
+      1.75,
+      3.5,
+      7
+     ]
+    }
+   },
+   "answer": "350 / tr",
+   "unit": "MHz",
+   "work": "$BW \\approx 0.35 / t_r = 0.35 \\div ({tr} \\times 10^{-9}) = {answer}$ MHz",
+   "why": "Bandwidth × rise time ≈ 0.35, as in the text: 1 ns goes with 350 MHz.",
+   "hint": "0.35 divided by the rise time.",
+   "added": true,
+   "after": "wikipedia1-30"
   },
   {
    "type": "concept",
@@ -324,6 +397,22 @@
    "html": "<p>A <a href=\"https://en.wikipedia.org/wiki/Logic_analyzer\">logic analyzer</a> is similar to an oscilloscope, but for each input signal only provides the <a href=\"https://en.wikipedia.org/wiki/Logic_level\">logic level</a> without the shape of its analog waveform. A mixed-signal oscilloscope (or MSO) meanwhile has two kinds of inputs: a small number of analog channels (typically two or four), and a larger number of logic channels (typically sixteen). It provides the ability to accurately time-correlate analog and logic signals, thus offering a distinct advantage over a separate oscilloscope and logic analyzer. Typically, logic channels may be grouped and displayed as a bus with each bus value displayed at the bottom of the display in hexadecimal or binary. On most MSOs, the trigger can be set across both analog and logic channels.</p>",
    "body": "A logic analyzer is similar to an oscilloscope, but for each input signal only provides the logic level without the shape of its analog waveform. A mixed-signal oscilloscope (or MSO) meanwhile has two kinds of inputs: a small number of analog channels (typically two or four), and a larger number of logic channels (typically sixteen). It provides the ability to accurately time-correlate analog and logic signals, thus offering a distinct advantage over a separate oscilloscope and logic analyzer. Typically, logic channels may be grouped and displayed as a bus with each bus value displayed at the bottom of the display in hexadecimal or binary. On most MSOs, the trigger can be set across both analog and logic channels.",
    "id": "wikipedia1-38"
+  },
+  {
+   "id": "q-logic",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does a logic analyser show a signal, compared with a scope?",
+   "options": [
+    "Only high or low, not the waveform's shape",
+    "Only the shape, not the timing",
+    "Only the frequency",
+    "Only the average voltage"
+   ],
+   "answer": 0,
+   "why": "A logic analyser shows each input as a 1 or a 0, across many channels at once: right for buses. A scope shows the real shape: ringing, slow edges, noise.",
+   "added": true,
+   "after": "wikipedia1-38"
   },
   {
    "type": "concept",

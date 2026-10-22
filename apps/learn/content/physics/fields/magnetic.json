@@ -103,6 +103,22 @@
    "id": "ox1-4"
   },
   {
+   "id": "q-mag-lines",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Outside a bar magnet, which way do the field lines run?",
+   "options": [
+    "From north to south",
+    "From south to north",
+    "Both ways at once",
+    "Straight out from each end"
+   ],
+   "answer": 0,
+   "why": "Outside, they leave the north pole and enter the south; inside, they carry on from south to north, so every line is a closed loop. That is the way a compass needle's north end points.",
+   "added": true,
+   "after": "ox1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Magnetic Field Strength: Force on a Moving Charge in a Magnetic Field",
@@ -141,6 +157,22 @@
    "html": "<ul><li>Magnetic fields exert a force on a moving charge <em>q</em>, the magnitude of which is\n    <div class=\"eq\"><math><mrow><mrow><mrow><mrow><mi>F</mi><mo stretchy=\"false\">=</mo><mstyle><mrow><mtext>qvB</mtext></mrow></mstyle></mrow><mspace width=\"0.25em\"></mspace><mtext>sin</mtext><mspace width=\"0.25em\"></mspace><mi>θ</mi></mrow><mo>,</mo></mrow><mrow></mrow></mrow></math></div>\nwhere <math><mrow><mrow><mi>θ</mi></mrow></mrow></math> is the angle between the directions of <math><mrow><mrow><mi>v</mi></mrow></mrow></math> and <math><mrow><mrow><mi>B</mi></mrow></mrow></math>.\n</li><li>The SI unit for magnetic field strength <math><mrow><mrow><mi>B</mi></mrow></mrow></math> is the tesla (T), which is related to other units by\n    <div class=\"eq\"><math><mrow><mrow><mrow><mn>1 T</mn><mrow><mrow><mo stretchy=\"false\">=</mo><mfrac><mtext>1 N</mtext><mrow><mn>C</mn><mo stretchy=\"false\">⋅</mo><mtext>m/s</mtext></mrow></mfrac></mrow><mo stretchy=\"false\">=</mo><mfrac><mrow><mtext>1 N</mtext></mrow><mrow><mn>A</mn><mo stretchy=\"false\">⋅</mo><mn>m</mn></mrow></mfrac></mrow></mrow></mrow><mo>.</mo></mrow></math></div>\n    </li><li>The <em>direction</em> of the force on a moving charge is given by right hand rule 1 (RHR-1): Point the thumb of the right hand in the direction of <math><mrow><mrow><mi>v</mi></mrow></mrow></math>, the fingers in the direction of <math><mrow><mrow><mi>B</mi></mrow></mrow></math>, and a perpendicular to the palm points in the direction of <math><mrow><mrow><mi>F</mi></mrow></mrow></math>.</li><li>The force is perpendicular to the plane formed by <math><mrow><mrow><mtext mathvariant=\"bold\">v</mtext></mrow></mrow></math> and <math><mrow><mrow><mtext mathvariant=\"bold\">B</mtext></mrow></mrow></math>. Since the force is zero if <math><mrow><mrow><mtext mathvariant=\"bold\">v</mtext></mrow></mrow></math> is parallel to <math><mrow><mrow><mtext mathvariant=\"bold\">B</mtext></mrow></mrow></math>, charged particles often follow magnetic field lines rather than cross them.</li></ul>",
    "body": "Magnetic fields exert a force on a moving charge q , the magnitude of which is F = qvB sin θ , where θ is the angle between the directions of v and B . The SI unit for magnetic field strength B is the tesla (T), which is related to other units by 1 T = 1 N C ⋅ m/s = 1 N A ⋅ m . The direction of the force on a moving charge is given by right hand rule 1 (RHR-1): Point the thumb of the right hand in the direction of v , the fingers in the direction of B , and a perpendicular to the palm points in the direction of F . The force is perpendicular to the plane formed by v and B . Since the force is zero if v is parallel to B , charged particles often follow magnetic field lines rather than cross them.",
    "id": "ox2-5"
+  },
+  {
+   "id": "q-parallel",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "An electron moves exactly along a magnetic field line. What force does the field put on it?",
+   "options": [
+    "None",
+    "Along its motion",
+    "At right angles to its motion",
+    "Opposite its motion"
+   ],
+   "answer": 0,
+   "why": "$F = qvB\\sin\\theta$, and θ = 0 along the field: sin 0 = 0. The force is largest at right angles to the field, and is always at right angles to both $v$ and $B$.",
+   "added": true,
+   "after": "ox2-5"
   },
   {
    "type": "flash",
@@ -269,6 +301,38 @@
    "id": "ox4-3"
   },
   {
+   "id": "q-wire-b",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A long straight cable carries {i} A. What is the magnetic field {r} cm from it, in µT? (μ₀ = 4π × 10⁻⁷ T·m/A)",
+   "vars": {
+    "i": {
+     "pick": [
+      10,
+      50,
+      100,
+      500
+     ]
+    },
+    "r": {
+     "pick": [
+      1,
+      2,
+      5,
+      10,
+      50
+     ]
+    }
+   },
+   "answer": "2e-7 * i / (r / 100) * 1e6",
+   "unit": "µT",
+   "work": "$B = \\frac{\\mu_0 I}{2\\pi r} = \\frac{4\\pi \\times 10^{-7} \\times {i}}{2\\pi \\times {r}/100} = {answer}$ µT",
+   "why": "μ₀/2π is 2 × 10⁻⁷, which saves a step. For comparison, the Earth's field is about 50 µT, which is why big cables upset compasses.",
+   "hint": "B = μ₀I ÷ (2πr), r in metres, then × 10⁶ for µT.",
+   "added": true,
+   "after": "ox4-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Ampere’s Law and Others",
@@ -323,6 +387,22 @@
    "html": "<ul><li>The strength of the magnetic field created by current in a long straight wire is given by\n    <div class=\"eq\"><math>\n        \n          <mrow>\n            <mrow>\n              <mrow>\n                <mrow>\n                  <mi>B</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mfrac>\n                    <mrow>\n                      <msub>\n                        <mi>μ</mi>\n                        <mrow>\n                          <mn>0</mn>\n                        </mrow>\n                      </msub>\n                      <mi>I</mi>\n                    </mrow><mrow>\n                    <mn>2</mn><mi>πr</mi></mrow>\n                  </mfrac>\n                </mrow>\n                <mi></mi>\n                <mo stretchy=\"false\">(</mo>\n                <mtext>long straight wire</mtext>\n                <mo stretchy=\"false\">)</mo>\n                <mi>,</mi>\n              </mrow>\n            </mrow>\n          </mrow>\n        \n      </math>\n    </div>\nwhere <math><mrow><mrow><mi>I</mi></mrow></mrow></math> is the current, <math><mrow><mrow><mi>r</mi></mrow></mrow></math> is the shortest distance to the wire, and the constant <math><mrow><mrow><mrow><mrow><msub><mi>μ</mi><mrow><mn>0</mn></mrow></msub><mo stretchy=\"false\">=</mo><mrow><mn>4π</mn><mspace width=\"0.15em\"></mspace><mo stretchy=\"false\">×</mo><mspace width=\"0.15em\"></mspace><msup><mtext>10</mtext><mrow><mrow><mo stretchy=\"false\">−</mo><mn>7</mn></mrow></mrow></msup><mspace width=\"0.25em\"></mspace></mrow></mrow><mrow><mtext>T</mtext><mo stretchy=\"false\">⋅</mo><mtext>m/A</mtext></mrow></mrow></mrow></mrow></math> is the permeability of free space.</li><li>The direction of the magnetic field created by a long straight wire is given by right hand rule 2 (RHR-2): <em>Point the thumb of the right hand in the direction of current, and the fingers curl in the direction of the magnetic field loops</em> created by it.</li><li>The magnetic field created by current following any path is the sum (or integral) of the fields due to segments along the path (magnitude and direction as for a straight wire), resulting in a general relationship between current and field known as Ampere’s law.</li><li>The magnetic field strength at the center of a circular loop is given by\n    <div class=\"eq\"><math>\n        \n          <mrow>\n            <mrow>\n              <mrow>\n                <mrow>\n                  <mi>B</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mfrac>\n                    <mrow>\n                      <msub>\n                        <mi>μ</mi>\n                        <mrow>\n                          <mn>0</mn>\n                        </mrow>\n                      </msub>\n                      <mi>I</mi>\n                    </mrow><mrow>\n                    <mn>2</mn><mi>R</mi></mrow>\n                  </mfrac>\n                </mrow>\n                <mtext></mtext>\n                <mo stretchy=\"false\">(</mo>\n                <mtext>at center of loop</mtext>\n                <mo stretchy=\"false\">)</mo>\n                <mi>,</mi>\n              </mrow>\n            </mrow>\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div>\nwhere <math><mrow><mrow><mi>R</mi></mrow></mrow></math> is the radius of the loop. This equation becomes <math><mrow><mrow><mrow><mrow><mi>B</mi><mo stretchy=\"false\">=</mo><msub><mi>μ</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow><mstyle><mrow><mtext>nI</mtext></mrow></mstyle><mo stretchy=\"false\">/</mo><mo stretchy=\"false\">(</mo></mrow><mn>2</mn><mi>R</mi><mo stretchy=\"false\">)</mo></mrow></mrow></mrow></math> for a flat coil of <math><mrow><mrow><mi>N</mi></mrow></mrow></math> loops. RHR-2 gives the direction of the field about the loop. A long coil is called a solenoid.</li><li>The magnetic field strength inside a solenoid is\n    <div class=\"eq\"><math>\n        \n          <mrow>\n            <mrow>\n              <mrow>\n                <mrow>\n                  <mi>B</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <msub>\n                    <mi>μ</mi>\n                    <mrow>\n                      <mn>0</mn>\n                    </mrow>\n                  </msub>\n                </mrow>\n                <mstyle>\n                  <mrow>\n                    <mtext>nI</mtext>\n                  </mrow>\n                </mstyle>\n               <mspace width=\"0.25em\"></mspace><mspace width=\"0.25em\"></mspace>\n                <mo stretchy=\"false\">(</mo>\n                <mtext>inside a solenoid</mtext>\n                <mo stretchy=\"false\">)</mo>\n                <mi>,</mi>\n              </mrow>\n            </mrow>\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div>\nwhere <math><mrow><mrow><mi>n</mi></mrow></mrow></math> is the number of loops per unit length of the solenoid. The field inside is very uniform in magnitude and direction.</li></ul>",
    "body": "The strength of the magnetic field created by current in a long straight wire is given by B = μ 0 I 2 πr ( long straight wire ) , where I is the current, r is the shortest distance to the wire, and the constant μ 0 = 4π × 10 − 7 T ⋅ m/A is the permeability of free space. The direction of the magnetic field created by a long straight wire is given by right hand rule 2 (RHR-2): Point the thumb of the right hand in the direction of current, and the fingers curl in the direction of the magnetic field loops created by it. The magnetic field created by current following any path is the sum (or integral) of the fields due to segments along the path (magnitude and direction as for a straight wire), resulting in a general relationship between current and field known as Ampere’s law. The magnetic field strength at the center of a circular loop is given by B = μ 0 I 2 R ( at center of loop ) , where R is the radius of the loop. This equation becomes B = μ 0 nI / ( 2 R ) for a flat coil of N loops. RHR-2 gives the direction of the field about the loop. A long coil is called a solenoid. The magnetic field strength inside a solenoid is B = μ 0 nI ( inside a solenoid ) , where n is the number of loops per unit length of the solenoid. The field inside is very uniform in magnitude and direction.",
    "id": "ox4-10"
+  },
+  {
+   "id": "q-solenoid",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A solenoid is rewound with twice as many turns over the same length, same current. What happens to the field inside?",
+   "options": [
+    "It doubles",
+    "It halves",
+    "It is four times",
+    "It stays the same"
+   ],
+   "answer": 0,
+   "why": "$B = \\mu_0 n I$, with $n$ the turns per metre. Twice the turns per metre, twice the field. The diameter does not appear, as long as the coil is long.",
+   "added": true,
+   "after": "ox4-10"
   },
   {
    "id": "add-motor-steps",

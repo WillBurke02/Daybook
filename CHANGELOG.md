@@ -1,5 +1,12 @@
 # Changes
 
+## 4.0.39 — 22 October 2026
+
+- **Questions inside the Physics book lessons**: EMF and internal resistance, the oscilloscope, accuracy and
+  uncertainty, electric and magnetic fields, induction, waves and superposition now ask after each section:
+  33 new questions, among them terminal voltage, a scope's bandwidth from its rise time, percentage
+  uncertainty, Faraday's law, the field round a cable in µT, and beats between two motors.
+
 ## 4.0.38 — 22 October 2026
 
 - **Questions inside the Mechanical book lessons**: bearings, screws, friction, guides, fatigue, DFMA,
