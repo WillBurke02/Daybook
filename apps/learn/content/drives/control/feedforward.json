@@ -38,6 +38,22 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-ballistic",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is pure feedforward sometimes called **ballistic**?",
+   "options": [
+    "Once sent, its signal cannot be corrected",
+    "It acts very fast, like a bullet",
+    "It only works on moving loads",
+    "It aims at the set point and overshoots"
+   ],
+   "answer": 0,
+   "why": "Like a fired shell, a feedforward command goes out on a prediction and nothing afterwards checks how it landed; any correction needs a new command. Feedback (cruise control, say) watches the result and keeps adjusting.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Overview",
@@ -46,12 +62,51 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-unmeasured",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A feedforward heating system turns the heater up when the door opens. Someone opens a window instead. What happens?",
+   "options": [
+    "Nothing reacts, and the house cools",
+    "The heater turns up as for the door",
+    "The heater turns off",
+    "The system switches to feedback"
+   ],
+   "answer": 0,
+   "why": "Feedforward can only act on disturbances it measures and has a model for. An unmeasured window is invisible to it. That is its main weakness, and why it is nearly always paired with feedback, which reacts to the temperature itself, whatever caused the change.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Overview",
    "html": "<p>There are three types of control systems: open-loop, feed-forward, and feedback. An example of a pure open-loop control system is manual non-power-assisted steering of a motor car; the steering system does not have access to an auxiliary power source and does not respond to varying resistance to turning of the direction wheels; the driver must make that response without help from the steering system. In comparison, <a href=\"https://en.wikipedia.org/wiki/Power_steering\">power steering</a> has access to a controlled auxiliary power source, which depends on the engine speed. When the steering wheel is turned, a valve is opened which allows fluid under pressure to turn the wheels. A sensor monitors that pressure so that the valve only opens enough to cause the correct pressure to reach the wheel turning mechanism. This is feed-forward control where the output of the system, the change in direction of travel of the vehicle, plays no part in the system. See <a href=\"https://en.wikipedia.org/wiki/Model_predictive_control\">Model predictive control</a>.</p><p>If the driver is included in the system, then they do provide a feedback path by observing the direction of travel and compensating for errors by turning the steering wheel. In that case you have a feedback system, and the block labeled <em>System</em> in Figure(c) is a feed-forward system.</p><p>In other words, systems of different types can be nested, and the overall system regarded as a <a href=\"https://en.wikipedia.org/wiki/Black-box\">black-box</a>.</p>",
    "body": "There are three types of control systems: open-loop, feed-forward, and feedback. An example of a pure open-loop control system is manual non-power-assisted steering of a motor car; the steering system does not have access to an auxiliary power source and does not respond to varying resistance to turning of the direction wheels; the driver must make that response without help from the steering system. In comparison, power steering has access to a controlled auxiliary power source, which depends on the engine speed. When the steering wheel is turned, a valve is opened which allows fluid under pressure to turn the wheels. A sensor monitors that pressure so that the valve only opens enough to cause the correct pressure to reach the wheel turning mechanism. This is feed-forward control where the output of the system, the change in direction of travel of the vehicle, plays no part in the system. See Model predictive control . If the driver is included in the system, then they do provide a feedback path by observing the direction of travel and compensating for errors by turning the steering wheel. In that case you have a feedback system, and the block labeled System in Figure(c) is a feed-forward system. In other words, systems of different types can be nested, and the overall system regarded as a black-box .",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-three-types",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each car system to its type of control, as the text describes them.",
+   "pairs": [
+    [
+     "Manual steering, no power assist",
+     "Open loop"
+    ],
+    [
+     "Power steering's pressure valve",
+     "Feedforward"
+    ],
+    [
+     "Cruise control",
+     "Feedback"
+    ]
+   ],
+   "why": "Manual steering just passes the driver's effort on. Power steering measures the steering input and applies a predicted assist, but never looks at where the car actually goes: feedforward. Cruise control measures the actual speed and corrects: feedback.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -68,6 +123,41 @@
    "html": "<p>The benefits of feedforward control are significant and can often justify the extra cost, time and effort required to implement the technology. Control accuracy can often be improved by as much as an <a href=\"https://en.wikipedia.org/wiki/Order_of_magnitude\">order of magnitude</a> if the mathematical model is of sufficient quality and implementation of the feedforward control law is well thought out. <a href=\"https://en.wikipedia.org/wiki/Energy_consumption\">Energy consumption</a> by the feedforward control system and its driver is typically substantially lower than with other controls. Stability is enhanced such that the controlled device can be built of lower cost, lighter weight, springier materials while still being highly accurate and able to operate at high speeds. Other benefits of feedforward control include reduced wear and tear on equipment, lower maintenance costs, higher reliability and a substantial reduction in <a href=\"https://en.wikipedia.org/wiki/Hysteresis\">hysteresis</a>. Feedforward control is often combined with feedback control to optimize performance.</p>",
    "body": "The benefits of feedforward control are significant and can often justify the extra cost, time and effort required to implement the technology. Control accuracy can often be improved by as much as an order of magnitude if the mathematical model is of sufficient quality and implementation of the feedforward control law is well thought out. Energy consumption by the feedforward control system and its driver is typically substantially lower than with other controls. Stability is enhanced such that the controlled device can be built of lower cost, lighter weight, springier materials while still being highly accurate and able to operate at high speeds. Other benefits of feedforward control include reduced wear and tear on equipment, lower maintenance costs, higher reliability and a substantial reduction in hysteresis . Feedforward control is often combined with feedback control to optimize performance.",
    "id": "wikipedia1-6"
+  },
+  {
+   "id": "q-ff-heat",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A water heater's feedforward adds {k} kW of heat for every extra m³/h of flow, before the temperature falls. The flow steps up from {q1} to {q2} m³/h. How much should the feedforward add to the heater's output?",
+   "vars": {
+    "k": [
+     1.5,
+     6,
+     0.5
+    ],
+    "q1": [
+     2,
+     6,
+     1
+    ],
+    "dq": [
+     1,
+     5,
+     0.5
+    ]
+   },
+   "let": {
+    "q2": "q1 + dq"
+   },
+   "answer": "k * (q2 - q1)",
+   "unit": "kW",
+   "tolerance": 0.01,
+   "work": "${k} \\times ({q2} - {q1}) = {answer:2}$ kW",
+   "why": "The model says how much heat each unit of flow needs, so the change in heat follows straight from the measured change in flow, before any error appears. The feedback (PID) loop then trims whatever the model got wrong.",
+   "hint": "Change in flow × heat needed per unit of flow.",
+   "added": true,
+   "after": "wikipedia1-6"
   },
   {
    "type": "concept",

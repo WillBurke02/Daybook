@@ -48,6 +48,40 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-module",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A spur gear has {n} teeth and a module of {m} mm. What is its pitch diameter?",
+   "vars": {
+    "n": [
+     12,
+     80,
+     1
+    ],
+    "m": {
+     "pick": [
+      0.5,
+      1,
+      1.25,
+      1.5,
+      2,
+      2.5,
+      3,
+      4
+     ]
+    }
+   },
+   "answer": "m * n",
+   "unit": "mm",
+   "tolerance": 0.005,
+   "work": "$d = mN = {m} \\times {n} = {answer}$ mm",
+   "why": "In SI countries the module is the pitch diameter per tooth: $d = mN$. (America uses diametral pitch, its reciprocal in teeth per inch.) Two gears only mesh if they have the same module.",
+   "hint": "The module is millimetres of pitch diameter per tooth.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Gear or speed ratio",
@@ -62,6 +96,40 @@
    "html": "<p>For example, if gear <em>A</em> has a pitch circle radius of 1 in (25 mm) and gear <em>B</em> has a pitch circle radius of 2 in (51 mm), the angular speed ratio R<sub>AB</sub> is 2, which is sometimes written as 2:1. Gear <em>A</em> turns at twice the speed of gear <em>B</em>. For every complete revolution of gear <em>A</em> (360°), gear <em>B</em> makes half a revolution (180°).</p><p>In addition, consider that in order to mesh smoothly and turn without slipping, these two gears <em>A</em> and <em>B</em> must have compatible teeth. Given the same tooth and gap widths, they also must have the same circular pitch p, which means</p><dl><dd><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>p</mi>\n          <mrow>\n            <mi>A</mi>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>p</mi>\n          <mrow>\n            <mi>B</mi>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> or, equivalently <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mrow>\n          <mfrac>\n            <mrow>\n              <mn>2</mn>\n              <mi>π</mi>\n              <msub>\n                <mi>r</mi>\n                <mrow>\n                  <mi>A</mi>\n                </mrow>\n              </msub>\n            </mrow>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>A</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n        <mo>=</mo>\n        <mrow>\n          <mfrac>\n            <mrow>\n              <mn>2</mn>\n              <mi>π</mi>\n              <msub>\n                <mi>r</mi>\n                <mrow>\n                  <mi>B</mi>\n                </mrow>\n              </msub>\n            </mrow>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>B</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></dd></dl><p>This equation can be rearranged to show the ratio of the pitch circle radii of two meshing gears is equal to the ratio of their number of teeth:</p><dl><dd><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mrow>\n          <mfrac>\n            <msub>\n              <mi>r</mi>\n              <mrow>\n                <mi>B</mi>\n              </mrow>\n            </msub>\n            <msub>\n              <mi>r</mi>\n              <mrow>\n                <mi>A</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n        <mo>=</mo>\n        <mrow>\n          <mfrac>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>B</mi>\n              </mrow>\n            </msub>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>A</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></dd></dl><p>Since the angular speed ratio R<sub>AB</sub> depends on the ratio of pitch circle radii, it is equivalently determined by the ratio of the number of teeth:</p><dl><dd><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>R</mi>\n          <mrow>\n            <mi>A</mi>\n            <mi>B</mi>\n          </mrow>\n        </msub>\n        <mo>≡</mo>\n        <mrow>\n          <mfrac>\n            <mrow>\n              <mrow>\n                <mo>|</mo>\n              </mrow>\n              <msub>\n                <mi>ω</mi>\n                <mrow>\n                  <mi>A</mi>\n                </mrow>\n              </msub>\n              <mrow>\n                <mo>|</mo>\n              </mrow>\n            </mrow>\n            <mrow>\n              <mrow>\n                <mo>|</mo>\n              </mrow>\n              <msub>\n                <mi>ω</mi>\n                <mrow>\n                  <mi>B</mi>\n                </mrow>\n              </msub>\n              <mrow>\n                <mo>|</mo>\n              </mrow>\n            </mrow>\n          </mfrac>\n        </mrow>\n        <mo>=</mo>\n        <mrow>\n          <mfrac>\n            <msub>\n              <mi>r</mi>\n              <mrow>\n                <mi>B</mi>\n              </mrow>\n            </msub>\n            <msub>\n              <mi>r</mi>\n              <mrow>\n                <mi>A</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n        <mo>=</mo>\n        <mrow>\n          <mfrac>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>B</mi>\n              </mrow>\n            </msub>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>A</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></dd></dl><p>In other words, the [angular] speed ratio is <a href=\"https://en.wikipedia.org/wiki/Inversely_proportional#Inverse_proportionality\">inversely proportional</a> to the radius of the pitch circle and the number of teeth of gear <em>A</em>, and directly proportional to the same values for gear <em>B</em>.</p>",
    "body": "For example, if gear A has a pitch circle radius of 1 in (25 mm) and gear B has a pitch circle radius of 2 in (51 mm), the angular speed ratio R AB is 2, which is sometimes written as 2:1. Gear A turns at twice the speed of gear B . For every complete revolution of gear A (360°), gear B makes half a revolution (180°). In addition, consider that in order to mesh smoothly and turn without slipping, these two gears A and B must have compatible teeth. Given the same tooth and gap widths, they also must have the same circular pitch p, which means p A = p B or, equivalently 2 π r A N A = 2 π r B N B This equation can be rearranged to show the ratio of the pitch circle radii of two meshing gears is equal to the ratio of their number of teeth: r B r A = N B N A Since the angular speed ratio R AB depends on the ratio of pitch circle radii, it is equivalently determined by the ratio of the number of teeth: R A B ≡ | ω A | | ω B | = r B r A = N B N A In other words, the [angular] speed ratio is inversely proportional to the radius of the pitch circle and the number of teeth of gear A , and directly proportional to the same values for gear B .",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-teeth-speed",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {na}-tooth gear on a motor at {n} rpm drives a {nb}-tooth gear. How fast does the driven gear turn?",
+   "vars": {
+    "na": [
+     12,
+     30,
+     1
+    ],
+    "nb": [
+     31,
+     90,
+     1
+    ],
+    "n": {
+     "pick": [
+      700,
+      950,
+      1450,
+      2900
+     ]
+    }
+   },
+   "answer": "n * na / nb",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "work": "${n} \\times \\frac{ {na} }{ {nb} } = {answer:1}$ rpm",
+   "why": "At the point of contact both gears move the same distance, so each tooth of the small gear moves one tooth of the big one: speed goes inversely with the tooth count. Bigger driven gear, slower output.",
+   "hint": "Speed × driver teeth ÷ driven teeth.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -88,12 +156,59 @@
    "id": "wikipedia1-7"
   },
   {
+   "id": "q-torque-out",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {ta} N·m motor drives a {na}-tooth pinion, meshing with a {nb}-tooth gear. Ignoring losses, what torque comes out?",
+   "vars": {
+    "ta": [
+     2,
+     40,
+     1
+    ],
+    "na": [
+     12,
+     25,
+     1
+    ],
+    "nb": [
+     36,
+     100,
+     2
+    ]
+   },
+   "answer": "ta * nb / na",
+   "unit": "N·m",
+   "tolerance": 0.01,
+   "work": "${ta} \\times \\frac{ {nb} }{ {na} } = {answer:1}$ N·m",
+   "why": "A speed reducer multiplies torque by the same ratio it divides speed, so power (torque × speed) stays the same, less the real losses (a few per cent a stage). Torque × the inverse ratio is the usual slip.",
+   "hint": "More teeth on the output means more torque out.",
+   "added": true,
+   "after": "wikipedia1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Hunting and non-hunting gear sets",
    "html": "<p>A <strong>hunting gear set</strong> is a set of gears where the gear teeth counts are relatively <a href=\"https://en.wikipedia.org/wiki/Prime_number\">prime</a> on each gear in an interfacing pair. Since the number of teeth on each gear have no common <a href=\"https://en.wikipedia.org/wiki/Factorization\">factors</a>, then any tooth on one of the gears will come into contact with every tooth on the other gear before encountering the same tooth again. This results in less wear and longer life of the mechanical parts. A <strong>non-hunting gear set</strong> is one where the teeth counts are insufficiently prime. In this case, some particular gear teeth will come into contact with particular opposing gear teeth more times than others, resulting in more wear on some teeth than others.</p>",
    "body": "A hunting gear set is a set of gears where the gear teeth counts are relatively prime on each gear in an interfacing pair. Since the number of teeth on each gear have no common factors , then any tooth on one of the gears will come into contact with every tooth on the other gear before encountering the same tooth again. This results in less wear and longer life of the mechanical parts. A non-hunting gear set is one where the teeth counts are insufficiently prime. In this case, some particular gear teeth will come into contact with particular opposing gear teeth more times than others, resulting in more wear on some teeth than others.",
    "id": "wikipedia1-8"
+  },
+  {
+   "id": "q-hunting",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which pair of tooth counts makes a **hunting** gear set?",
+   "options": [
+    "13 and 42",
+    "12 and 36",
+    "20 and 40",
+    "15 and 45"
+   ],
+   "answer": 0,
+   "why": "Hunting means the counts share no common factor, so every tooth meets every opposite tooth in turn and wear spreads evenly. 13 is prime and does not divide 42. The others share factors (12 and 36 share 12), so the same teeth keep meeting.",
+   "added": true,
+   "after": "wikipedia1-8"
   },
   {
    "type": "concept",
@@ -120,6 +235,22 @@
    "id": "wikipedia1-11"
   },
   {
+   "id": "q-idler",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "An idler gear is put between a driver and a driven gear. What changes?",
+   "options": [
+    "The driven gear's direction, not the ratio",
+    "The ratio, by the idler's tooth count",
+    "Both the ratio and the direction",
+    "Nothing at all"
+   ],
+   "answer": 0,
+   "why": "The idler's teeth cancel out of the ratio (the driver turns it, it turns the driven gear: its count appears once on top and once underneath), so the ratio is still driven teeth ÷ driver teeth. Each extra gear in a chain reverses the direction, so one idler makes driver and driven turn the same way.",
+   "added": true,
+   "after": "wikipedia1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Example",
@@ -142,6 +273,51 @@
    "html": "<p>A double reduction gear set comprises two pairs of gears, each individually single reductions, in series. In the diagram, the red and blue gears give the first stage of reduction and the orange and green gears give the second stage of reduction. The total reduction is the <a href=\"https://en.wikipedia.org/wiki/Product_(mathematics)\">product</a> of the first stage of reduction and the second stage of reduction.</p><p>It is essential to have two coupled gears, of different sizes, on the intermediate <a href=\"https://en.wikipedia.org/wiki/Layshaft\">layshaft</a>. If a single intermediate gear was used, the overall ratio would be simply that between the first and final gears, the intermediate gear would only act as an <a href=\"https://en.wikipedia.org/wiki/Idler_gear\">idler gear</a>: it would reverse the direction of rotation, but not change the ratio.</p>",
    "body": "A double reduction gear set comprises two pairs of gears, each individually single reductions, in series. In the diagram, the red and blue gears give the first stage of reduction and the orange and green gears give the second stage of reduction. The total reduction is the product of the first stage of reduction and the second stage of reduction. It is essential to have two coupled gears, of different sizes, on the intermediate layshaft . If a single intermediate gear was used, the overall ratio would be simply that between the first and final gears, the intermediate gear would only act as an idler gear : it would reverse the direction of rotation, but not change the ratio.",
    "id": "wikipedia1-14"
+  },
+  {
+   "id": "q-double-reduction",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A two-stage gearbox: the first stage is {a}:1 and the second {b}:1. The motor runs at {n} rpm. What is the output speed?",
+   "vars": {
+    "a": {
+     "pick": [
+      2.5,
+      3,
+      3.5,
+      4,
+      5
+     ]
+    },
+    "b": {
+     "pick": [
+      3,
+      4,
+      5,
+      6,
+      8
+     ]
+    },
+    "n": {
+     "pick": [
+      1450,
+      2900,
+      1750
+     ]
+    }
+   },
+   "answer": "n / tot",
+   "unit": "rpm",
+   "tolerance": 0.01,
+   "work": "Total ratio $= {a} \\times {b} = {tot}$; ${n} \\div {tot} = {answer:1}$ rpm",
+   "why": "The stages multiply: the second stage reduces what the first already reduced. Adding the ratios is the usual mistake. That needs two different gears on the layshaft; one gear there would just be an idler.",
+   "hint": "Multiply the stage ratios for the total, then divide the speed by it.",
+   "added": true,
+   "after": "wikipedia1-14",
+   "let": {
+    "tot": "a * b"
+   }
   },
   {
    "type": "concept",
@@ -168,6 +344,22 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-cam-diagram",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a cam's displacement diagram, what is a **dwell**?",
+   "options": [
+    "Where the follower stays still as the cam turns",
+    "Where the follower rises fastest",
+    "The cam's smallest radius",
+    "Where the follower leaves the cam"
+   ],
+   "answer": 0,
+   "why": "The diagram plots follower position against cam angle: a rise, a dwell (flat: no movement while the cam turns), a return. A cam's profile sets exactly when and how a machine part moves, which an electronic cam in a servo drive copies with a table.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Camshaft",
@@ -190,6 +382,22 @@
    "html": "<p>A <strong>cylindrical cam</strong>, or <strong>barrel cam</strong>, is a cam in which the follower rides on the surface of a cylinder. In the most common type, the follower rides in a groove cut into the surface of a cylinder. These cams are principally used to convert rotational motion to linear motion perpendicular to the rotational axis of the cylinder. A cylinder may have several grooves cut into the surface and drive several followers. Cylindrical cams can provide motions that involve more than a single rotation of the cylinder and generally provide positive positioning, removing the need for a spring or other provision to keep the follower in contact with the control surface.</p><p>Applications include machine tool drives, such as reciprocating saws, and shift control barrels in <a href=\"https://en.wikipedia.org/wiki/Sequential_manual_transmission\">sequential transmissions</a>, such as on most modern <a href=\"https://en.wikipedia.org/wiki/Motorcycle_transmission\">motorcycles</a>.</p><p>A special case of this cam is a <strong>constant lead</strong>, where the position of the follower is linear with rotation, as in a lead screw. The purpose and detail of implementation influence whether this application is called a cam or a screw thread, but in some cases, the nomenclature may be ambiguous.</p><p>Cylindrical cams may also be used to reference an output to two inputs, where one input is the rotation of the cylinder and the other is the position of the follower along the cam. The output is radial to the cylinder. These were once common for special functions in control systems, such as fire control mechanisms for guns on naval vessels and mechanical analog computers.</p>",
    "body": "A cylindrical cam , or barrel cam , is a cam in which the follower rides on the surface of a cylinder. In the most common type, the follower rides in a groove cut into the surface of a cylinder. These cams are principally used to convert rotational motion to linear motion perpendicular to the rotational axis of the cylinder. A cylinder may have several grooves cut into the surface and drive several followers. Cylindrical cams can provide motions that involve more than a single rotation of the cylinder and generally provide positive positioning, removing the need for a spring or other provision to keep the follower in contact with the control surface. Applications include machine tool drives, such as reciprocating saws, and shift control barrels in sequential transmissions , such as on most modern motorcycles . A special case of this cam is a constant lead , where the position of the follower is linear with rotation, as in a lead screw. The purpose and detail of implementation influence whether this application is called a cam or a screw thread, but in some cases, the nomenclature may be ambiguous. Cylindrical cams may also be used to reference an output to two inputs, where one input is the rotation of the cylinder and the other is the position of the follower along the cam. The output is radial to the cylinder. These were once common for special functions in control systems, such as fire control mechanisms for guns on naval vessels and mechanical analog computers.",
    "id": "wikipedia2-5"
+  },
+  {
+   "id": "q-barrel-cam",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a barrel cam with its follower in a groove need no return spring?",
+   "options": [
+    "The groove drives the follower both ways",
+    "The follower is light enough to fall back",
+    "Barrel cams turn too slowly to need one",
+    "Gravity holds it on the surface"
+   ],
+   "answer": 0,
+   "why": "With the follower captive in a groove, both sides of the groove push it: positive positioning. A plate cam's follower only rides on one surface, so a spring or gravity must keep it in contact, and at speed it can bounce off.",
+   "added": true,
+   "after": "wikipedia2-5"
   },
   {
    "type": "concept",

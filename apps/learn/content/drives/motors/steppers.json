@@ -39,6 +39,22 @@
    "id": "liec1-1"
   },
   {
+   "id": "q-step-cheap",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a stepper system cheaper than a servo for the same simple positioning job?",
+   "options": [
+    "It needs no position sensor or error amplifier",
+    "Its motor has more copper in it",
+    "It runs at higher speeds",
+    "It never loses position"
+   ],
+   "answer": 0,
+   "why": "A stepper moves one step per pulse, so the controller knows the position by counting pulses: open loop, with simple on-off switches in the driver. A servo needs an encoder and a tuned amplifier. The catch: if the load is too much, a stepper loses steps and nothing tells it.",
+   "added": true,
+   "after": "liec1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Stepper motors",
@@ -69,6 +85,49 @@
    "html": "<p> Steppers cannot achieve the speeds on the speed torque curve instantaneously. The <em>maximum start frequency</em> is the highest rate at which a stopped and unloaded stepper can be started. Any load will make this parameter unattainable. In practice, the step rate is ramped up during starting from well below the maximum start frequency. When stopping a stepper motor, the step rate may be decreased before stopping. </p><p> The maximum torque at which a stepper can start and stop is the <em>pull-in torque</em>. This torque load on the stepper is due to frictional (brake) and inertial (flywheel) loads on the motor shaft. Once the motor is up to speed, <em>pull-out torque</em> is the maximum sustainable torque without losing steps. </p><p> There are three types of stepper motors in order of increasing complexity: variable reluctance, permanent magnet, and hybrid. The variable reluctance stepper has s solid soft steel rotor with salient poles. The permanent magnet stepper has a cylindrical permanent magnet rotor. The hybrid stepper has soft steel teeth added to the permanent magnet rotor for a smaller step angle. </p>",
    "body": "Steppers cannot achieve the speeds on the speed torque curve instantaneously. The maximum start frequency is the highest rate at which a stopped and unloaded stepper can be started. Any load will make this parameter unattainable. In practice, the step rate is ramped up during starting from well below the maximum start frequency. When stopping a stepper motor, the step rate may be decreased before stopping. The maximum torque at which a stepper can start and stop is the pull-in torque . This torque load on the stepper is due to frictional (brake) and inertial (flywheel) loads on the motor shaft. Once the motor is up to speed, pull-out torque is the maximum sustainable torque without losing steps. There are three types of stepper motors in order of increasing complexity: variable reluctance, permanent magnet, and hybrid. The variable reluctance stepper has s solid soft steel rotor with salient poles. The permanent magnet stepper has a cylindrical permanent magnet rotor. The hybrid stepper has soft steel teeth added to the permanent magnet rotor for a smaller step angle.",
    "id": "liec1-5"
+  },
+  {
+   "id": "q-step-torques",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each stepper torque to what it means.",
+   "pairs": [
+    [
+     "Holding torque",
+     "Energised and stopped: how hard it holds"
+    ],
+    [
+     "Detent torque",
+     "Unpowered: the bumps you feel turning it by hand"
+    ],
+    [
+     "Pull-in torque",
+     "The most it can start and stop against"
+    ],
+    [
+     "Pull-out torque",
+     "The most it can carry once running, without losing steps"
+    ]
+   ],
+   "why": "Holding torque is the biggest figure on a data sheet, but a running stepper has much less, falling with speed. Pull-in is lower than pull-out, which is why step rates are ramped up from a slow start.",
+   "added": true,
+   "after": "liec1-5"
+  },
+  {
+   "id": "q-step-ramp",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a loaded stepper started at a low step rate and ramped up?",
+   "options": [
+    "From rest it would miss steps",
+    "To let the windings warm up",
+    "To save energy as it starts",
+    "Because the driver needs time to boot"
+   ],
+   "answer": 0,
+   "why": "The maximum start frequency applies only to an unloaded motor; with inertia and friction on the shaft, starting too fast means the rotor cannot keep up and steps are lost. Ramping up (and down when stopping) keeps the rotor in step.",
+   "added": true,
+   "after": "liec1-5"
   },
   {
    "type": "concept",
@@ -103,6 +162,22 @@
    "id": "liec1-9"
   },
   {
+   "id": "q-identify-vr",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "You turn an unpowered stepper by hand and feel no bumps at all. What type is it?",
+   "options": [
+    "Variable reluctance",
+    "Permanent magnet",
+    "Hybrid",
+    "Can-stack permanent magnet"
+   ],
+   "answer": 0,
+   "why": "Only the variable reluctance type has no detent torque: its rotor is plain soft iron, so nothing pulls it to a position when unpowered. Permanent magnet and hybrid rotors are magnets, which cog towards the stator teeth.",
+   "added": true,
+   "after": "liec1-9"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Permanent magnet stepper",
@@ -127,6 +202,33 @@
    "id": "liec1-12"
   },
   {
+   "id": "q-wires-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each stepper wiring to how it can be driven.",
+   "pairs": [
+    [
+     "4 wires",
+     "Bipolar only"
+    ],
+    [
+     "5 wires",
+     "Unipolar only"
+    ],
+    [
+     "6 wires",
+     "Unipolar, or bipolar ignoring the centre taps"
+    ],
+    [
+     "8 wires",
+     "Either, coils in series or in parallel"
+    ]
+   ],
+   "why": "A centre tap lets one polarity of supply reverse the field (unipolar). Five wires means the two centre taps are joined inside, which stops both windings being driven bipolar. Eight wires give every coil end, the most flexible.",
+   "added": true,
+   "after": "liec1-12"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Full step drive",
@@ -143,12 +245,55 @@
    "id": "liec1-14"
   },
   {
+   "id": "q-drive-modes",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Compared with wave drive (one coil on at a time), what does full-step drive (both coils on) give?",
+   "options": [
+    "More torque, same step angle",
+    "Half the step angle",
+    "Less torque, smoother motion",
+    "A reversed direction"
+   ],
+   "answer": 0,
+   "why": "With both coils on, the rotor sits between two poles, pulled by both: more torque, but the same number of steps. Half-step alternates one and two coils on, doubling the steps; microstepping goes further by shaping the currents.",
+   "added": true,
+   "after": "liec1-14"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Construction",
    "html": "<p> The contruction of a permanent magnet stepper motor is considerably different from the drawings above. It is desirable to increase the number of poles beyond that illustrated to produce a smaller step angle. It is also desirable to reduce the number of windings, or at least not increase the number of windings for ease of manufacture. </p><p> <img src=\"media/liec/e38ed93e-02452.png\" alt=\"\"> </p><p><em>Permanent magnet stepper motor, 24-pole can-stack construction.</em></p><p> The permanent magnet stepper (Figure  above) only has two windings, yet has 24-poles in each of two phases. This style of construction is known as <em>can stack</em>. A phase winding is wrapped with a mild steel shell, with fingers brought to the center. One phase, on a transient basis, will have a north side and a south side. Each side wraps around to the center of the doughnut with twelve interdigitated fingers for a total of 24 poles. These alternating north-south fingers will attract the permanent magnet rotor. If the polarity of the phase were reversed, the rotor would jump 360<sup>o</sup>/24 = 15<sup>o</sup>. We do not know which direction, which is not useful. However, if we energize φ-1 followed by φ-2, the rotor will move 7.5<sup>o</sup> because the φ-2 is offset (rotated) by 7.5<sup>o</sup> from φ-1. See below for offset. And, it will rotate in a reproducible direction if the phases are alternated. Application of any of the above waveforms will rotate the permanent magnet rotor. </p>",
    "body": "The contruction of a permanent magnet stepper motor is considerably different from the drawings above. It is desirable to increase the number of poles beyond that illustrated to produce a smaller step angle. It is also desirable to reduce the number of windings, or at least not increase the number of windings for ease of manufacture. Permanent magnet stepper motor, 24-pole can-stack construction. The permanent magnet stepper (Figure above) only has two windings, yet has 24-poles in each of two phases. This style of construction is known as can stack . A phase winding is wrapped with a mild steel shell, with fingers brought to the center. One phase, on a transient basis, will have a north side and a south side. Each side wraps around to the center of the doughnut with twelve interdigitated fingers for a total of 24 poles. These alternating north-south fingers will attract the permanent magnet rotor. If the polarity of the phase were reversed, the rotor would jump 360 o /24 = 15 o . We do not know which direction, which is not useful. However, if we energize φ-1 followed by φ-2, the rotor will move 7.5 o because the φ-2 is offset (rotated) by 7.5 o from φ-1. See below for offset. And, it will rotate in a reproducible direction if the phases are alternated. Application of any of the above waveforms will rotate the permanent magnet rotor.",
    "id": "liec1-15"
+  },
+  {
+   "id": "q-step-angle",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A stepper makes {s} steps per revolution. What is its step angle?",
+   "vars": {
+    "s": {
+     "pick": [
+      24,
+      48,
+      96,
+      100,
+      192,
+      200,
+      400
+     ]
+    }
+   },
+   "answer": "360 / s",
+   "unit": "°",
+   "tolerance": 0.005,
+   "work": "$360 \\div {s} = {answer:3}$°",
+   "why": "A full turn is 360°, shared equally between the steps: the book's 24-pole can-stack moves $360 \\div 24 = 15$° per reversal, and the common hybrid's 200 steps give 1.8°.",
+   "hint": "360° shared between the steps.",
+   "added": true,
+   "after": "liec1-15"
   },
   {
    "type": "concept",
@@ -173,6 +318,31 @@
    "html": "<p> The stator teeth on the 8-poles correspond to the 48-rotor teeth, except for missing teeth in the space between the poles. Thus, one pole of the rotor, say the south pole, may align with the stator in 48 distinct positions. However, the teeth of the south pole are offset from the north teeth by half a tooth. Therefore, the rotor may align with the stator in 96 distinct positions. This half tooth offset shows in the rotor pole detail above, or Figure  below. </p><p> As if this were not complicated enough, the stator main poles are divided into two phases (φ-1, φ-2). These stator phases are offset from one another by one-quarter of a tooth. This detail is only discernable on the schematic diagrams below. The result is that the rotor moves in steps of a quarter of a tooth when the phases are alternately energized. In other words, the rotor moves in 2×96=192 steps per revolution for the above stepper. </p><p> The above drawing is representative of an actual hybrid stepper motor. However, we provide a simplified pictorial and schematic representation (Figure  below) to illustrate details not obvious above. Note the reduced number of coils and teeth in rotor and stator for simplicity. In the next two figures, we attempt to illustrate the quarter tooth rotation produced by the two stator phases offset by a quarter tooth, and the rotor half tooth offset. The quarter tooth stator offset in conjunction with drive current timing also defines direction of rotation. </p>",
    "body": "The stator teeth on the 8-poles correspond to the 48-rotor teeth, except for missing teeth in the space between the poles. Thus, one pole of the rotor, say the south pole, may align with the stator in 48 distinct positions. However, the teeth of the south pole are offset from the north teeth by half a tooth. Therefore, the rotor may align with the stator in 96 distinct positions. This half tooth offset shows in the rotor pole detail above, or Figure below. As if this were not complicated enough, the stator main poles are divided into two phases (φ-1, φ-2). These stator phases are offset from one another by one-quarter of a tooth. This detail is only discernable on the schematic diagrams below. The result is that the rotor moves in steps of a quarter of a tooth when the phases are alternately energized. In other words, the rotor moves in 2×96=192 steps per revolution for the above stepper. The above drawing is representative of an actual hybrid stepper motor. However, we provide a simplified pictorial and schematic representation (Figure below) to illustrate details not obvious above. Note the reduced number of coils and teeth in rotor and stator for simplicity. In the next two figures, we attempt to illustrate the quarter tooth rotation produced by the two stator phases offset by a quarter tooth, and the rotor half tooth offset. The quarter tooth stator offset in conjunction with drive current timing also defines direction of rotation.",
    "id": "liec1-18"
+  },
+  {
+   "id": "q-hybrid-steps",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A hybrid stepper's rotor has {t} teeth on each section, and the motor moves a quarter of a tooth per step (as in the book's example). How many steps per revolution?",
+   "vars": {
+    "t": {
+     "pick": [
+      12,
+      24,
+      48,
+      50,
+      100
+     ]
+    }
+   },
+   "answer": "4 * t",
+   "abs": 0.01,
+   "work": "$4 \\times {t} = {answer}$ steps",
+   "why": "A quarter tooth per step means four steps for every tooth: the book's 48-tooth rotor gives 192 steps. The usual 1.8° hybrid has 50 teeth: 200 steps.",
+   "hint": "How many quarter-tooth steps make one tooth?",
+   "added": true,
+   "after": "liec1-18"
   },
   {
    "type": "concept",

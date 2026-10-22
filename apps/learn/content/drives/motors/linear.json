@@ -30,12 +30,51 @@
    "id": "wikipedia1-1"
   },
   {
+   "id": "q-lorentz",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a Lorentz-type linear motor, the force is proportional to what?",
+   "options": [
+    "The current and the magnetic field",
+    "The voltage alone",
+    "The length of the track",
+    "The speed of the carriage"
+   ],
+   "answer": 0,
+   "why": "Force on a current-carrying conductor in a field is $F = BIL$: double the current, double the force. That is why a linear motor has a force constant in N/A, the way a rotary motor has a torque constant in N·m/A.",
+   "added": true,
+   "after": "wikipedia1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Linear motor",
    "html": "<p>High-acceleration linear motors are used in studies of <a href=\"https://en.wikipedia.org/wiki/Hypervelocity\">hypervelocity</a> collisions, as <a href=\"https://en.wikipedia.org/wiki/Weapon\">weapons</a>, or as <a href=\"https://en.wikipedia.org/wiki/Mass_driver\">mass drivers</a> for <a href=\"https://en.wikipedia.org/wiki/Spacecraft_propulsion\">spacecraft propulsion</a>. They are usually of the AC <a href=\"https://en.wikipedia.org/wiki/Linear_induction_motor\">linear induction motor</a> (LIM) design with an active <a href=\"https://en.wikipedia.org/wiki/Three-phase\">three-phase</a> winding on one side of the <a href=\"https://en.wikipedia.org/wiki/Air_gap_(magnetic)\">air-gap</a> and a passive conductor plate on the other side. However, the direct current <a href=\"https://en.wikipedia.org/wiki/Homopolar_motor\">homopolar</a> linear motor <a href=\"https://en.wikipedia.org/wiki/Railgun\">railgun</a> is another high acceleration linear motor design. The low-acceleration, high speed and high power motors are usually of the <strong>linear synchronous motor</strong> (LSM) design, with an active winding on one side of the air-gap and an array of alternate-pole magnets on the other side. These magnets can be <a href=\"https://en.wikipedia.org/wiki/Permanent_magnet\">permanent magnets</a> or <a href=\"https://en.wikipedia.org/wiki/Electromagnet\">electromagnets</a>. The motor for the <a href=\"https://en.wikipedia.org/wiki/Shanghai_maglev_train\">Shanghai maglev train</a>, for instance, is an LSM.</p>",
    "body": "High-acceleration linear motors are used in studies of hypervelocity collisions, as weapons , or as mass drivers for spacecraft propulsion . They are usually of the AC linear induction motor (LIM) design with an active three-phase winding on one side of the air-gap and a passive conductor plate on the other side. However, the direct current homopolar linear motor railgun is another high acceleration linear motor design. The low-acceleration, high speed and high power motors are usually of the linear synchronous motor (LSM) design, with an active winding on one side of the air-gap and an array of alternate-pole magnets on the other side. These magnets can be permanent magnets or electromagnets . The motor for the Shanghai maglev train , for instance, is an LSM.",
    "id": "wikipedia1-2"
+  },
+  {
+   "id": "q-lim-lsm",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each linear motor type to its build.",
+   "pairs": [
+    [
+     "Linear induction motor (LIM)",
+     "3-phase winding facing a plain conductor plate"
+    ],
+    [
+     "Linear synchronous motor (LSM)",
+     "Winding facing a row of alternating magnets"
+    ],
+    [
+     "Brushed linear motor",
+     "Single phase, brushes that wear"
+    ]
+   ],
+   "why": "A LIM induces currents in a passive plate (cheap for long runs: transport). An LSM locks to magnets and moves in step with the field (precise: machine tools, the Shanghai maglev). Brushed motors came first, cheaper but needing brush maintenance.",
+   "added": true,
+   "after": "wikipedia1-2"
   },
   {
    "type": "concept",
@@ -54,12 +93,44 @@
    "id": "wikipedia1-4"
   },
   {
+   "id": "q-moving-coil",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a typical high-precision industrial linear motor, which part moves, and how does it get its current?",
+   "options": [
+    "The coil, through a cable in a cable carrier",
+    "The magnet track, through slip rings",
+    "The coil, by induction from the track",
+    "The magnet track, by a moving drive"
+   ],
+   "answer": 0,
+   "why": "The magnets form the stationary stator track; the coil (forcer) rides on the carriage, with a Hall sensor to find the magnets, fed from a fixed servo drive by a flexing cable in a cable carrier. That cable's life is one of the things to check on such a machine.",
+   "added": true,
+   "after": "wikipedia1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Induction",
    "html": "<p>In this design, the force is produced by a moving linear <a href=\"https://en.wikipedia.org/wiki/Magnetic_field\">magnetic field</a> acting on conductors in the field. Any conductor, be it a loop, a coil or simply a piece of plate metal, that is placed in this field will have <a href=\"https://en.wikipedia.org/wiki/Eddy_current\">eddy currents</a> <a href=\"https://en.wikipedia.org/wiki/Electromagnetic_induction\">induced</a> in it thus creating an opposing magnetic field, in accordance with <a href=\"https://en.wikipedia.org/wiki/Lenz&#x27;s_law\">Lenz's law</a>. The two opposing fields will repel each other, thus creating motion as the magnetic field sweeps through the metal.</p><h4>Homopolar</h4><p>In this design a large current is passed through a metal sabot across sliding contacts that are fed by two rails. The magnetic field this generates causes the metal to be projected along the rails.</p>",
    "body": "In this design, the force is produced by a moving linear magnetic field acting on conductors in the field. Any conductor, be it a loop, a coil or simply a piece of plate metal, that is placed in this field will have eddy currents induced in it thus creating an opposing magnetic field, in accordance with Lenz's law . The two opposing fields will repel each other, thus creating motion as the magnetic field sweeps through the metal. Homopolar In this design a large current is passed through a metal sabot across sliding contacts that are fed by two rails. The magnetic field this generates causes the metal to be projected along the rails.",
    "id": "wikipedia1-5"
+  },
+  {
+   "id": "q-lim-plate",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does a linear induction motor push a plain aluminium plate?",
+   "options": [
+    "The moving field induces eddy currents that oppose it",
+    "The plate is magnetised by the coils first",
+    "Current is fed into the plate by brushes",
+    "The plate is attracted to the iron core"
+   ],
+   "answer": 0,
+   "why": "The sweeping field induces eddy currents in the plate; by Lenz's law their field opposes the change, so the plate is dragged along with the moving field, just as a squirrel-cage rotor is in a rotary induction motor.",
+   "added": true,
+   "after": "wikipedia1-5"
   },
   {
    "type": "concept",
@@ -102,12 +173,59 @@
    "id": "wikipedia1-10"
   },
   {
+   "id": "q-direct-drive",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the main gain of a linear motor over a rotary motor and ball screw?",
+   "options": [
+    "Direct drive: no backlash, less to wear",
+    "It needs no position feedback",
+    "It holds position with the power off",
+    "It costs less for the same force"
+   ],
+   "answer": 0,
+   "why": "The force acts straight on the load, so there is no screw, belt or gearbox to wind up, wear or lose accuracy: high speed, precision and long travel together. It still needs a linear encoder, it does not self-lock (a vertical axis needs a brake), and it usually costs more.",
+   "added": true,
+   "after": "wikipedia1-10"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Industrial automation",
    "html": "<p>The combination of high precision, high velocity, high force, and long travel makes brushless linear motors attractive for driving industrial automations equipment. They serve industries and applications such as semiconductor <a href=\"https://en.wikipedia.org/wiki/Stepper\">steppers</a>, electronics <a href=\"https://en.wikipedia.org/wiki/Surface-mount_technology\">surface-mount technology</a>, automotive <a href=\"https://en.wikipedia.org/wiki/Cartesian_coordinate_robot\">cartesian coordinate robots</a>, aerospace <a href=\"https://en.wikipedia.org/wiki/Chemical_milling\">chemical milling</a>, optics <a href=\"https://en.wikipedia.org/wiki/Electron_microscope\">electron microscope</a>, healthcare <a href=\"https://en.wikipedia.org/wiki/Laboratory_automation\">laboratory automation</a>, food and beverage <a href=\"https://en.wikipedia.org/wiki/Pick_and_place_(disambiguation)\">pick and place</a>.</p><h4>Machine tools</h4><p>Synchronous linear motor <a href=\"https://en.wikipedia.org/wiki/Actuator\">actuators</a>, used in machine tools and industrial automation, provide high force, high velocity, high precision, and high dynamic stiffness. These characteristics enable zero-backlash motion, low settling time, and exceptional smoothness of movement. Modern systems can achieve velocities of 2 m/s or more, with micron-level positioning accuracy and fast cycle times, contributing to superior surface finishes and throughput.</p>",
    "body": "The combination of high precision, high velocity, high force, and long travel makes brushless linear motors attractive for driving industrial automations equipment. They serve industries and applications such as semiconductor steppers , electronics surface-mount technology , automotive cartesian coordinate robots , aerospace chemical milling , optics electron microscope , healthcare laboratory automation , food and beverage pick and place . Machine tools Synchronous linear motor actuators , used in machine tools and industrial automation, provide high force, high velocity, high precision, and high dynamic stiffness. These characteristics enable zero-backlash motion, low settling time, and exceptional smoothness of movement. Modern systems can achieve velocities of 2 m/s or more, with micron-level positioning accuracy and fast cycle times, contributing to superior surface finishes and throughput.",
    "id": "wikipedia1-11"
+  },
+  {
+   "id": "q-lin-fma",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A linear motor carriage and its load weigh {m} kg in all. What force does the motor need to accelerate it at {a} m/s², ignoring friction?",
+   "vars": {
+    "m": [
+     5,
+     60,
+     1
+    ],
+    "a": {
+     "pick": [
+      2,
+      5,
+      10,
+      15,
+      20,
+      30
+     ]
+    }
+   },
+   "answer": "m * a",
+   "unit": "N",
+   "work": "$F = ma = {m} \\times {a} = {answer}$ N",
+   "why": "With no screw or gears in between, the motor accelerates the whole moving mass directly: Newton's second law. 10 m/s² is about 1 g; machine tools commonly ask for more, which is why linear motors draw large peak currents.",
+   "hint": "Force = mass × acceleration.",
+   "added": true,
+   "after": "wikipedia1-11"
   },
   {
    "type": "concept",

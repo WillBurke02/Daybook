@@ -1,5 +1,11 @@
 # Changes
 
+## 4.0.34 — 22 October 2026
+
+- **Questions inside the Drives book lessons**: feedforward, gears and cams, linear motors and steppers now ask
+  after each section: 26 new questions, from gear speeds and torques, module, hunting sets and double
+  reductions to stepper torque terms, wiring and step angles, and linear-motor force.
+
 ## 4.0.33 — 22 October 2026
 
 - **Questions inside the PLC book lessons**: SFC and FBD, Structured Text, state machines, HMIs, Modbus,
