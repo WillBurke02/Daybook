@@ -90,6 +90,38 @@
    "id": "ox1-3"
   },
   {
+   "id": "q-q-av",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Water flows at {v} m/s along a pipe of {d} mm bore. What is the flow rate, in litres per second?",
+   "vars": {
+    "d": {
+     "pick": [
+      15,
+      22,
+      28,
+      40,
+      50,
+      80,
+      100
+     ]
+    },
+    "v": [
+     0.5,
+     3,
+     0.1
+    ]
+   },
+   "answer": "PI() * (d / 2000)^2 * v * 1000",
+   "unit": "L/s",
+   "tolerance": 0.01,
+   "work": "$A = \\pi \\times ({d} \\div 2000)^2$ m²; $Q = Av = {answer:3}$ L/s (× 1000 for litres)",
+   "why": "Flow rate is area times average velocity, $Q = Av$. Diameter in millimetres to radius in metres is ÷ 2000. A cubic metre is 1000 litres.",
+   "hint": "Area of the bore in m², times the speed, times 1000 for L/s.",
+   "added": true,
+   "after": "ox1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Flow Rate and Its Relation to Velocity",
@@ -112,6 +144,45 @@
    "html": "<p>The solution to the last part of the example shows that speed is inversely proportional to the <em>square</em> of the radius of the tube, making for large effects when radius varies. We can blow out a candle at quite a distance, for example, by pursing our lips, whereas blowing on a candle with our mouth wide open is quite ineffective.</p><p>In many situations, including in the cardiovascular system, branching of the flow occurs. The blood is pumped from the heart into arteries that subdivide into smaller arteries (arterioles) which branch into very fine vessels called capillaries. In this situation, continuity of flow is maintained but it is the <em>sum</em> of the flow rates in each of the branches in any portion along the tube that is maintained. The equation of continuity in a more general form becomes</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><msub><mi>n</mi><mrow><mn>1</mn></mrow></msub><msub><mi>A</mi><mrow><mn>1</mn></mrow></msub><mrow><msub><mrow>\n<mover>\n <mi>v</mi>\n <mo>¯</mo>\n</mover></mrow><mrow><mn>1</mn></mrow></msub><mo stretchy=\"false\">=</mo><msub><mi>n</mi><mrow><mn>2</mn></mrow></msub></mrow><msub><mi>A</mi><mrow><mn>2</mn></mrow></msub><msub><mrow>\n<mover>\n <mi>v</mi>\n <mo>¯</mo>\n</mover></mrow><mrow><mn>2</mn></mrow></msub></mrow></mrow><mtext>,</mtext></mrow><mrow></mrow></mrow></math></div><p>where <math><mrow><mrow><msub><mi>n</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> and <math><mrow><mrow><msub><mi>n</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> are the number of branches in each of the sections along the tube.</p>",
    "body": "The solution to the last part of the example shows that speed is inversely proportional to the square of the radius of the tube, making for large effects when radius varies. We can blow out a candle at quite a distance, for example, by pursing our lips, whereas blowing on a candle with our mouth wide open is quite ineffective. In many situations, including in the cardiovascular system, branching of the flow occurs. The blood is pumped from the heart into arteries that subdivide into smaller arteries (arterioles) which branch into very fine vessels called capillaries. In this situation, continuity of flow is maintained but it is the sum of the flow rates in each of the branches in any portion along the tube that is maintained. The equation of continuity in a more general form becomes n 1 A 1 v ¯ 1 = n 2 A 2 v ¯ 2 , where n 1 and n 2 are the number of branches in each of the sections along the tube.",
    "id": "ox1-6"
+  },
+  {
+   "id": "q-continuity",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Water at {v1} m/s in a {d1} mm pipe passes into a {d2} mm pipe. How fast does it go in the smaller pipe?",
+   "vars": {
+    "v1": [
+     0.5,
+     2,
+     0.1
+    ],
+    "d1": {
+     "pick": [
+      50,
+      80,
+      100
+     ]
+    },
+    "f": {
+     "pick": [
+      0.4,
+      0.5,
+      0.6,
+      0.75
+     ]
+    }
+   },
+   "let": {
+    "d2": "d1 * f"
+   },
+   "answer": "v1 * (d1 / d2)^2",
+   "unit": "m/s",
+   "tolerance": 0.01,
+   "work": "$v_2 = v_1 \\left(\\frac{d_1}{d_2}\\right)^2 = {v1} \\times \\left(\\frac{ {d1} }{ {d2} }\\right)^2 = {answer:2}$ m/s",
+   "why": "The same volume a second must pass every point (continuity), so velocity goes inversely with area, and area with diameter squared. Half the diameter means four times the speed: why a nozzle squirts.",
+   "hint": "Area ratio is the diameter ratio squared.",
+   "added": true,
+   "after": "ox1-6"
   },
   {
    "type": "concept",
@@ -163,6 +234,23 @@
    "html": "<figure><img src=\"media/openstax/college-physics-2e/Figure_13_02_01a.jpg\" alt=\"An overhead view of a car passing by a truck on a highway toward left is shown. The air passing through the vehicles is shown using lines along the length of both the vehicles. The lines representing the air movement has a velocity v one outside the area between the vehicles and velocity v two between the vehicles. v two is shown to be greater than v one with the help of a longer arrow toward right. The pressure between the car and the truck is represented by P i and the pressure at the other ends of both the vehicles is represented as P zero. The pressure P i is shown to be less than P zero by shorter length of the arrow. The direction of P i is shown as pushing the car and truck apart, and the direction of P zero is shown as pushing the car and truck toward each other.\"><figcaption>An overhead view of a car passing a truck on a highway. Air passing between the vehicles flows in a narrower channel and must increase its speed (<math><mrow><mrow><msub><mi>v</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is greater than <math><mrow><mrow><msub><mi>v</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math>), causing the pressure between them to drop (<math><mrow><mrow><msub><mi>P</mi><mrow><mtext>i</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> is less than <math><mrow><mrow><msub><mi>P</mi><mrow><mtext>o</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>). Greater pressure on the outside pushes the car and truck together.</figcaption></figure><div class=\"note\"><h4>Making Connections: Take-Home Investigation with a Sheet of Paper</h4>\n\n<p>Hold the short edge of a sheet of paper parallel to your mouth with one hand on each side of your mouth. The page should slant downward over your hands. Blow over the top of the page. Describe what happens and explain the reason for this behavior.</p>\n</div>",
    "body": "An overhead view of a car passing a truck on a highway. Air passing between the vehicles flows in a narrower channel and must increase its speed ( v 2 is greater than v 1 ), causing the pressure between them to drop ( P i is less than P o ). Greater pressure on the outside pushes the car and truck together. Making Connections: Take-Home Investigation with a Sheet of Paper Hold the short edge of a sheet of paper parallel to your mouth with one hand on each side of your mouth. The page should slant downward over your hands. Blow over the top of the page. Describe what happens and explain the reason for this behavior.",
    "id": "ox2-2"
+  },
+  {
+   "id": "q-passing-truck",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "Why are a car and a lorry drawn towards each other as they pass at speed?",
+   "options": [
+    "Faster air between them has lower pressure",
+    "The lorry's weight pulls the car in",
+    "Air between them is compressed",
+    "The car's slipstream pushes it sideways"
+   ],
+   "answer": 0,
+   "why": "The air between them is squeezed through a narrower gap and speeds up; by Bernoulli its pressure drops, so the higher pressure outside pushes them together. Paper blown over its top surface rises for the same reason.",
+   "added": true,
+   "after": "ox2-2"
   },
   {
    "type": "concept",
@@ -245,6 +333,28 @@
    "id": "ox2-12"
   },
   {
+   "id": "q-pitot",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.2,
+   "q": "A pitot tube in air (density 1.2 kg/m³) shows a pressure difference of {dp} Pa. How fast is the air moving?",
+   "vars": {
+    "dp": [
+     20,
+     900,
+     10
+    ]
+   },
+   "answer": "SQRT(2 * dp / 1.2)",
+   "unit": "m/s",
+   "tolerance": 0.01,
+   "work": "$v = \\sqrt{\\frac{2\\Delta P}{\\rho}} = \\sqrt{\\frac{2 \\times {dp}}{1.2}} = {answer:2}$ m/s",
+   "why": "The facing tube stops the air (v = 0); the side tube sees full speed. Bernoulli at constant depth: $\\Delta P = \\tfrac{1}{2}\\rho v^2$, so $v = \\sqrt{2\\Delta P/\\rho}$. Because of the square root, four times the pressure difference is only twice the speed.",
+   "hint": "Turn ΔP = ½ρv² round for v.",
+   "added": true,
+   "after": "ox2-12"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Summary",
@@ -294,6 +404,22 @@
    "html": "<p>the figure shows schematically how laminar and turbulent flow differ. Layers flow without mixing when flow is laminar. When there is turbulence, the layers mix, and there are significant velocities in directions other than the overall direction of flow. The lines that are shown in many illustrations are the paths followed by small volumes of fluids. These are called <em>streamlines</em>. Streamlines are smooth and continuous when flow is laminar, but break up and mix when flow is turbulent. Turbulence has two main causes. First, any obstruction or sharp corner, such as in a faucet, creates turbulence by imparting velocities perpendicular to the flow. Second, high speeds cause turbulence. The drag both between adjacent layers of fluid and between the fluid and its surroundings forms swirls and eddies, if the speed is great enough. We shall concentrate on laminar flow for the remainder of this section, leaving certain aspects of turbulence for later sections.</p><figure><img src=\"media/openstax/college-physics-2e/Figure_13_04_02a.jpg\" alt=\"Part a of the figure shows a laminar flow on a fixed smooth surface. The different layers of the liquid are shown as different colored bands along the horizontal surface. The friction is shown to act all along the line separating two layers. The direction of flow of the fluid is toward right and the velocity is shown as v b for layers at the bottom and v t for layers on top. Part b of the figure shows turbulent flow on a surface with some obstruction. The fluid directions are horizontal on smooth path and irregular near the area of the obstruction. The velocity is v on top as well as at the bottom of the fluid.\"><figcaption>(a) Laminar flow occurs in layers without mixing. Notice that viscosity causes drag between layers as well as with the fixed surface. (b) An obstruction in the vessel produces turbulence. Turbulent flow mixes the fluid. There is more interaction, greater heating, and more resistance than in laminar flow.</figcaption></figure><div class=\"note\"><h4>Making Connections: Take-Home Experiment: Go Down to the River</h4>\n<p>Try dropping simultaneously two sticks into a flowing river, one near the edge of the river and one near the middle. Which one travels faster? Why?</p>\n    </div>",
    "body": "the figure shows schematically how laminar and turbulent flow differ. Layers flow without mixing when flow is laminar. When there is turbulence, the layers mix, and there are significant velocities in directions other than the overall direction of flow. The lines that are shown in many illustrations are the paths followed by small volumes of fluids. These are called streamlines . Streamlines are smooth and continuous when flow is laminar, but break up and mix when flow is turbulent. Turbulence has two main causes. First, any obstruction or sharp corner, such as in a faucet, creates turbulence by imparting velocities perpendicular to the flow. Second, high speeds cause turbulence. The drag both between adjacent layers of fluid and between the fluid and its surroundings forms swirls and eddies, if the speed is great enough. We shall concentrate on laminar flow for the remainder of this section, leaving certain aspects of turbulence for later sections. (a) Laminar flow occurs in layers without mixing. Notice that viscosity causes drag between layers as well as with the fixed surface. (b) An obstruction in the vessel produces turbulence. Turbulent flow mixes the fluid. There is more interaction, greater heating, and more resistance than in laminar flow. Making Connections: Take-Home Experiment: Go Down to the River Try dropping simultaneously two sticks into a flowing river, one near the edge of the river and one near the middle. Which one travels faster? Why?",
    "id": "ox3-2"
+  },
+  {
+   "id": "q-laminar-turbulent",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the difference between laminar and turbulent flow?",
+   "options": [
+    "Laminar layers do not mix",
+    "Laminar is fast; turbulent slow",
+    "Laminar is gas; turbulent liquid",
+    "Laminar happens only in pipes"
+   ],
+   "answer": 0,
+   "why": "In laminar flow the fluid moves in smooth layers along streamlines. Turbulent flow has eddies and swirls that mix the layers; obstructions, sharp corners and high speeds cause it, and it raises the resistance to flow.",
+   "added": true,
+   "after": "ox3-2"
   },
   {
    "type": "concept",
@@ -360,6 +486,32 @@
    "id": "ox3-10"
   },
   {
+   "id": "q-poiseuille-r4",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "In laminar flow, everything else the same, a pipe's radius is made {k} times bigger. By what factor does the flow rate change?",
+   "vars": {
+    "k": {
+     "pick": [
+      1.1,
+      1.2,
+      1.25,
+      1.5,
+      2,
+      3
+     ]
+    }
+   },
+   "answer": "k^4",
+   "tolerance": 0.01,
+   "work": "$Q \\propto r^4$: ${k}^4 = {answer:3}$",
+   "why": "Poiseuille's law: flow goes with the fourth power of the radius. A 10% wider bore passes about 46% more; a narrowing does the reverse, which is why a small restriction (or plaque in an artery) cuts flow so much.",
+   "hint": "Flow goes with radius to the power 4.",
+   "added": true,
+   "after": "ox3-10"
+  },
+  {
    "type": "concept",
    "stage": "example",
    "title": "Example: What Pressure Produces This Flow Rate?",
@@ -374,6 +526,22 @@
    "html": "<p>You may have noticed that water pressure in your home might be lower than normal on hot summer days when there is more use. This pressure drop occurs in the water main before it reaches your home. Let us consider flow through the water main as illustrated in the figure. We can understand why the pressure <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> to the home drops during times of heavy use by rearranging</p><div class=\"eq\">\n      <math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mi>Q</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mfrac>\n                    <mrow>\n                      <msub>\n                        <mi>P</mi>\n\n                          <mrow>\n                            <mn>2</mn>\n                          </mrow>\n\n                      </msub>\n                      <mo stretchy=\"false\">−</mo>\n                      <msub>\n                        <mi>P</mi>\n\n                          <mrow>\n                            <mn>1</mn>\n                          </mrow>\n\n                      </msub>\n                    </mrow>\n                    <mi>R</mi>\n                  </mfrac>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div><p>to</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mo stretchy=\"false\">=</mo><mi>R</mi></mrow><mi></mi><mi>Q</mi></mrow></mrow><mtext>,</mtext></mrow><mrow></mrow></mrow></math></div><p>where, in this case, <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> is the pressure at the water works and <em><math><mrow><mrow><mi>R</mi></mrow></mrow></math></em> is the resistance of the water main. During times of heavy use, the flow rate <em><math><mrow><mrow><mi>Q</mi></mrow></mrow></math></em> is large. This means that <math><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow></mrow></mrow></math> must also be large. Thus <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math> must decrease. It is correct to think of flow and resistance as causing the pressure to drop from <math><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow></mrow></mrow></math> to <math><mrow><mrow><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow></mrow></mrow></math>. <math><mrow><mrow><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow><mo stretchy=\"false\">=</mo><mi>R</mi></mrow><mi></mi><mi>Q</mi></mrow></mrow></mrow></math> is valid for both laminar and turbulent flows.</p><figure><img src=\"media/openstax/college-physics-2e/Figure_13_04_06a.jpg\" alt=\"Figure shows the water distribution system from a water works to homes around that area. The pressure at the pipeline near the water works is shown to have a pressure P two and the pressure at the dividing point were the pipe line splits to corresponding houses the pressure is shown as P one.\"><figcaption>During times of heavy use, there is a significant pressure drop in a water main, and <math>\n \n<msub>\n  <mi>P</mi>\n<mtext>1</mtext>\n</msub>\n \n</math> supplied to users is significantly less than\n<math>\n \n<msub>\n  <mi>P</mi>\n<mtext>2</mtext>\n</msub>\n \n</math> created at the water works. If the flow is very small, then the pressure drop is negligible, and <math><mrow><mrow><mrow><msub><mi>P</mi><mrow><mn>2</mn></mrow></msub><mo stretchy=\"false\">≈</mo><msub><mi>P</mi><mrow><mn>1</mn></mrow></msub></mrow></mrow></mrow></math>.</figcaption></figure>",
    "body": "You may have noticed that water pressure in your home might be lower than normal on hot summer days when there is more use. This pressure drop occurs in the water main before it reaches your home. Let us consider flow through the water main as illustrated in the figure. We can understand why the pressure P 1 to the home drops during times of heavy use by rearranging Q = P 2 − P 1 R to P 2 − P 1 = R Q , where, in this case, P 2 is the pressure at the water works and R is the resistance of the water main. During times of heavy use, the flow rate Q is large. This means that P 2 − P 1 must also be large. Thus P 1 must decrease. It is correct to think of flow and resistance as causing the pressure to drop from P 2 to P 1 . P 2 − P 1 = R Q is valid for both laminar and turbulent flows. During times of heavy use, there is a significant pressure drop in a water main, and P 1 supplied to users is significantly less than P 2 created at the water works. If the flow is very small, then the pressure drop is negligible, and P 2 ≈ P 1 .",
    "id": "ox3-12"
+  },
+  {
+   "id": "q-mains-pressure",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a house's water pressure drop on a hot evening when everyone is watering their garden?",
+   "options": [
+    "More flow through the main's resistance drops more pressure",
+    "Hot water is less dense",
+    "The reservoir level falls at once",
+    "Garden hoses raise the main's resistance"
+   ],
+   "answer": 0,
+   "why": "The pressure arriving is the supply pressure minus flow × resistance of the main ($P_2 = P_1 - RQ$). Heavy use means a large Q, so a large drop before the water reaches you. Long, narrow pipework does the same to compressed air at the far end of a factory.",
+   "added": true,
+   "after": "ox3-12"
   },
   {
    "type": "concept",

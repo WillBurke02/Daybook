@@ -38,12 +38,44 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-two-stage",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why do most servo valves have two stages?",
+   "options": [
+    "A small pilot stage moves a big spool: more flow",
+    "One stage for each direction of flow",
+    "The second stage is a spare",
+    "To filter the oil twice"
+   ],
+   "answer": 0,
+   "why": "A torque motor alone is too weak to shift a large spool quickly. It moves a flapper, jet pipe or deflector, a hydraulic amplifier, whose oil pressure shoves the main spool. That multiplies the flow and force available while keeping the response fast.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Control",
    "html": "<p>A servo valve receives pressurized hydraulic fluid from a source, typically a hydraulic pump. It then transfers the fluid to a hydraulic cylinder in a closely controlled manner. Typically, the valve will move the spool proportionally to an electrical signal that it receives, indirectly controlling flow rate. Simple hydraulic control valves are binary, they are either on or off. Servo valves are different in that they can continuously vary the flow they supply from zero up to their rated maximum flow, or until the output pressure reaches the supplied pressure. More complex servo valves can control other parameters. For instance, some have internal feedback so that the input signal effectively control flow or output pressure, rather than spool position.</p><p>Servo valves are often used in a <a href=\"https://en.wikipedia.org/wiki/Feedback_control\">feedback control</a> where the position or force on a hydraulic cylinder is measured, and fed back into a controller that varies the signal sent to the servo valve. This allows very precise control of the cylinder.</p>",
    "body": "A servo valve receives pressurized hydraulic fluid from a source, typically a hydraulic pump. It then transfers the fluid to a hydraulic cylinder in a closely controlled manner. Typically, the valve will move the spool proportionally to an electrical signal that it receives, indirectly controlling flow rate. Simple hydraulic control valves are binary, they are either on or off. Servo valves are different in that they can continuously vary the flow they supply from zero up to their rated maximum flow, or until the output pressure reaches the supplied pressure. More complex servo valves can control other parameters. For instance, some have internal feedback so that the input signal effectively control flow or output pressure, rather than spool position. Servo valves are often used in a feedback control where the position or force on a hydraulic cylinder is measured, and fed back into a controller that varies the signal sent to the servo valve. This allows very precise control of the cylinder.",
    "id": "wikipedia1-3"
+  },
+  {
+   "id": "q-servo-vs-onoff",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What can a servo valve do that a simple solenoid directional valve cannot?",
+   "options": [
+    "Vary the flow smoothly from zero to full",
+    "Run on compressed air",
+    "Hold pressure with the power off",
+    "Work without a pump"
+   ],
+   "answer": 0,
+   "why": "An ordinary directional valve is on or off. A servo valve moves its spool in proportion to the signal, so flow follows the signal continuously: that is what lets a hydraulic axis do fine position, speed or force control.",
+   "added": true,
+   "after": "wikipedia1-3"
   },
   {
    "type": "concept",

@@ -55,6 +55,23 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-read-spool",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "How do you read a spool valve symbol on a fluid power drawing?",
+   "options": [
+    "One box at a time is connected to the lines",
+    "All the boxes are active together",
+    "The shaded box is the active one",
+    "The middle box is always the one in use"
+   ],
+   "answer": 0,
+   "why": "Each box is one position of the valve; imagine the boxes sliding so that one lines up with the pipes. The drawing shows the resting position. Shading and shifted boxes in teaching pictures never appear on a real drawing.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.2 Fluid power systems",
@@ -71,6 +88,22 @@
    "id": "liii1-5"
   },
   {
+   "id": "q-relief-why",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a hydraulic system with a fixed-displacement pump need a pressure relief valve?",
+   "options": [
+    "A blocked outlet would stall it",
+    "To keep the oil cool",
+    "To stop the cylinder moving fast",
+    "To filter the returning oil"
+   ],
+   "answer": 0,
+   "why": "A positive-displacement pump pushes a fixed volume each turn. With the directional valve closed there is nowhere for it to go, so pressure rises until something breaks or the motor stalls. The relief valve bleeds the excess back to the reservoir. A pressure-compensated variable pump is the alternative.",
+   "added": true,
+   "after": "liii1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.2 Fluid power systems",
@@ -85,6 +118,22 @@
    "html": "<p>Fluid power systems in general tend to be inefficient, requiring much more energy input to the fluid than what is extracted at the points of use4. When large amounts of energy need to be transmitted over long distances, electricity is the a more practical medium for the task. However, fluid power systems enjoy certain advantages over electric power, a few of which are listed here:</p><ul><li>Fluid power motors and cylinders do not overload at low speeds or under locked conditions</li><li>Fluid power systems present little hazard of accidently igniting flammable atmospheres (i.e. no sparks produced)</li><li>Fluid power systems present little or no fire hazard5</li><li>Fluid power systems present no hazard of electric shock or arc flash</li><li>Fluid power systems are often easier to understand and troubleshoot than electric systems</li><li>Fluid power systems may be safely used in submerged (underwater) environments</li><li>Pneumatic systems are relatively easy to equip with back-up energy reserve (e.g. liquefied nitrogen serving as a back-up gas supply in the event of compressor shut-down)</li><li>Pneumatic systems are self-purging (i.e. enclosures housing pneumatic devices will be naturally purged of dusts and vapors by leaking air)</li></ul>",
    "body": "Fluid power systems in general tend to be inefficient, requiring much more energy input to the fluid than what is extracted at the points of use4. When large amounts of energy need to be transmitted over long distances, electricity is the a more practical medium for the task. However, fluid power systems enjoy certain advantages over electric power, a few of which are listed here: Fluid power motors and cylinders do not overload at low speeds or under locked conditions Fluid power systems present little hazard of accidently igniting flammable atmospheres (i.e. no sparks produced) Fluid power systems present little or no fire hazard5 Fluid power systems present no hazard of electric shock or arc flash Fluid power systems are often easier to understand and troubleshoot than electric systems Fluid power systems may be safely used in submerged (underwater) environments Pneumatic systems are relatively easy to equip with back-up energy reserve (e.g. liquefied nitrogen serving as a back-up gas supply in the event of compressor shut-down) Pneumatic systems are self-purging (i.e. enclosures housing pneumatic devices will be naturally purged of dusts and vapors by leaking air)",
    "id": "liii1-7"
+  },
+  {
+   "id": "q-fluid-advantages",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which of these is an advantage of fluid power over electric drives, according to the book?",
+   "options": [
+    "Cylinders do not overload when stalled",
+    "It is more efficient over long distances",
+    "It needs less maintenance",
+    "It never needs filtering"
+   ],
+   "answer": 0,
+   "why": "A cylinder held against a stop just sits at the relief pressure, and makes no sparks: useful in flammable areas. But fluid power is generally less efficient than electricity, and needs clean, dry fluid and regular maintenance.",
+   "added": true,
+   "after": "liii1-7"
   },
   {
    "type": "concept",
@@ -119,12 +168,44 @@
    "id": "liii1-11"
   },
   {
+   "id": "q-dew-point",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Instrument air's dew point is quoted. What does a lower dew point mean?",
+   "options": [
+    "The air is drier",
+    "The air is wetter",
+    "The air is at higher pressure",
+    "The air is warmer"
+   ],
+   "answer": 0,
+   "why": "Dew point is the temperature at which the water vapour in the air condenses. The lower it is, the less water the air carries. It must be below the coldest temperature the air lines will see, or water collects in instruments (and freezes outdoors in winter).",
+   "added": true,
+   "after": "liii1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.2 Fluid power systems",
    "html": "<p>Such an installation invites trouble, as every bit of water condensed inside the header pipe is guaranteed to find its way by gravity to the instruments connected to the underside of that header. One good feature of this installation is the use of stainless steel as the piping material. Copper, brass, plastic6, and stainless steel are the preferred materials for instrument air piping, tubing, valves, and fittings, as standard (iron) pipe will inevitably rust in the presence of condensation. Particles of rust created inside an instrument air system plays havoc with the tiny ports, nozzles, and orifices of pneumatic instruments.</p><p>6Certain types of plastic pipe such as PVC should never be used in compressed air systems because it becomes brittle and liable to fracture over time. If you are considering the use of plastic for a high-pressure compressed air system, be sure the type of plastic is engineered for air pressure service!</p><p>The proper way to make instrument air connections to the air header is as such:</p><figure><img src=\"media/liii/ab1baba87ab0.png\" alt=\"A figure from page 731 of the original\"></figure><p>In order to facilitate draining of the header, the header should be slightly inclined, with the drain valve installed at the lowest point. This drain valve should then be periodically opened on a regular maintenance schedule in order to prevent the header from slowly filling up with condensed water over time.</p>",
    "body": "Such an installation invites trouble, as every bit of water condensed inside the header pipe is guaranteed to find its way by gravity to the instruments connected to the underside of that header. One good feature of this installation is the use of stainless steel as the piping material. Copper, brass, plastic6, and stainless steel are the preferred materials for instrument air piping, tubing, valves, and fittings, as standard (iron) pipe will inevitably rust in the presence of condensation. Particles of rust created inside an instrument air system plays havoc with the tiny ports, nozzles, and orifices of pneumatic instruments. 6Certain types of plastic pipe such as PVC should never be used in compressed air systems because it becomes brittle and liable to fracture over time. If you are considering the use of plastic for a high-pressure compressed air system, be sure the type of plastic is engineered for air pressure service! The proper way to make instrument air connections to the air header is as such: In order to facilitate draining of the header, the header should be slightly inclined, with the drain valve installed at the lowest point. This drain valve should then be periodically opened on a regular maintenance schedule in order to prevent the header from slowly filling up with condensed water over time.",
    "id": "liii1-12"
+  },
+  {
+   "id": "q-header-tap",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Where should instrument air branches be taken off a horizontal header pipe?",
+   "options": [
+    "From the top",
+    "From the underside",
+    "From the side nearest the wall",
+    "It makes no difference"
+   ],
+   "answer": 0,
+   "why": "Any water that condenses in the header runs to the bottom by gravity, straight into anything connected underneath. Tapping from the top leaves the water behind, to be drained at low points. The book also prefers stainless, copper, brass or plastic to iron pipe, which rusts.",
+   "added": true,
+   "after": "liii1-12"
   },
   {
    "type": "concept",
@@ -191,6 +272,33 @@
    "id": "liii1-20"
   },
   {
+   "id": "q-port-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each 3-way solenoid valve port label to its meaning.",
+   "pairs": [
+    [
+     "P",
+     "Pressure: the air supply"
+    ],
+    [
+     "E",
+     "Exhaust: vent to atmosphere"
+    ],
+    [
+     "C (or A)",
+     "Cylinder: to the actuator"
+    ],
+    [
+     "Port 1",
+     "Common, the one always in use"
+    ]
+   ],
+   "why": "Port numbers follow the valve's states rather than what is connected: 1 is common, 1–3 is the resting path and 1–2 the energised path. Hydraulic valves use T (tank) instead of E.",
+   "added": true,
+   "after": "liii1-20"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.3.2 3-way solenoid valves",
@@ -205,6 +313,22 @@
    "html": "<p>Not all 4-way valves use the spool-type design. However, the spool valve enjoys the advantage of having pressure balance on its one moving part. If you examine these cut-away illustrations closely, you will see that the two lands present equal surface areas to the two pressures (pump and tank, “P” and “T”) in perfect vertical symmetry, such that any forces acting on the two lands from fluid pressure do so in opposite directions. This means there will be no net hydraulic force acting on the spool to interfere with its positioning, thus making it very easy to position by hand lever, solenoid, piston, etc.</p><p>A photograph of a Parker brand 4-way pneumatic solenoid valve appears here:</p><figure><img src=\"media/liii/b0e04400bf71.jpg\" alt=\"A figure from page 743 of the original\"></figure><p>This particular solenoid valve is spring-centered, with one solenoid coil at each end to provide actuation in two different directions. The middle position is one where all ports are blocked, providing a “locked” control position for the pneumatic actuating element fed air by this solenoid valve.</p>",
    "body": "Not all 4-way valves use the spool-type design. However, the spool valve enjoys the advantage of having pressure balance on its one moving part. If you examine these cut-away illustrations closely, you will see that the two lands present equal surface areas to the two pressures (pump and tank, “P” and “T”) in perfect vertical symmetry, such that any forces acting on the two lands from fluid pressure do so in opposite directions. This means there will be no net hydraulic force acting on the spool to interfere with its positioning, thus making it very easy to position by hand lever, solenoid, piston, etc. A photograph of a Parker brand 4-way pneumatic solenoid valve appears here: This particular solenoid valve is spring-centered, with one solenoid coil at each end to provide actuation in two different directions. The middle position is one where all ports are blocked, providing a “locked” control position for the pneumatic actuating element fed air by this solenoid valve.",
    "id": "liii1-22"
+  },
+  {
+   "id": "q-spool-balance",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a spool valve easy to move, even at high pressure?",
+   "options": [
+    "Pressure pushes equally on both its lands",
+    "Its spool is very light",
+    "The oil lubricates it completely",
+    "The solenoid is very strong"
+   ],
+   "answer": 0,
+   "why": "Supply and tank pressures act on equal land areas in opposite directions, so there is no net force on the spool from the fluid: a small solenoid or lever can shift it. Poppet valves, by contrast, are pushed by the pressure they hold back.",
+   "added": true,
+   "after": "liii1-22"
   },
   {
    "type": "concept",
@@ -231,6 +355,22 @@
    "id": "liii1-25"
   },
   {
+   "id": "q-normal-meanings",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A P&ID says a solenoid valve is 'normally energised'. The valve itself is 'normally closed'. Do these clash?",
+   "options": [
+    "No: they mean different things",
+    "Yes: the drawing must be wrong",
+    "Yes: it cannot be both",
+    "No: they mean the same thing"
+   ],
+   "answer": 0,
+   "why": "'Normally closed' is the maker's word for the de-energised position. 'Normally energised' is the designer's word for how it sits in everyday running. A normally closed valve kept energised is open in normal running and closes when the power is cut: a common fail-safe arrangement. Always check which meaning a document uses.",
+   "added": true,
+   "after": "liii1-25"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.3.4 Normal energization states",
@@ -245,6 +385,102 @@
    "html": "<p>Here we have a normally open solenoid valve, designed by the manufacturer to pass instrument air pressure from the pressure (“P”) port to the cylinder (“C”) port when de-energized. The straight arrow with the “DE” label next to it reveals this to be the case. Instrument air pressure sent to the air door actuator holds the door shut, meaning the air door will swing open if ever instrument air pressure is vented by the solenoid. For this particular solenoid, this would require an energized condition. The process engineer designing this Emergency Air Door control system chose to let the solenoid be in its de-energized state under typical operating conditions (when the furnace air door should be shut), a fact revealed by the letters “NDE” (normally de-energized) next to the solenoid coil symbol. Therefore, the “normal” process operating condition for this solenoid happens to be de-energized, which makes the manufacturer’s definition of “normal” match the engineer’s definition of “normal.” The solenoid valve should be open (passing air to the door’s actuating cylinder) under “normal” operating conditions.</p>",
    "body": "Here we have a normally open solenoid valve, designed by the manufacturer to pass instrument air pressure from the pressure (“P”) port to the cylinder (“C”) port when de-energized. The straight arrow with the “DE” label next to it reveals this to be the case. Instrument air pressure sent to the air door actuator holds the door shut, meaning the air door will swing open if ever instrument air pressure is vented by the solenoid. For this particular solenoid, this would require an energized condition. The process engineer designing this Emergency Air Door control system chose to let the solenoid be in its de-energized state under typical operating conditions (when the furnace air door should be shut), a fact revealed by the letters “NDE” (normally de-energized) next to the solenoid coil symbol. Therefore, the “normal” process operating condition for this solenoid happens to be de-energized, which makes the manufacturer’s definition of “normal” match the engineer’s definition of “normal.” The solenoid valve should be open (passing air to the door’s actuating cylinder) under “normal” operating conditions.",
    "id": "liii1-27"
+  },
+  {
+   "id": "q-worked-retract",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A double-acting cylinder: 50 mm bore, 20 mm rod, 6 bar. Find the extending and retracting forces.",
+   "steps": [
+    {
+     "ask": "Full bore area",
+     "show": "$\\pi \\times 25^2 = 1963$ mm²"
+    },
+    {
+     "ask": "Extending force",
+     "show": "6 bar is 0.6 N/mm², so $0.6 \\times 1963 = 1178$ N"
+    },
+    {
+     "ask": "Area on the rod side",
+     "show": "Rod area $\\pi \\times 10^2 = 314$ mm²; $1963 - 314 = 1649$ mm²"
+    },
+    {
+     "ask": "Retracting force",
+     "show": "$0.6 \\times 1649 = 990$ N: less, because the rod takes up some of the piston's area"
+    }
+   ],
+   "why": "1 bar is 0.1 N/mm², which makes the units easy in millimetres. Real cylinders give less again (friction, roughly 10%).",
+   "added": true,
+   "after": "liii1-27"
+  },
+  {
+   "id": "q-faded-retract",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A double-acting cylinder: 63 mm bore, 20 mm rod, 7 bar. Find the extending and retracting forces.",
+   "steps": [
+    {
+     "ask": "Full bore area",
+     "show": "$\\pi \\times 31.5^2 = 3117$ mm²"
+    },
+    {
+     "ask": "Extending force",
+     "show": "$0.7 \\times 3117 = 2182$ N"
+    },
+    {
+     "ask": "Area on the rod side",
+     "show": "$3117 - 314 = 2803$ mm²"
+    },
+    {
+     "ask": "Retracting force",
+     "show": "$0.7 \\times 2803 = 1962$ N"
+    }
+   ],
+   "why": "The same four steps: area, force out, annulus area, force in.",
+   "added": true,
+   "after": "q-worked-retract"
+  },
+  {
+   "id": "q-retract-force",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A cylinder has a {bore} mm bore and a {rod} mm rod, on {bar} bar. What is its theoretical retracting force, in N?",
+   "vars": {
+    "bore": {
+     "pick": [
+      32,
+      40,
+      50,
+      63,
+      80,
+      100
+     ]
+    },
+    "rodf": {
+     "pick": [
+      0.3,
+      0.4
+     ]
+    },
+    "bar": [
+     3,
+     8,
+     0.5
+    ]
+   },
+   "let": {
+    "rod": "ROUND(bore * rodf, 0)"
+   },
+   "answer": "bar * 0.1 * PI() / 4 * (bore^2 - rod^2)",
+   "unit": "N",
+   "tolerance": 0.01,
+   "work": "$F = {bar} \\times 0.1 \\times \\frac{\\pi}{4}({bore}^2 - {rod}^2) = {answer:0}$ N",
+   "why": "On the way in, the air pushes on the ring left round the rod: the bore's area minus the rod's. Using the full bore gives the extending force, the usual slip.",
+   "hint": "Area = π/4 × (bore² − rod²) in mm²; × bar × 0.1 for newtons.",
+   "added": true,
+   "after": "q-faded-retract"
   },
   {
    "type": "concept",

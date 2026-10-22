@@ -74,6 +74,22 @@
    "id": "ox1-3"
   },
   {
+   "id": "q-heat-vs-work",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the difference between heat (Q) and work (W)?",
+   "options": [
+    "Heat: driven by a temperature gap",
+    "Heat is stored; work is used",
+    "Heat is for gases; work for solids",
+    "None: two words for the same"
+   ],
+   "answer": 0,
+   "why": "Both move energy in or out of a system, and can have the same effect (warming a tyre by sunshine or by pumping). Heat is the disorganised transfer driven by a temperature difference; work is organised: a force pushing through a distance.",
+   "added": true,
+   "after": "ox1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Internal Energy E int",
@@ -106,6 +122,32 @@
    "id": "ox1-7"
   },
   {
+   "id": "q-first-law",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A system takes in {q} J of heat and does {w} J of work on its surroundings. What is the change in its internal energy?",
+   "vars": {
+    "q": [
+     50,
+     900,
+     10
+    ],
+    "w": [
+     10,
+     600,
+     10
+    ]
+   },
+   "answer": "q - w",
+   "unit": "J",
+   "abs": 0.5,
+   "work": "$\\Delta E_{int} = Q - W = {q} - {w} = {answer}$ J",
+   "why": "The first law with the book's signs: Q is positive into the system, W positive when the system does work. Energy that comes in as heat and does not leave as work stays as internal energy; a negative answer means the system lost energy.",
+   "hint": "ΔE = Q − W, heat in positive, work done by the system positive.",
+   "added": true,
+   "after": "ox1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Human Metabolism and the First Law of Thermodynamics",
@@ -120,6 +162,28 @@
    "html": "<p>In chemistry and biochemistry, one calorie (spelled with a <em>lowercase</em> c) is defined as the energy (or heat transfer) required to raise the temperature of one gram of pure water by one degree Celsius.  Nutritionists and weight-watchers tend to use the <em>dietary</em> calorie, which is frequently called a Calorie (spelled with a <em>capital</em> C). One food Calorie is the energy needed to raise the temperature of one <em>kilogram</em> of water by one degree Celsius. This means that one dietary Calorie is equal to one kilocalorie for the chemist, and one must be careful to avoid confusion between the two.</p><p>Again, consider the internal energy the body has lost. There are three places this internal energy can go—to heat transfer, to doing work, and to stored fat (a tiny fraction also goes to cell repair and growth). Heat transfer and doing work take internal energy out of the body, and food puts it back. If you eat just the right amount of food, then your average internal energy remains constant. Whatever you lose to heat transfer and doing work is replaced by food, so that, in the long run, <math><mrow><mrow><mrow><mn>Δ</mn><msub><mi>E</mi><mtext>int</mtext></msub><mo stretchy=\"false\">=</mo><mn>0</mn></mrow></mrow></mrow></math>. If you overeat repeatedly, then <math><mrow><mrow><mn>Δ</mn><msub><mi>E</mi><mtext>int</mtext></msub></mrow></mrow></math> is always positive, and your body stores this extra internal energy as fat. The reverse is true if you eat too little. If <math><mrow><mrow><mn>Δ</mn><msub><mi>E</mi><mtext>int</mtext></msub></mrow></mrow></math> is negative for a few days, then the body metabolizes its own fat to maintain body temperature and do work that takes energy from the body. This process is how dieting produces weight loss.</p>",
    "body": "In chemistry and biochemistry, one calorie (spelled with a lowercase c) is defined as the energy (or heat transfer) required to raise the temperature of one gram of pure water by one degree Celsius. Nutritionists and weight-watchers tend to use the dietary calorie, which is frequently called a Calorie (spelled with a capital C). One food Calorie is the energy needed to raise the temperature of one kilogram of water by one degree Celsius. This means that one dietary Calorie is equal to one kilocalorie for the chemist, and one must be careful to avoid confusion between the two. Again, consider the internal energy the body has lost. There are three places this internal energy can go—to heat transfer, to doing work, and to stored fat (a tiny fraction also goes to cell repair and growth). Heat transfer and doing work take internal energy out of the body, and food puts it back. If you eat just the right amount of food, then your average internal energy remains constant. Whatever you lose to heat transfer and doing work is replaced by food, so that, in the long run, Δ E int = 0 . If you overeat repeatedly, then Δ E int is always positive, and your body stores this extra internal energy as fat. The reverse is true if you eat too little. If Δ E int is negative for a few days, then the body metabolizes its own fat to maintain body temperature and do work that takes energy from the body. This process is how dieting produces weight loss.",
    "id": "ox1-9"
+  },
+  {
+   "id": "q-calories",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A sandwich is labelled {c} kcal (food Calories). How many kilojoules is that? (1 kcal = 4.186 kJ.)",
+   "vars": {
+    "c": [
+     150,
+     750,
+     10
+    ]
+   },
+   "answer": "c * 4.186",
+   "unit": "kJ",
+   "tolerance": 0.005,
+   "work": "${c} \\times 4.186 = {answer:0}$ kJ",
+   "why": "A food Calorie (capital C) is a kilocalorie: the energy to warm 1 kg of water by 1 °C. UK labels show both kcal and kJ; the kJ figure is about 4.2 times bigger.",
+   "hint": "Multiply kcal by 4.186.",
+   "added": true,
+   "after": "ox1-9"
   },
   {
    "type": "concept",
@@ -197,6 +261,22 @@
    "id": "ox2-3"
   },
   {
+   "id": "q-second-law",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which statement is the second law of thermodynamics, in the book's first form?",
+   "options": [
+    "Heat never flows by itself from cold to hot",
+    "Energy cannot be created or destroyed",
+    "Heat and work are the same thing",
+    "Every engine wastes half its energy"
+   ],
+   "answer": 0,
+   "why": "Heat flows spontaneously from hotter to colder, never the reverse on its own. A fridge moves heat from cold to hot only because work is put in. Energy conservation is the first law.",
+   "added": true,
+   "after": "ox2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Heat Engines",
@@ -219,6 +299,36 @@
    "html": "<div class=\"eq\"><math><mrow><mrow><mrow><mrow><mn>0</mn><mo stretchy=\"false\">=</mo><mrow><mi>Q</mi><mo stretchy=\"false\">−</mo><mi>W</mi></mrow></mrow></mrow><mrow><mtext>,</mtext></mrow></mrow><mrow></mrow></mrow></math></div><p>so that</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mi>W</mi><mo stretchy=\"false\">=</mo><mi>Q</mi></mrow></mrow><mrow><mtext>.</mtext></mrow></mrow><mrow></mrow></mrow></math></div><p>Thus the net work done by the system equals the net heat transfer into the system, or</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mi>W</mi><mo stretchy=\"false\">=</mo><mrow><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub></mrow></mrow></mrow><mrow><mspace width=\"0.25em\"></mspace><mtext>(cyclical process),</mtext></mrow></mrow></mrow></math></div><p>just as shown schematically in the figure(b). The problem is that in all processes, there is some heat transfer <math><mrow><mrow><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> to the environment—and usually a very significant amount at that.</p><p>In the conversion of energy to work, we are always faced with the problem of getting less out than we put in. We define <em>conversion efficiency</em> <math><mrow><mrow><mstyle><mrow><mtext>Eff</mtext></mrow></mstyle></mrow><mrow></mrow></mrow></math> to be the ratio of useful work output to the energy input (or, in other words, the ratio of what we get to what we spend). In that spirit, we define the efficiency of a heat engine to be its net work output <math><mrow><mrow><mi>W</mi></mrow></mrow></math> divided by heat transfer to the engine <math><mrow><mrow><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub></mrow><mrow></mrow></mrow></math>; that is,</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mstyle><mrow><mtext>Eff</mtext></mrow></mstyle><mo stretchy=\"false\">=</mo><mfrac><mi>W</mi><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub></mfrac></mrow></mrow><mrow><mtext>.</mtext></mrow></mrow><mrow></mrow></mrow></math></div><p>Since <math><mrow><mrow><mrow><mi>W</mi><mo stretchy=\"false\">=</mo><mrow><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub></mrow></mrow></mrow></mrow></math> in a cyclical process, we can also express this as</p><div class=\"eq\"><math><mrow><mrow><mrow><mrow><mrow><mstyle><mrow><mtext>Eff</mtext></mrow></mstyle><mo stretchy=\"false\">=</mo><mfrac><mrow><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub><mo stretchy=\"false\">−</mo><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub></mrow><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub></mfrac></mrow><mo stretchy=\"false\">=</mo><mrow><mn>1</mn><mo stretchy=\"false\">−</mo><mfrac><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub><msub><mi>Q</mi><mrow><mtext>h</mtext></mrow></msub></mfrac></mrow></mrow></mrow><mrow><mspace width=\"0.25em\"></mspace><mtext>(cyclical process),</mtext></mrow></mrow></mrow></math></div><p>making it clear that an efficiency of 1, or 100%, is possible only if there is no heat transfer to the environment (<math><mrow><mrow><mrow><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub><mo stretchy=\"false\">=</mo><mn>0</mn></mrow></mrow></mrow></math>). Note that all <math><mrow><mrow><mi>Q</mi></mrow></mrow></math>s are positive. The direction of heat transfer is indicated by a plus or minus sign. For example, <math><mrow><mrow><msub><mi>Q</mi><mrow><mtext>c</mtext></mrow></msub></mrow><mrow></mrow></mrow></math> is out of the system and so is preceded by a minus sign.</p>",
    "body": "0 = Q − W , so that W = Q . Thus the net work done by the system equals the net heat transfer into the system, or W = Q h − Q c (cyclical process), just as shown schematically in the figure(b). The problem is that in all processes, there is some heat transfer Q c to the environment—and usually a very significant amount at that. In the conversion of energy to work, we are always faced with the problem of getting less out than we put in. We define conversion efficiency Eff to be the ratio of useful work output to the energy input (or, in other words, the ratio of what we get to what we spend). In that spirit, we define the efficiency of a heat engine to be its net work output W divided by heat transfer to the engine Q h ; that is, Eff = W Q h . Since W = Q h − Q c in a cyclical process, we can also express this as Eff = Q h − Q c Q h = 1 − Q c Q h (cyclical process), making it clear that an efficiency of 1, or 100%, is possible only if there is no heat transfer to the environment ( Q c = 0 ). Note that all Q s are positive. The direction of heat transfer is indicated by a plus or minus sign. For example, Q c is out of the system and so is preceded by a minus sign.",
    "id": "ox2-6"
+  },
+  {
+   "id": "q-engine-eff",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "An engine takes in {qh} kJ of heat each cycle and rejects {qc} kJ to the surroundings. What is its efficiency, in per cent?",
+   "vars": {
+    "qh": [
+     100,
+     900,
+     10
+    ],
+    "f": [
+     0.5,
+     0.85,
+     0.01
+    ]
+   },
+   "let": {
+    "qc": "ROUND(qh * f, 0)",
+    "w": "qh - qc"
+   },
+   "answer": "(qh - qc) / qh * 100",
+   "unit": "%",
+   "abs": 0.2,
+   "work": "$W = {qh} - {qc} = {w}$ kJ; $Eff = \\frac{ {w} }{ {qh} } \\times 100 = {answer:1}$ %",
+   "why": "In a cycle the internal energy returns to where it started, so the work done is the heat in minus the heat out, and efficiency is that work over the heat in: $Eff = \\tfrac{Q_h - Q_c}{Q_h}$. The heat rejected is never zero: that is the second law.",
+   "hint": "Work = heat in − heat out. Efficiency = work ÷ heat in.",
+   "added": true,
+   "after": "ox2-6"
   },
   {
    "type": "concept",
@@ -251,6 +361,22 @@
    "html": "<figure><img src=\"media/openstax/college-physics-2e/Figure_16_03_05.jpg\" alt=\"Part a of the figure shows a graph of pressure P versus volume V for an Otto cycle. The pressure P is along the Y axis and the volume V is along the X axis. The graph shows a complete cycle A B C D.  The path begins at point A; the curve rises upward from point A to point B along the direction of the negative X axis. This is marked as an adiabatic process. Then the curve rises vertically up from point B to point C in a direction perpendicular to the X axis. Then the curve moves smoothly down to point D along the direction of the positive X axis. This is also marked as an adiabatic process. The last part of the curve drops vertically down from point D back to point A. The path A B is slightly lower than path C D. Heat Q sub h is shown to enter the system as shown by a bold arrow to the curve B C. Heat Q sub c is shown to leave the system as shown by a bold arrow near D A. The area inside A B C D is shaded, and the area of the shaded region is shown proportional to the work W. Part b of the diagram shows an internal combustion engine represented as a circle. The hot reservoir is a rectangular section at the top of the circle shown at temperature T sub h. A cold reservoir is shown as a rectangular section in the bottom part of the circle at temperature T sub c. Heat Q sub h is shown to enter the heat engine, as shown by a bold arrow. Work W is produced as output, shown to leave the system, and the remaining heat Q sub c is returned back to the cold reservoir as shown by bold arrow toward it.\"><figcaption><math><mrow><mrow><mstyle><mrow><mtext>PV</mtext></mrow></mstyle></mrow><mrow></mrow></mrow></math> diagram for a simplified Otto cycle, analogous to that employed in an internal combustion engine. Point A corresponds to the start of the compression stroke of an internal combustion engine. Paths AB and CD are adiabatic and correspond to the compression and power strokes of an internal combustion engine, respectively. Paths BC and DA are isochoric and accomplish similar results to the ignition and exhaust-intake portions, respectively, of the internal combustion engine’s cycle. Work is done on the gas along path AB, but more work is done by the gas along path CD, so that there is a net work output.</figcaption></figure><figure><img src=\"media/openstax/college-physics-2e/Figure_16_03_06-064b.jpg\" alt=\"Part a of the figure shows a graph of pressure P versus volume V for an Otto cycle. The pressure P is along the Y axis and the volume V is along the X axis. The graph shows a complete cycle A B C D. The path begins at point A; the curve rises upward from point A to point B along the direction of the negative X axis. This is marked as an adiabatic process. Then the curve rises vertically up from point B to point C in a direction perpendicular to the X axis. Then the curve moves smoothly down to point D along the direction of the positive X axis. This is also marked as an adiabatic process. The last part of the curve drops vertically down from point D back to point A. The path A B is much lower than path C D, which shows that the starting temperature of path C D is higher than A B. Heat Q sub h prime enters the system as shown by a bold arrow to the curve B C. Heat Q sub c prime leaves the system, as shown by a bold arrow near D A. The area inside A B C D is shaded. Part b of the diagram shows an internal combustion engine represented as a circle. The hot reservoir is a rectangular section at the top of the circle shown at temperature T sub h prime. A cold reservoir is shown as a rectangular section in the bottom part of the circle at temperature T sub c prime. Heat Q sub h prime enters the heat engine as shown by a bold arrow, a work W prime is produced as output, shown to leave the system, and the remaining heat Q sub c prime is returned back to the cold reservoir, as shown by a bold arrow toward it.\"><figcaption>This Otto cycle produces a greater work output than the one in the figure, because the starting temperature of path CD is higher and the starting temperature of path AB is lower. The area inside the loop is greater, corresponding to greater net work output.</figcaption></figure>",
    "body": "PV diagram for a simplified Otto cycle, analogous to that employed in an internal combustion engine. Point A corresponds to the start of the compression stroke of an internal combustion engine. Paths AB and CD are adiabatic and correspond to the compression and power strokes of an internal combustion engine, respectively. Paths BC and DA are isochoric and accomplish similar results to the ignition and exhaust-intake portions, respectively, of the internal combustion engine’s cycle. Work is done on the gas along path AB, but more work is done by the gas along path CD, so that there is a net work output. This Otto cycle produces a greater work output than the one in the figure, because the starting temperature of path CD is higher and the starting temperature of path AB is lower. The area inside the loop is greater, corresponding to greater net work output.",
    "id": "ox2-10"
+  },
+  {
+   "id": "q-pv-area",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a PV diagram of an engine's cycle, what does the area inside the loop stand for?",
+   "options": [
+    "The net work done each cycle",
+    "The heat rejected each cycle",
+    "The engine's efficiency",
+    "The fuel used each cycle"
+   ],
+   "answer": 0,
+   "why": "Work done by the gas is the area under its path; going round a loop, the work done on the way out minus the work done on the way back is the area enclosed. A bigger loop is more work per cycle; no loop (out and back on the same path) is none.",
+   "added": true,
+   "after": "ox2-10"
   },
   {
    "type": "concept",

@@ -1,5 +1,12 @@
 # Changes
 
+## 4.0.37 — 22 October 2026
+
+- **Questions inside the Fluids book lessons**: pneumatic circuits and solenoid valves, servo valves,
+  Bernoulli and flow, thermodynamics and heat transfer now ask after each section: 32 new questions, with a
+  worked and a faded cylinder-force example, pipe flow and continuity, a pitot tube, Poiseuille's fourth
+  power, the first law, engine efficiency and radiation's fourth power.
+
 ## 4.0.36 — 22 October 2026
 
 - **Questions inside the Electronics book lessons**: op-amps, filters, power supplies, serial links,
