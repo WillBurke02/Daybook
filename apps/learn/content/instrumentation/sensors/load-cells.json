@@ -57,6 +57,43 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-wheatstone-rx",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A Wheatstone bridge balances (zero on the galvanometer) with R1 = {r1} Ω, R2 = {r2} Ω and the adjustable arm at {ra} Ω. The arms are in the same ratio: $\\tfrac{R_{adj}}{R_x} = \\tfrac{R_1}{R_2}$. What is the unknown $R_x$?",
+   "vars": {
+    "r1": {
+     "pick": [
+      100,
+      200,
+      500,
+      1000
+     ]
+    },
+    "r2": {
+     "pick": [
+      100,
+      1000,
+      2000,
+      5000
+     ]
+    },
+    "ra": [
+     50,
+     900,
+     10
+    ]
+   },
+   "answer": "ra * r2 / r1",
+   "unit": "Ω",
+   "tolerance": 0.005,
+   "work": "$R_x = R_{adj} \\times \\frac{R_2}{R_1} = {ra} \\times \\frac{ {r2} }{ {r1} } = {answer:1}$ Ω",
+   "why": "At balance both dividers give the same voltage, so the ratios match and the excitation voltage drops out: that is what makes a balanced bridge so precise. Rearranged: $R_x = R_{adj} \\times \\tfrac{R_2}{R_1}$.",
+   "hint": "Turn the ratio round to get Rx on its own.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "4.9.1 Component measurement",
@@ -89,6 +126,22 @@
    "id": "liii1-6"
   },
   {
+   "id": "q-excitation-matters",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A strain-gauge bridge works unbalanced, its output read as the measurement. What else changes its output?",
+   "options": [
+    "The excitation voltage",
+    "Nothing but the strain",
+    "The galvanometer's resistance",
+    "The length of the output cable"
+   ],
+   "answer": 0,
+   "why": "An unbalanced bridge's output is a fraction of its excitation, so a 1% drop in excitation reads as a 1% drop in load. That is why load cells are rated in mV per volt of excitation, and good indicators measure the excitation (with sense wires) and divide it out.",
+   "added": true,
+   "after": "liii1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "4.9.2 Sensor signal conditioning",
@@ -103,6 +156,22 @@
    "html": "<p>The “dummy” gauge is attached to the specimen in such a way that it maintains the same temperature as the active strain gauge, yet experiences no strain. Thus, any difference in gauge resistances must be due solely to specimen strain. The differential nature of the bridge circuit naturally translates the differential resistance of the two gauges into one voltage signal representing strain. If thermistors are used instead of strain gauges, this circuit becomes a differential temperature sensor. Differential temperature sensing circuits are used in solar heating control systems, to detect when the solar collector is hotter than the room or heat storage mass being heated. Sensing bridge circuits may have more than one active “arm” as well. The examples you have seen so far in this section have all been quarter-active bridge circuits. It is possible, however, to incorporate more than one sensor into the same bridge circuit. So long as the sensors’ resistance changes are coordinated, their combined effect will be to increase the sensitivity (and often the linearity as well) of the measurement.</p><p>For example, full-active bridge circuits are sometimes built out of four strain gauges, where each strain gauge comprises one arm of the bridge. Two of the strain gauges must compress and the other two must stretch under the application of the same mechanical force, in order that the bridge will become unbalanced with strain:</p><figure><img src=\"media/liii/6d64e9a353d6.png\" alt=\"A figure from page 362 of the original\"></figure>",
    "body": "The “dummy” gauge is attached to the specimen in such a way that it maintains the same temperature as the active strain gauge, yet experiences no strain. Thus, any difference in gauge resistances must be due solely to specimen strain. The differential nature of the bridge circuit naturally translates the differential resistance of the two gauges into one voltage signal representing strain. If thermistors are used instead of strain gauges, this circuit becomes a differential temperature sensor. Differential temperature sensing circuits are used in solar heating control systems, to detect when the solar collector is hotter than the room or heat storage mass being heated. Sensing bridge circuits may have more than one active “arm” as well. The examples you have seen so far in this section have all been quarter-active bridge circuits. It is possible, however, to incorporate more than one sensor into the same bridge circuit. So long as the sensors’ resistance changes are coordinated, their combined effect will be to increase the sensitivity (and often the linearity as well) of the measurement. For example, full-active bridge circuits are sometimes built out of four strain gauges, where each strain gauge comprises one arm of the bridge. Two of the strain gauges must compress and the other two must stretch under the application of the same mechanical force, in order that the bridge will become unbalanced with strain:",
    "id": "liii1-8"
+  },
+  {
+   "id": "q-dummy-gauge",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the dummy strain gauge in the bridge for?",
+   "options": [
+    "To cancel resistance changes from temperature",
+    "To double the sensitivity",
+    "To protect the active gauge from overload",
+    "To provide the excitation"
+   ],
+   "answer": 0,
+   "why": "Temperature changes a gauge's resistance as well as strain does. The dummy sits at the same temperature but takes no strain, in the neighbouring arm, so temperature changes both equally and cancels; only strain unbalances the bridge.",
+   "added": true,
+   "after": "liii1-8"
   },
   {
    "type": "concept",
@@ -121,6 +190,54 @@
    "id": "liii2-1"
   },
   {
+   "id": "q-worked-weigh",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A tank stands on three 1000 kg load cells, each 2 mV/V, wired through a summing box with 10 V excitation. The summing box gives 9.0 mV. The empty tank weighs 450 kg. How much is in it?",
+   "steps": [
+    {
+     "ask": "Full-scale output",
+     "show": "$2 \\text{ mV/V} \\times 10 \\text{ V} = 20$ mV, which the summing box gives with all three cells full: 3000 kg"
+    },
+    {
+     "ask": "The total weight now",
+     "show": "$\\frac{9.0}{20} \\times 3000 = 1350$ kg"
+    },
+    {
+     "ask": "Take off the tare",
+     "show": "$1350 - 450 = 900$ kg of contents"
+    }
+   ],
+   "why": "A summing box puts the cells in parallel, so its output is their average signal and stands for the total load. Weight in = fraction of full scale × total capacity; contents = total − tare.",
+   "added": true,
+   "after": "liii2-1"
+  },
+  {
+   "id": "q-faded-weigh",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A hopper stands on four 500 kg load cells, each 3 mV/V, excited at 5 V through a summing box. The output is 6.0 mV and the empty hopper weighs 300 kg. How much material is in it?",
+   "steps": [
+    {
+     "ask": "Full-scale output",
+     "show": "$3 \\times 5 = 15$ mV for $4 \\times 500 = 2000$ kg"
+    },
+    {
+     "ask": "The total weight now",
+     "show": "$\\frac{6.0}{15} \\times 2000 = 800$ kg"
+    },
+    {
+     "ask": "Take off the tare",
+     "show": "$800 - 300 = 500$ kg"
+    }
+   ],
+   "why": "The same three moves: full scale from mV/V × excitation and the cells' total capacity, the fraction you have, then the tare off.",
+   "added": true,
+   "after": "q-worked-weigh"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "20.6 Weight",
@@ -137,12 +254,44 @@
    "id": "liii2-3"
   },
   {
+   "id": "q-rigid-pipe",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A weighed tank's reading drifts whenever a nearby pipe warms up. What is the likely cause?",
+   "options": [
+    "A rigid pipe pushing or pulling on the vessel",
+    "The load cells measuring temperature",
+    "The liquid's density changing",
+    "The summing box overheating"
+   ],
+   "answer": 0,
+   "why": "Any force on the vessel other than its contents is read as weight. A pipe that grows with heat, or simply carries its own weight on the tank, adds or takes away force. Flexible couplings and pipe hangers that carry the pipework are the cure.",
+   "added": true,
+   "after": "liii2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "20.6 Weight",
    "html": "<p>41One practical solution to this problem is to shut down the source of vibration (e.g. agitator motor, pump, etc.) for a long enough time to take a sample weight measurement, then run the machine again between measurements. So long as intermittent weight measurement is adequate for the needs of the process, the interference of machine vibration may be dealt with in this manner.</p><p>but it can happen if maintenance workers incorrectly attach arc welding equipment to the support structure of the vessel, or if certain electrical equipment mounted on the vessel such as lights or motors develop ground faults. The electronic amplifier circuits interpreting a load cell’s resistance will detect voltage drops created by such currents, interpreting them as changes in load cell resistance and therefore as changes in material level. Sufficiently large currents may even cause permanent damage to load cells, as is often the case when the currents in question are generated by arc welding equipment.</p><p>A variation on this theme is the so-called hydraulic load cell which is a piston-and-cylinder mechanism designed to translate vessel weight directly into hydraulic (liquid) pressure. A normal pressure transmitter then measures the pressure developed by the load cell and reports it as material weight stored in the vessel. Hydraulic load cells completely bypass the electrical problems associated with resistive load cells, but are more difficult to network for the calculation of total weight (using multiple cells to measure the weight of a large vessel).</p>",
    "body": "41One practical solution to this problem is to shut down the source of vibration (e.g. agitator motor, pump, etc.) for a long enough time to take a sample weight measurement, then run the machine again between measurements. So long as intermittent weight measurement is adequate for the needs of the process, the interference of machine vibration may be dealt with in this manner. but it can happen if maintenance workers incorrectly attach arc welding equipment to the support structure of the vessel, or if certain electrical equipment mounted on the vessel such as lights or motors develop ground faults. The electronic amplifier circuits interpreting a load cell’s resistance will detect voltage drops created by such currents, interpreting them as changes in load cell resistance and therefore as changes in material level. Sufficiently large currents may even cause permanent damage to load cells, as is often the case when the currents in question are generated by arc welding equipment. A variation on this theme is the so-called hydraulic load cell which is a piston-and-cylinder mechanism designed to translate vessel weight directly into hydraulic (liquid) pressure. A normal pressure transmitter then measures the pressure developed by the load cell and reports it as material weight stored in the vessel. Hydraulic load cells completely bypass the electrical problems associated with resistive load cells, but are more difficult to network for the calculation of total weight (using multiple cells to measure the weight of a large vessel).",
    "id": "liii2-4"
+  },
+  {
+   "id": "q-weld-earth",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A welder clips the earth return to a weighed vessel's support frame to repair a bracket nearby. What is the risk?",
+   "options": [
+    "Current through the load cells",
+    "None: load cells are insulated",
+    "Only scorched paint on the frame",
+    "The tank's contents heating up"
+   ],
+   "answer": 0,
+   "why": "Welding current takes the easiest path, possibly through the load cells, upsetting the reading and able to burn out the gauges. Clamp the return next to the weld, or remove or bypass the cells first.",
+   "added": true,
+   "after": "liii2-4"
   },
   {
    "id": "add-bridge-bal",

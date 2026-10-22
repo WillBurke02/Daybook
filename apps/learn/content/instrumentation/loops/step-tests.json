@@ -67,6 +67,22 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-p-offset",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A P-only controller runs a flow loop (a self-regulating process). The set point is raised. Where does the flow end up?",
+   "options": [
+    "A little short of the new set point",
+    "Exactly at the new set point",
+    "Oscillating about the set point",
+    "Back at the old value"
+   ],
+   "answer": 0,
+   "why": "To hold a higher flow the valve must stay further open, and a P-only controller only holds its output away from the bias while there is an error. So some error (offset) must remain. Integral action is what removes it.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.1.1 Self-regulating processes",
@@ -97,6 +113,44 @@
    "html": "<figure><img src=\"media/liii/c129af708e84.png\" alt=\"A figure from page 2444 of the original\"></figure><figure><img src=\"media/liii/59ee975e6b25.png\" alt=\"A figure from page 2444 of the original\"></figure><p>For example, if the flow rate of liquid going into the vessel was 450 gallons per minute, and the constant flow rate drawn out of the vessel was 380 gallons per minute, the volume of liquid contained within the vessel would increase over time at a rate equal to 70 gallons per minute: the difference between the in-flow and the out-flow rates. Another way to express this mathematical relationship between flow rates and liquid volume in the vessel is to use the calculus function of integration:</p><figure><img src=\"media/liii/507ea91311b7.png\" alt=\"A figure from page 2444 of the original\"></figure><p>The amount of liquid volume accumulated in the vessel (∆V ) between time 0 and time T is equal</p><figure><img src=\"media/liii/ddf659208365.png\" alt=\"A figure from page 2444 of the original\"></figure><p>to the sum ( ) of the products (multiplication) of difference in flow rates in and out of the vessel (Qin −Qout) during infinitesimal increments of time (dt).</p>",
    "body": "For example, if the flow rate of liquid going into the vessel was 450 gallons per minute, and the constant flow rate drawn out of the vessel was 380 gallons per minute, the volume of liquid contained within the vessel would increase over time at a rate equal to 70 gallons per minute: the difference between the in-flow and the out-flow rates. Another way to express this mathematical relationship between flow rates and liquid volume in the vessel is to use the calculus function of integration: The amount of liquid volume accumulated in the vessel (∆V ) between time 0 and time T is equal to the sum ( ) of the products (multiplication) of difference in flow rates in and out of the vessel (Qin −Qout) during infinitesimal increments of time (dt).",
    "id": "liii1-6"
+  },
+  {
+   "id": "q-level-rate",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A tank with a flat bottom of {a} m² has {qi} L/s flowing in and {qo} L/s drawn out. How fast does the level rise, in mm per second?",
+   "vars": {
+    "a": {
+     "pick": [
+      0.5,
+      1,
+      1.5,
+      2,
+      4
+     ]
+    },
+    "qi": [
+     5,
+     30,
+     1
+    ],
+    "dq": [
+     1,
+     4,
+     1
+    ]
+   },
+   "let": {
+    "qo": "qi - dq"
+   },
+   "answer": "(qi - qo) / a",
+   "unit": "mm/s",
+   "tolerance": 0.01,
+   "work": "$\\frac{ {qi} - {qo} \\text{ L/s} }{ {a} \\text{ m}^2 } = {answer:2}$ mm/s (1 L over 1 m² is 1 mm)",
+   "why": "An integrating process: the level rises at a rate set by the imbalance, in minus out, and keeps rising while it lasts. A litre spread over a square metre is a millimetre deep, so L/s ÷ m² gives mm/s.",
+   "hint": "The imbalance (in − out) spread over the tank's area.",
+   "added": true,
+   "after": "liii1-6"
   },
   {
    "type": "concept",
@@ -155,12 +209,51 @@
    "id": "liii1-13"
   },
   {
+   "id": "q-natural-feedback",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A tank drains through a hand valve. After a step in the inflow, the level rises more and more slowly and settles. Why does it settle?",
+   "options": [
+    "Higher level pushes more out of the drain",
+    "The inflow valve closes as the level rises",
+    "The controller has integral action",
+    "The level transmitter is too slow"
+   ],
+   "answer": 0,
+   "why": "More head means more pressure across the drain valve, so more flows out, until out equals in. That is natural negative feedback inside the process: an integrating process made self-regulating, with no controller involved.",
+   "added": true,
+   "after": "liii1-13"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.1.2 Integrating processes",
    "html": "<p>Summary:</p><ul><li>Integrating processes are characterized by a ramping of the process variable in response to a step-change in the control element value or load(s).</li><li>This integration occurs as a result of either mass flow imbalance or energy flow imbalance in and out of the process.</li><li>Integrating processes are ideally controllable with proportional controller action alone.</li><li>Integral controller action guarantees setpoint overshoot in a purely integrating process.</li><li>Some integral controller action will be required in integrating processes to compensate for load changes.</li><li>The amount of proportional controller action tolerable in an integrating process depends on the degree of time lag and process noise in the system. Too much proportional action will result in oscillation (time lags) and/or erratic control element motion (noise).</li><li>An integrating process will become self-regulating if sufficient negative feedback is naturally introduced. This usually takes the form of loads varying with the process variable.</li></ul>",
    "body": "Summary: Integrating processes are characterized by a ramping of the process variable in response to a step-change in the control element value or load(s). This integration occurs as a result of either mass flow imbalance or energy flow imbalance in and out of the process. Integrating processes are ideally controllable with proportional controller action alone. Integral controller action guarantees setpoint overshoot in a purely integrating process. Some integral controller action will be required in integrating processes to compensate for load changes. The amount of proportional controller action tolerable in an integrating process depends on the degree of time lag and process noise in the system. Too much proportional action will result in oscillation (time lags) and/or erratic control element motion (noise). An integrating process will become self-regulating if sufficient negative feedback is naturally introduced. This usually takes the form of loads varying with the process variable.",
    "id": "liii1-14"
+  },
+  {
+   "id": "q-action-for-type",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each process to what it needs from the controller, as the book sums it up.",
+   "pairs": [
+    [
+     "Self-regulating (a flow loop)",
+     "Integral action, to remove offset"
+    ],
+    [
+     "Integrating (a level with fixed draw)",
+     "Mostly proportional; integral brings overshoot"
+    ],
+    [
+     "Dead time",
+     "All the settings turned down"
+    ]
+   ],
+   "why": "A self-regulating process only reaches set point if integral keeps changing the output; an integrating process already ramps on its own, so P alone can bring it to set point and integral only helps with load changes. Dead time makes every action less tolerable.",
+   "added": true,
+   "after": "liii1-14"
   },
   {
    "type": "concept",
@@ -195,6 +288,40 @@
    "id": "liii2-4"
   },
   {
+   "id": "q-rerange-gain",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.6,
+   "q": "A flow transmitter is re-ranged from 0–{r1} to 0–{r2} L/min. To keep the loop the same, by what factor should the controller's gain be multiplied?",
+   "vars": {
+    "r1": {
+     "pick": [
+      100,
+      150,
+      200,
+      250,
+      300
+     ]
+    },
+    "r2": {
+     "pick": [
+      50,
+      75,
+      120,
+      400,
+      500
+     ]
+    }
+   },
+   "answer": "r2 / r1",
+   "tolerance": 0.01,
+   "work": "Process gain × $\\frac{ {r1} }{ {r2} }$, so controller gain × $\\frac{ {r2} }{ {r1} } = {answer:3}$",
+   "why": "The controller only sees percent. A smaller range makes each L/min a bigger percentage, so the process looks more responsive (higher gain) and the controller's gain must come down by the same factor: the book's 0–200 to 0–150 change needs ¾ of the old gain. With ideal or series PID, changing Kp alone does it.",
+   "hint": "Smaller range → bigger process gain → smaller controller gain, by the ratio of the ranges.",
+   "added": true,
+   "after": "liii2-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.1.4 Steady-state process gain",
@@ -217,6 +344,22 @@
    "html": "<p>Note how the PV changes about 5% for the first 5% step-change in output, corresponding to a process gain of 1. Then, the PV changes about 7.5% for the next 5% output step-change, for a process gain of 1.5. The final increasing 5% step-change yields a PV change of about 12.5%, a process gain of 2.5. Clearly, the process being controlled here is not equally responsive throughout the measurement range. This is a concern to us in tuning the PID controller because any set of tuning constants that work well to control the process around a certain setpoint may not work as well if the setpoint is changed to a different value, simply because the process may be more or less responsive at that different process variable value. Inconsistent process gain is a problem inherent to many different process types, which means it is something you will need to be aware of when investigating a process prior to tuning the controller. The best way to reveal inconsistent process gain is to perform a series of step-changes to the controller output while in manual mode, “exploring” the process response throughout the safe range of operation. Compensating for inconsistent process gain is much more difficult than merely detecting its presence. If the gain of the process continuously grows from one end of the range to the other (e.g. low gain at low output values and high gain at high output values, or vice-versa), a control valve with a different characteristic may be applied to counter-act the process gain. If the process gain follows some pattern more closely related to PV value rather than controller output value, the best solution is a type of controller known as an adaptive gain controller. In an adaptive gain controller, the proportional setting is made to vary in a particular way as the process changes, rather than be a fixed constant set by a human technician or engineer.</p>",
    "body": "Note how the PV changes about 5% for the first 5% step-change in output, corresponding to a process gain of 1. Then, the PV changes about 7.5% for the next 5% output step-change, for a process gain of 1.5. The final increasing 5% step-change yields a PV change of about 12.5%, a process gain of 2.5. Clearly, the process being controlled here is not equally responsive throughout the measurement range. This is a concern to us in tuning the PID controller because any set of tuning constants that work well to control the process around a certain setpoint may not work as well if the setpoint is changed to a different value, simply because the process may be more or less responsive at that different process variable value. Inconsistent process gain is a problem inherent to many different process types, which means it is something you will need to be aware of when investigating a process prior to tuning the controller. The best way to reveal inconsistent process gain is to perform a series of step-changes to the controller output while in manual mode, “exploring” the process response throughout the safe range of operation. Compensating for inconsistent process gain is much more difficult than merely detecting its presence. If the gain of the process continuously grows from one end of the range to the other (e.g. low gain at low output values and high gain at high output values, or vice-versa), a control valve with a different characteristic may be applied to counter-act the process gain. If the process gain follows some pattern more closely related to PV value rather than controller output value, the best solution is a type of controller known as an adaptive gain controller. In an adaptive gain controller, the proportional setting is made to vary in a particular way as the process changes, rather than be a fixed constant set by a human technician or engineer.",
    "id": "liii2-7"
+  },
+  {
+   "id": "q-uneven-gain",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Step tests show the process gain is 1 at low output and 2.5 at high output. What is the risk with one set of tuning?",
+   "options": [
+    "Good at one end, poor at the other",
+    "None: the controller averages it",
+    "The valve will fail open",
+    "The transmitter must be re-ranged"
+   ],
+   "answer": 0,
+   "why": "Settings that work where the gain is 1 give two and a half times the loop gain where it is 2.5, which may oscillate; tuned for the high-gain end, the loop is sluggish at the low end. Tune for the worst region, or fix the cause (often a valve with the wrong characteristic).",
+   "added": true,
+   "after": "liii2-7"
   },
   {
    "type": "concept",
@@ -251,6 +394,44 @@
    "id": "liii2-11"
   },
   {
+   "id": "q-first-order-pct",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A first-order process has a time constant of {tau} s. How far towards its final value is it {t} s after a step, in per cent?",
+   "vars": {
+    "tau": {
+     "pick": [
+      10,
+      20,
+      30,
+      60,
+      120
+     ]
+    },
+    "n": {
+     "pick": [
+      0.5,
+      1,
+      2,
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   "let": {
+    "t": "n * tau"
+   },
+   "answer": "100 * (1 - EXP(-t / tau))",
+   "unit": "%",
+   "abs": 0.2,
+   "work": "$100 \\times (1 - e^{-{t}/{tau}}) = {answer:1}$ %",
+   "why": "One time constant gets 63.2% of the way; two, 86.5%; three, 95%; five, over 99%. The formula is $1 - e^{-t/\\tau}$: e is about 2.718, and $e^{-1} = 0.368$ is the part still to go after one time constant.",
+   "hint": "How many time constants is it? One gives 63.2%, two 86.5%, three 95%.",
+   "added": true,
+   "after": "liii2-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.1.5 Lag time",
@@ -275,6 +456,23 @@
    "id": "liii3-2"
   },
   {
+   "id": "q-dead-worse",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.8,
+   "q": "Why is dead time worse for a feedback loop than a lag of the same length?",
+   "options": [
+    "Its phase shift keeps growing with frequency",
+    "It reduces the process gain",
+    "It adds noise to the measurement",
+    "It makes the valve stick"
+   ],
+   "answer": 0,
+   "why": "A first-order lag can shift the phase by at most 90°, and cuts the signal as it does. Dead time shifts the phase more and more as frequency rises without cutting it at all, so some frequency always reaches 180°, and enough gain there makes the loop oscillate.",
+   "added": true,
+   "after": "liii3-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.1.7 Dead time",
@@ -297,6 +495,22 @@
    "html": "<p>All digital instruments exhibit dead time due to the nature of their operation: processing signals over discrete time periods. Usually, the amount of dead time seen in a modern digital instrument is too short to be of any consequence, but there are some special cases meriting attention. Perhaps the most serious case is the example of wireless transmitters, using radio waves to communicate process information back to a host system. In order to maximize battery life, a wireless transmitter must transmit its data sparingly. Update times (i.e. dead time) measured in minutes are not uncommon for battery-powered wireless process transmitters.</p><p>22An interesting analogy is that of a narcoleptic human operator manually controlling a process with a lot of dead time. If we imagine this person helplessly falling asleep at periodic intervals, then waking up to re-check the process variable and make another valve adjustment before falling asleep again, we see that the dead time of the process disappears from the perspective of the operator. The operator never realizes the process even has dead time, because they don’t remain awake long enough to notice. So long as the poor operator’s narcolepsy occurs at just the right intervals (i.e. not too short so as to notice dead time, and not too long so as to miss important changes in setpoint or load), good control of the process is possible.</p>",
    "body": "All digital instruments exhibit dead time due to the nature of their operation: processing signals over discrete time periods. Usually, the amount of dead time seen in a modern digital instrument is too short to be of any consequence, but there are some special cases meriting attention. Perhaps the most serious case is the example of wireless transmitters, using radio waves to communicate process information back to a host system. In order to maximize battery life, a wireless transmitter must transmit its data sparingly. Update times (i.e. dead time) measured in minutes are not uncommon for battery-powered wireless process transmitters. 22An interesting analogy is that of a narcoleptic human operator manually controlling a process with a lot of dead time. If we imagine this person helplessly falling asleep at periodic intervals, then waking up to re-check the process variable and make another valve adjustment before falling asleep again, we see that the dead time of the process disappears from the perspective of the operator. The operator never realizes the process even has dead time, because they don’t remain awake long enough to notice. So long as the poor operator’s narcolepsy occurs at just the right intervals (i.e. not too short so as to notice dead time, and not too long so as to miss important changes in setpoint or load), good control of the process is possible.",
    "id": "liii3-5"
+  },
+  {
+   "id": "q-wireless-dead",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which instrument is most likely to add serious dead time to a loop?",
+   "options": [
+    "A battery wireless transmitter updating each minute",
+    "A wired 4–20 mA pressure transmitter",
+    "A thermocouple in a thin sheath",
+    "A smart valve positioner"
+   ],
+   "answer": 0,
+   "why": "To save battery, wireless transmitters send rarely, and between updates the controller sees nothing new: that is dead time. Fine for a slow tank level; poor for a fast flow loop.",
+   "added": true,
+   "after": "liii3-5"
   },
   {
    "id": "add-gain-num",

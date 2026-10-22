@@ -30,12 +30,73 @@
    "id": "wikibooks1-1"
   },
   {
+   "id": "q-decades",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "How many decades are there between {f1} Hz and {f2} Hz on a Bode plot's frequency axis?",
+   "vars": {
+    "f1": {
+     "pick": [
+      0.1,
+      1,
+      2,
+      5,
+      10
+     ]
+    },
+    "n": [
+     0.5,
+     4,
+     0.5
+    ]
+   },
+   "let": {
+    "f2": "f1 * 10^n"
+   },
+   "answer": "LOG10(f2 / f1)",
+   "abs": 0.02,
+   "work": "$\\log_{10}\\frac{ {f2} }{ {f1} } = {answer:2}$ decades",
+   "why": "A decade is a factor of ten in frequency, so the number of decades is the log (base 10) of the ratio: 1 to 1000 Hz is three. On a log axis each decade takes the same width.",
+   "hint": "How many times do you multiply by 10 to get from one to the other? log₁₀ of the ratio.",
+   "added": true,
+   "after": "wikibooks1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Decibels",
    "html": "<p>A <strong>Decibel</strong> is a ratio between two numbers on a logarithmic scale. To express a ratio between two numbers (A and B) as a decibel we apply the following formula for numbers that represent amplitudes (numbers that represent a power measurement use a factor of 10 rather than 20): </p><dl><dd><math><mrow><mstyle><mi>d</mi><mi>B</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mi>A</mi></mrow><mrow><mi>B</mi></mrow></mfrac><mo>)</mo></mrow></mstyle></mrow></math></dd></dl><p>Where dB is the decibel result. </p><p>Or, if we just want to take the decibels of a single number C, we could just as easily write: </p><dl><dd><math><mrow><mstyle><mi>d</mi><mi>B</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mi>C</mi><mo>)</mo></mstyle></mrow></math></dd></dl>",
    "body": "A Decibel is a ratio between two numbers on a logarithmic scale. To express a ratio between two numbers (A and B) as a decibel we apply the following formula for numbers that represent amplitudes (numbers that represent a power measurement use a factor of 10 rather than 20): d B = 20 log ⁡ ( A B ) Where dB is the decibel result. Or, if we just want to take the decibels of a single number C, we could just as easily write: d B = 20 log ⁡ ( C )",
    "id": "wikibooks1-2"
+  },
+  {
+   "id": "q-power-db",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A power ratio is {p}. What is that in decibels?",
+   "vars": {
+    "p": {
+     "pick": [
+      0.01,
+      0.1,
+      0.5,
+      2,
+      4,
+      10,
+      100,
+      1000
+     ]
+    }
+   },
+   "answer": "10 * LOG10(p)",
+   "unit": "dB",
+   "abs": 0.05,
+   "work": "$10 \\log_{10} {p} = {answer:2}$ dB",
+   "why": "Power ratios take 10 log; amplitude (voltage, current) ratios take 20 log, because power goes with amplitude squared. So doubling power is +3 dB, doubling voltage +6 dB.",
+   "hint": "Power: 10 × log₁₀ of the ratio.",
+   "added": true,
+   "after": "wikibooks1-2"
   },
   {
    "type": "concept",
@@ -70,6 +131,45 @@
    "id": "wikibooks1-6"
   },
   {
+   "id": "q-pole-gain",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 7.0,
+   "q": "A system's Bode gain is flat at {g0} dB up to a single pole at {fb} Hz. On the straight-line plot, what is the gain at {f} Hz?",
+   "vars": {
+    "g0": [
+     0,
+     40,
+     2
+    ],
+    "fb": {
+     "pick": [
+      1,
+      5,
+      10,
+      50,
+      100
+     ]
+    },
+    "n": [
+     0.5,
+     3,
+     0.5
+    ]
+   },
+   "let": {
+    "f": "fb * 10^n"
+   },
+   "answer": "g0 - 20 * LOG10(f / fb)",
+   "unit": "dB",
+   "abs": 0.1,
+   "work": "${g0} - 20 \\times \\log_{10}\\frac{ {f} }{ {fb} } = {answer:1}$ dB",
+   "why": "Above a pole's break point the straight line falls 20 dB per decade: count the decades past the break and take 20 dB for each. (The real curve is 3 dB under the lines right at the break.)",
+   "hint": "Decades past the break × 20 dB, taken off the flat gain.",
+   "added": true,
+   "after": "wikibooks1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Bode Phase Plots",
@@ -86,12 +186,44 @@
    "id": "wikibooks1-8"
   },
   {
+   "id": "q-pole-phase",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On the straight-line Bode phase plot, how much phase does one pole add, and over what range?",
+   "options": [
+    "−90°, from a tenth to ten times its break",
+    "−90°, all at its break frequency",
+    "−180°, over one decade",
+    "+90°, above its break"
+   ],
+   "answer": 0,
+   "why": "A pole's phase slopes down 45° per decade, starting a decade below its break and flattening a decade above: −90° in all, −45° at the break itself. A zero does the same upwards.",
+   "added": true,
+   "after": "wikibooks1-8"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Example: Constant Gain",
    "html": "<p>Draw the bode plot of an amplifier system, with a constant gain increase of 6dB. </p><p>Because the gain value is constant, and is not dependent on the frequency, we know that the value of the magnitude graph is constant at all places on the graph. There are no break points, so the slope of the graph never changes. We can draw the graph as a straight, horizontal line at 6dB: </p><h4>Example: Integrator</h4><p>Draw the bode plot of a perfect integrator system given by the transfer function: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mi>s</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>First, we find the frequency response of the system, by a change of variables: </p><dl><dd><math><mrow><mstyle><mi>T</mi><mo>(</mo><mi>j</mi><mi>ω</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mrow><mi>j</mi><mi>ω</mi></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Then we convert our magnitude into logarithms: </p><dl><dd><math><mrow><mstyle><mi>G</mi><mi>a</mi><mi>i</mi><mi>n</mi><mo>=</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mn>2</mn><mo>)</mo><mo>−</mo><mn>20</mn><mi>log</mi><mo>⁡</mo><mo>(</mo><mo>|</mo><mi>j</mi><mi>ω</mi><mo>|</mo><mo>)</mo></mstyle></mrow></math></dd></dl><p>Notice that the location of the break point for the pole is located at ω → 0, which is all the way to the left of the graph. Also, we notice that inserting 0 in for ω gives us an undefined value (which approaches negative infinity, as the limit). We know, because there is a single pole at zero, that the graph to the right of zero (which is everywhere) has a slope of -20dB/Decade. We can determine from our magnitude calculation by plugging in ω → 1 that the second term drops out, and the magnitude at that point is 6dB. We now have the slope of the line, and a point that it intersects, and we can draw the graph: </p>",
    "body": "Draw the bode plot of an amplifier system, with a constant gain increase of 6dB. Because the gain value is constant, and is not dependent on the frequency, we know that the value of the magnitude graph is constant at all places on the graph. There are no break points, so the slope of the graph never changes. We can draw the graph as a straight, horizontal line at 6dB: Example: Integrator Draw the bode plot of a perfect integrator system given by the transfer function: T ( s ) = 2 s First, we find the frequency response of the system, by a change of variables: T ( j ω ) = 2 j ω Then we convert our magnitude into logarithms: G a i n = 20 log ⁡ ( 2 ) − 20 log ⁡ ( | j ω | ) Notice that the location of the break point for the pole is located at ω → 0, which is all the way to the left of the graph. Also, we notice that inserting 0 in for ω gives us an undefined value (which approaches negative infinity, as the limit). We know, because there is a single pole at zero, that the graph to the right of zero (which is everywhere) has a slope of -20dB/Decade. We can determine from our magnitude calculation by plugging in ω → 1 that the second term drops out, and the magnitude at that point is 6dB. We now have the slope of the line, and a point that it intersects, and we can draw the graph:",
    "id": "wikibooks1-9"
+  },
+  {
+   "id": "q-integrator-bode",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does a pure integrator, 1/s, look like on a Bode plot?",
+   "options": [
+    "Gain falling 20 dB/decade everywhere; phase −90°",
+    "Flat gain; phase 0°",
+    "Gain rising 20 dB/decade; phase +90°",
+    "Flat gain; phase −180°"
+   ],
+   "answer": 0,
+   "why": "Its pole is at zero frequency, so the gain falls at 20 dB per decade across the whole plot, and the phase is −90° at every frequency. A differentiator (s) is the mirror: rising 20 dB per decade, +90°.",
+   "added": true,
+   "after": "wikibooks1-9"
   },
   {
    "type": "concept",

@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.35 — 22 October 2026
+
+- **Questions inside the Instrumentation book lessons**: all 18 now ask after each section, 151 new
+  questions: the 4–20 mA chain, RTDs and thermocouples, pressure, level and magflow, load cells (with a worked
+  and a faded weighing example), valves and actuators, calibration, ADCs and aliasing, step tests and tuning,
+  cascade, ratio and split-range control, alarm rates, and the control theory lessons (block diagrams, second
+  order, Bode plots, stability, sampled systems).
+
 ## 4.0.34 — 22 October 2026
 
 - **Questions inside the Drives book lessons**: feedforward, gears and cams, linear motors and steppers now ask

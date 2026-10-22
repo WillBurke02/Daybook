@@ -48,6 +48,48 @@
    "id": "wikibooks1-2"
   },
   {
+   "id": "q-series-gain",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A transmitter (gain {g1}), a controller (gain {g2}) and a valve (gain {g3}) are in series. What single gain replaces the three?",
+   "vars": {
+    "g1": {
+     "pick": [
+      0.5,
+      0.8,
+      1.2,
+      1.6,
+      2
+     ]
+    },
+    "g2": {
+     "pick": [
+      0.5,
+      1.5,
+      2,
+      3,
+      4
+     ]
+    },
+    "g3": {
+     "pick": [
+      0.25,
+      0.6,
+      0.9,
+      1.5
+     ]
+    }
+   },
+   "answer": "g1 * g2 * g3",
+   "tolerance": 0.005,
+   "work": "${g1} \\times {g2} \\times {g3} = {answer:3}$",
+   "why": "In series, each block's output is the next one's input, so the gains multiply (in the Laplace domain the transfer functions multiply). Adding them is the slip; adding is for blocks in parallel feeding a summing junction.",
+   "hint": "Series: multiply.",
+   "added": true,
+   "after": "wikibooks1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Series State Space",
@@ -62,6 +104,32 @@
    "html": "<p>Blocks may not be placed in parallel without the use of an adder. Blocks connected by an adder as shown above have a total transfer function of: </p><dl><dd><math><mrow><mstyle><mi>Y</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mi>X</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>[</mo><mi>F</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>+</mo><mi>G</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>]</mo></mstyle></mrow></math></dd></dl><p>Since the Laplace transform is linear, we can easily transfer this to the time domain by converting the multiplication to convolution: </p><dl><dd><math><mrow><mstyle><mi>y</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>∗</mo><mo>[</mo><mi>f</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>+</mo><mi>g</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>]</mo></mstyle></mrow></math></dd></dl><h4>State Space Model</h4><p>The state-space equations, with non-zero A, B, C, and D matrices conceptually model the following system: </p><p>In this image, the strange-looking block in the center is either an integrator or an ideal delay, and can be represented in the transfer domain as: </p><dl><dd><math><mrow><mstyle><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>s</mi></mrow></mfrac></mrow></mstyle></mrow></math> or <math><mrow><mstyle><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>z</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Depending on the time characteristics of the system. If we only consider continuous-time systems, we can replace the funny block in the center with an integrator: </p>",
    "body": "Blocks may not be placed in parallel without the use of an adder. Blocks connected by an adder as shown above have a total transfer function of: Y ( s ) = X ( s ) [ F ( s ) + G ( s ) ] Since the Laplace transform is linear, we can easily transfer this to the time domain by converting the multiplication to convolution: y ( t ) = x ( t ) ∗ [ f ( t ) + g ( t ) ] State Space Model The state-space equations, with non-zero A, B, C, and D matrices conceptually model the following system: In this image, the strange-looking block in the center is either an integrator or an ideal delay, and can be represented in the transfer domain as: 1 s or 1 z Depending on the time characteristics of the system. If we only consider continuous-time systems, we can replace the funny block in the center with an integrator:",
    "id": "wikibooks1-4"
+  },
+  {
+   "id": "q-parallel-gain",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "Two blocks with gains {g1} and {g2} are fed the same input and their outputs added at a summing junction. What single gain replaces them?",
+   "vars": {
+    "g1": [
+     0.5,
+     6,
+     0.5
+    ],
+    "g2": [
+     0.5,
+     6,
+     0.5
+    ]
+   },
+   "answer": "g1 + g2",
+   "tolerance": 0.005,
+   "work": "${g1} + {g2} = {answer}$",
+   "why": "Parallel blocks need an adder, and the adder adds their outputs: the combined block is the sum. A PID controller drawn as three parallel blocks is Kp + Ki/s + Kd·s.",
+   "hint": "Parallel into an adder: add.",
+   "added": true,
+   "after": "wikibooks1-4"
   },
   {
    "type": "concept",
@@ -86,6 +154,22 @@
    "html": "<p> This operation can be performed using this </p><p><a href=\"https://en.wikibooks.org/wiki/MATLAB_Programming\">MATLAB</a></p><p> command: </p><strong><a href=\"https://en.wikibooks.org/wiki/Control_Systems/MATLAB\">tf</a></strong><p>A <strong>Transfer Function</strong> is the ratio of the output of a system to the input of a system, in the Laplace domain considering its initial conditions and equilibrium point to be zero. This assumption is relaxed for systems observing transience. If we have an input function of <em>X(s)</em>, and an output function <em>Y(s)</em>, we define the transfer function <em>H(s)</em> to be: </p><p>[Transfer Function] </p><dl><dd><math><mrow><mstyle><mi>H</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>Y</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mrow><mi>X</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mfrac></mstyle></mrow></math></dd></dl><p>Readers who have read the <a href=\"https://en.wikibooks.org/wiki/Circuit_Theory\">Circuit Theory</a> book will recognize the transfer function as being the impedance, admittance, impedance ratio of a voltage divider or the admittance ratio of a current divider. </p>",
    "body": "This operation can be performed using this MATLAB command: tf A Transfer Function is the ratio of the output of a system to the input of a system, in the Laplace domain considering its initial conditions and equilibrium point to be zero. This assumption is relaxed for systems observing transience. If we have an input function of X(s) , and an output function Y(s) , we define the transfer function H(s) to be: [Transfer Function] H ( s ) = Y ( s ) X ( s ) Readers who have read the Circuit Theory book will recognize the transfer function as being the impedance, admittance, impedance ratio of a voltage divider or the admittance ratio of a current divider.",
    "id": "wikibooks2-1"
+  },
+  {
+   "id": "q-tf-def",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is a transfer function?",
+   "options": [
+    "Output over input in the Laplace domain, from rest",
+    "Input over output in the time domain",
+    "The time a system takes to respond",
+    "The gain at one chosen frequency"
+   ],
+   "answer": 0,
+   "why": "H(s) = Y(s)/X(s), with zero initial conditions. It describes the whole system: put in any input's transform, multiply by H(s), and the output's transform comes out.",
+   "added": true,
+   "after": "wikibooks2-1"
   },
   {
    "type": "concept",
@@ -136,6 +220,22 @@
    "id": "wikibooks2-7"
   },
   {
+   "id": "q-convolution",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why are Laplace transforms used rather than working out convolution integrals?",
+   "options": [
+    "Convolution in time becomes multiplication in s",
+    "Laplace transforms remove the need for an input",
+    "They turn every system into a first-order one",
+    "They work only for stable systems"
+   ],
+   "answer": 0,
+   "why": "The convolution theorem: the hard time-domain operation (convolving the input with the impulse response) becomes a simple product, Y(s) = H(s)X(s). That is also why series blocks multiply.",
+   "added": true,
+   "after": "wikibooks2-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Using the Transfer Function",
@@ -158,6 +258,23 @@
    "html": "<p>From the Laplace Transform table, we can also see that the transform of the unit step function, <em>u(t)</em> is given by: </p><dl><dd><math><mrow><mstyle><mrow><mi>ℒ</mi></mrow><mo>[</mo><mi>u</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>]</mo><mo>=</mo><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>s</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Plugging that result into our relation for the transfer function gives us: </p><dl><dd><math><mrow><mstyle><mi>Y</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mi>X</mi><mo>(</mo><mi>s</mi><mo>)</mo><mi>H</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math></dd> <dd><math><mrow><mstyle><mi>Y</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>s</mi></mrow></mfrac></mrow><mi>H</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math></dd> <dd><math><mrow><mstyle><mi>Y</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><mi>H</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow><mrow><mi>s</mi></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>And we can see that the step response is simply the impulse response divided by <em>s</em>. </p>",
    "body": "From the Laplace Transform table, we can also see that the transform of the unit step function, u(t) is given by: ℒ [ u ( t ) ] = 1 s Plugging that result into our relation for the transfer function gives us: Y ( s ) = X ( s ) H ( s ) Y ( s ) = 1 s H ( s ) Y ( s ) = H ( s ) s And we can see that the step response is simply the impulse response divided by s .",
    "id": "wikibooks2-10"
+  },
+  {
+   "id": "q-step-impulse",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 7.2,
+   "q": "How is a system's step response related to its impulse response?",
+   "options": [
+    "Step response = impulse response ÷ s",
+    "Step response = impulse response × s",
+    "They are the same",
+    "Step response = 1 ÷ impulse response"
+   ],
+   "answer": 0,
+   "why": "A unit step transforms to 1/s and an impulse to 1, so the step response is H(s)/s: the impulse response divided by s, which in time is its running total (integral). A step is the integral of an impulse.",
+   "added": true,
+   "after": "wikibooks2-10"
   },
   {
    "type": "concept",

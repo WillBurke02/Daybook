@@ -49,6 +49,22 @@
    "id": "liii1-1"
   },
   {
+   "id": "q-open-closed",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How is the Ziegler–Nichols closed-loop (ultimate gain) test done?",
+   "why": "Closed loop means the controller is in automatic. With integral and derivative off, the gain is raised until the loop oscillates steadily; that gain (Ku) and the period (Pu) give the settings. The open-loop test is the manual step: gentler on a running process.",
+   "added": true,
+   "after": "liii1-1",
+   "options": [
+    "In auto, P only: gain raised until it swings steadily",
+    "In manual: the output stepped, the PV studied",
+    "In auto with full PID, set point stepped",
+    "In manual: the valve stroked fully open and shut"
+   ],
+   "answer": 0
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.3 Quantitative PID tuning procedures",
@@ -73,6 +89,26 @@
    "id": "liii1-4"
   },
   {
+   "id": "q-zn-p-only",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Ziegler–Nichols closed loop: the loop oscillates steadily at a gain of {ku}. What gain does the rule give for a **P-only** controller?",
+   "vars": {
+    "ku": [
+     1,
+     12,
+     0.5
+    ]
+   },
+   "answer": "0.5 * ku",
+   "tolerance": 0.01,
+   "work": "$K_p = 0.5 K_u = 0.5 \\times {ku} = {answer:2}$",
+   "why": "Half the ultimate gain gives roughly quarter-wave damping: each overshoot a quarter of the one before. With integral action added, slightly less than half (0.45); full PID, 0.6.",
+   "hint": "Half the ultimate gain.",
+   "added": true,
+   "after": "liii1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.3.1 Ziegler-Nichols closed-loop (“Ultimate Gain”)",
@@ -89,6 +125,22 @@
    "id": "liii1-6"
   },
   {
+   "id": "q-quarter-wave",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does the book argue against settling for quarter-wave damping today?",
+   "options": [
+    "It wears valves and uses air for no need",
+    "Modern controllers cannot oscillate",
+    "It makes the PV noisy",
+    "It was never in Ziegler and Nichols' paper"
+   ],
+   "answer": 0,
+   "why": "Quarter-wave damping keeps the valve swinging, wearing its packing and using compressed air. Ziegler and Nichols accepted it partly to avoid offset; modern controllers all have integral action, so gentler settings can remove offset without the swinging.",
+   "added": true,
+   "after": "liii1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.3.1 Ziegler-Nichols closed-loop (“Ultimate Gain”)",
@@ -103,6 +155,22 @@
    "html": "<p>28Imagine informing the lead operations manager or a unit supervisor in a chemical processing facility you wish to over-tune the temperature controller in the main reaction furnace or the pressure controller in one of the larger distillation columns until it nearly oscillates out of control, and that doing so may necessitate hours of unstable operation before you find the perfect gain setting. Consider yourself fortunate if your declaration of intent does not result in security personnel escorting you out of the control room.</p><p>“slower” the process is to respond, the “slower” (less aggressive) the controller’s integral response should be. Derivative time constant should likewise be proportional to the process time constant, although this has the opposite meaning from the perspective of aggressiveness: a “slow” process deserves a long derivative time constant; i.e. more aggressive derivative action.</p>",
    "body": "28Imagine informing the lead operations manager or a unit supervisor in a chemical processing facility you wish to over-tune the temperature controller in the main reaction furnace or the pressure controller in one of the larger distillation columns until it nearly oscillates out of control, and that doing so may necessitate hours of unstable operation before you find the perfect gain setting. Consider yourself fortunate if your declaration of intent does not result in security personnel escorting you out of the control room. “slower” the process is to respond, the “slower” (less aggressive) the controller’s integral response should be. Derivative time constant should likewise be proportional to the process time constant, although this has the opposite meaning from the perspective of aggressiveness: a “slow” process deserves a long derivative time constant; i.e. more aggressive derivative action.",
    "id": "liii1-8"
+  },
+  {
+   "id": "q-ultimate-hazard",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the main practical problem with the ultimate-gain (closed-loop) method on a running plant?",
+   "options": [
+    "It drives the loop to the edge of instability",
+    "It needs the controller in manual",
+    "It ignores the process gain",
+    "It only works on integrating processes"
+   ],
+   "answer": 0,
+   "why": "Finding Ku means turning the gain up until the loop oscillates steadily, possibly for hours, on a furnace or a distillation column. Operations may rightly refuse; the open-loop step test is less disruptive.",
+   "added": true,
+   "after": "liii1-8"
   },
   {
    "type": "concept",
@@ -129,12 +197,48 @@
    "id": "liii1-11"
   },
   {
+   "id": "q-zn-open-ti",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Ziegler–Nichols open loop on a full PID controller: the step test shows a dead time of {l} s. What integral time does the rule give?",
+   "vars": {
+    "l": [
+     2,
+     90,
+     1
+    ]
+   },
+   "answer": "2 * l",
+   "unit": "s",
+   "work": "$\\tau_i = 2L = 2 \\times {l} = {answer}$ s",
+   "why": "For PID, the open-loop rule sets the gain to 120% of the P-only value and the integral time to twice the dead time. The method leans heavily on dead time: a process with very little gives settings too aggressive to use.",
+   "hint": "Twice the dead time.",
+   "added": true,
+   "after": "liii1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "30.3.2 Ziegler-Nichols open-loop",
    "html": "<p>As you can see, the Ziegler-Nichols open-loop tuning method relies heavily on dead time (L) as a descriptive parameter for the process. This may be problematic in processes having insubstantial dead time, as the small L values obtained during the open-loop test will predict large controller gain (Kp) and aggressive integral (τi) time constant values, often too large to be practical. The open-loop method, however, is less disruptive to an operating process than the closed-loop method (which necessitated over-tuning the controller to the brink of total instability). Another limitation, common to both the closed-loop and open-loop tuning methods, is that other factors in the process such as noise and hysteresis are completely overlooked. Noise is troublesome for large controller gain values (because the controller’s proportional action reproduces that noise on the output) and is especially troublesome for derivative action which amplifies any noise it sees. Hysteresis causes integral action to continually “hunt” up and down, leading to cycling of the process variable. The lesson here is that no algorithmic PID tuning method can replace informed judgment on the part of the person tuning the loop. The methods proposed by Ziegler and Nichols (and others!) are merely starting points, and should never be taken as a definitive answer for controller tuning.</p>",
    "body": "As you can see, the Ziegler-Nichols open-loop tuning method relies heavily on dead time (L) as a descriptive parameter for the process. This may be problematic in processes having insubstantial dead time, as the small L values obtained during the open-loop test will predict large controller gain (Kp) and aggressive integral (τi) time constant values, often too large to be practical. The open-loop method, however, is less disruptive to an operating process than the closed-loop method (which necessitated over-tuning the controller to the brink of total instability). Another limitation, common to both the closed-loop and open-loop tuning methods, is that other factors in the process such as noise and hysteresis are completely overlooked. Noise is troublesome for large controller gain values (because the controller’s proportional action reproduces that noise on the output) and is especially troublesome for derivative action which amplifies any noise it sees. Hysteresis causes integral action to continually “hunt” up and down, leading to cycling of the process variable. The lesson here is that no algorithmic PID tuning method can replace informed judgment on the part of the person tuning the loop. The methods proposed by Ziegler and Nichols (and others!) are merely starting points, and should never be taken as a definitive answer for controller tuning.",
    "id": "liii1-12"
+  },
+  {
+   "id": "q-open-weakness",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A step test shows almost no dead time. What goes wrong with Ziegler–Nichols open-loop settings?",
+   "options": [
+    "They come out far too aggressive",
+    "They come out far too gentle",
+    "Nothing: less dead time is always better",
+    "The integral time becomes negative"
+   ],
+   "answer": 0,
+   "why": "The open-loop formulas divide by the dead time L, so a tiny L predicts a huge gain and a very short integral time. The method also treats self-regulating and integrating processes alike, and ignores noise and hysteresis.",
+   "added": true,
+   "after": "liii1-12"
   },
   {
    "type": "concept",
@@ -151,6 +255,29 @@
    "html": "<p>Gain and phase shift of each action</p><ul><li>Proportional action acts on the present, adding no phase shift to a sinusoidal signal. Its gain is constant for any signal frequency.</li><li>Integral action acts on the past, adding a −90o phase shift to a sinusoidal signal. Its gain</li></ul><p>decreases with increasing frequency.</p><ul><li>Derivative action acts on the future, adding a +90o phase shift to a sinusoidal signal. Its gain increases with increasing frequency.</li></ul><h4>30.4.2 Tuning recommendations based on process dynamics</h4><p>Knowing which control actions to focus on first is a matter of characterizing the process (identifying whether it is self-regulating, integrating, runaway, noisy, has lag or dead time, or any combination of these traits based on an open-loop response test34) and then selecting the best actions to fit those characteristics. The following table shows some general recommendations for fitting PID tuning to different process characteristics</p><figure><img src=\"media/liii/1342b5843aec.png\" alt=\"A figure from page 2500 of the original\"></figure><p>General rules:</p><ul><li>Use no derivative action if the process signal is “noisy”</li><li>Use proportional action sparingly if the process signal is “noisy”</li><li>The slower the time lag(s), the less integral action to use (a good approximation is to set the integration time τi equal to the measured lag time of the process)</li><li>The higher-order the time lag(s), the less proportional action (gain) to use</li><li>Self-regulating processes need integral action</li><li>Integrating processes need proportional action</li></ul><p><small>34Recall that an open-loop response test consists of placing the loop controller in manual mode, introducing a step-change to the controller output (manipulated variable), and analyzing the time-domain response of the process variable as it reacts to that perturbation.</small></p>",
    "body": "Gain and phase shift of each action Proportional action acts on the present, adding no phase shift to a sinusoidal signal. Its gain is constant for any signal frequency. Integral action acts on the past, adding a −90o phase shift to a sinusoidal signal. Its gain decreases with increasing frequency. Derivative action acts on the future, adding a +90o phase shift to a sinusoidal signal. Its gain increases with increasing frequency. 30.4.2 Tuning recommendations based on process dynamics Knowing which control actions to focus on first is a matter of characterizing the process (identifying whether it is self-regulating, integrating, runaway, noisy, has lag or dead time, or any combination of these traits based on an open-loop response test34) and then selecting the best actions to fit those characteristics. The following table shows some general recommendations for fitting PID tuning to different process characteristics General rules: Use no derivative action if the process signal is “noisy” Use proportional action sparingly if the process signal is “noisy” The slower the time lag(s), the less integral action to use (a good approximation is to set the integration time τi equal to the measured lag time of the process) The higher-order the time lag(s), the less proportional action (gain) to use Self-regulating processes need integral action Integrating processes need proportional action 34Recall that an open-loop response test consists of placing the loop controller in manual mode, introducing a step-change to the controller output (manipulated variable), and analyzing the time-domain response of the process variable as it reacts to that perturbation.",
    "id": "liii2-2"
+  },
+  {
+   "id": "q-pid-phase",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each control action to its phase shift and what it acts on.",
+   "pairs": [
+    [
+     "Proportional",
+     "0°: acts on the present error"
+    ],
+    [
+     "Integral",
+     "−90°: acts on the past (accumulated error)"
+    ],
+    [
+     "Derivative",
+     "+90°: acts on where the error is heading"
+    ]
+   ],
+   "why": "That is how to tell which action is over-tuned from an oscillating trend: output in step with PV means P; output lagging a quarter cycle means I; output leading a quarter cycle means D (allowing for the 180° of reverse action).",
+   "added": true,
+   "after": "liii2-2"
   },
   {
    "type": "concept",
@@ -191,6 +318,22 @@
    "html": "<p>An interesting case of over-tuning is when the process variable “porpoises36” on its way to setpoint following a step-change in setpoint. The following trend shows such a response:</p><figure><img src=\"media/liii/d5803a09648a.png\" alt=\"A figure from page 2505 of the original\"></figure><p>“Porpoising” is universally poor behavior for a loop, because it combines the negative consequences of over-tuning (instability and excessive valve travel) with the negative consequence of under-tuning (delay achieving setpoint). There is no practical purpose served by a loop “porpoising,” and so this behavior should be avoided if at all possible.</p><p>Thankfully, identifying the cause of “porpoising” is rather easy to do. Only two control actions are capable of causing this response: proportional and derivative. Integral action simply cannot cause porpoising. In order for the process variable to “porpoise,” the controller’s output signal must reverse direction before the process variable ever reaches setpoint. Integral action, however, will always drive the output in a consistent direction when the process variable is on one side of setpoint. Only proportional and derivative actions are capable of producing a directional change in the output signal prior to reaching setpoint. Solely examining the process variable waveform will not reveal whether it is proportional action, derivative action, or both responsible for the “porpoising” behavior. A trial reduction in the derivative37 tuning parameter is one way to identify the culprit, as is phase-shift analysis between the PV and output waveforms during the “porpoising” period.</p>",
    "body": "An interesting case of over-tuning is when the process variable “porpoises36” on its way to setpoint following a step-change in setpoint. The following trend shows such a response: “Porpoising” is universally poor behavior for a loop, because it combines the negative consequences of over-tuning (instability and excessive valve travel) with the negative consequence of under-tuning (delay achieving setpoint). There is no practical purpose served by a loop “porpoising,” and so this behavior should be avoided if at all possible. Thankfully, identifying the cause of “porpoising” is rather easy to do. Only two control actions are capable of causing this response: proportional and derivative. Integral action simply cannot cause porpoising. In order for the process variable to “porpoise,” the controller’s output signal must reverse direction before the process variable ever reaches setpoint. Integral action, however, will always drive the output in a consistent direction when the process variable is on one side of setpoint. Only proportional and derivative actions are capable of producing a directional change in the output signal prior to reaching setpoint. Solely examining the process variable waveform will not reveal whether it is proportional action, derivative action, or both responsible for the “porpoising” behavior. A trial reduction in the derivative37 tuning parameter is one way to identify the culprit, as is phase-shift analysis between the PV and output waveforms during the “porpoising” period.",
    "id": "liii2-7"
+  },
+  {
+   "id": "q-porpoise",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "After a set-point step, the PV 'porpoises' up to the new value in waves. Which actions can cause that?",
+   "options": [
+    "Proportional or derivative, not integral",
+    "Integral only",
+    "Integral or derivative, not proportional",
+    "Any of the three"
+   ],
+   "answer": 0,
+   "why": "Porpoising means the output reverses direction on the way up, which needs an action that responds to the PV's own movement: P or D. Integral keeps pushing the same way while the error has one sign, so it cannot cause it.",
+   "added": true,
+   "after": "liii2-7"
   },
   {
    "type": "concept",

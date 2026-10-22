@@ -80,6 +80,33 @@
    "id": "wikibooks1-6"
   },
   {
+   "id": "q-signal-kinds",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each kind of signal to its definition.",
+   "pairs": [
+    [
+     "Analog",
+     "Any value, at every moment"
+    ],
+    [
+     "Discrete-time (sampled)",
+     "Any value, but only at certain moments"
+    ],
+    [
+     "Quantised",
+     "Only certain values, at every moment"
+    ],
+    [
+     "Digital",
+     "Only certain values, only at certain moments"
+    ]
+   ],
+   "why": "Digital is both sampled and quantised, which is why a PLC's analogue input has two errors: it misses what happens between scans, and it rounds each reading to a whole count.",
+   "added": true,
+   "after": "wikibooks1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Example: Digital Clock",
@@ -94,6 +121,22 @@
    "html": "<p><strong>Hybrid Systems</strong> are systems that have both analog and digital components. Devices called <strong>samplers</strong> are used to convert analog signals into digital signals, and Devices called <strong>reconstructors</strong> are used to convert digital signals into analog signals. Because of the use of samplers, hybrid systems are frequently called <strong>sampled-data systems</strong>. </p><h4>Example: Automobile Computer</h4><p>Most modern automobiles today have integrated computer systems that monitor certain aspects of the car, and actually help to control the performance of the car. The speed of the car, and the rotational speed of the transmission are analog values, but a sampler converts them into digital values so the car computer can monitor them. The digital computer will then output control signals to other parts of the car, to alter analog systems such as the engine timing, the suspension, the brakes, and other parts. Because the car has both digital and analog components, it is a <strong>hybrid system</strong>. </p>",
    "body": "Hybrid Systems are systems that have both analog and digital components. Devices called samplers are used to convert analog signals into digital signals, and Devices called reconstructors are used to convert digital signals into analog signals. Because of the use of samplers, hybrid systems are frequently called sampled-data systems . Example: Automobile Computer Most modern automobiles today have integrated computer systems that monitor certain aspects of the car, and actually help to control the performance of the car. The speed of the car, and the rotational speed of the transmission are analog values, but a sampler converts them into digital values so the car computer can monitor them. The digital computer will then output control signals to other parts of the car, to alter analog systems such as the engine timing, the suspension, the brakes, and other parts. Because the car has both digital and analog components, it is a hybrid system .",
    "id": "wikibooks1-8"
+  },
+  {
+   "id": "q-sampler-reconstructor",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a hybrid (sampled-data) system, what does the reconstructor do?",
+   "options": [
+    "Turns digital values back into an analogue signal",
+    "Turns the analogue signal into numbers",
+    "Filters out noise before sampling",
+    "Stores the samples for later"
+   ],
+   "answer": 0,
+   "why": "Samplers turn analogue into digital (an ADC on an input card); reconstructors turn digital back into analogue (a DAC on an output card, usually a zero-order hold). A PLC controlling a valve has one of each.",
+   "added": true,
+   "after": "wikibooks1-8"
   },
   {
    "type": "concept",
@@ -142,6 +185,23 @@
    "html": "<p><br> Therefore, we come to the final result: <strong>The geometric series converges if and only if the value of <em>r</em> is less than one.</strong> </p><h4>The Star Transform</h4><p>The <strong>Star Transform</strong> is defined as such: </p><p>[Star Transform] </p><dl><dd><math><mrow><mstyle><msup><mi>F</mi><mrow><mo>∗</mo></mrow></msup><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><msup><mrow><mi>ℒ</mi></mrow><mrow><mo>∗</mo></mrow></msup><mo>[</mo><mi>f</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>]</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow></mrow><mrow><mi>∞</mi></mrow></munderover><mi>f</mi><mo>(</mo><mi>k</mi><mi>T</mi><mo>)</mo><msup><mi>e</mi><mrow><mrow><mo>−</mo><mi>s</mi><mi>k</mi><mi>T</mi></mrow></mrow></msup></mstyle></mrow></math></dd></dl><table><tbody><tr><td><img src=\"media/wikibooks/eb856134-60px-Wikipedia-logo-v2.svg.png\" alt=\"\"></td><td><a href=\"https://en.wikipedia.org/wiki/\">Wikipedia</a> has related information at <a href=\"https://en.wikipedia.org/wiki/Star_transform\"><em><strong>Star transform</strong></em></a>.</td></tr></tbody></table><p>The Star Transform depends on the sampling time <em>T</em> and is different for a single signal depending on the frequency at which the signal is sampled. Since the Star Transform is defined as an infinite series, it is important to note that some inputs to the Star Transform will not converge, and therefore some functions do not have a valid Star Transform. Also, it is important to note that the Star Transform may only be valid under a particular <strong>region of convergence</strong>. We will cover this topic more when we discuss the Z-transform. </p>",
    "body": "Therefore, we come to the final result: The geometric series converges if and only if the value of r is less than one. The Star Transform The Star Transform is defined as such: [Star Transform] F ∗ ( s ) = ℒ ∗ [ f ( t ) ] = ∑ k = 0 ∞ f ( k T ) e − s k T Wikipedia has related information at Star transform . The Star Transform depends on the sampling time T and is different for a single signal depending on the frequency at which the signal is sampled. Since the Star Transform is defined as an infinite series, it is important to note that some inputs to the Star Transform will not converge, and therefore some functions do not have a valid Star Transform. Also, it is important to note that the Star Transform may only be valid under a particular region of convergence . We will cover this topic more when we discuss the Z-transform.",
    "id": "wikibooks2-4"
+  },
+  {
+   "id": "q-geometric",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 7.2,
+   "q": "When does the infinite geometric series 1 + r + r² + r³ + … add up to a finite number?",
+   "options": [
+    "Only when |r| is less than 1",
+    "For any r",
+    "Only when r is a whole number",
+    "Only when r is greater than 1"
+   ],
+   "answer": 0,
+   "why": "With |r| < 1 each term is smaller than the last and the sum settles at 1/(1 − r): 1 + ½ + ¼ + … = 2. With |r| ≥ 1 the terms never shrink and the sum runs away. The same idea gives a digital system's region of convergence, and its stability: poles inside the unit circle.",
+   "added": true,
+   "after": "wikibooks2-4"
   },
   {
    "type": "concept",
@@ -286,6 +346,22 @@
    "html": "<p>The zero-order hold creates a step output waveform, but this isn't always the best way to reconstruct the circuit. Instead, the <strong>First-Order Hold</strong> circuit takes the derivative of the waveform at the time <em>t</em>, and uses that derivative to make a guess as to where the output waveform is going to be at time <em>(t + T)</em>. The first-order hold circuit then \"draws a line\" from the current position to the expected future position, as the output of the waveform. </p><p>[First Order Hold] </p><dl><dd><math><mrow><mstyle><msub><mi>G</mi><mrow><mrow><mi>h</mi><mn>1</mn></mrow></mrow></msub><mo>=</mo><mrow><mfrac><mrow><mrow><mn>1</mn><mo>+</mo><mi>T</mi><mi>s</mi></mrow></mrow><mrow><mi>T</mi></mrow></mfrac></mrow><msup><mrow><mo>[</mo><mrow><mfrac><mrow><mrow><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mrow><mo>−</mo><mi>T</mi><mi>s</mi></mrow></mrow></msup></mrow></mrow><mrow><mi>s</mi></mrow></mfrac></mrow><mo>]</mo></mrow><mrow><mn>2</mn></mrow></msup></mstyle></mrow></math></dd></dl><p>Keep in mind, however, that the next value of the signal will probably not be the same as the expected value of the next data point, and therefore the first-order hold may have a number of discontinuities. </p>",
    "body": "The zero-order hold creates a step output waveform, but this isn't always the best way to reconstruct the circuit. Instead, the First-Order Hold circuit takes the derivative of the waveform at the time t , and uses that derivative to make a guess as to where the output waveform is going to be at time (t + T) . The first-order hold circuit then \"draws a line\" from the current position to the expected future position, as the output of the waveform. [First Order Hold] G h 1 = 1 + T s T [ 1 − e − T s s ] 2 Keep in mind, however, that the next value of the signal will probably not be the same as the expected value of the next data point, and therefore the first-order hold may have a number of discontinuities.",
    "id": "wikibooks2-22"
+  },
+  {
+   "id": "q-first-order-hold",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does a first-order hold differ from a zero-order hold?",
+   "options": [
+    "It ramps on using the slope, not a flat step",
+    "It holds the value for twice as long",
+    "It outputs zero between samples",
+    "It waits one sample before output"
+   ],
+   "answer": 0,
+   "why": "A zero-order hold keeps the last value flat until the next sample: a staircase. A first-order hold uses the signal's slope to draw a line towards where it expects the next value to be, which is smoother but jumps if the guess was wrong.",
+   "added": true,
+   "after": "wikibooks2-22"
   },
   {
    "type": "concept",

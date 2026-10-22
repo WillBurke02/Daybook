@@ -63,6 +63,30 @@
    "id": "liii1-4"
   },
   {
+   "id": "q-adc-counts",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "A 12-bit ADC reads 0 to 10 V as 0 to 4095 counts. What count does it give for {v} V? (Round down, as the book does.)",
+   "vars": {
+    "v": [
+     0.1,
+     9.9,
+     0.01
+    ]
+   },
+   "answer": "ROUNDDOWN(v / 10 * 4095, 0)",
+   "abs": 1,
+   "work": "${v} \\div 10 \\times 4095 = {raw:2}$, rounded down: {answer} counts",
+   "why": "Per unit of the input times the full count, rounded down to a whole count: 6.11 V gives 2502 in the book. Each count covers 10 V ÷ 4095 ≈ 2.442 mV, so many slightly different voltages share one count: the quantisation error.",
+   "hint": "Fraction of 10 V, times 4095, then drop the decimals.",
+   "added": true,
+   "after": "liii1-4",
+   "let": {
+    "raw": "v / 10 * 4095"
+   }
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.3.1 Converter resolution",
@@ -77,6 +101,22 @@
    "html": "<p>Quantization error may be reduced (but never eliminated) by using an ADC with greater resolution. A 14-bit ADC operating over the same 0-10 VDC analog input range would have approximately one-quarter the uncertainty of the 12-bit ADC (0.610 mV instead of 2.442 mV). A 16-bit ADC’s uncertainty would only be (approximately) one-sixteenth that of the 12-bit ADC. The number of bits chosen for any particular ADC application is therefore a function of how precise the digitization must be.</p><p>In some data acquisition systems the digital “count” scale maps to a live-zero analog range. For example, the Siemens model 353 process controller represents process variable, setpoint, and output (“valve”) percentages on a displayed scale of −3.3% to 103.3% with a 12-bit ADC count.</p><p>For this controller, a digital count of zero (000 hexadecimal) represents an analog signal displayed on the controller’s digital readout of −3.3%, and a full-scale digital count value (FFF hexadecimal)</p><p>represents a displayed value of 103.3%. We may show the relationship between these two scales in graphical form, like a number line:</p><figure><img src=\"media/liii/e15b52193a4f.png\" alt=\"A figure from page 1023 of the original\"></figure>",
    "body": "Quantization error may be reduced (but never eliminated) by using an ADC with greater resolution. A 14-bit ADC operating over the same 0-10 VDC analog input range would have approximately one-quarter the uncertainty of the 12-bit ADC (0.610 mV instead of 2.442 mV). A 16-bit ADC’s uncertainty would only be (approximately) one-sixteenth that of the 12-bit ADC. The number of bits chosen for any particular ADC application is therefore a function of how precise the digitization must be. In some data acquisition systems the digital “count” scale maps to a live-zero analog range. For example, the Siemens model 353 process controller represents process variable, setpoint, and output (“valve”) percentages on a displayed scale of −3.3% to 103.3% with a 12-bit ADC count. For this controller, a digital count of zero (000 hexadecimal) represents an analog signal displayed on the controller’s digital readout of −3.3%, and a full-scale digital count value (FFF hexadecimal) represents a displayed value of 103.3%. We may show the relationship between these two scales in graphical form, like a number line:",
    "id": "liii1-6"
+  },
+  {
+   "id": "q-more-bits",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Going from a 12-bit to a 14-bit ADC on the same range does what to the quantisation step?",
+   "options": [
+    "Makes it about a quarter",
+    "Makes it about half",
+    "Makes it 14/12 as big",
+    "Removes it completely"
+   ],
+   "answer": 0,
+   "why": "Each extra bit doubles the number of counts, halving the step: two more bits give four times the counts, a quarter the step (2.442 mV to 0.610 mV on 0–10 V). It shrinks but never vanishes.",
+   "added": true,
+   "after": "liii1-6"
   },
   {
    "type": "concept",
@@ -127,12 +167,44 @@
    "id": "liii1-12"
   },
   {
+   "id": "q-strobe",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A strobe flashing 30 times a second lights a shaft turning at 1800 rpm. What do you see, and why?",
+   "options": [
+    "It looks still: one flash per turn",
+    "It looks to spin at 1800 rpm",
+    "It looks to spin backwards fast",
+    "It blurs, as it would in daylight"
+   ],
+   "answer": 0,
+   "why": "1800 rpm is 30 revolutions a second, so each flash catches the shaft in the same place: sampling once per cycle makes a moving thing look constant. Flash a little slower and it seems to creep forwards; a little faster, backwards. That is aliasing.",
+   "added": true,
+   "after": "liii1-12"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.3.2 Converter sampling rate and aliasing",
    "html": "<p>Aliasing may still occur within digital systems, though, if one portion of a system “samples” the digital output of another portion at too slow of a rate. An example of this might be the rate at which a digital control system (such as a DCS) polls a process variable value collected by a digital sensor network (such as a network of radio-linked process transmitters, or digital fieldbus transmitters). If the DCS polling rate is sufficiently slow compared to the frequency of the signal reported by the digital transmitters, aliasing may result. The best guard against such potential troubles is to synchronize the sampling rates throughout the system, or (alternatively) ensure data sources always output values at a significantly slower rate than any functions reading them. Remember that a practical (minimum) sample rate to signal period ratio is 10:1 to ensure good analog-to-digital conversion integrity.</p>",
    "body": "Aliasing may still occur within digital systems, though, if one portion of a system “samples” the digital output of another portion at too slow of a rate. An example of this might be the rate at which a digital control system (such as a DCS) polls a process variable value collected by a digital sensor network (such as a network of radio-linked process transmitters, or digital fieldbus transmitters). If the DCS polling rate is sufficiently slow compared to the frequency of the signal reported by the digital transmitters, aliasing may result. The best guard against such potential troubles is to synchronize the sampling rates throughout the system, or (alternatively) ensure data sources always output values at a significantly slower rate than any functions reading them. Remember that a practical (minimum) sample rate to signal period ratio is 10:1 to ensure good analog-to-digital conversion integrity.",
    "id": "liii1-13"
+  },
+  {
+   "id": "q-digital-alias",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Can aliasing happen when a DCS reads values that are already digital, from fieldbus transmitters?",
+   "options": [
+    "Yes, if it polls them too slowly",
+    "No: aliasing only happens in an ADC",
+    "No: digital values cannot change",
+    "Only if the cable is too long"
+   ],
+   "answer": 0,
+   "why": "Polling is sampling. If a fast-changing value is read too slowly, the system can see a false, slower signal just as an ADC would. Synchronise the rates, or make sure the source updates slower than whatever reads it.",
+   "added": true,
+   "after": "liii1-13"
   },
   {
    "id": "add-adc-res",

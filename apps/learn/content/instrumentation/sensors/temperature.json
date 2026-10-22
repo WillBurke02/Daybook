@@ -69,6 +69,29 @@
    "id": "liii1-1"
   },
   {
+   "id": "q-thermistor-rtd",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each sensor to its description.",
+   "pairs": [
+    [
+     "Thermistor",
+     "Metal oxide: very sensitive, nonlinear"
+    ],
+    [
+     "RTD",
+     "Pure metal wire: less sensitive, very linear"
+    ],
+    [
+     "Thermocouple",
+     "Two dissimilar metals: a small voltage from temperature"
+    ]
+   ],
+   "why": "An RTD's resistance rises steadily with temperature (platinum, mostly), ideal for accurate measurement. A thermistor changes a lot for a small change, but not in a straight line. A thermocouple makes a voltage, not a resistance, and covers far wider ranges.",
+   "added": true,
+   "after": "liii1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "21.3 Thermistors and Resistance Temperature Detectors",
@@ -85,12 +108,74 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-pt100-r",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A PT100 (100 Ω at 0 °C, European α = 0.00385 per °C) is at {t} °C. Using the linear formula, what is its resistance?",
+   "vars": {
+    "t": [
+     5,
+     400,
+     5
+    ]
+   },
+   "answer": "100 * (1 + 0.00385 * t)",
+   "unit": "Ω",
+   "abs": 0.05,
+   "work": "$R = 100 \\times (1 + 0.00385 \\times {t}) = {answer:2}$ Ω",
+   "why": "$R_T = R_0(1 + \\alpha T)$: each degree adds 0.385 Ω to a PT100. A meter check: about 138.5 Ω at 100 °C. The linear formula is an approximation (Callendar–van Dusen is closer), so a table is used for calibration.",
+   "hint": "Each degree adds 0.385 Ω to the 100 Ω at 0 °C.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
+   "id": "q-pt100-t",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A PT100 (α = 0.00385) measures {r} Ω. Roughly what temperature is it at?",
+   "vars": {
+    "t0": [
+     10,
+     300,
+     1
+    ]
+   },
+   "let": {
+    "r": "ROUND(100 * (1 + 0.00385 * t0), 1)"
+   },
+   "answer": "(r / 100 - 1) / 0.00385",
+   "unit": "°C",
+   "abs": 0.4,
+   "work": "$T = \\frac{ {r} \\div 100 - 1 }{0.00385} = {answer:1}$ °C",
+   "why": "Turn the formula round: how many ohms above 100, divided by 0.385 Ω per degree. Forgetting to take off the 100 Ω gives a wildly high answer.",
+   "hint": "How many ohms above 100? Each degree is 0.385 Ω.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "21.3.2 Two-wire RTD circuits",
    "html": "<p>The following schematic diagrams show the relative effects of 2 ohms total wire resistance on a thermistor circuit and on an RTD circuit:</p><figure><img src=\"media/liii/7f1354f349a4.png\" alt=\"A figure from page 1551 of the original\"></figure><figure><img src=\"media/liii/9de35c15bc50.png\" alt=\"A figure from page 1551 of the original\"></figure><p>As you can see, wire resistance adds to the sensing element’s resistance to create a larger total circuit resistance which will be interpreted by the receiving instrument (ohmmeter) as a falsely high temperature reading, assuming a positive temperature coefficient of resistance for the sensing element. Clearly, wire resistance is more problematic for low-resistance RTDs than for high-resistance thermistors. In the RTD circuit, wire resistance constitutes 1.96% of the total circuit resistance. In the thermistor circuit, the same 2 ohms of wire resistance constitutes only 0.004% of the total circuit resistance. The thermistor’s huge reference resistance value “swamps”2 the wire resistance to the point that the latter becomes insignificant by comparison. In HVAC (Heating, Ventilation, and Air Conditioning) systems, where the temperature measurement range is relatively narrow, the nonlinearity of thermistors is not a serious concern and their relative immunity to wire resistance error is a definite advantage over RTDs. In industrial temperature measurement applications where the temperature ranges are usually much wider, the nonlinearity of thermistors becomes a significant problem, so we must find a way to use low-resistance RTDs and deal with the (lesser) problem of wire resistance.</p><p><small>2“Swamping” is the term given to the overshadowing of one effect by another. Here, the normal resistance of the thermistor greatly overshadows (“swamps”) any wire resistance in the circuit, such that wire resistance becomes negligible.</small></p>",
    "body": "The following schematic diagrams show the relative effects of 2 ohms total wire resistance on a thermistor circuit and on an RTD circuit: As you can see, wire resistance adds to the sensing element’s resistance to create a larger total circuit resistance which will be interpreted by the receiving instrument (ohmmeter) as a falsely high temperature reading, assuming a positive temperature coefficient of resistance for the sensing element. Clearly, wire resistance is more problematic for low-resistance RTDs than for high-resistance thermistors. In the RTD circuit, wire resistance constitutes 1.96% of the total circuit resistance. In the thermistor circuit, the same 2 ohms of wire resistance constitutes only 0.004% of the total circuit resistance. The thermistor’s huge reference resistance value “swamps”2 the wire resistance to the point that the latter becomes insignificant by comparison. In HVAC (Heating, Ventilation, and Air Conditioning) systems, where the temperature measurement range is relatively narrow, the nonlinearity of thermistors is not a serious concern and their relative immunity to wire resistance error is a definite advantage over RTDs. In industrial temperature measurement applications where the temperature ranges are usually much wider, the nonlinearity of thermistors becomes a significant problem, so we must find a way to use low-resistance RTDs and deal with the (lesser) problem of wire resistance. 2“Swamping” is the term given to the overshadowing of one effect by another. Here, the normal resistance of the thermistor greatly overshadows (“swamps”) any wire resistance in the circuit, such that wire resistance becomes negligible.",
    "id": "liii1-4"
+  },
+  {
+   "id": "q-lead-swamp",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The same 2 Ω of lead resistance is added to a 100 Ω RTD and to a 10 kΩ thermistor. Which reading suffers more, and why?",
+   "options": [
+    "The RTD: 2 Ω is a bigger share of 100 Ω",
+    "The thermistor: it is more sensitive",
+    "Both the same: 2 Ω is 2 Ω",
+    "Neither: lead resistance is ignored"
+   ],
+   "answer": 0,
+   "why": "2 Ω is about 2% of the RTD's circuit, several degrees of error, but a tiny fraction of the thermistor's resistance: its large value swamps the leads. That is why RTDs need 3- or 4-wire connections and thermistors rarely do.",
+   "added": true,
+   "after": "liii1-4"
   },
   {
    "type": "concept",
@@ -107,6 +192,22 @@
    "html": "<p>Wire resistances are completely inconsequential in this circuit. The two “excitation” wires carrying current to the RTD will drop some voltage along their length, but this voltage drop is only “seen” by the current source and not the voltmeter. The two “sense” wires connecting the voltmeter to the RTD also possess resistance, but they drop negligible voltage because the voltmeter draws so little current through them3. Thus, the resistances of the current-carrying wires are of no effect because the voltmeter never senses their voltage drops, and the resistances of the voltmeter’s sensing wires are of no effect because they carry practically zero current. Note how wire colors (white and red) indicate which wires are common pairs at the RTD. The RTD is polarity-insensitive because it is nothing more than a resistor, which is why it doesn’t matter which color is positive and which color is negative. The only disadvantage of the four-wire method is the sheer number of wires necessary. Four wires per RTD can add up to a sizeable wire count when many different RTDs are installed in a process area.</p><p><small>3Remember that an ideal voltmeters has infinite input impedance, and modern semiconductor-amplified voltmeters have impedances of several mega-ohms or more.</small></p>",
    "body": "Wire resistances are completely inconsequential in this circuit. The two “excitation” wires carrying current to the RTD will drop some voltage along their length, but this voltage drop is only “seen” by the current source and not the voltmeter. The two “sense” wires connecting the voltmeter to the RTD also possess resistance, but they drop negligible voltage because the voltmeter draws so little current through them3. Thus, the resistances of the current-carrying wires are of no effect because the voltmeter never senses their voltage drops, and the resistances of the voltmeter’s sensing wires are of no effect because they carry practically zero current. Note how wire colors (white and red) indicate which wires are common pairs at the RTD. The RTD is polarity-insensitive because it is nothing more than a resistor, which is why it doesn’t matter which color is positive and which color is negative. The only disadvantage of the four-wire method is the sheer number of wires necessary. Four wires per RTD can add up to a sizeable wire count when many different RTDs are installed in a process area. 3Remember that an ideal voltmeters has infinite input impedance, and modern semiconductor-amplified voltmeters have impedances of several mega-ohms or more.",
    "id": "liii1-6"
+  },
+  {
+   "id": "q-4wire-why",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a 4-wire RTD connection, why does the resistance of the sense wires not matter?",
+   "options": [
+    "They carry almost no current, so drop no voltage",
+    "They are made of the same metal as the RTD",
+    "The instrument measures and subtracts them",
+    "They are much thicker than the others"
+   ],
+   "answer": 0,
+   "why": "The current flows only in the excitation pair; the voltmeter on the sense pair draws next to nothing, so those wires drop no voltage and the voltmeter sees just the RTD's drop. The excitation wires' drop is never seen by the voltmeter at all.",
+   "added": true,
+   "after": "liii1-6"
   },
   {
    "type": "concept",
@@ -131,6 +232,22 @@
    "html": "<p><small>4Note that the middle wire resistance is of no effect because it does not carry the RTD’s current. The amount of current entering or exiting an operational amplifier is assumed to be zero for all practical purposes.</small> the same amount of voltage. If this is not the case, and one of these wires drops more voltage than the other, the circuit will fail to yield the exact RTD voltage (VRT D) at the amplifier output. This is the fundamental limitation of any 3-wire RTD circuit: the cancellation of wire resistance is only as good as the wires’ resistances are precisely equal to each other.</p><p>A photograph of a modern temperature transmitter capable of receiving input from 2-wire, 3wire, or 4-wire RTDs (as well as thermocouples, another type of temperature sensor entirely) shows the connection points and the labeling describing how the sensor is to be connected to the appropriate terminals:</p><figure><img src=\"media/liii/f931a67f8287.jpg\" alt=\"A figure from page 1555 of the original\"></figure><p>The rectangle symbol shown on the label represents the resistive element of the RTD. The symbol with the “+” and “−” marks represents a thermocouple junction, and may be ignored for the purposes of this discussion. As shown by the diagram, a two-wire RTD would connect between terminals 2 and 3. Likewise, a three-wire RTD would connect to terminals 1, 2, and 3 (with terminals</p>",
    "body": "4Note that the middle wire resistance is of no effect because it does not carry the RTD’s current. The amount of current entering or exiting an operational amplifier is assumed to be zero for all practical purposes. the same amount of voltage. If this is not the case, and one of these wires drops more voltage than the other, the circuit will fail to yield the exact RTD voltage (VRT D) at the amplifier output. This is the fundamental limitation of any 3-wire RTD circuit: the cancellation of wire resistance is only as good as the wires’ resistances are precisely equal to each other. A photograph of a modern temperature transmitter capable of receiving input from 2-wire, 3wire, or 4-wire RTDs (as well as thermocouples, another type of temperature sensor entirely) shows the connection points and the labeling describing how the sensor is to be connected to the appropriate terminals: The rectangle symbol shown on the label represents the resistive element of the RTD. The symbol with the “+” and “−” marks represents a thermocouple junction, and may be ignored for the purposes of this discussion. As shown by the diagram, a two-wire RTD would connect between terminals 2 and 3. Likewise, a three-wire RTD would connect to terminals 1, 2, and 3 (with terminals",
    "id": "liii1-9"
+  },
+  {
+   "id": "q-3wire-limit",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does a 3-wire RTD connection rely on to cancel the lead resistance?",
+   "options": [
+    "The two current-carrying leads being equal",
+    "All three leads being short",
+    "A precision current source in the RTD",
+    "The RTD being polarity sensitive"
+   ],
+   "answer": 0,
+   "why": "The instrument measures one lead's drop and takes it off, assuming the other is the same. A corroded terminal or a joint in one lead upsets that and gives an error: check the lead resistances match when a 3-wire reading looks wrong.",
+   "added": true,
+   "after": "liii1-9"
   },
   {
    "type": "concept",
@@ -163,6 +280,22 @@
    "html": "<p>With the measurement (J1) and reference (J2) junction voltages opposed to each other, the voltmeter only “sees” the difference between these two voltages. Thus, thermocouple systems are fundamentally differential temperature sensors. That is, they provide an electrical output proportional to the difference in temperature between two different points. For this reason, the wire junction we use to measure the temperature of interest is called the measurement junction while the other junction (which we cannot eliminate from the circuit) is called the reference junction (or the cold junction, because it is typically at a cooler temperature than the process measurement junction).</p>",
    "body": "With the measurement (J1) and reference (J2) junction voltages opposed to each other, the voltmeter only “sees” the difference between these two voltages. Thus, thermocouple systems are fundamentally differential temperature sensors. That is, they provide an electrical output proportional to the difference in temperature between two different points. For this reason, the wire junction we use to measure the temperature of interest is called the measurement junction while the other junction (which we cannot eliminate from the circuit) is called the reference junction (or the cold junction, because it is typically at a cooler temperature than the process measurement junction).",
    "id": "liii2-3"
+  },
+  {
+   "id": "q-tc-zero",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A thermocouple and its meter are all at room temperature. What does the meter read, and why?",
+   "options": [
+    "0 mV: both junctions cancel",
+    "The room temperature's voltage",
+    "A small negative voltage",
+    "Its full-scale reading"
+   ],
+   "answer": 0,
+   "why": "Joining the thermocouple to the meter makes a second junction of opposite polarity. With both at the same temperature their voltages cancel: a thermocouple measures the *difference* in temperature between its measuring and reference junctions.",
+   "added": true,
+   "after": "liii2-3"
   },
   {
    "type": "concept",
@@ -246,6 +379,22 @@
    "id": "liii3-5"
   },
   {
+   "id": "q-why-tc",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "If cold-junction compensation needs an RTD or thermistor anyway, why use a thermocouple?",
+   "options": [
+    "Rugged, and far wider temperature ranges",
+    "Thermocouples are more accurate",
+    "They need no wiring care",
+    "They are linear, unlike RTDs"
+   ],
+   "answer": 0,
+   "why": "Thermocouples survive heat, vibration and abuse, and reach temperatures (over 1000 °C) that would destroy an RTD. The compensation sensor sits safely at the instrument terminals, near room temperature. Where the range and conditions allow, an RTD is usually the more accurate choice.",
+   "added": true,
+   "after": "liii3-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "21.4.8 Extension wire",
@@ -260,6 +409,22 @@
    "html": "<p>Now let us consider the same thermocouple installation with a length of copper cable (two wires) joining the field-mounted thermocouple to the panel-mounted indicator:</p><figure><img src=\"media/liii/02b007232954.png\" alt=\"A figure from page 1582 of the original\"></figure><p>Even though nothing has changed in the thermocouple circuit except for the type of wires joining the thermocouple to the indicator, the reference junction has completely shifted position. What used to be a reference junction (at the indicator’s terminals) is no longer, because now we have copper wires joining to copper wires. Where there is no dissimilarity of metals, there can be no thermoelectric potential. At the thermocouple’s connection “head,” however we now have a joining of chromel and alumel wires to copper wires, thus forming a reference junction in a new location at the thermocouple head. What is worse, this new location is likely to be at a different temperature than the panel-mounted indicator, which means the indicator’s reference junction compensation will be compensating for the wrong temperature. The only practical way to avoid this problem is to keep the reference junction where it belongs: at the terminals of the panel-mounted instrument where the ambient temperature is measured and the reference junction’s effects accurately compensated. If we must install “extension” wire to join a thermocouple to a remotely-located instrument, that wire must be of a type that does not form another dissimilar-metal junction at the thermocouple head, but will form one at the receiving instrument.</p>",
    "body": "Now let us consider the same thermocouple installation with a length of copper cable (two wires) joining the field-mounted thermocouple to the panel-mounted indicator: Even though nothing has changed in the thermocouple circuit except for the type of wires joining the thermocouple to the indicator, the reference junction has completely shifted position. What used to be a reference junction (at the indicator’s terminals) is no longer, because now we have copper wires joining to copper wires. Where there is no dissimilarity of metals, there can be no thermoelectric potential. At the thermocouple’s connection “head,” however we now have a joining of chromel and alumel wires to copper wires, thus forming a reference junction in a new location at the thermocouple head. What is worse, this new location is likely to be at a different temperature than the panel-mounted indicator, which means the indicator’s reference junction compensation will be compensating for the wrong temperature. The only practical way to avoid this problem is to keep the reference junction where it belongs: at the terminals of the panel-mounted instrument where the ambient temperature is measured and the reference junction’s effects accurately compensated. If we must install “extension” wire to join a thermocouple to a remotely-located instrument, that wire must be of a type that does not form another dissimilar-metal junction at the thermocouple head, but will form one at the receiving instrument.",
    "id": "liii4-2"
+  },
+  {
+   "id": "q-copper-ext",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A type K thermocouple is run back to the panel on ordinary copper cable. What goes wrong?",
+   "options": [
+    "The reference junction moves to the head",
+    "Nothing: copper conducts better",
+    "The signal becomes AC",
+    "The thermocouple's polarity reverses"
+   ],
+   "answer": 0,
+   "why": "Where chromel and alumel meet copper, at the head, a new reference junction forms, at the head's temperature, which the panel's compensation knows nothing about. Run thermocouple or matching extension cable right back to the instrument, so the reference junction stays where it is compensated.",
+   "added": true,
+   "after": "liii4-2"
   },
   {
    "type": "concept",

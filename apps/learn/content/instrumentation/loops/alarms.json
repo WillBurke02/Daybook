@@ -73,12 +73,52 @@
    "id": "hse2-2"
   },
   {
+   "id": "q-alarm-rate",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "CHIS6's target for normal running is a long-term average of no more than one alarm every ten minutes. Over a {h}-hour shift, what is the most alarms that meets it?",
+   "vars": {
+    "h": {
+     "pick": [
+      6,
+      8,
+      10,
+      12
+     ]
+    }
+   },
+   "answer": "h * 6",
+   "abs": 0.01,
+   "work": "Six an hour × {h} hours = {answer} alarms",
+   "why": "One every ten minutes is six an hour. Compare: at Milford Haven the operators faced 275 alarms in the last 11 minutes. Measuring the real rate is CHIS6's first step.",
+   "hint": "How many ten-minute periods in an hour?",
+   "added": true,
+   "after": "hse2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Chemicals Sheet No 6",
    "html": "<p>Ask managers about alarm issues, eg:</p><ul><li>Have there been any critical incidents or near misses where operators missed alarms or made the wrong response?</li><li>Is there a written policy/strategy on alarms?</li><li>Is there a company standard on alarms?</li></ul><p>How are new alarms added and existing ones modified?</p><p>Is there a structured process for this? For example there is a tendency for hazard and operability studies (HAZOPs) to generate actions which result in a lot of ‘quick fix’ alarms being installed.</p><ul><li>How many new alarms did your last HAZOP produce and how were they justified?</li><li>Can the operators notice and respond correctly to them? Was the impact on the overall alarm burden on operators considered?</li></ul><p>Operator Reliability</p><p>High operator reliability requires:</p><ul><li>very obvious display of the specific alarm;</li><li>few false alarms;</li><li>a low operator workload;</li><li>a simple well-defined operator response;</li><li>well trained operators;</li><li>testing of the effectiveness of operators’ responses.</li></ul><p>Can you demonstrate you have achieved this level of reliability, eg in safety reports and risk assessments, do you make unreasonable claims for the likelihood of operators responding correctly to alarms?</p><p>Is the alarm system designed to a standard that takes human limitations into account?</p><p>An effective alarm system should ‘direct the operator’s attention towards plant conditions requiring timely assessment or action’ (see page 4, EEMUA guide); and so should:</p><ul><li>Alert, inform and guide the operators, allowing them to diagnose problems and keep the process within its ‘safe envelope’.</li><li>Prevent unnecessary emergency shutdown.</li><li>Only present the operator with useful and relevant alarms.</li><li>Use prioritisation to highlight critical alarms.</li><li>Have a defined response to each alarm.</li><li>Be ergonomically designed to meet user needs and capabilities.</li><li>Allow enough time for the operator to respond.</li></ul>",
    "body": "Ask managers about alarm issues, eg: Have there been any critical incidents or near misses where operators missed alarms or made the wrong response? Is there a written policy/strategy on alarms? Is there a company standard on alarms? How are new alarms added and existing ones modified? Is there a structured process for this? For example there is a tendency for hazard and operability studies (HAZOPs) to generate actions which result in a lot of ‘quick fix’ alarms being installed. How many new alarms did your last HAZOP produce and how were they justified? Can the operators notice and respond correctly to them? Was the impact on the overall alarm burden on operators considered? Operator Reliability High operator reliability requires: very obvious display of the specific alarm; few false alarms; a low operator workload; a simple well-defined operator response; well trained operators; testing of the effectiveness of operators’ responses. Can you demonstrate you have achieved this level of reliability, eg in safety reports and risk assessments, do you make unreasonable claims for the likelihood of operators responding correctly to alarms? Is the alarm system designed to a standard that takes human limitations into account? An effective alarm system should ‘direct the operator’s attention towards plant conditions requiring timely assessment or action’ (see page 4, EEMUA guide); and so should: Alert, inform and guide the operators, allowing them to diagnose problems and keep the process within its ‘safe envelope’. Prevent unnecessary emergency shutdown. Only present the operator with useful and relevant alarms. Use prioritisation to highlight critical alarms. Have a defined response to each alarm. Be ergonomically designed to meet user needs and capabilities. Allow enough time for the operator to respond.",
    "id": "hse2-3"
+  },
+  {
+   "id": "q-hazop-alarms",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does CHIS6 warn about the alarms that come out of HAZOP studies?",
+   "options": [
+    "They tend to add 'quick fix' alarms to the burden",
+    "HAZOPs never consider alarms",
+    "Their alarms are always set too high",
+    "They remove too many alarms"
+   ],
+   "answer": 0,
+   "why": "A HAZOP finding is easily closed with 'add an alarm', but each one adds to what the operator must notice and handle. CHIS6 asks how many alarms the last HAZOP added, how they were justified, and whether the total burden was considered.",
+   "added": true,
+   "after": "hse2-3"
   },
   {
    "type": "concept",

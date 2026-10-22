@@ -59,12 +59,65 @@
    "id": "liii1-1"
   },
   {
+   "id": "q-quarter-points",
+   "type": "match",
+   "stage": "learn",
+   "level": 4.4,
+   "q": "Match each percentage to its 4–20 mA current: the table every instrument technician knows by heart.",
+   "pairs": [
+    [
+     "0%",
+     "4 mA"
+    ],
+    [
+     "25%",
+     "8 mA"
+    ],
+    [
+     "50%",
+     "12 mA"
+    ],
+    [
+     "75%",
+     "16 mA"
+    ],
+    [
+     "100%",
+     "20 mA"
+    ]
+   ],
+   "why": "Each 25% is 4 mA, a quarter of the 16 mA span, on top of the 4 mA live zero. Knowing these lets you sanity-check a loop with a meter in seconds: 12 mA is half range.",
+   "added": true,
+   "after": "liii1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "13.1 4 to 20 mA analog current signals",
    "html": "<p><small>1Not all industrial measurement and control signals are “live zero” like the 3-15 PSI and 4-20 mA standards. 0 to</small></p><p>An important concept to grasp with all analog instrumentation is that instruments sending and receiving analog signals must be compatibly ranged in order to properly represent the desired variable. To illustrate, let us consider a temperature measurement system consisting of a thermocouple2, a temperature transmitter, a 250 ohm resistor (to convert the 4-20 mA analog signal into a 1-5 volt analog signal), and a special voltmeter functioning as a temperature indicator:</p><figure><img src=\"media/liii/fbb45d05bd0f.png\" alt=\"A figure from page 892 of the original\"></figure><p>Note how the output range of each sending device matches the input range of its corresponding receiving device. If we view this system as a path for information to flow from the thermocouple’s tip to the transmitter to the resistor and finally to the voltmeter/indicator, we see that the analog output range of each device must correspond to the analog input range of the next device, or else the real-world meaning of the analog signal will be lost. This correspondence does not happen automatically, but must be established by the instrument technician building the system. In this case, it would be the technician’s responsibility to properly adjust the range of the temperature transmitter, and also to ensure the indicator’s display scale was properly labeled. Both the thermocouple and the resistor are non-adjustable devices, their input/output characteristics being fixed by physical laws.</p>",
    "body": "1Not all industrial measurement and control signals are “live zero” like the 3-15 PSI and 4-20 mA standards. 0 to An important concept to grasp with all analog instrumentation is that instruments sending and receiving analog signals must be compatibly ranged in order to properly represent the desired variable. To illustrate, let us consider a temperature measurement system consisting of a thermocouple2, a temperature transmitter, a 250 ohm resistor (to convert the 4-20 mA analog signal into a 1-5 volt analog signal), and a special voltmeter functioning as a temperature indicator: Note how the output range of each sending device matches the input range of its corresponding receiving device. If we view this system as a path for information to flow from the thermocouple’s tip to the transmitter to the resistor and finally to the voltmeter/indicator, we see that the analog output range of each device must correspond to the analog input range of the next device, or else the real-world meaning of the analog signal will be lost. This correspondence does not happen automatically, but must be established by the instrument technician building the system. In this case, it would be the technician’s responsibility to properly adjust the range of the temperature transmitter, and also to ensure the indicator’s display scale was properly labeled. Both the thermocouple and the resistor are non-adjustable devices, their input/output characteristics being fixed by physical laws.",
    "id": "liii1-2"
+  },
+  {
+   "id": "q-250-ohm",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A 250 Ω resistor turns a 4–20 mA loop into a voltage for an indicator. What voltage is across it at {ma} mA?",
+   "vars": {
+    "ma": [
+     4,
+     20,
+     0.1
+    ]
+   },
+   "answer": "ma / 1000 * 250",
+   "unit": "V",
+   "abs": 0.005,
+   "work": "$V = IR = {ma} \\times 10^{-3} \\times 250 = {answer:3}$ V",
+   "why": "Ohm's law: 250 Ω turns 4 mA into 1 V and 20 mA into 5 V, so the standard 1–5 V signal keeps the live zero. Remember mA to A first (÷ 1000).",
+   "hint": "V = I × R, with I in amps.",
+   "added": true,
+   "after": "liii1-2"
   },
   {
    "type": "concept",
@@ -75,12 +128,44 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-dead-zero",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In the old −10 V to +10 V system the book describes, why was a failed signal so misleading?",
+   "options": [
+    "0 V meant 50%, an ordinary-looking value",
+    "−10 V meant a fault, but looked like 0%",
+    "The voltage drifted with temperature",
+    "It could not carry a negative reading"
+   ],
+   "answer": 0,
+   "why": "A broken wire gives 0 V, and in that system 0 V was half scale: nothing about it looks wrong. A live-zero signal like 4–20 mA fails to 0 mA, which no healthy instrument ever sends.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "13.1 4 to 20 mA analog current signals",
    "html": "<p>Thus, most industrial control systems use at least two different 4-20 mA signals: one to represent the process variable (PV) and one to represent the command signal to the final control element (the “manipulated variable” or MV):</p><figure><img src=\"media/liii/c97916a39e2f.png\" alt=\"A figure from page 893 of the original\"></figure><p>The relationship between these two signals depends entirely on the response of the controller. There is no reason to ever expect the PV and MV current signals to be equal to each other except by chance, for they represent entirely different variables. In fact, if the controller is reverse-acting, it is entirely normal for the two current signals to be inversely related: as the PV signal increases going to a reverse-acting controller, the output signal will decrease. If the controller is placed into “manual” mode by a human operator, the output signal will have no automatic relation to the PV signal at all, instead being entirely determined by the operator’s whim.</p>",
    "body": "Thus, most industrial control systems use at least two different 4-20 mA signals: one to represent the process variable (PV) and one to represent the command signal to the final control element (the “manipulated variable” or MV): The relationship between these two signals depends entirely on the response of the controller. There is no reason to ever expect the PV and MV current signals to be equal to each other except by chance, for they represent entirely different variables. In fact, if the controller is reverse-acting, it is entirely normal for the two current signals to be inversely related: as the PV signal increases going to a reverse-acting controller, the output signal will decrease. If the controller is placed into “manual” mode by a human operator, the output signal will have no automatic relation to the PV signal at all, instead being entirely determined by the operator’s whim.",
    "id": "liii1-4"
+  },
+  {
+   "id": "q-reverse-controller",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A reverse-acting controller's PV signal rises from 8 mA to 12 mA. In automatic, what does its output do?",
+   "options": [
+    "It falls",
+    "It rises by 4 mA too",
+    "It stays the same",
+    "It goes to 4 mA at once"
+   ],
+   "answer": 0,
+   "why": "Reverse action means output goes the opposite way to PV. The PV and output currents are different variables, so there is no reason for them to be equal; in manual, the output has no link to PV at all.",
+   "added": true,
+   "after": "liii1-4"
   },
   {
    "type": "concept",
@@ -123,6 +208,22 @@
    "id": "liii2-3"
   },
   {
+   "id": "q-air-to-close",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A cooling-water valve is air-to-close. Why might it be chosen that way?",
+   "options": [
+    "On air or signal failure, it fails open",
+    "It moves faster than air-to-open",
+    "It needs less air to work",
+    "It holds its last position on failure"
+   ],
+   "answer": 0,
+   "why": "The spring opens it and air closes it, so losing air (or the 4–20 mA signal) drives it wide open: the safe way for cooling. That makes 4 mA mean full open, so the controller's output display is set to reverse indication to show the true valve position.",
+   "added": true,
+   "after": "liii2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "13.3 Controller output current loops",
@@ -161,6 +262,22 @@
    "html": "<p><small>6Some of my students have referred to such a circuit as a smart load, since it functions as a load but nevertheless exerts control over the circuit current.</small></p><p>Internally, the electronic hardware of a 2-wire transmitter circuitry resembles the following (simplified) diagram. Note that everything shown within the shaded rectangle is represented by the “2-wire transmitter” circle in the previous diagram:</p><figure><img src=\"media/liii/4e78f0f408e6.png\" alt=\"A figure from page 921 of the original\"></figure><p>All sensing, scaling, and output conditioning circuitry inside the transmitter must be designed to operate on less than 4 mA of DC current, and at a modest terminal voltage. In order to create loop currents exceeding 4 mA – as the transmitter must do in order to span the entire 4 to 20 milliamp signal range – the transmitter circuitry uses a transistor to shunt (bypass) extra current from one terminal to the other as needed to make the total current indicative of the process measurement. For example, if the transmitter’s internal operating current is only 3.8 mA, and it must regulate loop current at a value of 16 mA to represent a condition of 75% process measurement, the shunt transistor will be driven by the opamp to bypass exactly 12.2 mA of current (because 3.8 mA + 12.2 mA = 16.0 mA). The very low amount of electrical power available at a 2-wire transmitter’s terminals limits its functionality. If the transmitter requires more electrical power than can be delivered with 4 milliamps and 19 volts (minimum each), the only solution is to go with a 4-wire transmitter where the power conductors are separate from the signal conductors. An example of a process transmitter that must be 4-wire is a chemical analyzer such as a chromatograph, requiring enough power to operate an electrical heater, solenoid valves, and an on-board computer to process the sensor data. There is simply no way to operate a machine as complex and power-hungry as a 2010-era chromatograph on</p>",
    "body": "6Some of my students have referred to such a circuit as a smart load, since it functions as a load but nevertheless exerts control over the circuit current. Internally, the electronic hardware of a 2-wire transmitter circuitry resembles the following (simplified) diagram. Note that everything shown within the shaded rectangle is represented by the “2-wire transmitter” circle in the previous diagram: All sensing, scaling, and output conditioning circuitry inside the transmitter must be designed to operate on less than 4 mA of DC current, and at a modest terminal voltage. In order to create loop currents exceeding 4 mA – as the transmitter must do in order to span the entire 4 to 20 milliamp signal range – the transmitter circuitry uses a transistor to shunt (bypass) extra current from one terminal to the other as needed to make the total current indicative of the process measurement. For example, if the transmitter’s internal operating current is only 3.8 mA, and it must regulate loop current at a value of 16 mA to represent a condition of 75% process measurement, the shunt transistor will be driven by the opamp to bypass exactly 12.2 mA of current (because 3.8 mA + 12.2 mA = 16.0 mA). The very low amount of electrical power available at a 2-wire transmitter’s terminals limits its functionality. If the transmitter requires more electrical power than can be delivered with 4 milliamps and 19 volts (minimum each), the only solution is to go with a 4-wire transmitter where the power conductors are separate from the signal conductors. An example of a process transmitter that must be 4-wire is a chemical analyzer such as a chromatograph, requiring enough power to operate an electrical heater, solenoid valves, and an on-board computer to process the sensor data. There is simply no way to operate a machine as complex and power-hungry as a 2010-era chromatograph on",
    "id": "liii2-8"
+  },
+  {
+   "id": "q-2wire-budget",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why must a 2-wire transmitter's own electronics run on less than 4 mA?",
+   "options": [
+    "The loop never carries less than 4 mA",
+    "More current would overheat the cable",
+    "The PLC card limits it to 4 mA",
+    "4 mA is all a battery can give"
+   ],
+   "answer": 0,
+   "why": "The transmitter is powered by the loop current itself, and at 0% that is only 4 mA. Everything inside has to live on that, and the transmitter shunts any extra current past itself to make the signal up to 20 mA.",
+   "added": true,
+   "after": "liii2-8"
   },
   {
    "type": "concept",

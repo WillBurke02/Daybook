@@ -38,6 +38,22 @@
    "id": "wikibooks1-2"
   },
   {
+   "id": "q-bibo",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does **BIBO stable** mean?",
+   "options": [
+    "Finite in gives finite out",
+    "The output never changes",
+    "It works for one input only",
+    "The output equals the input"
+   ],
+   "answer": 0,
+   "why": "Bounded input, bounded output: put in anything finite and the output stays finite. An unstable system can run away to infinity (or, in practice, to a limit: a saturated valve, a crashed axis) from an ordinary input.",
+   "added": true,
+   "after": "wikibooks1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Determining BIBO Stability",
@@ -62,6 +78,22 @@
    "id": "wikibooks1-5"
   },
   {
+   "id": "q-which-stable",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which set of closed-loop poles gives a stable system?",
+   "options": [
+    "−2 and −5 ± 3j",
+    "−2 and +1",
+    "−1 ± 4j and +0.5",
+    "0 ± 2j"
+   ],
+   "answer": 0,
+   "why": "Stable needs every pole in the left half of the s-plane: a negative real part, so its term dies away. One pole at +1 or +0.5 grows without limit; poles on the imaginary axis (0 ± 2j) give a steady oscillation, only marginally stable.",
+   "added": true,
+   "after": "wikibooks1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Poles and Eigenvalues",
@@ -76,6 +108,23 @@
    "html": "<p>We are going to have a brief refesher here about transfer functions, because several of the later chapters will use transfer functions for analyzing system stability. </p><p>Let us remember our generalized feedback-loop transfer function, with a gain element of K, a forward path Gp(s), and a feedback of Gb(s). We write the transfer function for this system as: </p><dl><dd><math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>c</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mrow><mfrac><mrow><mrow><mi>K</mi><mi>G</mi><mi>p</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow><mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow></mfrac></mrow></mstyle></mrow></math></dd></dl><p>Where <math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>c</mi><mi>l</mi></mrow></mrow></msub></mstyle></mrow></math> is the closed-loop transfer function, and <math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub></mstyle></mrow></math> is the open-loop transfer function. Again, we define the open-loop transfer function as the product of the forward path and the feedback elements, as such: </p><dl><dd><math><mrow><mstyle><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mi>K</mi><mi>G</mi><mi>p</mi><mo>(</mo><mi>s</mi><mo>)</mo><mi>G</mi><mi>b</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math> &lt;---Note this definition now contradicts the updated definition in the <a href=\"https://en.wikibooks.org/wiki/Control_Systems/Feedback_Loops#Open_Loop_vs_Closed_Loop\">Feedback Loops</a> section.</dd></dl><p>Now, we can define F(s) to be the <strong>characteristic equation</strong>. F(s) is simply the denominator of the closed-loop transfer function, and can be defined as such: </p><p>[Characteristic Equation] </p><dl><dd><math><mrow><mstyle><mi>F</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>+</mo><msub><mi>H</mi><mrow><mrow><mi>o</mi><mi>l</mi></mrow></mrow></msub><mo>=</mo><mi>D</mi><mo>(</mo><mi>s</mi><mo>)</mo></mstyle></mrow></math></dd></dl><p>We can say conclusively that the roots of the characteristic equation are the poles of the transfer function. Now, we know a few simple facts: </p><ol><li>The locations of the poles of the closed-loop transfer function determine if the system is stable or not</li> <li>The zeros of the characteristic equation are the poles of the closed-loop transfer function.</li> <li>The characteristic equation is always a simpler equation than the closed-loop transfer function.</li></ol>",
    "body": "We are going to have a brief refesher here about transfer functions, because several of the later chapters will use transfer functions for analyzing system stability. Let us remember our generalized feedback-loop transfer function, with a gain element of K, a forward path Gp(s), and a feedback of Gb(s). We write the transfer function for this system as: H c l ( s ) = K G p ( s ) 1 + H o l ( s ) Where H c l is the closed-loop transfer function, and H o l is the open-loop transfer function. Again, we define the open-loop transfer function as the product of the forward path and the feedback elements, as such: H o l ( s ) = K G p ( s ) G b ( s ) <---Note this definition now contradicts the updated definition in the Feedback Loops section. Now, we can define F(s) to be the characteristic equation . F(s) is simply the denominator of the closed-loop transfer function, and can be defined as such: [Characteristic Equation] F ( s ) = 1 + H o l = D ( s ) We can say conclusively that the roots of the characteristic equation are the poles of the transfer function. Now, we know a few simple facts: The locations of the poles of the closed-loop transfer function determine if the system is stable or not The zeros of the characteristic equation are the poles of the closed-loop transfer function. The characteristic equation is always a simpler equation than the closed-loop transfer function.",
    "id": "wikibooks1-7"
+  },
+  {
+   "id": "q-char-eq",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 7.2,
+   "q": "For a loop with gain K, forward path Gp(s) and feedback Gb(s), what is the characteristic equation whose roots are the closed-loop poles?",
+   "options": [
+    "1 + K·Gp(s)·Gb(s) = 0",
+    "K·Gp(s) = 0",
+    "Gp(s) − Gb(s) = 0",
+    "K·Gp(s)·Gb(s) = 1"
+   ],
+   "answer": 0,
+   "why": "The closed-loop transfer function is K·Gp ÷ (1 + K·Gp·Gb); its denominator set to zero gives the poles. That is where the −1 point (gain 1, phase −180°) of the stability tests comes from.",
+   "added": true,
+   "after": "wikibooks1-7"
   },
   {
    "type": "concept",

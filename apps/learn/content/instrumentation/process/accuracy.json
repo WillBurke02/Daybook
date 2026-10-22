@@ -49,6 +49,22 @@
    "id": "liii1-1"
   },
   {
+   "id": "q-cal-vs-range",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the difference between calibrating and re-ranging a smart transmitter?",
+   "options": [
+    "Calibrating needs a known physical input; ranging only sets LRV and URV",
+    "They are the same thing, done on a laptop",
+    "Ranging needs a known input; calibrating does not",
+    "Calibrating changes the output from 4–20 mA"
+   ],
+   "answer": 0,
+   "why": "You cannot calibrate without applying known pressures (or temperatures) and comparing. Re-ranging just tells the transmitter which input should give 4 mA and which 20 mA; it trusts the sensor is already right.",
+   "added": true,
+   "after": "liii1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "18.2 Zero and span adjustments (analog instruments)",
@@ -65,12 +81,57 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-slope",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A transmitter is ranged 0 to {hi} bar, 4 to 20 mA. In y = mx + b, what is the slope m, in mA per bar?",
+   "vars": {
+    "hi": {
+     "pick": [
+      1,
+      2.5,
+      4,
+      6,
+      10,
+      16,
+      25,
+      40,
+      100
+     ]
+    }
+   },
+   "answer": "16 / hi",
+   "unit": "mA/bar",
+   "tolerance": 0.005,
+   "work": "$m = \\frac{16 \\text{ mA}}{ {hi} \\text{ bar} } = {answer:3}$ mA per bar",
+   "why": "Slope is rise over run: 16 mA of span over the range of the input. b is the 4 mA at zero input. The book's 0–100 PSI transmitter has m = 0.16 mA/PSI. Zero sets b; span sets m.",
+   "hint": "Output span ÷ input span.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "18.2 Zero and span adjustments (analog instruments)",
    "html": "<p>Zero adjustments typically take one or more of the following forms in an instrument:</p><ul><li>Bias force (spring or mass force applied to a mechanism)</li><li>Mechanical offset (adding or subtracting a certain amount of motion)</li><li>Bias voltage (adding or subtracting a certain amount of potential)</li></ul><p>Span adjustments typically take one of these forms:</p><ul><li>Fulcrum position for a lever (changing the force or motion multiplication)</li><li>Amplifier gain (multiplying or dividing a voltage signal)</li><li>Spring rate (changing the force per unit distance of stretch)</li></ul><p>It should be noted that for most analog instruments, zero and span adjustments are interactive. That is, adjusting one has an effect on the other. Specifically, changes made to the span adjustment almost always alter the instrument’s zero point1. An instrument with interactive zero and span adjustments requires much more effort to accurately calibrate, as one must switch back and forth between the lowerand upper-range points repeatedly to adjust for accuracy.</p>",
    "body": "Zero adjustments typically take one or more of the following forms in an instrument: Bias force (spring or mass force applied to a mechanism) Mechanical offset (adding or subtracting a certain amount of motion) Bias voltage (adding or subtracting a certain amount of potential) Span adjustments typically take one of these forms: Fulcrum position for a lever (changing the force or motion multiplication) Amplifier gain (multiplying or dividing a voltage signal) Spring rate (changing the force per unit distance of stretch) It should be noted that for most analog instruments, zero and span adjustments are interactive. That is, adjusting one has an effect on the other. Specifically, changes made to the span adjustment almost always alter the instrument’s zero point1. An instrument with interactive zero and span adjustments requires much more effort to accurately calibrate, as one must switch back and forth between the lowerand upper-range points repeatedly to adjust for accuracy.",
    "id": "liii1-4"
+  },
+  {
+   "id": "q-interactive",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On an analogue transmitter whose zero and span interact, how do you calibrate it?",
+   "options": [
+    "Set zero, then span, and repeat until both hold",
+    "Set span first, then never touch it",
+    "Set zero only; span follows",
+    "Adjust both at the same time at mid-range"
+   ],
+   "answer": 0,
+   "why": "Moving the span almost always shifts the zero, so set the zero at 0%, then the span at 100%, then check the zero again, going round until both are right without further adjustment.",
+   "added": true,
+   "after": "liii1-4"
   },
   {
    "type": "concept",
@@ -97,12 +158,55 @@
    "id": "liii1-7"
   },
   {
+   "id": "q-error-types",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each calibration error to how it shows in a test.",
+   "pairs": [
+    [
+     "Zero shift",
+     "The same error at every point"
+    ],
+    [
+     "Span shift",
+     "An error that grows with the reading"
+    ],
+    [
+     "Linearity",
+     "Right at the ends, wrong in between"
+    ],
+    [
+     "Hysteresis",
+     "Different readings going up and coming down"
+    ]
+   ],
+   "why": "Plot the as-found readings against ideal: a zero error moves the whole line up or down, a span error tilts it, a linearity error bends it, and hysteresis needs an up-test and a down-test to see at all.",
+   "added": true,
+   "after": "liii1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "18.3.1 Typical calibration errors",
    "html": "<p>In practice, most calibration errors are some combination of zero, span, linearity, and hysteresis problems. An important point to remember is that with rare exceptions, zero errors always accompany other types of errors. In other words, it is extremely rare to find an instrument with a span, linearity, or hysteresis error that does not also exhibit a zero error. For this reason, technicians often perform a single-point calibration test of an instrument as a qualitative indication of its calibration health. If the instrument performs within specification at that one point, its calibration over the entire range is probably good. Conversely, if the instrument fails to meet specification at that one point, it definitely needs to be recalibrated.</p><p>A very common single-point test for instrument technicians to perform on differential pressure (“DP”) instruments is to close both block valves on the three-valve manifold assembly and then open the equalizing valve, to produce a known condition of 0 PSI differential pressure:</p><p>Normal operation</p><p>&quot;Block and Equalize&quot; test</p><figure><img src=\"media/liii/0566e7ccd2e5.png\" alt=\"A figure from page 1290 of the original\"></figure><p>Most DP instrument ranges encompass 0 PSI, making this a very simple single-point check. If the technician “blocks and equalizes” a DP instrument and it properly reads zero, its calibration is probably good across the entire range. If the DP instrument fails to read zero during this test, it definitely needs to be recalibrated.</p>",
    "body": "In practice, most calibration errors are some combination of zero, span, linearity, and hysteresis problems. An important point to remember is that with rare exceptions, zero errors always accompany other types of errors. In other words, it is extremely rare to find an instrument with a span, linearity, or hysteresis error that does not also exhibit a zero error. For this reason, technicians often perform a single-point calibration test of an instrument as a qualitative indication of its calibration health. If the instrument performs within specification at that one point, its calibration over the entire range is probably good. Conversely, if the instrument fails to meet specification at that one point, it definitely needs to be recalibrated. A very common single-point test for instrument technicians to perform on differential pressure (“DP”) instruments is to close both block valves on the three-valve manifold assembly and then open the equalizing valve, to produce a known condition of 0 PSI differential pressure: Normal operation \"Block and Equalize\" test Most DP instrument ranges encompass 0 PSI, making this a very simple single-point check. If the technician “blocks and equalizes” a DP instrument and it properly reads zero, its calibration is probably good across the entire range. If the DP instrument fails to read zero during this test, it definitely needs to be recalibrated.",
    "id": "liii1-8"
+  },
+  {
+   "id": "q-single-point",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a single-point check a fair quick test of an instrument's calibration?",
+   "options": [
+    "Other errors nearly always bring a zero error with them",
+    "A transmitter is only used at one point",
+    "It finds hysteresis on its own",
+    "It is what the law requires"
+   ],
+   "answer": 0,
+   "why": "Span, linearity and hysteresis faults almost never come without a zero shift, so if one point is within spec the whole range probably is; if it fails, the instrument definitely needs a full calibration.",
+   "added": true,
+   "after": "liii1-8"
   },
   {
    "type": "concept",
@@ -161,6 +265,40 @@
    "id": "liii2-2"
   },
   {
+   "id": "q-min-span",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A transmitter's maximum range is 0 to {mx} bar and its turndown is {td}:1. What is the smallest span it can be ranged to?",
+   "vars": {
+    "mx": {
+     "pick": [
+      10,
+      16,
+      40,
+      100,
+      250,
+      400
+     ]
+    },
+    "td": {
+     "pick": [
+      10,
+      20,
+      50,
+      100
+     ]
+    }
+   },
+   "answer": "mx / td",
+   "unit": "bar",
+   "tolerance": 0.005,
+   "work": "${mx} \\div {td} = {answer:3}$ bar",
+   "why": "Turndown is maximum span ÷ minimum span. If the job needs a smaller span than that (the book's 50 to 90 PSI wanted 40 PSI from a transmitter that could only go to 50), choose a lower-range transmitter. Accuracy also worsens near the turndown limit.",
+   "hint": "Divide the maximum span by the turndown ratio.",
+   "added": true,
+   "after": "liii2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "18.8 Instrument turndown",
@@ -200,6 +338,21 @@
    "title": "Traceability in the UK",
    "body": "The book's chain ends at NIST, the US national laboratory. In the UK it ends at the **National Physical Laboratory (NPL)**, and calibration laboratories are accredited by **UKAS** (the United Kingdom Accreditation Service). A UKAS calibration certificate states each reading with its measurement uncertainty, and that unbroken chain of comparisons back to national standards is what 'traceable' means.",
    "added": true
+  },
+  {
+   "id": "q-trace-order",
+   "type": "order",
+   "stage": "learn",
+   "q": "Put the calibration chain in order, from the most accurate standard down to the gauge on the plant.",
+   "items": [
+    "The UK's national standard at NPL",
+    "A UKAS-accredited lab's reference standard",
+    "The workshop's pressure calibrator",
+    "The pressure transmitter on the vessel"
+   ],
+   "why": "Each link is calibrated against the one above, with its uncertainty stated, so the plant instrument's reading can be traced back unbroken to the national standard. Break one link (an out-of-date calibrator) and everything below it is unproven.",
+   "added": true,
+   "after": "liii2-6"
   },
   {
    "id": "add-zerospan",

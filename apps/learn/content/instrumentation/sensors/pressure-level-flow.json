@@ -87,6 +87,23 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-gauge-stretch",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A strain gauge bonded to a steel bar is stretched. What happens to its resistance, and why?",
+   "options": [
+    "It rises: the wire gets longer and thinner",
+    "It falls: the wire gets longer and thinner",
+    "It rises: the steel heats up",
+    "No change: only compression affects it"
+   ],
+   "answer": 0,
+   "why": "Resistance goes with length over cross-sectional area. Stretching makes the conductor both longer and thinner, so resistance rises; compressing it does the opposite. The change is tiny, which is why gauges sit in bridge circuits.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "19.3.1 Piezoresistive (strain gauge) sensors",
@@ -101,6 +118,22 @@
    "html": "<p>In some designs, a single silicon wafer serves as both the diaphragm and the strain gauge so as to fully exploit the excellent mechanical properties of silicon (high linearity and low fatigue). However, silicon is not chemically compatible with many process fluids, and so pressure must be transferred to the silicon diaphragm/sensor via a non-reactive fill fluid (commonly a silicone-based or fluorocarbon-based liquid). A metal isolating diaphragm transfers process fluid pressure to the fill fluid, which in turn transfers pressure to the silicon wafer. Another simplified illustration shows how this works:</p><figure><img src=\"media/liii/6379ec2d8a48.png\" alt=\"A figure from page 1355 of the original\"></figure><p>The isolating diaphragm is designed to be much more flexible (less rigid) than the silicon diaphragm, because its purpose is to seamlessly transfer fluid pressure from the process fluid to the fill fluid, not to act as a spring element. In this way, the silicon sensor experiences the same pressure that it would if it were directly exposed to the process fluid, without having to contact the process fluid. The flexibility of the metal isolating diaphragm also means it experiences much less stress than the silicon sensing diaphragm, which avoiding the problems of metal fatigue experienced by transmitter designs using metal as the sensing (spring) element. This use of a fill fluid to transfer pressure from an isolating diaphragm to a sensing diaphragm inside the transmitter is used in most if not all modern pressure transmitter designs, even those that are not piezoresistive.</p>",
    "body": "In some designs, a single silicon wafer serves as both the diaphragm and the strain gauge so as to fully exploit the excellent mechanical properties of silicon (high linearity and low fatigue). However, silicon is not chemically compatible with many process fluids, and so pressure must be transferred to the silicon diaphragm/sensor via a non-reactive fill fluid (commonly a silicone-based or fluorocarbon-based liquid). A metal isolating diaphragm transfers process fluid pressure to the fill fluid, which in turn transfers pressure to the silicon wafer. Another simplified illustration shows how this works: The isolating diaphragm is designed to be much more flexible (less rigid) than the silicon diaphragm, because its purpose is to seamlessly transfer fluid pressure from the process fluid to the fill fluid, not to act as a spring element. In this way, the silicon sensor experiences the same pressure that it would if it were directly exposed to the process fluid, without having to contact the process fluid. The flexibility of the metal isolating diaphragm also means it experiences much less stress than the silicon sensing diaphragm, which avoiding the problems of metal fatigue experienced by transmitter designs using metal as the sensing (spring) element. This use of a fill fluid to transfer pressure from an isolating diaphragm to a sensing diaphragm inside the transmitter is used in most if not all modern pressure transmitter designs, even those that are not piezoresistive.",
    "id": "liii1-4"
+  },
+  {
+   "id": "q-fill-fluid",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a silicon pressure sensor sit behind a metal isolating diaphragm and a fill fluid?",
+   "options": [
+    "Silicon cannot touch many process fluids",
+    "The fill fluid amplifies the pressure",
+    "It keeps the sensor at a fixed temperature",
+    "It stops the transmitter needing calibration"
+   ],
+   "answer": 0,
+   "why": "Silicon makes an excellent, linear, fatigue-free sensor but is attacked by many process fluids. The flexible metal diaphragm passes the pressure into an inert fill fluid, which passes it to the silicon. A damaged isolating diaphragm or lost fill fluid ruins the reading.",
+   "added": true,
+   "after": "liii1-4"
   },
   {
    "type": "concept",
@@ -135,6 +168,22 @@
    "id": "liii2-3"
   },
   {
+   "id": "q-hl-ports",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a DP transmitter, pressure on the **L** port rises while the H port stays the same. What does the output do?",
+   "options": [
+    "Falls",
+    "Rises",
+    "Stays the same",
+    "Goes to fault"
+   ],
+   "answer": 0,
+   "why": "H and L do not mean which pressure is bigger: they say which way each port drives the output. More on H pushes the output up; more on L pushes it down. The transmitter measures H − L, which can be negative.",
+   "added": true,
+   "after": "liii2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "19.5.1 DP transmitter construction and behavior",
@@ -167,12 +216,59 @@
    "id": "liii2-7"
   },
   {
+   "id": "q-common-mode-dp",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A DP transmitter's plate says range 0–50 inches of water, MWP 1500 PSI. What is the 1500 PSI?",
+   "options": [
+    "Static pressure it can take on both ports at once",
+    "The largest difference it can measure",
+    "The burst pressure of its diaphragm alone",
+    "The pressure for 20 mA"
+   ],
+   "answer": 0,
+   "why": "Maximum working pressure is the common-mode (static) pressure on both ports together, which a good DP cell ignores, reading zero if both ports see the same 1500 PSI. Its measuring range is the tiny difference, about 1.8 PSI here. Put 1500 PSI on one port alone and you can damage it.",
+   "added": true,
+   "after": "liii2-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "20.3.1 Pressure of a fluid column",
    "html": "<p>A vertical column of fluid exerts a pressure due to the column’s weight. The relationship between column height and fluid pressure at the bottom of the column is constant for any particular fluid (density) regardless of vessel width or shape. This principle makes it possible to infer the height of liquid in a vessel by measuring the pressure generated at the bottom:</p><figure><img src=\"media/liii/ccd513d203c2.png\" alt=\"A figure from page 1448 of the original\"></figure><p>The mathematical relationship between liquid column height and pressure is as follows:</p><p>P = ρgh</p><p>P = γh</p><p>Where, P = Hydrostatic pressure ρ = Mass density of fluid in kilograms per cubic meter (metric) or slugs per cubic foot (British) g = Acceleration of gravity γ = Weight density of fluid in newtons per cubic meter (metric) or pounds per cubic foot (British) h = Height of vertical fluid column above point of pressure measurement</p><p>For example, the pressure generated by a column of oil 12 feet high (h) having a weight density of 40 pounds per cubic foot (γ) is:</p><p>P = γh</p><figure><img src=\"media/liii/b1c4643181d3.png\" alt=\"A figure from page 1448 of the original\"></figure><p>Note the cancellation of units, resulting in a pressure value of 480 pounds per square foot (PSF). To convert into the more common pressure unit of pounds per square inch, we may multiply by the proportion of square feet to square inches, eliminating the unit of square feet by cancellation and leaving square inches in the denominator:</p><figure><img src=\"media/liii/fb0c4f44ce3c.png\" alt=\"A figure from page 1449 of the original\"></figure>",
    "body": "A vertical column of fluid exerts a pressure due to the column’s weight. The relationship between column height and fluid pressure at the bottom of the column is constant for any particular fluid (density) regardless of vessel width or shape. This principle makes it possible to infer the height of liquid in a vessel by measuring the pressure generated at the bottom: The mathematical relationship between liquid column height and pressure is as follows: P = ρgh P = γh Where, P = Hydrostatic pressure ρ = Mass density of fluid in kilograms per cubic meter (metric) or slugs per cubic foot (British) g = Acceleration of gravity γ = Weight density of fluid in newtons per cubic meter (metric) or pounds per cubic foot (British) h = Height of vertical fluid column above point of pressure measurement For example, the pressure generated by a column of oil 12 feet high (h) having a weight density of 40 pounds per cubic foot (γ) is: P = γh Note the cancellation of units, resulting in a pressure value of 480 pounds per square foot (PSF). To convert into the more common pressure unit of pounds per square inch, we may multiply by the proportion of square feet to square inches, eliminating the unit of square feet by cancellation and leaving square inches in the denominator:",
    "id": "liii3-1"
+  },
+  {
+   "id": "q-rho-g-h",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A tank holds {h} m of liquid with a density of {rho} kg/m³. What hydrostatic pressure is at the bottom, in kPa?",
+   "vars": {
+    "h": [
+     0.5,
+     12,
+     0.5
+    ],
+    "rho": {
+     "pick": [
+      680,
+      850,
+      1000,
+      1030,
+      1260,
+      1840
+     ]
+    }
+   },
+   "answer": "rho * 9.81 * h / 1000",
+   "unit": "kPa",
+   "tolerance": 0.01,
+   "work": "$P = \\rho g h = {rho} \\times 9.81 \\times {h} = {answer:2}$ kPa (÷ 1000 for kPa)",
+   "why": "Pressure depends only on the column's height and the liquid's density, not on the tank's width or shape. Water gives about 9.81 kPa a metre (0.0981 bar); denser liquids more.",
+   "hint": "P = ρgh gives pascals; divide by 1000 for kPa.",
+   "added": true,
+   "after": "liii3-1"
   },
   {
    "type": "concept",
@@ -199,6 +295,22 @@
    "id": "liii3-4"
   },
   {
+   "id": "q-density-change",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A level transmitter measures bottom pressure and was calibrated for a liquid of density 1000 kg/m³. The tank is refilled with a denser liquid at the same real level. What does it show?",
+   "options": [
+    "A level higher than the real one",
+    "The real level, exactly",
+    "A level lower than the real one",
+    "Zero: it cannot read other liquids"
+   ],
+   "answer": 0,
+   "why": "A denser liquid makes more pressure for the same height, and the transmitter turns pressure into level assuming the old density, so it reads high. Hydrostatic level is only right while the density is known and constant; weighing or a radar avoids that.",
+   "added": true,
+   "after": "liii3-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "20.3.1 Pressure of a fluid column",
@@ -221,6 +333,22 @@
    "html": "<p>Ultrasonic level instruments measure the distance from the transmitter (located at some high point) to the surface of a process material located farther below using reflected sound waves. The frequency of these waves extend beyond the range of human hearing, which is why they are called ultrasonic. The time-of-flight for a sound pulse indicates this distance, and is interpreted by the transmitter electronics as process level. These transmitters may output a signal corresponding either to the fullness of the vessel (fillage) or the amount of empty space remaining at the top of a vessel (ullage).</p><figure><img src=\"media/liii/1c0e5328d5e7.png\" alt=\"A figure from page 1499 of the original\"></figure><p>Ullage is the “natural” mode of measurement for this sort of level instrument, because the sound wave’s time-of-flight is a direct function of how much empty space exists between the liquid surface and the top of the vessel. Total tank height will always be the sum of fillage and ullage, though. If the ultrasonic level transmitter is programmed with the vessel’s total height, it may calculate fillage via simple subtraction:</p><figure><img src=\"media/liii/226773e69d09.png\" alt=\"A figure from page 1499 of the original\"></figure>",
    "body": "Ultrasonic level instruments measure the distance from the transmitter (located at some high point) to the surface of a process material located farther below using reflected sound waves. The frequency of these waves extend beyond the range of human hearing, which is why they are called ultrasonic. The time-of-flight for a sound pulse indicates this distance, and is interpreted by the transmitter electronics as process level. These transmitters may output a signal corresponding either to the fullness of the vessel (fillage) or the amount of empty space remaining at the top of a vessel (ullage). Ullage is the “natural” mode of measurement for this sort of level instrument, because the sound wave’s time-of-flight is a direct function of how much empty space exists between the liquid surface and the top of the vessel. Total tank height will always be the sum of fillage and ullage, though. If the ultrasonic level transmitter is programmed with the vessel’s total height, it may calculate fillage via simple subtraction:",
    "id": "liii4-1"
+  },
+  {
+   "id": "q-ullage",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does an ultrasonic level sensor on top of a tank measure most directly?",
+   "options": [
+    "Ullage: the empty space above the surface",
+    "Fillage: the depth of liquid",
+    "The liquid's density",
+    "The pressure at the bottom"
+   ],
+   "answer": 0,
+   "why": "It times the echo from the surface, so it measures the distance down to it: the empty space. The transmitter works out the level by taking that from the tank's height.",
+   "added": true,
+   "after": "liii4-1"
   },
   {
    "type": "concept",
@@ -255,6 +383,22 @@
    "id": "liii4-5"
   },
   {
+   "id": "q-foam-repose",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which of these makes an ultrasonic level reading hardest?",
+   "options": [
+    "Thick foam, or heaped powder",
+    "Clear water in a steel tank",
+    "A very tall tank",
+    "A liquid of high density"
+   ],
+   "answer": 0,
+   "why": "An echo needs a sharp change in sound speed facing the sensor. Foam gives a weak first echo and soaks up the second; a heaped powder surface (the angle of repose) bounces the sound off sideways. A flat liquid surface is easy, whatever its density.",
+   "added": true,
+   "after": "liii4-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "22.4.3 Magnetic flowmeters",
@@ -271,6 +415,22 @@
    "id": "liii5-2"
   },
   {
+   "id": "q-magflow-principle",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a magnetic flowmeter, what does the voltage at the electrodes depend on, if the field and pipe size are fixed?",
+   "options": [
+    "Only the liquid's average velocity",
+    "The liquid's conductivity",
+    "The liquid's density",
+    "The pressure in the pipe"
+   ],
+   "answer": 0,
+   "why": "Faraday's law: the moving liquid is a conductor cutting the field, E = Bdv. With B and d fixed, the voltage follows velocity, and so volume flow. Conductivity only has to be above a minimum: doubling it does not double the voltage.",
+   "added": true,
+   "after": "liii5-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "22.4.3 Magnetic flowmeters",
@@ -285,6 +445,22 @@
    "html": "<p><small>42The colloquial term in the United States for this sort of thing is fudge factor.</small></p><p>The first condition is met by careful consideration of the process liquid prior to installation. Magnetic flowmeter manufacturers will specify the minimum conductivity value of the liquid to be measured. The second and third conditions are met by correct installation of the magnetic flowtube in the pipe. The installation must be done in such a way as to guarantee full flooding of the flowtube (no gas pockets). The flowtube is usually installed with electrodes across from each other horizontally (never vertically!) so even a momentary gas bubble will not break electrical contact between an electrode tip and the liquid flowstream. The following photograph shows how not to install magnetic flowmeters:</p><figure><img src=\"media/liii/35fd9b524b01.jpg\" alt=\"A figure from page 1709 of the original\"></figure><p>Note in this example how the electrodes are vertically oriented instead of horizontal, because the pipes for these two magnetic flowmeters were placed too close43 to allow proper clearance for the protruding electrodes to lie horizontally. Sadly, poor flowmeter installation is all too common in new projects, as many piping designers and pipefitters are ignorant of flowmeter operating principles. This is one way instrument engineers and technicians may deter operational problems: by involving themselves in the design phase of a piping system, and helping to educate piping designers.</p>",
    "body": "42The colloquial term in the United States for this sort of thing is fudge factor. The first condition is met by careful consideration of the process liquid prior to installation. Magnetic flowmeter manufacturers will specify the minimum conductivity value of the liquid to be measured. The second and third conditions are met by correct installation of the magnetic flowtube in the pipe. The installation must be done in such a way as to guarantee full flooding of the flowtube (no gas pockets). The flowtube is usually installed with electrodes across from each other horizontally (never vertically!) so even a momentary gas bubble will not break electrical contact between an electrode tip and the liquid flowstream. The following photograph shows how not to install magnetic flowmeters: Note in this example how the electrodes are vertically oriented instead of horizontal, because the pipes for these two magnetic flowmeters were placed too close43 to allow proper clearance for the protruding electrodes to lie horizontally. Sadly, poor flowmeter installation is all too common in new projects, as many piping designers and pipefitters are ignorant of flowmeter operating principles. This is one way instrument engineers and technicians may deter operational problems: by involving themselves in the design phase of a piping system, and helping to educate piping designers.",
    "id": "liii5-4"
+  },
+  {
+   "id": "q-magflow-install",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How should a magnetic flowmeter's electrodes be placed in a horizontal pipe?",
+   "options": [
+    "Side by side, horizontally, with the tube kept full",
+    "One at the top and one at the bottom",
+    "Both at the top of the pipe",
+    "It makes no difference"
+   ],
+   "answer": 0,
+   "why": "A gas bubble rides along the top of the pipe; an electrode at the top would lose contact with the liquid. Electrodes horizontal, and a tube that always runs full (a low point, or vertical with upward flow), keep the reading sound.",
+   "added": true,
+   "after": "liii5-4"
   },
   {
    "type": "concept",
@@ -317,6 +493,22 @@
    "html": "<p><small>46Braided conductors do a better job of shunting radio-frequency currents, because at very high frequencies the skin effect makes the surface area of a conductor a greater factor in its conductivity than its cross-sectional area.</small> provide points of electrical contact with the liquid in installations where the pipe is made of plastic, or where the pipe is metal but lined with a plastic material for corrosion resistance. If the pipe connecting to a magnetic flowmeter’s flowtube is conductive (e.g. metal), grounding may be accomplished by joining the metal pipes’ flanges together with grounding straps to a common grounding point on the flowtube body as such:</p><figure><img src=\"media/liii/aa5678b17c20.png\" alt=\"A figure from page 1713 of the original\"></figure><p>If the pipe connecting to a magnetic flowmeter’s flowtube is non-conductive (e.g. plastic) or conductive with an insulating lining (e.g. metal pipe with plastic lining), grounding to the pipe flanges will be pointless. In order for flowtube grounding to be effective, the grounding conductors must have electrical continuity to the fluid itself. Special grounding rings may be sandwiched between the flanges of non-conducting pipes to provide points of electrical contact with the fluid. These grounding rings are then joined together with grounding straps to a common grounding point on the flowtube body as such:</p><figure><img src=\"media/liii/593bdb0fc39f.png\" alt=\"A figure from page 1713 of the original\"></figure><p>Some magnetic flowmeters have their signal conditioning electronics located integral to the flowtube assembly. A couple of examples are shown here (a pair of small Endress+Hauser flowmeters on the left and a large Toshiba flowmeter on the right):</p><figure><img src=\"media/liii/11b337bb7611.jpg\" alt=\"A figure from page 1714 of the original\"></figure>",
    "body": "46Braided conductors do a better job of shunting radio-frequency currents, because at very high frequencies the skin effect makes the surface area of a conductor a greater factor in its conductivity than its cross-sectional area. provide points of electrical contact with the liquid in installations where the pipe is made of plastic, or where the pipe is metal but lined with a plastic material for corrosion resistance. If the pipe connecting to a magnetic flowmeter’s flowtube is conductive (e.g. metal), grounding may be accomplished by joining the metal pipes’ flanges together with grounding straps to a common grounding point on the flowtube body as such: If the pipe connecting to a magnetic flowmeter’s flowtube is non-conductive (e.g. plastic) or conductive with an insulating lining (e.g. metal pipe with plastic lining), grounding to the pipe flanges will be pointless. In order for flowtube grounding to be effective, the grounding conductors must have electrical continuity to the fluid itself. Special grounding rings may be sandwiched between the flanges of non-conducting pipes to provide points of electrical contact with the fluid. These grounding rings are then joined together with grounding straps to a common grounding point on the flowtube body as such: Some magnetic flowmeters have their signal conditioning electronics located integral to the flowtube assembly. A couple of examples are shown here (a pair of small Endress+Hauser flowmeters on the left and a large Toshiba flowmeter on the right):",
    "id": "liii5-8"
+  },
+  {
+   "id": "q-magflow-earth",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A magflow meter is fitted in a plastic pipeline. What must be added?",
+   "options": [
+    "Grounding rings to contact the liquid",
+    "A permanent magnet",
+    "A longer straight run upstream",
+    "Nothing: plastic pipe insulates it"
+   ],
+   "answer": 0,
+   "why": "The signal is a millivolt or less, easily swamped by stray currents. With metal pipe, straps bond the flanges to the tube; with plastic or lined pipe there is no metal touching the liquid, so grounding rings (or electrodes) give the reference contact.",
+   "added": true,
+   "after": "liii5-8"
   },
   {
    "type": "concept",

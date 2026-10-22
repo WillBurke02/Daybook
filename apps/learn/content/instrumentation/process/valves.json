@@ -95,6 +95,22 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-double-ported",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the trade-off with a double-ported globe valve?",
+   "options": [
+    "Easy to actuate, but hard to shut off tightly",
+    "Tight shut-off, but hard to actuate",
+    "Cheap, but only for on/off duty",
+    "Quiet, but only for gases"
+   ],
+   "answer": 0,
+   "why": "The process pressure pushes one plug up and the other down, so the forces largely cancel and a small actuator will do. But two plugs must land on two seats at exactly the same moment, which is almost impossible, so some leakage when closed is normal.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.1.1 Globe valves",
@@ -111,12 +127,55 @@
    "id": "liii1-5"
   },
   {
+   "id": "q-cage-swap",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a cage-guided globe valve, how can you change the valve's flow characteristic?",
+   "options": [
+    "Swap the cage for one with different holes",
+    "Change the actuator's spring",
+    "Turn the valve body round",
+    "Fit a bigger positioner"
+   ],
+   "answer": 0,
+   "why": "The holes in the cage, uncovered as the plug lifts, set how flow rises with travel. Swapping the cage only means lifting off the bonnet. In stem- or port-guided valves the plug's shape sets it, which means more dismantling.",
+   "added": true,
+   "after": "liii1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.1.1 Globe valves",
    "html": "<p>Unbalanced plugs generate a force equal to the product of the differential pressure across the plug and the plug’s area (F = PA), which may be quite substantial in some applications. Balanced plugs do not generate this same force because they equalize the pressure on both sides of the plug, however, they exhibit the disadvantage of one more leak path when the valve is in the fully closed position (through the balancing ports, past the piston ring, and out the cage ports):</p><figure><img src=\"media/liii/dabe04eb9430.png\" alt=\"A figure from page 2118 of the original\"></figure><p>Thus, balanced and unbalanced cage-guided globe valves exhibit similar characteristics to doubleported and single-ported stemor port-guided globe valves, and for similar reasons. Balanced cageguided valves are easy to position, just like double-ported stem-guided and port-guided globe valves. However, balanced cage-guided valves tend to leak more when in the shut position due to a greater number of leak paths, much the same as with double-ported stem-guided and port-guided globe valves.</p><p>Another style of globe valve body is the three-way body, sometimes called a mixing or a diverting valve. This valve design has three ports on it, with the plug (in this particular case, a cage-guided plug) controlling the degree to which two of the ports connect with the third port:</p><figure><img src=\"media/liii/ec45ab29e0aa.png\" alt=\"A figure from page 2119 of the original\"></figure><p>This dual illustration shows a three-way valve in its two extreme stem positions. If the stem is positioned between these two extremes, all three ports will be “connected” to varying degrees. Three-way valves are useful in services where a flow stream must be diverted (split) between two different directions, or where two flow streams must converge (mix) within the valve to form a single flow stream.</p>",
    "body": "Unbalanced plugs generate a force equal to the product of the differential pressure across the plug and the plug’s area (F = PA), which may be quite substantial in some applications. Balanced plugs do not generate this same force because they equalize the pressure on both sides of the plug, however, they exhibit the disadvantage of one more leak path when the valve is in the fully closed position (through the balancing ports, past the piston ring, and out the cage ports): Thus, balanced and unbalanced cage-guided globe valves exhibit similar characteristics to doubleported and single-ported stemor port-guided globe valves, and for similar reasons. Balanced cageguided valves are easy to position, just like double-ported stem-guided and port-guided globe valves. However, balanced cage-guided valves tend to leak more when in the shut position due to a greater number of leak paths, much the same as with double-ported stem-guided and port-guided globe valves. Another style of globe valve body is the three-way body, sometimes called a mixing or a diverting valve. This valve design has three ports on it, with the plug (in this particular case, a cage-guided plug) controlling the degree to which two of the ports connect with the third port: This dual illustration shows a three-way valve in its two extreme stem positions. If the stem is positioned between these two extremes, all three ports will be “connected” to varying degrees. Three-way valves are useful in services where a flow stream must be diverted (split) between two different directions, or where two flow streams must converge (mix) within the valve to form a single flow stream.",
    "id": "liii1-6"
+  },
+  {
+   "id": "q-plug-force",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "An unbalanced globe valve plug is {d} mm in diameter, with a pressure drop of {dp} bar across it. What force does that put on the plug, in newtons? (1 bar = 100 000 Pa.)",
+   "vars": {
+    "d": [
+     20,
+     120,
+     5
+    ],
+    "dp": [
+     2,
+     40,
+     1
+    ]
+   },
+   "answer": "dp * 100000 * PI() * (d / 1000)^2 / 4",
+   "unit": "N",
+   "tolerance": 0.01,
+   "work": "$A = \\frac{\\pi \\times ({d} \\div 1000)^2}{4}$ m²; $F = PA = {dp} \\times 10^5 \\times A = {answer:0}$ N",
+   "why": "F = PA: the pressure difference times the plug's area. Even a modest valve sees forces of thousands of newtons, which the actuator must overcome: hence balanced plugs and double-ported bodies. Diameter in metres, pressure in pascals, or the answer is out by powers of ten.",
+   "hint": "Area of the plug in m² (π d² ÷ 4), times the pressure in pascals.",
+   "added": true,
+   "after": "liii1-6"
   },
   {
    "type": "concept",
@@ -143,12 +202,44 @@
    "id": "liii2-2"
   },
   {
+   "id": "q-ball-throttle",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a plain full-bore ball valve poor for throttling, and what is used instead?",
+   "options": [
+    "Uneven part-open; use a V-ball",
+    "It leaks shut; use a gate valve",
+    "It cannot open fully; use a butterfly",
+    "It is too slow; use a globe valve"
+   ],
+   "answer": 0,
+   "why": "A full-bore ball is excellent fully open or fully shut, but part-open its flow changes unevenly and the edges wear. A characterised or segmented ball (a V-notch) gives smoother control while keeping the rotary valve's clear path when open.",
+   "added": true,
+   "after": "liii2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.2.2 Butterfly valves",
    "html": "<p>Butterfly valves are quite simple to understand: the “butterfly” element is a disk that rotates perpendicular to the path of fluid flow. When parallel to the axis of flow, the disk presents minimal obstruction; when perpendicular to the axis, the disk completely blocks any flow. Fluid-tight shutoffis difficult to obtain in the classic butterfly design unless the seating area is lined with a soft (elastic) material.</p><h4>27.2.3 Disk valves</h4><p>Disk valves (often referred to as eccentric disk valves, or as high-performance butterfly valves) are a variation on the butterfly design intended to improve seat shut-off. The disk’s center is offset from the shaft centerline, causing it to approach the seat with a “cam” action that results in high seating pressure. Thus, tight shut-offof flow is possible even when using metal seats and disks. The following photograph shows the body of a Fisher E-plug control valve, with the disk in a partially-open position:</p><figure><img src=\"media/liii/5910b3966fce.jpg\" alt=\"A figure from page 2125 of the original\"></figure>",
    "body": "Butterfly valves are quite simple to understand: the “butterfly” element is a disk that rotates perpendicular to the path of fluid flow. When parallel to the axis of flow, the disk presents minimal obstruction; when perpendicular to the axis, the disk completely blocks any flow. Fluid-tight shutoffis difficult to obtain in the classic butterfly design unless the seating area is lined with a soft (elastic) material. 27.2.3 Disk valves Disk valves (often referred to as eccentric disk valves, or as high-performance butterfly valves) are a variation on the butterfly design intended to improve seat shut-off. The disk’s center is offset from the shaft centerline, causing it to approach the seat with a “cam” action that results in high seating pressure. Thus, tight shut-offof flow is possible even when using metal seats and disks. The following photograph shows the body of a Fisher E-plug control valve, with the disk in a partially-open position:",
    "id": "liii2-3"
+  },
+  {
+   "id": "q-eccentric-disk",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does an eccentric (high-performance butterfly) disk valve shut more tightly than a plain butterfly?",
+   "options": [
+    "Its offset disk cams hard onto the seat",
+    "It has two disks, one behind the other",
+    "It turns a full 180°",
+    "Its disk is made of rubber"
+   ],
+   "answer": 0,
+   "why": "With the disk's centre offset from the shaft, it swings onto the seat with a cam action, pressing hard all round. A plain butterfly needs a soft liner to seal at all.",
+   "added": true,
+   "after": "liii2-3"
   },
   {
    "type": "concept",
@@ -159,12 +250,60 @@
    "id": "liii3-1"
   },
   {
+   "id": "q-actuator-force",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A diaphragm actuator has an effective area of {a} cm². Air at {p} bar is applied. What force does it make, in newtons?",
+   "vars": {
+    "a": [
+     200,
+     1500,
+     50
+    ],
+    "p": {
+     "pick": [
+      0.2,
+      0.6,
+      1.0,
+      1.4,
+      2.0,
+      2.4
+     ]
+    }
+   },
+   "answer": "p * 100000 * a / 10000",
+   "unit": "N",
+   "tolerance": 0.01,
+   "work": "$F = PA = {p} \\times 10^5 \\times \\frac{ {a} }{10\\,000} = {answer:0}$ N",
+   "why": "F = PA again, with pressure in pascals and area in m² (10 000 cm² to the m²). A bar on 100 cm² is 1000 N, about 100 kg: big actuators make big forces from modest air pressure.",
+   "hint": "Change cm² to m² (÷ 10 000) and bar to Pa (× 100 000).",
+   "added": true,
+   "after": "liii3-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.6.1 Pneumatic actuators",
    "html": "<p>converters, since they typically translate an electric current signal (I) of 4 to 20 mA DC into an air pressure signal (P) of 3 to 15 PSI. The following photographs show I/P transducers of different make and model. A Fisher model</p><p>846 appears in the upper-left photograph, while an older Fisher model 546 appears in the upper-right (with cover removed). A Foxboro model E69F I/P appears in the lower-left photograph, while a Moore Industries model IPT appears in the lower-right:</p><figure><img src=\"media/liii/6c8c451f1a55.jpg\" alt=\"A figure from page 2141 of the original\"></figure><figure><img src=\"media/liii/e02a1924436f.jpg\" alt=\"A figure from page 2141 of the original\"></figure><p>Despite their differing designs and appearances, they all function the same: accepting an analog DC current signal input and a clean supply air pressure of about 20 PSI, outputting a variable air pressure signal proportional to the electric current input. An interesting feature to compare between these four I/P transducers is their relative ruggedness. Every transducer shown except the Moore Industries model (lower-right) is built to withstand direct exposure to a process atmosphere, hence the heavy cast-metal housings and electrical conduit fittings. The Moore Industries unit is intended for a sheltered location, and may be plugged in to a “manifold” with several other I/P transducers to form a compact bank of transducers capable of driving air pressure signals to several valve actuators.</p><p>Some pneumatic valve actuators are equipped with handwheels which are used to manually position the valve in the event of air pressure failure. The next photograph shows a sliding-stem control valve with pneumatic diaphragm actuator and a “handwheel” on the top:</p><figure><img src=\"media/liii/d3ec11682cdc.jpg\" alt=\"A figure from page 2142 of the original\"></figure>",
    "body": "converters, since they typically translate an electric current signal (I) of 4 to 20 mA DC into an air pressure signal (P) of 3 to 15 PSI. The following photographs show I/P transducers of different make and model. A Fisher model 846 appears in the upper-left photograph, while an older Fisher model 546 appears in the upper-right (with cover removed). A Foxboro model E69F I/P appears in the lower-left photograph, while a Moore Industries model IPT appears in the lower-right: Despite their differing designs and appearances, they all function the same: accepting an analog DC current signal input and a clean supply air pressure of about 20 PSI, outputting a variable air pressure signal proportional to the electric current input. An interesting feature to compare between these four I/P transducers is their relative ruggedness. Every transducer shown except the Moore Industries model (lower-right) is built to withstand direct exposure to a process atmosphere, hence the heavy cast-metal housings and electrical conduit fittings. The Moore Industries unit is intended for a sheltered location, and may be plugged in to a “manifold” with several other I/P transducers to form a compact bank of transducers capable of driving air pressure signals to several valve actuators. Some pneumatic valve actuators are equipped with handwheels which are used to manually position the valve in the event of air pressure failure. The next photograph shows a sliding-stem control valve with pneumatic diaphragm actuator and a “handwheel” on the top:",
    "id": "liii3-2"
+  },
+  {
+   "id": "q-ip",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "What does an I/P transducer do?",
+   "options": [
+    "Turns 4–20 mA into 3–15 PSI air",
+    "Turns air pressure into 4–20 mA",
+    "Measures the valve's position",
+    "Supplies power to the positioner"
+   ],
+   "answer": 0,
+   "why": "I/P is current to pressure: the controller's 4–20 mA becomes a 3–15 PSI (about 0.2–1.0 bar) air signal to drive a pneumatic actuator, from a clean supply of about 20 PSI. A P/I does the reverse, and a positioner is what measures stem position.",
+   "added": true,
+   "after": "liii3-2"
   },
   {
    "type": "concept",
@@ -231,6 +370,22 @@
    "id": "liii4-4"
   },
   {
+   "id": "q-fail-risk",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What should decide whether a control valve is air-to-open or air-to-close?",
+   "options": [
+    "Which way the process is safer if the air fails",
+    "Which is easier to understand",
+    "Which is cheaper to buy",
+    "Which makes the controller direct-acting"
+   ],
+   "answer": 0,
+   "why": "The fail position comes from the spring, so the action decides what happens on loss of air. The process's risks choose it: a cooling-water valve should fail open, a fuel valve fail closed. Habit or what is easy to picture are not reasons.",
+   "added": true,
+   "after": "liii4-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.7.3 Selecting the proper failure mode",
@@ -255,6 +410,22 @@
    "id": "liii4-7"
   },
   {
+   "id": "q-indication-action",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A controller drives an air-to-close valve and is set for **reverse indication**. What does that change?",
+   "options": [
+    "Only how the output is shown: 4 mA reads 100% open",
+    "Which way the controller acts on the error",
+    "Which way the valve fails",
+    "The transmitter's range"
+   ],
+   "answer": 0,
+   "why": "Reverse indication only flips the display, so the operator still sees 100% as wide open even though 4 mA opens this valve. Control action (direct or reverse) is a separate setting that decides which way the output moves when PV changes.",
+   "added": true,
+   "after": "liii4-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "27.10 Valve positioners",
@@ -269,6 +440,22 @@
    "html": "<p>Positioners essentially act as control systems within themselves16: the valve’s stem position is the process variable (PV), the command signal to the positioner is the setpoint (SP), and the positioner’s signal to the valve actuator is the manipulated variable (MV) or output. Thus, when a process controller sends a command signal to a valve equipped with a positioner, the positioner receives that command signal and applies as much or as little air pressure to the actuator as needed</p><p>15One way to minimize dynamic forces on a globe valve plug is to use a double-ported plug design, or to use a balanced plug on a cage-guided globe valve. A disadvantage to both these valve plug designs, though, is greater difficulty achieving tight shut-off. 16The technical term for this type of control system is cascade, where one controller’s output becomes the setpoint for a different controller. In the case of a valve positioner, the positioner receives a valve stem position setpoint from the main process controller. We could say that the main process controller in this case is the primary or master controller, while the valve positioner is the secondary or slave controller.</p><p>in order to achieve that desired stem position. Thus, the positioner will “fight” against any other forces acting on the valve stem to achieve crisp and accurate stem positioning according to the command signal. A properly functioning positioner ensures the control valve will be “well-behaved” and obedient to the command signal. The following photograph shows a Fisher model 3582 pneumatic positioner mounted to a control valve. The positioner is the grey-colored box with three pressure gauges on its right-hand side:</p><figure><img src=\"media/liii/be9739686031.jpg\" alt=\"A figure from page 2174 of the original\"></figure>",
    "body": "Positioners essentially act as control systems within themselves16: the valve’s stem position is the process variable (PV), the command signal to the positioner is the setpoint (SP), and the positioner’s signal to the valve actuator is the manipulated variable (MV) or output. Thus, when a process controller sends a command signal to a valve equipped with a positioner, the positioner receives that command signal and applies as much or as little air pressure to the actuator as needed 15One way to minimize dynamic forces on a globe valve plug is to use a double-ported plug design, or to use a balanced plug on a cage-guided globe valve. A disadvantage to both these valve plug designs, though, is greater difficulty achieving tight shut-off. 16The technical term for this type of control system is cascade, where one controller’s output becomes the setpoint for a different controller. In the case of a valve positioner, the positioner receives a valve stem position setpoint from the main process controller. We could say that the main process controller in this case is the primary or master controller, while the valve positioner is the secondary or slave controller. in order to achieve that desired stem position. Thus, the positioner will “fight” against any other forces acting on the valve stem to achieve crisp and accurate stem positioning according to the command signal. A properly functioning positioner ensures the control valve will be “well-behaved” and obedient to the command signal. The following photograph shows a Fisher model 3582 pneumatic positioner mounted to a control valve. The positioner is the grey-colored box with three pressure gauges on its right-hand side:",
    "id": "liii5-2"
+  },
+  {
+   "id": "q-positioner-loop",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A valve positioner is a small control loop of its own. What is its process variable?",
+   "options": [
+    "The valve stem's position",
+    "The flow through the valve",
+    "The air supply pressure",
+    "The controller's set point"
+   ],
+   "answer": 0,
+   "why": "Its set point is the command signal, its PV is the stem position it senses through its linkage (or a Hall sensor), and its output is the air to the actuator, adding or venting air until the stem is where it was told, despite packing friction and process forces.",
+   "added": true,
+   "after": "liii5-2"
   },
   {
    "type": "concept",
@@ -293,6 +480,22 @@
    "html": "<p>While positioners are beneficial on spring-equipped valve actuators, they are absolutely essential for some other styles of actuators. Consider the following double-acting pneumatic piston actuator which has no spring:</p><figure><img src=\"media/liii/baa7f8572b20.png\" alt=\"A figure from page 2177 of the original\"></figure><p>Without a spring providing a restraining force to return the valve to a “fail-safe” position, there exists no Hooke’s Law relationship between applied air pressure and stem position. A positioner must alternately apply air pressure to both surfaces of the piston to raise and lower the valve stem. Electric control valve actuators are another class of actuator design absolutely requiring some form of positioner system, because an electric motor is not “aware” of its own shaft position in order that it may precisely move a control valve. Thus, a positioner circuit using a potentiometer or LVDT/RVDT sensor to detect valve stem position and a set of transistor outputs to drive the motor is necessary to make an electric actuator responsive to an analog control signal.</p>",
    "body": "While positioners are beneficial on spring-equipped valve actuators, they are absolutely essential for some other styles of actuators. Consider the following double-acting pneumatic piston actuator which has no spring: Without a spring providing a restraining force to return the valve to a “fail-safe” position, there exists no Hooke’s Law relationship between applied air pressure and stem position. A positioner must alternately apply air pressure to both surfaces of the piston to raise and lower the valve stem. Electric control valve actuators are another class of actuator design absolutely requiring some form of positioner system, because an electric motor is not “aware” of its own shaft position in order that it may precisely move a control valve. Thus, a positioner circuit using a potentiometer or LVDT/RVDT sensor to detect valve stem position and a set of transistor outputs to drive the motor is necessary to make an electric actuator responsive to an analog control signal.",
    "id": "liii5-5"
+  },
+  {
+   "id": "q-positioner-essential",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "For which actuator is a positioner not just useful but essential?",
+   "options": [
+    "A double-acting piston with no spring",
+    "A spring-and-diaphragm actuator",
+    "A hand-wheel on a gate valve",
+    "Any actuator on a small valve"
+   ],
+   "answer": 0,
+   "why": "With no spring, air pressure does not map to a position (no Hooke's law), so something must measure the stem and feed air to either side to hold it. Electric actuators need one too, since a motor does not know its own position.",
+   "added": true,
+   "after": "liii5-5"
   },
   {
    "id": "add-fail",
