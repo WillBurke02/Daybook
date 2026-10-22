@@ -1,14 +1,12 @@
-# Plan: Log and Routine
+# Plan: Journal (Log, habits and training in one app)
 
-Plan only; nothing in §2 onwards is built. Wireframes: the "Second go" page of the Log habits
-wireframes canvas (phone: Today, Today with no sleep, Month, Home and the iPhone widget; PC: Today,
-Weeks, Habits and rules).
+Plan only; nothing in §2 onwards is built. Wireframes: the "Third go" page of the Log habits
+wireframes canvas (phone: Day, a habit tapped; PC: Day, Gym). Earlier pages are kept for comparison.
 
 ## 0. Text on screen
 
-SPEC §1 already says it: plain, short labels, no chatty helper text, no "insights". The first
-wireframes broke it, so to be exact. A screen holds labels, figures, dates and buttons. It does not
-hold:
+SPEC §1 already says it: plain, short labels, no chatty helper text, no "insights". A screen holds
+labels, figures, dates and buttons. It does not hold:
 
 - sentences explaining the screen ("Figures from a watch fill The day, never over what you typed")
 - comments on the data ("The three longest weeks are the three shortest for sleep")
@@ -16,72 +14,65 @@ hold:
 - labels about the design itself ("new panel", "one tap each", "swipe for the next day")
 
 Why a screen is built the way it is goes in this file, not on the screen. Empty states are a short
-phrase ("Nothing logged."). The same goes for docs and changelog entries: say what changed, no
-flourishes.
+phrase ("Nothing logged."). The same goes for docs and changelog entries.
 
 ## 1. Done in 4.0.39
 
 - Moving from one entry to the next no longer redraws the day under you.
 - Leaving the app or closing the window saves the box being typed in (`keepalive` writes).
 - Swipe left and right on a day steps days on a phone.
-- `/log/api/day` says how many share-sheet pictures wait instead of carrying them; Log asks for them
-  only then.
+- `/log/api/day` says how many share-sheet pictures wait instead of carrying them.
 
-## 2. Structure: one database, two doors
+## 2. One app: Journal
 
-Log becomes two front doors on `log.db`, as Money is two (Hours and pay, Spending):
+Log, habits and training become one app, so a day is in one place. **Journal** fits all three: a
+diary, a training journal, a habit record. Other candidates: Days, Life.
 
-| Door | Sidebar |
-|---|---|
-| **Log** | Day, Timeline, Calendar, Photos, Tags, Print |
-| **Routine** | **Habits**: Today, Month · **Training**: Workouts, Sleep · **Patterns**: Weeks, Compare · **Setup**: Habits and rules, Sources |
+- Inside it stays `log` (`log.db`, `apps/log/`, `/log/` addresses), so the iPhone Shortcuts and the
+  share sheet (`/log/api/quick`, `/log/share`) keep working. Only `TITLE` and the labels change.
+- Sidebar, each kind in its own group:
 
-- Habits and patterns get their own sidebar groups and their own tab on the phone.
-- One database, because the two share days, undo, backups, sync and the GitHub backup. A door is
-  a few lines (`DOORS` in `app.py`, a `door` table in `web/app.js`, as `apps/money/web/app.js`).
-- The app is still `log` inside (`log.db`, `apps/log/`); only the doors' titles show.
-- **Name**: Routine. It covers waking, gym, runs, work and learning without claiming to be medical.
-  Other candidates: Habits (narrower), Training (leaves out sleep and work), Health (too broad).
+  | Group | Pages |
+  |---|---|
+  | (top) | Day, Timeline, Calendar |
+  | Habits | Month, Rules |
+  | Training | Runs, Gym, Sleep |
+  | Patterns | Weeks, Compare |
+  | Diary | Photos, Tags, Print |
+  | Setup | Sources |
 
-## 3. Habits: categories, tiers, rules
+- **Day collates everything for the date**. Phone, top to bottom: quick add, Found, Habits,
+  Training, Diary, Work (with Money's hours). PC: a strip of habit tiles across the top; below it
+  the quick add, Found, Diary and Work on the left, Training on the right.
 
-**Categories** are the top level; **habits** sit under them. Habits in one category usually share a
-fact and differ in a threshold, so they form tiers:
+## 3. Habits
 
-| Category | Habits (tiers) | Done when |
+**Categories and tiers.** Categories are the top level (Woke, Gym, Run, Work, Learn); habits sit
+under them as tiers of one fact (Woke before 6, Woke before 7). Each habit has one rule: a fact, a
+comparison (before, after, at least, is, any) and a value, picked from lists on Habits → Rules.
+
+| Category | Tiers | Fact, from |
 |---|---|---|
-| Sleep | Woke before 6, Woke before 7, 7 hours | Woke before 06:00 / 07:00; Sleep at least 7 h |
-| Gym | Gym before 6, Gym before 7, Gym | Strength workout starts before 06:00 / 07:00; any |
-| Running | Run, Run 5 km | Run, any; Run distance at least 5 km |
-| Work | Worked | Hours worked (Money) more than 0 |
-| Learning | Learning, Review done | Learn minutes at least 15; Cards due (Learn) is 0 |
+| Woke | Before 6, Before 7 | Woke (Apple Health; typed) |
+| Gym | Before 6, Before 7, Any time | Start of a strength activity (Strava) |
+| Run | 5 km, Any | Run distance (Strava) |
+| Work | Worked | Hours worked (Money) |
+| Learn | 15 min | Learn minutes (Learn) |
 
-**Rules fill habits in.** Each habit has one rule: a fact, a comparison (before, after, at least, is,
-any) and a value, picked from lists in Setup → Habits and rules (no formula language). A day's habits
-are worked out from that day's facts whenever a fact arrives (a Strava run, last night's sleep, a
-shift in Money). Woke at 05:52 ticks both Woke before 6 and Woke before 7.
+**A habit row** (Day, phone and PC): the name, the day's value, the value drawn on a short scale with
+the tiers' thresholds marked (`06:00`, `07:00`; `5 km`; `15 min`), and one square per tier (dark: the
+first tier; grey: a lower tier; outline: none). Woke draws the night as a bar ending at the wake
+time, so sleep and waking read as one. On the PC the tiles add the week as seven squares and
+"3 / 4" against a weekly target. A habit with no fact (a plain tick) is a tap target with no scale.
 
-**Typing always wins.** Tapping a tier sets it by hand (done or not done) for that day, and the
-rule no longer touches it. A second option on the same tap puts it back to the rule. This keeps
-"explicit over inferred": the rules are yours, and every result can be overridden.
+**Tapping a row** opens a sheet: the value (Slept and Woke as times for sleep), where it came from,
+the scale, each tier as Rule / Done / Not done, the week, Save. Typed values and Done / Not done
+win over the rule for that day; Rule hands it back.
 
-**Shown as**: dark = first tier done, mid grey = a lower tier done, outline = none. One row per
-category in the month grid, so tiers do not multiply the rows.
+**Sleep boxes** show on the Day only when no sleep came in for that date.
 
-**Facts** and where each comes from:
-
-| Fact | From |
-|---|---|
-| Slept, Woke, Sleep length | Apple Health (iPhone now, a watch later); typed |
-| Workout: kind, start, minutes, distance, heart rate, route | Strava (runs; Hevy sessions arrive there too) |
-| Exercises and sets | Hevy |
-| Steps, resting heart rate, HRV | Apple Health (most need a watch) |
-| Hours worked, shift start | Money (`shift`) |
-| Learn minutes, cards due | Learn |
-| A tag used that day | Log entries |
-
-Money and Learn have their own databases, so each app gains a `facts(db, frm, to)` hook returning
-`{day: {key: value}}`, called by the suite as `days_of` calls `day()` for Home.
+**Habits and Training are separate sections**: habits are the yes/no record; Training is the
+detail of each run and gym session.
 
 **Tables** (a new Log migration):
 
@@ -92,93 +83,102 @@ CREATE TABLE habit (
   name TEXT NOT NULL, sort INTEGER NOT NULL DEFAULT 0,
   fact TEXT NOT NULL, op TEXT NOT NULL CHECK (op IN ('before','after','at_least','is','any')), value TEXT,
   week_target INTEGER, on_home INTEGER NOT NULL DEFAULT 0, gone TEXT);
--- a day's figures as they came; one per key per source, the preferred source wins in v_fact
+-- a day's figures as they came; one per key per source; typed wins in v_fact
 CREATE TABLE fact (day TEXT NOT NULL, key TEXT NOT NULL, source TEXT NOT NULL, value TEXT NOT NULL,
   PRIMARY KEY (day, key, source));
--- a habit set by hand for a day; no row = the rule decides
+-- a tier set by hand for a day; no row = the rule decides
 CREATE TABLE mark (day TEXT NOT NULL, habit_id INTEGER NOT NULL REFERENCES habit(id), done INTEGER NOT NULL,
   PRIMARY KEY (day, habit_id));
 CREATE TABLE workout (
-  id INTEGER PRIMARY KEY, day TEXT NOT NULL, start TEXT, kind TEXT NOT NULL, name TEXT,
-  minutes REAL, km REAL, climb_m REAL, hr_avg REAL, hr_max REAL, route TEXT,   -- route: Strava's polyline
-  source TEXT NOT NULL, ext TEXT, UNIQUE (source, ext));
+  id INTEGER PRIMARY KEY, day TEXT NOT NULL, start TEXT, finish TEXT, kind TEXT NOT NULL, name TEXT,
+  moving_s INTEGER, km REAL, climb_m REAL, hr_avg REAL, hr_max REAL,
+  route TEXT,                       -- Strava's summary polyline, drawn locally (no map tiles)
+  detail TEXT,                      -- splits and heart-rate zones as JSON, for the run card
+  description TEXT,                 -- as Strava has it; a Hevy session's sets are in here
+  strava_id INTEGER UNIQUE);
+-- a gym session's sets, read from its description; none if the description cannot be read
 CREATE TABLE workout_set (workout_id INTEGER NOT NULL REFERENCES workout(id) ON DELETE CASCADE,
-  exercise TEXT NOT NULL, n INTEGER NOT NULL, kg REAL, reps INTEGER, pr INTEGER NOT NULL DEFAULT 0);
+  exercise TEXT NOT NULL, n INTEGER NOT NULL, kg REAL, reps INTEGER);
 ```
 
-A view `v_habit_day` works out each habit for each day from `v_fact`, `workout` and `mark`.
-`ponytail:` rules worked out in a view over every day; keep a table of results if a year gets slow.
+`v_habit_day` works out each tier for each day from `v_fact`, `workout` and `mark`. Money and Learn
+have their own databases, so each app gains a `facts(db, frm, to)` hook returning `{day: {key:
+value}}`, called by the suite as `days_of` calls `day()` for Home.
+`ponytail:` tiers worked out in a view over every day; keep a table of results if a year gets slow.
 
 ## 4. Sources
 
-| Source | Gives | How | Online? |
-|---|---|---|---|
-| **Strava** | Runs; gym sessions (Hevy posts them); start, time, distance, climb, heart rate, splits, route | Strava API with your own API application (OAuth, refresh token in `suite.db` like the GitHub token). Fetched every 15 min while Routine is open and daily on the Pi. Webhooks need a public address, so no webhooks behind Tailscale. | Yes, opt-in |
-| **Apple Health** | Sleep (iPhone now), steps; heart rate and HRV with a watch | iPhone Shortcut, daily at 09:00: *Find Health Samples*, then POST to `/routine/api/health` with its own key. Earlier years: import Health's `export.zip` (`xml.etree.iterparse`). | No |
-| **Hevy** | Exercises, sets, kg × reps | Hevy's API (needs Hevy Pro), or its CSV export. Matched to Strava's session by start time, so one workout, not two. | API: yes, opt-in |
-| Health Connect (later) | Android sleep, steps, workouts | An automation app posting the same JSON as the Shortcut | No |
-| Garmin (later) | Activities; sleep | Activities through Strava (Garmin Connect can post there); sleep from `.FIT` by cable or Health Connect | No |
+Two, for now:
 
-Strava would be the second thing (after GitHub) to fetch from the internet. It stays off until
-you connect it, and everything it sends is kept in `log.db`.
+| Source | Gives | How |
+|---|---|---|
+| **Strava** | Runs; gym sessions (Hevy posts them there): start, finish, distance, pace, climb, splits, route; heart rate with a watch; the description | Strava API, your own API application (OAuth; refresh token in `suite.db`, like GitHub's) |
+| **Apple Health** | Sleep and waking (iPhone now, a watch later); steps | iPhone Shortcut, daily: *Find Health Samples* → POST to `/log/api/health` with its own key |
 
-When two sources give the same thing: typed beats everything; then Hevy over Strava for gym;
-Apple Health is the only sleep source for now.
+Hevy is not read directly. **Gym detail comes from the Strava activity's description**, where Hevy
+writes the exercises and sets. Lines are read into `workout_set`; if a description cannot be read,
+the card shows it as written. Before building: one real description from a Hevy session, to fix
+the format in a check (`tests/test_log.py`).
+
+**From the sets**: top set per exercise, the same exercise last time, best top set so far, volume
+(kg × reps, bodyweight sets left out), and on the Gym page each exercise's top set over time and
+volume a week by session name (Push, Pull, Legs, as named in Hevy).
+
+**When Strava is fetched** (no polling):
+
+1. When Journal is opened, if the last fetch is over 30 minutes old: one request for activities
+   since then, and one per new activity for its detail.
+2. A Fetch button (Setup → Sources, and on the Day when Training is empty).
+3. Once at the end of the day (23:30) by the server, so the day's habits are settled and the
+   Pi has them even if nothing was opened.
+4. On upload, if wanted: an iPhone personal automation, *When Strava (or Hevy) is closed* → *Get
+   Contents of URL* POST `/log/api/strava/fetch` with a key. Runs right after a recording or a
+   workout, needs no public address. Strava's own webhooks would be instant too, but need a public
+   address (Tailscale Funnel on a one-purpose listener); not at first.
+
+Later: Health Connect (Android) and Garmin. Garmin can post activities to Strava, so only its sleep
+would need a route of its own.
 
 ## 5. Suggestions for each day
 
-What a suggestion could be, and whether it belongs:
-
 | Kind | Example | Keep? |
 |---|---|---|
-| Something found that is not in the diary | Strava · Morning Run · 5.1 km → Add to diary | Yes |
-| A figure to confirm | Sleep 23:10–05:52 from the iPhone → Use / type over | Only when the source is unsure (iPhone sleep without a watch) |
-| How the week stands | Gym 3 / 4 · Run 2 / 2 | Yes, as counts, no wording |
-| Reminders left from earlier days | `!fri` items not ticked | Already there |
-| Advice | "Try to sleep earlier" | No: opinion, and the text SPEC §1 rules out |
-| Predictions, scores | "Recovery 62%" | No: inferred, not yours |
+| Found, not in the diary | Morning Run · 5.1 km → Add to diary | Yes |
+| A figure to confirm | Sleep 23:10–05:52, iPhone | Only when the source is unsure |
+| How the week stands | Gym 3 / 4 | Yes, as counts on the habit tiles |
+| Reminders from earlier days | `!fri` items not ticked | Already there |
+| Advice | "Try to sleep earlier" | No |
+| Predictions, scores | "Recovery 62%" | No |
 
-So the day gets a **Found** list at the top: one line per item, one button, a × to dismiss
-(remembered), nothing added until pressed, as Money's regular-payment suggestions work. At most a
-handful, no notifications. "This week" is a block of counts, not a suggestion.
+The **Found** list sits at the top of the Day: one line, one button, a × to dismiss (remembered),
+nothing added until pressed, as Money's regular-payment suggestions work. No notifications.
 
-## 6. Screens
+## 6. Screens (Third go)
 
-- **Routine → Today (phone)**: Found; Habits (category rows with tier buttons); Sleep (times,
-  length, a bar); Workouts (two figures each); This week (seven squares a habit, n / target); a link
-  to the day in Log.
-- **Sleep boxes**: Slept and Woke inputs show only when nothing came in for that day.
-- **Routine → Today (PC)**: three columns. Left: Found, Habits. Middle: each workout in full: route
-  drawn from Strava's polyline (no map tiles: nothing online), six figures, splits with pace and heart
-  rate, heart rate zones; a gym session as exercises × sets (kg × reps, PRs marked) with volume.
-  Right: Sleep with the last 7 nights, Work (Money), Learning (Learn), This week, the diary link.
-- **Month**: category rows × days, shaded by tier, counts per tier; 14 nights of sleep; month totals.
-- **Patterns → Weeks**: hours worked and sleep; workouts (gym, runs); wake time each day (work days
-  and days off); running km and pace. **Compare**: one table of day groups (gym before 7, no gym,
-  ran, over 9 h worked, `#site`, weekends) against sleep, waking, Learn minutes and steps, with how
-  many days each is from. No captions.
-- **Setup → Habits and rules**: the category tree, rules as three pickers, week target, on Home.
-  **Sources**: each with what it gives, how it arrives, last received, one button.
+- **Phone · Day**: as §2; Training shows the run (route, three figures) and the gym session (three
+  figures, the first three exercises with top set and change on last time, All 6).
+- **Phone · A habit, tapped**: the sheet in §3.
+- **PC · Day**: habit tiles; run card (route, six figures, splits, heart-rate zones); gym card (five
+  figures, a row per exercise: sets, top set, last time, top set over the last 8 sessions).
+- **PC · Gym**: figures for the period; sessions list; one exercise's top set over time with best
+  marks and its history; volume a week by session name.
+- Still to draw: Habits → Month and Rules in the new row style, Runs, Sleep, Sources.
 
-## 7. Home and widgets
+## 7. Widgets
 
-- Home → Today: a Routine card, the habits marked "Home" with their tiers.
-- Home → Tiles: the same as a tile, small or wide.
-- Customise → Add a panel: "Habits" on any page.
-- iPhone home screen: the existing Scriptable widget (Admin → phone) takes the parameter `routine`
-  for the habits, small or medium.
+Handed to a separate agent: the brief is Appendix A.
 
 ## 8. Order of work
 
 Each step is a version (CLAUDE.md) with its check in `tests/test_log.py`.
 
-1. The Routine door, categories and habits, typed only; Today and Month; Home card.
-2. Rules and facts: woke/slept typed, Money and Learn facts through `facts()`; tiers filled in.
+1. Rename to Journal; sidebar groups; categories and habits, typed only; the habit row and sheet.
+2. Rules and facts: typed sleep, Money and Learn through `facts()`; tiers filled in; Month.
 3. Apple Health Shortcut: sleep; the sleep boxes hide when it has come in.
-4. Strava: connect, fetch, workouts on Today; Found list.
-5. Hevy: sets matched to Strava's sessions; PC workout detail.
-6. Patterns: Weeks, Compare. Scriptable widget parameter.
-7. Later: Health Connect, Garmin, a watch's heart rate and HRV.
+4. Strava: connect, fetch on open / button / end of day; runs on the Day; Found list.
+5. Gym from Strava descriptions: sets, the gym card, the Gym page.
+6. Patterns: Weeks, Compare. The iPhone automation for fetch on upload.
+7. Later: a watch's heart rate and HRV; Health Connect; Garmin sleep.
 
 ## 9. Other Log improvements, not done
 
@@ -190,8 +190,55 @@ Each step is a version (CLAUDE.md) with its check in `tests/test_log.py`.
 
 ## 10. Open questions
 
-- Routine as the name?
-- Strava fetched from the internet (opt-in, like GitHub): all right?
-- Hevy Pro? It decides API or CSV for sets.
-- Week targets (Gym 4, Learning 5): wanted?
+- Journal as the name?
+- One Strava description from a Hevy workout, pasted as it is, to fix the format.
+- Fetch on upload through the iPhone automation: wanted?
+- Week targets: the numbers (Gym 4, Run 2, Woke before 6 4, Learn 5)?
 - Steps from the iPhone: wanted now, or wait for a watch?
+
+---
+
+## Appendix A. Brief for the widget agent
+
+> You are designing widgets for Daybook, a personal app (Python standard library and SQLite on the
+> server, plain ES modules in the browser, no build step, no framework, nothing loaded from the
+> internet). It runs on a PC or a Raspberry Pi; the iPhone reaches it over Tailscale. Repository
+> `willburke02/daybook`, branch `claude/charming-cerf-98smxs`. Read `CLAUDE.md`, SPEC.md §1 (text
+> rules) and `PLAN-LOG.md` first. Design and plan only: build nothing until Will approves.
+>
+> **What exists.**
+> - An iPhone home-screen widget through the free Scriptable app: `widgetScript()` in
+>   `web/core/admin.js` (Admin → Calendar feed and phone). It reads `/widget/<key>.json`
+>   (`widget()` in `core/server.py`), which is each app's Home figures, and draws up to three apps
+>   as columns of value + label. The parameter (`money`, `learn`, `log`) limits it to one app. It
+>   refreshes about every 15 minutes, as iOS allows. Will finds it poor.
+> - Home (`web/home/home.js`) has three views: Today, Tiles (each app's figures as tiles, any order,
+>   small or wide) and Timeline. Customise → Add a panel puts any app panel on any page.
+> - Apps: Hours and pay, Spending (both Money), Log (becoming **Journal**: diary, habits, training;
+>   see PLAN-LOG.md), Learn.
+>
+> **What is wanted.**
+> 1. Habits as a widget: the habit categories with their tiers (Woke before 6 / before 7, Gym
+>    before 6 / before 7 / any, Run 5 km / any, Work, Learn 15 min), today and the week.
+> 2. Training: today's run or gym session, and the week's count.
+> 3. Better widgets for the other apps too: payday and safe to spend (Money), today's hours, Learn's
+>    cards due and daily goal.
+> 4. Every size iOS offers through Scriptable: small, medium, large, and the lock-screen
+>    accessory sizes (circular, rectangular, inline). Light and dark (Scriptable's `Color.dynamic`).
+> 5. The same content as Home tiles and Customise panels inside Daybook, so a widget and a tile look
+>    like one family.
+>
+> **Constraints.**
+> - Text on a widget is labels, figures and dates only: no sentences, no advice, no scores, no
+>   emoji. British English.
+> - Scriptable widgets are not interactive: a tap opens a URL. Choose where each tap goes (the day
+>   in Journal, a habit's month, an app's page).
+> - Data comes only from Daybook over Tailscale with the widget key; say what the widget shows when
+>   Daybook cannot be reached (it should keep the last figures and their time).
+> - Propose the JSON the widget endpoint should return (an addition to `widget()`; the existing
+>   shape keeps working for scripts already installed), and how one script handles every size and
+>   parameter.
+>
+> **Deliverables.** Greyscale wireframes at real sizes for each widget and tile (Will dislikes
+> explanatory text on mock-ups too), the JSON shape, the parameter scheme, and a short plan in the
+> style of PLAN-LOG.md. Then stop and wait for Will.
