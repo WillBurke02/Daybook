@@ -51,7 +51,7 @@ const st = await load('apps/learn/web/st.js');
   assert.match(tpl.slip(59.2, 29.6), /twice/);
   assert.match(tpl.slip(-29.6, 29.6), /wrong sign/);
   assert.match(tpl.slip(400 / Math.sqrt(3) * Math.sqrt(3) * Math.sqrt(3), 400), /√3/);
-  assert.match(tpl.slip(31.5, 29.6), /Round only at the end/);
+  assert.match(tpl.slip(31.5, 29.6), /round only at the end/);
   assert.equal(tpl.slip(29.7, 29.6), null); assert.equal(tpl.slip(7, 29.6), null); assert.equal(tpl.slip(3, 0), null);
 }
 console.log('ok — question templates');
