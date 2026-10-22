@@ -8,6 +8,7 @@ export const api = {
   due:      () => get('due'),
   lesson:   id => get(`lesson${qs({ id })}`),
   place:    (lesson_id, pos, finished) => send('lesson/place', { lesson_id, pos, finished }),
+  play:     (kind, n = 5, exclude = []) => get(`play${qs({ kind, n, exclude: exclude.join(',') })}`),
   practice: (lessons, n = 10) => get(`practice${qs({ lessons: lessons.join(','), n })}`),
   answer:   b => send('answer', b),
   saveCard: card_id => send('save', { card_id }),

@@ -57,6 +57,7 @@ const todayPanel = { title: 'Today', w: 12, deps: ['setting', 'card', 'study', '
       : t.due ? ['Feed', 'what is new and due', '5 min', '#/feed'] : ['Find my level', 'a subject you have not placed', '10 min', '#/calibrate'],
     t.goal?.next && t.goal.next.id !== c?.id ? ['Next stop', t.goal.next.can, hm(t.goal.next.left || t.goal.next.minutes), lessonHref(t.goal.next.id)]
       : ['Skill map', t.goal ? t.goal.title : 'pick a track to follow', '', '#/map'],
+    ['Play', 'find a fault, make a machine work, a puzzle', '2 min', '#/play'],
   ];
   const r = t.rhythm;
   body.append(el('div', { class: 'lhome' },

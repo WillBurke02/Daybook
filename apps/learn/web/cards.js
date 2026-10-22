@@ -536,7 +536,7 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
   const result = el('div', { class: 'result', hidden: true });
   const asks = c.type !== 'concept' && !(c.type === 'steps' && c.worked);
   let confidence = null;
-  const sure = asks && MARKED.has(c.type) && mode !== 'practice' && state.meta?.settings?.confidence_taps !== '0'
+  const sure = asks && MARKED.has(c.type) && mode !== 'practice' && mode !== 'play' && state.meta?.settings?.confidence_taps !== '0'
     ? el('div', { class: 'sure', role: 'group', 'aria-label': 'How sure are you?' }, el('span', { class: 'muted small' }, 'How sure?'),
         SURE.map(([v, label]) => el('button', { type: 'button', class: 'chip', 'aria-pressed': 'false', onclick: e => {
           confidence = confidence === v ? null : v;
@@ -553,7 +553,7 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
         onclick: () => formulaHelp(mathsOf(c, values), item.id.split('/')[0]) }, 'Formula help') : null,
       el('button', { class: 'link small', type: 'button', title: 'A whiteboard beside the card (W)', onclick: () => toggle('board') }, 'Whiteboard'),
       el('button', { class: 'link small', type: 'button', title: 'A calculator beside the card (C)', onclick: () => toggle('calc') }, 'Calculator'),
-      el('button', { class: 'link small report', type: 'button', title: 'Report a problem with this card', onclick: () => report(item.id) }, 'Report')),
+      item.id.startsWith('play/') ? null : el('button', { class: 'link small report', type: 'button', title: 'Report a problem with this card', onclick: () => report(item.id) }, 'Report')),
     face, hint, sure, result);
   let finished = false;
   const done = async out => {
@@ -568,6 +568,7 @@ export function frame(item, { mode = 'feed', onDone } = {}) {
         !out.correct && out.answer ? el('div', {}, 'The answer: ', rich(out.answer)) : null,
         out.work ? rich(out.work) : null, out.why ? rich(out.why, values) : null, when);
     }
+    if (mode === 'play') return onDone?.(out);                     // play is for fun: not recorded
     try {
       const rec = await api.answer({ card_id: item.id, mode, correct: asks ? out.correct : null, rating: out.selfRated ? out.rating : null,
                                      confidence, ms: Math.min(Date.now() - started, 600000),

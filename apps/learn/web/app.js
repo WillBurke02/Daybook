@@ -9,6 +9,7 @@ import * as levels from './views/levels.js';
 import * as notes from './views/notes.js';
 import * as map from './views/map.js';
 import * as record from './views/record.js';
+import * as play from './views/play.js';
 import search from './search.js';
 import { formulasPanel } from './formulas.js';
 import { toggle } from './tools.js';
@@ -16,11 +17,11 @@ import { toggle } from './tools.js';
 export default {
   name: 'learn', title: 'Learn', home: 'today', period: false,
   about: 'courses, and a feed of short cards to use instead of scrolling.',
-  pages: { today: today.page, feed: feed.page, map: map.page, record: record.page, courses: courses.page, lesson: courses.lessonPage, review: review.page,
+  pages: { today: today.page, feed: feed.page, map: map.page, record: record.page, courses: courses.page, lesson: courses.lessonPage, review: review.page, play: play.page,
            practice: review.practicePage, stats: stats.page, mine: mine.page, calibrate: levels.calibratePage,
            checkpoint: levels.checkpointPage, notes: notes.page,
            formulas: { title: 'Formulas', quick: false, narrow: true, layout: [{ use: 'learn.formulas' }], panels: { 'learn.formulas': formulasPanel } } },
-  groups: [[null, ['today', 'feed', 'map', 'courses', 'review']], ['More', ['practice', 'notes', 'formulas', 'stats', 'record', 'calibrate']]],
+  groups: [[null, ['today', 'feed', 'play', 'map', 'courses', 'review']], ['More', ['practice', 'notes', 'formulas', 'stats', 'record', 'calibrate']]],
   setup: ['mine'],
   quick: [{ label: 'Start the feed', href: '#/feed' }],
   sqlHint: 'SELECT subject, COUNT(*) FROM v_card GROUP BY subject',

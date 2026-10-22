@@ -339,6 +339,15 @@ assert len({c["lesson_id"] for c in mx}) == len(mx), "one a lesson"
 assert R("GET", "lesson", q={"id": ["physics.ut.pulse-echo"]})["mixed"] == [], "it has a mix stage of its own"
 print("ok — interleaving: mixed in from earlier lessons")
 
+# === play: sims and puzzles, of the kind asked for, nothing recorded ===
+pf = R("GET", "play", q={"kind": ["fault"], "n": ["20"]})
+assert pf and all(c["card"]["ask"]["type"] == "diagnose" for c in pf), pf
+assert any(c["id"].startswith("play/") for c in pf) and any(not c["id"].startswith("play/") for c in pf), "lesson cards and whole machines"
+assert all(c["type"] in ("spot", "order", "code", "match") for c in R("GET", "play", q={"kind": ["puzzle"]}))
+assert all(c["card"]["ask"]["type"] == "goal" for c in R("GET", "play", q={"kind": ["goal"]}))
+assert not {c["id"] for c in R("GET", "play", q={"kind": ["fault"], "exclude": [",".join(c["id"] for c in pf)]})} & {c["id"] for c in pf}
+print("ok — play")
+
 # === reports and the rework list ===
 R("POST", "report", {"card_id": card, "note": "the answer looks wrong"})
 rw = R("GET", "rework")

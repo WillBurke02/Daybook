@@ -1,5 +1,14 @@
 # Changes
 
+## 4.0.40 — 22 October 2026
+
+- **Play**: a new page in Learn (and a tile on Today) for a minute or two of something hands-on instead of
+  scrolling. Find the fault: a machine with something wrong (or nothing), picked afresh each time, from the
+  lessons' fault-finding cards and from every simulated machine whole, with all of its faults to choose from.
+  Make it work: set a machine up to do a job. Puzzle: spot the mistake, put it in order, match the pairs,
+  fill in the code. Lessons you have started come first. It is for fun: nothing is marked and your reviews
+  do not change. Your run, best run and score are kept in the browser.
+
 ## 4.0.39 — 22 October 2026
 
 - **Questions inside the Physics book lessons**: EMF and internal resistance, the oscilloscope, accuracy and

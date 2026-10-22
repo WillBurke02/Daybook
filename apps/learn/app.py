@@ -521,6 +521,44 @@ def practice(db, lessons, n=10, rng=random):
     return [_card(r, "practice") for r in rows[:n]]
 
 
+# Play: sims and puzzles to pick up for a minute, for fun. Nothing here is recorded or scheduled.
+PLAY = {"fault": lambda c, d: c == "widget" and (d.get("ask") or {}).get("type") == "diagnose",
+        "goal": lambda c, d: c == "widget" and (d.get("ask") or {}).get("type") == "goal",
+        "puzzle": lambda c, d: c in ("spot", "order", "code", "match")}
+
+
+def play(db, kind, n=5, exclude=(), rng=random):
+    """n cards of a kind, from lessons you have started first (it is play, not a test of what you have not met)."""
+    test = PLAY.get(kind)
+    if not test:
+        raise Err(400, f"no game called {kind}")
+    started = {r[0] for r in db.execute("SELECT DISTINCT c.lesson_id FROM card c JOIN card_state s ON s.card_id = c.id WHERE s.reps > 0")}
+    rows = [r for r in db.execute(CARD_SQL + "WHERE c.type IN ('widget', 'spot', 'order', 'code', 'match')")
+            if r["id"] not in exclude and test(r["type"], json.loads(r["data"]))]
+    rows.sort(key=lambda r: (r["lesson_id"] not in started, rng.random()))
+    cards = [_card(r, "play") for r in rows]
+    if kind == "fault":       # and each machine whole, with any of its faults in it: harder, as there are more to choose from
+        extra = [c for c in scene_faults() if c["id"] not in exclude]
+        cards = [c for pair in zip(cards, extra) for c in pair] + cards[len(extra):] + extra[len(cards):]
+    return cards[:n]
+
+
+def scene_faults(folder=os.path.join(HERE, "web", "sims")):
+    out = []
+    for f in sorted(os.listdir(folder)):
+        sc = json.load(open(os.path.join(folder, f), encoding="utf-8"))
+        if sc.get("faults"):
+            out.append({"id": f"play/{f[:-5]}", "type": "widget", "lesson_id": None, "lesson": sc["title"], "subject": "Any fault",
+                        "why": "play", "state": None, "card": {
+                            "type": "widget", "intro": sc.get("about", "") + " It may have any one of its faults, or none.",
+                            "widget": {"name": "sim", "params": {"scene": f[:-5], "trend": False}},
+                            "ask": {"type": "diagnose", "q": "What is wrong with it?", "faults": [*sc["faults"], "none"],
+                                    "why": "See the symptom for yourself, then split the system in half: does the control ask for it, "
+                                           "does the power side follow, does the machine follow the power?"}}})
+    random.shuffle(out)
+    return out
+
+
 def _recall(r, now=None):
     """The chance you remember a card now (0 for one never learned)."""
     if r["stability"] is None or not r["last_review"]:
@@ -1098,6 +1136,8 @@ def route(db, method, p, query, body, ctx):
         return 200, [dict(r) for r in rows]
     if p == ["practice"] and method == "GET":
         return 200, practice(db, ids("lessons"), min(int(g("n", 10)), 50))
+    if p == ["play"] and method == "GET":
+        return 200, play(db, g("kind", "fault"), min(int(g("n", 5)), 20), set(ids("exclude")))
     if p == ["answer"] and method == "POST":
         return 200, answer(db, body)
     if p == ["save"] and method == "POST":                       # swipe right: keep it for later
