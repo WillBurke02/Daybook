@@ -79,6 +79,9 @@ function mathOK(where, card, values) {
   // {d} is filled in everywhere, TeX too: \frac{d}{v} with a var d loses its braces. {{d}} puts the value in.
   for (const t of texts(card)) for (const part of split(t)) for (const m of (part.math || '').matchAll(/(\\[a-zA-Z]+|\}|\^|_)\{(\w+)\}/g))
     if (m[2] in values) bad(where, `{${m[2]}} in maths is replaced by its value, braces and all: write {{${m[2]}}} for the value, or { ${m[2]} } for the letter`);
+  // only a name is filled in: {{5.92 * t}} would show as written. Work it out in a let.
+  if (Object.keys(values).length) for (const t of texts(card)) for (const m of t.matchAll(/\{\{([^{}]*[^\w.:{}\s][^{}]*)\}\}/g))
+    bad(where, `{{${m[1]}}} is not filled in (only a name is): work it out in a let and write {{name}}`);
   for (const t of texts(card)) for (const part of split(tpl.fill(t, values))) {
     if (part.math == null) continue;
     if (/merror/.test(tex(part.math, part.display))) bad(where, `this maths does not parse: ${part.math}`);

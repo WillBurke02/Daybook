@@ -352,6 +352,9 @@ def place(cards, added):
         at = next((i + 1 for i, x in enumerate(out) if x["id"] == c.get("after")), None)
         if at is None:
             at = end
+        else:                                           # after those already put there, so several keep their order
+            while at < len(out) and out[at].get("added") and out[at].get("after") == c.get("after"):
+                at += 1
         end += at <= end
         out.insert(at, c)
     return out

@@ -39,6 +39,23 @@
    "id": "liii1-1"
   },
   {
+   "id": "q-contactor-what",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "What is a contactor?",
+   "options": [
+    "A relay with contacts big enough for a motor's current",
+    "A fuse that resets itself",
+    "A switch that only opens on a fault",
+    "A transformer for the control circuit"
+   ],
+   "answer": 0,
+   "why": "A contactor is a heavy-duty relay: a coil (A1–A2) pulls in an armature that closes three main contacts, rated to make and break a motor's starting current many times over. It switches; it does not protect. Protection is the overload and the fuses or breaker.",
+   "added": true,
+   "after": "liii1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.4.2 Motor contactors",
@@ -55,12 +72,44 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-low-control",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The motor runs on 400 V, but its contactor coil and control circuit run on 24 V DC or 110 V AC. Why?",
+   "options": [
+    "Safety: buttons and wiring people touch carry a low voltage",
+    "A lower voltage makes the motor start faster",
+    "The coil would burn out on 400 V whatever its rating",
+    "So the overload can sense the current"
+   ],
+   "answer": 0,
+   "why": "Pushbuttons, PLC outputs and control wiring are what people touch and work on, so they are kept at a lower, safer voltage. The small control current then switches the large motor current through the contactor. Coils are made for many voltages; that is not the reason.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.4.2 Motor contactors",
    "html": "<p>Both contacts inside the overload assembly will remain in their resting (“normal”) states so long as the heater elements (the back-to-back “hook” symbols seen in the above diagram) remain cool. If one or more of the resistive heaters becomes too warm, however, the contacts will actuate and change state. The normally-closed overload contact (terminals 95 and 96) is typically wired in series with the contactor coil (terminals A1 and A2), so that a detected overload condition forces the contactor to de-energize and interrupt power to the motor.</p><p>The following photograph shows a three-phase contactor relay joined together with a set of three “overload heaters” through which all of the motor’s current flows. The overload heaters appear as three brass-colored metal strips near a red push-bar labeled “Reset”. The entire assembly – contactor plus overload heaters – is referred to as a starter:</p><figure><img src=\"media/liii/e5ffa72ccc3d.jpg\" alt=\"A figure from page 760 of the original\"></figure><p>Removing one of the heater elements reveals its mechanical nature: a small toothed wheel on one side engages with a lever when it is bolted into place in the overload assembly. That lever connects to a spring-loaded mechanism charged by the manual actuation of the red “Reset” push-bar, which in turn actuates a small set of electrical switch contacts:</p><figure><img src=\"media/liii/200df5e3f175.jpg\" alt=\"A figure from page 761 of the original\"></figure><p>The purpose of the overload heater is to heat up as the motor draws excessive current. The small toothed wheel is held in place by a rod immersed in a solidified mass of solder, encased in a brass cylinder underneath the heater strip. The next photograph shows the underside of the heater element, with the toothed wheel and brass cylinder plainly visible:</p><figure><img src=\"media/liii/f716e292a57b.jpg\" alt=\"A figure from page 761 of the original\"></figure>",
    "body": "Both contacts inside the overload assembly will remain in their resting (“normal”) states so long as the heater elements (the back-to-back “hook” symbols seen in the above diagram) remain cool. If one or more of the resistive heaters becomes too warm, however, the contacts will actuate and change state. The normally-closed overload contact (terminals 95 and 96) is typically wired in series with the contactor coil (terminals A1 and A2), so that a detected overload condition forces the contactor to de-energize and interrupt power to the motor. The following photograph shows a three-phase contactor relay joined together with a set of three “overload heaters” through which all of the motor’s current flows. The overload heaters appear as three brass-colored metal strips near a red push-bar labeled “Reset”. The entire assembly – contactor plus overload heaters – is referred to as a starter: Removing one of the heater elements reveals its mechanical nature: a small toothed wheel on one side engages with a lever when it is bolted into place in the overload assembly. That lever connects to a spring-loaded mechanism charged by the manual actuation of the red “Reset” push-bar, which in turn actuates a small set of electrical switch contacts: The purpose of the overload heater is to heat up as the motor draws excessive current. The small toothed wheel is held in place by a rod immersed in a solidified mass of solder, encased in a brass cylinder underneath the heater strip. The next photograph shows the underside of the heater element, with the toothed wheel and brass cylinder plainly visible:",
    "id": "liii1-4"
+  },
+  {
+   "id": "q-ol-contact",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does the overload relay actually stop the motor?",
+   "options": [
+    "Its NC contact (95–96) opens the contactor's coil circuit",
+    "Its heaters burn out like a fuse",
+    "It shorts the motor to earth to trip the breaker",
+    "It opens the three motor lines itself"
+   ],
+   "answer": 0,
+   "why": "The heaters only warm up and move a mechanism. That opens a small normally closed contact, 95–96, wired in series with the contactor coil, so the contactor drops out and the main contacts open. The heaters are not meant to open like fuses.",
+   "added": true,
+   "after": "liii1-4"
   },
   {
    "type": "concept",
@@ -79,12 +128,45 @@
    "id": "liii1-6"
   },
   {
+   "id": "q-ol-vs-fuse",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The fuses protect the cable. What does the overload protect, and how?",
+   "options": [
+    "The motor, by heating and cooling like the motor does",
+    "The cable too, a second time",
+    "The contactor's coil, from high voltage",
+    "The supply, from the motor's harmonics"
+   ],
+   "answer": 0,
+   "why": "The overload is a thermal model of the motor: it heats as fast as the windings would, and cools as slowly, so it trips before they overheat and does not let you restart at once. That is also why a motor in a hot plant room with its overload in a cool MCC can be under-protected.",
+   "added": true,
+   "after": "liii1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.4.2 Motor contactors",
    "html": "<p><small>25This is not to say overload heaters cannot fail open, because they can and will under extraordinary circumstances. However, opening like a fuse is not the design function of an overload heater.</small></p><p>An interesting “trick” to keep in mind for motor control circuit diagnosis is that overload heaters are nothing more than low-value resistors. As such, they will drop small amounts of voltage (usually quite a bit less than 1 volt AC) under full load current. This voltage drop may be used as a simple, qualitative measure of motor phase current. By measuring the voltage dropped across each overload heater (with the motor running), one may ascertain whether or not all phases are carrying equal currents. Of course, overload heaters are not precise enough in their resistance to serve as true current-measuring “shunts,” but they are more than adequate as qualitative indicators of relative phase current, to aid you in determining (for instance) if the motor suffers from an open or highresistance phase winding:</p><figure><img src=\"media/liii/0ca035c2a3ee.png\" alt=\"A figure from page 763 of the original\"></figure>",
    "body": "25This is not to say overload heaters cannot fail open, because they can and will under extraordinary circumstances. However, opening like a fuse is not the design function of an overload heater. An interesting “trick” to keep in mind for motor control circuit diagnosis is that overload heaters are nothing more than low-value resistors. As such, they will drop small amounts of voltage (usually quite a bit less than 1 volt AC) under full load current. This voltage drop may be used as a simple, qualitative measure of motor phase current. By measuring the voltage dropped across each overload heater (with the motor running), one may ascertain whether or not all phases are carrying equal currents. Of course, overload heaters are not precise enough in their resistance to serve as true current-measuring “shunts,” but they are more than adequate as qualitative indicators of relative phase current, to aid you in determining (for instance) if the motor suffers from an open or highresistance phase winding:",
    "id": "liii1-7"
+  },
+  {
+   "id": "q-ol-volt-drop",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "With the motor running, you measure the small voltage across each overload heater. Two read about 0.4 V and one reads 0.05 V. What does that suggest?",
+   "options": [
+    "An open or high-resistance winding",
+    "That heater is about to trip",
+    "The motor is overloaded on that phase",
+    "Nothing: the heaters vary that much"
+   ],
+   "answer": 0,
+   "why": "Each heater is a small resistor, so its voltage drop goes with the current through it. Equal phases give equal drops; one much lower means that phase carries much less current, pointing at an open or high-resistance winding or connection. It is a comparison, not a measurement of amps.",
+   "added": true,
+   "after": "liii1-7"
   },
   {
    "type": "concept",
@@ -119,12 +201,63 @@
    "id": "liii1-11"
   },
   {
+   "id": "q-ct-ratio",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "A {pri}/5 A current transformer feeds a motor protection relay. Its secondary carries {is} A. What current flows in the motor line?",
+   "vars": {
+    "pri": {
+     "pick": [
+      50,
+      100,
+      150,
+      200,
+      300,
+      400,
+      600
+     ]
+    },
+    "is": [
+     0.5,
+     5,
+     0.1
+    ]
+   },
+   "answer": "is * pri / 5",
+   "unit": "A",
+   "work": "Ratio $= {pri} \\div 5 = {ratio}$; line current $= {is} \\times {ratio} = {answer:1}$ A",
+   "why": "A CT steps current down by its ratio: full primary current gives 5 A (or 1 A) on the secondary. Multiply the secondary current by the ratio to get the line current. Never open-circuit a CT's secondary with current flowing: it can make a dangerous voltage.",
+   "hint": "5 A on the secondary means the full primary rating. What fraction of 5 A is flowing?",
+   "added": true,
+   "after": "liii1-11",
+   "let": {
+    "ratio": "pri / 5"
+   }
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.4.2 Motor contactors",
    "html": "<p><small>28Potential transformers are also known as voltage transformers, abbreviated VT.</small> a ground fault develops within the motor where some AC current “leaks” from a stator winding to earth ground to return to the 4160 VAC power source’s neutral connection, that imbalance of phase currents will be sensed by the zero sequence CT, since that ground fault current represents a fourth path for current not accounted for by the three power conductors passing through to the motor. This next photograph shows the front panel display of a General Electric (“Multilin”) model 369 protective relay for an electric motor:</p><figure><img src=\"media/liii/1fa13dc46a27.jpg\" alt=\"A figure from page 766 of the original\"></figure>",
    "body": "28Potential transformers are also known as voltage transformers, abbreviated VT. a ground fault develops within the motor where some AC current “leaks” from a stator winding to earth ground to return to the 4160 VAC power source’s neutral connection, that imbalance of phase currents will be sensed by the zero sequence CT, since that ground fault current represents a fourth path for current not accounted for by the three power conductors passing through to the motor. This next photograph shows the front panel display of a General Electric (“Multilin”) model 369 protective relay for an electric motor:",
    "id": "liii1-12"
+  },
+  {
+   "id": "q-zero-seq-ct",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A zero-sequence CT surrounds all three motor conductors. What does it detect?",
+   "options": [
+    "A leak from a winding to earth",
+    "The current in each phase separately",
+    "The motor's speed",
+    "The line voltage"
+   ],
+   "answer": 0,
+   "why": "Three healthy phase currents add up to zero, so a CT round all three sees nothing. If current leaks from a winding to earth it has a fourth path, the sum is no longer zero, and the CT sees the difference: the same idea as an RCD, scaled up for a big motor.",
+   "added": true,
+   "after": "liii1-12"
   },
   {
    "type": "concept",
@@ -143,6 +276,24 @@
    "id": "liii1-14"
   },
   {
+   "id": "q-seal-spot",
+   "type": "spot",
+   "stage": "learn",
+   "q": "Someone wired a start/stop circuit. Which line is wrong?",
+   "lines": [
+    "Stop button: normally closed, in series with everything",
+    "Start button: normally open",
+    "Seal-in: a normally open M auxiliary, across the Stop button",
+    "Overload contact 95–96: normally closed, in series with the coil",
+    "Contactor coil M, between A1 and A2"
+   ],
+   "wrong": 2,
+   "fix": "Seal-in: a normally open M auxiliary, across the Start button",
+   "why": "The seal-in must bypass the Start button, so the coil stays fed when Start is released. Across Stop, it would bypass the Stop button instead: once running, pressing Stop would do nothing. Check any seal-in by asking: when this button is released, what still feeds the coil?",
+   "added": true,
+   "after": "liii1-14"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "10.4.4 Motor control circuit wiring",
@@ -157,6 +308,22 @@
    "html": "<p>Note how motor reversal is accomplished by swapping phases L1 and L3: in the forward direction, power line conductor L1 connects to motor terminal T1, L2 connects to T2, and L3 connects to T3. In the reverse direction L2 still connects to T2, but L1 now connects to T3 and L3 now connects to T1. Recall the principle that swapping any two phases in a three-phase power system reverses the phase rotation, which in this case make the electric motor spin the other direction. With two contactors, the control circuit now contains two coils to actuate those contactors: one marked “forward” and the other marked “reverse”. Separate “forward” and “reverse” pushbutton switches send power to those coils, and separate seal-in auxiliary contacts connected in parallel with their respective pushbuttons latch each one. An important feature of this reversing starter circuit is the inclusion of interlocking contacts in each rung of the circuit. In the forward-control circuit, a normally-closed auxiliary contact actuated by the “reverse” contactor is wired in series, and vice-versa in the reverse-control circuit. The purpose of an “interlock” is to prevent incompatible events from happening, in this case preventing the actuation of the “reverse” contactor when the “forward” contactor is already actuated, and vice-versa. If both contactors were to be simultaneously actuated, it would result in a direct phaseto-phase fault (short-circuit) between L1 and L3! Some reversing motor starters provide a feature called mechanical interlocking, where the motion of the armature in each contactor is restrained in such a way that both cannot actuate simultaneously. This usually takes the form of a “rocking beam” lever preventing one contactor armature from being pulled in while the other contactor’s armature is pulled in, similar to a “see-saw” playground toy where only one end can be down at any given time. It is not uncommon for both electrical and mechanical interlocking to be used in the same reversing starter, as a measure of extra protection.</p>",
    "body": "Note how motor reversal is accomplished by swapping phases L1 and L3: in the forward direction, power line conductor L1 connects to motor terminal T1, L2 connects to T2, and L3 connects to T3. In the reverse direction L2 still connects to T2, but L1 now connects to T3 and L3 now connects to T1. Recall the principle that swapping any two phases in a three-phase power system reverses the phase rotation, which in this case make the electric motor spin the other direction. With two contactors, the control circuit now contains two coils to actuate those contactors: one marked “forward” and the other marked “reverse”. Separate “forward” and “reverse” pushbutton switches send power to those coils, and separate seal-in auxiliary contacts connected in parallel with their respective pushbuttons latch each one. An important feature of this reversing starter circuit is the inclusion of interlocking contacts in each rung of the circuit. In the forward-control circuit, a normally-closed auxiliary contact actuated by the “reverse” contactor is wired in series, and vice-versa in the reverse-control circuit. The purpose of an “interlock” is to prevent incompatible events from happening, in this case preventing the actuation of the “reverse” contactor when the “forward” contactor is already actuated, and vice-versa. If both contactors were to be simultaneously actuated, it would result in a direct phaseto-phase fault (short-circuit) between L1 and L3! Some reversing motor starters provide a feature called mechanical interlocking, where the motion of the armature in each contactor is restrained in such a way that both cannot actuate simultaneously. This usually takes the form of a “rocking beam” lever preventing one contactor armature from being pulled in while the other contactor’s armature is pulled in, similar to a “see-saw” playground toy where only one end can be down at any given time. It is not uncommon for both electrical and mechanical interlocking to be used in the same reversing starter, as a measure of extra protection.",
    "id": "liii1-16"
+  },
+  {
+   "id": "q-reverse-interlock",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a reversing starter, why is an NC auxiliary of the *reverse* contactor wired in the *forward* coil's circuit, and the other way round?",
+   "options": [
+    "So both can never pull in at once and short two phases",
+    "So the motor stops before it reverses",
+    "To make the motor reverse faster",
+    "So the overload trips in both directions"
+   ],
+   "answer": 0,
+   "why": "Forward and reverse connect L1 and L3 opposite ways round. If both contactors closed together, L1 and L3 would be shorted through them. Each contactor's NC auxiliary blocks the other's coil: an interlock. Many starters add a mechanical interlock too.",
+   "added": true,
+   "after": "liii1-16"
   },
   {
    "type": "concept",

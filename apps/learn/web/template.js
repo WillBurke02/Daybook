@@ -96,7 +96,7 @@ export function slip(given, want, card = {}) {
   }
   for (const [f, say] of SLIPS) if (near(f)) return say;
   if (Math.abs(want) > 1e-9 && Math.abs(Math.log10(Math.abs(want))) > 0.2 && near(1 / want / want)) return 'That is the answer upside down: the fraction is flipped.';
-  if (Math.abs(given - want) <= Math.abs(want) * 0.1) return 'Close, but outside what is allowed. Round only at the end, and keep every figure until then.';
+  if (Math.abs(given - want) <= Math.abs(want) * 0.1) return 'Close, but outside what is allowed. Check the arithmetic, and round only at the end.';
   return null;
 }
 

@@ -378,6 +378,9 @@ from apps.learn.openstax import place      # noqa: E402
 book = [{"id": i, "stage": st} for i, st in [("a", "learn"), ("b", "check"), ("c", "learn"), ("d", "check"), ("e", "check")]]
 got = [c["id"] for c in place(book, [{"id": "x"}, {"id": "y", "after": "a"}, {"id": "z"}])]
 assert got == ["a", "y", "b", "c", "x", "z", "d", "e"], got
+added = [{"id": k, "added": True, "after": "c"} for k in ("p", "q", "r")] + [{"id": "s", "added": True, "after": "q"}]
+got = [c["id"] for c in place(book, added)]
+assert got == ["a", "b", "c", "p", "q", "s", "r", "d", "e"], got        # several after one card keep their order
 print("ok — imported lessons keep their added cards in place")
 
 # === other sources: a page's words kept, its furniture dropped, cut into cards ======

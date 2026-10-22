@@ -564,7 +564,7 @@ def doitpoms(base, page):
             for v, _ in opts:
                 said = _answer(base, f"question={qn}&response={v}" + ("&button=answer" if kind == "2" else ""))
                 if re.match(r"\s*Correct", said):
-                    right, why = v, re.sub(r"^\s*Correct\.?\s*", "", said)
+                    right, why = v, re.sub(r"^\s*Correct[.!]?\s*", "", said)
             if right is None:
                 continue
             labels = [re.sub(rf"^{re.escape(v)}\s+", "", t) for v, t in opts]
@@ -574,9 +574,11 @@ def doitpoms(base, page):
             ans = _answer(base, f"question={qn}&button=answer")
             worked = _answer(base, f"question={qn}&button=worked")
             back = (ans + ("\n\n" + worked if worked and worked != ans else "")).strip()
+            # as HTML, so a worked answer's equations (pictures on DoITPoMS) come too
+            ah, wh = _answer(base, f"question={qn}&button=answer", page), _answer(base, f"question={qn}&button=worked", page)
             if back:
                 cards.append({"type": "flash", "stage": "check", "front": text(stem), "back": back,
-                              "front_html": stem, "back_html": "".join(f"<p>{escape(x)}</p>" for x in back.split("\n\n"))})
+                              "front_html": stem, "back_html": ah + (wh if worked and worked != ans else "")})
     aims = tree(fetch(base + "aims.php")).find("div.col-lg-9")
     goals = [re.sub(r"\s+", " ", li.words()).strip() for li in _all(aims, "li")] if aims else []
     return cards, goals
@@ -596,8 +598,14 @@ def _hidden(form, name):
     return next((i.attrs.get("value") for i in _all(form, "input") if i.attrs.get("name") == name), None)
 
 
-def _answer(base, qs):
-    body = tree(fetch(base + "answer.php?" + qs)).find("body")
+def _answer(base, qs, page=None):
+    """An answer page's words (or, given the page, its HTML, pictures and all), without its heading and close link."""
+    # the page's analytics script is not part of the answer (it came through as the "why" once)
+    body = tree(re.sub(r"(?is)<(script|style)\b.*?</\1>", "", fetch(base + "answer.php?" + qs))).find("body")
+    if page:
+        h = "".join(page.html(k) for k in (body.kids if body else []))
+        h = re.sub(r"^\s*<h4>[^<]*answer to question \d+\s*</h4>", "", h, flags=re.I)
+        return re.sub(r"\s*(<p>\s*)?Close this window\s*(</p>)?\s*$", "", h).strip()
     words = re.sub(r"\s+", " ", body.words() if body else "").strip()
     words = re.sub(r"^Answer to question \d+\s*", "", words)
     return re.sub(r"\s*Close this window\s*$", "", words)
@@ -755,7 +763,9 @@ def run(plan, files, log=print, only=None):
         lesson = {**{k: v for k, v in old.items() if k in ("title", "level", "prereq", "tags", "summary", "goals")},
                   "id": lesson_id, "imported": {"from": "pages", "sections": names},
                   "minutes": max(10, round(words / 130 + sum(c["type"] in ("flash", "mcq") for c in all_cards))),
-                  "sources": credits, "resources": resources, "cards": all_cards}
+                  # the links' reading stays until the links are fetched again below (a failed run leaves them be)
+                  "sources": credits, "resources": resources + [r for r in old.get("resources") or [] if r.get("linked")],
+                  "cards": all_cards}
         if goals:
             lesson["goals"] = goals
         os.makedirs(os.path.dirname(path), exist_ok=True)

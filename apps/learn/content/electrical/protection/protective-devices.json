@@ -75,6 +75,22 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-arc-chute",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does the arc chute in an MCB do?",
+   "options": [
+    "Splits the arc between plates to cool and stop it",
+    "Stores energy to snap the contacts open",
+    "Measures the current to decide when to trip",
+    "Lets the arc burn safely until the fuse blows"
+   ],
+   "answer": 0,
+   "why": "The chute is a stack of insulated metal plates. The arc is driven into it and divided into many small arcs, which cools it and raises the total arc voltage until it can no longer be kept going. A spring opens the contacts; the bimetal and solenoid do the sensing.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Operation",
@@ -91,12 +107,45 @@
    "id": "wikipedia1-5"
   },
   {
+   "id": "q-breaking-capacity",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A board's prospective short-circuit current is 16 kA. The MCBs fitted are rated to break 10 kA. What is the risk?",
+   "options": [
+    "It may not break a fault safely",
+    "None: the rated current is what matters",
+    "The MCBs trip too often on start-up",
+    "The cable overheats in normal use"
+   ],
+   "answer": 0,
+   "why": "A breaker must be able to interrupt the largest fault current it could ever see. Above its breaking capacity the arc may not be stopped, and the text warns a breaker can even explode when reset. Check the prospective fault current at the board (a PFC test) against the breaking capacity printed on the device.",
+   "added": true,
+   "after": "wikipedia1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Standard current ratings",
    "html": "<p>Circuit breakers are manufactured with standard ratings, using a system of <a href=\"https://en.wikipedia.org/wiki/Preferred_number\">preferred numbers</a> to create a useful selection of ratings. A miniature circuit breaker has a fixed trip setting; changing the operating current value requires replacing the whole circuit breaker. Circuit breakers with higher ratings can have adjustable trip settings, allowing fewer standardized products to be used, adjusted to the applicable precise ratings when installed. For example, a circuit breaker with a 400 ampere <em>frame size</em> might have its over-current detection threshold set only 300 amperes where that rating is appropriate.</p><p>For low-voltage distribution circuit breakers an international standard, IEC 60898-1, defines <em>rated current</em> as the maximum current that a breaker is designed to carry continuously. The commonly available preferred values for rated current are 1 A, 2 A, 4 A, 6 A, 10 A, 13 A, 16 A, 20 A, 25 A, 32 A, 40 A, 50 A, 63 A, 80 A, 100 A, and 125 A. The circuit breaker is labeled with the rated current in <a href=\"https://en.wikipedia.org/wiki/Ampere\">amperes</a> prefixed by a letter, which indicates the <em>instantaneous tripping current</em> that causes the circuit breaker to trip without intentional time delay expressed in multiples of the rated current:</p><table> <tbody><tr> <th>Type</th> <th>Instantaneous tripping current</th></tr> <tr> <td>B</td> <td>3–5 times rated current <em>I<sub>n</sub></em>, e.g. a nominally 10 A device will trip at 30–50 A</td></tr> <tr> <td>C</td> <td>5–10 times <em>I<sub>n</sub></em></td></tr> <tr> <td>D</td> <td>10–20 times <em>I<sub>n</sub></em></td></tr> <tr> <td>K</td> <td>8–15 times <em>I<sub>n</sub></em> <p>For the protection of loads that cause frequent short-duration (approximately 400 ms to 2 s) current peaks in normal operation</p></td></tr> <tr> <td>Z</td> <td>2–3 times <em>I<sub>n</sub></em> for durations on the order of tens of seconds. <p>For the protection of loads such as semiconductor devices or measuring circuits using current transformers.</p></td></tr> </tbody></table>",
    "body": "Circuit breakers are manufactured with standard ratings, using a system of preferred numbers to create a useful selection of ratings. A miniature circuit breaker has a fixed trip setting; changing the operating current value requires replacing the whole circuit breaker. Circuit breakers with higher ratings can have adjustable trip settings, allowing fewer standardized products to be used, adjusted to the applicable precise ratings when installed. For example, a circuit breaker with a 400 ampere frame size might have its over-current detection threshold set only 300 amperes where that rating is appropriate. For low-voltage distribution circuit breakers an international standard, IEC 60898-1, defines rated current as the maximum current that a breaker is designed to carry continuously. The commonly available preferred values for rated current are 1 A, 2 A, 4 A, 6 A, 10 A, 13 A, 16 A, 20 A, 25 A, 32 A, 40 A, 50 A, 63 A, 80 A, 100 A, and 125 A. The circuit breaker is labeled with the rated current in amperes prefixed by a letter, which indicates the instantaneous tripping current that causes the circuit breaker to trip without intentional time delay expressed in multiples of the rated current: Type Instantaneous tripping current B 3–5 times rated current I n , e.g. a nominally 10 A device will trip at 30–50 A C 5–10 times I n D 10–20 times I n K 8–15 times I n For the protection of loads that cause frequent short-duration (approximately 400 ms to 2 s) current peaks in normal operation Z 2–3 times I n for durations on the order of tens of seconds. For the protection of loads such as semiconductor devices or measuring circuits using current transformers.",
    "id": "wikipedia1-6"
+  },
+  {
+   "id": "q-not-a-rating",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "Which of these is **not** one of the preferred MCB ratings?",
+   "options": [
+    "30 A",
+    "32 A",
+    "16 A",
+    "40 A"
+   ],
+   "answer": 0,
+   "why": "The preferred values run 6, 10, 13, 16, 20, 25, 32, 40, 50, 63 A and so on. 30 A was an old rewirable fuse size, so it turns up in old installations and in people's memories, but an MCB is 32 A.",
+   "added": true,
+   "after": "wikipedia1-6"
   },
   {
    "type": "concept",
@@ -139,6 +188,33 @@
    "id": "wikipedia1-11"
   },
   {
+   "id": "q-thermal-magnetic",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each part of a thermal–magnetic MCB to the fault it deals with.",
+   "pairs": [
+    [
+     "Bimetallic strip",
+     "Small overloads that last: trips sooner the bigger they are"
+    ],
+    [
+     "Solenoid",
+     "Short circuits: trips at once, no delay"
+    ],
+    [
+     "Calibration screw",
+     "Set by the maker to fix the trip current"
+    ],
+    [
+     "Free-trip lever",
+     "Trips even if the lever is held on"
+    ]
+   ],
+   "why": "The bimetal heats and bends slowly, so a motor's brief starting current does not trip it but a long overload does. The solenoid pulls only on a large current, and then instantly. Free (positive) trip means you cannot hold a breaker on into a fault.",
+   "added": true,
+   "after": "wikipedia1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Magnetic–hydraulic",
@@ -155,12 +231,44 @@
    "id": "wikipedia1-13"
   },
   {
+   "id": "q-no-neutral-breaker",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why must a circuit never have a separate breaker in its neutral?",
+   "options": [
+    "It could open alone, leaving the load dead but still live",
+    "The neutral carries no current, so it would never trip",
+    "Two breakers in a circuit always trip together",
+    "The neutral breaker would double the fault current"
+   ],
+   "answer": 0,
+   "why": "If only the neutral opens, the equipment stops working and looks off, but every part of it is still connected to the live conductor. Anyone working on it could be shocked. Where the neutral must be switched, use a double-pole (or four-pole) device that opens line and neutral together.",
+   "added": true,
+   "after": "wikipedia1-13"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Shunt-trip units",
    "html": "<p>A shunt-trip unit appears similar to a normal breaker and the moving actuators are <em>ganged</em> to a normal breaker mechanism to operate together in a similar way, but the shunt trip is a solenoid intended to be operated by an external constant-voltage signal, rather than a current, commonly the local mains voltage or DC. These are often used to cut the power when a high-risk event occurs, such as a fire or flood alarm, or another electrical condition, such as over-voltage detection. Shunt trips may be a user-fitted accessory to a standard breaker or supplied as an integral part of a circuit breaker.</p>",
    "body": "A shunt-trip unit appears similar to a normal breaker and the moving actuators are ganged to a normal breaker mechanism to operate together in a similar way, but the shunt trip is a solenoid intended to be operated by an external constant-voltage signal, rather than a current, commonly the local mains voltage or DC. These are often used to cut the power when a high-risk event occurs, such as a fire or flood alarm, or another electrical condition, such as over-voltage detection. Shunt trips may be a user-fitted accessory to a standard breaker or supplied as an integral part of a circuit breaker.",
    "id": "wikipedia1-14"
+  },
+  {
+   "id": "q-shunt-trip",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What makes a shunt-trip unit open a breaker?",
+   "options": [
+    "An outside voltage signal, such as a fire alarm",
+    "The circuit's own overload current",
+    "A leak of current to earth",
+    "The breaker getting too hot"
+   ],
+   "answer": 0,
+   "why": "A shunt trip is a solenoid worked by a separate constant voltage (mains or DC) from elsewhere: a fire alarm, a flood sensor, an emergency stop on a big supply. It lets a signal cut the power, rather than the current in the circuit.",
+   "added": true,
+   "after": "wikipedia1-14"
   },
   {
    "type": "concept",
@@ -179,6 +287,52 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-rcd-principle",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How does an RCD know there is a fault?",
+   "options": [
+    "Line and neutral currents no longer balance",
+    "The current in the earth wire is too high",
+    "The supply voltage dips",
+    "The load current goes above its rating"
+   ],
+   "answer": 0,
+   "why": "A current transformer around line and neutral adds them up. Normally what goes out comes back, so they cancel; if some leaks away (through a person, or to earth) they do not, and it trips. It does not need the leak to come back by the earth wire, so it still works if the earth is damaged.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
+   "id": "q-residual-ma",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "A clamp meter reads {il} A on the line and {ir:3} A on the neutral of a single-phase circuit. What residual (leakage) current is that, in mA?",
+   "vars": {
+    "il": [
+     3,
+     20,
+     0.5
+    ],
+    "leak": [
+     4,
+     60,
+     1
+    ]
+   },
+   "let": {
+    "ir": "il - leak / 1000"
+   },
+   "answer": "(il - ir) * 1000",
+   "unit": "mA",
+   "abs": 0.5,
+   "work": "$({il} - {ir:3}) \\times 1000 = {answer:0}$ mA",
+   "why": "The residual current is the difference between what goes out and what comes back. An RCD is only certain to trip at its rating, 30 mA, and may trip from about half of that, so above 30 mA it trips; below 15 mA it should hold. Clamping line and neutral together reads the difference directly.",
+   "hint": "Subtract, then turn amps into milliamps (× 1000).",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Application",
@@ -193,6 +347,22 @@
    "html": "<p>In Europe, RCDs can fit on the same <a href=\"https://en.wikipedia.org/wiki/DIN_rail\">DIN rail</a> as the <a href=\"https://en.wikipedia.org/wiki/Miniature_circuit_breaker\">miniature circuit breakers</a>; much like in miniature circuit breakers, the busbar arrangements in <a href=\"https://en.wikipedia.org/wiki/Consumer_unit\">consumer units</a> and <a href=\"https://en.wikipedia.org/wiki/Distribution_board\">distribution boards</a> provides protection for anything downstream.</p><h4>RCBO</h4><p>A pure RCD will detect imbalance in the currents of the supply and return conductors of a circuit. But it cannot protect against overload or <a href=\"https://en.wikipedia.org/wiki/Short_circuit\">short circuit</a> like a fuse or a miniature circuit breaker (MCB) does (except for the special case of a short circuit from line to ground, not line to neutral).</p><p>However, an RCD and an MCB often come integrated in the same device, thus being able to detect both supply imbalance and overload current. Such a device is called an <em>RCBO</em>, for <em>residual-current circuit breaker with overcurrent protection</em>, in Europe and Australia, and a <em>GFCI breaker</em>, for <em>ground fault circuit interrupter</em>, in the United States and Canada.</p>",
    "body": "In Europe, RCDs can fit on the same DIN rail as the miniature circuit breakers ; much like in miniature circuit breakers, the busbar arrangements in consumer units and distribution boards provides protection for anything downstream. RCBO A pure RCD will detect imbalance in the currents of the supply and return conductors of a circuit. But it cannot protect against overload or short circuit like a fuse or a miniature circuit breaker (MCB) does (except for the special case of a short circuit from line to ground, not line to neutral). However, an RCD and an MCB often come integrated in the same device, thus being able to detect both supply imbalance and overload current. Such a device is called an RCBO , for residual-current circuit breaker with overcurrent protection , in Europe and Australia, and a GFCI breaker , for ground fault circuit interrupter , in the United States and Canada.",
    "id": "wikipedia2-4"
+  },
+  {
+   "id": "q-rcbo",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does a plain RCD **not** protect against?",
+   "options": [
+    "An overload, or a short from line to neutral",
+    "A leak from line to earth",
+    "Touching a live part while standing on the ground",
+    "A fault on a circuit whose earth wire is broken"
+   ],
+   "answer": 0,
+   "why": "An overload or a line–neutral short draws a big current, but out and back are still equal, so an RCD sees nothing. That is what the MCB or fuse is for; an RCBO is both in one device. The other three are all leaks to earth, which is exactly what an RCD detects.",
+   "added": true,
+   "after": "wikipedia2-4"
   },
   {
    "type": "concept",
@@ -267,12 +437,52 @@
    "id": "wikipedia2-13"
   },
   {
+   "id": "q-sensitivity-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each RCD sensitivity group to what it is for.",
+   "pairs": [
+    [
+     "30 mA (high)",
+     "Protecting people from shock"
+    ],
+    [
+     "300 mA (medium)",
+     "Protecting against fire"
+    ],
+    [
+     "3 A (low)",
+     "Protecting machines"
+    ]
+   ],
+   "why": "IEC's groups: 5, 10 and 30 mA for life; 100 to 1000 mA for fire; 3, 10 and 30 A for machines. Only the high-sensitivity group protects a person, and in the UK shock protection means 30 mA or less, immediate (not time-delayed).",
+   "added": true,
+   "after": "wikipedia2-13"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Sensitivity",
    "html": "<p><em>Programmable</em> devices may be available for industrial use that can be adjusted to a range of sensitivity values and possibly response times.</p><h4>Type (types of leakage current detected)</h4><p>IEC Standard 60755 (<em>General requirements for residual current operated protective devices</em>) defines the following types of RCD depending on the waveforms and frequency of the fault current:</p><dl><dt>Type AC <a href=\"https://en.wikipedia.org/wiki/File:Typ_AC-Symbol.png\"><img src=\"media/wikipedia/cc7be9f0-40px-Typ_AC-Symbol.png\" alt=\"RCD type AC symbol\"></a></dt><dd>These trip on alternating sinusoidal residual current, suddenly applied or smoothly increasing.</dd> <dt>Type A <a href=\"https://en.wikipedia.org/wiki/File:Typ_A-Symbol.png\"><img src=\"media/wikipedia/e1d74729-40px-Typ_A-Symbol.png\" alt=\"RCD type A symbol\"></a></dt><dd>These trip on both alternating sinusoidal residual current and residual pulsating direct current, suddenly applied or smoothly increasing.</dd> <dt>Type F <a href=\"https://en.wikipedia.org/wiki/File:Typ_A-Symbol.png\"><img src=\"media/wikipedia/e1d74729-40px-Typ_A-Symbol.png\" alt=\"RCD type F symbol part 1\"></a> <a href=\"https://en.wikipedia.org/wiki/File:Typ_F-Symbol.png\"><img src=\"media/wikipedia/072a5fe4-40px-Typ_F-Symbol.png\" alt=\"RCD type F symbol part 2\"></a></dt><dd>These trip in the same conditions as Type A, and additionally: <ul><li>For composite residual currents, whether suddenly applied or slowly rising, intended for circuit supplied between line and neutral, or line and earthed middle conductor;</li> <li>For residual pulsating direct currents superimposed on smooth direct current.</li></ul></dd> <dt>Type B <a href=\"https://en.wikipedia.org/wiki/File:Typ_A-Symbol.png\"><img src=\"media/wikipedia/e1d74729-40px-Typ_A-Symbol.png\" alt=\"RCD type B symbol part 1\"></a> <a href=\"https://en.wikipedia.org/wiki/File:Typ_F-Symbol.png\"><img src=\"media/wikipedia/072a5fe4-40px-Typ_F-Symbol.png\" alt=\"RCD type B symbol part 2\"></a> <a href=\"https://en.wikipedia.org/wiki/File:Typ_B-Symbol.png\"><img src=\"media/wikipedia/9faf1abe-40px-Typ_B-Symbol.png\" alt=\"RCD type B symbol part 3\"></a></dt><dd>These trip in the same conditions as Type F, and additionally: <ul><li>For residual sinusoidal alternating currents up to 1 kHz;</li> <li>For residual alternating currents superimposed on a smooth direct current;</li> <li>For residual pulsating direct currents superimposed on a smooth direct current;</li> <li>For residual pulsating rectified direct current which results from two or more phases;</li> <li>For residual smooth direct currents, whether suddenly applied or slowly increased, independent of polarity.</li></ul></dd></dl><p>The <a href=\"https://en.wikipedia.org/wiki/BEAMA\">BEAMA</a> RCD Handbook notes that types F and B have been introduced because some designs of types AC and A can be disabled if a DC current is present that saturates the core of the detector.</p>",
    "body": "Programmable devices may be available for industrial use that can be adjusted to a range of sensitivity values and possibly response times. Type (types of leakage current detected) IEC Standard 60755 ( General requirements for residual current operated protective devices ) defines the following types of RCD depending on the waveforms and frequency of the fault current: Type AC These trip on alternating sinusoidal residual current, suddenly applied or smoothly increasing. Type A These trip on both alternating sinusoidal residual current and residual pulsating direct current, suddenly applied or smoothly increasing. Type F These trip in the same conditions as Type A, and additionally: For composite residual currents, whether suddenly applied or slowly rising, intended for circuit supplied between line and neutral, or line and earthed middle conductor; For residual pulsating direct currents superimposed on smooth direct current. Type B These trip in the same conditions as Type F, and additionally: For residual sinusoidal alternating currents up to 1 kHz; For residual alternating currents superimposed on a smooth direct current; For residual pulsating direct currents superimposed on a smooth direct current; For residual pulsating rectified direct current which results from two or more phases; For residual smooth direct currents, whether suddenly applied or slowly increased, independent of polarity. The BEAMA RCD Handbook notes that types F and B have been introduced because some designs of types AC and A can be disabled if a DC current is present that saturates the core of the detector.",
    "id": "wikipedia2-14"
+  },
+  {
+   "id": "q-type-b",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.2,
+   "q": "A three-phase VFD can leak smooth DC current to earth through its filter. Which RCD type will still detect it?",
+   "options": [
+    "Type B",
+    "Type AC",
+    "Type A",
+    "Type S"
+   ],
+   "answer": 0,
+   "why": "Type AC sees only sine-wave leakage; type A adds pulsating DC; type F adds mixed frequencies; type B also sees smooth DC (and AC up to 1 kHz). Smooth DC can blind an AC or A type, so a VFD maker usually asks for type B. S means time-delayed, which is about timing, not waveform.",
+   "added": true,
+   "after": "wikipedia2-14"
   },
   {
    "type": "concept",
@@ -291,12 +501,44 @@
    "id": "wikipedia2-16"
   },
   {
+   "id": "q-rcd-l-n",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Someone touches line and neutral at once in a light fitting, standing on a dry wooden floor. Will a 30 mA RCD trip?",
+   "options": [
+    "No: the current out and back still balance",
+    "Yes: any current through a person trips it",
+    "Yes, but only if it is a type B",
+    "Only if the circuit's earth is good"
+   ],
+   "answer": 0,
+   "why": "The current goes out on the line, through the person and back on the neutral: to the RCD it looks like any other load. An RCD only protects against current that leaks to earth. Isolation and proving dead are the protection here, not the RCD.",
+   "added": true,
+   "after": "wikipedia2-16"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Limitations",
    "html": "<p>Whole installations on a single RCD, common in older installations in the UK, are prone to \"nuisance\" trips that can cause secondary safety problems with loss of lighting and defrosting of food. Frequently the trips are caused by deteriorating insulation on heater elements, such as water heaters and cooker elements or rings. Although regarded as a nuisance, the fault is with the deteriorated element and not the RCD: replacement of the offending element will resolve the problem, but replacing the RCD will not.</p><p>RCDs are not <a href=\"https://en.wikipedia.org/wiki/Selectivity_(circuit_breakers)\">selective</a>, for example when a ground fault occurs on a circuit protected by a 30 mA I<sub>Δn</sub> RCD in series with a 300 mA I<sub>Δn</sub> RCD either or both may trip. Special time-delayed types are available to provide selectivity in such installations.</p>",
    "body": "Whole installations on a single RCD, common in older installations in the UK, are prone to \"nuisance\" trips that can cause secondary safety problems with loss of lighting and defrosting of food. Frequently the trips are caused by deteriorating insulation on heater elements, such as water heaters and cooker elements or rings. Although regarded as a nuisance, the fault is with the deteriorated element and not the RCD: replacement of the offending element will resolve the problem, but replacing the RCD will not. RCDs are not selective , for example when a ground fault occurs on a circuit protected by a 30 mA I Δn RCD in series with a 300 mA I Δn RCD either or both may trip. Special time-delayed types are available to provide selectivity in such installations.",
    "id": "wikipedia2-17"
+  },
+  {
+   "id": "q-nuisance-trip",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "One RCD covering a whole house keeps tripping. Testing finds an immersion heater element with poor insulation. What fixes it?",
+   "options": [
+    "Replace the heater element",
+    "Replace the RCD",
+    "Fit a 100 mA RCD instead",
+    "Move the heater to a non-RCD circuit"
+   ],
+   "answer": 0,
+   "why": "The RCD is doing its job: the element leaks current to earth. Replace the element and the trips stop. A new RCD trips the same, and a less sensitive one, or no RCD, just hides a real fault.",
+   "added": true,
+   "after": "wikipedia2-17"
   },
   {
    "type": "concept",
@@ -321,6 +563,22 @@
    "html": "<p>The current (18th) edition of the <a href=\"https://en.wikipedia.org/wiki/BS_7671\">IET Electrical Wiring Regulations</a> requires that all socket outlets in most installations have RCD protection, though there are exemptions. Non armoured cables buried in walls must also be RCD protected (again with some specific exemptions). Provision of RCD protection for circuits present in bathrooms and shower rooms reduces the requirement for supplementary bonding in those locations. Two RCDs may be used to cover the installation, with upstairs and downstairs lighting and power circuits spread across both RCDs. When one RCD trips, power is maintained to at least one lighting and power circuit. Other arrangements, such as the use of RCBOs, may be employed to meet the regulations. The new requirements for RCDs do not affect most existing installations unless they are rewired, the distribution board is changed, a new circuit is installed, or alterations are made such as additional socket outlets or new cables buried in walls.</p><p>RCDs used for shock protection must be of the 'immediate' operation type (not time-delayed) and must have a residual current sensitivity of no greater than 30 mA.</p><p>If spurious tripping would cause a greater problem than the risk of the electrical accident the RCD is supposed to prevent (examples might be a supply to a critical factory process, or to life support equipment), RCDs may be omitted, providing affected circuits are clearly labelled and the balance of risks considered; this may include the provision of alternative safety measures.</p>",
    "body": "The current (18th) edition of the IET Electrical Wiring Regulations requires that all socket outlets in most installations have RCD protection, though there are exemptions. Non armoured cables buried in walls must also be RCD protected (again with some specific exemptions). Provision of RCD protection for circuits present in bathrooms and shower rooms reduces the requirement for supplementary bonding in those locations. Two RCDs may be used to cover the installation, with upstairs and downstairs lighting and power circuits spread across both RCDs. When one RCD trips, power is maintained to at least one lighting and power circuit. Other arrangements, such as the use of RCBOs, may be employed to meet the regulations. The new requirements for RCDs do not affect most existing installations unless they are rewired, the distribution board is changed, a new circuit is installed, or alterations are made such as additional socket outlets or new cables buried in walls. RCDs used for shock protection must be of the 'immediate' operation type (not time-delayed) and must have a residual current sensitivity of no greater than 30 mA. If spurious tripping would cause a greater problem than the risk of the electrical accident the RCD is supposed to prevent (examples might be a supply to a critical factory process, or to life support equipment), RCDs may be omitted, providing affected circuits are clearly labelled and the balance of risks considered; this may include the provision of alternative safety measures.",
    "id": "wikipedia3-1"
+  },
+  {
+   "id": "q-uk-rcd-type",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Under the 18th edition of the Wiring Regulations, an RCD used for shock protection must be what?",
+   "options": [
+    "30 mA or less, immediate (not time-delayed)",
+    "100 mA, time-delayed (type S)",
+    "300 mA, immediate",
+    "Any rating, as long as it is double-pole"
+   ],
+   "answer": 0,
+   "why": "Additional protection against shock needs a residual operating current no greater than 30 mA and no deliberate time delay. Time-delayed 100 mA devices are used upstream (on a TT installation, say) so that the 30 mA ones nearer the fault trip first.",
+   "added": true,
+   "after": "wikipedia3-1"
   },
   {
    "type": "concept",

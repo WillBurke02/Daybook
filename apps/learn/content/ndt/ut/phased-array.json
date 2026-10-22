@@ -40,12 +40,46 @@
    "id": "wikipedia1-1"
   },
   {
+   "id": "q-phased-word",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "In **phased array**, what does the word *phased* refer to?",
+   "options": [
+    "The timing of each element's pulse",
+    "The phase of the mains supply to the set",
+    "The stages of a weld inspection",
+    "The way the crystal is cut"
+   ],
+   "answer": 0,
+   "why": "The text says it plainly: *phased* is the timing, *array* is the many elements. Each small element is pulsed at a time the computer works out, and those timings shape and steer the beam. The mains supply and the crystal cut have nothing to do with the name.",
+   "added": true,
+   "after": "wikipedia1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Principle of operation",
    "html": "<p>The PA probe consists of many small <a href=\"https://en.wikipedia.org/wiki/Ultrasonic_transducer\">ultrasonic transducers</a>, each of which can be pulsed independently. By varying the timing, for instance by making the pulse from each transducer progressively delayed going up the line, a pattern of constructive interference is set up that results in radiating a quasi-plane ultrasonic beam at a set angle depending on the progressive time delay. In other words, by changing the progressive time delay the beam can be steered electronically. It can be swept like a search-light through the tissue or object being examined, and the data from multiple beams are put together to make a visual image showing a slice through the object.</p>",
    "body": "The PA probe consists of many small ultrasonic transducers , each of which can be pulsed independently. By varying the timing, for instance by making the pulse from each transducer progressively delayed going up the line, a pattern of constructive interference is set up that results in radiating a quasi-plane ultrasonic beam at a set angle depending on the progressive time delay. In other words, by changing the progressive time delay the beam can be steered electronically. It can be swept like a search-light through the tissue or object being examined, and the data from multiple beams are put together to make a visual image showing a slice through the object.",
    "id": "wikipedia1-2"
+  },
+  {
+   "id": "q-steer-delay",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Each element fires a little later than the one before it, going up the line. What does the beam do?",
+   "options": [
+    "It leaves at an angle set by the delay",
+    "It stays straight down but gets stronger",
+    "It splits into one beam per element",
+    "It cancels out and nothing goes in"
+   ],
+   "answer": 0,
+   "why": "The small waves from the elements add up (constructive interference) along a tilted front, so the beam leaves at an angle. Change the delay step and the angle changes: that is steering with no moving parts. It does not cancel: the delays are chosen so the waves line up in the direction wanted.",
+   "hint": "Think of a line of people stepping off one after another: the front they make is slanted.",
+   "added": true,
+   "after": "wikipedia1-2"
   },
   {
    "type": "concept",
@@ -64,12 +98,45 @@
    "id": "wikipedia1-4"
   },
   {
+   "id": "q-focus-limit",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Where can a phased-array probe focus its beam?",
+   "options": [
+    "Only within the probe's near field",
+    "Anywhere, however deep",
+    "Only at the surface of the part",
+    "Only beyond the near field"
+   ],
+   "answer": 0,
+   "why": "The text: focusing is limited to the near field of the array. Past the near field the beam spreads whatever delays you set, so deep focusing needs a bigger active aperture (more elements firing), which makes the near field longer.",
+   "hint": "The text names the region focusing is limited to.",
+   "added": true,
+   "after": "wikipedia1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Standards",
    "html": "<p><a href=\"https://en.wikipedia.org/wiki/European_Committee_for_Standardization\">European Committee for Standardization</a> (CEN)</p><ul><li>prEN 16018, <em>Non destructive testing - Terminology - Terms used in ultrasonic testing with phased arrays</em></li> <li>ISO/WD 13588, <em> Non-destructive testing of welds – Ultrasonic testing – Use of (semi-) automated phased array technology</em></li></ul>",
    "body": "European Committee for Standardization (CEN) prEN 16018, Non destructive testing - Terminology - Terms used in ultrasonic testing with phased arrays ISO/WD 13588, Non-destructive testing of welds – Ultrasonic testing – Use of (semi-) automated phased array technology",
    "id": "wikipedia1-5"
+  },
+  {
+   "id": "q-pa-tradeoff",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Against conventional single-element UT, what does the text say phased array costs you?",
+   "options": [
+    "Dearer kit and more training",
+    "A slower inspection",
+    "Less control of the beam angle",
+    "No image of the part"
+   ],
+   "answer": 0,
+   "why": "PA instruments and probes are more complex and expensive, and technicians need more experience and training. In return it is faster, steers and focuses electronically and gives an image of a slice through the part, so the other three are its gains, not its costs.",
+   "added": true,
+   "after": "wikipedia1-5"
   },
   {
    "type": "concept",
@@ -88,12 +155,93 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-tofd-why-time",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does TOFD size cracks by **time**, not by how big the echo is?",
+   "options": [
+    "Echo amplitude depends on how the crack is turned",
+    "Time is easier to show on the screen",
+    "Cracks give no echo at all",
+    "Amplitude cannot be measured in steel"
+   ],
+   "answer": 0,
+   "why": "A crack tilted away from the beam gives a small echo even if it is large, so amplitude is an unreliable guide to size. The diffracted signals from the crack's tips arrive at times set by where the tips are, so time gives their depth whichever way the crack faces.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
+   "id": "q-tofd-order",
+   "type": "order",
+   "stage": "learn",
+   "level": 6.2,
+   "q": "A TOFD scan across a weld with a crack in it. Put the signals in the order they reach the receiver, first first.",
+   "items": [
+    "The lateral wave, along the surface",
+    "The diffraction from the crack's upper tip",
+    "The diffraction from the crack's lower tip",
+    "The back-wall echo"
+   ],
+   "why": "Each signal's time is its path length. The lateral wave takes the shortest path, straight along the top. A deeper point means a longer path down and back up, so the upper tip comes before the lower tip, and the back wall, deepest of all, comes last. The crack's height is the gap between the two tip signals, turned into depth.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
+   "id": "q-tofd-depth",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 7.0,
+   "q": "TOFD on steel (longitudinal, 5920 m/s). The probes' centres are {sep} mm apart and a crack tip lies midway between them. Its signal arrives {tt} µs after the pulse (wedge time taken off). How deep is the tip?",
+   "vars": {
+    "sep": [
+     40,
+     120,
+     10
+    ],
+    "d": [
+     4,
+     40,
+     1
+    ]
+   },
+   "let": {
+    "tt": "ROUND(2 * SQRT((sep / 2)^2 + d^2) / 5.92, 2)",
+    "path": "5.92 * tt",
+    "half": "path / 2",
+    "s": "sep / 2"
+   },
+   "answer": "SQRT(half^2 - s^2)",
+   "unit": "mm",
+   "tolerance": 0.03,
+   "work": "Path $= 5.92 \\times {tt} = {path:1}$ mm, so each slant is ${half:1}$ mm. Half the separation, $S = {s}$ mm. $d = \\sqrt{ {half:1}^2 - {s}^2 } = {answer:1}$ mm",
+   "why": "The sound goes down a slant to the tip and up a slant to the receiver: two equal sides of right-angled triangles. Each slant is half the path; its flat side is half the probe separation; the depth is the third side, by Pythagoras: $d = \\sqrt{(\\tfrac{vt}{2})^2 - S^2}$. Halving the time as in pulse-echo, without the triangle, gives an answer too deep.",
+   "hint": "Distance = speed × time (5.92 mm every µs). Half the path is the slant from one probe to the tip; half the separation is the flat side. Pythagoras gives the depth.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Applications",
    "html": "<p>Phased Array + TOFD combination is commonly used to inspect pipeline welds.</p><h4>Reliability</h4><p>One of the limitations of TOFD is the \"dead zone' created by the lateral wave signal just below the inspection surface (or OD surface in case of the pipe). The dead zone is approximately 5 mm and there is no flaw detection in this zone. Calibration blocks with side drilled holes as shown in Reference and ISO 10863 used to validate the \"dead zone\" and sizing accuracy.</p><h4>Features</h4><ul><li>A computerised and automated system for <a href=\"https://en.wikipedia.org/wiki/Weld_inspection\">weld inspection</a>.</li> <li>Probes are mounted on a buggy that travels along a weld, recording data as it moves.</li> <li>Compared to conventional methods of ultrasonic testing, TOFD is sensitive to cracks and measures their dimensions accurately.</li> <li>TOFD has a dead zone where it is not sensitive to defects, hence TOFD ought always to be supplemented by a conventional pulse-echo examination or phased array. The pulse echo probes are commonly mounted on the same buggy as the TOFD probes.</li> <li>Requires ultrasound technicians with advanced training.</li></ul>",
    "body": "Phased Array + TOFD combination is commonly used to inspect pipeline welds. Reliability One of the limitations of TOFD is the \"dead zone' created by the lateral wave signal just below the inspection surface (or OD surface in case of the pipe). The dead zone is approximately 5 mm and there is no flaw detection in this zone. Calibration blocks with side drilled holes as shown in Reference and ISO 10863 used to validate the \"dead zone\" and sizing accuracy. Features A computerised and automated system for weld inspection . Probes are mounted on a buggy that travels along a weld, recording data as it moves. Compared to conventional methods of ultrasonic testing, TOFD is sensitive to cracks and measures their dimensions accurately. TOFD has a dead zone where it is not sensitive to defects, hence TOFD ought always to be supplemented by a conventional pulse-echo examination or phased array. The pulse echo probes are commonly mounted on the same buggy as the TOFD probes. Requires ultrasound technicians with advanced training.",
    "id": "wikipedia2-3"
+  },
+  {
+   "id": "q-tofd-deadzone",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "TOFD has a dead zone of about 5 mm under the scanning surface. What should go with it so that zone is covered?",
+   "options": [
+    "A pulse-echo or phased-array scan",
+    "A second TOFD pair, further apart",
+    "More gain on the TOFD receiver",
+    "A thicker layer of couplant"
+   ],
+   "answer": 0,
+   "why": "The lateral wave hides anything just under the surface, so the text says TOFD ought always to be supplemented by conventional pulse-echo or phased array, often on the same buggy. More gain or a wider pair does not remove the lateral wave, and couplant has nothing to do with it.",
+   "added": true,
+   "after": "wikipedia2-3"
   },
   {
    "id": "add-pa-steer",

@@ -47,6 +47,24 @@
    "id": "liec1-2"
   },
   {
+   "id": "q-neutral-two",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "Two equal heaters are fed from two sources 120° apart and share a neutral. Each live wire carries 40 A. What does the neutral carry?",
+   "options": [
+    "40 A",
+    "0 A",
+    "80 A",
+    "About 23 A"
+   ],
+   "answer": 0,
+   "why": "Kirchhoff's current law: what goes out on the two lives comes back on the neutral, added as phasors. Two equal currents 120° apart add to one of the same size, so the neutral carries a full 40 A, as the book's 83.33 A example shows. 0 A is the split-phase answer (180° apart), and 80 A adds them as if in phase.",
+   "hint": "In the book's example, compare the neutral current with each live wire's.",
+   "added": true,
+   "after": "liec1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Three-phase power systems",
@@ -61,6 +79,22 @@
    "html": "<p> Sure enough, we get 120 volts across each load resistor, with (approximately) 208 volts between any two “hot” conductors and conductor currents equal to 83.33 amps. (Figure  below) At that current and voltage, each load will be dissipating 10 kW of power. Notice that this circuit has no “neutral” conductor to ensure stable voltage to all loads if one should open. What we have here is a situation similar to our split-phase power circuit with no “neutral” conductor: if one load should happen to fail open, the voltage drops across the remaining load(s) will change. To ensure load voltage stability in the event of another load opening, we need a neutral wire to connect the source node and load node together: </p><p> <img src=\"media/liec/d5a25c0e-02175.png\" alt=\"\"> </p><p><em>SPICE circuit annotated with simulation results: Three 3-Φ loads phased at 120<sup>o</sup>.</em></p><p> So long as the loads remain balanced (equal resistance, equal currents), the neutral wire will not have to carry any current at all. It is there just in case one or more load resistors should fail open (or be shut off through a disconnecting switch). </p>",
    "body": "Sure enough, we get 120 volts across each load resistor, with (approximately) 208 volts between any two “hot” conductors and conductor currents equal to 83.33 amps. (Figure below) At that current and voltage, each load will be dissipating 10 kW of power. Notice that this circuit has no “neutral” conductor to ensure stable voltage to all loads if one should open. What we have here is a situation similar to our split-phase power circuit with no “neutral” conductor: if one load should happen to fail open, the voltage drops across the remaining load(s) will change. To ensure load voltage stability in the event of another load opening, we need a neutral wire to connect the source node and load node together: SPICE circuit annotated with simulation results: Three 3-Φ loads phased at 120 o . So long as the loads remain balanced (equal resistance, equal currents), the neutral wire will not have to carry any current at all. It is there just in case one or more load resistors should fail open (or be shut off through a disconnecting switch).",
    "id": "liec1-4"
+  },
+  {
+   "id": "q-neutral-three",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A balanced three-phase star load has a neutral. What does the neutral carry, and why keep it?",
+   "options": [
+    "Nothing; it holds the voltages if a load fails open",
+    "The sum of the three line currents, to share the load",
+    "Three times a line current, to return it all",
+    "Nothing; it is only there as the earth"
+   ],
+   "answer": 0,
+   "why": "Three equal currents 120° apart add to zero, so a balanced load sends nothing down the neutral. It is there in case one load opens or is switched off: without it the star point floats and the other loads' voltages change. It is not the protective earth, which is a separate conductor (green and yellow).",
+   "added": true,
+   "after": "liec1-4"
   },
   {
    "type": "concept",
@@ -79,6 +113,27 @@
    "id": "liec1-6"
   },
   {
+   "id": "q-line-current-star",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A {p} kW heater element is connected between each line and neutral of a 400/230 V supply: three elements, one per phase. What current flows in each line?",
+   "vars": {
+    "p": [
+     1,
+     9,
+     0.5
+    ]
+   },
+   "answer": "p * 1000 / 230",
+   "unit": "A",
+   "work": "$I = \\frac{P}{V} = \\frac{{p} \\times 1000}{230} = {answer:1}$ A",
+   "why": "Each element has 230 V across it (line to neutral) and takes its own current, $I = \\tfrac{P}{V}$. In star the line current is the element's current. Three such heaters on one single-phase supply would draw three times that through one pair of wires: the point of three-phase.",
+   "hint": "Each element sees 230 V, line to neutral. Current = power ÷ voltage, with the power in watts.",
+   "added": true,
+   "after": "liec1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Three-phase power systems",
@@ -93,6 +148,33 @@
    "html": "<p> In our example circuit, we showed the three voltage sources connected together in a “Y” configuration (sometimes called the “star” configuration), with one lead of each source tied to a common point (the node where we attached the “neutral” conductor). The common way to depict this connection scheme is to draw the windings in the shape of a “Y” like Figure  below. </p><p> <img src=\"media/liec/77608145-02179.png\" alt=\"\"> </p><p><em>Alternator \"Y\" configuration.</em></p><p> The “Y” configuration is not the only option open to us, but it is probably the easiest to understand at first. More to come on this subject later in the chapter. </p><ul> <li><strong>REVIEW:</strong></li> <li>A <em>single-phase</em> power system is one where there is only one AC voltage source (one source voltage waveform).</li> <li>A <em>split-phase</em> power system is one where there are two voltage sources, 180<sup>o</sup> phase-shifted from each other, powering two series-connected loads. The advantage of this is the ability to have lower conductor currents while maintaining low load voltages for safety reasons.</li> <li>A <em>polyphase</em> power system uses multiple voltage sources at different phase angles from each other (many “phases” of voltage waveforms at work). A polyphase power system can deliver more power at less voltage with smaller-gage conductors than single- or split-phase systems.</li> <li>The phase-shifted voltage sources necessary for a polyphase power system are created in alternators with multiple sets of wire windings. These winding sets are spaced around the circumference of the rotor's rotation at the desired angle(s).</li> </ul>",
    "body": "In our example circuit, we showed the three voltage sources connected together in a “Y” configuration (sometimes called the “star” configuration), with one lead of each source tied to a common point (the node where we attached the “neutral” conductor). The common way to depict this connection scheme is to draw the windings in the shape of a “Y” like Figure below. Alternator \"Y\" configuration. The “Y” configuration is not the only option open to us, but it is probably the easiest to understand at first. More to come on this subject later in the chapter. REVIEW: A single-phase power system is one where there is only one AC voltage source (one source voltage waveform). A split-phase power system is one where there are two voltage sources, 180 o phase-shifted from each other, powering two series-connected loads. The advantage of this is the ability to have lower conductor currents while maintaining low load voltages for safety reasons. A polyphase power system uses multiple voltage sources at different phase angles from each other (many “phases” of voltage waveforms at work). A polyphase power system can deliver more power at less voltage with smaller-gage conductors than single- or split-phase systems. The phase-shifted voltage sources necessary for a polyphase power system are created in alternators with multiple sets of wire windings. These winding sets are spaced around the circumference of the rotor's rotation at the desired angle(s).",
    "id": "liec1-8"
+  },
+  {
+   "id": "q-system-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each supply to what it is.",
+   "pairs": [
+    [
+     "Single-phase",
+     "One AC source, one voltage waveform"
+    ],
+    [
+     "Split-phase",
+     "Two sources 180° apart, loads in series"
+    ],
+    [
+     "Polyphase",
+     "Several sources at different phase angles"
+    ],
+    [
+     "Three-phase",
+     "Three sources 120° apart"
+    ]
+   ],
+   "why": "The book's review: single-phase has one waveform; split-phase two, 180° apart; polyphase any number at different angles, of which three-phase (120° apart) is the one used for power distribution.",
+   "added": true,
+   "after": "liec1-8"
   },
   {
    "type": "concept",
@@ -119,6 +201,23 @@
    "id": "liec1-11"
   },
   {
+   "id": "q-detector-cap",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "In the two-lamp phase sequence detector, what does the capacitor do?",
+   "options": [
+    "Shifts one leg's current so the lamps differ",
+    "Stores charge to light the lamps at start",
+    "Blocks the DC part of the supply",
+    "Limits the current so the lamps last"
+   ],
+   "answer": 0,
+   "why": "With a resistor in the third leg the circuit is balanced and both lamps glow the same. The capacitor puts a 90° shift in that leg, which unbalances the voltages: one lamp bright, one dim, and the other way round if the sequence is reversed. A voltmeter alone could not tell you the sequence.",
+   "added": true,
+   "after": "liec1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Phase rotation",
@@ -133,6 +232,23 @@
    "html": "<p> Starting out with a phase rotation of 3-2-1, we can try all the possibilities for swapping any two of the wires at a time and see what happens to the resulting sequence in Figure  below. </p><p> <img src=\"media/liec/889f142c-02185.png\" alt=\"\"> </p><p><em>All possibilities of swapping any two wires.</em></p><p> No matter which pair of “hot” wires out of the three we choose to swap, the phase rotation ends up being reversed (1-2-3 gets changed to 2-1-3, 1-3-2 or 3-2-1, all equivalent). </p><ul> <li><strong>REVIEW:</strong></li> <li><em>Phase rotation</em>, or <em>phase sequence</em>, is the order in which the voltage waveforms of a polyphase AC source reach their respective peaks. For a three-phase system, there are only two possible phase sequences: 1-2-3 and 3-2-1, corresponding to the two possible directions of alternator rotation.</li> <li>Phase rotation has no impact on resistive loads, but it will have impact on unbalanced reactive loads, as shown in the operation of a phase rotation detector circuit.</li> <li>Phase rotation can be reversed by swapping any two of the three “hot” leads supplying three-phase power to a three-phase load.</li> </ul>",
    "body": "Starting out with a phase rotation of 3-2-1, we can try all the possibilities for swapping any two of the wires at a time and see what happens to the resulting sequence in Figure below. All possibilities of swapping any two wires. No matter which pair of “hot” wires out of the three we choose to swap, the phase rotation ends up being reversed (1-2-3 gets changed to 2-1-3, 1-3-2 or 3-2-1, all equivalent). REVIEW: Phase rotation , or phase sequence , is the order in which the voltage waveforms of a polyphase AC source reach their respective peaks. For a three-phase system, there are only two possible phase sequences: 1-2-3 and 3-2-1, corresponding to the two possible directions of alternator rotation. Phase rotation has no impact on resistive loads, but it will have impact on unbalanced reactive loads, as shown in the operation of a phase rotation detector circuit. Phase rotation can be reversed by swapping any two of the three “hot” leads supplying three-phase power to a three-phase load.",
    "id": "liec1-13"
+  },
+  {
+   "id": "q-motor-reverse",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A three-phase pump motor has just been reconnected and runs backwards. What is the fix?",
+   "options": [
+    "Swap any two of the three line wires",
+    "Swap a line wire with the neutral",
+    "Swap all three lines one place round",
+    "Reverse the earth and one line"
+   ],
+   "answer": 0,
+   "why": "Swapping any two lines reverses the phase sequence (1-2-3 becomes 2-1-3, the same as 3-2-1), and the motor turns the other way. Moving all three one place round (1-2-3 to 2-3-1) keeps the same sequence, so nothing changes. Never touch the neutral or earth for this: isolate first, then swap two lines.",
+   "hint": "Write out 1-2-3 and try each swap: which ones change the order?",
+   "added": true,
+   "after": "liec1-13"
   },
   {
    "type": "concept",
@@ -167,6 +283,26 @@
    "id": "liec1-17"
   },
   {
+   "id": "q-delta-line-i",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "Each winding of a balanced delta-connected motor carries {ip} A. What current flows in each supply line?",
+   "vars": {
+    "ip": [
+     3,
+     60,
+     1
+    ]
+   },
+   "answer": "ip * SQRT(3)",
+   "unit": "A",
+   "work": "$I_L = \\sqrt{3} \\times I_{ph} = 1.732 \\times {ip} = {answer:1}$ A",
+   "why": "In delta each line joins two windings whose currents are 120° apart, so the line current is their phasor difference: √3 times either one. In star it would be the same as the winding current. Multiplying by 3, or by 2, are the usual slips.",
+   "hint": "Delta: line voltage = phase voltage, but line current = √3 × phase current.",
+   "added": true,
+   "after": "liec1-17"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Three-phase Y and Delta configurations",
@@ -175,12 +311,56 @@
    "id": "liec1-18"
   },
   {
+   "id": "q-delta-open",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "One winding of a delta-connected source fails open. What happens at the load?",
+   "options": [
+    "Its voltages stay the same; two windings carry more",
+    "Two load phases drop to half voltage",
+    "One load phase loses its supply",
+    "Everything stops: the loop is broken"
+   ],
+   "answer": 0,
+   "why": "In a delta source each line pair is still fed through the two good windings in series, so the load sees the same voltages; the good windings just carry more current. Half voltage on two loads, and a lost load, are what happens with an open winding in a Y source. That fault tolerance is why delta sources are preferred for reliability.",
+   "added": true,
+   "after": "liec1-18"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Three-phase Y and Delta configurations",
    "html": "<ul> <li><strong>REVIEW:</strong></li> <li>The conductors connected to the three points of a three-phase source or load are called <em>lines</em>.</li> <li>The three components comprising a three-phase source or load are called <em>phases</em>.</li> <li><em>Line voltage</em> is the voltage measured between any two lines in a three-phase circuit.</li> <li><em>Phase voltage</em> is the voltage measured across a single component in a three-phase source or load.</li> <li><em>Line current</em> is the current through any one line between a three-phase source and load.</li> <li><em>Phase current</em> is the current through any one component comprising a three-phase source or load.</li> <li>In balanced “Y” circuits, line voltage is equal to phase voltage times the square root of 3, while line current is equal to phase current.</li> <li> <p> <img src=\"media/liec/ca0918e1-12115.png\" alt=\"\"> </p> </li> <li>In balanced Δ circuits, line voltage is equal to phase voltage, while line current is equal to phase current times the square root of 3.</li> <li> <p> <img src=\"media/liec/52e97d48-12118.png\" alt=\"\"> </p> </li> <li>Δ-connected three-phase voltage sources give greater reliability in the event of winding failure than Y-connected sources. However, Y-connected sources can deliver the same amount of power with less line current than Δ-connected sources.</li> </ul>",
    "body": "REVIEW: The conductors connected to the three points of a three-phase source or load are called lines . The three components comprising a three-phase source or load are called phases . Line voltage is the voltage measured between any two lines in a three-phase circuit. Phase voltage is the voltage measured across a single component in a three-phase source or load. Line current is the current through any one line between a three-phase source and load. Phase current is the current through any one component comprising a three-phase source or load. In balanced “Y” circuits, line voltage is equal to phase voltage times the square root of 3, while line current is equal to phase current. In balanced Δ circuits, line voltage is equal to phase voltage, while line current is equal to phase current times the square root of 3. Δ-connected three-phase voltage sources give greater reliability in the event of winding failure than Y-connected sources. However, Y-connected sources can deliver the same amount of power with less line current than Δ-connected sources.",
    "id": "liec1-19"
+  },
+  {
+   "id": "q-worked-delta",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 400 V motor is connected in delta. Each winding carries 10 A, at a power factor of 0.85. Find the line current and the power it takes.",
+   "steps": [
+    {
+     "ask": "The voltage across each winding",
+     "show": "Delta: each winding sits across two lines, so it has the full line voltage, 400 V."
+    },
+    {
+     "ask": "The line current",
+     "show": "$I_L = \\sqrt{3} \\times 10 = 17.3$ A"
+    },
+    {
+     "ask": "The power, from line values",
+     "show": "$P = \\sqrt{3} \\times 400 \\times 17.3 \\times 0.85 = 10.2$ kW"
+    },
+    {
+     "ask": "Check it per winding",
+     "show": "$3 \\times 400 \\times 10 \\times 0.85 = 10.2$ kW: the same, as it must be."
+    }
+   ],
+   "why": "Line or phase, the power is the same: $\\sqrt{3} V_L I_L \\cos\\phi = 3 V_{ph} I_{ph} \\cos\\phi$. Working it both ways is a quick check on which value is which.",
+   "added": true,
+   "after": "liec1-19"
   },
   {
    "id": "add-uk-400",

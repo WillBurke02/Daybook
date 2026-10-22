@@ -39,12 +39,45 @@
    "id": "liec1-1"
   },
   {
+   "id": "q-nonlinear",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "What makes a load **nonlinear**?",
+   "options": [
+    "Its current is not a sine wave on a sine-wave supply",
+    "It takes more power than its rating",
+    "Its voltage is not 230 V",
+    "It is connected between two lines"
+   ],
+   "answer": 0,
+   "why": "A nonlinear load draws current out of proportion to the voltage across it, so a sine-wave voltage gives a current of some other shape, and any other shape is the fundamental plus harmonics. Diodes, thyristors, discharge lamps and iron cores near saturation all do it. Power, voltage and how it is connected have nothing to do with it.",
+   "added": true,
+   "after": "liec1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Harmonics in polyphase power systems",
    "html": "<p> <img src=\"media/liec/dd4c7834-02293.png\" alt=\"\"> </p><p><em>Examples of symmetrical waveforms -- odd harmonics only.</em></p><p> Examples of nonsymmetrical waveforms with even harmonics present are shown for reference in Figure  below. </p><p> <img src=\"media/liec/af679946-02294.png\" alt=\"\"> </p><p><em>Examples of nonsymmetrical waveforms -- even harmonics present.</em></p><p> Even though half of the possible harmonic frequencies are eliminated by the typically symmetrical distortion of nonlinear loads, the odd harmonics can still cause problems. Some of these problems are general to all power systems, single-phase or otherwise. Transformer overheating due to eddy current losses, for example, can occur in <em>any</em> AC power system where there is significant harmonic content. However, there are some problems caused by harmonic currents that are specific to polyphase power systems, and it is these problems to which this section is specifically devoted. </p><p> It is helpful to be able to simulate nonlinear loads in SPICE so as to avoid a lot of complex mathematics and obtain a more intuitive understanding of harmonic effects. First, we'll begin our simulation with a very simple AC circuit: a single sine-wave voltage source with a purely linear load and all associated resistances: (Figure  below) </p><p> <img src=\"media/liec/fbed60f5-02322.png\" alt=\"\"> </p><p><em>SPICE circuit with single sine-wave source.</em></p><p> The R<sub>source</sub> and R<sub>line</sub> resistances in this circuit do more than just mimic the real world: they also provide convenient shunt resistances for measuring currents in the SPICE simulation: by reading voltage across a 1 Ω resistance, you obtain a direct indication of current through it, since E = IR. </p>",
    "body": "Examples of symmetrical waveforms -- odd harmonics only. Examples of nonsymmetrical waveforms with even harmonics present are shown for reference in Figure below. Examples of nonsymmetrical waveforms -- even harmonics present. Even though half of the possible harmonic frequencies are eliminated by the typically symmetrical distortion of nonlinear loads, the odd harmonics can still cause problems. Some of these problems are general to all power systems, single-phase or otherwise. Transformer overheating due to eddy current losses, for example, can occur in any AC power system where there is significant harmonic content. However, there are some problems caused by harmonic currents that are specific to polyphase power systems, and it is these problems to which this section is specifically devoted. It is helpful to be able to simulate nonlinear loads in SPICE so as to avoid a lot of complex mathematics and obtain a more intuitive understanding of harmonic effects. First, we'll begin our simulation with a very simple AC circuit: a single sine-wave voltage source with a purely linear load and all associated resistances: (Figure below) SPICE circuit with single sine-wave source. The R source and R line resistances in this circuit do more than just mimic the real world: they also provide convenient shunt resistances for measuring currents in the SPICE simulation: by reading voltage across a 1 Ω resistance, you obtain a direct indication of current through it, since E = IR.",
    "id": "liec1-2"
+  },
+  {
+   "id": "q-odd-only",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A load distorts the current the same way above and below the centre line. Which harmonics can it make?",
+   "options": [
+    "Odd ones only: 3rd, 5th, 7th…",
+    "Even ones only: 2nd, 4th, 6th…",
+    "All of them, odd and even",
+    "None: symmetrical means no distortion"
+   ],
+   "answer": 0,
+   "why": "Symmetrical distortion contains odd harmonics only, which is why the 2nd and 4th are rarely a problem on power systems. Even harmonics show a waveform that is lopsided about the centre line (a half-wave rectifier, say). Symmetrical still means distorted, just evenly.",
+   "added": true,
+   "after": "liec1-2"
   },
   {
    "type": "concept",
@@ -87,6 +120,40 @@
    "id": "liec1-7"
   },
   {
+   "id": "q-which-harmonic",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "On a UK 50 Hz supply, a power analyser shows a current at {f} Hz. Which harmonic is it (give its number)?",
+   "vars": {
+    "n": {
+     "pick": [
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      23,
+      25
+     ]
+    }
+   },
+   "let": {
+    "f": "n * 50"
+   },
+   "answer": "f / 50",
+   "abs": 0.01,
+   "work": "${f} \\div 50 = {answer}$: harmonic number {answer}",
+   "why": "A harmonic is a whole-number multiple of the fundamental. Divide by 50 Hz on a UK supply (60 Hz in the book's American examples, which is why its 3rd harmonic is 180 Hz, not 150 Hz).",
+   "hint": "Harmonic number = its frequency ÷ the supply frequency.",
+   "added": true,
+   "after": "liec1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Harmonics in polyphase power systems",
@@ -127,12 +194,68 @@
    "id": "liec1-12"
   },
   {
+   "id": "q-triplen-why",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.6,
+   "q": "The three phases are 120° apart. Why are their **3rd** harmonics in step with each other?",
+   "options": [
+    "120° at the fundamental is 360° at three times the frequency",
+    "The 3rd harmonic comes from the neutral, not the phases",
+    "The supply transformer holds them in phase",
+    "They are not: they cancel like the fundamental"
+   ],
+   "answer": 0,
+   "why": "A shift is really a time. A third of a cycle at 50 Hz is a whole cycle at 150 Hz, and a whole cycle, 360°, is the same as no shift. So the three 3rd harmonics rise and fall together, and in a neutral they add instead of cancelling.",
+   "added": true,
+   "after": "liec1-12"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Harmonics in polyphase power systems",
    "html": "<p> This characteristic of the 3rd harmonic in a three-phase system also holds true for any integer multiples of the 3rd harmonic. So, not only are the 3rd harmonic waveforms of each fundamental waveform in phase with each other, but so are the 6th harmonics, the 9th harmonics, the 12th harmonics, the 15th harmonics, the 18th harmonics, the 21st harmonics, and so on. Since only odd harmonics appear in systems where waveform distortion is symmetrical about the centerline -- and most nonlinear loads create symmetrical distortion -- even-numbered multiples of the 3rd harmonic (6th, 12th, 18th, etc.) are generally not significant, leaving only the odd-numbered multiples (3rd, 9th, 15th, 21st, etc.) to significantly contribute to neutral currents. </p><p> In polyphase power systems with some number of phases other than three, this effect occurs with harmonics of the same multiple. For instance, the harmonic currents that add in the neutral conductor of a star-connected 4-phase system where the phase shift between fundamental waveforms is 90<sup>o</sup> would be the 4th, 8th, 12th, 16th, 20th, and so on. </p><p> Due to their abundance and significance in three-phase power systems, the 3rd harmonic and its multiples have their own special name: <em>triplen harmonics</em>. All triplen harmonics add with each other in the neutral conductor of a 4-wire Y-connected load. In power systems containing substantial nonlinear loading, the triplen harmonic currents may be of great enough magnitude to cause neutral conductors to overheat. This is very problematic, as other safety concerns prohibit neutral conductors from having overcurrent protection, and thus there is no provision for automatic interruption of these high currents. </p>",
    "body": "This characteristic of the 3rd harmonic in a three-phase system also holds true for any integer multiples of the 3rd harmonic. So, not only are the 3rd harmonic waveforms of each fundamental waveform in phase with each other, but so are the 6th harmonics, the 9th harmonics, the 12th harmonics, the 15th harmonics, the 18th harmonics, the 21st harmonics, and so on. Since only odd harmonics appear in systems where waveform distortion is symmetrical about the centerline -- and most nonlinear loads create symmetrical distortion -- even-numbered multiples of the 3rd harmonic (6th, 12th, 18th, etc.) are generally not significant, leaving only the odd-numbered multiples (3rd, 9th, 15th, 21st, etc.) to significantly contribute to neutral currents. In polyphase power systems with some number of phases other than three, this effect occurs with harmonics of the same multiple. For instance, the harmonic currents that add in the neutral conductor of a star-connected 4-phase system where the phase shift between fundamental waveforms is 90 o would be the 4th, 8th, 12th, 16th, 20th, and so on. Due to their abundance and significance in three-phase power systems, the 3rd harmonic and its multiples have their own special name: triplen harmonics . All triplen harmonics add with each other in the neutral conductor of a 4-wire Y-connected load. In power systems containing substantial nonlinear loading, the triplen harmonic currents may be of great enough magnitude to cause neutral conductors to overheat. This is very problematic, as other safety concerns prohibit neutral conductors from having overcurrent protection, and thus there is no provision for automatic interruption of these high currents.",
    "id": "liec1-13"
+  },
+  {
+   "id": "q-neutral-triplen",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.6,
+   "q": "A balanced four-wire star load. Each line carries {i3} A of 3rd-harmonic current (and a fundamental that cancels in the neutral). How much 3rd-harmonic current flows in the neutral?",
+   "vars": {
+    "i3": [
+     2,
+     40,
+     1
+    ]
+   },
+   "answer": "3 * i3",
+   "unit": "A",
+   "work": "In step, so they add: $3 \\times {i3} = {answer}$ A",
+   "why": "The three 3rd harmonics are in phase, so they add straight, not as phasors: three times one line's. In the book's simulation, 50 mA per phase gave about 150 mA in the neutral. That is how a neutral can carry more than the lines, and why it must not be undersized.",
+   "hint": "Do the three 3rd-harmonic currents cancel, or add, in the neutral?",
+   "added": true,
+   "after": "liec1-13"
+  },
+  {
+   "id": "q-four-phase",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 7.2,
+   "q": "In a star-connected **four**-phase system, the phases 90° apart, which harmonics add in the neutral?",
+   "options": [
+    "4th, 8th, 12th…",
+    "3rd, 9th, 15th…",
+    "2nd, 6th, 10th…",
+    "None of them"
+   ],
+   "answer": 0,
+   "why": "The rule is the number of phases: with four phases 90° apart, 90° × 4 = 360°, so the 4th harmonic and its multiples are in step. Three phases give the triplens (3rd, 6th, 9th…), of which only the odd ones matter in practice.",
+   "hint": "What multiple of 90° makes a whole cycle?",
+   "added": true,
+   "after": "liec1-13"
   },
   {
    "type": "concept",
@@ -157,6 +280,22 @@
    "html": "<p> Strange things are happening, indeed. First, we see that the triplen harmonic currents (3rd and 9th) all but disappear in the lines connecting load to source. The 5th and 7th harmonic currents are present at their normal levels (approximately 50 mA), but the 3rd and 9th harmonic currents are of negligible magnitude. Second, we see that there is substantial harmonic voltage between the two “Y” center-points, between which the neutral conductor used to connect. According to SPICE, there is 50 volts of both 3rd and 9th harmonic frequency between these two points, which is definitely not normal in a linear (no harmonics), balanced Y system. Finally, the voltage as measured across one of the load's phases (between nodes 8 and 7 in the SPICE analysis) likewise shows strong triplen harmonic voltages of 50 volts each. </p><p> Figure  below is a graphical summary of the aforementioned effects. </p><p> <img src=\"media/liec/cb928fe9-02330.png\" alt=\"\"> </p><p><em>Three-wire “Y-Y” (no neutral) system: Triplen voltages appear between “Y” centers. Triplen voltages appear across load phases. Non-triplen currents appear in line conductors.</em></p><p> In summary, removal of the neutral conductor leads to a “hot” center-point on the load “Y”, and also to harmonic load phase voltages of equal magnitude, all comprised of triplen frequencies. In the previous simulation where we had a 4-wire, Y-connected system, the undesirable effect from harmonics was excessive neutral <em>current</em>, but at least each phase of the load received voltage nearly free of harmonics. </p>",
    "body": "Strange things are happening, indeed. First, we see that the triplen harmonic currents (3rd and 9th) all but disappear in the lines connecting load to source. The 5th and 7th harmonic currents are present at their normal levels (approximately 50 mA), but the 3rd and 9th harmonic currents are of negligible magnitude. Second, we see that there is substantial harmonic voltage between the two “Y” center-points, between which the neutral conductor used to connect. According to SPICE, there is 50 volts of both 3rd and 9th harmonic frequency between these two points, which is definitely not normal in a linear (no harmonics), balanced Y system. Finally, the voltage as measured across one of the load's phases (between nodes 8 and 7 in the SPICE analysis) likewise shows strong triplen harmonic voltages of 50 volts each. Figure below is a graphical summary of the aforementioned effects. Three-wire “Y-Y” (no neutral) system: Triplen voltages appear between “Y” centers. Triplen voltages appear across load phases. Non-triplen currents appear in line conductors. In summary, removal of the neutral conductor leads to a “hot” center-point on the load “Y”, and also to harmonic load phase voltages of equal magnitude, all comprised of triplen frequencies. In the previous simulation where we had a 4-wire, Y-connected system, the undesirable effect from harmonics was excessive neutral current , but at least each phase of the load received voltage nearly free of harmonics.",
    "id": "liec1-16"
+  },
+  {
+   "id": "q-no-neutral",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "To stop triplen currents in the neutral, someone removes the neutral of a star–star system. What happens?",
+   "options": [
+    "Triplen voltages appear across each load phase",
+    "The harmonics vanish completely",
+    "The 5th and 7th harmonics stop",
+    "The line currents double"
+   ],
+   "answer": 0,
+   "why": "With nowhere to flow, the triplen currents mostly stop, but the load's star point no longer sits at the source's: the simulation shows about 50 V of 3rd and 9th harmonic between the star points and across each load phase. The 5th and 7th carry on in the lines as before. The problem moves; it does not go.",
+   "added": true,
+   "after": "liec1-16"
   },
   {
    "type": "concept",
@@ -223,6 +362,22 @@
    "id": "liec1-24"
   },
   {
+   "id": "q-delta-trap",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a delta–delta system, where do the triplen harmonic currents made by the loads go?",
+   "options": [
+    "They circulate inside the load's delta",
+    "Out along the lines to the source",
+    "Into the earth conductor",
+    "They are turned into 5th harmonics"
+   ],
+   "answer": 0,
+   "why": "Being in step, they flow round the closed loop of the delta like a DC current would, and never reach the lines or the source windings. That is the delta's great benefit for harmonics, and why a delta winding on a transformer traps triplens. The circulating current still heats the windings.",
+   "added": true,
+   "after": "liec1-24"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Harmonic phase sequences",
@@ -231,12 +386,51 @@
    "id": "liec1-25"
   },
   {
+   "id": "q-sequence-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each harmonic to its phase sequence.",
+   "pairs": [
+    [
+     "7th",
+     "Positive: rotates the same way as the fundamental"
+    ],
+    [
+     "5th",
+     "Negative: rotates the opposite way"
+    ],
+    [
+     "3rd",
+     "Zero: does not rotate at all"
+    ]
+   ],
+   "why": "The pattern repeats every three: 1st, 4th, 7th, 10th, 13th are positive; 2nd, 5th, 8th, 11th negative; 3rd, 6th, 9th zero sequence.",
+   "added": true,
+   "after": "liec1-25"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Harmonic phase sequences",
    "html": "<p> Sequence especially matters when we're dealing with AC motors, since the mechanical rotation of the rotor depends on the torque produced by the sequential “rotation” of the applied 3-phase power. Positive-sequence frequencies work to push the rotor in the proper direction, whereas negative-sequence frequencies actually work <em>against</em> the direction of the rotor's rotation. Zero-sequence frequencies neither contribute to nor detract from the rotor's torque. An excess of negative-sequence harmonics (5th, 11th, 17th, and/or 23rd) in the power supplied to a three-phase AC motor will result in a degradation of performance and possible overheating. Since the higher-order harmonics tend to be attenuated more by system inductances and magnetic core losses, and generally originate with less amplitude anyway, the primary harmonic of concern is the 5th, which is 300 Hz in 60 Hz power systems and 250 Hz in 50 Hz power systems. </p>",
    "body": "Sequence especially matters when we're dealing with AC motors, since the mechanical rotation of the rotor depends on the torque produced by the sequential “rotation” of the applied 3-phase power. Positive-sequence frequencies work to push the rotor in the proper direction, whereas negative-sequence frequencies actually work against the direction of the rotor's rotation. Zero-sequence frequencies neither contribute to nor detract from the rotor's torque. An excess of negative-sequence harmonics (5th, 11th, 17th, and/or 23rd) in the power supplied to a three-phase AC motor will result in a degradation of performance and possible overheating. Since the higher-order harmonics tend to be attenuated more by system inductances and magnetic core losses, and generally originate with less amplitude anyway, the primary harmonic of concern is the 5th, which is 300 Hz in 60 Hz power systems and 250 Hz in 50 Hz power systems.",
    "id": "liec1-26"
+  },
+  {
+   "id": "q-motor-5th",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which harmonic is the main concern for a three-phase motor, and why?",
+   "options": [
+    "The 5th: it pushes against the rotation",
+    "The 3rd: it adds in the neutral",
+    "The 7th: it rotates with the fundamental",
+    "The 9th: it is the largest"
+   ],
+   "answer": 0,
+   "why": "Negative-sequence harmonics make torque against the rotation, causing heat and lost performance. The 5th is negative sequence and usually the biggest of them (higher ones are smaller and damped more): 250 Hz on a UK 50 Hz supply. A motor has no neutral, so the 3rd does not trouble it that way, and the 7th helps rather than hinders.",
+   "added": true,
+   "after": "liec1-26"
   },
   {
    "id": "add-g55",

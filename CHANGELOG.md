@@ -1,5 +1,19 @@
 # Changes
 
+## 4.0.32 — 22 October 2026
+
+- **Questions inside the book lessons, starting with Electrical**: three-phase, transformers, harmonics,
+  earthing, protective devices, test equipment (GS38), motor circuits and ATEX, and phased array and TOFD,
+  now ask you something straight after each section instead of 10 to 30 cards of reading first: 79 new
+  questions, among them worked and faded examples (delta line current, transformer ratios), a TOFD depth
+  by Pythagoras, residual current from clamp readings, CT ratios and a seal-in wiring mistake to spot.
+- **DoITPoMS questions explained properly**: the answers to five lessons' DoITPoMS questions came with the
+  page's tracking script as their explanation. Fixed in the importer and the lessons re-imported (two of
+  them cleaned in place while the site was down); worked answers now keep their equations, which are pictures.
+- An import that fails half way no longer loses a lesson's "another account" reading.
+- Several of Daybook's cards placed after the same book card now keep their order through a fresh import.
+- The content check catches a sum written in a question's double braces, which would have shown as written.
+
 ## 4.0.31 — 22 October 2026
 
 - **Learn audit**: every lesson judged on how well it makes you learn (LEARN-AUDIT.md), with what would

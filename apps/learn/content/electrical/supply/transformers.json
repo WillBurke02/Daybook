@@ -38,6 +38,23 @@
    "id": "liec1-2"
   },
   {
+   "id": "q-thick-wire",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 4.6,
+   "q": "A step-down transformer: 230 V in, 24 V out. Which winding is wound with the thicker wire?",
+   "options": [
+    "The secondary, because it carries more current",
+    "The primary, because it has the higher voltage",
+    "Both the same, because the power is the same",
+    "The primary, because it has more turns"
+   ],
+   "answer": 0,
+   "why": "Stepping voltage down steps current up by the same ratio, so the 24 V winding carries nearly ten times the current of the 230 V one and needs the thicker wire. Voltage sets how much insulation a winding needs, not how thick its copper is.",
+   "added": true,
+   "after": "liec1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Step-up and step-down transformers",
@@ -52,6 +69,22 @@
    "html": "<p> The fact that voltage and current get “stepped” in opposite directions (one up, the other down) makes perfect sense when you recall that power is equal to voltage times current, and realize that transformers cannot <em>produce</em> power, only convert it. Any device that could output more power than it took in would violate the <em>Law of Energy Conservation</em> in physics, namely that energy cannot be created or destroyed, only converted. As with the first transformer example we looked at, power transfer efficiency is very good from the primary to the secondary sides of the device. </p><p> The practical significance of this is made more apparent when an alternative is considered: before the advent of efficient transformers, voltage/current level conversion could only be achieved through the use of motor/generator sets. A drawing of a motor/generator set reveals the basic principle involved: (Figure  below) </p><p> <img src=\"media/liec/7b82eccb-02295.png\" alt=\"\"> </p><p><em>Motor generator illustrates the basic principle of the transformer.</em></p><p> In such a machine, a motor is mechanically coupled to a generator, the generator designed to produce the desired levels of voltage and current at the rotating speed of the motor. While both motors and generators are fairly efficient devices, the use of both in this fashion compounds their inefficiencies so that the overall efficiency is in the range of 90% or less. Furthermore, because motor/generator sets obviously require moving parts, mechanical wear and balance are factors influencing both service life and performance. Transformers, on the other hand, are able to convert levels of AC voltage and current at very high efficiencies with no moving parts, making possible the widespread distribution and use of electric power we take for granted. </p>",
    "body": "The fact that voltage and current get “stepped” in opposite directions (one up, the other down) makes perfect sense when you recall that power is equal to voltage times current, and realize that transformers cannot produce power, only convert it. Any device that could output more power than it took in would violate the Law of Energy Conservation in physics, namely that energy cannot be created or destroyed, only converted. As with the first transformer example we looked at, power transfer efficiency is very good from the primary to the secondary sides of the device. The practical significance of this is made more apparent when an alternative is considered: before the advent of efficient transformers, voltage/current level conversion could only be achieved through the use of motor/generator sets. A drawing of a motor/generator set reveals the basic principle involved: (Figure below) Motor generator illustrates the basic principle of the transformer. In such a machine, a motor is mechanically coupled to a generator, the generator designed to produce the desired levels of voltage and current at the rotating speed of the motor. While both motors and generators are fairly efficient devices, the use of both in this fashion compounds their inefficiencies so that the overall efficiency is in the range of 90% or less. Furthermore, because motor/generator sets obviously require moving parts, mechanical wear and balance are factors influencing both service life and performance. Transformers, on the other hand, are able to convert levels of AC voltage and current at very high efficiencies with no moving parts, making possible the widespread distribution and use of electric power we take for granted.",
    "id": "liec1-4"
+  },
+  {
+   "id": "q-why-current-up",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why must the current go **up** when a transformer steps the voltage **down**?",
+   "options": [
+    "Power in equals power out, and P = V × I",
+    "The secondary has less resistance",
+    "The core stores the missing voltage as current",
+    "The secondary has more turns"
+   ],
+   "answer": 0,
+   "why": "A transformer cannot make power, only pass it on (less a few per cent of losses). With $P = VI$ the same on both sides, a tenth of the voltage means ten times the current. A step-down secondary has fewer turns, not more.",
+   "added": true,
+   "after": "liec1-4"
   },
   {
    "type": "concept",
@@ -70,6 +103,93 @@
    "id": "liec1-6"
   },
   {
+   "id": "q-inductance-ratio",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "Two windings on the same core. The primary's inductance is {k} times the secondary's. What is the turns ratio, primary to secondary (the number to put before the 1)?",
+   "vars": {
+    "k": {
+     "pick": [
+      4,
+      9,
+      16,
+      25,
+      36,
+      49,
+      64,
+      81,
+      100,
+      144,
+      400,
+      2500
+     ]
+    }
+   },
+   "answer": "SQRT(k)",
+   "work": "$\\frac{N_p}{N_s} = \\sqrt{ {k} } = {answer}$, so {answer}:1",
+   "why": "Inductance goes with the **square** of the turns on the same core, so the turns ratio (and the voltage ratio) is the square root of the inductance ratio. The book's 10 000 H and 100 H windings are 100:1 in inductance, 10:1 in turns.",
+   "hint": "Inductance goes up with turns squared. What number, squared, gives the inductance ratio?",
+   "added": true,
+   "after": "liec1-6"
+  },
+  {
+   "id": "q-worked-ratio",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A control transformer has 1600 turns on its 400 V primary and 96 turns on its secondary. The secondary supplies 5 A. Find the secondary voltage and the primary current.",
+   "steps": [
+    {
+     "ask": "The turns ratio",
+     "show": "$1600 \\div 96 = 16.7$: it steps down 16.7 times."
+    },
+    {
+     "ask": "The secondary voltage",
+     "show": "$400 \\div 16.7 = 24$ V (or $400 \\times \\tfrac{96}{1600}$)"
+    },
+    {
+     "ask": "The primary current",
+     "show": "Current goes the other way: $5 \\div 16.7 = 0.3$ A"
+    },
+    {
+     "ask": "Check with power",
+     "show": "$24 \\times 5 = 120$ W out; $400 \\times 0.3 = 120$ W in. They match."
+    }
+   ],
+   "why": "Voltage follows the turns; current goes the other way; power in equals power out. The power check catches a ratio used the wrong way up.",
+   "added": true,
+   "after": "liec1-6"
+  },
+  {
+   "id": "q-faded-ratio",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A 230 V to 12 V transformer powers a 36 W lamp. Find the secondary current and the primary current.",
+   "steps": [
+    {
+     "ask": "The turns ratio",
+     "show": "$230 \\div 12 = 19.2$"
+    },
+    {
+     "ask": "The secondary current",
+     "show": "$I = \\tfrac{P}{V} = 36 \\div 12 = 3$ A"
+    },
+    {
+     "ask": "The primary current",
+     "show": "$3 \\div 19.2 = 0.16$ A"
+    },
+    {
+     "ask": "Check with power",
+     "show": "$230 \\times 0.16 = 36$ W: it matches."
+    }
+   ],
+   "why": "The same moves as the worked example: ratio, the current where you know the load, then the other current divided by the ratio.",
+   "added": true,
+   "after": "q-worked-ratio"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Electrical isolation",
@@ -84,6 +204,23 @@
    "html": "<p> SPICE shows the 250 volts DC being impressed upon the secondary circuit elements with respect to ground, (Figure  above) but as you can see there is no effect on the primary circuit (zero DC voltage) at nodes 1 and 2, and the transformation of AC power from primary to secondary circuits remains the same as before. The impressed voltage in this example is often called a <em>common-mode</em> voltage because it is seen at more than one point in the circuit with reference to the common point of ground. The transformer isolates the common-mode voltage so that it is not impressed upon the primary circuit at all, but rather isolated to the secondary side. For the record, it does not matter that the common-mode voltage is DC, either. It could be AC, even at a different frequency, and the transformer would isolate it from the primary circuit all the same. </p><p> There are applications where electrical isolation is needed between two AC circuit without any transformation of voltage or current levels. In these instances, transformers called <em>isolation transformers</em> having 1:1 transformation ratios are used. A benchtop isolation transformer is shown in Figure  below. </p><p> <img src=\"media/liec/ebb0e458-52006.jpg\" alt=\"\"> </p><p><em>Isolation transformer isolates power out from the power line.</em></p><ul> <li><strong>REVIEW:</strong></li> <li>By being able to transfer power from one circuit to another without the use of interconnecting conductors between the two circuits, transformers provide the useful feature of <em>electrical isolation</em>.</li> <li>Transformers designed to provide electrical isolation without stepping voltage and current either up or down are called <em>isolation transformers</em>.</li> </ul>",
    "body": "SPICE shows the 250 volts DC being impressed upon the secondary circuit elements with respect to ground, (Figure above) but as you can see there is no effect on the primary circuit (zero DC voltage) at nodes 1 and 2, and the transformation of AC power from primary to secondary circuits remains the same as before. The impressed voltage in this example is often called a common-mode voltage because it is seen at more than one point in the circuit with reference to the common point of ground. The transformer isolates the common-mode voltage so that it is not impressed upon the primary circuit at all, but rather isolated to the secondary side. For the record, it does not matter that the common-mode voltage is DC, either. It could be AC, even at a different frequency, and the transformer would isolate it from the primary circuit all the same. There are applications where electrical isolation is needed between two AC circuit without any transformation of voltage or current levels. In these instances, transformers called isolation transformers having 1:1 transformation ratios are used. A benchtop isolation transformer is shown in Figure below. Isolation transformer isolates power out from the power line. REVIEW: By being able to transfer power from one circuit to another without the use of interconnecting conductors between the two circuits, transformers provide the useful feature of electrical isolation . Transformers designed to provide electrical isolation without stepping voltage and current either up or down are called isolation transformers .",
    "id": "liec1-8"
+  },
+  {
+   "id": "q-common-mode",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "250 V DC is put between the secondary circuit and earth, as in the book's simulation. What does the primary circuit see?",
+   "options": [
+    "None of it: the windings are not joined",
+    "All 250 V, on top of its AC",
+    "Half of it, split across the windings",
+    "A tenth of it, by the turns ratio"
+   ],
+   "answer": 0,
+   "why": "That **common-mode** voltage sits on the secondary side only. The windings share a magnetic field, not a conductor, so nothing of it reaches the primary, DC or AC, at any frequency. The turns ratio only applies to what the core carries from one winding to the other.",
+   "added": true,
+   "after": "liec1-8"
   },
   {
    "type": "concept",
@@ -110,6 +247,23 @@
    "id": "liec1-11"
   },
   {
+   "id": "q-dots",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a transformer drawing, the dots are at the top of the primary and the **bottom** of the secondary. What is the phase shift, primary to secondary?",
+   "options": [
+    "180°",
+    "0°",
+    "90°",
+    "It depends on the load"
+   ],
+   "answer": 0,
+   "why": "Dots mark the ends of the windings that go positive together. Dots at the same end mean 0°; at opposite ends, the secondary is upside down to the primary: 180°. On H and X labels, H1 and X1 are where the dots would be.",
+   "hint": "Dots mark the ends that go positive at the same moment.",
+   "added": true,
+   "after": "liec1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Winding configurations",
@@ -134,6 +288,22 @@
    "id": "liec1-14"
   },
   {
+   "id": "q-tap-switch",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A distribution transformer has a tap switch to adjust its voltage. When may it be moved?",
+   "options": [
+    "Only with the transformer de-energised",
+    "At any time, under full load",
+    "Only at full load, so the taps share the current",
+    "Only when the secondary is short-circuited"
+   ],
+   "answer": 0,
+   "why": "The book: such tap switches are usually not made to handle full-load current and must only be operated with the transformer de-energised. (On-load tap changers exist on big grid transformers, but they are a special, much costlier design.)",
+   "added": true,
+   "after": "liec1-14"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Winding configurations",
@@ -148,6 +318,33 @@
    "html": "<p> Like regular transformers, autotransformer windings can be tapped to provide variations in ratio. Additionally, they can be made continuously variable with a sliding contact to tap the winding at any point along its length. The latter configuration is popular enough to have earned itself its own name: the <em>Variac</em>. (Figure  below) </p><p> <img src=\"media/liec/75af9ceb-02149.png\" alt=\"\"> </p><p><em>A variac is an autotransformer with a sliding tap.</em></p><p> Small variacs for benchtop use are popular pieces of equipment for the electronics experimenter, being able to step household AC voltage down (or sometimes up as well) with a wide, fine range of control by a simple twist of a knob. </p><ul> <li><strong>REVIEW:</strong></li> <li>Transformers can be equipped with more than just a single primary and single secondary winding pair. This allows for multiple step-up and/or step-down ratios in the same device.</li> <li>Transformer windings can also be “tapped:” that is, intersected at many points to segment a single winding into sections.</li> <li>Variable transformers can be made by providing a movable arm that sweeps across the length of a winding, making contact with the winding at any point along its length. The winding, of course, has to be bare (no insulation) in the area where the arm sweeps.</li> <li>An autotransformer is a single, tapped inductor coil used to step up or step down voltage like a transformer, except without providing electrical isolation.</li> <li>A <em>Variac</em> is a variable autotransformer.</li> </ul>",
    "body": "Like regular transformers, autotransformer windings can be tapped to provide variations in ratio. Additionally, they can be made continuously variable with a sliding contact to tap the winding at any point along its length. The latter configuration is popular enough to have earned itself its own name: the Variac . (Figure below) A variac is an autotransformer with a sliding tap. Small variacs for benchtop use are popular pieces of equipment for the electronics experimenter, being able to step household AC voltage down (or sometimes up as well) with a wide, fine range of control by a simple twist of a knob. REVIEW: Transformers can be equipped with more than just a single primary and single secondary winding pair. This allows for multiple step-up and/or step-down ratios in the same device. Transformer windings can also be “tapped:” that is, intersected at many points to segment a single winding into sections. Variable transformers can be made by providing a movable arm that sweeps across the length of a winding, making contact with the winding at any point along its length. The winding, of course, has to be bare (no insulation) in the area where the arm sweeps. An autotransformer is a single, tapped inductor coil used to step up or step down voltage like a transformer, except without providing electrical isolation. A Variac is a variable autotransformer.",
    "id": "liec1-16"
+  },
+  {
+   "id": "q-winding-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each device to what it is.",
+   "pairs": [
+    [
+     "Isolation transformer",
+     "Separate windings at 1:1, for isolation alone"
+    ],
+    [
+     "Tap",
+     "A connection part-way along a winding"
+    ],
+    [
+     "Autotransformer",
+     "One tapped winding: cheaper, but no isolation"
+    ],
+    [
+     "Variac",
+     "An autotransformer with a sliding contact"
+    ]
+   ],
+   "why": "An autotransformer saves copper by sharing one winding between input and output, which is exactly why it gives no isolation. A Variac is a variable autotransformer, so it does not isolate you from the mains either: never use one as an isolation transformer.",
+   "added": true,
+   "after": "liec1-16"
   },
   {
    "type": "concept",
@@ -166,12 +363,57 @@
    "id": "liec1-18"
   },
   {
+   "id": "q-regulation",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A transformer gives {vnl} V with no load and {vfl} V at full load. What is its voltage regulation, in per cent?",
+   "vars": {
+    "vnl": [
+     228,
+     244,
+     1
+    ],
+    "drop": [
+     2,
+     15,
+     0.5
+    ]
+   },
+   "let": {
+    "vfl": "vnl - drop"
+   },
+   "answer": "(vnl - vfl) / vfl * 100",
+   "unit": "%",
+   "tolerance": 0.02,
+   "work": "$\\frac{ {vnl} - {vfl} }{ {vfl} } \\times 100 = {answer:2}$ %",
+   "why": "Regulation is the drop from no load to full load, as a percentage of the **full-load** voltage, as in the book's formula. Smaller is better: under 3% is good for a power transformer on a resistive load. Dividing by the no-load voltage gives a slightly smaller, wrong figure.",
+   "hint": "Take the full-load voltage from the no-load voltage, divide by the full-load voltage, times 100.",
+   "added": true,
+   "after": "liec1-18"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Voltage regulation",
    "html": "<p> There are some applications, however, where poor regulation is actually desired. One such case is in discharge lighting, where a step-up transformer is required to initially generate a high voltage (necessary to “ignite” the lamps), then the voltage is expected to drop off once the lamp begins to draw current. This is because discharge lamps' voltage requirements tend to be much lower after a current has been established through the arc path. In this case, a step-up transformer with poor voltage regulation suffices nicely for the task of conditioning power to the lamp. </p><p> Another application is in current control for AC arc welders, which are nothing more than step-down transformers supplying low-voltage, high-current power for the welding process. A high voltage is desired to assist in “striking” the arc (getting it started), but like the discharge lamp, an arc doesn't require as much voltage to sustain itself once the air has been heated to the point of ionization. Thus, a decrease of secondary voltage under high load current would be a good thing. Some arc welder designs provide arc current adjustment by means of a movable iron core in the transformer, cranked in or out of the winding assembly by the operator. Moving the iron slug away from the windings reduces the strength of magnetic coupling between the windings, which diminishes no-load secondary voltage <em>and</em> makes for poorer voltage regulation. </p>",
    "body": "There are some applications, however, where poor regulation is actually desired. One such case is in discharge lighting, where a step-up transformer is required to initially generate a high voltage (necessary to “ignite” the lamps), then the voltage is expected to drop off once the lamp begins to draw current. This is because discharge lamps' voltage requirements tend to be much lower after a current has been established through the arc path. In this case, a step-up transformer with poor voltage regulation suffices nicely for the task of conditioning power to the lamp. Another application is in current control for AC arc welders, which are nothing more than step-down transformers supplying low-voltage, high-current power for the welding process. A high voltage is desired to assist in “striking” the arc (getting it started), but like the discharge lamp, an arc doesn't require as much voltage to sustain itself once the air has been heated to the point of ionization. Thus, a decrease of secondary voltage under high load current would be a good thing. Some arc welder designs provide arc current adjustment by means of a movable iron core in the transformer, cranked in or out of the winding assembly by the operator. Moving the iron slug away from the windings reduces the strength of magnetic coupling between the windings, which diminishes no-load secondary voltage and makes for poorer voltage regulation.",
    "id": "liec1-19"
+  },
+  {
+   "id": "q-poor-reg",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does an AC arc welder use a transformer with deliberately **poor** regulation?",
+   "options": [
+    "A high voltage strikes the arc, a lower one holds it",
+    "It wastes less power in the core",
+    "It keeps the welding current exactly constant",
+    "It stops the transformer humming"
+   ],
+   "answer": 0,
+   "why": "Striking an arc needs more voltage than keeping it going once the gap is ionised, so a secondary voltage that falls as the current rises suits it. Discharge lamps use the same idea. Some welders even move an iron core out of the windings to weaken the coupling and set the current.",
+   "added": true,
+   "after": "liec1-19"
   },
   {
    "type": "concept",

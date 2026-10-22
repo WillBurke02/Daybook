@@ -40,6 +40,23 @@
    "id": "wikipedia1-1"
   },
   {
+   "id": "q-touch-50",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "Earthing and protective devices together aim to keep the voltage you could touch on metalwork below about what?",
+   "options": [
+    "50 V AC",
+    "230 V AC",
+    "12 V AC",
+    "110 V AC"
+   ],
+   "answer": 0,
+   "why": "The text: a threshold typically set at about 50 V AC. Above that a shock through the body can be dangerous, so a fault must either never raise metalwork that high or be cleared fast. 230 V is the supply itself; 110 V is the reduced site supply, still above it at the extremes.",
+   "added": true,
+   "after": "wikipedia1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Low-voltage systems",
@@ -56,12 +73,60 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-letters-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each letter of an IEC 60364 earthing code to what it means.",
+   "pairs": [
+    [
+     "T (first letter)",
+     "A point of the supply connected straight to Earth"
+    ],
+    [
+     "I (first letter)",
+     "The supply isolated from Earth, or earthed through an impedance"
+    ],
+    [
+     "N (second letter)",
+     "Exposed metal joined to the supply's earthed point"
+    ],
+    [
+     "S",
+     "Neutral and protective earth as separate conductors"
+    ],
+    [
+     "C",
+     "Neutral and protective earth in one conductor (PEN)"
+    ]
+   ],
+   "why": "First letter: the supply and Earth. Second: your exposed metalwork and Earth. Then S or C for separate or combined neutral and earth. From the French: terre, isolé, neutre, séparé, combiné.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Types of TN system",
    "html": "<p>In a <strong>TN</strong> earthing system, one of the points in the supply <a href=\"https://en.wikipedia.org/wiki/Transformer\">transformer</a> is directly connected with Earth, usually the <em>neutral-star-point</em> in a <em>star-connected</em> supply transformer, the same point from which a neutral (N) connection would be provided. Exposed-conductive-parts within a consumer installation are connected with Earth via this connection at the transformer, and thus via the supply cable(s). The conductor that connects an exposed-conductive-part of the consumer's electrical installation to Earth is called the <em>protective earth</em> (<em>PE</em>; see also: <a href=\"https://en.wikipedia.org/wiki/Ground_(electricity)\">Ground</a>) conductor.</p><p>This arrangement is a current standard for residential and industrial electric systems particularly in Europe.</p><p>Three variants of TN systems are distinguished:</p><dl><dt>TN−S</dt><dd>PE and N are entirely separate conductors. If a neutral conductor is provided, and if the point from which the transformer connects to Earth is the <em>neutral-star-point</em>, then PE and N conductors will be connected at this one and only point within the system. Note that the armoring of the supply cable is commonly used as the PE conductor between the transformer and installation rather than a dedicated conductor within the supply cable.</dd> <dt>TN−C</dt><dd>A single combined PEN conductor (PE+N) fulfils the functions of both a PE and an N conductor. This is not only so for the supply cable but within the consumer installation also (no separation of neutral and earthing). In 230/400 V consumer systems this is normally only used with distribution circuits.</dd> <dt>TN−C−S</dt><dd>Part of the system uses a combined PEN conductor, which is at some point split up into separate PE and N conductors. The combined PEN conductor typically spans between the transformer and the consumer installation, with separate earth and neutral conductors used within the installation.</dd></dl>",
    "body": "In a TN earthing system, one of the points in the supply transformer is directly connected with Earth, usually the neutral-star-point in a star-connected supply transformer, the same point from which a neutral (N) connection would be provided. Exposed-conductive-parts within a consumer installation are connected with Earth via this connection at the transformer, and thus via the supply cable(s). The conductor that connects an exposed-conductive-part of the consumer's electrical installation to Earth is called the protective earth ( PE ; see also: Ground ) conductor. This arrangement is a current standard for residential and industrial electric systems particularly in Europe. Three variants of TN systems are distinguished: TN−S PE and N are entirely separate conductors. If a neutral conductor is provided, and if the point from which the transformer connects to Earth is the neutral-star-point , then PE and N conductors will be connected at this one and only point within the system. Note that the armoring of the supply cable is commonly used as the PE conductor between the transformer and installation rather than a dedicated conductor within the supply cable. TN−C A single combined PEN conductor (PE+N) fulfils the functions of both a PE and an N conductor. This is not only so for the supply cable but within the consumer installation also (no separation of neutral and earthing). In 230/400 V consumer systems this is normally only used with distribution circuits. TN−C−S Part of the system uses a combined PEN conductor, which is at some point split up into separate PE and N conductors. The combined PEN conductor typically spans between the transformer and the consumer installation, with separate earth and neutral conductors used within the installation.",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-decode-tncs",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "Read the code **TN-C-S** letter by letter. What does it describe?",
+   "options": [
+    "Supply earthed; metal tied to its neutral point; combined N and PE, then separate",
+    "Supply earthed; metal on its own electrode; combined N and PE throughout",
+    "Supply isolated; metal earthed locally; separate N and PE throughout",
+    "Supply earthed; metal tied to its neutral point; separate N and PE throughout"
+   ],
+   "answer": 0,
+   "why": "T: the supply transformer's neutral is earthed. N: your exposed metal goes back to that point through the supply cable. C then S: a combined PEN conductor in the supply, split into separate neutral and earth at the cut-out. The last option is TN-S; the second is near TT.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -80,6 +145,22 @@
    "id": "wikipedia1-6"
   },
   {
+   "id": "q-open-pen",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the danger if the PEN conductor of a TN-C-S (PME) supply breaks?",
+   "options": [
+    "Earthed metalwork can rise towards line voltage",
+    "The RCD trips and cannot be reset",
+    "The supply voltage falls to zero safely",
+    "The earth electrode overheats"
+   ],
+   "answer": 0,
+   "why": "Earth and neutral are the same conductor in the supply. With it broken, neutral current seeks other paths, through bonded pipes and the ground, and exposed metal can rise to a dangerous voltage, up to the line-to-line voltage in the worst case. That is why the ESQCR bans PEN supplies to caravans and boats, and why EV chargers on PME need special measures.",
+   "added": true,
+   "after": "wikipedia1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "TT system",
@@ -96,6 +177,22 @@
    "id": "wikipedia1-8"
   },
   {
+   "id": "q-when-tt",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Where does UK practice recommend a TT earthing system?",
+   "options": [
+    "Long outdoor wiring, farms, mobile homes, marinas",
+    "Hospital operating theatres",
+    "Every new house in a town",
+    "Data centres that need the lowest loop impedance"
+   ],
+   "answer": 0,
+   "why": "TT suits places where a low-impedance equipotential zone is hard to keep by bonding, where there is a lot of outdoor wiring, or where a large fault current would itself be dangerous (fuel depots, marinas). Its high loop impedance means an RCD does the disconnecting. Theatres use IT for continuity; town houses are mostly TN-C-S.",
+   "added": true,
+   "after": "wikipedia1-8"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "IT system",
@@ -104,12 +201,43 @@
    "id": "wikipedia1-9"
   },
   {
+   "id": "q-it-first-fault",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In an IT system, one live conductor faults to earth. What normally happens?",
+   "options": [
+    "Nothing is disconnected; a monitor raises an alarm",
+    "The supply trips at once",
+    "The neutral carries the fault current",
+    "The RCD trips the whole installation"
+   ],
+   "answer": 0,
+   "why": "With the supply isolated from Earth, a first fault has no path for a big current, so the supply carries on and an insulation monitor alarms. A second fault on another conductor would make a short between them, so it must be found and cleared before then. That continuity is why IT is used in hospitals.",
+   "added": true,
+   "after": "wikipedia1-9"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Comparison",
    "html": "<table> <tbody><tr> <th></th> <th>TT</th> <th>IT</th> <th>TN-S</th> <th>TN-C</th> <th>TN-C-S</th></tr> <tr> <td>Earth fault loop impedance</td> <td>High</td> <td>Highest</td> <td>Low</td> <td>Low</td> <td>Low</td></tr> <tr> <td>RCD required?</td> <td>Yes, often mandatory</td> <td>Preferred</td> <td>Optional</td> <td>N/A</td> <td>Optional</td></tr> <tr> <td>Earth electrode needed at site?</td> <td>Yes</td> <td>Yes</td> <td>No</td> <td>No</td> <td>Optional</td></tr> <tr> <td>Broken PEN danger</td> <td>N/A</td> <td>N/A</td> <td>N/A</td> <td>Highest</td> <td>High</td></tr> <tr> <td>Safety</td> <td>Safe</td> <td>Less Safe</td> <td>Safest</td> <td>Least Safe</td> <td>Safe</td></tr> <tr> <td>Electromagnetic interference</td> <td>Least</td> <td>Least</td> <td>Low</td> <td>High</td> <td>Low</td></tr> <tr> <td>Safety risks</td> <td>High loop impedance (step voltages)</td> <td>Overvoltage</td> <td>Broken PE</td> <td>Broken PEN</td> <td>Broken PEN</td></tr> <tr> <td>Advantages</td> <td>Safe and reliable</td> <td>Continuity of operation, cost</td> <td>Safest</td> <td>Cost</td> <td>Safety and cost</td></tr> </tbody></table><h4>Other terminologies</h4><p>While the national wiring regulations for buildings of many countries follow the <a href=\"https://en.wikipedia.org/wiki/IEC_60364\">IEC 60364</a> terminology, in North America (United States and Canada), the term \"equipment grounding conductor\" refers to equipment grounds and ground wires on branch circuits, and \"grounding electrode conductor\" is used for conductors bonding an earth/ground rod, electrode or similar to a service panel. The \"local\" earth/ground electrode provides \"system grounding\" at each building where it is installed.</p><p>The \"grounded\" current carrying conductor is the system \"neutral\".</p><p>Australian and New Zealand standards use a modified <em>protective multiple earthing</em> (<em>PME</em> ) system called <em>multiple earthed neutral (MEN)</em>. The neutral is grounded (earthed) at each consumer service point thereby effectively bringing the neutral potential difference towards zero along the whole length of <a href=\"https://en.wikipedia.org/wiki/Low_voltage\">LV</a> lines. In North America, the term <em>multigrounded neutral (MGN)</em> is used.</p><p>In the UK and some Commonwealth countries, the term \"PNE\", meaning phase-neutral-earth is used to indicate that three (or more for non-single-phase connections) conductors are used, i.e., PN-S.</p>",
    "body": "TT IT TN-S TN-C TN-C-S Earth fault loop impedance High Highest Low Low Low RCD required? Yes, often mandatory Preferred Optional N/A Optional Earth electrode needed at site? Yes Yes No No Optional Broken PEN danger N/A N/A N/A Highest High Safety Safe Less Safe Safest Least Safe Safe Electromagnetic interference Least Least Low High Low Safety risks High loop impedance (step voltages) Overvoltage Broken PE Broken PEN Broken PEN Advantages Safe and reliable Continuity of operation, cost Safest Cost Safety and cost Other terminologies While the national wiring regulations for buildings of many countries follow the IEC 60364 terminology, in North America (United States and Canada), the term \"equipment grounding conductor\" refers to equipment grounds and ground wires on branch circuits, and \"grounding electrode conductor\" is used for conductors bonding an earth/ground rod, electrode or similar to a service panel. The \"local\" earth/ground electrode provides \"system grounding\" at each building where it is installed. The \"grounded\" current carrying conductor is the system \"neutral\". Australian and New Zealand standards use a modified protective multiple earthing ( PME ) system called multiple earthed neutral (MEN) . The neutral is grounded (earthed) at each consumer service point thereby effectively bringing the neutral potential difference towards zero along the whole length of LV lines. In North America, the term multigrounded neutral (MGN) is used. In the UK and some Commonwealth countries, the term \"PNE\", meaning phase-neutral-earth is used to indicate that three (or more for non-single-phase connections) conductors are used, i.e., PN-S.",
    "id": "wikipedia1-10"
+  },
+  {
+   "id": "q-loop-order",
+   "type": "order",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "Put these earthing systems in order of their earth fault loop impedance, lowest first.",
+   "items": [
+    "TN-C-S or TN-S",
+    "TT",
+    "IT"
+   ],
+   "why": "TN systems return a fault through metal conductors all the way to the transformer: low impedance, so a fuse or MCB can clear it. TT returns it through the ground and an electrode: high. IT has no deliberate path at all: highest. Typical UK Ze figures: 0.35 Ω (TN-C-S), 0.8 Ω (TN-S), 21 Ω plus the electrode (TT).",
+   "added": true,
+   "after": "wikipedia1-10"
   },
   {
    "type": "concept",
@@ -150,6 +278,22 @@
    "html": "<p>(c)no impedance is inserted in any connection with earth of a low voltage network other than that required for the operation of switching devices or of instruments or equipment for control, telemetry or metering. </p><p>(4) A consumer shall not combine the neutral and protective functions in a single conductor in his consumer’s installation. </p><p>(5) Paragraphs (1) to (3) shall not apply to a network which is situated within a generating station if, and only if, adequate alternative arrangements are in place to prevent danger. </p>",
    "body": "(c)no impedance is inserted in any connection with earth of a low voltage network other than that required for the operation of switching devices or of instruments or equipment for control, telemetry or metering. (4) A consumer shall not combine the neutral and protective functions in a single conductor in his consumer’s installation. (5) Paragraphs (1) to (3) shall not apply to a network which is situated within a generating station if, and only if, adequate alternative arrangements are in place to prevent danger.",
    "id": "legislation2-2"
+  },
+  {
+   "id": "q-consumer-pen",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Under regulation 8(4) of the ESQCR, what may a consumer **not** do in their own installation?",
+   "options": [
+    "Combine neutral and protective earth in one conductor",
+    "Fit an RCD on a TN-C-S supply",
+    "Use a local earth electrode",
+    "Run separate neutral and earth conductors"
+   ],
+   "answer": 0,
+   "why": "8(4): a consumer shall not combine the neutral and protective functions in a single conductor in his installation. The combined PEN is allowed only in the distributor's supply, up to the cut-out; after that, neutral and earth stay separate.",
+   "added": true,
+   "after": "legislation2-2"
   },
   {
    "id": "add-ze",
