@@ -38,12 +38,44 @@
    "id": "liec1-2"
   },
   {
+   "id": "q-po-box",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In the post-office-box picture of a ROM state machine, what is written on the paper in each box?",
+   "options": [
+    "The number of the next box to open",
+    "The output to switch on",
+    "How long to wait",
+    "The number of this box"
+   ],
+   "answer": 0,
+   "why": "Each memory location (box) holds the address of the next one. Feed the data back to the address lines on each clock pulse and the machine steps through whatever sequence was stored: the state is the address; the program is the table.",
+   "added": true,
+   "after": "liec1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Finite-state machines",
    "html": "<p> Try to follow the Gray Code count sequence as the FSM would do it: starting at 0000, follow the data stored at that address (0001) to the next address, and so on (0011), and so on (0010), and so on (0110), etc. The result, for the program table shown, is that the sequence of addressing jumps around from address to address in what looks like a haphazard fashion, but when you check each address that is accessed, you will find that it follows the correct order for 4-bit Gray code. When the FSM arrives at its last programmed state (address 1000), the data stored there is 0000, which starts the whole sequence over again at address 0000 in step with the next clock pulse. </p><p> We could expand on the capabilities of the above circuit by using a ROM with more address lines, and adding more programming data: </p><p> <img src=\"media/liec/58d09d7d-04222.png\" alt=\"\"> </p><p> Now, just like the look-up table adder circuit that we turned into an Arithmetic Logic Unit (+, -, x, / functions) by utilizing more address lines as \"function control\" inputs, this FSM counter can be used to generate more than one count sequence, a different sequence programmed for the four feedback bits (A0 through A3) for each of the two function control line input combinations (A4 = 0 or 1). </p>",
    "body": "Try to follow the Gray Code count sequence as the FSM would do it: starting at 0000, follow the data stored at that address (0001) to the next address, and so on (0011), and so on (0010), and so on (0110), etc. The result, for the program table shown, is that the sequence of addressing jumps around from address to address in what looks like a haphazard fashion, but when you check each address that is accessed, you will find that it follows the correct order for 4-bit Gray code. When the FSM arrives at its last programmed state (address 1000), the data stored there is 0000, which starts the whole sequence over again at address 0000 in step with the next clock pulse. We could expand on the capabilities of the above circuit by using a ROM with more address lines, and adding more programming data: Now, just like the look-up table adder circuit that we turned into an Arithmetic Logic Unit (+, -, x, / functions) by utilizing more address lines as \"function control\" inputs, this FSM counter can be used to generate more than one count sequence, a different sequence programmed for the four feedback bits (A0 through A3) for each of the two function control line input combinations (A4 = 0 or 1).",
    "id": "liec1-3"
+  },
+  {
+   "id": "q-gray-code",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The FSM counts 0000, 0001, 0011, 0010, 0110… in Gray code. What is special about each step?",
+   "options": [
+    "Only one bit changes",
+    "It always counts up by one",
+    "Two bits change every time",
+    "The bits are always in order"
+   ],
+   "answer": 0,
+   "why": "In Gray code each count differs from the last by exactly one bit (check: 0001 to 0011, 0011 to 0010). That is why absolute encoders use it: reading during a change can only be one step out, never wildly wrong, as with 0111 to 1000 in binary.",
+   "added": true,
+   "after": "liec1-3"
   },
   {
    "type": "concept",
@@ -54,12 +86,117 @@
    "id": "liec1-4"
   },
   {
+   "id": "q-extra-input",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "With the extra address line A4, the same ROM counts in binary when A4 is 0 and in Gray code when A4 is 1. What does that show about a state machine?",
+   "options": [
+    "Inputs as well as state set the next step",
+    "It can only ever follow one sequence",
+    "It keeps no memory of its state",
+    "Its outputs are chosen at random"
+   ],
+   "answer": 0,
+   "why": "A4 is an input. The next state is looked up from the current state and the inputs together, so an input can send the machine down a different sequence: in a PLC, a sensor or a mode switch choosing the next step.",
+   "added": true,
+   "after": "liec1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Finite-state machines",
    "html": "<p> Here, the D0 through D3 data outputs are used exclusively for feedback to the A0 through A3 address lines. Date output lines D4 through D7 can be programmed to output something other than the FSM's \"state\" value. Being that four data output bits are being fed back to four address bits, this is still a 16-state device. However, having the output data come from other data output lines gives the programmer more freedom to configure functions than before. In other words, this device can do far more than just count! The programmed output of this FSM is dependent not only upon the state of the feedback address lines (A0 through A3), but also the states of the input lines (A4 through A7). The D-type flip/flop's clock signal input does not have to come from a pulse generator, either. To make things more interesting, the flip/flop could be wired up to clock on some external event, so that the FSM goes to the next state only when an input signal tells it to. </p><p> Now we have a device that better fulfills the meaning of the word \"programmable.\" The data written to the ROM is a program in the truest sense: the outputs follow a pre-established order based on the inputs to the device and which \"step\" the device is on in its sequence. This is very close to the operating design of the <em>Turing Machine</em>, a theoretical computing device invented by Alan Turing, mathematically proven to be able to solve any known arithmetic problem, given enough memory capacity. </p>",
    "body": "Here, the D0 through D3 data outputs are used exclusively for feedback to the A0 through A3 address lines. Date output lines D4 through D7 can be programmed to output something other than the FSM's \"state\" value. Being that four data output bits are being fed back to four address bits, this is still a 16-state device. However, having the output data come from other data output lines gives the programmer more freedom to configure functions than before. In other words, this device can do far more than just count! The programmed output of this FSM is dependent not only upon the state of the feedback address lines (A0 through A3), but also the states of the input lines (A4 through A7). The D-type flip/flop's clock signal input does not have to come from a pulse generator, either. To make things more interesting, the flip/flop could be wired up to clock on some external event, so that the FSM goes to the next state only when an input signal tells it to. Now we have a device that better fulfills the meaning of the word \"programmable.\" The data written to the ROM is a program in the truest sense: the outputs follow a pre-established order based on the inputs to the device and which \"step\" the device is on in its sequence. This is very close to the operating design of the Turing Machine , a theoretical computing device invented by Alan Turing, mathematically proven to be able to solve any known arithmetic problem, given enough memory capacity.",
    "id": "liec1-5"
+  },
+  {
+   "id": "q-code-sequence",
+   "type": "code",
+   "stage": "learn",
+   "level": 5.8,
+   "q": "A conveyor sequence: step 10 waits for Start; step 20 runs the Motor until the photo-eye (Eye) sees a box; step 30 waits 2 s, then back to 10. Fill in the blanks.",
+   "code": "VAR Step : INT := 10; T1 : TON; END_VAR\nCASE Step OF\n  10: IF Start THEN Step := 20; END_IF;\n  20: IF ___ THEN Step := 30; END_IF;\n  30: IF T1.Q THEN Step := 10; END_IF;\nEND_CASE;\nT1(IN := (Step = 30), PT := T#2s);\nMotor := (Step = ___);",
+   "inputs": [
+    "Start",
+    "Eye"
+   ],
+   "outputs": [
+    "Motor",
+    "Step"
+   ],
+   "solution": [
+    "Eye",
+    "20"
+   ],
+   "tests": [
+    {
+     "name": "Start runs the motor",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 2,
+       "expect": {
+        "Motor": true
+       }
+      }
+     ]
+    },
+    {
+     "name": "The eye stops it",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 2
+      },
+      {
+       "set": {
+        "Start": false,
+        "Eye": true
+       },
+       "scans": 2,
+       "expect": {
+        "Motor": false,
+        "Step": 30
+       }
+      }
+     ]
+    },
+    {
+     "name": "Back to 10 after 2 s",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 2
+      },
+      {
+       "set": {
+        "Start": false,
+        "Eye": true
+       },
+       "scans": 2
+      },
+      {
+       "set": {
+        "Eye": false
+       },
+       "scans": 25,
+       "expect": {
+        "Step": 10,
+        "Motor": false
+       }
+      }
+     ]
+    }
+   ],
+   "why": "Each step waits for its own condition, then moves on; the output is worked out from the step, so it can only be on in the step that wants it. Writing outputs from the step number (not setting them inside the CASE) means a jump to any step leaves no output stuck on.",
+   "added": true,
+   "after": "liec1-5"
   },
   {
    "id": "add-fsm-what",

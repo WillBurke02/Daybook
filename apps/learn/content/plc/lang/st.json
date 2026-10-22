@@ -48,12 +48,99 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-case-no-fall",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "In the sample program, `StateMachine` is 1 when the scan reaches the CASE. What runs on this scan?",
+   "options": [
+    "ClosingValve only; StateMachine becomes 2",
+    "ClosingValve, then OpeningValve after it",
+    "OpeningValve only, as StateMachine is now 2",
+    "BadCase, because 1 is not one of its cases"
+   ],
+   "answer": 0,
+   "why": "ST's CASE has no fall-through: the first matching label runs, then the whole CASE is left. Setting StateMachine to 2 takes effect on the **next** scan, when case 2 runs. (In C, a missing break would run on into the next case; ST is not like that.)",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Function block example",
    "html": "<pre>//=======================================================================\n// Function Block Timed Counter :  Incremental count of the timed interval\n//=======================================================================\nFUNCTION_BLOCK FB_Timed_Counter\n    VAR_INPUT\n        Execute         : BOOL := FALSE;        // Trigger signal to begin Timed Counting\n        Time_Increment  : REAL := 1.25;         // Enter Cycle Time (Seconds) between counts\n        Count_Cycles    : INT  := 20;           // Number of Desired Count Cycles\n    END_VAR\n    \n    VAR_OUTPUT\n        Timer_Done_Bit  : BOOL := FALSE;        // One Shot Bit indicating Timer Cycle Done\n        Count_Complete  : BOOL := FALSE;        // Output Bit indicating the Count is complete            \n        Current_Count   : INT  := 0;            // Accumulating Value of Counter\n    END_VAR\n    \n    VAR\n        CycleTimer      : TON;                  // Timer FB from Command Library\n        CycleCounter    : CTU;                  // Counter FB from Command Library\n        TimerPreset     : TIME;                 // Converted Time_Increment in Seconds to MS\n    END_VAR\n        \n    // Start of Function Block programming\n    TimerPreset := REAL_TO_TIME(in := Time_Increment) * 1000;\n\n    CycleTimer(\n        in := Execute AND NOT CycleTimer.Q,\n        pt := TimerPreset);\n\n    Timer_Done_Bit := CycleTimer.Q;\n    \n    CycleCounter(\n        cu := CycleTimer.Q,\n        r := NOT Execute,\n        pv := Count_Cycles);\n\n    Current_Count := CycleCounter.cv;\n    Count_Complete := CycleCounter.q;\n    \nEND_FUNCTION_BLOCK\n</pre>",
    "body": "//======================================================================= // Function Block Timed Counter : Incremental count of the timed interval //======================================================================= FUNCTION_BLOCK FB_Timed_Counter VAR_INPUT Execute : BOOL := FALSE; // Trigger signal to begin Timed Counting Time_Increment : REAL := 1.25; // Enter Cycle Time (Seconds) between counts Count_Cycles : INT := 20; // Number of Desired Count Cycles END_VAR VAR_OUTPUT Timer_Done_Bit : BOOL := FALSE; // One Shot Bit indicating Timer Cycle Done Count_Complete : BOOL := FALSE; // Output Bit indicating the Count is complete Current_Count : INT := 0; // Accumulating Value of Counter END_VAR VAR CycleTimer : TON; // Timer FB from Command Library CycleCounter : CTU; // Counter FB from Command Library TimerPreset : TIME; // Converted Time_Increment in Seconds to MS END_VAR // Start of Function Block programming TimerPreset := REAL_TO_TIME(in := Time_Increment) * 1000; CycleTimer( in := Execute AND NOT CycleTimer.Q, pt := TimerPreset); Timer_Done_Bit := CycleTimer.Q; CycleCounter( cu := CycleTimer.Q, r := NOT Execute, pv := Count_Cycles); Current_Count := CycleCounter.cv; Count_Complete := CycleCounter.q; END_FUNCTION_BLOCK",
    "id": "wikipedia1-3"
+  },
+  {
+   "id": "q-code-ton",
+   "type": "code",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "Fill in the blanks so the Lamp comes on once Start has been held for 2 seconds, and goes off as soon as Start is released.",
+   "code": "VAR T1 : TON; END_VAR\nT1(IN := Start, PT := ___);\nLamp := T1.___;",
+   "inputs": [
+    "Start"
+   ],
+   "outputs": [
+    "Lamp"
+   ],
+   "solution": [
+    "T#2s",
+    "Q"
+   ],
+   "tests": [
+    {
+     "name": "Not yet after 1.5 s",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 15,
+       "expect": {
+        "Lamp": false
+       }
+      }
+     ]
+    },
+    {
+     "name": "On after 2 s",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 22,
+       "expect": {
+        "Lamp": true
+       }
+      }
+     ]
+    },
+    {
+     "name": "Off when Start is released",
+     "steps": [
+      {
+       "set": {
+        "Start": true
+       },
+       "scans": 25
+      },
+      {
+       "set": {
+        "Start": false
+       },
+       "expect": {
+        "Lamp": false
+       }
+      }
+     ]
+    }
+   ],
+   "why": "A TON (on-delay) times while IN is true and sets Q once ET reaches PT. When IN goes false, Q and ET reset at once. PT is a TIME: T#2s, not just 2. ET is the time so far, a TIME, not a BOOL.",
+   "added": true,
+   "after": "wikipedia1-3"
   },
   {
    "type": "concept",
@@ -64,6 +151,22 @@
    "id": "wikipedia2-1"
   },
   {
+   "id": "q-il-gone",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which IEC 61131-3 language was deprecated in 2013 and removed in the 2025 edition?",
+   "options": [
+    "Instruction List (IL)",
+    "Structured Text (ST)",
+    "Sequential Function Chart (SFC)",
+    "Function Block Diagram (FBD)"
+   ],
+   "answer": 0,
+   "why": "IL, a textual, assembler-like language, was deprecated in the third edition (2013) and dropped in the fourth (May 2025). The standard now has three graphical languages (LD, FBD, SFC) and one textual (ST). Old S7 code in STL is the same idea and still turns up on site.",
+   "added": true,
+   "after": "wikipedia2-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Elementary Data Types (basic)",
@@ -72,12 +175,55 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-type-choice",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.3,
+   "q": "A position count can go from −80 000 to +80 000. Which elementary type holds it?",
+   "options": [
+    "DINT",
+    "INT",
+    "UINT",
+    "SINT"
+   ],
+   "answer": 0,
+   "why": "INT is 2 bytes signed: −32 768 to 32 767, too small. UINT is 2 bytes unsigned: 0 to 65 535, no negatives. SINT is 1 byte. DINT is 4 bytes signed, about ±2.1 billion. An INT that overflows wraps round to a large negative number, a classic fault.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Elementary Data Types (Date and Time)",
    "html": "<table> <caption><strong>Duration literals</strong></caption> <tbody><tr> <th>Unit</th> <th>Description</th></tr> <tr> <td>d</td> <td>Day</td></tr> <tr> <td>h</td> <td>Hour</td></tr> <tr> <td>m</td> <td>Minute</td></tr> <tr> <td>s</td> <td>Second</td></tr> <tr> <td>ms</td> <td>Millisecond</td></tr> <tr> <td>us</td> <td>Microsecond</td></tr> <tr> <td>ns</td> <td>Nanosecond</td></tr> </tbody></table><ul><li>Duration  <ul><li>TIME – (implementer specific). Literals in the form of T#5m90s15ms</li> <li>LTIME – (8 byte). Literals extend to nanoseconds in the form of T#5m90s15ms542us15ns</li></ul></li> <li>Date <ul><li>DATE – calendar date (implementer specific)</li> <li>LDATE – calendar date (8 byte, nanoseconds since 1970-01-01, restricted to multiple of one day)</li></ul></li> <li>Time of day <ul><li>TIME_OF_DAY / TOD – clock time (implementer specific)</li> <li>LTIME_OF_DAY / LTOD – clock time (8 byte)</li></ul></li> <li>Date and time of Day <ul><li>DATE_AND_TIME / DT – time and date (implementer specific)</li> <li>LDATE_AND_TIME / LDT – time and date (8 byte, nanoseconds since 1970-01-01)</li></ul></li></ul>",
    "body": "Duration literals Unit Description d Day h Hour m Minute s Second ms Millisecond us Microsecond ns Nanosecond Duration TIME – (implementer specific). Literals in the form of T#5m90s15ms LTIME – (8 byte). Literals extend to nanoseconds in the form of T#5m90s15ms542us15ns Date DATE – calendar date (implementer specific) LDATE – calendar date (8 byte, nanoseconds since 1970-01-01, restricted to multiple of one day) Time of day TIME_OF_DAY / TOD – clock time (implementer specific) LTIME_OF_DAY / LTOD – clock time (8 byte) Date and time of Day DATE_AND_TIME / DT – time and date (implementer specific) LDATE_AND_TIME / LDT – time and date (8 byte, nanoseconds since 1970-01-01)",
    "id": "wikipedia2-3"
+  },
+  {
+   "id": "q-time-literal",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 4.8,
+   "q": "A timer's preset is `T#{m}m{s}s`. How many seconds is that?",
+   "vars": {
+    "m": [
+     1,
+     9,
+     1
+    ],
+    "s": [
+     5,
+     55,
+     5
+    ]
+   },
+   "answer": "m * 60 + s",
+   "unit": "s",
+   "work": "${m} \\times 60 + {s} = {answer}$ s",
+   "why": "A duration literal reads unit by unit: m is minutes, s seconds (ms is milliseconds, h hours). Times 60 for the minutes, then add the seconds.",
+   "hint": "m is minutes. How many seconds in a minute?",
+   "added": true,
+   "after": "wikipedia2-3"
   },
   {
    "type": "concept",
@@ -102,6 +248,81 @@
    "html": "<p>Variable attributes: RETAIN, CONSTANT, AT</p><ul><li>Global</li> <li>Direct (local)</li> <li><a href=\"https://en.wikipedia.org/wiki/I/O\">I/O</a> Mapping – Input, Output, I/O</li> <li>External</li> <li>Temporary</li></ul><h4>Configuration</h4><ul><li>Resource – Like a <a href=\"https://en.wikipedia.org/wiki/CPU\">CPU</a></li> <li>Tasks – Can be multiple per <a href=\"https://en.wikipedia.org/wiki/CPU\">CPU</a>.</li> <li><a href=\"https://en.wikipedia.org/wiki/Computer_program\">Programs</a> – Can be executed once, on a timer, on an event.</li></ul><h4>Program organization unit (POU)</h4><ul><li>Functions <ul><li>Standard: ADD, SQRT, SIN, COS, GT, MIN, MAX, AND, OR, etc.</li> <li>Custom</li></ul></li> <li>Function Blocks <ul><li>Standard:</li> <li>Custom – Libraries of functions can be supplied by a vendor or third party.</li></ul></li> <li>Programs</li></ul><h4>Configuration, resources, tasks</h4><ul><li>Configuration – processing resources, memory for IO, execution rates, number of tasks.</li></ul><h4>Object oriented programming (OOP)</h4><ul><li>The 3rd revision of the standard describes how to implement OOP within the application programming</li></ul>",
    "body": "Variable attributes: RETAIN, CONSTANT, AT Global Direct (local) I/O Mapping – Input, Output, I/O External Temporary Configuration Resource – Like a CPU Tasks – Can be multiple per CPU . Programs – Can be executed once, on a timer, on an event. Program organization unit (POU) Functions Standard: ADD, SQRT, SIN, COS, GT, MIN, MAX, AND, OR, etc. Custom Function Blocks Standard: Custom – Libraries of functions can be supplied by a vendor or third party. Programs Configuration, resources, tasks Configuration – processing resources, memory for IO, execution rates, number of tasks. Object oriented programming (OOP) The 3rd revision of the standard describes how to implement OOP within the application programming",
    "id": "wikipedia2-6"
+  },
+  {
+   "id": "q-code-edge",
+   "type": "code",
+   "stage": "learn",
+   "level": 5.4,
+   "q": "Count each press of Button once, however long it is held. Fill in the blanks.",
+   "code": "VAR Edge : R_TRIG; Count : INT := 0; END_VAR\nEdge(CLK := ___);\nIF Edge.___ THEN Count := Count + 1; END_IF;",
+   "inputs": [
+    "Button"
+   ],
+   "outputs": [
+    "Count"
+   ],
+   "solution": [
+    "Button",
+    "Q"
+   ],
+   "tests": [
+    {
+     "name": "A long press counts once",
+     "steps": [
+      {
+       "set": {
+        "Button": true
+       },
+       "scans": 30,
+       "expect": {
+        "Count": 1
+       }
+      }
+     ]
+    },
+    {
+     "name": "Three presses count three",
+     "steps": [
+      {
+       "set": {
+        "Button": true
+       },
+       "scans": 3
+      },
+      {
+       "set": {
+        "Button": false
+       },
+       "scans": 3
+      },
+      {
+       "set": {
+        "Button": true
+       },
+       "scans": 3
+      },
+      {
+       "set": {
+        "Button": false
+       },
+       "scans": 3
+      },
+      {
+       "set": {
+        "Button": true
+       },
+       "scans": 3,
+       "expect": {
+        "Count": 3
+       }
+      }
+     ]
+    }
+   ],
+   "why": "R_TRIG's Q is TRUE for one scan only, when CLK goes from FALSE to TRUE. Counting on Button itself would add one every scan it is held: hundreds a press.",
+   "added": true,
+   "after": "wikipedia2-6"
   },
   {
    "id": "add-st-assign",
@@ -160,7 +381,7 @@
     "Sequential Function Chart"
    ],
    "answer": 0,
-   "why": "The standard defines Ladder Diagram, Function Block Diagram, Structured Text and Sequential Function Chart (Instruction List was dropped in the 2013 edition). Some PLCs run other languages alongside, but outside the standard.",
+   "why": "The standard defines Ladder Diagram, Function Block Diagram, Structured Text and Sequential Function Chart. Instruction List was deprecated in the 2013 edition and removed in 2025. Some PLCs run other languages alongside, but outside the standard.",
    "added": true
   },
   {

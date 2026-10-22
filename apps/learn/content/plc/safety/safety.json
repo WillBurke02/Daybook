@@ -40,6 +40,22 @@
    "id": "wikipedia1-1"
   },
   {
+   "id": "q-13849-parts",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "ISO 13849 has two parts. What is Part 2 about?",
+   "why": "Part 1 is how to design safety-related parts of a control system to reach a performance level; Part 2 is how to prove they do, by analysis and tests, with lists of well-tried components and common faults in its annexes.",
+   "added": true,
+   "after": "wikipedia1-1",
+   "options": [
+    "Validating the safety functions",
+    "Designing the safety functions",
+    "Choosing guards and their distances",
+    "The machine's risk assessment"
+   ],
+   "answer": 0
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "ISO 13849",
@@ -80,6 +96,22 @@
    "id": "wikipedia1-6"
   },
   {
+   "id": "q-annex-a",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does the risk graph in ISO 13849-1 Annex A give you?",
+   "options": [
+    "The required performance level, PLr",
+    "A full risk assessment of the machine",
+    "The guard's distance from the hazard",
+    "The safety relay to buy"
+   ],
+   "answer": 0,
+   "why": "The Annex A decision tree turns severity, exposure and the chance of avoiding the hazard into a PLr for one safety function. The text stresses it is not a risk assessment tool: the risk assessment (ISO 12100) comes first and decides which safety functions are needed.",
+   "added": true,
+   "after": "wikipedia1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Assignment of safety functions",
@@ -94,6 +126,22 @@
    "html": "<p>A Performance Level is a band of failure rates, represented as a, b, c, d, e. These failure rates are quantified as the Probability of Dangerous Failure per hour, PFH<sub>d</sub>. The numeric values for PFH<sub>d</sub> are given in Annex K. The PL range for each band has a 5% tolerance. The PFH<sub>d</sub> covered by ISO 13849-1 range from the highest failure rate in PL<sub>a</sub> &lt; 1 × 10<sup>−4</sup> to the lowest failure rate in PL<sub>e</sub> at ≥ 1 × 10<sup>−8</sup>.</p><p>The Performance Level of a safety function is determined by the architectural characteristics of the controller (classified according to designated architectural categories, Category B, 1, 2, 3, 4), the MTTF<sub>D</sub> of the components in the functional channel(s) of the system, the average diagnostic coverage (DC<sub>avg</sub>) implemented in the system, and the application of measures against Common Cause Failures (CCF). Category B, 1 and 2 architectures are single channel, and therefore offer no fault tolerance.</p>",
    "body": "A Performance Level is a band of failure rates, represented as a, b, c, d, e. These failure rates are quantified as the Probability of Dangerous Failure per hour, PFH d . The numeric values for PFH d are given in Annex K. The PL range for each band has a 5% tolerance. The PFH d covered by ISO 13849-1 range from the highest failure rate in PL a < 1 × 10 −4 to the lowest failure rate in PL e at ≥ 1 × 10 −8 . The Performance Level of a safety function is determined by the architectural characteristics of the controller (classified according to designated architectural categories, Category B, 1, 2, 3, 4), the MTTF D of the components in the functional channel(s) of the system, the average diagnostic coverage (DC avg ) implemented in the system, and the application of measures against Common Cause Failures (CCF). Category B, 1 and 2 architectures are single channel, and therefore offer no fault tolerance.",
    "id": "wikipedia1-8"
+  },
+  {
+   "id": "q-single-channel",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which designated architectures have no fault tolerance, because they are single channel?",
+   "options": [
+    "Categories B, 1 and 2",
+    "Categories 3 and 4",
+    "Only Category B",
+    "All five"
+   ],
+   "answer": 0,
+   "why": "B, 1 and 2 are single channel: one fault in the channel can lose the safety function (Category 2's tests only find it at the next test). Categories 3 and 4 have two channels with cross-monitoring, so no single fault loses the function.",
+   "added": true,
+   "after": "wikipedia1-8"
   },
   {
    "type": "concept",
@@ -120,6 +168,37 @@
    "id": "wikipedia1-11"
   },
   {
+   "id": "q-category-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each category to what marks it out.",
+   "pairs": [
+    [
+     "Category B",
+     "Basic, suitable components; at most PL b"
+    ],
+    [
+     "Category 1",
+     "Well-tried components; at most PL c"
+    ],
+    [
+     "Category 2",
+     "One channel plus periodic testing; at most PL d"
+    ],
+    [
+     "Category 3",
+     "Two channels: no single fault loses the function"
+    ],
+    [
+     "Category 4",
+     "Two channels with DCavg of 99% or more"
+    ]
+   ],
+   "why": "Reliability climbs from B to 1 by better components, to 2 by testing, to 3 and 4 by redundancy. Category 4 also needs high-MTTFd parts and high diagnostic coverage, so faults are found before they can add up.",
+   "added": true,
+   "after": "wikipedia1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Validation",
@@ -144,12 +223,45 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-sil-rrf",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "A hazard needs its risk cut by a factor of about 500 by one safety instrumented function (low demand). Which SIL is that?",
+   "options": [
+    "SIL 2",
+    "SIL 1",
+    "SIL 3",
+    "SIL 4"
+   ],
+   "answer": 0,
+   "why": "Each tenfold step of risk reduction is one SIL: SIL 1 is 10 to 100, SIL 2 is 100 to 1000, SIL 3 is 1000 to 10 000. 500 sits in SIL 2. Past what SIL 4 can give, the text says to use other safeguards, such as a relief valve.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Problems",
    "html": "<p>There are several problems inherent in the use of safety integrity levels. These can be summarized as follows:</p><ul><li>Poor harmonization of definition across the different standards bodies which utilize SIL.</li> <li>Process-oriented metrics for derivation of SIL.</li> <li>Estimation of SIL based on reliability estimates.</li> <li>System complexity, particularly in software systems, making SIL estimation difficult to impossible.</li></ul><p>These lead to such erroneous statements as the <a href=\"https://en.wikipedia.org/wiki/Tautology_(logic)\">tautology</a> \"This system is a SIL N system because the process adopted during its development was the standard process for the development of a SIL N system\", or use of the SIL concept out of context such as \"This is a SIL 3 <a href=\"https://en.wikipedia.org/wiki/Heat_exchanger\">heat exchanger</a>\" or \"This <a href=\"https://en.wikipedia.org/wiki/Software\">software</a> is SIL 2\". According to IEC 61508, the SIL concept must be related to the dangerous failure rate of a system, not just its failure rate or the failure rate of a component part, such as the software. Definition of the dangerous failure modes by safety analysis is intrinsic to the proper determination of the failure rate.</p>",
    "body": "There are several problems inherent in the use of safety integrity levels. These can be summarized as follows: Poor harmonization of definition across the different standards bodies which utilize SIL. Process-oriented metrics for derivation of SIL. Estimation of SIL based on reliability estimates. System complexity, particularly in software systems, making SIL estimation difficult to impossible. These lead to such erroneous statements as the tautology \"This system is a SIL N system because the process adopted during its development was the standard process for the development of a SIL N system\", or use of the SIL concept out of context such as \"This is a SIL 3 heat exchanger \" or \"This software is SIL 2\". According to IEC 61508, the SIL concept must be related to the dangerous failure rate of a system, not just its failure rate or the failure rate of a component part, such as the software. Definition of the dangerous failure modes by safety analysis is intrinsic to the proper determination of the failure rate.",
    "id": "wikipedia2-3"
+  },
+  {
+   "id": "q-sil-misuse",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is \"this is a SIL 3 heat exchanger\" a misuse of SIL?",
+   "options": [
+    "SIL belongs to a whole safety function",
+    "Heat exchangers can only be SIL 1",
+    "SIL applies only to software",
+    "SIL 3 is not a real level at all"
+   ],
+   "answer": 0,
+   "why": "Under IEC 61508 a SIL belongs to a safety function and its rate of dangerous failure, worked out from its whole loop (sensor, logic and final element). A component can be suitable for use in a SIL 3 function, but a heat exchanger or a piece of software is not 'SIL 3' on its own.",
+   "added": true,
+   "after": "wikipedia2-3"
   },
   {
    "type": "concept",

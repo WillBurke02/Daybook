@@ -46,6 +46,22 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-tag-db",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What links a button or number on an HMI screen to the data in the PLC?",
+   "options": [
+    "A tag name in the HMI's tag database",
+    "A wire from the screen to the PLC input",
+    "A copy of the PLC program in the HMI",
+    "The PLC's scan time"
+   ],
+   "answer": 0,
+   "why": "Each screen object is tied to a tag name, and the tag database maps that name to a bit or word in the PLC. Programming an HMI is building that database and then drawing the screens.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "12.9 Human-Machine Interfaces",
@@ -60,6 +76,22 @@
    "html": "<p>HMI cannot possibly generate a conflict. The potential for data conflict also exists for some of the other points in the database, however. A good example of this is the MOTOR RUN bit, which is the bit within the PLC program telling the real-world motor to run. Presumably, this bit gets its data from a coil in the PLC’s Ladder Diagram program. However, since it also appears in the HMI database with read/write permission, the potential exists for the HMI to over-write (i.e. conflict) that same bit in the PLC’s memory. Suppose someone programmed a toggling “pushbutton” screen object in the HMI linked to this tag: pushing this virtual “button” on the HMI screen would attempt to set the bit (1), and pushing it again would attempt to reset the bit (0). If this same bit is being written to by a coil in the PLC’s program, however, there exists the distinct possibility that the HMI’s “pushbutton” object and the PLC’s coil will conflict, one trying to tell the bit to be a “0” while the other tries to tell that bit to be a “1”. This situation is quite similar to the problem experienced when multiple coils in a Ladder Diagram program are addressed to the same bit. The general rule to follow here is never allow more than one element to write to any data point. In my experience teaching PLC and HMI programming, this is one of the more common errors students make when first learning to program HMIs: they will try to have both the HMI and the PLC writing to the same memory locations, with weird results.</p>",
    "body": "HMI cannot possibly generate a conflict. The potential for data conflict also exists for some of the other points in the database, however. A good example of this is the MOTOR RUN bit, which is the bit within the PLC program telling the real-world motor to run. Presumably, this bit gets its data from a coil in the PLC’s Ladder Diagram program. However, since it also appears in the HMI database with read/write permission, the potential exists for the HMI to over-write (i.e. conflict) that same bit in the PLC’s memory. Suppose someone programmed a toggling “pushbutton” screen object in the HMI linked to this tag: pushing this virtual “button” on the HMI screen would attempt to set the bit (1), and pushing it again would attempt to reset the bit (0). If this same bit is being written to by a coil in the PLC’s program, however, there exists the distinct possibility that the HMI’s “pushbutton” object and the PLC’s coil will conflict, one trying to tell the bit to be a “0” while the other tries to tell that bit to be a “1”. This situation is quite similar to the problem experienced when multiple coils in a Ladder Diagram program are addressed to the same bit. The general rule to follow here is never allow more than one element to write to any data point. In my experience teaching PLC and HMI programming, this is one of the more common errors students make when first learning to program HMIs: they will try to have both the HMI and the PLC writing to the same memory locations, with weird results.",
    "id": "liii1-5"
+  },
+  {
+   "id": "q-read-only",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why should the HMI tag for a real pushbutton wired to a PLC input be read-only?",
+   "options": [
+    "The input and the HMI would fight over the same bit",
+    "Reading is faster than writing",
+    "Inputs cannot be shown on a screen otherwise",
+    "To save HMI licence tags"
+   ],
+   "answer": 0,
+   "why": "The bit's state comes from the input terminal. If the HMI could also write it, the two would conflict, and whichever wrote last would win: unpredictable behaviour. The same goes for a bit written by a coil in the program. Give the HMI its own request bits instead.",
+   "added": true,
+   "after": "liii1-5"
   },
   {
    "type": "concept",
@@ -78,12 +110,44 @@
    "id": "liii1-7"
   },
   {
+   "id": "q-tag-names",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why name tags like `Exchanger_preheat_pump` rather than `Preheat_pump_exchanger`?",
+   "options": [
+    "It groups related tags when sorted",
+    "Shorter names scan faster",
+    "The PLC needs the noun first",
+    "It avoids spaces in the name"
+   ],
+   "answer": 0,
+   "why": "Starting with the equipment (then the part, then the signal) puts every tag of the exchanger together in an alphabetical list, so they are easy to find years later. Spaces are avoided too, with underscores, but that is a separate rule.",
+   "added": true,
+   "after": "liii1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "12.9 Human-Machine Interfaces",
    "html": "<p>Like programmable logic controllers themselves, the capabilities of HMIs have been steadily increasing while their price decreases. Modern HMIs support graphic trending, data archival, advanced alarming, and even web server ability allowing other computers to easily access certain data over wide-area networks. The ability of HMIs to log data over long periods of time relieves the PLC of having to do this task, which is very memory-intensive. This way, the PLC merely “serves” current data to the HMI, and the HMI is able to keep a record of current and past data using its vastly larger memory reserves32. Some modern HMI panels even have a PLC built inside the unit, providing control and monitoring in the same device. Such panels provide terminal strip connection points for discrete and even analog I/O, allowing all control and interface functions to be located in a single panel-mount unit.</p><p><small>32If the HMI is based on a personal computer platform (e.g. Rockwell RSView, Wonderware, FIX/Intellution software), it may even be equipped with a hard disk drive for enormous amounts of historical data storage.</small></p>",
    "body": "Like programmable logic controllers themselves, the capabilities of HMIs have been steadily increasing while their price decreases. Modern HMIs support graphic trending, data archival, advanced alarming, and even web server ability allowing other computers to easily access certain data over wide-area networks. The ability of HMIs to log data over long periods of time relieves the PLC of having to do this task, which is very memory-intensive. This way, the PLC merely “serves” current data to the HMI, and the HMI is able to keep a record of current and past data using its vastly larger memory reserves32. Some modern HMI panels even have a PLC built inside the unit, providing control and monitoring in the same device. Such panels provide terminal strip connection points for discrete and even analog I/O, allowing all control and interface functions to be located in a single panel-mount unit. 32If the HMI is based on a personal computer platform (e.g. Rockwell RSView, Wonderware, FIX/Intellution software), it may even be equipped with a hard disk drive for enormous amounts of historical data storage.",
    "id": "liii1-8"
+  },
+  {
+   "id": "q-hmi-log",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does the HMI usually keep the trends and history rather than the PLC?",
+   "options": [
+    "It takes memory, which the HMI has",
+    "PLCs cannot read the time",
+    "The PLC would scan too slowly",
+    "History is not allowed in a PLC"
+   ],
+   "answer": 0,
+   "why": "The text: logging over long periods is memory-hungry. The PLC serves the current values and the HMI, with far more storage, keeps the record. Big sites hand it on again to a historian.",
+   "added": true,
+   "after": "liii1-8"
   },
   {
    "id": "add-hmi-tags",

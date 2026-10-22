@@ -57,6 +57,22 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-rerange",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A transmitter is re-ranged to twice the span, so the loop needs half the gain. With which PID form must you change P, I and D settings all three?",
+   "options": [
+    "Parallel",
+    "Ideal (ISA)",
+    "Series (interacting)",
+    "Any of them: only Kp ever changes"
+   ],
+   "answer": 0,
+   "why": "In the parallel form each action has its own independent setting, so halving the loop gain means changing all three in proportion. In the ideal and series forms Kp multiplies every term, so changing Kp alone rescales the whole controller.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "29.10.2 Ideal PID equation",
@@ -79,6 +95,29 @@
    "html": "<p>As you can see, all three portions of this PID equation are influenced by the gain (Kp) owing to algebraic distribution. However, the proportional term is also affected by the values of the integral and derivative tuning parameters (τi and τd). Therefore, adjusting τi affects both the I and P actions, adjusting τd affects both the D and P actions, and adjusting Kp affects all three actions. This “interacting” equation is an artifact of certain pneumatic and electronic controller designs. Back when these were the dominant technologies, and PID controllers were modularly designed such that integral and derivative actions were separate hardware modules included in a controller at additional cost beyond proportional-only action, the easiest way to implement the integral and derivative actions was in a way that just happened to have an interactive effect on controller gain. In other words, this odd equation form was a sort of compromise made for the purpose of simplifying the physical design of the controller. Interestingly enough, many digital PID controllers are programmed to implement the “interacting” PID equation even though it is no longer an artifact of controller hardware. The rationale for this programming is to have the digital controller behave identically to the legacy analog electronic or pneumatic controller it is replacing. This way, the proven tuning parameters of the old controller may be plugged into the new digital controller, yielding the same results. In essence, this is a form of “backward compatibility” between digital PID control and analog (electronic or pneumatic) PID control.</p>",
    "body": "As you can see, all three portions of this PID equation are influenced by the gain (Kp) owing to algebraic distribution. However, the proportional term is also affected by the values of the integral and derivative tuning parameters (τi and τd). Therefore, adjusting τi affects both the I and P actions, adjusting τd affects both the D and P actions, and adjusting Kp affects all three actions. This “interacting” equation is an artifact of certain pneumatic and electronic controller designs. Back when these were the dominant technologies, and PID controllers were modularly designed such that integral and derivative actions were separate hardware modules included in a controller at additional cost beyond proportional-only action, the easiest way to implement the integral and derivative actions was in a way that just happened to have an interactive effect on controller gain. In other words, this odd equation form was a sort of compromise made for the purpose of simplifying the physical design of the controller. Interestingly enough, many digital PID controllers are programmed to implement the “interacting” PID equation even though it is no longer an artifact of controller hardware. The rationale for this programming is to have the digital controller behave identically to the legacy analog electronic or pneumatic controller it is replacing. This way, the proven tuning parameters of the old controller may be plugged into the new digital controller, yielding the same results. In essence, this is a form of “backward compatibility” between digital PID control and analog (electronic or pneumatic) PID control.",
    "id": "liii1-5"
+  },
+  {
+   "id": "q-pid-forms",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each PID equation form to how its settings behave.",
+   "pairs": [
+    [
+     "Parallel",
+     "P, I and D each set independently"
+    ],
+    [
+     "Ideal (ISA)",
+     "Kp scales all three; Ti and Td act alone"
+    ],
+    [
+     "Series (interacting)",
+     "Changing Ti or Td also changes the P action"
+    ]
+   ],
+   "why": "The same numbers in a different form give a different controller, so tuning values copied from one make of controller to another must be converted. The series form survives from pneumatic and analogue designs, and many digital controllers copy it.",
+   "added": true,
+   "after": "liii1-5"
   },
   {
    "type": "concept",
@@ -105,6 +144,22 @@
    "id": "liii2-2"
   },
   {
+   "id": "q-cascade-mode",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A controller has three modes: manual, automatic and cascade. What does cascade mode change?",
+   "options": [
+    "Where its set point comes from",
+    "Whether it calculates its output",
+    "How fast it scans",
+    "Which PID form it uses"
+   ],
+   "answer": 0,
+   "why": "In cascade (remote set point) mode the set point comes from another device, usually another controller's output, instead of the operator. In manual the operator sets the output itself; in automatic the controller calculates it from the operator's set point.",
+   "added": true,
+   "after": "liii2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "29.14.2 Output and setpoint tracking",
@@ -119,6 +174,22 @@
    "html": "<p>level43.</p><p>A similar feature to output tracking – also designed for the convenience of a human operator switching a PID controller between automatic and manual modes – is called setpoint tracking. The purpose of setpoint tracking is to equalize SP and PV while the controller is in manual mode, so that when the controller gets switched back into automatic mode, it will begin its automatic operation with no error (PV = SP). This feature is most useful during system start-ups, where the controller may have difficulty controlling the process in automatic mode under unusual conditions. Operators often prefer to run certain control loops in manual mode from the time of initial start-up until such time that the process is near normal operating conditions. At that point, when the operator is content with the stability of the process, the controller is assigned the responsibility of maintaining the process at setpoint. With setpoint tracking present in the controller, the controller’s SP value will be held equal to the PV value (whatever that value happens to be) for the entire time the controller is in manual mode. Once the operator decides it is proper to switch the controller into automatic mode, the SP value freezes at that last manual-mode PV value, and the controller will continue to control the PV at that SP value. Of course, the operator is free to adjust the SP value to any new value while the controller is in automatic mode, but this is at the operator’s discretion. Without setpoint tracking, the operator would have to make a setpoint adjustment either before or after switching the controller from manual mode to automatic mode, in order to ensure the controller was properly set up to maintain the process variable at the desired value. With setpoint tracking, the setpoint value will default to the process variable value when the controller was last in manual mode, which (it is assumed) will be close enough to the desired value to suffice for continued operation. Unlike output tracking, for which there is virtually no reason not to have the feature present in a PID controller, there may very well be applications where we do not wish to have setpoint tracking. For some processes44, the setpoint value should remain fixed at all times, and as such it would be undesirable to have the setpoint value drift around with the process variable value every time the controller was placed into manual mode.</p>",
    "body": "level43. A similar feature to output tracking – also designed for the convenience of a human operator switching a PID controller between automatic and manual modes – is called setpoint tracking. The purpose of setpoint tracking is to equalize SP and PV while the controller is in manual mode, so that when the controller gets switched back into automatic mode, it will begin its automatic operation with no error (PV = SP). This feature is most useful during system start-ups, where the controller may have difficulty controlling the process in automatic mode under unusual conditions. Operators often prefer to run certain control loops in manual mode from the time of initial start-up until such time that the process is near normal operating conditions. At that point, when the operator is content with the stability of the process, the controller is assigned the responsibility of maintaining the process at setpoint. With setpoint tracking present in the controller, the controller’s SP value will be held equal to the PV value (whatever that value happens to be) for the entire time the controller is in manual mode. Once the operator decides it is proper to switch the controller into automatic mode, the SP value freezes at that last manual-mode PV value, and the controller will continue to control the PV at that SP value. Of course, the operator is free to adjust the SP value to any new value while the controller is in automatic mode, but this is at the operator’s discretion. Without setpoint tracking, the operator would have to make a setpoint adjustment either before or after switching the controller from manual mode to automatic mode, in order to ensure the controller was properly set up to maintain the process variable at the desired value. With setpoint tracking, the setpoint value will default to the process variable value when the controller was last in manual mode, which (it is assumed) will be close enough to the desired value to suffice for continued operation. Unlike output tracking, for which there is virtually no reason not to have the feature present in a PID controller, there may very well be applications where we do not wish to have setpoint tracking. For some processes44, the setpoint value should remain fixed at all times, and as such it would be undesirable to have the setpoint value drift around with the process variable value every time the controller was placed into manual mode.",
    "id": "liii2-4"
+  },
+  {
+   "id": "q-sp-tracking",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does set point tracking do while a controller is in manual?",
+   "options": [
+    "Keeps SP equal to PV, so auto starts with no error",
+    "Keeps the output equal to the set point",
+    "Stops the PV changing",
+    "Holds the last automatic output"
+   ],
+   "answer": 0,
+   "why": "With SP made equal to PV all through manual, switching to automatic starts with zero error, so the output does not jump. Output tracking is its partner: the bias follows the manual output, so automatic starts from where manual left it.",
+   "added": true,
+   "after": "liii2-4"
   },
   {
    "type": "concept",
@@ -137,12 +208,51 @@
    "id": "liii2-6"
   },
   {
+   "id": "q-alarm-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each kind of alarm to what triggers it.",
+   "pairs": [
+    [
+     "Hard alarm",
+     "A process switch, such as a high-level switch"
+    ],
+    [
+     "Soft alarm",
+     "A transmitter's value passing a set limit"
+    ],
+    [
+     "Deviation alarm",
+     "PV too far from SP"
+    ]
+   ],
+   "why": "Soft alarms are cheap, since the controller already has the measurement, but they share its transmitter: if that fails, both the control and the alarm go. That is why the book warns soft alarms are no replacement for hard ones on anything that matters.",
+   "added": true,
+   "after": "liii2-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "29.14.4 Output and setpoint limiting",
    "html": "<p>In some process applications, it may not be desirable to allow the controller to automatically manipulate the final control element (control valve, variable-speed motor, heater) over its full 0% - 100% range. In such applications, a useful controller feature is an output limit. For example, a PID flow controller may be configured to have a minimum output limit of 5%, so that it is not able to close the control valve any further than the 5% open position in order to maintain “minimum flow” through a pump. The valve may still be fully closed (0% stem position) in manual mode, but just not in automatic mode46. Similarly, setpoint values may be internally limited in some PID controllers, such that an operator cannot adjust the setpoint above some limiting value or below some other limiting value. In the event that the process variable must be driven outside these limits, the controller may be placed in manual mode and the process “manually” guided to the desired state by an operator.</p><p>45It is very important to note that soft alarms are not a replacement for hard alarms. There is much wisdom in maintaining both hard and soft alarms for a process, so there will be redundant, non-interactive levels of alarming. Hard and soft alarms should complement each other in any critical process. 46Some PID controllers limit manual-mode output values as well, so be sure to check the manufacturer’s documentation for output limiting on your particular PID controller!</p>",
    "body": "In some process applications, it may not be desirable to allow the controller to automatically manipulate the final control element (control valve, variable-speed motor, heater) over its full 0% - 100% range. In such applications, a useful controller feature is an output limit. For example, a PID flow controller may be configured to have a minimum output limit of 5%, so that it is not able to close the control valve any further than the 5% open position in order to maintain “minimum flow” through a pump. The valve may still be fully closed (0% stem position) in manual mode, but just not in automatic mode46. Similarly, setpoint values may be internally limited in some PID controllers, such that an operator cannot adjust the setpoint above some limiting value or below some other limiting value. In the event that the process variable must be driven outside these limits, the controller may be placed in manual mode and the process “manually” guided to the desired state by an operator. 45It is very important to note that soft alarms are not a replacement for hard alarms. There is much wisdom in maintaining both hard and soft alarms for a process, so there will be redundant, non-interactive levels of alarming. Hard and soft alarms should complement each other in any critical process. 46Some PID controllers limit manual-mode output values as well, so be sure to check the manufacturer’s documentation for output limiting on your particular PID controller!",
    "id": "liii2-7"
+  },
+  {
+   "id": "q-min-output",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A flow controller has a minimum output limit of 5% to protect its pump. Can the valve ever close fully?",
+   "options": [
+    "Yes, in manual; not in automatic",
+    "No, never",
+    "Yes, in automatic if the flow is high",
+    "Only if the limit is set to 0%"
+   ],
+   "answer": 0,
+   "why": "Output limits act on automatic mode: the controller will not drive the valve below 5%, keeping a minimum flow through the pump. In manual the operator can still close it fully, for example to isolate.",
+   "added": true,
+   "after": "liii2-7"
   },
   {
    "type": "concept",
@@ -249,6 +359,50 @@
    "id": "liii2-20"
   },
   {
+   "id": "q-p-position",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.0,
+   "q": "A proportional-only controller (position algorithm, reverse acting, so error = SP − PV) has gain {kp} and bias {b}%. SP is {sp}% and PV is {pv}%. What is its output?",
+   "vars": {
+    "kp": {
+     "pick": [
+      0.5,
+      1,
+      1.5,
+      2,
+      3
+     ]
+    },
+    "b": [
+     30,
+     60,
+     5
+    ],
+    "sp": [
+     40,
+     70,
+     1
+    ],
+    "dpv": [
+     -6,
+     6,
+     1
+    ]
+   },
+   "let": {
+    "pv": "sp + dpv"
+   },
+   "answer": "kp * (sp - pv) + b",
+   "unit": "%",
+   "abs": 0.05,
+   "work": "$m = K_p e + b = {kp} \\times ({sp} - {pv}) + {b} = {answer:1}$ %",
+   "why": "The position form works out the output itself: gain times error, plus the bias that sets where the output sits with no error. If PV is above SP the error is negative and the output falls below the bias.",
+   "hint": "Error first (SP − PV, and watch the sign), times the gain, then add the bias.",
+   "added": true,
+   "after": "liii2-20"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "29.15.1 Introduction to pseudocode",
@@ -263,6 +417,23 @@
    "html": "<p>From a human operator’s point of view, the position algorithm and the velocity algorithm are identical with one exception: how each controller reacts to a sudden change in gain (K p). To understand this difference, let us perform a “thought experiment” where we imagine a condition of constant error between PV and SP. Suppose the controller is operating in automatic mode, with a setpoint of 60% and a (steady) process variable value of 57%. We should not be surprised that a constant error might exist for a proportional-only controller, since we should be well aware of the phenomenon of proportional-only offset. How will this controller react if the gain is suddenly increased in value while operating in automatic mode? If the controller executes the position algorithm, the result of a sudden gain change will be a sudden change in its output value, since output is a direct function of error and gain. However, if the controller executes the velocity algorithm, the result of a sudden gain change will be no change to the output at all, so long as the error remains constant. Only when the error begins to change will there be any noticeable difference in the controller’s behavior compared to how it acted before the gain change. This is because the velocity algorithm is a function of gain and change in error, not error directly. Comparing the two responses, the velocity algorithm’s response to changes in gain is regarded as “better-mannered” than the position algorithm’s response to changes in gain. When tuning a controller, we would rather not have the controller’s output suddenly jump in response to simple gain changes48, and so the velocity algorithm is generally preferred. If we allow the gain of the algorithm to be set by another process variable49, the need for “stable” gain-change behavior becomes even more important.</p>",
    "body": "From a human operator’s point of view, the position algorithm and the velocity algorithm are identical with one exception: how each controller reacts to a sudden change in gain (K p). To understand this difference, let us perform a “thought experiment” where we imagine a condition of constant error between PV and SP. Suppose the controller is operating in automatic mode, with a setpoint of 60% and a (steady) process variable value of 57%. We should not be surprised that a constant error might exist for a proportional-only controller, since we should be well aware of the phenomenon of proportional-only offset. How will this controller react if the gain is suddenly increased in value while operating in automatic mode? If the controller executes the position algorithm, the result of a sudden gain change will be a sudden change in its output value, since output is a direct function of error and gain. However, if the controller executes the velocity algorithm, the result of a sudden gain change will be no change to the output at all, so long as the error remains constant. Only when the error begins to change will there be any noticeable difference in the controller’s behavior compared to how it acted before the gain change. This is because the velocity algorithm is a function of gain and change in error, not error directly. Comparing the two responses, the velocity algorithm’s response to changes in gain is regarded as “better-mannered” than the position algorithm’s response to changes in gain. When tuning a controller, we would rather not have the controller’s output suddenly jump in response to simple gain changes48, and so the velocity algorithm is generally preferred. If we allow the gain of the algorithm to be set by another process variable49, the need for “stable” gain-change behavior becomes even more important.",
    "id": "liii2-22"
+  },
+  {
+   "id": "q-velocity-gain",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "A P-only controller sits with a steady error of 3%. Someone doubles the gain. What does the output do with each algorithm?",
+   "options": [
+    "Position: jumps. Velocity: stays put",
+    "Position: stays put. Velocity: jumps",
+    "Both jump by the same amount",
+    "Neither changes until the error changes"
+   ],
+   "answer": 0,
+   "why": "The position algorithm calculates the output from gain × error, so a new gain gives a new output at once. The velocity algorithm calculates a change, gain × (change in error); with a steady error that change is zero, whatever the gain.",
+   "added": true,
+   "after": "liii2-22"
   },
   {
    "type": "concept",

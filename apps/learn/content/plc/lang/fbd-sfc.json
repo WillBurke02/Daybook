@@ -40,6 +40,22 @@
    "id": "wikipedia1-1"
   },
   {
+   "id": "q-sfc-step-active",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In an SFC, when does the step below a transition become active?",
+   "options": [
+    "Step above active and condition true",
+    "As soon as the step above has run once",
+    "When its own actions are ready to run",
+    "On every scan, whatever the condition"
+   ],
+   "answer": 0,
+   "why": "A transition fires only when every step above it is active and its condition is true; then the steps above go inactive and the steps below go active. That is how an SFC holds one place in a sequence and moves on only when the machine says so (a sensor made, a timer done).",
+   "added": true,
+   "after": "wikipedia1-1"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Sequential function chart",
@@ -48,12 +64,51 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-sfc-actions",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each SFC action qualifier to what it does.",
+   "pairs": [
+    [
+     "N",
+     "On only while the step is active"
+    ],
+    [
+     "S",
+     "Set: stays on after the step ends"
+    ],
+    [
+     "R",
+     "Reset: turns off something set earlier"
+    ]
+   ],
+   "why": "N (non-stored) is the usual one: the output follows the step. S and R store: a motor set in one step stays on through the next steps until a later step resets it. Forgetting the R is a classic SFC fault: the output never goes off.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Function block diagram",
    "html": "<p>The <strong>function block diagram</strong> (<strong>FBD</strong>) is a <a href=\"https://en.wikipedia.org/wiki/Visual_programming_language\">graphical language</a> for <a href=\"https://en.wikipedia.org/wiki/Programmable_logic_controller\">programmable logic controller</a> design, that can describe the function between input variables and output variables. A function is described as a set of elementary blocks. Input and output variables are connected to blocks by connection lines.</p><h4>Design</h4><p>Inputs and outputs of the blocks are wired together with connection lines or links. Single lines may be used to connect two logical points of the diagram:</p><ul><li>An input variable and an input of a block</li> <li>An output of a block and an input of another block</li> <li>An output of a block and an output variable</li></ul><p>The connection is oriented, meaning that the line carries associated data from the left end to the right end. The left and right ends of the connection line must be of the same type.</p><p>Multiple right connection, also called divergence, can be used to broadcast information from its left end to each of its right ends. All ends of the connection must be of the same type.</p>",
    "body": "The function block diagram ( FBD ) is a graphical language for programmable logic controller design, that can describe the function between input variables and output variables. A function is described as a set of elementary blocks. Input and output variables are connected to blocks by connection lines. Design Inputs and outputs of the blocks are wired together with connection lines or links. Single lines may be used to connect two logical points of the diagram: An input variable and an input of a block An output of a block and an input of another block An output of a block and an output variable The connection is oriented, meaning that the line carries associated data from the left end to the right end. The left and right ends of the connection line must be of the same type. Multiple right connection, also called divergence, can be used to broadcast information from its left end to each of its right ends. All ends of the connection must be of the same type.",
    "id": "wikipedia2-1"
+  },
+  {
+   "id": "q-fbd-flow",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In a function block diagram, one block's output is wired to the inputs of three other blocks. What is that called, and which way does the data go?",
+   "options": [
+    "A divergence; data flows left to right",
+    "A convergence; data flows right to left",
+    "A feedback loop; data flows both ways",
+    "A divergence; data flows right to left"
+   ],
+   "answer": 0,
+   "why": "Connections are directed: the value flows from the left end of a line to its right end. One output feeding several inputs is a divergence, which broadcasts the same value to each, and every end must be the same data type.",
+   "added": true,
+   "after": "wikipedia2-1"
   },
   {
    "type": "concept",

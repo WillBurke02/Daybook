@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.33 — 22 October 2026
+
+- **Questions inside the PLC book lessons**: SFC and FBD, Structured Text, state machines, HMIs, Modbus,
+  analogue scaling, PID blocks and machine safety now ask after each section: 64 new questions. Among them,
+  three Structured Text programs to finish and run against tests (an on-delay timer, counting presses with
+  R_TRIG, a CASE sequence for a conveyor), Modbus relative addresses, scaling with a live zero (with a worked
+  and a faded example, and a mistake to spot), a P-only controller's output, and ISO 13849 categories.
+
 ## 4.0.32 — 22 October 2026
 
 - **Questions inside the book lessons, starting with Electrical**: three-phase, transformers, harmonics,

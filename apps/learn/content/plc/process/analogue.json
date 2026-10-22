@@ -48,12 +48,49 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-live-zero",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a 4–20 mA signal start at 4 mA for 0%, not at 0 mA?",
+   "options": [
+    "A broken wire (0 mA) can be told from a 0% reading",
+    "Transmitters cannot make less than 4 mA of signal",
+    "It makes the maths simpler",
+    "So the signal is never negative"
+   ],
+   "answer": 0,
+   "why": "With a live zero, 0 mA means a fault (an open circuit, a dead transmitter), not a real 0%, and the PLC can alarm on it. The 4 mA also powers a loop-powered transmitter. The maths is in fact harder: you must take the 4 off.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "13.2.1 Example calculation: controller output to valve",
    "html": "<figure><img src=\"media/liii/40020b5c29bb.png\" alt=\"A figure from page 897 of the original\"></figure><p>An electronic loop controller outputs a signal of 8.55 mA to a direct-responding control valve (where</p><p>4 mA is shut and 20 mA is wide open). How far open should the control valve be at this MV signal level?</p><p>To solve for percentage of stem travel (x) at 8.55 milliamps of signal current (y), we may use the linear equation developed previously to predict current in milliamps (y) from signal value in percent (x):</p><figure><img src=\"media/liii/cf0862b9287e.png\" alt=\"A figure from page 897 of the original\"></figure><p>Therefore, we should expect the valve to be 28.4% open at an applied MV signal of 8.55 milliamps.</p>",
    "body": "An electronic loop controller outputs a signal of 8.55 mA to a direct-responding control valve (where 4 mA is shut and 20 mA is wide open). How far open should the control valve be at this MV signal level? To solve for percentage of stem travel (x) at 8.55 milliamps of signal current (y), we may use the linear equation developed previously to predict current in milliamps (y) from signal value in percent (x): Therefore, we should expect the valve to be 28.4% open at an applied MV signal of 8.55 milliamps.",
    "id": "liii1-3"
+  },
+  {
+   "id": "q-ma-to-pct",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A controller sends {ma} mA to a valve (4 mA shut, 20 mA wide open). How far open should it be?",
+   "vars": {
+    "ma": [
+     4.5,
+     19.5,
+     0.05
+    ]
+   },
+   "answer": "(ma - 4) / 16 * 100",
+   "unit": "%",
+   "abs": 0.15,
+   "work": "$\\frac{ {ma} - 4 }{16} \\times 100 = {answer:1}$ %",
+   "why": "Take off the 4 mA live zero, divide by the 16 mA span, times 100: the book's 8.55 mA gives 28.4%. Dividing by 20 instead of taking 4 off and dividing by 16 is the usual slip.",
+   "hint": "How far above 4 mA is it, out of the 16 mA span?",
+   "added": true,
+   "after": "liii1-3"
   },
   {
    "type": "concept",
@@ -70,6 +107,41 @@
    "html": "<p>Now that the linear equation is set up for this particular flowmeter, we may plug in the 204 GPM value for x and solve for current:</p><figure><img src=\"media/liii/c135faad4417.png\" alt=\"A figure from page 899 of the original\"></figure><p>y = 13.33</p><p>Just as before, we arrive at a current of 13.33 milliamps representing a flow rate of 204 GPM.</p>",
    "body": "Now that the linear equation is set up for this particular flowmeter, we may plug in the 204 GPM value for x and solve for current: y = 13.33 Just as before, we arrive at a current of 13.33 milliamps representing a flow rate of 204 GPM.",
    "id": "liii1-5"
+  },
+  {
+   "id": "q-flow-ma",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A flow transmitter is ranged 0 to {urv} m³/h, 4 to 20 mA. What current does it send at {q} m³/h?",
+   "vars": {
+    "urv": {
+     "pick": [
+      50,
+      80,
+      100,
+      150,
+      200,
+      250,
+      350
+     ]
+    },
+    "f": [
+     0.05,
+     0.95,
+     0.05
+    ]
+   },
+   "let": {
+    "q": "ROUND(urv * f, 0)"
+   },
+   "answer": "4 + 16 * q / urv",
+   "unit": "mA",
+   "abs": 0.01,
+   "work": "$4 + 16 \\times \\frac{ {q} }{ {urv} } = {answer:2}$ mA",
+   "why": "Per unit first ($q \\div$ range), then times the 16 mA span, then add the 4 mA live zero: $y = 16x + 4$.",
+   "hint": "What fraction of the range is the flow? Then 16 mA times that, plus 4.",
+   "added": true,
+   "after": "liii1-5"
   },
   {
    "type": "concept",
@@ -128,12 +200,110 @@
    "id": "liii2-7"
   },
   {
+   "id": "q-worked-per-unit",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A pressure transmitter is ranged 0.5 to 10 bar, 4 to 20 mA. The loop reads 7.2 mA. What is the pressure?",
+   "steps": [
+    {
+     "ask": "Per unit of the signal",
+     "show": "$(7.2 - 4) \\div 16 = 0.2$"
+    },
+    {
+     "ask": "The span of the pressure range",
+     "show": "$10 - 0.5 = 9.5$ bar"
+    },
+    {
+     "ask": "The pressure",
+     "show": "$0.2 \\times 9.5 + 0.5 = 2.4$ bar"
+    }
+   ],
+   "why": "The same two moves every time: (value − LRV) ÷ span gives per unit; per unit × the other span + the other LRV gives the answer. Forgetting to add the 0.5 bar LRV back is the trap when a range does not start at zero.",
+   "added": true,
+   "after": "liii2-7"
+  },
+  {
+   "id": "q-faded-per-unit",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A temperature transmitter is ranged −20 to 180 °C, 4 to 20 mA. What current should it send at 60 °C?",
+   "steps": [
+    {
+     "ask": "Per unit of the temperature",
+     "show": "$(60 - (-20)) \\div 200 = 80 \\div 200 = 0.4$"
+    },
+    {
+     "ask": "The current",
+     "show": "$0.4 \\times 16 + 4 = 10.4$ mA"
+    }
+   ],
+   "why": "Taking away a negative LRV adds: 60 − (−20) = 80. The span is 180 − (−20) = 200 °C.",
+   "added": true,
+   "after": "q-worked-per-unit"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "13.2.7 Graphical interpretation of signal ranges",
    "html": "<p>Example: Given a pH transmitter with a measurement range of 3 pH to 11 pH and a signal range of 4 to 20 milliamps, calculate the proper signal output at 9.32 pH. Solution: Take 9.32 pH and subtract the LRV (3 pH), then divide by the span (11 pH −3 pH, or 8 pH) to arrive at 79% (0.79 per unit). Take this number and multiply by the span of the current signal range (16 milliamps) and lastly add the LRV of the current signal range (4 milliamps) to arrive at a final answer of 16.64 milliamps.</p>",
    "body": "Example: Given a pH transmitter with a measurement range of 3 pH to 11 pH and a signal range of 4 to 20 milliamps, calculate the proper signal output at 9.32 pH. Solution: Take 9.32 pH and subtract the LRV (3 pH), then divide by the span (11 pH −3 pH, or 8 pH) to arrive at 79% (0.79 per unit). Take this number and multiply by the span of the current signal range (16 milliamps) and lastly add the LRV of the current signal range (4 milliamps) to arrive at a final answer of 16.64 milliamps.",
    "id": "liii2-8"
+  },
+  {
+   "id": "q-temp-from-ma",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A temperature transmitter is ranged {lo} to {hi} °C, 4 to 20 mA. The PLC sees {ma} mA. What temperature is that?",
+   "vars": {
+    "lo": {
+     "pick": [
+      -50,
+      -20,
+      0,
+      20
+     ]
+    },
+    "hi": {
+     "pick": [
+      100,
+      150,
+      200,
+      400
+     ]
+    },
+    "ma": [
+     4.2,
+     19.8,
+     0.1
+    ]
+   },
+   "answer": "lo + (ma - 4) / 16 * (hi - lo)",
+   "unit": "°C",
+   "abs": 0.15,
+   "work": "$\\frac{ {ma} - 4 }{16} \\times ({hi} - ({lo})) + ({lo}) = {answer:1}$ °C",
+   "why": "Per unit from the signal, times the temperature span, plus the LRV. With a negative LRV the span is bigger than the top figure, and adding the LRV brings the answer down.",
+   "hint": "(mA − 4) ÷ 16 gives per unit. Times the span (hi − lo), then add lo.",
+   "added": true,
+   "after": "liii2-8"
+  },
+  {
+   "id": "q-spot-live-zero",
+   "type": "spot",
+   "stage": "learn",
+   "q": "A transmitter is ranged 0 to 10 bar, 4 to 20 mA, and reads 12 mA. Which line of this working is wrong?",
+   "lines": [
+    "Signal range 4 to 20 mA: span 16 mA",
+    "Per unit: $12 \\div 20 = 0.6$",
+    "Pressure: $0.6 \\times 10 = 6$ bar"
+   ],
+   "wrong": 1,
+   "fix": "Per unit: $(12 - 4) \\div 16 = 0.5$, so 5 bar",
+   "why": "The live zero was forgotten: 12 mA is 8 mA above 4 mA, out of a 16 mA span, so half. Check with the midpoint: 12 mA is exactly halfway between 4 and 20, so it must be half the range, 5 bar.",
+   "added": true,
+   "after": "liii2-8"
   },
   {
    "id": "add-s7-counts",

@@ -47,6 +47,22 @@
    "id": "liii1-2"
   },
   {
+   "id": "q-mb-layer",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why can the same Modbus messages run over RS-485 and over Ethernet?",
+   "options": [
+    "Modbus is an application-layer protocol",
+    "Modbus has its own special cable",
+    "RS-485 and Ethernet use the same wires",
+    "Ethernet translates it into Profibus"
+   ],
+   "answer": 0,
+   "why": "Modbus defines what the commands, addresses and data mean (OSI layer 7), not the wiring, so its frames can be carried by RS-232, RS-485 or wrapped in TCP/IP over Ethernet (Modbus TCP). The master/slave idea from its RS-485 days still survives inside the messages.",
+   "added": true,
+   "after": "liii1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.11.1 Modbus overview",
@@ -63,6 +79,22 @@
    "id": "liii1-4"
   },
   {
+   "id": "q-mb-gain",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Replacing a drive's hard-wired run, direction and 0–10 V speed signals with Modbus gives the PLC something new. What?",
+   "options": [
+    "It can read data back, such as fault codes",
+    "Faster response than a wire",
+    "A link that survives a broken cable",
+    "No need for a slave address"
+   ],
+   "answer": 0,
+   "why": "As well as sending the same commands (05 to write a bit, 06 to write the speed register), the PLC can now read the drive's registers with 03: fault codes, current, speed. The costs are a little speed, and reliability: one broken cable stops everything on it.",
+   "added": true,
+   "after": "liii1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.11.1 Modbus overview",
@@ -71,12 +103,44 @@
    "id": "liii1-5"
   },
   {
+   "id": "q-mb-broadcast",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The PLC wants every drive on a Modbus network to stop at once. Which slave address does it send to?",
+   "options": [
+    "0, the broadcast address",
+    "247, the last address",
+    "1, the first drive",
+    "255, all ones"
+   ],
+   "answer": 0,
+   "why": "Address 0 is broadcast: every slave acts on it (and none replies). Real slaves use 1 to 247, each with its own address so the master can tell them apart on the same pair of wires.",
+   "added": true,
+   "after": "liii1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.11.1 Modbus overview",
    "html": "<p>The only disadvantages to using Modbus as opposed to dedicated wires for each sensing and control function are speed and reliability. Modbus is necessarily slower than dedicated wire control because the PLC cannot simultaneously issue different commands on the network. For example, if the PLC needed to tell a VFD to begin turning its motor in the forward direction at 1050 RPM, the Modbus-based system would need to issue two separate Modbus codes whereas the individuallywired system could issue these commands all at once. This disadvantage, however, is hardly worth considering if the Modbus network communicates at reasonably high speed (thousands of bits per second). The disadvantage of reliability may be readily perceived if we consider how each system would respond to a wire fault (e.g. one wire coming loose and disconnected from a screw terminal). In the individually-wired system, one wire fault disables that one motor-control function but not necessarily any of the other functions. In the Modbus-based system, one wire fault disables everything because any Modbus communication requires full function of that two-conductor communication cable. The problem is even larger when multiple devices are controlled by the same Modbus cable: if a fault occurs between the controlling PLC and all the field devices, the PLC will lose control (and monitoring) for every one of those field devices! This is a factor worth considering when deciding whether or not to use any digital communication method for monitoring and control of multiple devices.</p>",
    "body": "The only disadvantages to using Modbus as opposed to dedicated wires for each sensing and control function are speed and reliability. Modbus is necessarily slower than dedicated wire control because the PLC cannot simultaneously issue different commands on the network. For example, if the PLC needed to tell a VFD to begin turning its motor in the forward direction at 1050 RPM, the Modbus-based system would need to issue two separate Modbus codes whereas the individuallywired system could issue these commands all at once. This disadvantage, however, is hardly worth considering if the Modbus network communicates at reasonably high speed (thousands of bits per second). The disadvantage of reliability may be readily perceived if we consider how each system would respond to a wire fault (e.g. one wire coming loose and disconnected from a screw terminal). In the individually-wired system, one wire fault disables that one motor-control function but not necessarily any of the other functions. In the Modbus-based system, one wire fault disables everything because any Modbus communication requires full function of that two-conductor communication cable. The problem is even larger when multiple devices are controlled by the same Modbus cable: if a fault occurs between the controlling PLC and all the field devices, the PLC will lose control (and monitoring) for every one of those field devices! This is a factor worth considering when deciding whether or not to use any digital communication method for monitoring and control of multiple devices.",
    "id": "liii1-6"
+  },
+  {
+   "id": "q-mb-wire-fault",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "One wire of the RS-485 pair comes loose at a terminal. Hard-wired, one function would be lost. With Modbus?",
+   "options": [
+    "Every device on that network loses its link",
+    "Only the drive nearest the break",
+    "Nothing: the other wire carries on",
+    "Only writes fail; reads still work"
+   ],
+   "answer": 0,
+   "why": "Every message to every device uses the same pair, so one break can take out the lot. That is the reliability cost the text describes, and why a comms watchdog in the PLC (and a safe stop on comms loss in the drive) matters.",
+   "added": true,
+   "after": "liii1-6"
   },
   {
    "type": "concept",
@@ -101,6 +165,22 @@
    "html": "<p>78Recall that each ASCII character requires 7 bits to encode. This impacts nearly every portion of the Modbus data frame. Slave address and function code portions, for example, require 14 bits each in ASCII but only 8 bits each in RTU. The data portion of a Modbus ASCII frame requires one ASCII character (7 bits) to represent each hexadecimal symbol that in turn represents just 4 bits of actual data. The data portion of a Modbus RTU frame, by contrast, codes the data bits directly (i.e. 8 bits of data appear as 8 bits within that portion of the frame). Additionally, RTU data frames use quiet periods (pauses) as delimiters, while ASCII data frames use three ASCII characters in total to mark the start and stop of each frame, at a “cost” of 21 additional bits. These additional delimiting bits do serve a practical purpose, though: they format each Modbus ASCII data frame as its own line on the screen of a terminal program.</p>",
    "body": "78Recall that each ASCII character requires 7 bits to encode. This impacts nearly every portion of the Modbus data frame. Slave address and function code portions, for example, require 14 bits each in ASCII but only 8 bits each in RTU. The data portion of a Modbus ASCII frame requires one ASCII character (7 bits) to represent each hexadecimal symbol that in turn represents just 4 bits of actual data. The data portion of a Modbus RTU frame, by contrast, codes the data bits directly (i.e. 8 bits of data appear as 8 bits within that portion of the frame). Additionally, RTU data frames use quiet periods (pauses) as delimiters, while ASCII data frames use three ASCII characters in total to mark the start and stop of each frame, at a “cost” of 21 additional bits. These additional delimiting bits do serve a practical purpose, though: they format each Modbus ASCII data frame as its own line on the screen of a terminal program.",
    "id": "liii1-9"
+  },
+  {
+   "id": "q-ascii-rtu",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the trade-off between Modbus ASCII and Modbus RTU?",
+   "options": [
+    "ASCII is readable on a terminal; RTU is more compact",
+    "ASCII is faster; RTU is easier to read",
+    "ASCII is for Ethernet; RTU for serial",
+    "ASCII has no error checking; RTU has"
+   ],
+   "answer": 0,
+   "why": "ASCII sends every hex digit as a 7-bit character, so you can read frames on a terminal program, but it needs about twice the bits. RTU sends the raw bytes and marks frames with quiet gaps: compact and the usual choice. Both check for errors.",
+   "added": true,
+   "after": "liii1-9"
   },
   {
    "type": "concept",
@@ -141,6 +221,38 @@
    "html": "<p>A few examples are given here for illustration:</p><ul><li>Read the content of contact register 12440: Modbus read function 02; relative address 2439</li><li>Read the content of analog input register 30050: Modbus read function 04; relative address 49</li><li>Read the content of holding register 41000: Modbus read function 03; relative address 999</li><li>Write multiple output coils in register 00008: Modbus write function 15; relative address 7</li></ul><p>In each case, the pattern is the same: the relative address gets added to the first address of that range in order to arrive at the absolute address within the Modbus device. Referencing the first example shown above: 2439 (relative address) + 10001 (first address of register range) = 12440 (absolute address). Thankfully, the only time you are likely to contend with relative addressing is if you program a computer using some low-level language such as assembly or C++. Most high-level industrial programming languages such as Function Block or Ladder Diagram make it easy for the end-user by allowing absolute addresses to be directly specified in the read and write commands. In a typical PLC program, for example, you would read contact register 12440 by simply specifying the number 12440 within the address field of a “read 02” instruction.</p><p>The following listing shows code (written in the C language) utilizing the open-source libmodbus function library instructing a computer to access 16-bit integer data from four Modbus “holding” registers (absolute addresses 49001 through 49004) via Modbus/TCP. The device’s IP address is 192.169.0.10 and port 502 is used for the TCP connection:</p><figure><img src=\"media/liii/83ec12941127.png\" alt=\"A figure from page 1145 of the original\"></figure>",
    "body": "A few examples are given here for illustration: Read the content of contact register 12440: Modbus read function 02; relative address 2439 Read the content of analog input register 30050: Modbus read function 04; relative address 49 Read the content of holding register 41000: Modbus read function 03; relative address 999 Write multiple output coils in register 00008: Modbus write function 15; relative address 7 In each case, the pattern is the same: the relative address gets added to the first address of that range in order to arrive at the absolute address within the Modbus device. Referencing the first example shown above: 2439 (relative address) + 10001 (first address of register range) = 12440 (absolute address). Thankfully, the only time you are likely to contend with relative addressing is if you program a computer using some low-level language such as assembly or C++. Most high-level industrial programming languages such as Function Block or Ladder Diagram make it easy for the end-user by allowing absolute addresses to be directly specified in the read and write commands. In a typical PLC program, for example, you would read contact register 12440 by simply specifying the number 12440 within the address field of a “read 02” instruction. The following listing shows code (written in the C language) utilizing the open-source libmodbus function library instructing a computer to access 16-bit integer data from four Modbus “holding” registers (absolute addresses 49001 through 49004) via Modbus/TCP. The device’s IP address is 192.169.0.10 and port 502 is used for the TCP connection:",
    "id": "liii1-14"
+  },
+  {
+   "id": "q-mb-relative",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.6,
+   "q": "A device's manual lists a value at Modbus register **{abs}**. What relative address (in decimal) goes in the message?",
+   "vars": {
+    "k": {
+     "pick": [
+      1,
+      3,
+      4
+     ]
+    },
+    "n": [
+     2,
+     9990,
+     1
+    ]
+   },
+   "let": {
+    "abs": "k * 10000 + n",
+    "first": "k * 10000 + 1"
+   },
+   "answer": "n - 1",
+   "abs": 0.01,
+   "work": "The range starts at {first}; ${abs} - {first} = {answer}$",
+   "why": "The first digit names the range (1 for discrete inputs, 3 for input registers, 4 for holding registers) and the function code already says which range. The message carries how far up from the range's first address, counting from 0: the book's 12440 goes as 2439. One out is the classic Modbus mistake.",
+   "hint": "Drop the first digit, then take one off: the ranges start at 1, the message counts from 0.",
+   "added": true,
+   "after": "liii1-14"
   },
   {
    "type": "concept",
@@ -199,12 +311,49 @@
    "id": "liii1-21"
   },
   {
+   "id": "q-force-coil",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "With function 05 (write single coil), what data turns the coil **on**?",
+   "options": [
+    "FF 00",
+    "00 01",
+    "01 00",
+    "FF FF"
+   ],
+   "answer": 0,
+   "why": "The standard allows exactly two values: FF 00 for on and 00 00 for off. Anything else is ignored by the slave, so 00 01, the obvious guess, does nothing.",
+   "added": true,
+   "after": "liii1-21"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.11.5 Modbus function command formats",
    "html": "<p>Function code 16 – Write (Preset) Multiple Holding Register</p><p>This Modbus function writes multiple words of data to a set of “holding” registers within the slave device. Relevant Modbus addresses for this function range from 40001 to 49999 (decimal) but the starting address is a hexadecimal number representing the (n −1)th register from the beginning of this range (e.g. decimal address 47441 would be specified as hexadecimal 1D 10).</p><figure><img src=\"media/liii/e394cffe10d6.png\" alt=\"A figure from page 1154 of the original\"></figure><figure><img src=\"media/liii/2952595ae84e.png\" alt=\"A figure from page 1154 of the original\"></figure><p>Note that the query message specifies both the number of registers (16-bit words) and the number of bytes, which is redundant (the number of bytes must always be twice the number of registers, given that each register is two bytes80 in size). Note also that the maximum number of registers which may be requested in the query message (65536) with “high” and “low” byte values grossly exceeds the number of bytes the response message can report (255) with its single byte value.</p><p><small>80Even for devices where the register size is less than two bytes (e.g. Modicon M84 and 484 model controllers have</small></p><p><small>10 bits within each register), data is still addressed as two bytes’ worth per register, with the leading bits simply set to zero to act as placeholders.</small></p>",
    "body": "Function code 16 – Write (Preset) Multiple Holding Register This Modbus function writes multiple words of data to a set of “holding” registers within the slave device. Relevant Modbus addresses for this function range from 40001 to 49999 (decimal) but the starting address is a hexadecimal number representing the (n −1)th register from the beginning of this range (e.g. decimal address 47441 would be specified as hexadecimal 1D 10). Note that the query message specifies both the number of registers (16-bit words) and the number of bytes, which is redundant (the number of bytes must always be twice the number of registers, given that each register is two bytes80 in size). Note also that the maximum number of registers which may be requested in the query message (65536) with “high” and “low” byte values grossly exceeds the number of bytes the response message can report (255) with its single byte value. 80Even for devices where the register size is less than two bytes (e.g. Modicon M84 and 484 model controllers have 10 bits within each register), data is still addressed as two bytes’ worth per register, with the leading bits simply set to zero to act as placeholders.",
    "id": "liii1-22"
+  },
+  {
+   "id": "q-byte-count",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "A master asks for {n} holding registers with function 03. What number appears in the reply's byte-count field?",
+   "vars": {
+    "n": [
+     1,
+     60,
+     1
+    ]
+   },
+   "answer": "2 * n",
+   "abs": 0.01,
+   "work": "$2 \\times {n} = {answer}$ bytes",
+   "why": "Each register is 16 bits, two bytes, so the reply counts twice as many bytes as registers were asked for. A 32-bit float takes two registers, four bytes.",
+   "hint": "How many bytes in one 16-bit register?",
+   "added": true,
+   "after": "liii1-22"
   },
   {
    "type": "concept",
