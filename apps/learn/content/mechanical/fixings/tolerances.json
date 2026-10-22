@@ -38,6 +38,22 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-hole-basis",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is the hole-basis system (H holes, fits set by the shaft) the most common?",
+   "options": [
+    "Standard tools size holes",
+    "Shafts are made first",
+    "Holes can't be measured",
+    "It gives tighter fits"
+   ],
+   "answer": 0,
+   "why": "Holes are drilled, reamed or bored with standard-size tools and checked with standard plug gauges, so keeping the hole at H and machining the shaft to suit (easy on a lathe or grinder) needs fewer special tools. Shaft-basis is used where one ground bar carries many parts.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Types of fit",
@@ -46,12 +62,142 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-fit-types",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each type of fit to what it means at assembly.",
+   "pairs": [
+    [
+     "Clearance",
+     "Hole bigger than shaft: slides or turns"
+    ],
+    [
+     "Transition",
+     "May be a little clearance or interference: mallet or light press"
+    ],
+    [
+     "Interference",
+     "Shaft bigger than hole: heavy press or heat"
+    ]
+   ],
+   "why": "The letters say which: in hole-basis, shafts a to h give clearance, js to n are transition, p to z interference. H7/g6 slides; H7/k6 locates a pulley; H7/p6 presses in a bush.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Transition fits",
    "html": "<table> <tbody><tr><th>Category</th> <th>Description and Usage</th> <th>Hole Basis</th> <th>Shaft Basis</th></tr> <tr> <td>Similar fit</td> <td>Negligible clearance or interference fit which can be assembled or disassembled with a rubber mallet, e.g., hubs, gears, pulleys, bushes, bearings</td> <td>H7/k6</td> <td>K7/h6</td></tr> <tr> <td>Fixed fit</td> <td>Negligible clearance or small interference fit which can be assembled or disassembled with light pressing force, e.g., plugs, driven bushes, armatures on shafts</td> <td>H7/n6</td> <td>N7/h6</td></tr> </tbody></table><p>For example, using an H7/k6 similar fit on a 50 mm diameter:</p><ul><li>H7 (hole) tolerance range = +0.000 mm to +0.025 mm</li> <li>k6 (shaft) tolerance range = +0.002 mm to +0.018 mm</li> <li>Potential clearance / interference will be between +0.023 mm and −0.018 mm</li></ul>",
    "body": "Category Description and Usage Hole Basis Shaft Basis Similar fit Negligible clearance or interference fit which can be assembled or disassembled with a rubber mallet, e.g., hubs, gears, pulleys, bushes, bearings H7/k6 K7/h6 Fixed fit Negligible clearance or small interference fit which can be assembled or disassembled with light pressing force, e.g., plugs, driven bushes, armatures on shafts H7/n6 N7/h6 For example, using an H7/k6 similar fit on a 50 mm diameter: H7 (hole) tolerance range = +0.000 mm to +0.025 mm k6 (shaft) tolerance range = +0.002 mm to +0.018 mm Potential clearance / interference will be between +0.023 mm and −0.018 mm",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-worked-fit",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A 25 mm shaft and hole are toleranced H7/g6. H7 is +0.000/+0.021 mm; g6 is −0.007/−0.020 mm. Find the largest and smallest clearance.",
+   "steps": [
+    {
+     "ask": "The hole's limits",
+     "show": "25.000 to 25.021 mm"
+    },
+    {
+     "ask": "The shaft's limits",
+     "show": "24.980 to 24.993 mm"
+    },
+    {
+     "ask": "Largest clearance: biggest hole, smallest shaft",
+     "show": "$25.021 - 24.980 = 0.041$ mm"
+    },
+    {
+     "ask": "Smallest clearance: smallest hole, biggest shaft",
+     "show": "$25.000 - 24.993 = 0.007$ mm: always positive, so a clearance fit"
+    }
+   ],
+   "why": "Write both parts' limits out in full first, then pair the extremes. If the smallest clearance came out negative, the fit could interfere.",
+   "added": true,
+   "after": "wikipedia1-4"
+  },
+  {
+   "id": "q-faded-fit",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A 50 mm pulley bore and shaft are H7/k6. H7 is +0.000/+0.025 mm; k6 is +0.002/+0.018 mm. Find the largest clearance and the largest interference.",
+   "steps": [
+    {
+     "ask": "The hole's limits",
+     "show": "50.000 to 50.025 mm"
+    },
+    {
+     "ask": "The shaft's limits",
+     "show": "50.002 to 50.018 mm"
+    },
+    {
+     "ask": "Largest clearance",
+     "show": "$50.025 - 50.002 = 0.023$ mm"
+    },
+    {
+     "ask": "Largest interference: smallest hole, biggest shaft",
+     "show": "$50.018 - 50.000 = 0.018$ mm: it can go either way, a transition fit"
+    }
+   ],
+   "why": "The same pairing of extremes. A transition fit locates accurately and goes together with a mallet, as the table says for k6.",
+   "added": true,
+   "after": "q-worked-fit"
+  },
+  {
+   "id": "q-max-clear",
+   "type": "numeric",
+   "stage": "example",
+   "q": "A hole is {d}.000 to {hmax:3} mm; its shaft is {smin:3} to {smax:3} mm. What is the largest clearance, in µm?",
+   "vars": {
+    "d": {
+     "pick": [
+      12,
+      20,
+      25,
+      30,
+      40,
+      50
+     ]
+    },
+    "hu": {
+     "pick": [
+      18,
+      21,
+      25
+     ]
+    },
+    "su": [
+     -25,
+     -5,
+     1
+    ],
+    "w": {
+     "pick": [
+      9,
+      11,
+      13,
+      16
+     ]
+    }
+   },
+   "let": {
+    "hmax": "d + hu / 1000",
+    "smax": "d + su / 1000",
+    "smin": "d + (su - w) / 1000"
+   },
+   "answer": "(hmax - smin) * 1000",
+   "unit": "µm",
+   "abs": 0.5,
+   "work": "Biggest hole − smallest shaft: ${hmax:3} - {smin:3} = {answer:0}$ µm",
+   "why": "Largest clearance pairs the largest hole with the smallest shaft. Millimetres to micrometres: × 1000.",
+   "hint": "Largest hole minus smallest shaft, then × 1000 for µm.",
+   "added": true,
+   "after": "q-faded-fit"
   },
   {
    "type": "concept",
@@ -86,6 +232,22 @@
    "id": "wikipedia1-8"
   },
   {
+   "id": "q-shrink",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "How is a shrink fit assembled?",
+   "options": [
+    "Heat the outer part so it grows, slip it on, let it cool",
+    "Freeze the outer part and press it on",
+    "Press the parts together cold at high force",
+    "Glue them, then heat them"
+   ],
+   "answer": 0,
+   "why": "Heating the hub (or cooling the shaft, with liquid nitrogen say) opens a temporary clearance; on returning to temperature the interference is back, gripping as tightly as a force fit but without scoring the surfaces.",
+   "added": true,
+   "after": "wikipedia1-8"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Location clearance fit",
@@ -108,6 +270,22 @@
    "html": "<p>Fits of this kind are intended for use where accuracy is not essential. It is suitable for great temperature variations. This fit is suitable to use without any special requirements for precise guiding of shafts into certain holes.</p><h4>RC8 and RC9: loose running fits</h4><p>Fits of this kind are intended for use where wide commercial tolerances may be required on the shaft. With these fits, the parts with great clearances with having great tolerances. Loose running fits may be exposed to effects of corrosion, contamination by dust, and thermal or mechanical deformations.</p>",
    "body": "Fits of this kind are intended for use where accuracy is not essential. It is suitable for great temperature variations. This fit is suitable to use without any special requirements for precise guiding of shafts into certain holes. RC8 and RC9: loose running fits Fits of this kind are intended for use where wide commercial tolerances may be required on the shaft. With these fits, the parts with great clearances with having great tolerances. Loose running fits may be exposed to effects of corrosion, contamination by dust, and thermal or mechanical deformations.",
    "id": "wikipedia1-11"
+  },
+  {
+   "id": "q-rc-numbers",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In the RC running fits, which is the looser fit: RC2 or RC8?",
+   "options": [
+    "RC8",
+    "RC2",
+    "They are the same",
+    "It depends on the size only"
+   ],
+   "answer": 0,
+   "why": "Smaller RC numbers have smaller clearances (RC1 close sliding); larger numbers, larger clearances (RC8 and RC9 loose running, for wide commercial tolerances and dirt).",
+   "added": true,
+   "after": "wikipedia1-11"
   },
   {
    "id": "add-h7g6",

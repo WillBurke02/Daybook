@@ -118,6 +118,41 @@
    "id": "ox1-8"
   },
   {
+   "id": "q-alpha",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A drum goes from rest to {n} rpm in {t} s at a steady rate. What is its angular acceleration, in rad/s²?",
+   "vars": {
+    "n": {
+     "pick": [
+      300,
+      600,
+      1450,
+      1500,
+      3000
+     ]
+    },
+    "t": {
+     "pick": [
+      2,
+      4,
+      5,
+      10
+     ]
+    }
+   },
+   "let": {
+    "w": "n * 2 * PI() / 60"
+   },
+   "answer": "w / t",
+   "unit": "rad/s²",
+   "work": "$\\omega = {n} \\times 2\\pi \\div 60 = {w:1}$ rad/s, then $\\alpha = {w:1} \\div {t} = {answer:2}$ rad/s²",
+   "why": "$\\alpha = \\Delta\\omega / \\Delta t$, with ω in radians a second: rpm × 2π ÷ 60.",
+   "hint": "Turn rpm into rad/s first.",
+   "added": true,
+   "after": "ox1-8"
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "At its peak, a tornado is 60.0 m in diameter and carries 500 km/h winds. What is its angular velocity in revolutions per second?",
@@ -206,6 +241,49 @@
    "html": "<ul><li>The farther the force is applied from the pivot, the greater is the angular acceleration; angular acceleration is inversely proportional to mass.</li><li>If we exert a force <math><mrow><mrow><mi>F</mi></mrow></mrow></math> on a point mass <math><mrow><mrow><mi>m</mi></mrow></mrow></math> that is at a distance <math><mrow><mrow><mi>r</mi></mrow></mrow></math> from a pivot point and because the force is perpendicular to <math><mrow><mrow><mi>r</mi></mrow></mrow></math>, an acceleration <math><mrow><mrow><mtext>a = F/m</mtext></mrow></mrow></math> is obtained in the direction of <math><mrow><mrow><mi>F</mi></mrow></mrow></math>. We can rearrange this equation such that             <div class=\"eq\"><math><mrow><mrow><mi>F = ma</mi></mrow><mtext>,</mtext><mrow></mrow></mrow></math>\n</div>\n                <p>and then look for ways to relate this expression to expressions for rotational quantities. We note that\n <math><mrow><mrow><mi>a = rα</mi></mrow></mrow></math>, and we substitute this expression into <math><mrow><mrow><mi>F=ma</mi></mrow></mrow></math>, yielding</p>\n\n          <div class=\"eq\"><math><mrow><mrow><mi>F=mrα</mi></mrow></mrow></math></div></li><li>Torque is the turning effectiveness of a force. In this case, because <math><mrow><mrow><mi>F</mi></mrow></mrow></math> is perpendicular to <math><mrow><mrow><mi>r</mi></mrow></mrow></math>, torque is simply <math><mrow><mrow><mi>τ</mi><mo>=</mo><mi mathvariant=\"italic\">rF</mi></mrow></mrow></math>. If we multiply both sides of the equation above by <math><mrow><mrow><mi>r</mi></mrow></mrow></math>, we get torque on the left-hand side. That is,\n    <div class=\"eq\"><math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mrow>\n                    <mstyle>\n                      <mrow>\n                        <mtext>rF</mtext>\n                      </mrow>\n                    </mstyle>\n                    <mo stretchy=\"false\">=</mo>\n\n                      <mrow>\n                        <msup>    <mstyle>\n                          <mtext>mr</mtext>\n                                              </mstyle>\n                            <mrow>\n                              <mn>2</mn>\n                            </mrow>\n\n                        </msup>\n                      </mrow>\n\n                  </mrow>\n                  <mi>α</mi>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div>\n    <p>or</p>\n    <div class=\"eq\"><math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mrow>\n                    <mi>τ</mi>\n                    <mo stretchy=\"false\">=</mo>\n\n                      <mrow>\n                        <msup>                    <mstyle>\n                          <mtext>mr</mtext>\n                                              </mstyle>\n                            <mrow>\n                              <mn>2</mn>\n                            </mrow>\n\n                        </msup>\n                      </mrow>\n\n                  </mrow>\n                  <mi>α</mi>\n                  <mtext>.</mtext>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div></li><li>The moment of inertia <math><mrow><mrow><mi>I</mi></mrow></mrow></math> of an object is the sum of <math><mrow><mrow><mrow><msup><mstyle><mtext>MR</mtext></mstyle><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math> for all the point masses  of which it is composed. That is,\n    <div class=\"eq\"><math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mrow>\n                    <mi>I</mi>\n                    <mo stretchy=\"false\">=</mo>\n                    <mrow>\n                      <mo stretchy=\"false\">∑</mo>\n\n                        <mrow>\n                          <msup>                      <mstyle>\n                            <mtext>mr</mtext>\n                                                  </mstyle>\n                              <mrow>\n                                <mn>2</mn>\n                              </mrow>\n\n                          </msup>\n                        </mrow>\n\n                    </mrow>\n                  </mrow>\n                  <mtext>.</mtext>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div></li><li>The general relationship among torque, moment of inertia, and angular acceleration is\n    <div class=\"eq\"><math>\n        \n          <mrow>\n\n              <mrow>\n                <mrow>\n                  <mi>τ</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mi>Iα</mi>\n                </mrow>\n              </mrow>\n\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n    </div><p>or </p><div class=\"eq\"><math>\n        \n          <mtable>\n            <mtr>\n              <mtd><mrow>\n                  <mi>α</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mrow>\n                    <mfrac>\n                      <mrow>\n                          <mrow>\n                            <mtext>net τ</mtext>\n                          </mrow>\n\n                      </mrow>\n                      <mi>I</mi>\n                    </mfrac>\n                    <mo stretchy=\"false\">⋅</mo>\n                    <mrow></mrow>\n                  </mrow>\n                </mrow>\n                <mrow></mrow>\n              </mtd></mtr>\n            <mtr>\n\n                <mtd><mrow></mrow>\n                </mtd></mtr>\n          </mtable>\n          \n        \n      </math>\n    </div></li></ul>",
    "body": "The farther the force is applied from the pivot, the greater is the angular acceleration; angular acceleration is inversely proportional to mass. If we exert a force F on a point mass m that is at a distance r from a pivot point and because the force is perpendicular to r , an acceleration a = F/m is obtained in the direction of F . We can rearrange this equation such that F = ma , and then look for ways to relate this expression to expressions for rotational quantities. We note that a = rα , and we substitute this expression into F=ma , yielding F=mrα Torque is the turning effectiveness of a force. In this case, because F is perpendicular to r , torque is simply τ = rF . If we multiply both sides of the equation above by r , we get torque on the left-hand side. That is, rF = mr 2 α or τ = mr 2 α . The moment of inertia I of an object is the sum of MR 2 for all the point masses of which it is composed. That is, I = ∑ mr 2 . The general relationship among torque, moment of inertia, and angular acceleration is τ = Iα or α = net τ I ⋅",
    "id": "ox2-9"
+  },
+  {
+   "id": "q-analogues",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each rotational quantity to its straight-line partner.",
+   "pairs": [
+    [
+     "Torque",
+     "Force"
+    ],
+    [
+     "Moment of inertia",
+     "Mass"
+    ],
+    [
+     "Angular velocity",
+     "Velocity"
+    ],
+    [
+     "Angular acceleration",
+     "Acceleration"
+    ]
+   ],
+   "why": "So $\\tau = I\\alpha$ mirrors $F = ma$, and $\\tfrac{1}{2}I\\omega^2$ mirrors $\\tfrac{1}{2}mv^2$.",
+   "added": true,
+   "after": "ox2-9"
+  },
+  {
+   "id": "q-rim-disc",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two wheels have the same mass and diameter. One is a solid disc; the other has its mass in the rim. Given the same torque, which speeds up faster?",
+   "options": [
+    "The solid disc",
+    "The rim-heavy wheel",
+    "Both the same",
+    "It depends on the speed"
+   ],
+   "answer": 0,
+   "why": "Moment of inertia is the sum of $mr^2$: mass far from the axis counts for more. The rim wheel has the larger I, so $\\alpha = \\tau / I$ is smaller. It also stores more energy at a given speed, which is why flywheels carry their mass at the rim.",
+   "added": true,
+   "after": "q-analogues"
   },
   {
    "type": "flash",
@@ -329,6 +407,22 @@
    "html": "<ul><li>The rotational kinetic energy <math><mrow><mrow><mrow><msub><mtext>KE</mtext><mrow><mrow><mtext>rot</mtext></mrow></mrow></msub></mrow></mrow></mrow></math> for an object with a moment of inertia <math><mrow><mi>I</mi></mrow></math> and an angular velocity <math><mrow><mrow><mi>ω</mi></mrow></mrow></math> is given by\n<div class=\"eq\"><math><mrow><mrow><mrow><mrow><msub><mtext>KE</mtext><mrow><mtext>rot</mtext></mrow></msub><mo stretchy=\"false\">=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><msup><mi>Iω</mi><mrow><mn>2</mn></mrow></msup></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li><li>Helicopters store large amounts of rotational kinetic energy in their blades. This energy must be put into the blades before takeoff and maintained until the end of the flight. The engines do not have enough power to simultaneously provide lift and put significant rotational energy into the blades.</li><li>Work and energy in rotational motion are completely analogous to work and energy in translational motion.</li><li>The equation for the <strong>work-energy theorem</strong> for rotational motion is,<div class=\"eq\"><math><mrow><mrow><mrow><mtext>net </mtext><mspace width=\"0.25em\"></mspace><mrow><mi>W</mi><mo stretchy=\"false\">=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mrow><msup><mi>Iω</mi><mrow><mn>2</mn></mrow></msup><mo stretchy=\"false\">−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><mi>I</mi><msup>\n                     <mrow>\n                      <msub>\n                       <mi>ω</mi>\n                       <mtext>0</mtext>\n                      </msub>\n                     </mrow>\n\n                     <mrow>\n                       <mn>2</mn>\n                     </mrow>\n\n                    </msup></mrow></mrow><mrow></mrow><mo>.</mo></mrow></math></div></li></ul>",
    "body": "The rotational kinetic energy KE rot for an object with a moment of inertia I and an angular velocity ω is given by KE rot = 1 2 Iω 2 . Helicopters store large amounts of rotational kinetic energy in their blades. This energy must be put into the blades before takeoff and maintained until the end of the flight. The engines do not have enough power to simultaneously provide lift and put significant rotational energy into the blades. Work and energy in rotational motion are completely analogous to work and energy in translational motion. The equation for the work-energy theorem for rotational motion is, net W = 1 2 Iω 2 − 1 2 I ω 0 2 .",
    "id": "ox3-12"
+  },
+  {
+   "id": "q-soup",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two cans of the same size and mass roll down a ramp. One holds thin soup, the other thick. Which reaches the bottom first?",
+   "options": [
+    "The thin soup",
+    "The thick soup",
+    "They tie",
+    "The one rolled first"
+   ],
+   "answer": 0,
+   "why": "Thin soup hardly turns with the can, so little of the lost potential energy goes into spinning and more into speed. Thick soup turns with the can, takes a bigger share as rotational energy, and rolls slowest.",
+   "added": true,
+   "after": "ox3-12"
   },
   {
    "id": "add-flywheel-steps",

@@ -46,6 +46,29 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-cad-cae-cam",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each tool to its job.",
+   "pairs": [
+    [
+     "CAD",
+     "Creating and changing the design"
+    ],
+    [
+     "CAE / FEA",
+     "Analysing it: stress, heat, flow"
+    ],
+    [
+     "CAM",
+     "Turning it into machine tool paths"
+    ]
+   ],
+   "why": "They form a chain: model in CAD, check it in CAE, make it with CAM, all ideally from the same model, so a change flows through.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Types",
@@ -62,12 +85,44 @@
    "id": "wikipedia1-5"
   },
   {
+   "id": "q-wireframe",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What can a solid model give you that a 3D wireframe cannot?",
+   "options": [
+    "Its mass and volume",
+    "Lines in three dimensions",
+    "A drawing of the part",
+    "Coloured edges"
+   ],
+   "answer": 0,
+   "why": "A wireframe is only lines in space: it has no volume, so no mass or centre of gravity, and holes cannot be cut into it. Solids know what is inside and what is not.",
+   "added": true,
+   "after": "wikipedia1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "3D CAD",
    "html": "<ul><li><em><a href=\"https://en.wikipedia.org/wiki/Parametric_modeling\">Parametric modeling</a></em> allows the operator to use what is referred to as \"design intent\". The objects and features are created modifiable. Any future modifications can be made by changing on how the original part was created. If a feature was intended to be located from the center of the part, the operator should locate it from the center of the model. The feature could be located using any geometric object already available in the part, but this random placement would defeat the design intent. If the operator designs the part as it functions, the parametric modeler is able to make changes to the part while maintaining geometric and functional relationships.</li> <li><em><a href=\"https://en.wikipedia.org/wiki/Explicit_modeling?action=edit&amp;redlink=1\">Direct or explicit modeling</a></em> provide the ability to edit geometry without a history tree. With direct modeling, once a sketch is used to create geometry it is incorporated into the new geometry, and the designer only has to modify the geometry afterward without needing the original sketch. As with parametric modeling, <a href=\"https://en.wikipedia.org/wiki/Direct_modeling?action=edit&amp;redlink=1\">direct modeling</a> has the ability to include the relationships between selected geometry (e.g., tangency, concentricity).</li> <li><em><a href=\"https://en.wikipedia.org/wiki/Assembly_modelling\">Assembly modelling</a></em> is a process which incorporates results of the previous single-part modelling into a final product containing several parts. Assemblies can be hierarchical, depending on the specific CAD software vendor, and highly complex models can be achieved (e.g. in building engineering by using <a href=\"https://en.wikipedia.org/wiki/Computer-aided_architectural_design\">computer-aided architectural design</a> software)</li></ul>",
    "body": "Parametric modeling allows the operator to use what is referred to as \"design intent\". The objects and features are created modifiable. Any future modifications can be made by changing on how the original part was created. If a feature was intended to be located from the center of the part, the operator should locate it from the center of the model. The feature could be located using any geometric object already available in the part, but this random placement would defeat the design intent. If the operator designs the part as it functions, the parametric modeler is able to make changes to the part while maintaining geometric and functional relationships. Direct or explicit modeling provide the ability to edit geometry without a history tree. With direct modeling, once a sketch is used to create geometry it is incorporated into the new geometry, and the designer only has to modify the geometry afterward without needing the original sketch. As with parametric modeling, direct modeling has the ability to include the relationships between selected geometry (e.g., tangency, concentricity). Assembly modelling is a process which incorporates results of the previous single-part modelling into a final product containing several parts. Assemblies can be hierarchical, depending on the specific CAD software vendor, and highly complex models can be achieved (e.g. in building engineering by using computer-aided architectural design software)",
    "id": "wikipedia1-6"
+  },
+  {
+   "id": "q-design-intent",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A hole must always be central in a plate. How should it be placed in a parametric model?",
+   "options": [
+    "Dimensioned from the plate's centre",
+    "Dimensioned from one edge, by eye",
+    "Dragged to the middle",
+    "Placed anywhere, then moved"
+   ],
+   "answer": 0,
+   "why": "That is design intent: if the plate is later made wider, a hole located from the centre stays central; one located from an edge does not. Model features the way the part works.",
+   "added": true,
+   "after": "wikipedia1-6"
   },
   {
    "type": "concept",

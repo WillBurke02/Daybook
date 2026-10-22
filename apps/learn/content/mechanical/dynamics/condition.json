@@ -87,6 +87,43 @@
    "id": "liii1-7"
   },
   {
+   "id": "q-vib-vel",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A shaft is out of balance and vibrates as a sine once per revolution at {rpm} rpm. The peak displacement is {d} µm. What is the peak velocity, in mm/s?",
+   "vars": {
+    "rpm": {
+     "pick": [
+      980,
+      1450,
+      1480,
+      2950,
+      3000
+     ]
+    },
+    "d": {
+     "pick": [
+      10,
+      20,
+      25,
+      40,
+      50,
+      80
+     ]
+    }
+   },
+   "let": {
+    "f": "rpm / 60"
+   },
+   "answer": "2 * PI() * f * d / 1000",
+   "unit": "mm/s",
+   "work": "$f = {rpm} \\div 60 = {f:2}$ Hz, then $v = 2\\pi f D = 2\\pi \\times {f:2} \\times {d} \\div 1000 = {answer:2}$ mm/s",
+   "why": "Differentiating $D\\cos\\omega t$ gives a peak velocity of $\\omega D$, with $\\omega = 2\\pi f$. The same displacement at a higher speed means more velocity, and $\\omega^2 D$ of acceleration.",
+   "hint": "Peak velocity = ωD, with ω = 2π × revolutions a second.",
+   "added": true,
+   "after": "liii1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "24.1.2 Non-sinusoidal vibrations",
@@ -151,6 +188,22 @@
    "id": "liii1-15"
   },
   {
+   "id": "q-2x",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "On a vibration spectrum, at what frequency is the peak labelled 2X?",
+   "options": [
+    "Twice running speed",
+    "Twice the 1X amplitude",
+    "Half running speed",
+    "The second sensor's reading"
+   ],
+   "answer": 0,
+   "why": "1X is the fundamental, once per revolution; 2X and 3X are the second and third harmonics. A spectrum taken when a machine is new is a baseline: growth at a harmonic later is the clue.",
+   "added": true,
+   "after": "liii1-15"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "24.2 Vibration sensors",
@@ -183,6 +236,29 @@
    "id": "liii1-19"
   },
   {
+   "id": "q-sensor-kinds",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each device to what it senses.",
+   "pairs": [
+    [
+     "Eddy-current probe",
+     "The gap between shaft and housing"
+    ],
+    [
+     "Velocity or acceleration sensor",
+     "Motion of the casing it is fixed to"
+    ],
+    [
+     "Keyphasor",
+     "One pulse a revolution: phase and speed"
+    ]
+   ],
+   "why": "Displacement probes thread through the frame and see the shaft move within its bearing. Casing sensors see the frame shake. The keyphasor's pulse tells where the out-of-balance is around the shaft.",
+   "added": true,
+   "after": "liii1-19"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "24.3 Monitoring hardware",
@@ -205,6 +281,22 @@
    "html": "<p>A much simpler alternative to continuous vibration sensors (displacement or acceleration) and monitoring equipment suitable for less critical applications is a simple mechanical switch actuated by a machine’s vibration. These switches cannot, of course, quantitatively analyze machine vibrations, but they do serve as qualitative indicators of gross vibration. The following photograph shows a Robertshaw “Vibraswitch” unit:</p><figure><img src=\"media/liii/583803ea96b2.jpg\" alt=\"A figure from page 1922 of the original\"></figure><p>This switch works on the principle of a weighted lever generating a force when shaken. A pair of magnets located at the weighted end of the lever hold it in either the “reset” (normal) or “tripped” position:</p><figure><img src=\"media/liii/8862361a2097.jpg\" alt=\"A figure from page 1922 of the original\"></figure><p>When reset, the lever is pre-loaded by spring tension to flip to the “tripped” position. All it needs to make that transition is enough acceleration to generate the “breakaway” force necessary to pull away from the holding magnet. Once the acceleration force exceeds that threshold, the lever moves toward the other magnet, which holds it securely in position so that switch will not “reset” itself with additional vibration.</p><p>This pre-loading spring is adjustable by a small screw, making it possible to easily vary the sensitivity of the switch:</p><figure><img src=\"media/liii/d914109a0dc7.jpg\" alt=\"A figure from page 1923 of the original\"></figure>",
    "body": "A much simpler alternative to continuous vibration sensors (displacement or acceleration) and monitoring equipment suitable for less critical applications is a simple mechanical switch actuated by a machine’s vibration. These switches cannot, of course, quantitatively analyze machine vibrations, but they do serve as qualitative indicators of gross vibration. The following photograph shows a Robertshaw “Vibraswitch” unit: This switch works on the principle of a weighted lever generating a force when shaken. A pair of magnets located at the weighted end of the lever hold it in either the “reset” (normal) or “tripped” position: When reset, the lever is pre-loaded by spring tension to flip to the “tripped” position. All it needs to make that transition is enough acceleration to generate the “breakaway” force necessary to pull away from the holding magnet. Once the acceleration force exceeds that threshold, the lever moves toward the other magnet, which holds it securely in position so that switch will not “reset” itself with additional vibration. This pre-loading spring is adjustable by a small screw, making it possible to easily vary the sensitivity of the switch:",
    "id": "liii1-22"
+  },
+  {
+   "id": "q-vib-switch",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does a mechanical vibration switch do?",
+   "options": [
+    "Trip when shaking passes a set level",
+    "Measure the vibration in mm/s",
+    "Show the spectrum",
+    "Find the out-of-balance position"
+   ],
+   "answer": 0,
+   "why": "It is a qualitative device: a weighted lever breaks away from a magnet when acceleration is high enough, and stays tripped until reset. The adjusting screw sets how hard a shake trips it.",
+   "added": true,
+   "after": "liii1-22"
   },
   {
    "id": "add-vib-units",

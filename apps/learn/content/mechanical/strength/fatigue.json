@@ -38,6 +38,22 @@
    "id": "wikipedia1-2"
   },
   {
+   "id": "q-fatigue-start",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Where do fatigue cracks usually start?",
+   "options": [
+    "At stress raisers: holes, keyways, sharp corners",
+    "In the middle of a smooth section",
+    "Wherever the part is thickest",
+    "At random, anywhere"
+   ],
+   "answer": 0,
+   "why": "Stress concentrates at holes, keyways, sharp internal corners, weld toes, inclusions and scratches, so cracks start there, at stresses well below the yield strength.",
+   "added": true,
+   "after": "wikipedia1-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Crack initiation",
@@ -60,6 +76,22 @@
    "html": "<p>The following effects change the rate of growth:</p><ul><li>Mean stress effect: Higher mean stress increases the rate of crack growth.</li> <li>Environment: Increased moisture increases the rate of crack growth. In the case of aluminium, cracks generally grow from the surface, where water vapour from the atmosphere is able to reach the tip of the crack and dissociate into atomic hydrogen which causes <a href=\"https://en.wikipedia.org/wiki/Hydrogen_embrittlement\">hydrogen embrittlement</a>. Cracks growing internally are isolated from the atmosphere and grow in a <a href=\"https://en.wikipedia.org/wiki/Vacuum\">vacuum</a> where the rate of growth is typically an order of magnitude slower than a surface crack.</li> <li>Short crack effect: In 1975, Pearson observed that short cracks grow faster than expected. Possible reasons for the short crack effect include the presence of the T-stress, the tri-axial stress state at the crack tip, the lack of crack closure associated with short cracks and the large plastic zone in comparison to the crack length. In addition, long cracks typically experience a threshold which short cracks do not have. There are a number of criteria for short cracks: <ul><li>cracks are typically smaller than 1 mm,</li> <li>cracks are smaller than the material microstructure size such as the grain size, or</li> <li>crack length is small compared to the plastic zone.</li></ul></li> <li>Underloads: Small numbers of underloads increase the rate of growth and may counteract the effect of overloads.</li> <li>Overloads: Initially overloads (&gt; 1.5 the maximum load in a sequence) lead to a small increase in the rate of growth followed by a long reduction in the rate of growth.</li></ul>",
    "body": "The following effects change the rate of growth: Mean stress effect: Higher mean stress increases the rate of crack growth. Environment: Increased moisture increases the rate of crack growth. In the case of aluminium, cracks generally grow from the surface, where water vapour from the atmosphere is able to reach the tip of the crack and dissociate into atomic hydrogen which causes hydrogen embrittlement . Cracks growing internally are isolated from the atmosphere and grow in a vacuum where the rate of growth is typically an order of magnitude slower than a surface crack. Short crack effect: In 1975, Pearson observed that short cracks grow faster than expected. Possible reasons for the short crack effect include the presence of the T-stress, the tri-axial stress state at the crack tip, the lack of crack closure associated with short cracks and the large plastic zone in comparison to the crack length. In addition, long cracks typically experience a threshold which short cracks do not have. There are a number of criteria for short cracks: cracks are typically smaller than 1 mm, cracks are smaller than the material microstructure size such as the grain size, or crack length is small compared to the plastic zone. Underloads: Small numbers of underloads increase the rate of growth and may counteract the effect of overloads. Overloads: Initially overloads (> 1.5 the maximum load in a sequence) lead to a small increase in the rate of growth followed by a long reduction in the rate of growth.",
    "id": "wikipedia1-5"
+  },
+  {
+   "id": "q-crack-growth",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which of these speeds up fatigue crack growth?",
+   "options": [
+    "A higher mean stress, or moisture",
+    "A lower load range",
+    "A vacuum around the crack",
+    "A polished surface after cracking"
+   ],
+   "answer": 0,
+   "why": "The load range drives growth, and a higher mean stress and a damp environment speed it up (water at the crack tip can cause hydrogen embrittlement in aluminium). Cracks inside the metal, cut off from the air, grow far more slowly.",
+   "added": true,
+   "after": "wikipedia1-5"
   },
   {
    "type": "concept",
@@ -100,6 +132,38 @@
    "html": "<p>In 1945, Milton A. Miner popularised a rule that had first been proposed by <a href=\"https://sv.wikipedia.org/wiki/Arvid%20Palmgren\">Arvid Palmgren</a> in 1924. The rule, variously called Miner's rule or the Palmgren–Miner linear damage hypothesis, states that where there are <em>k</em> different stress magnitudes in a spectrum, <em>S<sub>i</sub></em> (1 ≤ <em>i</em> ≤ <em>k</em>), each contributing <em>n<sub>i</sub></em>(<em>S<sub>i</sub></em>) cycles, then if <em>N<sub>i</sub></em>(<em>S<sub>i</sub></em>) is the number of cycles to failure of a constant stress reversal <em>S<sub>i</sub></em> (determined by uni-axial fatigue tests), failure occurs when:</p><dl><dd><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <munderover>\n          <mo>∑</mo>\n          <mrow>\n            <mi>i</mi>\n            <mo>=</mo>\n            <mn>1</mn>\n          </mrow>\n          <mrow>\n            <mi>k</mi>\n          </mrow>\n        </munderover>\n        <mrow>\n          <mfrac>\n            <msub>\n              <mi>n</mi>\n              <mrow>\n                <mi>i</mi>\n              </mrow>\n            </msub>\n            <msub>\n              <mi>N</mi>\n              <mrow>\n                <mi>i</mi>\n              </mrow>\n            </msub>\n          </mfrac>\n        </mrow>\n        <mo>=</mo>\n        <mi>C</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></dd></dl><p>Usually, for design purposes, C is assumed to be 1. This can be thought of as assessing what proportion of life is consumed by a linear combination of stress reversals at varying magnitudes.</p><p>Although Miner's rule may be a useful approximation in many circumstances, it has several major limitations:</p><ol><li>It fails to recognize the probabilistic nature of fatigue and there is no simple way to relate life predicted by the rule with the characteristics of a probability distribution. Industry analysts often use design curves, adjusted to account for scatter, to calculate <em>N<sub>i</sub></em>(<em>S<sub>i</sub></em>).</li> <li>The sequence in which high vs. low stress cycles are applied to a sample in fact affect the fatigue life, for which Miner's Rule does not account. In some circumstances, cycles of low stress followed by high stress cause more damage than would be predicted by the rule. It does not consider the effect of an overload or high stress which may result in a compressive residual stress that may retard crack growth. High stress followed by low stress may have less damage due to the presence of compressive residual stress (or localized plastic damages around crack tip).</li></ol>",
    "body": "In 1945, Milton A. Miner popularised a rule that had first been proposed by Arvid Palmgren in 1924. The rule, variously called Miner's rule or the Palmgren–Miner linear damage hypothesis, states that where there are k different stress magnitudes in a spectrum, S i (1 ≤ i ≤ k ), each contributing n i ( S i ) cycles, then if N i ( S i ) is the number of cycles to failure of a constant stress reversal S i (determined by uni-axial fatigue tests), failure occurs when: ∑ i = 1 k n i N i = C Usually, for design purposes, C is assumed to be 1. This can be thought of as assessing what proportion of life is consumed by a linear combination of stress reversals at varying magnitudes. Although Miner's rule may be a useful approximation in many circumstances, it has several major limitations: It fails to recognize the probabilistic nature of fatigue and there is no simple way to relate life predicted by the rule with the characteristics of a probability distribution. Industry analysts often use design curves, adjusted to account for scatter, to calculate N i ( S i ). The sequence in which high vs. low stress cycles are applied to a sample in fact affect the fatigue life, for which Miner's Rule does not account. In some circumstances, cycles of low stress followed by high stress cause more damage than would be predicted by the rule. It does not consider the effect of an overload or high stress which may result in a compressive residual stress that may retard crack growth. High stress followed by low stress may have less damage due to the presence of compressive residual stress (or localized plastic damages around crack tip).",
    "id": "wikipedia1-10"
+  },
+  {
+   "id": "q-miner",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.6,
+   "q": "A part sees {n1} cycles at a stress where it would last {big1} cycles, and {n2} cycles at a stress where it would last {big2}. Using Miner's rule, what fraction of its life is used up?",
+   "vars": {
+    "k1": [
+     1,
+     9,
+     1
+    ],
+    "k2": [
+     1,
+     9,
+     1
+    ]
+   },
+   "let": {
+    "big1": "100000",
+    "big2": "1000000",
+    "n1": "k1 * 5000",
+    "n2": "k2 * 50000"
+   },
+   "answer": "n1 / big1 + n2 / big2",
+   "abs": 0.001,
+   "work": "$\\frac{ {n1} }{ {big1} } + \\frac{ {n2} }{ {big2} } = {answer:3}$",
+   "why": "Miner's rule adds the fraction of life each stress level uses: n ÷ N for each. When the sum reaches 1 (C = 1 for design), failure is expected. It ignores the order of the loads, which in reality matters.",
+   "hint": "For each level: cycles applied ÷ cycles to failure. Add them.",
+   "added": true,
+   "after": "wikipedia1-10"
   },
   {
    "type": "concept",
@@ -158,6 +222,22 @@
    "id": "wikipedia1-17"
   },
   {
+   "id": "q-stop-drill",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does stop-drilling a fatigue crack do?",
+   "options": [
+    "Replaces its sharp tip with a round hole",
+    "Removes the crack entirely",
+    "Welds the crack shut",
+    "Hardens the metal around it"
+   ],
+   "answer": 0,
+   "why": "A hole drilled at the tip blunts it, cutting the stress concentration so growth slows or stops. It is a temporary repair: the crack is still there and must be watched.",
+   "added": true,
+   "after": "wikipedia1-17"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Life improvement",
@@ -198,6 +278,22 @@
    "id": "wikipedia1-22"
   },
   {
+   "id": "q-comet",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What design change came from the de Havilland Comet investigations?",
+   "options": [
+    "Windows and cut-outs with rounded corners",
+    "Square windows for strength",
+    "Thicker glass in the windows",
+    "No windows near the cockpit"
+   ],
+   "answer": 0,
+   "why": "Stress around the sharp-cornered cut-outs was far higher than expected, and fatigue cracks started there. Every later airliner has rounded window corners. The same lesson applies to a sharp corner in a machine frame.",
+   "added": true,
+   "after": "wikipedia1-22"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Alexander L. Kielland oil platform capsizing",
@@ -212,6 +308,22 @@
    "html": "<p>In March 1981, the investigative report concluded that the rig collapsed owing to a fatigue crack in one of its six bracings (bracing D-6), which connected the collapsed D-leg to the rest of the rig. This was traced to a small 6 mm fillet weld which joined a non-load-bearing flange plate to this D-6 bracing. This flange plate held a sonar device used during drilling operations. The poor profile of the fillet weld contributed to a reduction in its fatigue strength. Further, the investigation found considerable amounts of <a href=\"https://en.wikipedia.org/wiki/Lamellar_tearing\">lamellar tearing</a> in the flange plate and cold cracks in the butt weld. Cold cracks in the welds, increased stress concentrations due to the weakened flange plate, the poor weld profile, and cyclical stresses (which would be common in the <a href=\"https://en.wikipedia.org/wiki/North_Sea\">North Sea</a>), seemed to collectively play a role in the rig's collapse.</p>",
    "body": "In March 1981, the investigative report concluded that the rig collapsed owing to a fatigue crack in one of its six bracings (bracing D-6), which connected the collapsed D-leg to the rest of the rig. This was traced to a small 6 mm fillet weld which joined a non-load-bearing flange plate to this D-6 bracing. This flange plate held a sonar device used during drilling operations. The poor profile of the fillet weld contributed to a reduction in its fatigue strength. Further, the investigation found considerable amounts of lamellar tearing in the flange plate and cold cracks in the butt weld. Cold cracks in the welds, increased stress concentrations due to the weakened flange plate, the poor weld profile, and cyclical stresses (which would be common in the North Sea ), seemed to collectively play a role in the rig's collapse.",
    "id": "wikipedia1-24"
+  },
+  {
+   "id": "q-kielland",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "The Alexander L. Kielland rig capsized from a fatigue crack. Where did it start?",
+   "options": [
+    "A small, poor fillet weld on a non-load-bearing fitting",
+    "A main structural weld that was overloaded",
+    "Corrosion of the anchor chains",
+    "A cracked deck plate"
+   ],
+   "answer": 0,
+   "why": "A 6 mm fillet weld fixing a sonar flange plate to a bracing had a poor profile and lamellar tearing nearby; the crack grew from it. 'Non-load-bearing' attachments still put a stress raiser on the member they are welded to.",
+   "added": true,
+   "after": "wikipedia1-24"
   },
   {
    "type": "concept",

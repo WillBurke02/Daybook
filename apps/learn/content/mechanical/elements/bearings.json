@@ -71,6 +71,22 @@
    "id": "wikipedia1-5"
   },
   {
+   "id": "q-ball-contact",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A ball meets its race over, in theory, a single point. Why is the contact pressure not infinite?",
+   "options": [
+    "The ball and race flatten slightly under load",
+    "The grease takes the load",
+    "The cage spreads the load",
+    "The balls never actually touch the race"
+   ],
+   "answer": 0,
+   "why": "Both deform elastically, like a tyre on a road, giving a small contact patch. The stress there is still very high and repeats every time a ball rolls over, which is why bearings eventually fail by fatigue.",
+   "added": true,
+   "after": "wikipedia1-5"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Cylindrical roller",
@@ -101,6 +117,37 @@
    "html": "<p>The needle roller bearing is a special type of roller bearing which uses long, thin cylindrical rollers resembling needles. Often the ends of the rollers taper to points, and these are used to keep the rollers captive, or they may be hemispherical and not captive but held by the shaft itself or a similar arrangement. Since the rollers are thin, the outside diameter of the bearing is only slightly larger than the hole in the middle. However, the small-diameter rollers must bend sharply where they contact the races, and thus the bearing <a href=\"https://en.wikipedia.org/wiki/Fatigue_(material)\">fatigues</a> relatively quickly.</p>",
    "body": "The needle roller bearing is a special type of roller bearing which uses long, thin cylindrical rollers resembling needles. Often the ends of the rollers taper to points, and these are used to keep the rollers captive, or they may be hemispherical and not captive but held by the shaft itself or a similar arrangement. Since the rollers are thin, the outside diameter of the bearing is only slightly larger than the hole in the middle. However, the small-diameter rollers must bend sharply where they contact the races, and thus the bearing fatigues relatively quickly.",
    "id": "wikipedia1-9"
+  },
+  {
+   "id": "q-bearing-types",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each rolling bearing to what it is good at.",
+   "pairs": [
+    [
+     "Deep-groove ball",
+     "Moderate radial and some axial load, low friction"
+    ],
+    [
+     "Cylindrical roller",
+     "Heavy radial load, but dislikes misalignment"
+    ],
+    [
+     "Spherical roller",
+     "Heavy load with a misaligned or bending shaft"
+    ],
+    [
+     "Tapered roller",
+     "Radial and axial together: wheel hubs"
+    ],
+    [
+     "Needle roller",
+     "Little room: barely bigger than the shaft"
+    ]
+   ],
+   "why": "Rollers carry more than balls because they touch along a line, not at a point. Each shape trades something: needles fatigue faster, tapered rollers cost more, spherical rollers have more friction.",
+   "added": true,
+   "after": "wikipedia1-9"
   },
   {
    "type": "concept",
@@ -135,6 +182,22 @@
    "id": "wikipedia1-13"
   },
   {
+   "id": "q-small-fatigue",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why do smaller balls or rollers tend to fatigue sooner?",
+   "options": [
+    "They bend more sharply",
+    "They spin more slowly",
+    "They hold less grease",
+    "They are of softer steel"
+   ],
+   "answer": 0,
+   "why": "A small rolling element bends more tightly at the contact, concentrating the stress, and each element is loaded more often per turn. Fatigue, abrasion from dirt and pressure welding are the failure modes the text names.",
+   "added": true,
+   "after": "wikipedia1-13"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Linear motion",
@@ -149,6 +212,32 @@
    "html": "<p>The prediction of bearing life is described in ISO 281 and the <a href=\"https://en.wikipedia.org/wiki/ANSI\">ANSI</a>/American Bearing Manufacturers Association Standards 9 and 11.</p><p>The traditional life prediction model for rolling-element bearings uses the basic life equation:</p><p><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>L</mi>\n          <mrow>\n            <mn>10</mn>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <mo>(</mo>\n        <mi>C</mi>\n        <mrow>\n          <mo>/</mo>\n        </mrow>\n        <mi>P</mi>\n        <msup>\n          <mo>)</mo>\n          <mrow>\n            <mi>p</mi>\n          </mrow>\n        </msup>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></p><p>Where:</p><ul><li><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>L</mi>\n          <mrow>\n            <mn>10</mn>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> is the 'basic life' (usually quoted in millions of revolutions) for a reliability of 90%, i.e. no more than 10% of bearings are expected to have failed</li> <li><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mi>C</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> is the dynamic load rating of the bearing, quoted by the manufacturer</li> <li><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mi>P</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> is the equivalent dynamic load applied to the bearing</li> <li><math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mi>p</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> is a constant: 3 for ball bearings, 4 for pure line contact and 3.33 for roller bearings</li></ul><p>Basic life or <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>L</mi>\n          <mrow>\n            <mn>10</mn>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> is the life that 90% of bearings can be expected to reach or exceed. The median or average life, sometimes called <a href=\"https://en.wikipedia.org/wiki/Mean_Time_Between_Failure\">Mean Time Between Failure</a> (MTBF), is about five times the calculated basic rating life. Several factors, the '<a href=\"https://en.wikipedia.org/wiki/ASME\">ASME</a> five factor model', can be used to further adjust the <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>L</mi>\n          <mrow>\n            <mn>10</mn>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> life depending upon the desired reliability, lubrication, contamination, etc.</p><p>The major implication of this model is that bearing life is finite, and reduces by a cube power of the ratio between <a href=\"https://en.wikipedia.org/wiki/Design_load\">design load</a> and applied load. This model was developed in 1924, 1947 and 1952 work by <a href=\"https://sv.wikipedia.org/wiki/Arvid%20Palmgren\">Arvid Palmgren</a> and Gustaf Lundberg in their paper <em>Dynamic Capacity of Rolling Bearings</em>. The model dates from 1924, the values of the constant <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mi>p</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> from the post-war works. Higher <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <mi>p</mi>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> values may be seen as both a longer lifetime for a correctly used bearing below its design load, or also as the increased rate by which lifetime is shortened when overloaded.</p>",
    "body": "The prediction of bearing life is described in ISO 281 and the ANSI /American Bearing Manufacturers Association Standards 9 and 11. The traditional life prediction model for rolling-element bearings uses the basic life equation: L 10 = ( C / P ) p Where: L 10 is the 'basic life' (usually quoted in millions of revolutions) for a reliability of 90%, i.e. no more than 10% of bearings are expected to have failed C is the dynamic load rating of the bearing, quoted by the manufacturer P is the equivalent dynamic load applied to the bearing p is a constant: 3 for ball bearings, 4 for pure line contact and 3.33 for roller bearings Basic life or L 10 is the life that 90% of bearings can be expected to reach or exceed. The median or average life, sometimes called Mean Time Between Failure (MTBF), is about five times the calculated basic rating life. Several factors, the ' ASME five factor model', can be used to further adjust the L 10 life depending upon the desired reliability, lubrication, contamination, etc. The major implication of this model is that bearing life is finite, and reduces by a cube power of the ratio between design load and applied load. This model was developed in 1924, 1947 and 1952 work by Arvid Palmgren and Gustaf Lundberg in their paper Dynamic Capacity of Rolling Bearings . The model dates from 1924, the values of the constant p from the post-war works. Higher p values may be seen as both a longer lifetime for a correctly used bearing below its design load, or also as the increased rate by which lifetime is shortened when overloaded.",
    "id": "wikipedia1-15"
+  },
+  {
+   "id": "q-l10-factor",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.2,
+   "q": "A ball bearing's load is multiplied by {k}. By what factor does its L10 life change? (Ball bearings: exponent 3.)",
+   "vars": {
+    "k": {
+     "pick": [
+      0.5,
+      0.75,
+      1.25,
+      1.5,
+      2,
+      3
+     ]
+    }
+   },
+   "answer": "1 / k^3",
+   "tolerance": 0.01,
+   "work": "$L_{10} \\propto (C/P)^3$, so life × $\\frac{1}{ {k}^3 } = {answer:3}$",
+   "why": "Life goes with (C/P)³, so it falls with the cube of the load: twice the load, an eighth of the life; half the load, eight times. That is why a slightly bigger bearing, or less belt tension, can last far longer.",
+   "hint": "Life goes as 1 ÷ load³.",
+   "added": true,
+   "after": "wikipedia1-15"
   },
   {
    "type": "concept",
@@ -191,12 +280,45 @@
    "id": "wikipedia1-20"
   },
   {
+   "id": "q-sealed-tradeoff",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does the text say is the down side of a permanently sealed bearing?",
+   "options": [
+    "Friction, and trapped dirt",
+    "Greasing every week",
+    "No axial load at all",
+    "A bigger shaft is needed"
+   ],
+   "answer": 0,
+   "why": "Seals rub, adding friction, and any grit or wear particles that get in stay in the grease for good, wearing the bearing. Regreasable bearings can be purged, but need the maintenance. A bearing kept cool, clean, lubricated and within its load can outlast the machine.",
+   "added": true,
+   "after": "wikipedia1-20"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Designation",
    "html": "<p>Metric rolling-element bearings have alphanumerical designations, defined by <a href=\"https://en.wikipedia.org/wiki/ISO_15?action=edit&amp;redlink=1\">ISO 15</a>, to define all of the physical parameters. The main designation is a seven digit number with optional alphanumeric digits before or after to define additional parameters. Here the digits will be defined as: 7654321. Any zeros to the left of the last defined digit are not printed; e.g. a designation of 0007208 is printed 7208.</p><p>Digits one and two together are used to define the inner diameter (ID), or bore diameter, of the bearing. For diameters between 20 and 495 mm, inclusive, the designation is multiplied by five to give the ID; e.g. designation 08 is a 40 mm ID. For inner diameters less than 20 the following designations are used: 00 = 10 mm ID, 01 = 12 mm ID, 02 = 15 mm ID, and 03 = 17 mm ID. The third digit defines the \"diameter series\", which defines the outer diameter (OD). The diameter series, defined in ascending order, is: 0, 8, 9, 1, 7, 2, 3, 4, 5, 6. The fourth digit defines the type of bearing:</p><ol><li>Ball radial single-row</li><li>Ball radial spherical double-row</li><li>Roller radial with short cylindrical rollers</li><li>Roller radial spherical double-row</li><li>Roller needle or with long cylindrical rollers</li><li>Roller radial with spiral rollers</li><li>Ball radial-thrust single-row</li><li>Roller tapered</li><li>Ball thrust, ball thrust-radial</li><li>Roller thrust or thrust-radial</li></ol>",
    "body": "Metric rolling-element bearings have alphanumerical designations, defined by ISO 15 , to define all of the physical parameters. The main designation is a seven digit number with optional alphanumeric digits before or after to define additional parameters. Here the digits will be defined as: 7654321. Any zeros to the left of the last defined digit are not printed; e.g. a designation of 0007208 is printed 7208. Digits one and two together are used to define the inner diameter (ID), or bore diameter, of the bearing. For diameters between 20 and 495 mm, inclusive, the designation is multiplied by five to give the ID; e.g. designation 08 is a 40 mm ID. For inner diameters less than 20 the following designations are used: 00 = 10 mm ID, 01 = 12 mm ID, 02 = 15 mm ID, and 03 = 17 mm ID. The third digit defines the \"diameter series\", which defines the outer diameter (OD). The diameter series, defined in ascending order, is: 0, 8, 9, 1, 7, 2, 3, 4, 5, 6. The fourth digit defines the type of bearing: Ball radial single-row Ball radial spherical double-row Roller radial with short cylindrical rollers Roller radial spherical double-row Roller needle or with long cylindrical rollers Roller radial with spiral rollers Ball radial-thrust single-row Roller tapered Ball thrust, ball thrust-radial Roller thrust or thrust-radial",
    "id": "wikipedia1-21"
+  },
+  {
+   "id": "q-bearing-bore",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.2,
+   "q": "A motor's drive-end bearing is a 6208. What is its bore? (For codes 04 and up, the last two digits × 5 give the bore in mm.)",
+   "options": [
+    "40 mm",
+    "8 mm",
+    "62 mm",
+    "80 mm"
+   ],
+   "answer": 0,
+   "why": "The last two digits, 08, times 5 is 40 mm. The 6 is the type (deep-groove ball) and the 2 the series (light). Codes 00 to 03 are the exceptions: 10, 12, 15 and 17 mm.",
+   "added": true,
+   "after": "wikipedia1-21"
   },
   {
    "type": "concept",

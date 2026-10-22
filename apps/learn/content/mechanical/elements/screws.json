@@ -56,12 +56,44 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-ball-vs-acme",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Roughly how efficient is a ball screw compared with an ACME lead screw of the same size?",
+   "options": [
+    "About 90%, against 20 to 25%",
+    "About 50%, against 45%",
+    "About 99%, against 90%",
+    "About the same"
+   ],
+   "answer": 0,
+   "why": "Rolling balls instead of sliding threads cut the friction dramatically: much less motor torque for the same thrust, and less heat and wear.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Design",
    "html": "<p>Because of their high mechanical efficiency, especially compared to traditional lead screws, ball screws can potentially be back-driven (that is, a linear force applied directly to the nut can induce a rotation of the shaft, an effect counterproductive to most uses). While this is usually of limited consequence to motorized applications, and potentially even provides a mild protective effect in some cases, it makes them generally unsuitable for application in manually actuated systems, such as hand-fed <a href=\"https://en.wikipedia.org/wiki/Machine_tool\">machine tools</a>. The static torque and digital control of an appropriate <a href=\"https://en.wikipedia.org/wiki/Servomotor\">servomotor</a> can be made to resist and compensate, but hand cranked mechanisms would require additional mechanisms to prevent undesirable behaviors. Such undesirable behavior could range from simple loss of control of the machine, such as self-feeding (the tool of the machine causing motion of the axes without the control input of the operator), to potentially dangerous cases where unexpected force could be transmitted all the way to an operator's limbs and pose a risk of injury. Because an ordinary lead screw resists or even prohibits such reverse operation, they are inherently safer and more reliable for manual use. The magnitude of force needed to consequentially back-drive an Acme lead screw would usually be sufficient to destroy the mechanism, immobilizing the machine and absorbing any dangerous force before it could pose a risk to an operator.</p>",
    "body": "Because of their high mechanical efficiency, especially compared to traditional lead screws, ball screws can potentially be back-driven (that is, a linear force applied directly to the nut can induce a rotation of the shaft, an effect counterproductive to most uses). While this is usually of limited consequence to motorized applications, and potentially even provides a mild protective effect in some cases, it makes them generally unsuitable for application in manually actuated systems, such as hand-fed machine tools . The static torque and digital control of an appropriate servomotor can be made to resist and compensate, but hand cranked mechanisms would require additional mechanisms to prevent undesirable behaviors. Such undesirable behavior could range from simple loss of control of the machine, such as self-feeding (the tool of the machine causing motion of the axes without the control input of the operator), to potentially dangerous cases where unexpected force could be transmitted all the way to an operator's limbs and pose a risk of injury. Because an ordinary lead screw resists or even prohibits such reverse operation, they are inherently safer and more reliable for manual use. The magnitude of force needed to consequentially back-drive an Acme lead screw would usually be sufficient to destroy the mechanism, immobilizing the machine and absorbing any dangerous force before it could pose a risk to an operator.",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-back-drive",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A vertical axis uses a ball screw. Power is lost. What can happen, and why?",
+   "options": [
+    "The load can drive the screw round and drop",
+    "Nothing: ball screws lock when stopped",
+    "The balls fall out of the nut",
+    "The screw bends"
+   ],
+   "answer": 0,
+   "why": "High efficiency works both ways: a force on the nut can turn the screw (back-driving). A vertical ball-screw axis needs a motor brake or a counterbalance. Most lead screws, being inefficient, self-lock instead.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -112,6 +144,22 @@
    "id": "wikipedia1-10"
   },
   {
+   "id": "q-preload",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a ball screw nut preloaded?",
+   "options": [
+    "To remove backlash and add stiffness",
+    "To make it easier to turn by hand",
+    "To stop it being back-driven",
+    "To hold the grease in"
+   ],
+   "answer": 0,
+   "why": "Preload (often two nut halves pushed apart) keeps every ball loaded in both directions, so reversing does not take up slack: no backlash, a stiffer axis, better positioning. Too much preload adds friction and heat.",
+   "added": true,
+   "after": "wikipedia1-10"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Manufacture",
@@ -120,12 +168,76 @@
    "id": "wikipedia1-11"
   },
   {
+   "id": "q-accuracy-grade",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A ball screw is graded C3. Is that more or less precise than C7?",
+   "options": [
+    "More precise: C0 is the best",
+    "Less precise: C10 is the best",
+    "The same: the grade is the size",
+    "It depends on the length"
+   ],
+   "answer": 0,
+   "why": "Grades run from C0 (most precise) to C10. Ground screws reach the low grades; rolled screws are cheaper and less precise, fine for many transfer axes.",
+   "added": true,
+   "after": "wikipedia1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Applications",
    "html": "<p>Ball screws are used in aircraft and missiles to move control surfaces, especially for electric <a href=\"https://en.wikipedia.org/wiki/Fly_by_wire_(flight_control)\">fly by wire</a>, and in automobile <a href=\"https://en.wikipedia.org/wiki/Power_steering\">power steering</a> to translate rotary motion from an electric motor to axial motion of the steering rack. They are also used in <a href=\"https://en.wikipedia.org/wiki/Machine_tool\">machine tools</a>, <a href=\"https://en.wikipedia.org/wiki/Robot\">robots</a>, and precision assembly equipment. High-precision ball screws are used in <a href=\"https://en.wikipedia.org/wiki/Stepper\">steppers</a> for <a href=\"https://en.wikipedia.org/wiki/Semiconductor_manufacturing\">semiconductor manufacturing</a>.</p><p>A ball screw is used to expand the Deployable Tower Assembly (DTA) structure on the <a href=\"https://en.wikipedia.org/wiki/James_Webb_Space_Telescope\">James Webb Space Telescope</a>.</p><p>A ball screw is also planned to be used in <a href=\"https://en.wikipedia.org/wiki/TerraPower\">TerraPower</a>'s <a href=\"https://en.wikipedia.org/wiki/Natrium_reactor\">Natrium reactor</a> as part of its <a href=\"https://en.wikipedia.org/wiki/Control_rod\">Control rod</a> drive mechanism.</p><p>In 2026 it was assessed that precision ball screws have become a <a href=\"https://en.wikipedia.org/wiki/Bottleneck_(production)\">bottleneck (production)</a> for the <a href=\"https://en.wikipedia.org/wiki/Defense_industry_of_the_United_States\">defense industry of the United States</a>.</p>",
    "body": "Ball screws are used in aircraft and missiles to move control surfaces, especially for electric fly by wire , and in automobile power steering to translate rotary motion from an electric motor to axial motion of the steering rack. They are also used in machine tools , robots , and precision assembly equipment. High-precision ball screws are used in steppers for semiconductor manufacturing . A ball screw is used to expand the Deployable Tower Assembly (DTA) structure on the James Webb Space Telescope . A ball screw is also planned to be used in TerraPower 's Natrium reactor as part of its Control rod drive mechanism. In 2026 it was assessed that precision ball screws have become a bottleneck (production) for the defense industry of the United States .",
    "id": "wikipedia1-12"
+  },
+  {
+   "id": "q-worked-screw",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A ball screw with a 10 mm lead (90% efficient) must push a carriage at 200 mm/s against 2000 N. Find the screw speed and torque.",
+   "steps": [
+    {
+     "ask": "Speed",
+     "show": "$200 \\div 10 = 20$ rev/s, so $20 \\times 60 = 1200$ rpm"
+    },
+    {
+     "ask": "Torque",
+     "show": "$T = \\frac{F L}{2\\pi\\eta} = \\frac{2000 \\times 0.010}{2\\pi \\times 0.9} = 3.54$ N·m"
+    },
+    {
+     "ask": "Check with power",
+     "show": "Out: $2000 \\times 0.2 = 400$ W. In: $3.54 \\times 2\\pi \\times 20 = 445$ W, and $400 \\div 445 = 0.9$: it checks"
+    }
+   ],
+   "why": "Each turn moves the nut one lead. The work done per turn by the motor (torque × 2π) times the efficiency equals force × lead.",
+   "added": true,
+   "after": "wikipedia1-12"
+  },
+  {
+   "id": "q-faded-screw",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A ball screw with a 5 mm lead (90% efficient) must push a carriage at 50 mm/s against 800 N. Find the screw speed and torque.",
+   "steps": [
+    {
+     "ask": "Speed",
+     "show": "$50 \\div 5 = 10$ rev/s = 600 rpm"
+    },
+    {
+     "ask": "Torque",
+     "show": "$\\frac{800 \\times 0.005}{2\\pi \\times 0.9} = 0.707$ N·m"
+    },
+    {
+     "ask": "Check with power",
+     "show": "Out: $800 \\times 0.05 = 40$ W; in: $0.707 \\times 2\\pi \\times 10 = 44.4$ W; $40 \\div 44.4 = 0.9$"
+    }
+   ],
+   "why": "The same three steps: speed from lead, torque from force × lead ÷ (2π × efficiency), then check the power.",
+   "added": true,
+   "after": "q-worked-screw"
   },
   {
    "type": "concept",
@@ -160,12 +272,55 @@
    "id": "wikipedia2-3"
   },
   {
+   "id": "q-thread-forms",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each thread form to its trait as a power screw.",
+   "pairs": [
+    [
+     "V-thread",
+     "High friction: made to stop fasteners loosening"
+    ],
+    [
+     "ACME (trapezoidal)",
+     "29° flanks: easy to machine and strong"
+    ],
+    [
+     "Square",
+     "Most efficient sliding thread"
+    ],
+    [
+     "Buttress",
+     "Efficient when the load pushes one way only"
+    ]
+   ],
+   "why": "Lead screws want low friction, the opposite of a bolt, so V-threads are avoided. Trapezoidal (in metric form, 30°) is the everyday choice: a compromise between strength, cost and efficiency.",
+   "added": true,
+   "after": "wikipedia2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Advantages and disadvantages",
    "html": "<p>The advantages of a leadscrew are:</p><ul><li>Large load carrying capability</li> <li>Compactness</li> <li>Simplicity of design</li> <li>Ease of manufacture</li> <li>Large mechanical advantage</li> <li>Precise and accurate linear motion</li> <li>Smooth and quiet operation</li> <li>Low maintenance</li> <li>Minimal number of parts</li> <li>Most are self-locking (cannot be back-driven)</li></ul><p>The disadvantages are that most are not very efficient. Due to this low efficiency, they cannot be used in continuous power transmission applications. They also have a high degree of friction on the threads, which can wear the threads out quickly. For square threads, the nut must be replaced; for trapezoidal threads, a <a href=\"https://en.wikipedia.org/wiki/Split_nut\">split nut</a> may be used to compensate for the wear.</p>",
    "body": "The advantages of a leadscrew are: Large load carrying capability Compactness Simplicity of design Ease of manufacture Large mechanical advantage Precise and accurate linear motion Smooth and quiet operation Low maintenance Minimal number of parts Most are self-locking (cannot be back-driven) The disadvantages are that most are not very efficient. Due to this low efficiency, they cannot be used in continuous power transmission applications. They also have a high degree of friction on the threads, which can wear the threads out quickly. For square threads, the nut must be replaced; for trapezoidal threads, a split nut may be used to compensate for the wear.",
    "id": "wikipedia2-4"
+  },
+  {
+   "id": "q-self-lock",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a plain lead screw often chosen for a manually adjusted or vertical slide?",
+   "options": [
+    "Most are self-locking: the load cannot turn them",
+    "They are the most efficient screws",
+    "They never wear",
+    "They have no backlash at all"
+   ],
+   "answer": 0,
+   "why": "With high thread friction, pushing on the nut cannot turn the screw, so the slide stays put without a brake. The cost is low efficiency and more wear, which is why they are kept to intermittent, low-power duty.",
+   "added": true,
+   "after": "wikipedia2-4"
   },
   {
    "type": "concept",

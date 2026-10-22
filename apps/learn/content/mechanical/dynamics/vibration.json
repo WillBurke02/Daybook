@@ -99,6 +99,32 @@
    "id": "ox1-5"
   },
   {
+   "id": "q-period",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A vibration repeats every {t} ms. What is its frequency, in Hz?",
+   "vars": {
+    "t": {
+     "pick": [
+      2,
+      4,
+      5,
+      8,
+      12.5,
+      20,
+      40
+     ]
+    }
+   },
+   "answer": "1000 / t",
+   "unit": "Hz",
+   "work": "$f = 1/T = 1 \\div ({t} \\div 1000) = {answer}$ Hz",
+   "why": "Frequency is cycles a second, the inverse of the period. Turn ms into s first.",
+   "hint": "f = 1/T, with T in seconds.",
+   "added": true,
+   "after": "ox1-5"
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "A stroboscope is set to flash every 8 . 00 × 10 − 5 s . What is the frequency of the flashes?",
@@ -198,6 +224,22 @@
    "id": "ox2-9"
   },
   {
+   "id": "q-shm-mass",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A mass bounces on a spring. The mass is made four times bigger. What happens to the period?",
+   "options": [
+    "It doubles",
+    "It becomes four times",
+    "It halves",
+    "It stays the same"
+   ],
+   "answer": 0,
+   "why": "$T = 2\\pi\\sqrt{m/k}$: the period goes with the square root of the mass, and $\\sqrt{4} = 2$. Only the mass and the stiffness set it, not how far it swings.",
+   "added": true,
+   "after": "ox2-9"
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "A type of cuckoo clock keeps time by having a mass bouncing on a spring, usually something cute like a cherub in a chair. What force constant is needed to produce a period of 0.500 s for a 0.0150-kg mass?",
@@ -278,6 +320,22 @@
    "html": "<ul><li>A system’s natural frequency is the frequency at which the system will oscillate if not affected by driving or damping forces.</li><li>A periodic force driving a harmonic oscillator at its natural frequency produces resonance. The system is said to resonate.</li><li>The less damping a system has, the higher the amplitude of the forced oscillations near resonance. The more damping a system has, the broader response it has to varying driving frequencies.</li></ul>",
    "body": "A system’s natural frequency is the frequency at which the system will oscillate if not affected by driving or damping forces. A periodic force driving a harmonic oscillator at its natural frequency produces resonance. The system is said to resonate. The less damping a system has, the higher the amplitude of the forced oscillations near resonance. The more damping a system has, the broader response it has to varying driving frequencies.",
    "id": "ox3-5"
+  },
+  {
+   "id": "q-damping",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A machine is driven at its natural frequency. What does adding damping do?",
+   "options": [
+    "Lowers and widens the resonance peak",
+    "Moves the peak to a new speed",
+    "Makes the peak taller",
+    "Removes the natural frequency"
+   ],
+   "answer": 0,
+   "why": "Damping takes energy out each cycle, so the amplitude at resonance is smaller and the response is spread over a wider band of frequencies. The natural frequency itself barely moves.",
+   "added": true,
+   "after": "ox3-5"
   },
   {
    "id": "add-spring-diag",

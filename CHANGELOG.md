@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.38 — 22 October 2026
+
+- **Questions inside the Mechanical book lessons**: bearings, screws, friction, guides, fatigue, DFMA,
+  drawings, tolerances and fits, GD&T, CAD, vibration and condition monitoring, work and energy, rotation,
+  oscillation and beams now ask after each section: 70 new questions, with a worked and a faded fit
+  calculation (H7/g6, H7/k6), clearance in µm, third- and first-angle projection, beam stiffness and sag,
+  running cost in pounds, and kinetic and rotational energy.
+
 ## 4.0.37 — 22 October 2026
 
 - **Questions inside the Fluids book lessons**: pneumatic circuits and solenoid valves, servo valves,

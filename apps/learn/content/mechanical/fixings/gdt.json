@@ -46,12 +46,44 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-basic-dim",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is a **basic** dimension in GD&T?",
+   "options": [
+    "A theoretically exact value; its tolerance is in a frame",
+    "A dimension given for information only",
+    "The largest size allowed",
+    "Any dimension without decimals"
+   ],
+   "answer": 0,
+   "why": "A basic dimension (in a box) defines the exact true position or profile; the allowed variation comes from the geometric tolerance in the feature control frame. A reference dimension, by contrast, only informs and is not inspected.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Tolerances",
    "html": "<p>Every feature on every manufactured part is subject to variation; therefore, the limits of allowable variation must be specified. Tolerances can be expressed directly on a dimension by limits, plus/minus tolerances, or geometric tolerances, or indirectly in tolerance blocks, notes, or tables.</p><p>Geometric tolerances are described by <em>feature control frames,</em> which are rectangular boxes on a drawing that indicate the type of geometric control, tolerance value, modifier(s) and/or datum(s) relevant to the feature<em>.</em> The type of tolerances used with symbols in feature control frames can be:</p><ol><li>equal bilateral</li> <li>unequal bilateral</li> <li>unilateral</li> <li>no particular distribution (a \"floating\" zone)</li></ol><p>Tolerances for the profile symbols are equal bilateral unless otherwise specified, and for the position symbol tolerances are always equal bilateral. For example, the position of a hole has a tolerance of .020 inches. This means the hole can move ±.010 inches, which is an equal bilateral tolerance. It does not mean the hole can move +.015/−.005 inches, which is an unequal bilateral tolerance. Unequal bilateral and unilateral tolerances for profile are specified by adding further information to clearly show this is what is required.</p>",
    "body": "Every feature on every manufactured part is subject to variation; therefore, the limits of allowable variation must be specified. Tolerances can be expressed directly on a dimension by limits, plus/minus tolerances, or geometric tolerances, or indirectly in tolerance blocks, notes, or tables. Geometric tolerances are described by feature control frames, which are rectangular boxes on a drawing that indicate the type of geometric control, tolerance value, modifier(s) and/or datum(s) relevant to the feature . The type of tolerances used with symbols in feature control frames can be: equal bilateral unequal bilateral unilateral no particular distribution (a \"floating\" zone) Tolerances for the profile symbols are equal bilateral unless otherwise specified, and for the position symbol tolerances are always equal bilateral. For example, the position of a hole has a tolerance of .020 inches. This means the hole can move ±.010 inches, which is an equal bilateral tolerance. It does not mean the hole can move +.015/−.005 inches, which is an unequal bilateral tolerance. Unequal bilateral and unilateral tolerances for profile are specified by adding further information to clearly show this is what is required.",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-fcf",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does a feature control frame hold?",
+   "options": [
+    "Symbol, tolerance, modifiers and datums",
+    "The part number and revision",
+    "The material and finish",
+    "The scale and projection"
+   ],
+   "answer": 0,
+   "why": "Read it left to right: which geometric characteristic (position, flatness…), the tolerance zone's size (with ⌀ for a cylindrical zone), any modifier (Ⓜ, Ⓛ), then the datums it is measured from, in order of priority.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -70,6 +102,22 @@
    "id": "wikipedia1-6"
   },
   {
+   "id": "q-no-scaling",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A dimension is missing from a drawing. May the machinist measure the drawing to find it?",
+   "options": [
+    "No: dimensions must fully define the part",
+    "Yes, if the drawing is to scale",
+    "Yes, if the result is rounded",
+    "Yes, on a CAD screen only"
+   ],
+   "answer": 0,
+   "why": "The text: measuring directly from the drawing or assuming dimensions is not allowed. Ask for the drawing to be corrected. Every dimension also needs a tolerance, directly or from the title block.",
+   "added": true,
+   "after": "wikipedia1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "List of geometric characteristics",
@@ -78,12 +126,56 @@
    "id": "wikipedia1-7"
   },
   {
+   "id": "q-form-symbols",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each form control to what it requires.",
+   "pairs": [
+    [
+     "Straightness",
+     "A line on the surface is straight"
+    ],
+    [
+     "Flatness",
+     "The whole surface lies between two planes"
+    ],
+    [
+     "Circularity",
+     "Each cross-section is round"
+    ],
+    [
+     "Cylindricity",
+     "Round and straight along its length"
+    ]
+   ],
+   "why": "These four control a feature's own form, so they need no datum. Cylindricity combines the other three for a round feature. Orientation (parallelism, perpendicularity) and location (position) relate a feature to datums.",
+   "added": true,
+   "after": "wikipedia1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "List of modifiers",
    "html": "<p>The following table shows only some of the more commonly used modifiers in GD&amp;T. It is not an exhaustive list.</p><table> <caption>Symbols used in a \"feature control frame\" to specify a feature's description, tolerance, modifier and <a href=\"https://en.wikipedia.org/wiki/Datum_references\">datum references</a></caption> <tbody><tr> <th>Symbol</th><th><a href=\"https://en.wikipedia.org/wiki/Unicode\">Unicode</a> <br>character</th><th>Modifier</th> <th>Definition</th><th>Notes</th></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓕ\">Ⓕ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24BB</small></td><td>Free state</td> <td>\"The condition of a part free of applied forces\"</td><td>Applies only when part is otherwise restrained</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓛ\">Ⓛ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24C1</small></td><td>Least material condition (LMC)</td> <td>\"The condition in which a feature of size contains the <em>least</em> amount of material within the stated limits of size\"</td><td>Useful to maintain minimum wall thickness</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓜ\">Ⓜ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24C2</small></td><td>Maximum material condition (MMC)</td> <td>\"The condition in which a feature of size contains the <em>maximum</em> amount of material within the stated limits of size\"</td><td>Provides bonus tolerance only for a feature of size</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓟ\">Ⓟ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24C5</small></td><td><a href=\"https://en.wikipedia.org/wiki/Projected_tolerance_zone\">Projected tolerance zone</a></td> <td></td><td>Useful on threaded holes for long studs</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓢ\">Ⓢ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24C8</small></td><td>Regardless of feature size (RFS)</td> <td>\"Indicates a geometric tolerance applies at any increment of size of the actual mating envelope of the feature of size\"</td><td>Not part of the 1994 version. See para. A5, bullet 3. Also para. D3. Also, Figure 3–8.</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓣ\">Ⓣ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24C9</small></td><td>Tangent plane</td> <td>\"A plane that contacts the high points of the specified feature surface\"</td><td>Useful for interfaces where form is not required</td></tr> <tr> <td></td><td></td><td>Continuous feature</td> <td>Identifies \"a group of features of size where there is a requirement that they be treated geometrically as a single feature of size\"</td><td>Identifies a group of features that should be \"treated geometrically as a single feature\"</td></tr> <tr> <td></td><td></td><td>Statistical tolerance</td> <td>Indicates that features \"shall be produced with statistical process controls\".</td><td>Appears in the 1994 version of the standard, assumes appropriate statistical process control.</td></tr> <tr> <td></td><td><a href=\"https://en.wikipedia.org/wiki/Ⓤ\">Ⓤ</a><br><small><a href=\"https://en.wikipedia.org/wiki/Unicode\">U</a>+24CA</small></td><td>Unequal bilateral</td> <td></td><td>Added in the 2009 version of the standard, and refers to unequal profile distribution. Number after this symbol indicates tolerance in the \"plus material\" direction.</td></tr> </tbody></table>",
    "body": "The following table shows only some of the more commonly used modifiers in GD&T. It is not an exhaustive list. Symbols used in a \"feature control frame\" to specify a feature's description, tolerance, modifier and datum references Symbol Unicode character Modifier Definition Notes Ⓕ U +24BB Free state \"The condition of a part free of applied forces\" Applies only when part is otherwise restrained Ⓛ U +24C1 Least material condition (LMC) \"The condition in which a feature of size contains the least amount of material within the stated limits of size\" Useful to maintain minimum wall thickness Ⓜ U +24C2 Maximum material condition (MMC) \"The condition in which a feature of size contains the maximum amount of material within the stated limits of size\" Provides bonus tolerance only for a feature of size Ⓟ U +24C5 Projected tolerance zone Useful on threaded holes for long studs Ⓢ U +24C8 Regardless of feature size (RFS) \"Indicates a geometric tolerance applies at any increment of size of the actual mating envelope of the feature of size\" Not part of the 1994 version. See para. A5, bullet 3. Also para. D3. Also, Figure 3–8. Ⓣ U +24C9 Tangent plane \"A plane that contacts the high points of the specified feature surface\" Useful for interfaces where form is not required Continuous feature Identifies \"a group of features of size where there is a requirement that they be treated geometrically as a single feature of size\" Identifies a group of features that should be \"treated geometrically as a single feature\" Statistical tolerance Indicates that features \"shall be produced with statistical process controls\". Appears in the 1994 version of the standard, assumes appropriate statistical process control. Ⓤ U +24CA Unequal bilateral Added in the 2009 version of the standard, and refers to unequal profile distribution. Number after this symbol indicates tolerance in the \"plus material\" direction.",
    "id": "wikipedia1-8"
+  },
+  {
+   "id": "q-mmc",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 6.4,
+   "q": "What is the maximum material condition (MMC) of a hole?",
+   "options": [
+    "Its smallest allowed size",
+    "Its largest allowed size",
+    "Its nominal size",
+    "Its size before machining"
+   ],
+   "answer": 0,
+   "why": "MMC is when the part holds the most material: for a hole, the smallest bore; for a shaft, the biggest diameter. A position tolerance at Ⓜ grows (bonus tolerance) as the hole departs from MMC, since a bigger hole still clears its bolt.",
+   "added": true,
+   "after": "wikipedia1-8"
   },
   {
    "type": "concept",

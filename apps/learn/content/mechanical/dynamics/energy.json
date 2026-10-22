@@ -82,6 +82,22 @@
    "id": "ox1-4"
   },
   {
+   "id": "q-no-work",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Which of these does no work on the load, in the physics sense?",
+   "options": [
+    "Holding a box still",
+    "Lifting a box",
+    "Pushing a cart along",
+    "Dragging a crate"
+   ],
+   "answer": 0,
+   "why": "Work needs a force and a movement in the direction of that force. Holding still: force but no movement, so no work on the box, however tiring it is.",
+   "added": true,
+   "after": "ox1-4"
+  },
+  {
    "type": "concept",
    "stage": "example",
    "title": "Example: Calculating the Work You Do to Push a Lawn Mower Across a Large Lawn",
@@ -96,6 +112,48 @@
    "html": "<ul><li>Work is the transfer of energy by a force acting on an object as it is displaced.</li><li>The work <math><mrow><mrow><mi>W</mi></mrow></mrow></math> that a force <math><mrow><mrow><mi mathvariant=\"bold\">F</mi></mrow></mrow></math> does on an object is the product of the magnitude <math><mrow><mrow><mi>F</mi></mrow></mrow></math> of the force, times the magnitude <math><mrow><mrow><mi>d</mi></mrow></mrow></math> of the displacement, times the cosine of the angle <math><mrow><mrow><mi>θ</mi></mrow></mrow></math> between them. In symbols,\n<div class=\"eq\"><math>\n        \n          <mrow>\n            <mrow>\n              <mrow>\n                <mrow>\n                  <mi>W</mi>\n                  <mo stretchy=\"false\">=</mo>\n                  <mstyle>\n                    <mrow>\n                      <mtext>Fd</mtext>\n                    </mrow>\n                  </mstyle>\n                </mrow><mspace width=\"0.25em\"></mspace>\n                <mtext>cos</mtext><mspace width=\"0.25em\"></mspace>\n                <mi>θ</mi>\n                <mtext>.</mtext>\n              </mrow>\n            </mrow>\n            <mrow></mrow>\n          </mrow>\n          \n        \n      </math>\n\n</div>\n</li><li>The SI unit for work and energy is the joule (J), where <math><mrow><mrow><mrow><mn>1</mn><mrow><mspace width=\"0.25em\"></mspace><mtext>J</mtext><mo stretchy=\"false\">=</mo><mn>1</mn></mrow><mrow><mrow><mspace width=\"0.25em\"></mspace><mtext>N</mtext><mo stretchy=\"false\">⋅</mo><mtext>m</mtext></mrow><mo stretchy=\"false\">=</mo><mrow><mtext>1 kg</mtext><mo stretchy=\"false\">⋅</mo><msup><mtext>m</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow><msup><mtext>/s</mtext><mrow><mn>2</mn></mrow></msup></mrow></mrow></mrow></math>.</li><li>The work done by a force is zero if the displacement is either zero or perpendicular to the force.</li><li>The work done is positive if the force and displacement have the same direction, and negative if they have opposite direction.</li></ul>",
    "body": "Work is the transfer of energy by a force acting on an object as it is displaced. The work W that a force F does on an object is the product of the magnitude F of the force, times the magnitude d of the displacement, times the cosine of the angle θ between them. In symbols, W = Fd cos θ . The SI unit for work and energy is the joule (J), where 1 J = 1 N ⋅ m = 1 kg ⋅ m 2 /s 2 . The work done by a force is zero if the displacement is either zero or perpendicular to the force. The work done is positive if the force and displacement have the same direction, and negative if they have opposite direction.",
    "id": "ox1-6"
+  },
+  {
+   "id": "q-work-num",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A trolley is pulled {d} m along a level floor by a rope at {th}° above the horizontal, with a tension of {f} N. How much work does the rope do, in J?",
+   "vars": {
+    "f": {
+     "pick": [
+      50,
+      80,
+      120,
+      200,
+      250
+     ]
+    },
+    "d": {
+     "pick": [
+      5,
+      8,
+      10,
+      20,
+      25
+     ]
+    },
+    "th": {
+     "pick": [
+      0,
+      20,
+      30,
+      45,
+      60
+     ]
+    }
+   },
+   "answer": "f * d * COS(RADIANS(th))",
+   "unit": "J",
+   "work": "$W = Fd\\cos\\theta = {f} \\times {d} \\times \\cos {th}° = {answer:0}$ J",
+   "why": "Only the part of the force along the movement does work: $F\\cos\\theta$. At 0° that is all of it; at 90° none.",
+   "hint": "W = F d cos θ.",
+   "added": true,
+   "after": "ox1-6"
   },
   {
    "type": "flash",
@@ -197,6 +255,56 @@
    "id": "ox2-9"
   },
   {
+   "id": "q-ke-double",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A conveyor doubles its belt speed. What happens to each package's kinetic energy?",
+   "options": [
+    "It becomes four times",
+    "It doubles",
+    "It halves",
+    "It stays the same"
+   ],
+   "answer": 0,
+   "why": "$KE = \\tfrac{1}{2}mv^2$: speed is squared, so twice the speed gives $2^2 = 4$ times the energy, and four times the work to stop it.",
+   "added": true,
+   "after": "ox2-9"
+  },
+  {
+   "id": "q-ke-num",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {m} kg vehicle moves at {v} m/s. What is its kinetic energy, in kJ?",
+   "vars": {
+    "m": {
+     "pick": [
+      500,
+      800,
+      1200,
+      1500,
+      2000
+     ]
+    },
+    "v": {
+     "pick": [
+      4,
+      8,
+      10,
+      15,
+      20,
+      30
+     ]
+    }
+   },
+   "answer": "0.5 * m * v^2 / 1000",
+   "unit": "kJ",
+   "work": "$\\tfrac{1}{2} \\times {m} \\times {v}^2 = {answer:1}$ kJ",
+   "why": "Square the speed before multiplying. J to kJ: divide by 1000.",
+   "hint": "Half m v squared.",
+   "added": true,
+   "after": "q-ke-double"
+  },
+  {
    "type": "flash",
    "stage": "check",
    "front": "Compare the kinetic energy of a 20,000-kg truck moving at 110 km/h with that of an 80.0-kg astronaut in orbit moving at 27,500 km/h.",
@@ -294,6 +402,55 @@
    "html": "<ul><li>Power is the rate at which work is done, or in equation form, for the average power <math><mrow><mrow><mi>P</mi></mrow></mrow></math> for work <math><mrow><mrow><mi>W</mi></mrow></mrow></math> done over a time <math><mrow><mrow><mi>t</mi></mrow></mrow></math>, <math><mrow><mrow><mrow><mi>P</mi><mo stretchy=\"false\">=</mo><mrow><mi>W</mi><mo stretchy=\"false\">/</mo><mi>t</mi></mrow></mrow></mrow></mrow></math>.</li><li>The SI unit for power is the watt  (W), where <math><mrow><mrow><mrow><mrow><mtext>1 W </mtext><mo stretchy=\"false\">=</mo><mtext> 1 J/s</mtext></mrow></mrow></mrow></mrow></math>.</li><li>The power of many devices such as electric motors is also often expressed in horsepower (hp), where <math><mrow><mrow><mrow><mrow><mtext>1 hp </mtext><mo stretchy=\"false\">=</mo><mtext> 746 W</mtext></mrow></mrow></mrow></mrow></math>.</li></ul>",
    "body": "Power is the rate at which work is done, or in equation form, for the average power P for work W done over a time t , P = W / t . The SI unit for power is the watt (W), where 1 W = 1 J/s . The power of many devices such as electric motors is also often expressed in horsepower (hp), where 1 hp = 746 W .",
    "id": "ox3-9"
+  },
+  {
+   "id": "q-run-cost",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {p} kW pump runs {h} hours a day, {days} days a week. Electricity costs {c}p per kWh. What does it cost a week, in £?",
+   "vars": {
+    "p": {
+     "pick": [
+      0.75,
+      1.5,
+      4,
+      7.5,
+      11
+     ]
+    },
+    "h": {
+     "pick": [
+      8,
+      12,
+      16,
+      24
+     ]
+    },
+    "days": {
+     "pick": [
+      5,
+      7
+     ]
+    },
+    "c": {
+     "pick": [
+      18,
+      22,
+      25,
+      28
+     ]
+    }
+   },
+   "let": {
+    "kwh": "p * h * days"
+   },
+   "answer": "kwh * c / 100",
+   "unit": "£",
+   "work": "Energy: ${p} \\times {h} \\times {days} = {kwh}$ kWh; cost: ${kwh} \\times {c} \\div 100 = £{answer:2}$",
+   "why": "Energy = power × time, so kW × hours gives kWh, the unit the supplier charges for. Pence to pounds: divide by 100.",
+   "hint": "kW × hours = kWh, then × the price.",
+   "added": true,
+   "after": "ox3-9"
   },
   {
    "id": "add-hoist-steps",

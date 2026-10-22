@@ -70,6 +70,22 @@
    "id": "doitpoms1-4"
   },
   {
+   "id": "q-deeper",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A rectangular beam is made twice as deep, the same width. How much stiffer is it in bending?",
+   "options": [
+    "8 times",
+    "2 times",
+    "4 times",
+    "16 times"
+   ],
+   "answer": 0,
+   "why": "$I = wh^3/12$, and stiffness is $EI$. Depth is cubed, so $2^3 = 8$. Twice as wide only doubles it. That is why joists stand on edge.",
+   "added": true,
+   "after": "doitpoms1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Beam deflections from applied bending moments",
@@ -118,12 +134,82 @@
    "id": "doitpoms1-10"
   },
   {
+   "id": "q-3pt",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A steel bar ($E$ = 200 GPa) rests on supports {l} mm apart and carries {f} N at its centre. Its $I$ is {i} mm⁴. How far does the centre drop, in mm?",
+   "vars": {
+    "f": {
+     "pick": [
+      100,
+      200,
+      500
+     ]
+    },
+    "l": {
+     "pick": [
+      400,
+      600,
+      800,
+      1000
+     ]
+    },
+    "i": {
+     "pick": [
+      5000,
+      10000,
+      20000,
+      40000
+     ]
+    }
+   },
+   "answer": "f * l^3 / (48 * 200000 * i)",
+   "unit": "mm",
+   "work": "$\\delta = \\frac{FL^3}{48EI} = \\frac{{f} \\times {l}^3}{48 \\times 200\\,000 \\times {i}} = {answer}$ mm",
+   "why": "200 GPa is 200 000 N/mm², which keeps everything in N and mm. Span is cubed: twice the span, eight times the sag.",
+   "hint": "δ = F L³ / (48 E I), with E in N/mm².",
+   "added": true,
+   "after": "doitpoms1-10"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Calculating I for simple shapes",
    "html": "<p><img src=\"media/doitpoms/2b13d03b-second_moment_diagram1.jpg\" alt=\"\"></p><p>The second moment of area for a rectangular section beam of width <em>w </em> and thickness <em>h </em>is given by </p><p>\\[I = \\int\\limits_0^{h/2} {{y^2}dA} = 2\\int\\limits_0^{h/2} {{y^2}w {\\rm{d}}y} = 2w\\left[ {\\frac{{{y^3}}}{3}} \\right]_0^{h/2} = \\frac{{w{h^3}}}{{12}}\\]</p><p><img src=\"media/doitpoms/1c33d777-second_moment_diagram2.jpg\" alt=\"\"></p><p>The corresponding operation for a circular cross-section of diameter <em>D </em>gives </p><p>\\[\\begin{array}{l} I = \\int\\limits_A^{} {{y^2}{\\rm{d}}A} = \\int\\limits_{\\theta = 0}^{2\\pi } {\\int\\limits_{r = 0}^{D/2} {{{\\left( {r\\sin \\theta } \\right)}^2}} } \\;\\left[ {\\left( {r{\\rm{d}}\\theta } \\right){\\rm{d}}r} \\right] = \\int\\limits_{\\theta = 0}^{2\\pi } {\\left\\{ {\\int\\limits_{r = 0}^{D/2} {{r^3}{\\rm{d}}r} } \\right\\}} {\\sin ^2}\\theta {\\rm{d}}\\theta \\\\ = \\frac{{{D^4}}}{{64}}\\int\\limits_{\\theta = 0}^{2\\pi } {{{\\sin }^2}\\theta {\\rm{d}}\\theta } = \\frac{{{D^4}}}{{64}}\\int\\limits_{\\theta = 0}^{2\\pi } {\\left( {\\frac{{1 - \\cos 2\\theta }}{2}} \\right){\\rm{d}}\\theta } = \\frac{{{D^4}}}{{64}}\\left[ {\\frac{\\theta }{2} - \\frac{{\\sin 2\\theta }}{4}} \\right]_0^{2\\pi } = \\frac{{\\pi {D^4}}}{{64}} \\end{array}\\]</p><p><strong>Academic consultant:</strong> Bill Clyne (University of Cambridge)<br> <strong>Content development:</strong> Sonya Pemberton <br> <strong>Photography and video:</strong> Brian Barber and Carol Best <br> <strong>Web development:</strong> David Brook</p><p>This <a href=\"https://www.doitpoms.ac.uk/\">DoITPoMS</a> TLP was funded by the UK Centre for Materials Education and the <a href=\"http://www.msm.cam.ac.uk/\">Department of Materials Science and Metallurgy</a>, University of Cambridge.</p><p>Additional support for the development of this TLP came from the Worshipful Company of Armourers and Brasiers'</p>",
    "body": "The second moment of area for a rectangular section beam of width w and thickness h is given by \\[I = \\int\\limits_0^{h/2} {{y^2}dA} = 2\\int\\limits_0^{h/2} {{y^2}w {\\rm{d}}y} = 2w\\left[ {\\frac{{{y^3}}}{3}} \\right]_0^{h/2} = \\frac{{w{h^3}}}{{12}}\\] The corresponding operation for a circular cross-section of diameter D gives \\[\\begin{array}{l} I = \\int\\limits_A^{} {{y^2}{\\rm{d}}A} = \\int\\limits_{\\theta = 0}^{2\\pi } {\\int\\limits_{r = 0}^{D/2} {{{\\left( {r\\sin \\theta } \\right)}^2}} } \\;\\left[ {\\left( {r{\\rm{d}}\\theta } \\right){\\rm{d}}r} \\right] = \\int\\limits_{\\theta = 0}^{2\\pi } {\\left\\{ {\\int\\limits_{r = 0}^{D/2} {{r^3}{\\rm{d}}r} } \\right\\}} {\\sin ^2}\\theta {\\rm{d}}\\theta \\\\ = \\frac{{{D^4}}}{{64}}\\int\\limits_{\\theta = 0}^{2\\pi } {{{\\sin }^2}\\theta {\\rm{d}}\\theta } = \\frac{{{D^4}}}{{64}}\\int\\limits_{\\theta = 0}^{2\\pi } {\\left( {\\frac{{1 - \\cos 2\\theta }}{2}} \\right){\\rm{d}}\\theta } = \\frac{{{D^4}}}{{64}}\\left[ {\\frac{\\theta }{2} - \\frac{{\\sin 2\\theta }}{4}} \\right]_0^{2\\pi } = \\frac{{\\pi {D^4}}}{{64}} \\end{array}\\] Academic consultant: Bill Clyne (University of Cambridge) Content development: Sonya Pemberton Photography and video: Brian Barber and Carol Best Web development: David Brook This DoITPoMS TLP was funded by the UK Centre for Materials Education and the Department of Materials Science and Metallurgy , University of Cambridge. Additional support for the development of this TLP came from the Worshipful Company of Armourers and Brasiers'",
    "id": "doitpoms1-11"
+  },
+  {
+   "id": "q-i-rect",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A rectangular bar is {w} mm wide and {h} mm deep, bent about its width. What is its second moment of area, in mm⁴?",
+   "vars": {
+    "w": {
+     "pick": [
+      10,
+      20,
+      25,
+      40
+     ]
+    },
+    "h": {
+     "pick": [
+      5,
+      10,
+      20,
+      30,
+      50
+     ]
+    }
+   },
+   "answer": "w * h^3 / 12",
+   "unit": "mm⁴",
+   "work": "$I = wh^3/12 = {w} \\times {h}^3 \\div 12 = {answer}$ mm⁴",
+   "why": "The depth, the dimension in the direction of bending, is the one cubed.",
+   "hint": "w h³ / 12, cubing the depth.",
+   "added": true,
+   "after": "doitpoms1-11"
   },
   {
    "type": "mcq",
