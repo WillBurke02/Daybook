@@ -116,13 +116,50 @@ Two, for now:
 | **Apple Health** | Sleep and waking (iPhone now, a watch later); steps | iPhone Shortcut, daily: *Find Health Samples* → POST to `/log/api/health` with its own key |
 
 Hevy is not read directly. **Gym detail comes from the Strava activity's description**, where Hevy
-writes the exercises and sets. Lines are read into `workout_set`; if a description cannot be read,
-the card shows it as written. Before building: one real description from a Hevy session, to fix
-the format in a check (`tests/test_log.py`).
+writes the exercises and sets. A real one (22/10/2026):
 
-**From the sets**: top set per exercise, the same exercise last time, best top set so far, volume
-(kg × reps, bodyweight sets left out), and on the Gym page each exercise's top set over time and
-volume a week by session name (Push, Pull, Legs, as named in Hevy).
+```
+Push
+
+Logged with hevyapp.com
+
+Bench Press (Barbell)
+Set 1: 20 kg x 16 [Warm-up]
+Set 2: 50 kg x 8 [Warm-up]
+Set 3: 70 kg x 8 
+Set 4: 80 kg x 3 
+Set 5: 70 kg x 9 
+
+Overhead Press (Barbell)
+Set 1: 20 kg x 10 
+
+Triceps Rope Pushdown
+Set 1: 23 kg x 11 
+Set 2: 27 kg x 8 
+
+Lateral Raise (Dumbbell)
+Set 1: 10 kg x 10 
+Set 2: 10 kg x 10 
+
+Chest Fly (Machine)
+Set 1: 66 kg x 6 @ 6 rpe 
+Set 2: 79 kg x 8 
+```
+
+Read as: blocks split by blank lines; `Logged with hevyapp.com` and the title line are skipped; in a
+block, the first line is the exercise (equipment in brackets kept as part of the name, so Lateral
+Raise (Dumbbell) and (Cable) stay apart), and each `Set n: <kg> kg x <reps>` line is a set, with an
+optional `[Warm-up]` (or another `[…]` set type) and `@ <n> rpe`. Lines end in a space; strip them.
+A set line that does not match is kept as text on that exercise, and shown as written; nothing is
+guessed. The text above goes into `tests/test_log.py` as it is.
+
+`workout_set` gains `kind` (normal, warm-up, other `[…]` types as written) and `rpe`.
+
+**From the sets** (warm-ups shown, greyed, and left out of every figure): top set per exercise
+(heaviest working set; Bench Press 80 × 3), the same exercise last time, best top set so far,
+volume (kg × reps of working sets: this session 3,327 kg over 10 sets), and on the Gym page each
+exercise's top set over time and volume a week by session name (Push, Pull, Legs, as named in Hevy).
+`ponytail:` volume counts a dumbbell set once, as Hevy writes it; double it per exercise if wanted.
 
 **When Strava is fetched** (no polling):
 
@@ -131,10 +168,14 @@ volume a week by session name (Push, Pull, Legs, as named in Hevy).
 2. A Fetch button (Setup → Sources, and on the Day when Training is empty).
 3. Once at the end of the day (23:30) by the server, so the day's habits are settled and the
    Pi has them even if nothing was opened.
-4. On upload, if wanted: an iPhone personal automation, *When Strava (or Hevy) is closed* → *Get
-   Contents of URL* POST `/log/api/strava/fetch` with a key. Runs right after a recording or a
-   workout, needs no public address. Strava's own webhooks would be instant too, but need a public
-   address (Tailscale Funnel on a one-purpose listener); not at first.
+4. On upload: an iPhone personal automation, *When Strava or Hevy is closed* → POST
+   `/log/api/strava/fetch` with the phone capture key (Appendix B). The key already opens Log's
+   quick add and share; this adds one more door that can only start a fetch. Strava may not have
+   the activity yet when the app closes (Hevy's post can take a minute), so the server fetches
+   then and again 5 and 15 minutes later, and ignores a second call within 2 minutes (closing the
+   app without recording costs one cheap call at most).
+   Strava's own webhooks would be instant too, but need a public address (Tailscale Funnel on a
+   one-purpose listener); not needed with the automation.
 
 Later: Health Connect (Android) and Garmin. Garmin can post activities to Strava, so only its sleep
 would need a route of its own.
@@ -188,13 +229,13 @@ Each step is a version (CLAUDE.md) with its check in `tests/test_log.py`.
 - Phone quick add: the Add button wraps onto its own line at 390 px.
 - Timeline: one query instead of two per day shown.
 
-## 10. Open questions
+## 10. Decided, and open
 
-- Journal as the name?
-- One Strava description from a Hevy workout, pasted as it is, to fix the format.
-- Fetch on upload through the iPhone automation: wanted?
-- Week targets: the numbers (Gym 4, Run 2, Woke before 6 4, Learn 5)?
-- Steps from the iPhone: wanted now, or wait for a watch?
+Decided (22/10/2026): the name is Journal; gym detail from Strava descriptions (format in §4); the
+iPhone automation for fetch on upload (Appendix B); week targets Gym 4, Run 2, Woke before 6 4,
+Learn 5.
+
+Open: steps from the iPhone now, or wait for a watch?
 
 ---
 
@@ -242,3 +283,20 @@ Each step is a version (CLAUDE.md) with its check in `tests/test_log.py`.
 > **Deliverables.** Greyscale wireframes at real sizes for each widget and tile (Will dislikes
 > explanatory text on mock-ups too), the JSON shape, the parameter scheme, and a short plan in the
 > style of PLAN-LOG.md. Then stop and wait for Will.
+
+## Appendix B. iPhone automation: fetch from Strava on upload
+
+Works once step 6 of §8 is built (`/log/api/strava/fetch`). The phone needs Tailscale on.
+
+1. Shortcuts → **Automation** → **+** → **App**.
+2. App: **Strava** and **Hevy**. Tick **Is Closed** (untick Is Opened). **Run Immediately**; turn
+   **Notify When Run** off. Next.
+3. **New Blank Automation** → add **Get Contents of URL**:
+   - URL: `https://<pc>.<tailnet>.ts.net/log/api/strava/fetch`
+   - Method: **POST**
+   - Headers: `Authorization` = `Bearer <phone capture key>`; `X-Daybook` = `1`
+   - Request Body: JSON, no fields
+4. Done.
+
+The key is the one in Admin → Calendar feed and phone → Phone capture key; Reset there stops this
+automation and the Log Shortcuts together.
