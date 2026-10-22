@@ -495,7 +495,7 @@ def route(db, method, p, query, body, ctx):
         return 200, {"day": d, "entries": entries, "prev": near[0], "next": near[1], "reminders": rem,
                      "github": gh, "github_stale": stale,
                      "tag_notes": dict(db.execute("SELECT tag, note FROM tag_note").fetchall()),   # ponytail: all of them; a handful
-                     "inbox": [dict(r) for r in db.execute("SELECT i.* FROM inbox i")]}
+                     "inbox": db.execute("SELECT COUNT(*) FROM inbox").fetchone()[0]}   # how many: the page fetches them
 
     if p[:1] == ["github"]:
         return _github(db, method, p[1:], body)

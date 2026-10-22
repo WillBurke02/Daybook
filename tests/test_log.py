@@ -218,6 +218,7 @@ sh = one("SELECT * FROM entry ORDER BY id DESC LIMIT 1")
 assert sh["text"] == "From the gallery\nPanel #site" and sh["tags"] == " site " and sh["day"] == date.today().isoformat()
 inbox = R("GET", "t/inbox")
 assert len(inbox) == 1 and inbox[0]["data"].startswith("data:image/png;base64,") and inbox[0]["entry_id"] == sh["id"]
+assert R("GET", "day")["inbox"] == 1, "the day says how many wait, not the pictures themselves"
 # the browser shrinks it and files it; the inbox row goes
 R("POST", f"attach/{sh['id']}", {"photos": [{"image": JPEG, "thumb": JPEG}], "inbox": [inbox[0]["id"]]})
 assert not R("GET", "t/inbox") and one("SELECT COUNT(*) n FROM attachment WHERE entry_id=?", sh["id"])["n"] == 1

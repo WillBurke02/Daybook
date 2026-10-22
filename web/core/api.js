@@ -45,8 +45,9 @@ function once(url) {
 /** The generic calls every app's API answers, at base (for example '/log/api/'). */
 export function client(base) {
   const get = path => once(base + path);
-  const send = (path, body, method = 'POST') =>
-    req(base + path, { method, headers: HEAD, body: body === undefined ? undefined : JSON.stringify(body) });
+  // a small write outlives the page (a box saved as the window closes); keepalive caps them all at 64 KB in flight
+  const send = (path, body, method = 'POST', b = body === undefined ? undefined : JSON.stringify(body)) =>
+    req(base + path, { method, headers: HEAD, body: b, keepalive: !b || b.length < 8000 });
   return {
     get, send,
     meta:   ()       => get('meta'),

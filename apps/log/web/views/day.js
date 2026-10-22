@@ -21,7 +21,18 @@ const remindChip = e => e.remind ? el('a', { class: 'chip rem' + (e.reminded ? '
   title: e.reminded ? 'Reminder, done' : 'Reminder: on that day in Log, and in the calendar feed' }, `Reminder ${whenOf(e.remind)}`) : null;
 let cache = null;                                        // the panels on one page share one fetch of the day
 let githubAsked = false;                                 // one background fetch from GitHub at a time
-const changed = ctx => { cache = null; tagList = null; ctx.reload(); };
+// The day is drawn again after a change, but not under a box being typed in: going from one entry to the next lost
+// the second box (and, on a phone, the keyboard) to the redraw. Then it waits until that box is left.
+let waitOn = null;
+const changed = ctx => {
+  cache = null; tagList = null;
+  const a = document.activeElement;
+  if (!a?.matches('.entry textarea, .entry input, textarea.diary')) { waitOn = null; return ctx.reload(); }
+  if (waitOn === a) return;
+  waitOn = a;
+  // a beat after leaving it, so a tap on a button lands before the page changes under it
+  a.addEventListener('blur', () => setTimeout(() => { if (waitOn === a) { waitOn = null; changed(ctx); } }, 300), { once: true });
+};
 
 // ---- #tags: the ones in use, offered as a # is typed ------------------------------------
 let tagList = null;                                      // most used first; fetched again after a change
@@ -191,7 +202,6 @@ export async function quickBar(ctx) {
   document.body.ondragleave = e => { if (!e.relatedTarget) bar.classList.remove('drop'); };
   document.body.ondrop = e => { bar.classList.remove('drop'); const f = mediaIn(e.dataTransfer); if (f.length) { e.preventDefault(); takeMedia(f); } };
   show();
-  fileInbox(ctx);
   showKept();
   if (navigator.onLine !== false) sendKept();
   // opened to write (the Log icon, Ctrl+Alt+L): the box is ready to type in, with a mouse and keyboard;
@@ -200,18 +210,22 @@ export async function quickBar(ctx) {
   return bar;
 }
 
-/** Pictures a phone shared arrive as they are: shrink each in the browser, file it on its entry. */
+/** Pictures a phone shared arrive as they are: shrink each in the browser, file it on its entry. Asked for when
+ *  the day says there are some (it used to be asked on every page, and the day carried them all, unused). */
+let filing = false;                                      // once at a time: two at once filed a picture twice
 async function fileInbox(ctx) {
-  const rows = await api.table('inbox').catch(() => []);
-  if (!rows.length) return;
+  if (filing) return;
+  filing = true;
   let n = 0;
-  for (const r of rows) {
-    try {
-      const p = await shrink(await blobOf(r.data));
-      await api.attach(r.entry_id, { photos: [p], inbox: [r.id] });
-      n++;
-    } catch { /* one that will not read stays in the inbox, and is tried again next time */ }
-  }
+  try {
+    for (const r of await api.table('inbox').catch(() => [])) {
+      try {
+        const p = await shrink(await blobOf(r.data));
+        await api.attach(r.entry_id, { photos: [p], inbox: [r.id] });
+        n++;
+      } catch { /* one that will not read stays in the inbox, and is tried again next time */ }
+    }
+  } finally { filing = false; }
   if (n) { flash(`Filed ${n} shared picture${n === 1 ? '' : 's'}`); changed(ctx); }
 }
 
@@ -301,6 +315,7 @@ function workEntry(e, ctx) {
 const load = d => {
   if (cache?.d === d && Date.now() - cache.t < 1500) return cache.p;
   cache = { d, t: Date.now(), p: api.day(d) };
+  cache.p.then(got => { if (got.inbox && lastCtx) fileInbox(lastCtx); }, () => {});
   return cache.p;
 };
 

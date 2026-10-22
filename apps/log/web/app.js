@@ -10,6 +10,23 @@ const onDay = () => location.hash.startsWith('#/day') || !location.hash.replace(
 const dayShown = () => new URLSearchParams(location.hash.split('?')[1] || '').get('d') || today();
 const toDay = d => { location.hash = `#/day?d=${d}`; };
 
+// A swipe across a day steps to the one before or after, as [ and ] do; not in a box being typed in, a dialog
+// (a photo's own swipe), or from the screen's edge, which is the phone's own back.
+let x0 = null, y0 = 0;
+addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  x0 = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && e.target.closest?.('main')
+    && !e.target.closest('textarea, input, select, dialog, .tagassist') ? t.clientX : null;
+  y0 = t.clientY;
+}, { passive: true });
+addEventListener('touchend', e => {
+  if (x0 == null || !onDay()) return;
+  const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+  if (Math.abs(dx) > 80 && Math.abs(dx) > 2 * Math.abs(dy) && !String(getSelection())) toDay(addDays(dayShown(), dx < 0 ? 1 : -1));
+}, { passive: true });
+// Leaving the app (another app on the phone, the window closed) saves the box being typed in, as leaving the box does.
+document.addEventListener('visibilitychange', () => { if (document.hidden) document.activeElement?.blur?.(); });
+
 export default {
   name: 'log', title: 'Log', home: 'day', period: false,
   about: 'a diary of the day and the work day.',

@@ -1,5 +1,17 @@
 # Changes
 
+## 4.0.39 — 22 October 2026
+
+- **Log keeps your place while you write**: going from one entry (or the diary) to the next no longer
+  redraws the day under you, which lost the box you had moved to and, on a phone, closed the keyboard. The
+  day is drawn again once you leave the box.
+- **Nothing typed is lost on leaving**: switching to another app on the phone, or closing the window, saves
+  the box being typed in, as leaving the box does.
+- **Swipe between days** on a phone: left for the next day, right for the day before, as `]` and `[`.
+- **Lighter pages**: a day no longer carries every picture waiting from the share sheet (the phone kept a copy
+  of each answer, pictures and all), and Log no longer asks the server for them on every page: only when the
+  day says some are waiting.
+
 ## 4.0.38 — 22 October 2026
 
 - **Questions inside the Mechanical book lessons**: bearings, screws, friction, guides, fatigue, DFMA,
