@@ -65,6 +65,22 @@
    "id": "liec1-3"
   },
   {
+   "id": "q-nc-cnc",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In the book's terms, what did CNC add to the old paper-tape NC machine tool?",
+   "options": [
+    "Memory it writes to, so it can act on what happened",
+    "A faster tape reader",
+    "A second tape for spare programs",
+    "Hydraulic drives instead of electric"
+   ],
+   "answer": 0,
+   "why": "Plain NC blindly followed the tape. Writing data to read/write memory let the control record what it had done and what its sensors saw, and act on it: the stored-program idea, a machinist's notepad in silicon.",
+   "added": true,
+   "after": "liec1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Microprocessors",
@@ -87,6 +103,33 @@
    "html": "<pre>\n        Microprocessor (CPU)\n\n--------------------------------------\n|       ** Program counter **        |\n|  (increments address value sent to |\n|  external memory chip(s) to fetch  |==========&gt; Address bus\n|  the next instruction)             |          (to RAM memory)\n--------------------------------------\n|        ** Control Unit **          |&lt;=========&gt; Control Bus\n|  (decodes instructions read from   | (to all devices sharing\n|  program in memory, enables flow   | address and/or data busses;\n|  of data to and from ALU, internal | arbitrates all bus communi- \n|  registers, and external devices)  | cations)\n-------------------------------------- \n| ** Arithmetic Logic Unit (ALU) **  |\n|    (performs all mathematical      |\n|     calculations and Boolean       |\n|     functions)                     |\n--------------------------------------\n|          ** Registers **           |\n|    (small read/write memories for  |&lt;=========&gt; Data Bus\n|     holding instruction codes,     | (from RAM memory and other\n|     error codes, ALU data, etc;    |  external devices)\n|     includes the \"accumulator\")    |\n--------------------------------------\n</pre><p> As one might guess, carrying out even simple instructions is a tedious process. Several steps are necessary for the Control Unit to complete the simplest of mathematical procedures. This is especially true for arithmetic procedures such as exponents, which involve repeated executions (\"iterations\") of simpler functions. Just imagine the sheer quantity of steps necessary within the CPU to update the bits of information for the graphic display on a flight simulator game! The only thing which makes such a tedious process practical is the fact that microprocessor circuits are able to repeat the fetch/execute cycle with great speed. </p>",
    "body": "Microprocessor (CPU) -------------------------------------- | ** Program counter ** | | (increments address value sent to | | external memory chip(s) to fetch |==========> Address bus | the next instruction) | (to RAM memory) -------------------------------------- | ** Control Unit ** |<=========> Control Bus | (decodes instructions read from | (to all devices sharing | program in memory, enables flow | address and/or data busses; | of data to and from ALU, internal | arbitrates all bus communi- | registers, and external devices) | cations) -------------------------------------- | ** Arithmetic Logic Unit (ALU) ** | | (performs all mathematical | | calculations and Boolean | | functions) | -------------------------------------- | ** Registers ** | | (small read/write memories for |<=========> Data Bus | holding instruction codes, | (from RAM memory and other | error codes, ALU data, etc; | external devices) | includes the \"accumulator\") | -------------------------------------- As one might guess, carrying out even simple instructions is a tedious process. Several steps are necessary for the Control Unit to complete the simplest of mathematical procedures. This is especially true for arithmetic procedures such as exponents, which involve repeated executions (\"iterations\") of simpler functions. Just imagine the sheer quantity of steps necessary within the CPU to update the bits of information for the graphic display on a flight simulator game! The only thing which makes such a tedious process practical is the fact that microprocessor circuits are able to repeat the fetch/execute cycle with great speed.",
    "id": "liec1-6"
+  },
+  {
+   "id": "q-cpu-parts",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each part of a CPU to its job.",
+   "pairs": [
+    [
+     "Program counter",
+     "Holds the address of the next instruction"
+    ],
+    [
+     "Control unit",
+     "Decodes instructions and steers the data"
+    ],
+    [
+     "ALU",
+     "Does the arithmetic and Boolean logic"
+    ],
+    [
+     "RAM",
+     "Holds the program's data, read and written"
+    ]
+   ],
+   "why": "Fetch (at the program counter's address), decode (control unit), execute (often in the ALU), store (RAM), repeat. A PLC's CPU runs the same cycle underneath its scan.",
+   "added": true,
+   "after": "liec1-6"
   },
   {
    "type": "concept",
@@ -113,6 +156,22 @@
    "id": "liec2-2"
   },
   {
+   "id": "q-assembler",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is assembly language?",
+   "options": [
+    "Short names for one CPU's machine instructions",
+    "A language every CPU understands directly",
+    "A way of wiring chips together",
+    "A high-level language like Python"
+   ],
+   "answer": 0,
+   "why": "Each mnemonic (MOV A,E) stands for one machine instruction of one CPU family (7B on the Intel 8080). An assembler turns them into binary. It is specific to the chip, unlike a high-level language.",
+   "added": true,
+   "after": "liec2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Microprocessor programming",
@@ -135,6 +194,22 @@
    "html": "<p> The answer comes in two different forms: <em>interpretation</em>, or <em>compilation</em>. Just like two people speaking different languages, there has to be some way to transcend the language barrier in order for them to converse. A translator is needed to translate each person's words to the other person's language, one way at a time. For the microprocessor, this means another program, written by another programmer in machine language, which recognizes the ASCII character patterns of high-level commands such as Print (P-r-i-n-t) and can translate them into the necessary bite-size steps that the microprocessor can directly understand. If this translation is done during program execution, just like a translator intervening between two people in a live conversation, it is called \"interpretation.\" On the other hand, if the entire program is translated to machine language in one fell swoop, like a translator recording a monologue on paper and then translating all the words at one sitting into a written document in the other language, the process is called \"compilation.\" </p><p> Interpretation is simple, but makes for a slow-running program because the microprocessor has to continually translate the program between steps, and that takes time. Compilation takes time initially to translate the whole program into machine code, but the resulting machine code needs no translation after that and runs faster as a consequence. Programming languages such as BASIC and FORTH are interpreted. Languages such as C, C++, FORTRAN, and PASCAL are compiled. Compiled languages are generally considered to be the languages of choice for professional programmers, because of the efficiency of the final product. </p>",
    "body": "The answer comes in two different forms: interpretation , or compilation . Just like two people speaking different languages, there has to be some way to transcend the language barrier in order for them to converse. A translator is needed to translate each person's words to the other person's language, one way at a time. For the microprocessor, this means another program, written by another programmer in machine language, which recognizes the ASCII character patterns of high-level commands such as Print (P-r-i-n-t) and can translate them into the necessary bite-size steps that the microprocessor can directly understand. If this translation is done during program execution, just like a translator intervening between two people in a live conversation, it is called \"interpretation.\" On the other hand, if the entire program is translated to machine language in one fell swoop, like a translator recording a monologue on paper and then translating all the words at one sitting into a written document in the other language, the process is called \"compilation.\" Interpretation is simple, but makes for a slow-running program because the microprocessor has to continually translate the program between steps, and that takes time. Compilation takes time initially to translate the whole program into machine code, but the resulting machine code needs no translation after that and runs faster as a consequence. Programming languages such as BASIC and FORTH are interpreted. Languages such as C, C++, FORTRAN, and PASCAL are compiled. Compiled languages are generally considered to be the languages of choice for professional programmers, because of the efficiency of the final product.",
    "id": "liec2-5"
+  },
+  {
+   "id": "q-interp-compile",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the difference between an interpreter and a compiler?",
+   "options": [
+    "An interpreter translates while running; a compiler beforehand",
+    "A compiler translates while running; an interpreter beforehand",
+    "An interpreter only works on assembly",
+    "There is no difference"
+   ],
+   "answer": 0,
+   "why": "Like a live translator, an interpreter converts each high-level line as the program runs (slower, but easy to change). A compiler translates the whole program into machine code first, which then runs fast on its own.",
+   "added": true,
+   "after": "liec2-5"
   },
   {
    "type": "concept",

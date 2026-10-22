@@ -55,6 +55,22 @@
    "id": "liii1-3"
   },
   {
+   "id": "q-why-frames",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does serial data need delimiters (frames or packets)?",
+   "options": [
+    "To mark where each group starts",
+    "To make the cable shorter",
+    "To raise the baud rate",
+    "To power the receiver"
+   ],
+   "answer": 0,
+   "why": "A stream of bits means nothing until it is grouped. The book's example: is it 'NOWHERE' or 'NOW HERE'? Morse operators used pauses; serial links use start and stop bits, or packet headers.",
+   "added": true,
+   "after": "liii1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.5.1 Serial communication principles",
@@ -87,12 +103,51 @@
    "id": "liii1-7"
   },
   {
+   "id": "q-manchester",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the advantage of Manchester encoding over plain NRZ?",
+   "options": [
+    "It is self-clocking: every bit has a transition",
+    "It sends two bits per transition",
+    "It needs no voltage at all",
+    "It cannot be corrupted by noise"
+   ],
+   "answer": 0,
+   "why": "Each bit is a transition (low to high for 1, high to low for 0), so the receiver can recover the clock from the signal itself, even through long runs of identical bits that would leave NRZ flat. The cost: up to two transitions per bit.",
+   "added": true,
+   "after": "liii1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.5.1 Serial communication principles",
    "html": "<p>Yet another method for encoding binary 1 and 0 states is to use sine waves of different frequencies (“tone bursts”). This is referred to as Frequency Shift Keying, or FSK, and it is the method of encoding used in the HART “smart” instrument communications standard.</p><p>Frequency Shift Key (FSK) encoding</p><figure><img src=\"media/liii/084687ede86e.png\" alt=\"A figure from page 1058 of the original\"></figure><p>In the HART standard – based on the Bell 202 standard used in telephone data exchange – two complete cycles at 2200 Hz represents a “0” bit (space), while one complete cycle at 1200 Hz represents a “1” bit (mark). This standard was invented as a way to exchange digital data over telephone networks, which were built to communicate audio-frequency28 AC signals and thus could not reliably communicate the square-wave signals associated with direct digital data. By assigning digital values to different audio frequencies, serial data could be communicated over telephone channels as a series of sine-wave tones. The same principle of FSK allows HART-compatible instruments to communicate digital data over cables simultaneously carrying DC current (4 to 20 mA) signals representing control system data. Since each bit of FSK-encoded data consists of complete AC cycles (one full positive swing for every full negative swing), the superposition of AC tones does not affect the time-averaged value of the DC milliamp signal.</p><p>Other methods exist as well for encoding digital data along network cables, but these three are the most popular in industrial networks.</p>",
    "body": "Yet another method for encoding binary 1 and 0 states is to use sine waves of different frequencies (“tone bursts”). This is referred to as Frequency Shift Keying, or FSK, and it is the method of encoding used in the HART “smart” instrument communications standard. Frequency Shift Key (FSK) encoding In the HART standard – based on the Bell 202 standard used in telephone data exchange – two complete cycles at 2200 Hz represents a “0” bit (space), while one complete cycle at 1200 Hz represents a “1” bit (mark). This standard was invented as a way to exchange digital data over telephone networks, which were built to communicate audio-frequency28 AC signals and thus could not reliably communicate the square-wave signals associated with direct digital data. By assigning digital values to different audio frequencies, serial data could be communicated over telephone channels as a series of sine-wave tones. The same principle of FSK allows HART-compatible instruments to communicate digital data over cables simultaneously carrying DC current (4 to 20 mA) signals representing control system data. Since each bit of FSK-encoded data consists of complete AC cycles (one full positive swing for every full negative swing), the superposition of AC tones does not affect the time-averaged value of the DC milliamp signal. Other methods exist as well for encoding digital data along network cables, but these three are the most popular in industrial networks.",
    "id": "liii1-8"
+  },
+  {
+   "id": "q-encoding-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each encoding to how it represents bits.",
+   "pairs": [
+    [
+     "NRZ",
+     "A steady high or low level for each bit"
+    ],
+    [
+     "Manchester",
+     "The direction of a transition in each bit"
+    ],
+    [
+     "FSK (as in HART)",
+     "Tones: 1200 Hz for 1, 2200 Hz for 0"
+    ]
+   ],
+   "why": "FSK is why HART can ride on top of a 4–20 mA loop: the tones average to zero, so the analogue current is undisturbed.",
+   "added": true,
+   "after": "liii1-8"
   },
   {
    "type": "concept",
@@ -119,6 +174,22 @@
    "id": "liii1-11"
   },
   {
+   "id": "q-baud-bits",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "With Manchester encoding, what is the worst-case baud rate (transitions a second) compared with the bit rate?",
+   "options": [
+    "Twice the bit rate",
+    "The same as the bit rate",
+    "Half the bit rate",
+    "Ten times the bit rate"
+   ],
+   "answer": 0,
+   "why": "A string of identical bits needs an extra 'set-up' transition between each data transition: two per bit. For NRZ with alternating bits, baud equals bit rate; for long unchanging runs, far less.",
+   "added": true,
+   "after": "liii1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.5.4 Data frames",
@@ -143,6 +214,21 @@
    "id": "liii1-14"
   },
   {
+   "id": "q-frame-order",
+   "type": "order",
+   "stage": "learn",
+   "q": "Put the parts of an asynchronous serial frame in the order they are sent.",
+   "items": [
+    "Start bit",
+    "Data bits, least significant first",
+    "Parity bit (if used)",
+    "Stop bit(s)"
+   ],
+   "why": "The start bit (a 0) wakes the receiver and sets its timing; the data follows LSB first in EIA/TIA-232; parity, if any, sits between the data and the stop bits, which return the line to its idle state.",
+   "added": true,
+   "after": "liii1-14"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.5.4 Data frames",
@@ -159,12 +245,44 @@
    "id": "liii1-16"
   },
   {
+   "id": "q-parity-bit",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A device set for **odd** parity sends the data 0110 1001. What parity bit does it add?",
+   "options": [
+    "1",
+    "0",
+    "No parity bit is needed",
+    "It depends on the stop bits"
+   ],
+   "answer": 0,
+   "why": "0110 1001 has four 1s: an even count. Odd parity needs the total, data plus parity, to be odd, so the parity bit is 1. With even parity it would be 0.",
+   "added": true,
+   "after": "liii1-16"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "15.5.4 Data frames",
    "html": "<p>34It should take only a moment or two of reflection to realize that such a parity check cannot detect an even number of corruptions, since flipping the states of any two or any four or any six (or even all eight!) bits will not alter the evenness/oddness of the bit count. So, parity is admittedly an imperfect error-detection scheme. However, it is certainly better than no error detection at all!</p><p>Now suppose this transmitted frame encounters a significant amount of electrical noise as it travels to the receiving device. If the frame reaches the receiver as shown in the next illustration, the receiving device will interpret the message incorrectly:</p><figure><img src=\"media/liii/ff8e46c4027c.png\" alt=\"A figure from page 1065 of the original\"></figure>",
    "body": "34It should take only a moment or two of reflection to realize that such a parity check cannot detect an even number of corruptions, since flipping the states of any two or any four or any six (or even all eight!) bits will not alter the evenness/oddness of the bit count. So, parity is admittedly an imperfect error-detection scheme. However, it is certainly better than no error detection at all! Now suppose this transmitted frame encounters a significant amount of electrical noise as it travels to the receiving device. If the frame reaches the receiver as shown in the next illustration, the receiving device will interpret the message incorrectly:",
    "id": "liii1-17"
+  },
+  {
+   "id": "q-parity-limit",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Noise flips two bits in a frame protected by a parity bit. What does the receiver see?",
+   "options": [
+    "Nothing: parity still matches",
+    "A parity error",
+    "Two parity errors",
+    "A framing error"
+   ],
+   "answer": 0,
+   "why": "Flipping two (or any even number of) bits leaves the count of 1s odd or even as it was, so parity cannot see it. It catches single-bit errors only, and never says which bit; protocols like Modbus RTU add a CRC for that reason.",
+   "added": true,
+   "after": "liii1-17"
   },
   {
    "type": "concept",
@@ -197,6 +315,22 @@
    "html": "<p>35The “XOFF” code tells the transmitting device to halt its serial data stream to give the receiving device a chance to “catch up.” In data terminal applications, the XOFF command may be issued by pressing the key combination &lt;Ctrl&gt;&lt;S&gt;. This will “freeze” the stream of text data sent to the terminal by the host computer. The key combination &lt;Ctrl&gt;&lt;Q&gt; sends the “XON” code, enabling the host computer to resume data transmission to the terminal.</p><p>The following screen shot shows options for flow control in the “minicom” terminal program:</p><figure><img src=\"media/liii/354523661e2c.jpg\" alt=\"A figure from page 1068 of the original\"></figure><p>Here, you can see “hardware” flow control enabled and “software” flow control disabled. The enabling of “hardware” flow control means the serial communications cable must be equipped with the necessary lines to convey these handshaking signals (when needed) between devices. Software flow control tends to be the more popular option, the advantage of this of course being fewer conductors necessary in the serial data cable. The disadvantage of using software flow control over hardware is a slight inefficiency in data throughput, since the XON and XOFF commands require time to be transmitted serially over the same network as the rest of the data.</p>",
    "body": "35The “XOFF” code tells the transmitting device to halt its serial data stream to give the receiving device a chance to “catch up.” In data terminal applications, the XOFF command may be issued by pressing the key combination <Ctrl><S>. This will “freeze” the stream of text data sent to the terminal by the host computer. The key combination <Ctrl><Q> sends the “XON” code, enabling the host computer to resume data transmission to the terminal. The following screen shot shows options for flow control in the “minicom” terminal program: Here, you can see “hardware” flow control enabled and “software” flow control disabled. The enabling of “hardware” flow control means the serial communications cable must be equipped with the necessary lines to convey these handshaking signals (when needed) between devices. Software flow control tends to be the more popular option, the advantage of this of course being fewer conductors necessary in the serial data cable. The disadvantage of using software flow control over hardware is a slight inefficiency in data throughput, since the XON and XOFF commands require time to be transmitted serially over the same network as the rest of the data.",
    "id": "liii1-21"
+  },
+  {
+   "id": "q-xon-xoff",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What does XON/XOFF flow control do?",
+   "options": [
+    "Lets the receiver pause and resume the sender",
+    "Sets the baud rate automatically",
+    "Checks each byte for errors",
+    "Encrypts the data"
+   ],
+   "answer": 0,
+   "why": "When the receiver (a slow printer, say) falls behind, it sends XOFF (Ctrl-S) to halt the data and XON (Ctrl-Q) to resume. Hardware flow control does the same with extra wires (RTS/CTS).",
+   "added": true,
+   "after": "liii1-21"
   },
   {
    "id": "add-8n1",

@@ -56,12 +56,44 @@
    "id": "govuk1-3"
   },
   {
+   "id": "q-gb-marking",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Under the guide, which conformity markings may apparatus carry when placed on the GB market?",
+   "options": [
+    "UKCA, CE, or CE + UKNI",
+    "Only UKCA",
+    "Only CE",
+    "None: EMC needs no marking"
+   ],
+   "answer": 0,
+   "why": "The manufacturer decides which marking (UKCA, CE, or CE + UKNI) to use, draws up the technical documentation, carries out the conformity assessment and the declaration of conformity.",
+   "added": true,
+   "after": "govuk1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "4. Obligations of manufacturers",
    "html": "<p>3) The manufacturer must label apparatus with their name, registered trade name or registered trade mark, a postal address, and the type batch or serial number (or other identification). Where it is not possible to indicate the type, batch or serial number (or other identification) on the apparatus due to its size or nature and /or it is not possible to include the manufacturer’s name, registered trade name or registered trade mark or a postal address on the apparatus, the manufacturer must ensure the information is included on the packaging or in a document accompanying the apparatus.</p><p>4) The manufacturer must ensure that the apparatus is accompanied by relevant instructions in English.</p><p>5) The manufacturer must ensure that procedures are in place for series production to remain in conformity with Part 2 of the 2016 Regulations. In doing so, they must take account of any changes in electrical equipment design or characteristics, and any change in a harmonised standard or in another technical specification by reference to which the Declaration of Conformity was drawn up.</p><p>6) Manufacturers must take action where they have reason to believe that the apparatus they have placed on the GB market is not in conformity with the 2016 Regulations by bringing the apparatus into conformity, withdrawing the apparatus or recalling the apparatus. Where the apparatus presents a risk, the manufacturer must immediately inform the market surveillance authority (MSA), giving details of how the apparatus is not in conformity and any corrective measures taken. <a href=\"https://www.gov.uk/government/publications/business-notifications-of-unsafe-and-noncompliant-products\">Read more information on how to notify the MSA</a>.</p>",
    "body": "3) The manufacturer must label apparatus with their name, registered trade name or registered trade mark, a postal address, and the type batch or serial number (or other identification). Where it is not possible to indicate the type, batch or serial number (or other identification) on the apparatus due to its size or nature and /or it is not possible to include the manufacturer’s name, registered trade name or registered trade mark or a postal address on the apparatus, the manufacturer must ensure the information is included on the packaging or in a document accompanying the apparatus. 4) The manufacturer must ensure that the apparatus is accompanied by relevant instructions in English. 5) The manufacturer must ensure that procedures are in place for series production to remain in conformity with Part 2 of the 2016 Regulations. In doing so, they must take account of any changes in electrical equipment design or characteristics, and any change in a harmonised standard or in another technical specification by reference to which the Declaration of Conformity was drawn up. 6) Manufacturers must take action where they have reason to believe that the apparatus they have placed on the GB market is not in conformity with the 2016 Regulations by bringing the apparatus into conformity, withdrawing the apparatus or recalling the apparatus. Where the apparatus presents a risk, the manufacturer must immediately inform the market surveillance authority (MSA), giving details of how the apparatus is not in conformity and any corrective measures taken. Read more information on how to notify the MSA .",
    "id": "govuk1-4"
+  },
+  {
+   "id": "q-emc-label",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What must a manufacturer put on the apparatus (or with it, if it will not fit)?",
+   "options": [
+    "Name, address and serial number",
+    "The test lab's report number",
+    "The full EMC test results",
+    "The installer's name"
+   ],
+   "answer": 0,
+   "why": "So the product can be traced to someone responsible. The guide also requires instructions in English.",
+   "added": true,
+   "after": "govuk1-4"
   },
   {
    "type": "concept",
@@ -88,6 +120,22 @@
    "id": "wikipedia2-2"
   },
   {
+   "id": "q-ground-loop-cause",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Two instruments are each earthed through their mains plugs, and joined by a screened signal cable. Why can that make hum?",
+   "options": [
+    "A loop for induced current",
+    "The two earths cancel each other",
+    "Screened cable cannot carry signals",
+    "The mains plugs leak signal"
+   ],
+   "answer": 0,
+   "why": "The two earth wires, the building wiring and the cable screen form a closed loop. Magnetic fields near power wiring induce a mains-frequency current round it, and that current through the screen's resistance makes a voltage added to the signal: hum.",
+   "added": true,
+   "after": "wikipedia2-2"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Description",
@@ -104,6 +152,32 @@
    "id": "wikipedia2-4"
   },
   {
+   "id": "q-ground-drop",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A ground conductor shared by two circuits has a resistance of {r} mΩ. {i} A of one circuit's current flows in it. What noise voltage does the other circuit see, in mV?",
+   "vars": {
+    "r": [
+     5,
+     200,
+     5
+    ],
+    "i": [
+     0.5,
+     10,
+     0.5
+    ]
+   },
+   "answer": "r * i",
+   "unit": "mV",
+   "tolerance": 0.01,
+   "work": "$V = IR = {i} \\times {r} \\times 10^{-3} = {answer:1}$ mV (× 1000 for mV)",
+   "why": "Ohm's law on the shared conductor: its voltage drop sits between the two 'grounds' and adds to the second circuit's signal. A few millivolts swamps a thermocouple's or strain gauge's signal, which is why sensitive signals get their own return and one reference point.",
+   "hint": "V = I × R. Amps times milliohms gives millivolts.",
+   "added": true,
+   "after": "wikipedia2-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Representative circuit",
@@ -118,6 +192,22 @@
    "html": "<p>The symptoms of a ground loop, ground noise and hum in electrical equipment are caused by current flowing in the ground or <em>shield</em> conductor of a cable. Fig. 1 shows a signal cable <em>S</em> linking two electronic components, including the typical <a href=\"https://en.wikipedia.org/wiki/Line_driver\">line driver</a> and receiver amplifiers <em>(triangles)</em>. The cable has a ground or shield conductor which is connected to the chassis ground of each component. The driver amplifier in component 1 <em>(left)</em> applies signal <em>V</em><sub>1</sub> between the signal and ground conductors of the cable. At the destination end <em>(right)</em>, the signal and ground conductors are connected to a <a href=\"https://en.wikipedia.org/wiki/Differential_amplifier\">differential amplifier</a>. This produces the signal input to component 2 by subtracting the shield voltage from the signal voltage to eliminate <a href=\"https://en.wikipedia.org/wiki/Common-mode_interference\">common-mode noise</a> picked up by the cable <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mn>2</mn>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>S2</mtext>\n          </mrow>\n        </msub>\n        <mo>−</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>G2</mtext>\n          </mrow>\n        </msub>\n        <mspace></mspace>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></p><p>If a current <em>I</em> from a separate source is flowing through the ground conductor, the resistance <em>R</em> of the conductor will create a voltage drop along the cable ground of <em>IR</em>, so the destination end of the ground conductor will be at a different potential than the source end <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>G2</mtext>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>G1</mtext>\n          </mrow>\n        </msub>\n        <mo>−</mo>\n        <mi>I</mi>\n        <mi>R</mi>\n        <mspace></mspace>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> Since the differential amplifier has high impedance, little current flows in the signal wire, therefore there is no voltage drop across it: <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>S2</mtext>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>S1</mtext>\n          </mrow>\n        </msub>\n        <mspace></mspace>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> The ground voltage appears to be in series with the signal voltage <em>V</em><sub>1</sub> and adds to it <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mn>2</mn>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>S1</mtext>\n          </mrow>\n        </msub>\n        <mo>−</mo>\n        <mo>(</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mtext>G1</mtext>\n          </mrow>\n        </msub>\n        <mo>−</mo>\n        <mi>I</mi>\n        <mi>R</mi>\n        <mo>)</mo>\n        <mspace></mspace>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math> <math>\n  <semantics>\n    <mrow>\n      <mstyle>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mn>2</mn>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <msub>\n          <mi>V</mi>\n          <mrow>\n            <mn>1</mn>\n          </mrow>\n        </msub>\n        <mo>+</mo>\n        <mi>I</mi>\n        <mi>R</mi>\n        <mspace></mspace>\n      </mstyle>\n    </mrow>\n    \n  </semantics>\n</math></p>",
    "body": "The symptoms of a ground loop, ground noise and hum in electrical equipment are caused by current flowing in the ground or shield conductor of a cable. Fig. 1 shows a signal cable S linking two electronic components, including the typical line driver and receiver amplifiers (triangles) . The cable has a ground or shield conductor which is connected to the chassis ground of each component. The driver amplifier in component 1 (left) applies signal V 1 between the signal and ground conductors of the cable. At the destination end (right) , the signal and ground conductors are connected to a differential amplifier . This produces the signal input to component 2 by subtracting the shield voltage from the signal voltage to eliminate common-mode noise picked up by the cable V 2 = V S2 − V G2 If a current I from a separate source is flowing through the ground conductor, the resistance R of the conductor will create a voltage drop along the cable ground of IR , so the destination end of the ground conductor will be at a different potential than the source end V G2 = V G1 − I R Since the differential amplifier has high impedance, little current flows in the signal wire, therefore there is no voltage drop across it: V S2 = V S1 The ground voltage appears to be in series with the signal voltage V 1 and adds to it V 2 = V S1 − ( V G1 − I R ) V 2 = V 1 + I R",
    "id": "wikipedia2-6"
+  },
+  {
+   "id": "q-diff-receiver",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a differential input at the receiving end help against ground-loop noise?",
+   "options": [
+    "It measures signal minus shield, so shared noise cancels",
+    "It doubles the signal voltage",
+    "It disconnects the shield",
+    "It filters out all frequencies but one"
+   ],
+   "answer": 0,
+   "why": "Noise that appears on both conductors equally (common mode) drops out when the input takes their difference. That is the same idea as twisted pairs and RS-485.",
+   "added": true,
+   "after": "wikipedia2-6"
   },
   {
    "type": "concept",

@@ -56,12 +56,60 @@
    "id": "wikipedia1-3"
   },
   {
+   "id": "q-linear-eff",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A linear regulator gives {vo} V from a {vi} V input. What is its best possible efficiency, in per cent?",
+   "vars": {
+    "vo": {
+     "pick": [
+      3.3,
+      5,
+      9,
+      12
+     ]
+    },
+    "dv": [
+     2,
+     20,
+     1
+    ]
+   },
+   "let": {
+    "vi": "vo + dv"
+   },
+   "answer": "vo / vi * 100",
+   "unit": "%",
+   "abs": 0.2,
+   "work": "$\\frac{ {vo} }{ {vi} } \\times 100 = {answer:1}$ %",
+   "why": "The same current flows in and out, and the regulator burns the difference in voltage as heat, so efficiency can be no better than Vout ÷ Vin. Dropping 24 V to 5 V wastes about four-fifths of the power: a job for a switch-mode supply.",
+   "hint": "Vout ÷ Vin, times 100.",
+   "added": true,
+   "after": "wikipedia1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Advantages and disadvantages",
    "html": "<p>The main advantage of the switching power supply is greater efficiency (up to ~98–99%) and associated lower heat generation than linear regulators because the switching transistor dissipates little power when acting as a switch.</p><p>Other advantages include smaller size and lighter weight from the elimination of heavy and expensive line-frequency transformers. Standby power loss is often also reduced with the elimination of these transformers.</p><p>Disadvantages include greater complexity, the generation of high-amplitude, high-frequency energy that the <a href=\"https://en.wikipedia.org/wiki/Low-pass_filter\">low-pass filter</a> must block to avoid <a href=\"https://en.wikipedia.org/wiki/Electromagnetic_interference\">electromagnetic interference</a> (EMI), a <a href=\"https://en.wikipedia.org/wiki/Ripple_voltage\">ripple voltage</a> at the switching frequency and its <a href=\"https://en.wikipedia.org/wiki/Harmonic_frequencies\">harmonic frequencies</a>.</p><p>Very low-cost SMPSs may couple electrical switching noise back onto the mains power line, causing interference with devices connected to the same AC circuit, such as <a href=\"https://en.wikipedia.org/wiki/Audio_equipment\">audio equipment</a>. Non-<a href=\"https://en.wikipedia.org/wiki/Power_factor_correction\">power-factor-corrected</a> SMPSs also cause <a href=\"https://en.wikipedia.org/wiki/Harmonics_(electrical_power)\">harmonic distortion</a>.</p>",
    "body": "The main advantage of the switching power supply is greater efficiency (up to ~98–99%) and associated lower heat generation than linear regulators because the switching transistor dissipates little power when acting as a switch. Other advantages include smaller size and lighter weight from the elimination of heavy and expensive line-frequency transformers. Standby power loss is often also reduced with the elimination of these transformers. Disadvantages include greater complexity, the generation of high-amplitude, high-frequency energy that the low-pass filter must block to avoid electromagnetic interference (EMI), a ripple voltage at the switching frequency and its harmonic frequencies . Very low-cost SMPSs may couple electrical switching noise back onto the mains power line, causing interference with devices connected to the same AC circuit, such as audio equipment . Non- power-factor-corrected SMPSs also cause harmonic distortion .",
    "id": "wikipedia1-4"
+  },
+  {
+   "id": "q-smps-cost",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "What is the main price of a switch-mode supply's high efficiency?",
+   "options": [
+    "More complexity and high-frequency noise",
+    "Much more heat to get rid of",
+    "A heavier mains transformer",
+    "A lower output voltage"
+   ],
+   "answer": 0,
+   "why": "Switching hard at tens or hundreds of kilohertz makes electrical noise that must be filtered to avoid interference, and the circuit is more complex. It runs cooler and lighter than a linear supply, which needs a heavy 50 Hz transformer.",
+   "added": true,
+   "after": "wikipedia1-4"
   },
   {
    "type": "concept",
@@ -88,6 +136,32 @@
    "id": "wikipedia1-7"
   },
   {
+   "id": "q-dc-from-ac",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "An AC-input switch-mode supply rated for {v} V AC can run from DC, which passes straight through its rectifier. Roughly what DC voltage matches the AC it expects?",
+   "vars": {
+    "v": {
+     "pick": [
+      100,
+      115,
+      120,
+      220,
+      230,
+      240
+     ]
+    }
+   },
+   "answer": "v * SQRT(2)",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "${v} \\times \\sqrt{2} = {answer:0}$ V",
+   "why": "The rectifier and capacitor charge to the AC's peak, which is √2 times its RMS value: 230 V AC gives about 325 V DC on the capacitor. That is also why that capacitor is dangerous after switch-off.",
+   "hint": "Peak = RMS × √2.",
+   "added": true,
+   "after": "wikipedia1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Inverter",
@@ -110,6 +184,35 @@
    "html": "<p>Simpler, non-isolated power supplies contain an inductor instead of a transformer. This type includes <em><a href=\"https://en.wikipedia.org/wiki/Boost_converter\">boost converters</a></em>, <em><a href=\"https://en.wikipedia.org/wiki/Buck_converter\">buck converters</a></em>, and <em><a href=\"https://en.wikipedia.org/wiki/Buck–boost_converter\">buck–boost converters</a></em>. These belong to the simplest class of single-input, single-output converters which use one inductor and one active switch. The buck converter reduces the input voltage in direct proportion to the ratio of conductive time to the total switching period, called the <a href=\"https://en.wikipedia.org/wiki/Duty_cycle\">duty cycle</a>. For example, an ideal buck converter with a 10 V input operating at a 50% duty cycle will produce an average output voltage of 5 V. A feedback control loop is employed to regulate the output voltage by varying the duty cycle to compensate for variations in input voltage. The output voltage of a <a href=\"https://en.wikipedia.org/wiki/Boost_converter\">boost converter</a> is always greater than the input voltage and the buck–boost output voltage is inverted but can be greater than, equal to, or less than the magnitude of its input voltage. By adding a second inductor the <a href=\"https://en.wikipedia.org/wiki/Ćuk_converter\">Ćuk</a> and <a href=\"https://en.wikipedia.org/wiki/SEPIC_converter\">SEPIC</a> converters can be implemented, or, by adding additional active switches, various bridge converters can be realized.</p><p>Other types of SMPSs use a <a href=\"https://en.wikipedia.org/wiki/Capacitor\">capacitor</a>–<a href=\"https://en.wikipedia.org/wiki/Diode\">diode</a> <a href=\"https://en.wikipedia.org/wiki/Voltage_multiplier\">voltage multiplier</a> instead of inductors and transformers. These are mostly used for generating high voltages at low currents (<em><a href=\"https://en.wikipedia.org/wiki/Cockcroft–Walton_generator\">Cockcroft–Walton generator</a></em>). The low voltage variant is called <a href=\"https://en.wikipedia.org/wiki/Charge_pump\">charge pump</a>.</p>",
    "body": "Simpler, non-isolated power supplies contain an inductor instead of a transformer. This type includes boost converters , buck converters , and buck–boost converters . These belong to the simplest class of single-input, single-output converters which use one inductor and one active switch. The buck converter reduces the input voltage in direct proportion to the ratio of conductive time to the total switching period, called the duty cycle . For example, an ideal buck converter with a 10 V input operating at a 50% duty cycle will produce an average output voltage of 5 V. A feedback control loop is employed to regulate the output voltage by varying the duty cycle to compensate for variations in input voltage. The output voltage of a boost converter is always greater than the input voltage and the buck–boost output voltage is inverted but can be greater than, equal to, or less than the magnitude of its input voltage. By adding a second inductor the Ćuk and SEPIC converters can be implemented, or, by adding additional active switches, various bridge converters can be realized. Other types of SMPSs use a capacitor – diode voltage multiplier instead of inductors and transformers. These are mostly used for generating high voltages at low currents ( Cockcroft–Walton generator ). The low voltage variant is called charge pump .",
    "id": "wikipedia1-10"
+  },
+  {
+   "id": "q-buck",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "An ideal buck converter runs from {vin} V at a duty cycle of {d}%. What is its output voltage?",
+   "vars": {
+    "vin": {
+     "pick": [
+      5,
+      12,
+      24,
+      48
+     ]
+    },
+    "d": [
+     10,
+     90,
+     5
+    ]
+   },
+   "answer": "vin * d / 100",
+   "unit": "V",
+   "tolerance": 0.01,
+   "work": "$V_{out} = D \\times V_{in} = {d}\\% \\times {vin} = {answer:2}$ V",
+   "why": "A buck converter switches the input on for a fraction D of each period and smooths it with an inductor and capacitor, so the output is the average: D × Vin. The control loop adjusts D to hold the output steady as the input or load changes.",
+   "hint": "The output is the duty cycle (as a fraction) times the input.",
+   "added": true,
+   "after": "wikipedia1-10"
   },
   {
    "type": "concept",
@@ -142,6 +245,22 @@
    "html": "<p>Simple off-line switched-mode power supplies incorporate a simple full-wave rectifier connected to a large energy-storing capacitor. Such SMPSs draw current from the AC line in short pulses when the mains instantaneous voltage exceeds the voltage across this capacitor. During the remaining portion of the AC cycle the capacitor provides energy to the power supply.</p><p>As a result, the input current of such basic switched-mode power supplies has high <a href=\"https://en.wikipedia.org/wiki/Harmonic\">harmonic</a> content and relatively low power factor. This creates extra load on utility lines, increases heating of building wiring, the utility <a href=\"https://en.wikipedia.org/wiki/Transformer\">transformers</a>, and standard AC electric motors, and may cause stability problems in some applications such as in emergency generator systems or aircraft generators. Harmonics can be removed by filtering, but the filters are expensive. Unlike displacement power factor created by linear inductive or capacitive loads, this distortion cannot be corrected by addition of a single linear component. Additional circuits are required to counteract the effect of the brief current pulses. Putting a current regulated boost chopper stage after the off-line rectifier (to charge the storage capacitor) can correct the power factor, but increases the complexity and cost.</p><p>In 2001, the European Union put into effect the standard <a href=\"https://en.wikipedia.org/wiki/IEC_61000-3-2\">IEC 61000-3-2</a> to set limits on the harmonics of the AC input current up to the 40th harmonic for equipment above 75 W. The standard defines four classes of equipment depending on its type and current waveform. The most rigorous limits (class D) are established for personal computers, computer monitors, and TV receivers. To comply with these requirements, modern switched-mode power supplies normally include an additional <a href=\"https://en.wikipedia.org/wiki/Power_factor_correction\">power factor correction</a> (PFC) stage.</p>",
    "body": "Simple off-line switched-mode power supplies incorporate a simple full-wave rectifier connected to a large energy-storing capacitor. Such SMPSs draw current from the AC line in short pulses when the mains instantaneous voltage exceeds the voltage across this capacitor. During the remaining portion of the AC cycle the capacitor provides energy to the power supply. As a result, the input current of such basic switched-mode power supplies has high harmonic content and relatively low power factor. This creates extra load on utility lines, increases heating of building wiring, the utility transformers , and standard AC electric motors, and may cause stability problems in some applications such as in emergency generator systems or aircraft generators. Harmonics can be removed by filtering, but the filters are expensive. Unlike displacement power factor created by linear inductive or capacitive loads, this distortion cannot be corrected by addition of a single linear component. Additional circuits are required to counteract the effect of the brief current pulses. Putting a current regulated boost chopper stage after the off-line rectifier (to charge the storage capacitor) can correct the power factor, but increases the complexity and cost. In 2001, the European Union put into effect the standard IEC 61000-3-2 to set limits on the harmonics of the AC input current up to the 40th harmonic for equipment above 75 W. The standard defines four classes of equipment depending on its type and current waveform. The most rigorous limits (class D) are established for personal computers, computer monitors, and TV receivers. To comply with these requirements, modern switched-mode power supplies normally include an additional power factor correction (PFC) stage.",
    "id": "wikipedia1-14"
+  },
+  {
+   "id": "q-smps-pf",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why does a simple off-line switch-mode supply have a poor power factor?",
+   "options": [
+    "It draws current in short pulses",
+    "Its output is DC",
+    "Its transformer is too small",
+    "It switches above 20 kHz"
+   ],
+   "answer": 0,
+   "why": "The rectifier only conducts when the mains is above the capacitor's voltage, near each peak, so the current comes in short spikes rich in harmonics. Many such supplies together load wiring and transformers, which is why larger supplies add power factor correction.",
+   "added": true,
+   "after": "wikipedia1-14"
   },
   {
    "type": "concept",
@@ -192,6 +311,22 @@
    "id": "wikipedia1-20"
   },
   {
+   "id": "q-cap-danger",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "You open a mains switch-mode supply that has been unplugged for a minute. What is the hazard?",
+   "options": [
+    "The main capacitor may still hold about 325 V",
+    "None: it is unplugged",
+    "The output still gives 24 V",
+    "The transformer stays magnetised"
+   ],
+   "answer": 0,
+   "why": "The input filter capacitor charges to the mains peak and not every supply has a bleed resistor to discharge it. Treat it as live: wait, then measure across it with a suitable meter (or discharge it properly) before touching anything.",
+   "added": true,
+   "after": "wikipedia1-20"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Applications",
@@ -232,6 +367,40 @@
    "id": "wikipedia2-3"
   },
   {
+   "id": "q-dropout",
+   "type": "numeric",
+   "stage": "learn",
+   "q": "A {vo} V linear regulator has a dropout of {d} V. What is the lowest input voltage that keeps it regulating?",
+   "vars": {
+    "vo": {
+     "pick": [
+      3.3,
+      5,
+      9,
+      12,
+      15
+     ]
+    },
+    "d": {
+     "pick": [
+      0.2,
+      0.3,
+      0.5,
+      1.5,
+      2
+     ]
+    }
+   },
+   "answer": "vo + d",
+   "unit": "V",
+   "tolerance": 0.005,
+   "work": "${vo} + {d} = {answer:1}$ V",
+   "why": "Dropout is the least difference between input and output the regulator needs to work. A 7805 drops out about 2 V, so needs over 7 V; a low-dropout (LDO) regulator gets by with a few hundred millivolts.",
+   "hint": "Output plus the dropout.",
+   "added": true,
+   "after": "wikipedia2-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Shunt regulators",
@@ -246,6 +415,22 @@
    "html": "<p>The regulation of this circuit is also not very good because the Zener current (and hence the Zener voltage) will vary depending on <em>V</em><sub>S</sub> and inversely depending on the load current. In some designs, the Zener diode may be replaced with another similarly functioning device, especially in an ultra-low-voltage scenario, like (under forward bias) several normal diodes or LEDs in series.</p><h4>Series regulators</h4><p>Series regulators are the more common form; they are more efficient than shunt designs. The series regulator works by providing a path from the supply voltage to the load through a variable resistance, usually a transistor (in this role it is usually termed the series <strong>pass transistor</strong>); it is in the \"top half\" of the voltage divider - the bottom half being the load. The power dissipated by the regulating device is equal to the power supply output current times the <em>voltage drop</em> in the regulating device. For efficiency and reduced stress on the pass transistor, designers try to minimize the voltage drop but not all circuits regulate well once the input (unregulated) voltage comes close to the required output voltage; those that do are termed <strong>low dropout</strong> regulators, A series regulator can usually only source (supply) current, unlike shunt regulators.</p><p>For example, adding an <a href=\"https://en.wikipedia.org/wiki/Common_collector\">emitter follower</a> stage to the shunt example forms a simple series regulator:</p><p>Here, the load current <em>I</em><sub>R<sub>2</sub></sub> is supplied by the transistor whose base is now connected to the Zener diode. Thus the transistor's base current (<em>I</em><sub>B</sub>) forms the load current for the Zener diode and is much smaller than the current through <em>R</em><sub>2</sub>. This regulator is classified as \"series\" because the regulating element, viz., the transistor, appears in series with the load.</p>",
    "body": "The regulation of this circuit is also not very good because the Zener current (and hence the Zener voltage) will vary depending on V S and inversely depending on the load current. In some designs, the Zener diode may be replaced with another similarly functioning device, especially in an ultra-low-voltage scenario, like (under forward bias) several normal diodes or LEDs in series. Series regulators Series regulators are the more common form; they are more efficient than shunt designs. The series regulator works by providing a path from the supply voltage to the load through a variable resistance, usually a transistor (in this role it is usually termed the series pass transistor ); it is in the \"top half\" of the voltage divider - the bottom half being the load. The power dissipated by the regulating device is equal to the power supply output current times the voltage drop in the regulating device. For efficiency and reduced stress on the pass transistor, designers try to minimize the voltage drop but not all circuits regulate well once the input (unregulated) voltage comes close to the required output voltage; those that do are termed low dropout regulators, A series regulator can usually only source (supply) current, unlike shunt regulators. For example, adding an emitter follower stage to the shunt example forms a simple series regulator: Here, the load current I R 2 is supplied by the transistor whose base is now connected to the Zener diode. Thus the transistor's base current ( I B ) forms the load current for the Zener diode and is much smaller than the current through R 2 . This regulator is classified as \"series\" because the regulating element, viz., the transistor, appears in series with the load.",
    "id": "wikipedia2-5"
+  },
+  {
+   "id": "q-series-shunt",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why is a series linear regulator usually more efficient than a shunt (Zener) regulator?",
+   "options": [
+    "A shunt wastes current to ground at all times",
+    "A series regulator has no heat loss at all",
+    "A shunt regulator switches on and off",
+    "A series regulator stores energy in an inductor"
+   ],
+   "answer": 0,
+   "why": "A shunt regulator holds the voltage by diverting current past the load to ground, and that current is drawn even when the load takes little. A series regulator only passes what the load needs, though it still burns the voltage difference.",
+   "added": true,
+   "after": "wikipedia2-5"
   },
   {
    "type": "concept",
@@ -294,6 +479,23 @@
    "html": "<p>Linear regulators can be constructed using discrete components but are usually encountered in <a href=\"https://en.wikipedia.org/wiki/Integrated_circuit\">integrated circuit</a> forms. The most common linear regulators are three-terminal <a href=\"https://en.wikipedia.org/wiki/Integrated_circuit\">integrated circuits</a> in the <a href=\"https://en.wikipedia.org/wiki/TO-220\">TO-220</a> package.</p><p>Common voltage regulators are the LM<a href=\"https://en.wikipedia.org/wiki/78xx\">78xx</a>-series (for positive voltages) and LM79xx-series (for negative voltages). Robust automotive voltage regulators, such as LM2940 / MIC2940A / AZ2940, can handle reverse battery connections and brief +50/-50V transients too. Some <a href=\"https://en.wikipedia.org/wiki/Low-dropout_regulator\">Low-dropout regulator</a> (LDO) alternatives, such as MCP1700 / MCP1711 / TPS7A05 / XC6206, have a very low quiescent current of less than 5 μA (approximately 1,000 times less than the LM78xx series) making them better suited for battery-powered devices.</p><p>Common fixed voltages are 1.8 V, 2.5 V, 3.3 V (for low-voltage <a href=\"https://en.wikipedia.org/wiki/CMOS_logic\">CMOS logic</a> circuits), 5 V (for <a href=\"https://en.wikipedia.org/wiki/Transistor-transistor_logic\">transistor-transistor logic</a> circuits) and 12 V (for communications circuits and peripheral devices such as <a href=\"https://en.wikipedia.org/wiki/Disk_drive\">disk drives</a>). </p><p>In fixed voltage regulators the reference pin is tied to <a href=\"https://en.wikipedia.org/wiki/Ground_(electricity)\">ground</a>, whereas in variable regulators the reference pin is connected to the centre point of a fixed or variable voltage divider fed by the regulator's output. A variable voltage divider such as a <a href=\"https://en.wikipedia.org/wiki/Potentiometer\">potentiometer</a> allows the user to adjust the regulated voltage.</p>",
    "body": "Linear regulators can be constructed using discrete components but are usually encountered in integrated circuit forms. The most common linear regulators are three-terminal integrated circuits in the TO-220 package. Common voltage regulators are the LM 78xx -series (for positive voltages) and LM79xx-series (for negative voltages). Robust automotive voltage regulators, such as LM2940 / MIC2940A / AZ2940, can handle reverse battery connections and brief +50/-50V transients too. Some Low-dropout regulator (LDO) alternatives, such as MCP1700 / MCP1711 / TPS7A05 / XC6206, have a very low quiescent current of less than 5 μA (approximately 1,000 times less than the LM78xx series) making them better suited for battery-powered devices. Common fixed voltages are 1.8 V, 2.5 V, 3.3 V (for low-voltage CMOS logic circuits), 5 V (for transistor-transistor logic circuits) and 12 V (for communications circuits and peripheral devices such as disk drives ). In fixed voltage regulators the reference pin is tied to ground , whereas in variable regulators the reference pin is connected to the centre point of a fixed or variable voltage divider fed by the regulator's output. A variable voltage divider such as a potentiometer allows the user to adjust the regulated voltage.",
    "id": "wikipedia2-11"
+  },
+  {
+   "id": "q-78-79",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "On a panel's power board you find a 7815 and a 7915. What do they supply?",
+   "options": [
+    "+15 V and −15 V",
+    "+78 V and +79 V",
+    "15 V at 78 mA and 79 mA",
+    "Two separate +15 V rails"
+   ],
+   "answer": 0,
+   "why": "The 78xx series are positive regulators and the 79xx negative; the last two digits are the voltage. A ±15 V pair is the classic split supply for op-amps.",
+   "added": true,
+   "after": "wikipedia2-11"
   },
   {
    "id": "add-lin-loss",

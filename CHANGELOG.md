@@ -1,5 +1,13 @@
 # Changes
 
+## 4.0.36 — 22 October 2026
+
+- **Questions inside the Electronics book lessons**: op-amps, filters, power supplies, serial links,
+  microprocessors and EMC now ask after each section: 42 new questions, with worked and faded examples
+  (a non-inverting amplifier, choosing an RC filter's capacitor), a mistake to spot (an inverting amplifier
+  worked with the wrong formula), and numbers to work: a follower's input difference, buck converter and
+  dropout voltages, linear regulator efficiency, ground-loop noise.
+
 ## 4.0.35 — 22 October 2026
 
 - **Questions inside the Instrumentation book lessons**: all 18 now ask after each section, 102 new

@@ -46,6 +46,23 @@
    "id": "liec1-3"
   },
   {
+   "id": "q-split-supply",
+   "type": "mcq",
+   "stage": "learn",
+   "level": 5.0,
+   "q": "An amplifier runs from a split ±15 V supply instead of 0 and +30 V. What does that give its output?",
+   "options": [
+    "Output either side of 0 V",
+    "Twice the output voltage",
+    "Less noise on the output",
+    "A larger current gain"
+   ],
+   "answer": 0,
+   "why": "With the middle of the supply grounded, the output can go from about +15 V to −15 V relative to ground: true AC with no coupling capacitor or transformer. The total swing (30 V peak to peak) is the same as before.",
+   "added": true,
+   "after": "liec1-3"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Single-ended and differential amplifiers",
@@ -60,6 +77,22 @@
    "html": "<p> This concept may at first be confusing to students new to amplifiers. With all these polarities and polarity markings (- and +) around, its easy to get confused and not know what the output of a differential amplifier will be. To address this potential confusion, here's a simple rule to remember: </p><p> <img src=\"media/liec/4f5c4af8-03026.png\" alt=\"\"> </p><p> When the polarity of the <em>differential</em> voltage matches the markings for inverting and noninverting inputs, the output will be positive. When the polarity of the differential voltage clashes with the input markings, the output will be negative. This bears some similarity to the mathematical sign displayed by digital voltmeters based on input voltage polarity. The red test lead of the voltmeter (often called the \"positive\" lead because of the color red's popular association with the positive side of a power supply in electronic wiring) is more positive than the black, the meter will display a positive voltage figure, and vice versa: </p><p> <img src=\"media/liec/668af97c-03027.png\" alt=\"\"> </p><p> Just as a voltmeter will only display the voltage <em>between</em> its two test leads, an ideal differential amplifier only amplifies the potential difference between its two input connections, not the voltage between any one of those connections and ground. The output polarity of a differential amplifier, just like the signed indication of a digital voltmeter, depends on the relative polarities of the differential voltage between the two input connections. </p>",
    "body": "This concept may at first be confusing to students new to amplifiers. With all these polarities and polarity markings (- and +) around, its easy to get confused and not know what the output of a differential amplifier will be. To address this potential confusion, here's a simple rule to remember: When the polarity of the differential voltage matches the markings for inverting and noninverting inputs, the output will be positive. When the polarity of the differential voltage clashes with the input markings, the output will be negative. This bears some similarity to the mathematical sign displayed by digital voltmeters based on input voltage polarity. The red test lead of the voltmeter (often called the \"positive\" lead because of the color red's popular association with the positive side of a power supply in electronic wiring) is more positive than the black, the meter will display a positive voltage figure, and vice versa: Just as a voltmeter will only display the voltage between its two test leads, an ideal differential amplifier only amplifies the potential difference between its two input connections, not the voltage between any one of those connections and ground. The output polarity of a differential amplifier, just like the signed indication of a digital voltmeter, depends on the relative polarities of the differential voltage between the two input connections.",
    "id": "liec1-5"
+  },
+  {
+   "id": "q-diff-sign",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A differential amplifier has +3 V on its (+) input and +5 V on its (−) input. Which way does the output go?",
+   "options": [
+    "Negative",
+    "Positive",
+    "Zero",
+    "It depends on the supply"
+   ],
+   "answer": 0,
+   "why": "The output follows (+) minus (−): 3 − 5 = −2 V of difference, so the output goes negative. The book's rule: when the differential voltage's polarity clashes with the input markings, the output is negative.",
+   "added": true,
+   "after": "liec1-5"
   },
   {
    "type": "concept",
@@ -110,6 +143,22 @@
    "id": "liec1-11"
   },
   {
+   "id": "q-comparator-alarm",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In the book's comparator, Vin goes to the inverting input and a pot sets a reference on the other. What lights the LED?",
+   "options": [
+    "Vin falling below the reference",
+    "Vin rising above the reference",
+    "Vin equal to the reference",
+    "The pot set to zero"
+   ],
+   "answer": 0,
+   "why": "With no feedback, the op-amp's huge gain slams the output to a rail. When Vin (on −) drops below the reference (on +), the difference is positive, so the output saturates high and the LED lights: a low-level alarm. Swap the inputs for a high alarm.",
+   "added": true,
+   "after": "liec1-11"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "The \"operational\" amplifier",
@@ -142,6 +191,37 @@
    "id": "liec1-15"
   },
   {
+   "id": "q-follower-error",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.3,
+   "q": "A voltage follower uses an op-amp with an open-loop gain of {a}. With {vin} V in, how many microvolts separate its two inputs?",
+   "vars": {
+    "a": {
+     "pick": [
+      20000,
+      50000,
+      100000,
+      200000,
+      1000000
+     ]
+    },
+    "vin": [
+     1,
+     10,
+     0.5
+    ]
+   },
+   "answer": "vin / (1 + a) * 1000000",
+   "unit": "µV",
+   "tolerance": 0.01,
+   "work": "$\\frac{ {vin} }{1 + {a}} \\times 10^6 = {answer:3}$ µV",
+   "why": "The output is A times the difference, and the output is fed back to (−): Vout = A(Vin − Vout), so the difference is Vin ÷ (1 + A). With A in the hundreds of thousands it is microvolts: why we treat the inputs as equal. The book: 6 V and A = 200 000 gives about 30 µV.",
+   "hint": "The difference is Vin ÷ (1 + A). Then × 1 000 000 for µV.",
+   "added": true,
+   "after": "liec1-15"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Negative feedback",
@@ -164,6 +244,22 @@
    "html": "<p> It should be mentioned that many op-amps cannot swing their output voltages exactly to +V/-V power supply rail voltages. The model 741 is one of those that cannot: when saturated, its output voltage peaks within about one volt of the +V power supply voltage and within about 2 volts of the -V power supply voltage. Therefore, with a split power supply of +15/-15 volts, a 741 op-amp's output may go as high as +14 volts or as low as -13 volts (approximately), but no further. This is due to its bipolar transistor design. These two voltage limits are known as the <em>positive saturation voltage</em> and <em>negative saturation voltage</em>, respectively. Other op-amps, such as the model 3130 with field-effect transistors in the final output stage, have the ability to swing their output voltages within millivolts of either power supply <em>rail</em> voltage. Consequently, their positive and negative saturation voltages are practically equal to the supply voltages. </p>",
    "body": "It should be mentioned that many op-amps cannot swing their output voltages exactly to +V/-V power supply rail voltages. The model 741 is one of those that cannot: when saturated, its output voltage peaks within about one volt of the +V power supply voltage and within about 2 volts of the -V power supply voltage. Therefore, with a split power supply of +15/-15 volts, a 741 op-amp's output may go as high as +14 volts or as low as -13 volts (approximately), but no further. This is due to its bipolar transistor design. These two voltage limits are known as the positive saturation voltage and negative saturation voltage , respectively. Other op-amps, such as the model 3130 with field-effect transistors in the final output stage, have the ability to swing their output voltages within millivolts of either power supply rail voltage. Consequently, their positive and negative saturation voltages are practically equal to the supply voltages.",
    "id": "liec1-18"
+  },
+  {
+   "id": "q-741-rails",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A 741 op-amp on ±15 V supplies saturates. Roughly how far can its output go?",
+   "options": [
+    "About +14 V and −13 V",
+    "Exactly +15 V and −15 V",
+    "About +12 V and −12 V",
+    "About +7.5 V and −7.5 V"
+   ],
+   "answer": 0,
+   "why": "Its bipolar output stage stops about 1 V short of +V and 2 V short of −V. 'Rail-to-rail' op-amps get much closer. Always check how close to the rails a chip can swing before relying on a large output.",
+   "added": true,
+   "after": "liec1-18"
   },
   {
    "type": "concept",
@@ -206,6 +302,62 @@
    "id": "liec1-23"
   },
   {
+   "id": "q-worked-noninv",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "A non-inverting amplifier: R1 (to ground) is 1 kΩ, R2 (feedback) is 3 kΩ, and 2 V goes in. Find the output.",
+   "steps": [
+    {
+     "ask": "The voltage on the inverting input",
+     "show": "Feedback holds it equal to the (+) input: 2 V"
+    },
+    {
+     "ask": "The current through R1",
+     "show": "$2 \\text{ V} \\div 1 \\text{ k}\\Omega = 2$ mA, to ground"
+    },
+    {
+     "ask": "The voltage across R2",
+     "show": "The same 2 mA flows through R2 (the input takes none): $2 \\text{ mA} \\times 3 \\text{ k}\\Omega = 6$ V"
+    },
+    {
+     "ask": "The output",
+     "show": "$2 + 6 = 8$ V, a gain of $1 + \\tfrac{R_2}{R_1} = 4$"
+    }
+   ],
+   "why": "Two rules do it all: the inputs sit at the same voltage, and no current flows into them. Then it is just Ohm's law along the divider.",
+   "added": true,
+   "after": "liec1-23"
+  },
+  {
+   "id": "q-faded-noninv",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "A non-inverting amplifier has R1 = 2.2 kΩ to ground and R2 = 10 kΩ feedback, with 0.5 V in. Find the output.",
+   "steps": [
+    {
+     "ask": "The voltage on the inverting input",
+     "show": "0.5 V, the same as the (+) input"
+    },
+    {
+     "ask": "The current through R1",
+     "show": "$0.5 \\div 2.2 = 0.227$ mA"
+    },
+    {
+     "ask": "The voltage across R2",
+     "show": "$0.227 \\text{ mA} \\times 10 \\text{ k}\\Omega = 2.27$ V"
+    },
+    {
+     "ask": "The output",
+     "show": "$0.5 + 2.27 = 2.77$ V (gain $1 + 10/2.2 = 5.55$)"
+    }
+   ],
+   "why": "The same steps as the worked example. The gain formula $1 + R_2/R_1$ is just these steps done once in letters.",
+   "added": true,
+   "after": "q-worked-noninv"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Divided feedback",
@@ -214,12 +366,44 @@
    "id": "liec1-24"
   },
   {
+   "id": "q-virtual-ground",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "In an inverting amplifier, why is the inverting input called a **virtual ground**?",
+   "options": [
+    "Feedback holds it at 0 V, though it is not wired to ground",
+    "It is wired straight to ground",
+    "It carries all the input current to ground",
+    "It is at half the supply voltage"
+   ],
+   "answer": 0,
+   "why": "The (+) input is grounded, and negative feedback drives the output until the (−) input matches it: 0 V. It is not connected to ground, so no current goes into it; the input current all flows on through the feedback resistor, which is what makes the gain −Rf/Rin.",
+   "added": true,
+   "after": "liec1-24"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Divided feedback",
    "html": "<p> These two amplifier circuits we've just investigated serve the purpose of multiplying or dividing the magnitude of the input voltage signal. This is exactly how the mathematical operations of multiplication and division are typically handled in analog computer circuitry. </p><ul> <li><strong>REVIEW:</strong></li> <li>By connecting the inverting (-) input of an op-amp directly to the output, we get negative feedback, which gives us a <em>voltage follower</em> circuit. By connecting that negative feedback through a resistive voltage divider (feeding back a <em>fraction</em> of the output voltage to the inverting input), the output voltage becomes a <em>multiple</em> of the input voltage.</li> <li>A negative-feedback op-amp circuit with the input signal going to the noninverting (+) input is called a <em>noninverting amplifier</em>. The output voltage will be the same polarity as the input. Voltage gain is given by the following equation: A<sub>V</sub> = (R<sub>2</sub>/R<sub>1</sub>) + 1</li> <li>A negative-feedback op-amp circuit with the input signal going to the \"bottom\" of the resistive voltage divider, with the noninverting (+) input grounded, is called an <em>inverting amplifier</em>. Its output voltage will be the opposite polarity of the input. Voltage gain is given by the following equation: A<sub>V</sub> = -R<sub>2</sub>/R<sub>1</sub></li> </ul>",
    "body": "These two amplifier circuits we've just investigated serve the purpose of multiplying or dividing the magnitude of the input voltage signal. This is exactly how the mathematical operations of multiplication and division are typically handled in analog computer circuitry. REVIEW: By connecting the inverting (-) input of an op-amp directly to the output, we get negative feedback, which gives us a voltage follower circuit. By connecting that negative feedback through a resistive voltage divider (feeding back a fraction of the output voltage to the inverting input), the output voltage becomes a multiple of the input voltage. A negative-feedback op-amp circuit with the input signal going to the noninverting (+) input is called a noninverting amplifier . The output voltage will be the same polarity as the input. Voltage gain is given by the following equation: A V = (R 2 /R 1 ) + 1 A negative-feedback op-amp circuit with the input signal going to the \"bottom\" of the resistive voltage divider, with the noninverting (+) input grounded, is called an inverting amplifier . Its output voltage will be the opposite polarity of the input. Voltage gain is given by the following equation: A V = -R 2 /R 1",
    "id": "liec1-25"
+  },
+  {
+   "id": "q-spot-inverting",
+   "type": "spot",
+   "stage": "learn",
+   "q": "An inverting amplifier: Rin = 10 kΩ, Rf = 47 kΩ, Vin = +0.2 V. Which line of the working is wrong?",
+   "lines": [
+    "Gain $= -R_f \\div R_{in} = -47 \\div 10 = -4.7$",
+    "Output $= (1 + 4.7) \\times 0.2 = +1.14$ V",
+    "Check: the output is within the ±12 V rails"
+   ],
+   "wrong": 1,
+   "fix": "Output $= -4.7 \\times 0.2 = -0.94$ V",
+   "why": "The non-inverting formula (1 + Rf/Rin) was used on an inverting amplifier, which also loses the minus sign. An inverting amplifier's output always has the opposite sign to its input: a positive answer here should have rung the bell.",
+   "added": true,
+   "after": "liec1-25"
   },
   {
    "id": "add-noninv",

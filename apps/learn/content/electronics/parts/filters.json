@@ -63,6 +63,22 @@
    "id": "liec1-4"
   },
   {
+   "id": "q-cap-preferred",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Why are RC filters usually preferred to filters made with inductors?",
+   "options": [
+    "Capacitors are purer, more predictable components",
+    "Inductors cannot pass low frequencies",
+    "Capacitors are always smaller in value",
+    "RC filters need no resistor"
+   ],
+   "answer": 0,
+   "why": "A real inductor has winding resistance and core losses, so it is not a pure reactance; a capacitor is almost 100% reactive, so the filter behaves as calculated. Inductors are also bulkier and pick up and radiate magnetic fields.",
+   "added": true,
+   "after": "liec1-4"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Low-pass filters",
@@ -79,6 +95,43 @@
    "id": "liec1-6"
   },
   {
+   "id": "q-choose-c",
+   "type": "numeric",
+   "stage": "learn",
+   "level": 6.3,
+   "q": "You need an RC low-pass filter with a cut-off of {fc} Hz, using R = {r} kΩ. What capacitance, in nanofarads?",
+   "vars": {
+    "fc": {
+     "pick": [
+      10,
+      50,
+      100,
+      500,
+      1000,
+      5000
+     ]
+    },
+    "r": {
+     "pick": [
+      1,
+      2.2,
+      4.7,
+      10,
+      22,
+      47
+     ]
+    }
+   },
+   "answer": "1 / (2 * PI() * r * 1000 * fc) * 1e9",
+   "unit": "nF",
+   "tolerance": 0.01,
+   "work": "$C = \\frac{1}{2\\pi R f_c} = \\frac{1}{2\\pi \\times {r} \\times 10^3 \\times {fc}} = {answer:4}$ nF",
+   "why": "Turn $f_c = \\tfrac{1}{2\\pi RC}$ round: $C = \\tfrac{1}{2\\pi R f_c}$. Then pick the nearest standard value and recalculate $f_c$. Keep R in ohms and convert farads to nF (× 10⁹) at the end.",
+   "hint": "C = 1 ÷ (2π R fc), with R in ohms; then × 10⁹ for nF.",
+   "added": true,
+   "after": "liec1-6"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Low-pass filters",
@@ -87,12 +140,76 @@
    "id": "liec1-7"
   },
   {
+   "id": "q-decoupling",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "Noise from nearby circuits rides on a DC supply. A capacitor is fitted across the supply right at the load. What is it doing?",
+   "options": [
+    "Low-pass filtering: shorting the AC noise",
+    "High-pass filtering: blocking the DC",
+    "Storing charge to raise the voltage",
+    "Correcting the power factor"
+   ],
+   "answer": 0,
+   "why": "To the noise the capacitor is a low impedance, so it shunts the AC away from the load, while DC sees an open circuit and carries on. The supply wiring's own impedance acts as the series element. That is a decoupling capacitor, on every IC on a PCB.",
+   "added": true,
+   "after": "liec1-7"
+  },
+  {
    "type": "concept",
    "stage": "learn",
    "title": "Low-pass filters",
    "html": "<ul> <li><strong>REVIEW:</strong></li> <li>A low-pass filter allows for easy passage of low-frequency signals from source to load, and difficult passage of high-frequency signals.</li> <li>Inductive low-pass filters insert an inductor in series with the load; capacitive low-pass filters insert a resistor in series and a capacitor in parallel with the load. The former filter design tries to “block” the unwanted frequency signal while the latter tries to short it out.</li> <li>The <em>cutoff frequency</em> for a low-pass filter is that frequency at which the output (load) voltage equals 70.7% of the input (source) voltage. Above the cutoff frequency, the output voltage is lower than 70.7% of the input, and vice versa.</li> </ul>",
    "body": "REVIEW: A low-pass filter allows for easy passage of low-frequency signals from source to load, and difficult passage of high-frequency signals. Inductive low-pass filters insert an inductor in series with the load; capacitive low-pass filters insert a resistor in series and a capacitor in parallel with the load. The former filter design tries to “block” the unwanted frequency signal while the latter tries to short it out. The cutoff frequency for a low-pass filter is that frequency at which the output (load) voltage equals 70.7% of the input (source) voltage. Above the cutoff frequency, the output voltage is lower than 70.7% of the input, and vice versa.",
    "id": "liec1-8"
+  },
+  {
+   "id": "q-worked-rc",
+   "type": "steps",
+   "stage": "example",
+   "worked": true,
+   "q": "Design an RC low-pass filter for a sensor signal with a cut-off near 1 kHz, using R = 10 kΩ.",
+   "steps": [
+    {
+     "ask": "The capacitance needed",
+     "show": "$C = \\frac{1}{2\\pi \\times 10\\,000 \\times 1000} = 15.9$ nF"
+    },
+    {
+     "ask": "The nearest standard value",
+     "show": "15 nF (E6/E12 series)"
+    },
+    {
+     "ask": "The real cut-off",
+     "show": "$f_c = \\frac{1}{2\\pi \\times 10\\,000 \\times 15 \\times 10^{-9}} = 1061$ Hz: close enough"
+    }
+   ],
+   "why": "Rearrange, pick a real value, recalculate. And remember the book's warning: the formula assumes no load; a load resistance across the capacitor changes the cut-off.",
+   "added": true,
+   "after": "liec1-8"
+  },
+  {
+   "id": "q-faded-rc",
+   "type": "steps",
+   "stage": "example",
+   "given": 1,
+   "q": "Design an RC low-pass filter with a cut-off near 50 Hz, using R = 4.7 kΩ.",
+   "steps": [
+    {
+     "ask": "The capacitance needed",
+     "show": "$C = \\frac{1}{2\\pi \\times 4700 \\times 50} = 0.677$ µF"
+    },
+    {
+     "ask": "The nearest standard value",
+     "show": "0.68 µF"
+    },
+    {
+     "ask": "The real cut-off",
+     "show": "$f_c = \\frac{1}{2\\pi \\times 4700 \\times 0.68 \\times 10^{-6}} = 49.8$ Hz"
+    }
+   ],
+   "why": "The same three steps: rearrange for C, pick a standard value, check the cut-off.",
+   "added": true,
+   "after": "q-worked-rc"
   },
   {
    "type": "concept",
@@ -109,6 +226,22 @@
    "html": "<p> As with low-pass filters, high-pass filters have a rated <em>cutoff frequency</em>, above which the output voltage increases above 70.7% of the input voltage. Just as in the case of the capacitive low-pass filter circuit, the capacitive high-pass filter's cutoff frequency can be found with the same formula: </p><p> <img src=\"media/liec/6e642bab-12097.png\" alt=\"\"> </p><p> In the example circuit, there is no resistance other than the load resistor, so that is the value for R in the formula. </p><p> Using a stereo system as a practical example, a capacitor connected in series with the tweeter (treble) speaker will serve as a high-pass filter, imposing a high impedance to low-frequency bass signals, thereby preventing that power from being wasted on a speaker inefficient for reproducing such sounds. In like fashion, an inductor connected in series with the woofer (bass) speaker will serve as a low-pass filter for the low frequencies that particular speaker is designed to reproduce. In this simple example circuit, the midrange speaker is subjected to the full spectrum of frequencies from the stereo's output. More elaborate filter networks are sometimes used, but this should give you the general idea. Also bear in mind that I'm only showing you one channel (either left or right) on this stereo system. A real stereo would have six speakers: 2 woofers, 2 midranges, and 2 tweeters. </p><p> <img src=\"media/liec/a82ef45c-02120.png\" alt=\"\"> </p><p><em>High-pass filter routes high frequencies to tweeter, while low-pass filter routes lows to woofer.</em></p>",
    "body": "As with low-pass filters, high-pass filters have a rated cutoff frequency , above which the output voltage increases above 70.7% of the input voltage. Just as in the case of the capacitive low-pass filter circuit, the capacitive high-pass filter's cutoff frequency can be found with the same formula: In the example circuit, there is no resistance other than the load resistor, so that is the value for R in the formula. Using a stereo system as a practical example, a capacitor connected in series with the tweeter (treble) speaker will serve as a high-pass filter, imposing a high impedance to low-frequency bass signals, thereby preventing that power from being wasted on a speaker inefficient for reproducing such sounds. In like fashion, an inductor connected in series with the woofer (bass) speaker will serve as a low-pass filter for the low frequencies that particular speaker is designed to reproduce. In this simple example circuit, the midrange speaker is subjected to the full spectrum of frequencies from the stereo's output. More elaborate filter networks are sometimes used, but this should give you the general idea. Also bear in mind that I'm only showing you one channel (either left or right) on this stereo system. A real stereo would have six speakers: 2 woofers, 2 midranges, and 2 tweeters. High-pass filter routes high frequencies to tweeter, while low-pass filter routes lows to woofer.",
    "id": "liec1-10"
+  },
+  {
+   "id": "q-tweeter",
+   "type": "mcq",
+   "stage": "learn",
+   "q": "A capacitor in series with a tweeter (treble speaker) is what kind of filter?",
+   "options": [
+    "High-pass",
+    "Low-pass",
+    "Band-stop",
+    "None: it only blocks DC"
+   ],
+   "answer": 0,
+   "why": "The capacitor's reactance is high at low frequencies, so bass is kept out of the tweeter while treble passes. A capacitor in series passes high frequencies; across the load it shorts them out (low-pass).",
+   "added": true,
+   "after": "liec1-10"
   },
   {
    "type": "concept",
@@ -149,6 +282,33 @@
    "html": "<p> Given these component ratios, the frequency of maximum rejection (the “notch frequency”) can be calculated as follows: </p><p> <img src=\"media/liec/33322687-12099.png\" alt=\"\"> </p><p> The impressive band-stopping ability of this filter is illustrated by the following SPICE analysis: (Figure  below) </p><pre>\ntwin-t bandstop filter\nv1 1 0 ac 1 sin \nr1 1 2 200      \nc1 2 0 2u       \nr2 2 3 200      \nc2 1 4 1u       \nr3 4 0 100      \nc3 4 3 1u       \nrload 3 0 1k    \n.ac lin 20 200 1.5k     \n.plot ac v(3)   \n.end    \n</pre><p> <img src=\"media/liec/52ae1695-22032.png\" alt=\"\"> </p><p><em>Response of “twin-T” band-stop filter.</em></p><ul> <li><strong>REVIEW:</strong></li> <li>A <em>band-stop</em> filter works to screen out frequencies that are within a certain range, giving easy passage only to frequencies outside of that range. Also known as <em>band-elimination</em>, <em>band-reject</em>, or <em>notch</em> filters.</li> <li>Band-stop filters can be made by placing a low-pass filter in parallel with a high-pass filter. Commonly, both the low-pass and high-pass filter sections are of the “T” configuration, giving the name “Twin-T” to the band-stop combination.</li> <li>The frequency of maximum attenuation is called the <em>notch</em> frequency.</li> </ul>",
    "body": "Given these component ratios, the frequency of maximum rejection (the “notch frequency”) can be calculated as follows: The impressive band-stopping ability of this filter is illustrated by the following SPICE analysis: (Figure below) twin-t bandstop filter v1 1 0 ac 1 sin r1 1 2 200 c1 2 0 2u r2 2 3 200 c2 1 4 1u r3 4 0 100 c3 4 3 1u rload 3 0 1k .ac lin 20 200 1.5k .plot ac v(3) .end Response of “twin-T” band-stop filter. REVIEW: A band-stop filter works to screen out frequencies that are within a certain range, giving easy passage only to frequencies outside of that range. Also known as band-elimination , band-reject , or notch filters. Band-stop filters can be made by placing a low-pass filter in parallel with a high-pass filter. Commonly, both the low-pass and high-pass filter sections are of the “T” configuration, giving the name “Twin-T” to the band-stop combination. The frequency of maximum attenuation is called the notch frequency.",
    "id": "liec1-15"
+  },
+  {
+   "id": "q-filter-match",
+   "type": "match",
+   "stage": "learn",
+   "q": "Match each filter to what it does.",
+   "pairs": [
+    [
+     "Low-pass",
+     "Passes slow signals, cuts high frequencies"
+    ],
+    [
+     "High-pass",
+     "Passes high frequencies, cuts low ones and DC"
+    ],
+    [
+     "Band-pass",
+     "Passes only a range in between"
+    ],
+    [
+     "Band-stop (notch)",
+     "Cuts only a narrow range, e.g. mains hum"
+    ]
+   ],
+   "why": "A band-pass can be a high-pass and a low-pass in series; a band-stop rejects a range, like a twin-T notch tuned to 50 Hz to remove mains hum from a sensor signal.",
+   "added": true,
+   "after": "liec1-15"
   },
   {
    "type": "concept",
